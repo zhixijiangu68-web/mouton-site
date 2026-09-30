@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>ムートン — Personal Archive</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=Inter:wght@300;400&display=swap');
+:root{--ink:#252724;--muted:#686b65;--line:rgba(37,39,36,.18);--glass:rgba(247,244,236,.50);--paper:#eee9dd;}
+*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:#e9e4d8;color:var(--ink)}
+body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;overflow-x:hidden}
+button,a{font:inherit;color:inherit} button{cursor:pointer}
+.scene{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;background:linear-gradient(180deg,#eee9df 0%,#e6e0d4 52%,#d5d0c4 100%)}
+.scene:before{content:"";position:absolute;inset:-5%;z-index:-3;background:
+ radial-gradient(circle at 77% 31%,rgba(255,236,198,.86),transparent 24%),
+ radial-gradient(circle at 18% 76%,rgba(93,110,91,.34),transparent 25%),
+ linear-gradient(160deg,rgba(218,226,224,.85),rgba(239,225,203,.75) 49%,rgba(151,167,158,.55));animation:breathe 16s ease-in-out infinite alternate;transform:scale(1.04)}
+.scene:after{content:"";position:absolute;inset:0;z-index:-2;background:
+ linear-gradient(180deg,rgba(255,255,255,.18),transparent 35%),
+ radial-gradient(ellipse at 50% 84%,rgba(54,66,57,.28),transparent 47%);mix-blend-mode:multiply;opacity:.55}
+@keyframes breathe{to{transform:scale(1.075) translate3d(-.5%,.35%,0)}}
+.grain{pointer-events:none;position:absolute;inset:0;z-index:8;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+.arc{position:absolute;width:72vw;height:72vw;border:1px solid rgba(255,255,255,.42);border-radius:50%;left:-24vw;top:34vh;pointer-events:none}
+.arc.two{left:57vw;top:12vh;width:50vw;height:50vw;opacity:.55}
+header{height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(22px,4vw,64px);position:relative;z-index:10}
+.brand{font-family:"Noto Serif JP",serif;font-size:clamp(20px,2vw,29px);letter-spacing:.2em;white-space:nowrap}.tools{justify-self:end;font-size:11px;letter-spacing:.28em}.tabs{display:flex;gap:clamp(24px,5vw,74px);align-items:center}.tab{border:0;background:none;padding:12px 0;font-size:11px;letter-spacing:.24em;position:relative;opacity:.65}.tab.active{opacity:1}.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--ink)}
+main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative;z-index:3}
+.hero{text-align:center;margin-bottom:clamp(20px,3vh,38px)}.hero h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,4.2vw,64px);line-height:1.45;letter-spacing:.08em;margin:0}.hero p{font-family:"Noto Serif JP",serif;margin:14px 0 0;font-size:13px;letter-spacing:.16em}.hero .en{font-family:Inter,sans-serif;font-size:9px;letter-spacing:.38em;line-height:1.8;opacity:.62;text-transform:uppercase;margin-top:14px}
+.window{width:min(900px,100%);min-height:330px;margin:auto;border:1px solid rgba(255,255,255,.7);border-radius:12px;background:var(--glass);backdrop-filter:blur(13px) saturate(.82);-webkit-backdrop-filter:blur(13px) saturate(.82);box-shadow:0 24px 80px rgba(40,45,39,.10);overflow:hidden;position:relative}
+.panel{display:none;min-height:330px;padding:clamp(28px,4vw,54px);animation:enter .55s cubic-bezier(.2,.75,.25,1)}.panel.active{display:grid}@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{font-size:9px;letter-spacing:.32em;text-transform:uppercase;opacity:.6}.big{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,50px);margin:14px 0 8px;letter-spacing:.08em}.copy{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;max-width:480px;color:#444740}.link{display:inline-flex;align-items:center;gap:16px;border:1px solid rgba(37,39,36,.35);border-radius:999px;padding:11px 20px;text-decoration:none;font-size:9px;letter-spacing:.25em;margin-top:22px;background:rgba(255,255,255,.18)}
+.now{grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}.art{height:230px;border-radius:7px;position:relative;overflow:hidden;background:linear-gradient(145deg,#7e8f89,#c9c3ae 45%,#e8d5b4)}.art:before{content:"";position:absolute;width:68%;aspect-ratio:1;border-radius:50%;background:rgba(246,231,194,.68);filter:blur(2px);right:-17%;top:-30%}.art:after{content:"";position:absolute;left:-5%;right:-5%;bottom:-25%;height:68%;background:linear-gradient(160deg,rgba(43,57,50,.75),rgba(95,110,100,.42));clip-path:polygon(0 72%,22% 42%,42% 63%,65% 24%,100% 58%,100% 100%,0 100%)}
+.projects{grid-template-columns:repeat(3,1fr);gap:16px;align-content:center}.card{min-height:220px;padding:24px;border:1px solid rgba(37,39,36,.13);border-radius:8px;background:rgba(255,255,255,.17);display:flex;flex-direction:column;justify-content:flex-end;transition:.35s ease}.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.3)}.card span{font-size:8px;letter-spacing:.25em;opacity:.55}.card h3{font-family:"Noto Serif JP",serif;font-weight:300;font-size:24px;margin:10px 0}.card p{font-size:11px;line-height:1.8;opacity:.7;margin:0}.card.placeholder{border-style:dashed;opacity:.58}
+.journal{align-content:center}.entry{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.entry:first-of-type{border-top:1px solid var(--line);margin-top:20px}.date{font-size:9px;letter-spacing:.18em;opacity:.55}.entry-title{font-family:"Noto Serif JP",serif;font-size:16px}.arrow{opacity:.55}.entry.clickable{cursor:pointer}.entry.clickable:hover .entry-title{opacity:.62}.article{display:none!important;background:rgba(244,241,233,.74);overflow:auto;max-height:min(66vh,660px);padding:clamp(30px,5vw,68px) clamp(28px,7vw,88px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:14px;line-height:2.25;margin:0 0 24px;max-width:680px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
+.about{grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.portrait{height:235px;border-radius:7px;background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(95,111,99,.34)),linear-gradient(25deg,#8b9a91,#e7d9bd);position:relative;overflow:hidden}.portrait:after{content:"";position:absolute;width:1px;height:150%;background:rgba(255,255,255,.5);left:55%;top:-25%;transform:rotate(30deg)}
+.bottom{width:min(1120px,90vw);margin:20px auto 0;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;letter-spacing:.25em;position:relative;z-index:3;padding-bottom:24px}.quote{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.15em;text-align:right}.quote small{font-family:Inter,sans-serif;display:block;font-size:7px;letter-spacing:.28em;margin-top:8px;opacity:.55;text-transform:uppercase}
+.mobile-tabs{display:none}
+@media(max-width:760px){header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.entry{grid-template-columns:72px 1fr auto;gap:10px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="grain"></div><div class="arc"></div><div class="arc two"></div>
+  <header>
+    <div class="brand">ムートン</div>
+    <nav class="tabs" aria-label="メインナビゲーション">
+      <button class="tab active" data-tab="now">NOW</button><button class="tab" data-tab="projects">PROJECTS</button><button class="tab" data-tab="journal">JOURNAL</button><button class="tab" data-tab="about">ABOUT</button>
+    </nav>
+    <div class="tools">JP / EN　 ☰</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>作る。記録する。<br>残していく。</h1>
+      <p>まだ見ぬ景色のために。</p>
+      <div class="en">A personal archive<br>for things yet to come.</div>
+    </section>
+
+    <section class="window" aria-live="polite">
+      <div class="panel now active" id="now">
+        <div><div class="kicker">NOW / 2026</div><div class="big">いま、ここから。</div><p class="copy">作っているもの、考えていること、これから試したいこと。完成だけではなく、その途中も静かに残していく場所。</p><a class="link" href="#projects" data-jump="projects">PROJECTSを見る <b>→</b></a></div>
+        <div class="art" aria-label="静かな抽象風景"></div>
+      </div>
+      <div class="panel projects" id="projects">
+        <article class="card"><span>PROJECT 001</span><h3>KIOKU</h3><p>「観た」を記録し、記憶として残すためのアプリ。</p></article>
+        <article class="card"><span>PROJECT 002</span><h3>DIARY</h3><p>日々の記録を積み重ねる、小さな実験。</p></article>
+        <article class="card placeholder"><span>NEXT</span><h3>...</h3><p>まだ名前のないもの。</p></article>
+      </div>
+      <div class="panel journal" id="journal">
+        <div class="kicker">JOURNAL / fragments</div>
+        <div class="entry clickable" id="trampoline-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">大人は、いつから跳ばなくなったのか。</div><div class="arrow">→</div></div>
+        <div class="entry clickable" id="stamina-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="arrow">→</div></div>
+        <div class="entry clickable" id="nietzsche-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="arrow">→</div></div>
+        <div class="entry"><div class="date">2026.09.30</div><div class="entry-title">自分のWebサイトを作り始めた。</div><div class="arrow">→</div></div>
+        <div class="entry"><div class="date">2026.09.29</div><div class="entry-title">作ること、残すことについて。</div><div class="arrow">→</div></div>
+        <div class="entry"><div class="date">2026.09.28</div><div class="entry-title">小さな一歩を記録する。</div><div class="arrow">→</div></div>
+      </div>
+      <article class="panel article" id="article-nietzsche">
+        <button class="article-back" id="article-back">← JOURNALへ戻る</button>
+        <div class="article-meta">2026.09.30　/　PHILOSOPHY</div>
+        <h2>神は死んだ。<br>それでも、なぜ生きるのか。</h2>
+        <p class="lead">「神は死んだ。」</p>
+        <p>ニーチェの言葉として、あまりにも有名だ。</p>
+        <p>けれど、この言葉は単純に「神なんて存在しない」と言っているのではない。もっと恐ろしい問いを、私たちに突きつけている。</p>
+        <p>長い間、人間には「生きる理由」があった。神のため。家族のため。国家のため。社会のため。善く生きるため。正しい人間になるため。</p>
+        <p>そこには、自分より大きな何かが存在していた。そして、その大きな何かが、「こう生きるべきだ」「これには価値がある」と教えてくれた。</p>
+        <p>しかし、それらを絶対的なものとして信じられなくなったらどうなるのだろう。</p>
+        <p>ニーチェの「神は死んだ」という言葉の先には、この問題がある。</p>
+        <h3>生きる意味は、どこにあるのか。</h3>
+        <p>朝、起きる。仕事や学校へ行く。食事をする。スマートフォンを見る。誰かと話す。眠る。そして、また朝が来る。</p>
+        <p>それを何十年も繰り返す。でも、ある瞬間に立ち止まってしまう。</p>
+        <p class="question">「そもそも、何のために？」</p>
+        <p>お金を稼ぐため？ 幸せになるため？ 家族をつくるため？ 何かを成し遂げるため？</p>
+        <p>では、なぜ幸せになる必要があるのだろう。なぜ何かを成し遂げる必要があるのだろう。</p>
+        <p>その問いに「なぜ？」を繰り返していくと、いつか答えられない場所にたどり着く。</p>
+        <p>宇宙は、私たち一人ひとりに生きる目的を説明してくれない。生まれた瞬間に、「あなたが生きる意味はこれです」という紙を渡されるわけでもない。</p>
+        <p>それでも私たちは生きている。これは、不思議なことだと思う。</p>
+        <h3>君は、なぜ生きている？</h3>
+        <p>もし最初から決められた意味がないのだとしたら。</p>
+        <p>なぜ、今日も起きたのだろう。なぜ、誰かを好きになるのだろう。なぜ、何かを作るのだろう。なぜ、美しい景色を見ると立ち止まるのだろう。なぜ、好きな音楽をもう一度聴くのだろう。なぜ、明日の予定を立てるのだろう。</p>
+        <p class="question">なぜ、生きる意味が分からないのに、私たちは生き続けているのだろう。</p>
+        <p>もしかすると、「生きる意味が存在しない」ということと、「生きる価値が存在しない」ということは、同じではないのかもしれない。</p>
+        <p>あらかじめ意味が決められていないからこそ、自分で意味をつくる余地が残されている。</p>
+        <p>何を見るのか。誰と生きるのか。何を愛するのか。何を作るのか。何を残すのか。</p>
+        <p>その一つひとつによって、自分の人生に意味が生まれていくのかもしれない。</p>
+        <div class="ending">
+          <p>僕はまだ答えを持っていない。だから、この記事も答えではない。これは問いだ。</p>
+          <p>このページを閉じたあと、ほんの少しだけ考えてみてほしい。</p>
+          <p><strong>君は、生きる意味が分からないのに、なぜ今日も生きているのだろう。</strong></p>
+        </div>
+      </article>
+      <article class="panel article" id="article-trampoline">
+        <button class="article-back" id="trampoline-back">← JOURNALへ戻る</button>
+        <div class="article-meta">2026.09.30　/　BODY</div>
+        <h2>大人は、いつから<br>跳ばなくなったのか。</h2>
+        <p class="lead">——トランポリンを調べたら、「体力」の正体が少し見えてきた。</p>
+        <p>子どもの頃は、よく跳んでいた。水たまりを飛び越えたり、階段からジャンプしたり、意味もなくその場で跳ねたり。</p>
+        <p>でも大人になると、不思議なくらい跳ばなくなる。歩く。座る。立つ。たまに走る。ジムに行けば、重いものを持ち上げる。</p>
+        <p>でも、<strong>「跳ぶ」という動きは、いつの間にか生活から消えている。</strong></p>
+        <p>僕もトランポリンと聞けば、子どもの遊びくらいに思っていた。ところが調べてみると、少し印象が変わった。</p>
+        <p>高齢者が14週間ミニトランポリンでトレーニングした研究では、前方にバランスを崩したとき、身体を立て直す能力が<strong>約35％改善</strong>したと報告されている。</p>
+        <p>心肺。筋力。バランス。代謝。いくつもの機能が動いている。もしかすると「跳ぶ」というのは、僕たちが思っているよりずっと複雑な運動なのかもしれない。</p>
+        <p>なお、この記事で扱うのは主に家庭でも使えるミニトランポリン（リバウンダー）の研究だ。</p>
+        <h3>1. 跳ぶと、心肺が動く</h3>
+        <p>過体重の女性18人を対象にした研究では、12週間のミニトランポリン運動によって、最大酸素摂取量（VO₂max）が<strong>15.4 → 16.9 mL/kg/min</strong>になった。約10％の向上だ。</p>
+        <p>最大運動時の仕事量も、<strong>104W → 123W</strong>と約18％増加した。</p>
+        <p>見た目はその場で上下しているだけだ。でも、身体はそう捉えていない。何度も脚を使い、身体を持ち上げ、着地し、また跳ぶ。そのために酸素が必要になり、心臓が働く。</p>
+        <p><strong>「跳ぶ」は、ちゃんと心肺を使う。</strong></p>
+        <p>ただし、この研究は18人という小規模なものだ。12週間跳べば誰でもVO₂maxが10％上がる、という意味ではない。</p>
+        <h3>2. 跳ぶたびに、身体は小さく崩れている</h3>
+        <p>普通の床とは違って、足元が安定していない。着地する。沈む。跳ね返される。また着地する。</p>
+        <p>実はこの瞬間、<strong>身体は毎回、小さくバランスを崩している。</strong>そして次の瞬間には、それを修正している。</p>
+        <p>高齢者を対象にした14週間の研究では、足首を伸ばす筋力が<strong>約10％向上</strong>した。さらに、前方にバランスを崩したときに身体を立て直す能力が<strong>約35％改善</strong>した。</p>
+        <p>崩れる。気づく。修正する。立て直す。そういう<strong>身体をコントロールする能力</strong>まで使っている。</p>
+        <h3>3. ウォーキングとは少し違う</h3>
+        <p>2026年には、平均71歳の47人を対象に、<strong>トランポリン20分 × 週3回</strong>と<strong>ウォーキング20分 × 週3回</strong>を6週間行った研究も報告されている。</p>
+        <p>歩行能力などは両群で改善した。一方、片脚立ち能力はトランポリン群で改善した。</p>
+        <p>もちろん、この研究だけで「トランポリンはウォーキングより優れている」とは言えない。ウォーキングにはウォーキングの良さがある。</p>
+        <p>ただ、歩くとき地面は基本的に動かない。トランポリンでは地面そのものが動く。だから、<strong>心肺を使いながら、姿勢を制御する。</strong>この組み合わせが面白い。</p>
+        <h3>4. 代謝も動く</h3>
+        <p>2型糖尿病の成人60人を対象に、<strong>30分 × 週3回 × 12週間</strong>のミニトランポリン運動を行った研究では、対照群と比較してインスリン抵抗性、腹囲、血中脂質などに改善が確認された。</p>
+        <p>ただし、<strong>「トランポリンには特殊な血糖改善作用がある」</strong>という意味ではない。そもそも運動そのものが糖代謝に影響する。そして対象者も2型糖尿病の成人だ。</p>
+        <p>健康な若い人に同じ大きさの変化が起こるとは限らない。それでも、あの単純な上下運動が、代謝まで動かすほどの運動になり得ることは興味深い。</p>
+        <h3>5. 「跳ぶ」は意外と全身運動だった</h3>
+        <p><strong>跳ぶ → 着地する → 沈み込む → 姿勢を立て直す → また跳ぶ。</strong></p>
+        <p>ふくらはぎ。太もも。お尻。体幹。そして心肺。さらに、不安定な足元で姿勢を維持する。</p>
+        <p>だからトランポリンは、有酸素運動、筋力トレーニング、バランストレーニングのどれか一つに分類するより、<strong>複数の身体機能を同時に使う運動</strong>と考える方がしっくりくる。</p>
+        <h3>6. だからといって、万能ではない</h3>
+        <p>骨量減少症の女性40人を対象とした12週間の研究では、筋力やバランスなどは改善したものの、腰椎や大腿骨頸部の骨密度について明確な群間差は確認されなかった。</p>
+        <p>だから、<strong>「跳べば骨密度が大幅に上がる」</strong>とは現時点では言えない。</p>
+        <p>また、「リンパが流れる」「デトックスできる」「免疫力が劇的に上がる」といった話も、今回紹介した心肺機能やバランス能力などと同じレベルで臨床的根拠が確立しているとは言いにくい。</p>
+        <p>トランポリンは、誇張しなくても十分面白い。<strong>分かっていることだけで評価すればいい。</strong></p>
+        <h3>7. では、どのくらい跳べばいいのか</h3>
+        <p>今回紹介した研究には、<strong>週3回・20〜30分を、6〜12週間続けたもの</strong>がある。ただし「週3回20分が最適」という意味ではない。</p>
+        <p>運動習慣がないなら、まずは<strong>5分</strong>。慣れたら10分、さらに余裕があれば15分と、身体の反応を見ながら増やしていく。</p>
+        <p>転倒が心配なら、手すり付きのモデルを使ったり、身体を支えられる環境で行う。膝、腰、足首に不安がある人や、運動について制限を受けている持病がある人は、始める前に医師などの専門家へ相談した方がいい。</p>
+        <p>今回紹介した研究は、高齢者、過体重の女性、2型糖尿病の人といった集団を対象にしたものが多い。健康な現役世代に同じ大きさの効果が出るかは、まだ分からない。</p>
+        <h3>「体力」とは何だろう</h3>
+        <p>以前、僕は「体力とは何なのか」を考えた。筋肉が大きいことでも、長距離を走れることでもない。</p>
+        <p>朝起きる。仕事をする。歩く。階段を上る。人と会う。遊ぶ。そして夜になったとき、<strong>まだ少し余力が残っている。</strong></p>
+        <p>僕にとっては、そんな身体が「体力のある身体」だ。</p>
+        <p><strong>心肺機能。筋力。バランス。身体を思い通りに動かす能力。そして代謝。</strong></p>
+        <p>いろいろな能力が少しずつ必要になる。そう考えたとき、トランポリンが急に面白く見えてきた。</p>
+        <h3>大人は、いつから跳ばなくなったのか</h3>
+        <p>筋力を最大化したいなら、筋トレをすればいい。持久力を伸ばしたいなら、ランニングもある。長く身体を動かしたいなら、ウォーキングも素晴らしい。</p>
+        <p>トランポリンが、それらより優れているという話ではない。ただ、<strong>「跳ぶ」という動きには、僕が思っていた以上にいろいろな身体能力が詰まっていた。</strong></p>
+        <p>子どもの頃は、ただ走って、登って、しゃがんで、そして跳んでいた。</p>
+        <p><strong>歩く。走る。しゃがむ。登る。跳ぶ。</strong></p>
+        <div class="ending">
+          <p>トランポリンについて調べていたはずなのに、最後に残ったのは、そんな当たり前のことだった。</p>
+          <p>「トランポリンが最強の運動だ」とは思わない。</p>
+          <p><strong>でも、たまには、跳んでもいい。</strong></p>
+          <p>大人になった僕たちが忘れていた動きを、身体に思い出させるように。</p>
+        </div>
+        <h3>参考文献</h3>
+        <p>Aragão FA, Karamanidis K, Vaz MA, Arampatzis A. <em>Mini-trampoline exercise related to mechanisms of dynamic stability improves the ability to regain balance in elderly.</em> Journal of Electromyography and Kinesiology. 2011;21(3):512–518.</p>
+        <p>Cugusi L, et al. <em>Effects of a mini-trampoline rebounding exercise program on functional parameters, body composition and quality of life in overweight women.</em> Journal of Sports Medicine and Physical Fitness. 2018;58(3):287–294.</p>
+        <p>Nuhu JM, Maharaj SS. <em>Influence of a mini-trampoline rebound exercise program on insulin resistance, lipid profile and central obesity in individuals with type 2 diabetes.</em> Journal of Sports Medicine and Physical Fitness. 2018;58(4):503–509.</p>
+        <p>Posch M, et al. <em>Effectiveness of a Mini-Trampoline Training Program on Balance and Functional Mobility, Gait Performance, Strength, Fear of Falling and Bone Mineral Density in Older Women with Osteopenia.</em> Clinical Interventions in Aging. 2019.</p>
+        <p>Kendall BJ, et al. <em>Six Weeks of Mini-Trampoline Training Improves Balance, Mobility, and Walking Capacity in Older Adults.</em> Journal of Aging and Physical Activity. 2026.</p>
+        <p><small>※本記事は運動・健康に関する研究を紹介するもので、医療上の診断や治療を目的とするものではありません。</small></p>
+      </article>
+      <article class="panel article" id="article-stamina">
+        <button class="article-back" id="stamina-back">← JOURNALへ戻る</button>
+        <div class="article-meta">2026.09.30　/　BODY</div>
+        <h2>筋トレを減らしたら、<br>なぜか「体力」がついた</h2>
+        <p class="lead">以前の僕は、週3回ジムで数時間、がっつり筋トレをしていた。</p>
+        <p>今は隔週くらいで登山に行き、週4回、15分程度の自重トレーニングをしている。どう考えても、昔の方が「鍛えていた」。扱う重量も大きかったし、トレーニング時間も長かった。</p>
+        <p>それなのに不思議なことに、<strong>日常生活で疲れにくいのは圧倒的に今だ。</strong></p>
+        <p>長く歩いても平気になった。外出した後にも余力がある。以前より「もう疲れたから動きたくない」と感じることが減った。</p>
+        <p>そこで疑問に思った。そもそも僕たちが言っている「体力」って何なんだろう。</p>
+        <h3>体力＝筋力ではない</h3>
+        <p>「体力をつけるために筋トレする」という言葉はよく聞く。もちろん間違いではない。筋力が上がれば、荷物を持ったり、階段を上ったりするのは楽になる。</p>
+        <p>でも、ベンチプレスが80kgから100kgになったからといって、一日中歩いても疲れなくなるとは限らない。逆に、毎日よく歩いている人が重いバーベルを持てるとも限らない。</p>
+        <p>どうやら「体力」という一つの言葉の中に、筋力、心肺能力、筋持久力、回復、睡眠、疲労、普段の活動量など、いろいろなものが混ざっている。</p>
+        <h3>もしかすると、体力とは「余力」なのかもしれない</h3>
+        <p>今のところ僕が一番しっくり来ているのは、<strong>体力＝余力</strong>という考え方だ。</p>
+        <p>どれだけ大きな力を出せるかではなく、<strong>普通に一日生活した後、どれだけエネルギーが残っているか。</strong></p>
+        <p>例えば同じ階段でも、身体能力の60％を使って上る人と、30％で上れる人では疲れ方が違う。同じ一万歩でも、それが身体にとって大仕事なのか、軽い活動なのかで意味が変わる。</p>
+        <p>そう考えると、体力がつくとは、<strong>日常生活そのものを「軽い運動」に変えていくこと</strong>なのかもしれない。</p>
+        <h3>だから今の方が疲れない？</h3>
+        <p>ここからはまだ僕自身の仮説だ。</p>
+        <p>昔は筋肉を大きくするために、かなり強い筋トレをしていた。身体能力は上がっていたと思う。でも同時に、筋肉痛になり、脚が重くなり、トレーニング後は休みたくなり、日常で動く量が減ることもあった。</p>
+        <p>今は逆だ。15分くらい身体を動かす。普段も歩く。たまに何時間も山を歩く。そして翌日の生活を潰すほど疲れない。</p>
+        <p>つまり以前は、<strong>「身体能力を大きくする運動」</strong>をしていた。今は、<strong>「生活を楽にする運動」</strong>に近づいているのかもしれない。</p>
+        <h3>筋肉をつけることと、元気になることは同じではない</h3>
+        <p>これは筋トレを否定したいわけではない。僕自身、筋肥大を狙ったトレーニングは好きだ。身体を大きくしたい。腹筋を割りたい。美しい身体を作りたい。それはそれで一つの目的だと思う。</p>
+        <p>ただ、<strong>「身体を美しくする」ことと「一日を疲れずに過ごせる身体を作る」こと</strong>は、一度分けて考えてもいいのではないか。目的が違えば、運動の設計も変わる。</p>
+        <h3>体力について、もう少し考えてみたい</h3>
+        <p>今のところ僕の仮説はこうだ。</p>
+        <p class="question">体力とは、限界の高さではなく、日常と限界の間にある余白なのではないか。</p>
+        <p>だとしたら、歩くこと、心肺能力、筋力、睡眠、疲労、回復、登山、食事。これらを全部「余力を作る」という視点から見直せる。</p>
+        <div class="ending">
+          <p>僕自身、まだ答えは出ていない。だから、これから一つずつ調べてみようと思う。</p>
+          <p><strong>どうすれば、一日を終えたときにまだ何かできる身体を作れるのか。</strong></p>
+          <p>その問いから、「体力」について考えていきたい。</p>
+        </div>
+      </article>
+      <div class="panel about" id="about">
+        <div><div class="kicker">ABOUT / MOUTON</div><div class="big">好奇心を、形に。</div><p class="copy">ムートンの個人的な制作と記録のための場所。興味を持ったことを試し、作り、その過程を残していきます。</p></div>
+        <div class="portrait" aria-hidden="true"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bottom"><div>2026<br><br>SOMEWHERE IN JAPAN</div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
+
+  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">NOW</button><button class="tab" data-tab="projects">PROJECTS</button><button class="tab" data-tab="journal">JOURNAL</button><button class="tab" data-tab="about">ABOUT</button></nav>
+</div>
+<script>
+const tabs=[...document.querySelectorAll('[data-tab]')];
+const panels=[...document.querySelectorAll('.panel')];
+function show(name){panels.forEach(p=>p.classList.toggle('active',p.id===name));tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===name));history.replaceState(null,'','#'+name)}
+tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.dataset.jump)}));
+function openArticle(id){panels.forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab==='journal'));history.replaceState(null,'','#'+id)}
+function bindArticle(entryId,articleId,backId){const e=document.getElementById(entryId);const open=()=>openArticle(articleId);e.addEventListener('click',open);e.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();open()}});document.getElementById(backId).addEventListener('click',()=>show('journal'))}
+bindArticle('nietzsche-entry','article-nietzsche','article-back');
+bindArticle('stamina-entry','article-stamina','stamina-back');
+bindArticle('trampoline-entry','article-trampoline','trampoline-back');
+const initial=location.hash.slice(1); if(['now','projects','journal','about'].includes(initial)) show(initial); else if(['article-nietzsche','article-stamina','article-trampoline'].includes(initial)) openArticle(initial);
+</script>
+</body>
+</html>
