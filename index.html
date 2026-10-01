@@ -25,11 +25,30 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 .kicker{font-size:9px;letter-spacing:.32em;text-transform:uppercase;opacity:.6}.big{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,50px);margin:14px 0 8px;letter-spacing:.08em}.copy{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;max-width:480px;color:#444740}.link{display:inline-flex;align-items:center;gap:16px;border:1px solid rgba(37,39,36,.35);border-radius:999px;padding:11px 20px;text-decoration:none;font-size:9px;letter-spacing:.25em;margin-top:22px;background:rgba(255,255,255,.18)}
 .now{grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}.art{height:230px;border-radius:7px;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 25%,rgba(255,225,187,.9),transparent 23%),radial-gradient(ellipse at 35% 62%,rgba(231,233,224,.78),transparent 38%),linear-gradient(165deg,#aebbb6 0%,#ddd3c3 47%,#687d74 100%)}.art:before{content:"";position:absolute;width:68%;aspect-ratio:1;border-radius:50%;background:rgba(246,231,194,.68);filter:blur(2px);right:-17%;top:-30%}.art:after{content:"";position:absolute;left:-5%;right:-5%;bottom:-25%;height:68%;background:linear-gradient(160deg,rgba(43,57,50,.75),rgba(95,110,100,.42));clip-path:polygon(0 72%,22% 42%,42% 63%,65% 24%,100% 58%,100% 100%,0 100%)}
 .projects{grid-template-columns:repeat(3,1fr);gap:16px;align-content:center}.card{min-height:220px;padding:24px;border:1px solid rgba(37,39,36,.13);border-radius:8px;background:rgba(255,255,255,.17);display:flex;flex-direction:column;justify-content:flex-end;transition:.35s ease}.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.3)}.card span{font-size:8px;letter-spacing:.25em;opacity:.55}.card h3{font-family:"Noto Serif JP",serif;font-weight:300;font-size:24px;margin:10px 0}.card p{font-size:11px;line-height:1.8;opacity:.7;margin:0}.card.placeholder{border-style:dashed;opacity:.58}
-.journal{align-content:center}.entry-link{text-decoration:none;color:inherit}.entry{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.entry:first-of-type{border-top:1px solid var(--line);margin-top:20px}.date{font-size:9px;letter-spacing:.18em;opacity:.55}.entry-title{font-family:"Noto Serif JP",serif;font-size:16px}.arrow{opacity:.55}.entry.clickable{cursor:pointer}.entry.clickable:hover .entry-title{opacity:.62}.article{display:none!important;background:rgba(244,241,233,.74);overflow:auto;max-height:min(66vh,660px);padding:clamp(30px,5vw,68px) clamp(28px,7vw,88px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:14px;line-height:2.25;margin:0 0 24px;max-width:680px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
+.journal{grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:start;align-content:center;min-height:390px}
+.journal-intro{padding-top:2px}
+.journal-no{font-family:"Noto Serif JP",serif;font-size:13px;letter-spacing:.22em;opacity:.72;margin-bottom:10px}
+.journal-heading{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,3.3vw,40px);letter-spacing:.10em;margin:0 0 10px}
+.journal-sub{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.08em;margin:0 0 22px}
+.journal-copy{font-family:"Noto Serif JP",serif;font-size:11px;line-height:2;color:#4e514c;margin:0;max-width:180px}
+.journal-list{border-top:1px solid var(--line)}
+.journal-link{text-decoration:none;color:inherit}
+.journal-item{display:grid;grid-template-columns:86px 12px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);min-height:70px;transition:.28s ease}
+.journal-date{font-size:8px;letter-spacing:.14em;opacity:.5;white-space:nowrap}
+.journal-dot{width:6px;height:6px;border-radius:50%;background:rgba(37,39,36,.38);justify-self:center}
+.journal-body{min-width:0}
+.journal-title{font-family:"Noto Serif JP",serif;font-size:14px;line-height:1.55;transition:.28s ease}
+.journal-excerpt{font-family:"Noto Serif JP",serif;font-size:9px;line-height:1.7;opacity:.56;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.journal-arrow{font-size:13px;opacity:.48;transition:.28s ease}
+.journal-item.clickable{cursor:pointer}
+.journal-item.clickable:hover{padding-left:4px}
+.journal-item.clickable:hover .journal-title{opacity:.66}
+.journal-item.clickable:hover .journal-arrow{transform:translateX(3px);opacity:.9}
+.journal-item.is-note{opacity:.68}.article{display:none!important;background:rgba(244,241,233,.74);overflow:auto;max-height:min(66vh,660px);padding:clamp(30px,5vw,68px) clamp(28px,7vw,88px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:14px;line-height:2.25;margin:0 0 24px;max-width:680px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
 .about{grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.portrait{height:235px;border-radius:7px;background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(95,111,99,.34)),linear-gradient(25deg,#8b9a91,#e7d9bd);position:relative;overflow:hidden}.portrait:after{content:"";position:absolute;width:1px;height:150%;background:rgba(255,255,255,.5);left:55%;top:-25%;transform:rotate(30deg)}
 .bottom{width:min(1120px,90vw);margin:20px auto 0;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;letter-spacing:.25em;position:relative;z-index:3;padding-bottom:24px}.quote{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.15em;text-align:right}.quote small{font-family:Inter,sans-serif;display:block;font-size:7px;letter-spacing:.28em;margin-top:8px;opacity:.55;text-transform:uppercase}
 .mobile-tabs{display:none}
-@media(max-width:760px){header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.entry{grid-template-columns:72px 1fr auto;gap:10px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
+@media(max-width:760px){header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.journal{grid-template-columns:1fr;gap:26px;align-content:start}.journal-copy{max-width:100%}.journal-list{margin-top:0}.journal-item{grid-template-columns:72px 10px minmax(0,1fr) 18px;gap:8px;padding:13px 0}.journal-excerpt{white-space:normal}.journal-heading{font-size:28px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -62,14 +81,49 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
         <article class="card placeholder"><span>NEXT</span><h3>...</h3><p>まだ名前のないもの。</p></article>
       </div>
       <div class="panel journal" id="journal">
-        <div class="kicker">JOURNAL / fragments</div>
-        <a class="entry clickable entry-link" href="blood-glucose.html"><div class="date">2026.10.01</div><div class="entry-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="arrow">→</div></a>
-        <div class="entry clickable" id="trampoline-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">大人は、いつから跳ばなくなったのか。</div><div class="arrow">→</div></div>
-        <div class="entry clickable" id="stamina-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="arrow">→</div></div>
-        <div class="entry clickable" id="nietzsche-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="arrow">→</div></div>
-        <div class="entry"><div class="date">2026.09.30</div><div class="entry-title">自分のWebサイトを作り始めた。</div><div class="arrow">→</div></div>
-        <div class="entry"><div class="date">2026.09.29</div><div class="entry-title">作ること、残すことについて。</div><div class="arrow">→</div></div>
-        <div class="entry"><div class="date">2026.09.28</div><div class="entry-title">小さな一歩を記録する。</div><div class="arrow">→</div></div>
+        <div class="journal-intro">
+          <div class="journal-no">03</div>
+          <h2 class="journal-heading">JOURNAL</h2>
+          <div class="journal-sub">書き留める。</div>
+          <p class="journal-copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
+        </div>
+        <div class="journal-list">
+          <a class="journal-item clickable journal-link" href="blood-glucose.html">
+            <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div></div>
+            <div class="journal-arrow">→</div>
+          </a>
+          <div class="journal-item clickable" id="trampoline-entry" tabindex="0">
+            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div></div>
+            <div class="journal-arrow">→</div>
+          </div>
+          <div class="journal-item clickable" id="stamina-entry" tabindex="0">
+            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div></div>
+            <div class="journal-arrow">→</div>
+          </div>
+          <div class="journal-item clickable" id="nietzsche-entry" tabindex="0">
+            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div></div>
+            <div class="journal-arrow">→</div>
+          </div>
+          <div class="journal-item is-note">
+            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">自分のWebサイトを作り始めた。</div><div class="journal-excerpt">自分の基地のような場所を、ようやく形にし始めた。</div></div>
+            <div class="journal-arrow">—</div>
+          </div>
+          <div class="journal-item is-note">
+            <div class="journal-date">2026.09.29</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">作ること、残すことについて。</div><div class="journal-excerpt">完成だけではなく、途中の思考にも価値がある。</div></div>
+            <div class="journal-arrow">—</div>
+          </div>
+          <div class="journal-item is-note">
+            <div class="journal-date">2026.09.28</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">小さな一歩を記録する。</div><div class="journal-excerpt">あとから振り返ったとき、始まりが見えるように。</div></div>
+            <div class="journal-arrow">—</div>
+          </div>
+        </div>
       </div>
       <article class="panel article" id="article-nietzsche">
         <button class="article-back" id="article-back">← JOURNALへ戻る</button>
