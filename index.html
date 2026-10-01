@@ -31,7 +31,7 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 .journal-heading{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,3.3vw,40px);letter-spacing:.10em;margin:0 0 10px}
 .journal-sub{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.08em;margin:0 0 22px}
 .journal-copy{font-family:"Noto Serif JP",serif;font-size:11px;line-height:2;color:#4e514c;margin:0;max-width:180px}
-.journal-list{border-top:1px solid var(--line)}
+.journal-filters{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 18px}.journal-filter{border:0;background:none;padding:4px 0;font-size:8px;letter-spacing:.18em;opacity:.45;position:relative}.journal-filter.active{opacity:1}.journal-filter.active:after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:var(--ink)}.journal-list{border-top:1px solid var(--line)}.journal-item.is-hidden{display:none}
 .journal-link{text-decoration:none;color:inherit}
 .journal-item{display:grid;grid-template-columns:86px 12px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);min-height:70px;transition:.28s ease}
 .journal-date{font-size:8px;letter-spacing:.14em;opacity:.5;white-space:nowrap}
@@ -48,7 +48,7 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 .about{grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.portrait{height:235px;border-radius:7px;background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(95,111,99,.34)),linear-gradient(25deg,#8b9a91,#e7d9bd);position:relative;overflow:hidden}.portrait:after{content:"";position:absolute;width:1px;height:150%;background:rgba(255,255,255,.5);left:55%;top:-25%;transform:rotate(30deg)}
 .bottom{width:min(1120px,90vw);margin:20px auto 0;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;letter-spacing:.25em;position:relative;z-index:3;padding-bottom:24px}.quote{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.15em;text-align:right}.quote small{font-family:Inter,sans-serif;display:block;font-size:7px;letter-spacing:.28em;margin-top:8px;opacity:.55;text-transform:uppercase}
 .mobile-tabs{display:none}
-@media(max-width:760px){.window.article-mode{width:100%}.article{max-height:76vh;padding:28px 22px}.article p{font-size:14px;line-height:2.05}header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.journal{grid-template-columns:1fr;gap:26px;align-content:start}.journal-copy{max-width:100%}.journal-list{margin-top:0}.journal-item{grid-template-columns:72px 10px minmax(0,1fr) 18px;gap:8px;padding:13px 0}.journal-excerpt{white-space:normal}.journal-heading{font-size:28px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
+@media(max-width:760px){.window.article-mode{width:100%}.article{max-height:76vh;padding:28px 22px}.article p{font-size:14px;line-height:2.05}header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.journal{grid-template-columns:1fr;gap:26px;align-content:start}.journal-filters{gap:14px;margin-top:18px}.journal-copy{max-width:100%}.journal-list{margin-top:0}.journal-item{grid-template-columns:72px 10px minmax(0,1fr) 18px;gap:8px;padding:13px 0}.journal-excerpt{white-space:normal}.journal-heading{font-size:28px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -86,39 +86,45 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
           <h2 class="journal-heading">JOURNAL</h2>
           <div class="journal-sub">書き留める。</div>
           <p class="journal-copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
+          <div class="journal-filters" aria-label="JOURNALカテゴリー">
+            <button class="journal-filter active" data-journal-filter="all">ALL</button>
+            <button class="journal-filter" data-journal-filter="body">BODY</button>
+            <button class="journal-filter" data-journal-filter="philosophy">PHILOSOPHY</button>
+            <button class="journal-filter" data-journal-filter="making">MAKING</button>
+          </div>
         </div>
         <div class="journal-list">
-          <a class="journal-item clickable journal-link" href="blood-glucose.html">
+          <a class="journal-item clickable journal-link" href="blood-glucose.html" data-category="body">
             <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div></div>
             <div class="journal-arrow">→</div>
           </a>
-          <div class="journal-item clickable" id="trampoline-entry" tabindex="0">
+          <div class="journal-item clickable" id="trampoline-entry" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div></div>
             <div class="journal-arrow">→</div>
           </div>
-          <div class="journal-item clickable" id="stamina-entry" tabindex="0">
+          <div class="journal-item clickable" id="stamina-entry" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div></div>
             <div class="journal-arrow">→</div>
           </div>
-          <div class="journal-item clickable" id="nietzsche-entry" tabindex="0">
+          <div class="journal-item clickable" id="nietzsche-entry" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div></div>
             <div class="journal-arrow">→</div>
           </div>
-          <div class="journal-item is-note">
+          <div class="journal-item is-note" data-category="making">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">自分のWebサイトを作り始めた。</div><div class="journal-excerpt">自分の基地のような場所を、ようやく形にし始めた。</div></div>
             <div class="journal-arrow">—</div>
           </div>
-          <div class="journal-item is-note">
+          <div class="journal-item is-note" data-category="making">
             <div class="journal-date">2026.09.29</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">作ること、残すことについて。</div><div class="journal-excerpt">完成だけではなく、途中の思考にも価値がある。</div></div>
             <div class="journal-arrow">—</div>
           </div>
-          <div class="journal-item is-note">
+          <div class="journal-item is-note" data-category="making">
             <div class="journal-date">2026.09.28</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">小さな一歩を記録する。</div><div class="journal-excerpt">あとから振り返ったとき、始まりが見えるように。</div></div>
             <div class="journal-arrow">—</div>
@@ -291,6 +297,15 @@ function bindArticle(entryId,articleId,backId){const e=document.getElementById(e
 bindArticle('nietzsche-entry','article-nietzsche','article-back');
 bindArticle('stamina-entry','article-stamina','stamina-back');
 bindArticle('trampoline-entry','article-trampoline','trampoline-back');
+document.querySelectorAll('[data-journal-filter]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const filter=btn.dataset.journalFilter;
+    document.querySelectorAll('[data-journal-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+    document.querySelectorAll('#journal .journal-item').forEach(item=>{
+      item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter);
+    });
+  });
+});
 const initial=location.hash.slice(1); if(['now','projects','journal','about'].includes(initial)) show(initial); else if(['article-nietzsche','article-stamina','article-trampoline'].includes(initial)) openArticle(initial);
 </script>
 </body>
