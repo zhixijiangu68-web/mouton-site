@@ -10,21 +10,9 @@
 *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:#e9e4d8;color:var(--ink)}
 body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;overflow-x:hidden}
 button,a{font:inherit;color:inherit} button{cursor:pointer}
-.scene{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;background:#d7d3c8}
-.scene:before{content:"";position:absolute;inset:-6%;z-index:-4;background:
-radial-gradient(ellipse at 86% 28%,rgba(255,222,177,.95) 0 8%,rgba(242,194,145,.45) 18%,transparent 36%),
-radial-gradient(ellipse at 48% 55%,rgba(242,239,226,.92) 0 14%,transparent 39%),
-radial-gradient(ellipse at 12% 52%,rgba(93,111,108,.88) 0 14%,rgba(128,143,139,.52) 25%,transparent 44%),
-linear-gradient(175deg,#c9d1d0 0%,#e6ded0 27%,#e7c9a9 48%,#a7b3ae 65%,#536861 100%);
-animation:breathe 28s ease-in-out infinite alternate;transform:scale(1.05)}
-.scene:after{content:"";position:absolute;inset:0;z-index:-3;background:
-radial-gradient(ellipse at 8% 83%,rgba(21,36,31,.86) 0 12%,transparent 31%),
-radial-gradient(ellipse at 25% 92%,rgba(37,55,48,.76) 0 15%,transparent 34%),
-radial-gradient(ellipse at 68% 92%,rgba(69,91,82,.52) 0 20%,transparent 43%),
-radial-gradient(ellipse at 101% 76%,rgba(51,70,63,.62) 0 19%,transparent 40%),
-linear-gradient(180deg,transparent 0 43%,rgba(239,237,225,.36) 50%,rgba(84,105,96,.42) 72%,rgba(28,44,38,.42) 100%);
-filter:blur(.15px);opacity:.92}
-@keyframes breathe{to{transform:scale(1.085) translate3d(-.6%,.35%,0)}}}
+.scene{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;background:#c9c3b7 url('mouton-bg.jpg') center center/cover fixed no-repeat}
+.scene:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(244,240,230,.08) 0%,rgba(235,226,210,.02) 45%,rgba(25,32,29,.13) 100%);pointer-events:none}
+.scene:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 42%,transparent 28%,rgba(28,34,31,.12) 100%);pointer-events:none}}}
 .grain{pointer-events:none;position:absolute;inset:0;z-index:8;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");opacity:.22}
 .arc{position:absolute;width:72vw;height:72vw;border:1px solid rgba(255,255,255,.42);border-radius:50%;left:-24vw;top:34vh;pointer-events:none;border-color:rgba(255,255,255,.48)}
 .arc.two{left:57vw;top:12vh;width:50vw;height:50vw;opacity:.55}
@@ -249,3 +237,9 @@ const initial=location.hash.slice(1); if(['now','projects','journal','about'].in
 </script>
 </body>
 </html>
+
+<style>
+@media(max-width:760px){
+ .scene{background-attachment:scroll;background-position:58% center}
+}
+</style>
