@@ -25,28 +25,7 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 .kicker{font-size:9px;letter-spacing:.32em;text-transform:uppercase;opacity:.6}.big{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,50px);margin:14px 0 8px;letter-spacing:.08em}.copy{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;max-width:480px;color:#444740}.link{display:inline-flex;align-items:center;gap:16px;border:1px solid rgba(37,39,36,.35);border-radius:999px;padding:11px 20px;text-decoration:none;font-size:9px;letter-spacing:.25em;margin-top:22px;background:rgba(255,255,255,.18)}
 .now{grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}.art{height:230px;border-radius:7px;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 25%,rgba(255,225,187,.9),transparent 23%),radial-gradient(ellipse at 35% 62%,rgba(231,233,224,.78),transparent 38%),linear-gradient(165deg,#aebbb6 0%,#ddd3c3 47%,#687d74 100%)}.art:before{content:"";position:absolute;width:68%;aspect-ratio:1;border-radius:50%;background:rgba(246,231,194,.68);filter:blur(2px);right:-17%;top:-30%}.art:after{content:"";position:absolute;left:-5%;right:-5%;bottom:-25%;height:68%;background:linear-gradient(160deg,rgba(43,57,50,.75),rgba(95,110,100,.42));clip-path:polygon(0 72%,22% 42%,42% 63%,65% 24%,100% 58%,100% 100%,0 100%)}
 .projects{grid-template-columns:repeat(3,1fr);gap:16px;align-content:center}.card{min-height:220px;padding:24px;border:1px solid rgba(37,39,36,.13);border-radius:8px;background:rgba(255,255,255,.17);display:flex;flex-direction:column;justify-content:flex-end;transition:.35s ease}.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.3)}.card span{font-size:8px;letter-spacing:.25em;opacity:.55}.card h3{font-family:"Noto Serif JP",serif;font-weight:300;font-size:24px;margin:10px 0}.card p{font-size:11px;line-height:1.8;opacity:.7;margin:0}.card.placeholder{border-style:dashed;opacity:.58}
-.journal{align-content:center}.entry{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.entry:first-of-type{border-top:1px solid var(--line);margin-top:20px}.date{font-size:9px;letter-spacing:.18em;opacity:.55}.entry-title{font-family:"Noto Serif JP",serif;font-size:16px}.arrow{opacity:.55}.entry.clickable{cursor:pointer}.entry.clickable:hover .entry-title{opacity:.62}.article{display:none!important;background:rgba(244,241,233,.74);overflow:auto;max-height:min(66vh,660px);padding:clamp(30px,5vw,68px) clamp(28px,7vw,88px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:14px;line-height:2.25;margin:0 0 24px;max-width:680px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
-
-.article .evidence-figure{max-width:680px;margin:42px 0;padding:22px;border:1px solid rgba(37,39,36,.14);border-radius:10px;background:rgba(255,255,255,.22)}
-.article .figure-title{font-family:"Noto Serif JP",serif;font-size:15px;line-height:1.7;margin-bottom:18px}
-.article .figure-note{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;font-size:9px;line-height:1.8;letter-spacing:.03em;opacity:.62;margin-top:16px}
-.flow-row{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap}
-.flow-box{flex:1 1 120px;min-height:74px;border:1px solid rgba(37,39,36,.18);border-radius:8px;padding:12px;display:flex;align-items:center;justify-content:center;text-align:center;font-family:"Noto Serif JP",serif;font-size:12px;line-height:1.7;background:rgba(247,244,236,.34)}
-.flow-arrow{display:flex;align-items:center;justify-content:center;font-size:16px;opacity:.5}
-.study-bars{display:grid;gap:14px}
-.bar-row{display:grid;grid-template-columns:150px 1fr 52px;gap:10px;align-items:center}
-.bar-label{font-family:"Noto Serif JP",serif;font-size:11px;line-height:1.5}
-.bar-track{height:12px;background:rgba(37,39,36,.09);border-radius:999px;overflow:hidden}
-.bar-fill{height:100%;background:rgba(37,39,36,.62);border-radius:999px}
-.bar-value{font-size:11px;letter-spacing:.08em;text-align:right}
-.article .source-link{color:inherit;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25)}
-.article .source-link:hover{border-bottom-color:rgba(37,39,36,.7)}
-.article .metric-grid{max-width:680px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:28px 0}
-.metric-card{padding:16px;border:1px solid rgba(37,39,36,.14);border-radius:8px;background:rgba(255,255,255,.18)}
-.metric-card b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin-bottom:5px}
-.metric-card span{font-size:9px;line-height:1.6;opacity:.62}
-@media(max-width:760px){.bar-row{grid-template-columns:100px 1fr 44px}.metric-grid{grid-template-columns:1fr}.flow-arrow{display:none}}
-
+.journal{align-content:center}.entry-link{text-decoration:none;color:inherit}.entry{display:grid;grid-template-columns:110px 1fr auto;gap:20px;align-items:center;padding:17px 0;border-bottom:1px solid var(--line)}.entry:first-of-type{border-top:1px solid var(--line);margin-top:20px}.date{font-size:9px;letter-spacing:.18em;opacity:.55}.entry-title{font-family:"Noto Serif JP",serif;font-size:16px}.arrow{opacity:.55}.entry.clickable{cursor:pointer}.entry.clickable:hover .entry-title{opacity:.62}.article{display:none!important;background:rgba(244,241,233,.74);overflow:auto;max-height:min(66vh,660px);padding:clamp(30px,5vw,68px) clamp(28px,7vw,88px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:14px;line-height:2.25;margin:0 0 24px;max-width:680px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
 .about{grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.portrait{height:235px;border-radius:7px;background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(95,111,99,.34)),linear-gradient(25deg,#8b9a91,#e7d9bd);position:relative;overflow:hidden}.portrait:after{content:"";position:absolute;width:1px;height:150%;background:rgba(255,255,255,.5);left:55%;top:-25%;transform:rotate(30deg)}
 .bottom{width:min(1120px,90vw);margin:20px auto 0;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;letter-spacing:.25em;position:relative;z-index:3;padding-bottom:24px}.quote{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.15em;text-align:right}.quote small{font-family:Inter,sans-serif;display:block;font-size:7px;letter-spacing:.28em;margin-top:8px;opacity:.55;text-transform:uppercase}
 .mobile-tabs{display:none}
@@ -84,7 +63,7 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
       </div>
       <div class="panel journal" id="journal">
         <div class="kicker">JOURNAL / fragments</div>
-        <div class="entry clickable" id="blood-glucose-entry" tabindex="0"><div class="date">2026.10.01</div><div class="entry-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="arrow">→</div></div>
+        <a class="entry clickable entry-link" href="blood-glucose.html"><div class="date">2026.10.01</div><div class="entry-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="arrow">→</div></a>
         <div class="entry clickable" id="trampoline-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">大人は、いつから跳ばなくなったのか。</div><div class="arrow">→</div></div>
         <div class="entry clickable" id="stamina-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="arrow">→</div></div>
         <div class="entry clickable" id="nietzsche-entry" tabindex="0"><div class="date">2026.09.30</div><div class="entry-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="arrow">→</div></div>
@@ -125,124 +104,6 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
           <p>このページを閉じたあと、ほんの少しだけ考えてみてほしい。</p>
           <p><strong>君は、生きる意味が分からないのに、なぜ今日も生きているのだろう。</strong></p>
         </div>
-      </article>
-      <article class="panel article" id="article-blood-glucose">
-        <button class="article-back" id="blood-glucose-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.10.01　/　BODY</div>
-        <h2>血糖値は、なぜこれほど<br>健康に重要なのか</h2>
-        <p class="lead">健康診断で目にする「血糖値」。多くの人にとっては、「糖尿病になっていなければ大丈夫」くらいの数字かもしれない。</p>
-        <p>しかし、血糖について調べていくと、この数字は想像以上に身体の多くの部分とつながっていることがわかる。</p>
-        <p><strong>目。腎臓。神経。心臓。脳。そして、それらをつないでいる血管。</strong></p>
-        <p>血糖値は、身体がエネルギーをどう扱い、血管をどんな環境に置いているかを示す重要な指標の一つだ。</p>
-
-        <h3>そもそも血糖値とは何か</h3>
-        <p>ご飯やパン、麺類、果物などに含まれる炭水化物の多くは、消化されてブドウ糖になる。ブドウ糖は血液に入り、全身へ運ばれる。この血液中のブドウ糖の濃度が「血糖値」だ。</p>
-        <p>ブドウ糖そのものは悪者ではない。人間が生きていくための重要なエネルギー源だ。</p>
-        <p>問題は、<strong>必要以上に高い状態が長く続くこと</strong>にある。</p>
-
-        <h3>鍵は「血管」</h3>
-        <p>なぜ血糖値が目や腎臓、神経、心臓まで関係するのか。その答えの一つが血管だ。</p>
-        <p>血管は全身に張り巡らされている。心臓や脳のような大きな臓器だけでなく、目にも、腎臓にも、神経の周囲にも、非常に細い血管がある。酸素や栄養を届ける物流網のようなものだ。</p>
-        <p>慢性的な高血糖は、この血管や神経にダメージを与えることが知られている。米国NIDDKも、高血糖が長期間続くと血管が傷つき、心疾患につながりうると説明している。</p>
-
-        <div class="evidence-figure" role="img" aria-label="慢性的な高血糖から血管や神経への負担を経て全身の臓器へ影響する流れ">
-          <div class="figure-title">血糖の問題が、なぜ全身につながるのか</div>
-          <div class="flow-row">
-            <div class="flow-box">血糖が<br>慢性的に高い</div><div class="flow-arrow">→</div>
-            <div class="flow-box">血管・神経への<br>負担が増える</div><div class="flow-arrow">→</div>
-            <div class="flow-box">目・腎臓・神経・<br>心臓などへ影響</div>
-          </div>
-          <div class="figure-note">単発の食後血糖上昇ではなく、「慢性的に高い状態」を示した概念図。</div>
-        </div>
-
-        <p class="question"><strong>血糖 → 血管・神経 → 全身</strong></p>
-        <p>このつながりが、血糖値を単なる検査値以上のものにしている。</p>
-
-        <h3>とくに影響を受けやすい「細い血管」</h3>
-        <p>糖尿病の代表的な合併症は、<strong>網膜症・腎症・神経障害</strong>だ。</p>
-        <p>一見すると別々の病気だが、目の網膜や腎臓には微小血管が密集している。神経障害にも、神経そのものの代謝異常だけでなく、神経を養う小血管の障害など複数の要因が関係する。</p>
-        <p>血糖の問題が「糖尿病という一つの病気」で終わらず、全身へ広がっていくのはこのためだ。</p>
-
-        <h3>血糖を改善すると、何が変わるのか</h3>
-        <p>血糖値と合併症の関係は、理論だけの話ではない。大規模な臨床研究が、その裏付けを示している。</p>
-        <p>2型糖尿病患者を追跡した<strong>UKPDS 35</strong>では、更新平均HbA1cが1ポイント低いことが、糖尿病関連のあらゆるエンドポイント約21％、細小血管合併症約37％、心筋梗塞約14％の低いリスクと関連していた。</p>
-
-        <div class="evidence-figure" role="img" aria-label="UKPDS35でHbA1cが1ポイント低いことと関連したリスク低下率">
-          <div class="figure-title">UKPDS 35：平均HbA1cが1ポイント低いことと関連したリスク低下</div>
-          <div class="study-bars">
-            <div class="bar-row"><div class="bar-label">糖尿病関連<br>全エンドポイント</div><div class="bar-track"><div class="bar-fill" style="width:52.5%"></div></div><div class="bar-value">21%</div></div>
-            <div class="bar-row"><div class="bar-label">細小血管<br>合併症</div><div class="bar-track"><div class="bar-fill" style="width:92.5%"></div></div><div class="bar-value">37%</div></div>
-            <div class="bar-row"><div class="bar-label">心筋梗塞</div><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div><div class="bar-value">14%</div></div>
-          </div>
-          <div class="figure-note">2型糖尿病患者を対象とした観察解析。これは「HbA1cを1％下げれば必ず同じ割合だけリスクが下がる」という意味ではない。</div>
-        </div>
-
-        <p>さらに1型糖尿病を対象にした<strong>DCCT</strong>では、強化療法群で、従来療法群と比較して網膜症の発症が約76％低下し、微量アルブミン尿は約39％、臨床的神経障害は約60％低下した。</p>
-        <p>どちらも糖尿病患者を対象とした研究だ。健康な人にそのまま同じ数字を当てはめることはできない。それでも、<strong>長期的な血糖状態と血管・臓器の健康が強く結びついている</strong>ことを示す重要なデータだ。</p>
-
-        <h3>糖尿病と診断される前から、すでに連続している</h3>
-        <p>血糖と血管の関係は、「糖尿病になった日」から突然始まるわけではない。</p>
-        <p>血糖値は、正常から糖尿病まで連続的に変化する。診断基準は、その連続線上に医学的な判断のための線を引いたものだ。</p>
-        <p><strong>DECODE研究</strong>では、75g経口ブドウ糖負荷試験（OGTT）の2時間値が、空腹時血糖とは別の予後情報を持つことが示された。空腹時の数値だけでは捉えきれない糖代謝異常がある、ということだ。</p>
-        <p>ただし、「少し血糖が上がったら危険」という意味ではない。大切なのは、一回一回の小さな変動を恐れることではなく、<strong>長期的に身体が血糖を適切に処理できているか</strong>を見ることだ。</p>
-
-        <h3>健診の数字をどう読むか：HbA1c</h3>
-        <p>血糖値は常に変動する。食べれば上がり、運動や睡眠、ストレスでも変わる。一回の測定だけでは長期的な状態はわからない。</p>
-        <p>そこで使われるのが<strong>HbA1c（ヘモグロビンA1c）</strong>だ。直前の食事ではなく、過去1〜2か月を中心とする数か月間の血糖状態を反映する。</p>
-
-        <div class="metric-grid" aria-label="日本糖尿病学会の糖尿病型判定に使われる代表的な数値">
-          <div class="metric-card"><b>126 mg/dL以上</b><span>空腹時血糖：糖尿病型を示す基準の一つ</span></div>
-          <div class="metric-card"><b>HbA1c 6.5%以上</b><span>糖尿病診断に使われる重要な基準の一つ</span></div>
-        </div>
-
-        <p>日本糖尿病学会では、空腹時血糖126mg/dL以上などが「糖尿病型」の基準になる。正常型は空腹時血糖110mg/dL未満かつOGTT2時間値140mg/dL未満で、境界型は糖尿病型にも正常型にも当てはまらない領域とされる。</p>
-        <p>1回の測定だけで自己診断するものではない。検査値や症状などを合わせて医療機関で判断する。</p>
-
-        <h3>「血糖を上げない」ことが目的ではない</h3>
-        <p>ここで大きな誤解を避けたい。</p>
-        <p>食後に血糖値が上がること自体は異常ではない。食事をすれば血糖は上がり、インスリンが分泌され、筋肉などがブドウ糖を取り込み、再び適切な範囲へ戻っていく。これが正常な代謝だ。</p>
-        <p>だから、血糖値を一切上げないことを目標にする必要はない。</p>
-        <p><strong>重要なのは、上がった血糖を適切に処理できる身体を維持することだ。</strong></p>
-
-        <h3>筋肉は、ブドウ糖の巨大な消費場所</h3>
-        <p>その処理能力に深く関わるのが、運動と筋肉だ。</p>
-        <p>筋肉はブドウ糖を大量に使う組織でもある。歩く、スクワットをする、自転車に乗る。筋肉を動かすとブドウ糖がエネルギーとして使われ、継続的な運動はインスリン感受性の改善にもつながる。</p>
-        <p class="question"><strong>運動する → 筋肉がブドウ糖を利用する → 血糖管理を助ける</strong></p>
-
-        <h3>食後10分歩く、という小さな行動</h3>
-        <p>2型糖尿病の成人41人を対象にしたランダム化クロスオーバー試験では、1日30分まとめて歩く場合と、朝・昼・夕食後にそれぞれ10分歩く場合が比較された。</p>
-        <p>食後10分ずつ歩いた期間では、食後3時間の血糖上昇を表す指標が、1日30分まとめて歩いた期間より低かった。</p>
-        <p>また、健康な若年成人12人を対象にした2025年の小規模試験でも、75gブドウ糖摂取直後に10分歩いた条件では、安静時より血糖ピークが<strong>181.9 → 164.3mg/dL</strong>と低くなった。</p>
-        <p>小規模・短期の研究なので、誰にでも同じ変化が起きるとは限らない。それでも、<strong>食後に少し身体を動かす</strong>という小さな行動が血糖に影響しうることは興味深い。</p>
-
-        <h3>血糖値は「未来の健康」のための数字</h3>
-        <p>血糖について考える最大の理由は、今日の数値を数mg/dL下げることではない。10年、20年、30年という時間で身体を見ることにある。</p>
-        <p>高血糖による合併症は、多くの場合、一日で突然起こるわけではない。長い時間をかけて進行する。</p>
-        <p>だから、症状が出てから考えるのではなく、症状がない段階から自分の代謝を知っておく価値がある。</p>
-
-        <h3>血糖値は健康のすべてではない。でも、無視できない</h3>
-        <p>血管の健康を決めるのは血糖だけではない。血圧、LDLコレステロール、中性脂肪、喫煙、肥満、運動不足、睡眠、遺伝。多くの要因が関係する。</p>
-        <p>「血糖値さえ低ければ健康」ではない。</p>
-        <p>それでも血糖値が重要なのは、<strong>食事、運動、筋肉、インスリン、血管、そして全身の臓器を結ぶ場所にある数字</strong>だからだ。</p>
-
-        <div class="ending">
-          <p>最初の一歩は難しくない。</p>
-          <p>次の健康診断で、<strong>空腹時血糖とHbA1cの数値を自分の目で確認する。</strong></p>
-          <p>そして日常では、食後に少し歩く。筋肉を使う。座り続ける時間を減らす。</p>
-          <p><strong>自分の身体は、毎日入ってくるエネルギーをうまく処理できているだろうか。</strong></p>
-          <p>その答えを知る手がかりが、血糖値だ。</p>
-        </div>
-
-        <h3>参考文献・資料</h3>
-        <p>Stratton IM, et al. <a class="source-link" href="https://www.bmj.com/content/321/7258/405" target="_blank" rel="noopener">Association of glycaemia with macrovascular and microvascular complications of type 2 diabetes: UKPDS 35.</a> BMJ. 2000.</p>
-        <p>The Diabetes Control and Complications Trial Research Group. <a class="source-link" href="https://www.nejm.org/doi/10.1056/NEJM199309303291401" target="_blank" rel="noopener">The effect of intensive treatment of diabetes on the development and progression of long-term complications in insulin-dependent diabetes mellitus.</a> N Engl J Med. 1993.</p>
-        <p>DECODE Study Group. <a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/10466661/" target="_blank" rel="noopener">Glucose tolerance and mortality: comparison of WHO and American Diabetes Association diagnostic criteria.</a> Lancet. 1999.</p>
-        <p>日本糖尿病学会. <a class="source-link" href="https://www.jds.or.jp/modules/study/index.php?content_id=10" target="_blank" rel="noopener">糖尿病診断基準.</a></p>
-        <p>Reynolds AN, et al. <a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/27747394/" target="_blank" rel="noopener">Advice to walk after meals is more effective for lowering postprandial glycaemia in type 2 diabetes mellitus than advice that does not specify timing.</a> Diabetologia. 2016.</p>
-        <p><a class="source-link" href="https://pubmed.ncbi.nlm.nih.gov/40594496/" target="_blank" rel="noopener">Positive impact of a 10-min walk immediately after glucose intake on postprandial glucose levels.</a> 2025.</p>
-        <p>NIDDK. <a class="source-link" href="https://www.niddk.nih.gov/health-information/diabetes/overview/preventing-problems/heart-disease-stroke" target="_blank" rel="noopener">Diabetes, Heart Disease, & Stroke.</a></p>
-        <p>CDC. <a class="source-link" href="https://www.cdc.gov/diabetes/communication-resources/how-diabetes-can-affect-your-body.html" target="_blank" rel="noopener">How Diabetes Can Affect Your Body.</a></p>
-        <p><small>※本記事は健康・医学研究を一般向けに紹介するもので、個別の診断や治療を目的とするものではありません。</small></p>
       </article>
       <article class="panel article" id="article-trampoline">
         <button class="article-back" id="trampoline-back">← JOURNALへ戻る</button>
@@ -373,8 +234,7 @@ function bindArticle(entryId,articleId,backId){const e=document.getElementById(e
 bindArticle('nietzsche-entry','article-nietzsche','article-back');
 bindArticle('stamina-entry','article-stamina','stamina-back');
 bindArticle('trampoline-entry','article-trampoline','trampoline-back');
-bindArticle('blood-glucose-entry','article-blood-glucose','blood-glucose-back');
-const initial=location.hash.slice(1); if(['now','projects','journal','about'].includes(initial)) show(initial); else if(['article-nietzsche','article-stamina','article-trampoline','article-blood-glucose'].includes(initial)) openArticle(initial);
+const initial=location.hash.slice(1); if(['now','projects','journal','about'].includes(initial)) show(initial); else if(['article-nietzsche','article-stamina','article-trampoline'].includes(initial)) openArticle(initial);
 </script>
 </body>
 </html>
