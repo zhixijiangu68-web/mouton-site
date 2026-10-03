@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>愛ではなく、自由を求める — ムートン</title>
+<meta name="description" content="愛は外側に基準があり、自由は自分の中に基準を置ける。愛と自由、依存と選択、人生の向きについて考える。">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400&display=swap');
+:root{--ink:#252724;--muted:#666a64;--line:rgba(37,39,36,.16);--paper:rgba(244,241,233,.90);--soft:rgba(255,255,255,.28)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
+body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#c9c3b7 url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
+body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(244,240,230,.16),rgba(25,32,29,.18));z-index:-1}
+header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px)}
+.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.3);padding-bottom:5px}
+main{width:min(1040px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.65);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(36px,7vw,88px)}
+.meta{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:28px}.eyebrow{font-size:9px;letter-spacing:.3em;opacity:.55;margin-bottom:18px}
+h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,64px);line-height:1.45;letter-spacing:.04em;margin:0 0 28px;max-width:850px}
+.deck{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2;opacity:.72;max-width:690px;margin:0 0 60px}
+article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.25;margin:0 0 27px}h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,32px);line-height:1.7;margin:72px 0 28px}strong{font-weight:600}
+.question{font-size:clamp(20px,2.8vw,30px);line-height:1.9;margin:52px 0}.words{line-height:2.5}
+.axis{margin:62px 0;padding:clamp(28px,5vw,48px);border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.axis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-top:26px}
+.axis-card{background:rgba(246,243,235,.82);padding:28px}.axis-label{font-size:8px;letter-spacing:.24em;opacity:.52;margin-bottom:12px}.axis-title{font-family:"Noto Serif JP",serif;font-size:22px;margin-bottom:12px}.axis-copy{font-family:"Noto Serif JP",serif;font-size:12px;line-height:2;opacity:.72}
+.vector{margin:64px 0;padding:clamp(30px,5vw,50px);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.vector-row{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:30px}.vector-card{min-height:180px;position:relative;padding:22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.20);overflow:hidden}
+.vector-card h3{font-family:"Noto Serif JP",serif;font-size:16px;font-weight:400;margin:0 0 15px}.vline{position:absolute;height:1px;background:rgba(37,39,36,.55);transform-origin:left center}.vline:after{content:"";position:absolute;right:-1px;top:-3px;width:7px;height:7px;border-right:1px solid rgba(37,39,36,.65);border-top:1px solid rgba(37,39,36,.65);transform:rotate(45deg)}
+.v-a{left:25%;top:63%;width:34%;transform:rotate(-22deg)}.v-b{right:24%;top:64%;width:34%;transform:rotate(202deg);transform-origin:right center}.v-c{left:14%;top:70%;width:56%;transform:rotate(-18deg)}.v-d{left:22%;top:56%;width:55%;transform:rotate(-7deg)}
+.center-dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--ink);left:50%;top:55%;transform:translate(-50%,-50%);opacity:.65}
+.pendulum{margin:68px 0;padding:44px clamp(24px,5vw,50px);text-align:center;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.18)}
+.pendulum-track{height:84px;position:relative;margin:28px auto 8px;max-width:560px}.pendulum-track:before{content:"";position:absolute;left:5%;right:5%;top:42px;height:1px;background:var(--line)}.pendulum-center{position:absolute;left:50%;top:35px;width:14px;height:14px;border:1px solid var(--ink);border-radius:50%;transform:translateX(-50%);background:rgba(244,241,233,.9)}
+.pendulum-left,.pendulum-right{position:absolute;top:36px;font-size:9px;letter-spacing:.16em;opacity:.55}.pendulum-left{left:0}.pendulum-right{right:0}.pendulum-note{font-family:"Noto Serif JP",serif;font-size:12px;line-height:2;opacity:.68;max-width:560px;margin:0 auto}
+.ending{margin-top:76px;padding-top:48px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(21px,3vw,30px);line-height:1.9}
+.footer{width:min(1040px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;opacity:.7}
+@media(max-width:700px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:22px}.deck{font-size:14px;margin-bottom:42px}p{font-size:14px;line-height:2.15}h2{margin-top:54px}.axis-grid,.vector-row{grid-template-columns:1fr}.axis,.vector,.pendulum{margin:46px 0}.vector-card{min-height:160px}.pendulum-left,.pendulum-right{font-size:8px}}
+</style>
+</head>
+<body>
+<header><div class="brand">ムートン</div><a class="back" href="index.html#journal">← JOURNAL</a></header>
+<main>
+<div class="eyebrow">JOURNAL / PHILOSOPHY</div>
+<div class="meta">2026.10.03</div>
+<h1>愛ではなく、自由を求める</h1>
+<p class="deck">誰かに愛されることより、自分の人生の基準を自分の中に置いておくこと。愛、依存、選択、そして自由について。</p>
+
+<article>
+<p>人はよく「愛されたい」と言う。</p>
+<p>必要とされたい。特別になりたい。誰かにとって、かけがえのない存在になりたい。</p>
+<p>それはとても自然な感情だと思う。</p>
+<p>でも最近、僕が本当に欲しいのは、愛ではなく自由なのかもしれないと思う。</p>
+<p>愛されることよりも、自分の人生を自分で決められること。</p>
+<p>誰かに必要とされることよりも、自分がどこへ向かうのかを自分で選べること。</p>
+<p>僕が求めているのは、そういうものなのかもしれない。</p>
+
+<h2>愛には、条件がついてくる</h2>
+<p>人と深く関われば、そこには期待が生まれる。</p>
+<p class="words">もっと連絡してほしい。<br>自分を優先してほしい。<br>そばにいてほしい。<br>変わらないでほしい。</p>
+<p>いつの間にか「愛している」という言葉の中に、「こうしてほしい」が混ざってくる。</p>
+<p>それが悪いわけではない。人と関わる以上、期待が生まれるのは自然なことだと思う。</p>
+<p>ただ僕は、誰かの期待に応えるためだけに生きたいわけではない。</p>
+<p>相手を大切にすることと、自分の人生を明け渡すことは違う。</p>
+<p>その境界を失いたくない。</p>
+
+<h2>愛は外にあり、自由は自分の中にある</h2>
+<p>愛には、必ず相手がいる。</p>
+<p>自分がどれだけ愛していても、相手が同じように愛してくれるとは限らない。どれだけ大切にしても、関係が続くとは限らない。</p>
+
+<section class="axis">
+<div class="eyebrow">WHERE IS THE STANDARD?</div>
+<div class="axis-grid">
+  <div class="axis-card"><div class="axis-label">LOVE</div><div class="axis-title">基準の一部は、外にある。</div><div class="axis-copy">愛されているか。必要とされているか。選ばれているか。その答えは、自分一人では決められない。</div></div>
+  <div class="axis-card"><div class="axis-label">FREEDOM</div><div class="axis-title">基準を、自分の中に置ける。</div><div class="axis-copy">何を選ぶか。誰といるか。どこへ向かうか。自分にとって何が自由なのかを、自分で定められる。</div></div>
+</div>
+</section>
+
+<p>愛は、自分一人では完結しない。だからこそ美しいのだと思うし、同時に不確実でもある。</p>
+<p>でも自由は違う。</p>
+<p>何を自由と呼ぶのかは、自分で決められる。</p>
+<p>自由は必ずしも、十分なお金を持つことではない。</p>
+<p>もちろん、お金は選択肢を増やしてくれる。働く場所を選べる。住む場所を選べる。嫌な環境から離れやすくなる。</p>
+<p>でも、お金を持っていても、他人の評価に縛られている人はいる。</p>
+<p>断りたいのに断れない。嫌われることが怖くて、自分の意見を言えない。周囲が望む人生を、自分の人生だと思い込んでいる。</p>
+<p>それを自由と呼べるだろうか。</p>
+<p>逆に、大金を持っていなくても、自分の時間を自分で決められる人がいる。誰と関わるかを選べる。一人になることを選べる。何を大切にするかを、自分で決められる。</p>
+<p class="question"><strong>僕にとって自由とは、何を持っているかではない。自分の人生の基準を、自分の中に置いておけることだ。</strong></p>
+<p>愛されているかどうかは、僕一人では決められない。</p>
+<p>でも、自分がどう生きるかは決められる。</p>
+<p>だから僕は、愛よりも自由に惹かれるのだと思う。</p>
+
+<h2>好きでも、離れたいときがある</h2>
+<p>好きなのに、一人になりたい。</p>
+<p>大切なのに、距離を取りたい。</p>
+<p>愛しているのに、縛られたくない。</p>
+<p>一見すると、矛盾しているように見える。でも本当は、矛盾ではないのだと思う。</p>
+<p>人を好きになることと、自分の人生を自分で選びたいことは、同時に存在できる。</p>
+<p>「好きなら、いつも一緒にいたいはず」「愛しているなら、すべてを共有したいはず」。そんな考え方は、誰かがつくった愛の型にすぎないのかもしれない。</p>
+<p>人には、それぞれの距離がある。</p>
+<p>近づきたいときもあれば、離れたいときもある。その距離まで自分で決められることが、僕にとっては大切だ。</p>
+
+<h2>大切なのは、強さではなく向き</h2>
+<p>ここで、人生をベクトルで考えてみる。</p>
+
+<section class="vector">
+<div class="eyebrow">VECTOR / DIRECTION</div>
+<div class="vector-row">
+  <div class="vector-card">
+    <h3>依存する愛</h3>
+    <div class="center-dot"></div><div class="vline v-a"></div><div class="vline v-b"></div>
+  </div>
+  <div class="vector-card">
+    <h3>自由な愛</h3>
+    <div class="vline v-c"></div><div class="vline v-d"></div>
+  </div>
+</div>
+</section>
+
+<p>依存的な愛では、二人のベクトルが相手の中心へ向かって収束していく。</p>
+<p>人生の中心が相手になる。相手が笑えば嬉しい。相手が離れれば不安になる。そして相手がいなくなれば、自分の進む方向まで分からなくなる。</p>
+<p>軸を、自分の外側に置いているからだ。</p>
+<p>自由な関係は、少し違う。</p>
+<p>それぞれが自分の方向へ進んでいる。その二つの線が並走することもあれば、近づくこともある。離れることもある。そして、ときどき交差する。</p>
+<p>大切なのは、二人がまったく同じ方向へ進むことではない。</p>
+<p>むしろ、それぞれに自分の方向があるからこそ、交わることに意味が生まれる。</p>
+<p class="question"><strong>関係の質を決めるのは、愛の強さだけではない。その愛が、どこへ向かっているのかだ。</strong></p>
+<p>相手を自分のところへ引き寄せようとする愛なのか。</p>
+<p>それとも、相手が自分の人生を進むことを認められる愛なのか。</p>
+<p>僕は、人生の中心に自分を置いていたい。</p>
+<p>恋愛は人生の中にあればいい。恋愛の中に、人生のすべてを入れるのではなく。</p>
+
+<h2>「必要とされること」に依存しない</h2>
+<p>人から必要とされると、自分に価値があるように感じる。愛されると、安心する。</p>
+<p>だからいつの間にか、「この人を失ったら、自分には何も残らない」と思ってしまうことがある。</p>
+<p>でもその瞬間、自分の価値を誰かの愛情に預けてしまっている。</p>
+<p>相手が愛してくれれば、自分には価値がある。相手が離れれば、自分には価値がない。</p>
+<p>そんな状態では、自分の人生の評価まで他人に委ねることになる。</p>
+<p>誰かに愛されなくてもいい、という話ではない。</p>
+<p>愛されることは嬉しい。必要とされることも嬉しい。</p>
+<p>ただ、それが自分の存在価値そのものになってしまうのは違うと思う。</p>
+<p>誰かに愛されなくても、自分は残る。誰かに必要とされなくても、人生は続く。</p>
+<p>そう思えるからこそ、人を自由に愛せる。</p>
+<p class="question"><strong>「あなたがいないと生きられない」ではなく、「一人でも生きられる。でも、あなたといたい」。</strong></p>
+<p>そう言える関係のほうが、僕には美しく見える。</p>
+
+<h2>止まらないことが、自由</h2>
+<p>自由とは、一人になることでも、責任を捨てることでもない。</p>
+<p class="words">今日は誰かといたい。<br>明日は一人でいたい。<br>何かに夢中になりたい。<br>突然、知らない場所へ行きたい。<br>一日中、何もしたくない日もある。</p>
+<p>そのときの自分が望む方向へ、自分で動けること。</p>
+<p>僕にとって自由とは、そういうものだ。</p>
+<p>そしてもう一つ。自由とは、同じ場所に永遠にとどまらないことでもあると思う。</p>
+<p>人は、ときどき極端に振れる。仕事だけに没頭する時期がある。誰かとずっと一緒にいたい時期がある。逆に、誰とも会いたくない時期もある。</p>
+<p>僕は、それでいいと思う。</p>
+<p>全てはバランスだと言われる。確かにそうだと思う。</p>
+<p>ただ、常に真ん中にいることがバランスなのではない。</p>
+<p>大きく片方に振れてもいい。必要なのは、そこに永遠に居続けないことだ。</p>
+
+<section class="pendulum">
+<div class="eyebrow">PENDULUM / MOVEMENT</div>
+<div class="pendulum-track"><span class="pendulum-left">苦痛</span><span class="pendulum-center"></span><span class="pendulum-right">退屈</span></div>
+<p class="pendulum-note">極に居続けるのでも、真ん中に固定されるのでもなく、動きながら自分の位置を選び直す。</p>
+</section>
+
+<p>ショーペンハウアーは、人生を苦痛と退屈の間を揺れ動く振り子になぞらえた。</p>
+<p>苦痛から逃れれば退屈が待ち、退屈から逃れようとすれば、また欲望や苦痛が生まれる。</p>
+<p>僕はそこに、少し違う意味も感じる。</p>
+<p>振れ続けることそのものが、生きることなのではないか。</p>
+<p>ただし、どんな変化でもいいわけではない。</p>
+<p>強いられた変化は、自由ではない。</p>
+<p>誰かの都合で動かされる。望んでいない場所へ連れていかれる。自分の意思とは関係なく、人生の方向を決められる。</p>
+<p>それは変化ではあっても、自由ではない。</p>
+<p class="question"><strong>大切なのは、変わることそのものではない。変化の中で、選び続けられること。</strong></p>
+<p>どこまで振れるのか。どちらへ向かうのか。いつ戻るのか。そして、もう一度どこへ向かうのか。</p>
+<p>それを自分で決められること。</p>
+<p>それが、僕の言う自由だ。</p>
+
+<h2>愛から逃げたいわけではない</h2>
+<p>だからといって、愛を否定したいわけではない。</p>
+<p>むしろ、自由な人間同士だからこそ生まれる愛があると思う。</p>
+<p class="words">相手を所有しない。<br>相手を変えようとしない。<br>離れている時間を恐れない。<br>相手の人生の選択を奪わない。</p>
+<p>「私のものになってほしい」ではなく、「あなたがあなたでいてくれればいい」。</p>
+<p>そう思えること。</p>
+<p>そして相手にも、「あなたも、あなたのままでいていい」と思ってもらえること。</p>
+<p>自由と愛は、反対側にあるものではないのかもしれない。</p>
+<p>自由があるからこそ、愛は選択になる。</p>
+<p>縛られているから一緒にいるのではない。</p>
+<p>一人でも生きられるのに、それでも一緒にいる。</p>
+<p>そのほうが、僕にはずっと深い愛に見える。</p>
+
+<div class="ending">
+<h2>愛ではなく、自由を求める</h2>
+<p>若い頃は、愛されることが幸せなのだと思っていた。</p>
+<p>誰かに選ばれること。誰かに必要とされること。誰かにとって特別になること。</p>
+<p>でも今は、それだけでは足りない。</p>
+<p>僕が求めているのは、誰かに人生を満たしてもらうことではない。</p>
+<p>自分の人生を、自分の意志で生きられることだ。</p>
+<p>何を幸せとするのか。誰といるのか。何を手放すのか。どこへ向かうのか。</p>
+<p>その基準を、自分の外側ではなく、自分の中に置いていたい。</p>
+<p>その自由の中で出会った誰かと、一緒に歩けたらいい。</p>
+<p>依存ではなく、選択として。義務ではなく、意志として。孤独を埋めるためではなく、人生を分かち合うために。</p>
+<p><strong>だから僕は、愛よりも自由を求めたい。そしてもし愛するなら、お互いの自由を奪わない愛を選びたい。</strong></p>
+</div>
+</article>
+</main>
+<div class="footer">MOUTON — PERSONAL ARCHIVE / 2026</div>
+</body>
+</html>
