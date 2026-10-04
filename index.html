@@ -84,6 +84,9 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 }
 
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* Keep inactive panels hidden on narrow screens. */
+.panel:not(.active){display:none!important}
 </style>
 </head>
 <body>
@@ -153,31 +156,31 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
             <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div></div>
             <div class="journal-arrow">→</div>
           </a>
-          <div class="journal-item clickable" id="trampoline-entry" tabindex="0" data-category="body">
+          <a class="journal-item clickable journal-link" id="trampoline-entry" href="trampoline.html" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div></div>
             <div class="journal-arrow">→</div>
-          </div>
-          <div class="journal-item clickable" id="stamina-entry" tabindex="0" data-category="body">
+          </a>
+          <a class="journal-item clickable journal-link" id="stamina-entry" href="stamina.html" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div></div>
             <div class="journal-arrow">→</div>
-          </div>
-          <div class="journal-item clickable" id="self-image-entry" tabindex="0" data-category="philosophy">
+          </a>
+          <a class="journal-item clickable journal-link" id="self-image-entry" href="self-image.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div></div>
             <div class="journal-arrow">→</div>
-          </div>
-          <div class="journal-item clickable" id="hill-entry" tabindex="0" data-category="philosophy">
+          </a>
+          <a class="journal-item clickable journal-link" id="hill-entry" href="hill.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div></div>
             <div class="journal-arrow">→</div>
-          </div>
-          <div class="journal-item clickable" id="nietzsche-entry" tabindex="0" data-category="philosophy">
+          </a>
+          <a class="journal-item clickable journal-link" id="nietzsche-entry" href="nietzsche.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div></div>
             <div class="journal-arrow">→</div>
-          </div>
+          </a>
           <div class="journal-item is-note" data-category="making">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">自分のWebサイトを作り始めた。</div><div class="journal-excerpt">自分の基地のような場所を、ようやく形にし始めた。</div></div>
@@ -195,304 +198,11 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
           </div>
         </div>
       </div>
-      <article class="panel article" id="article-self-image">
-        <button class="article-back" id="self-image-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.10.02　/　PHILOSOPHY</div>
-        <h2>セルフイメージは、<br>長期の行動を変える</h2>
-        <p class="lead">セルフイメージは、現実を直接変えない。変えるのは日々の選択であり、その影響が出るのは長い時間をかけてからだ。</p>
-
-        <h3>セルフイメージとは</h3>
-        <p>「自分はこういう人間だ」という認識のこと。</p>
-        <p>自分は継続できない。自分は人前に出るタイプではない。自分は文章を書く人間ではない。</p>
-        <p>事実のように感じるが、多くは過去の経験から作った解釈にすぎない。</p>
-        <p>運動が続かなかった経験が、「自分は続かない人間だ」という結論に変わる。</p>
-
-        <h3>作用の仕組み</h3>
-        <p>セルフイメージは、行動を通じて間接的に結果へ影響する。</p>
-        <p class="question"><strong>自己認識 → 期待 → 行動 → 結果 → 自己認識の強化</strong></p>
-        <p>「どうせ続かない」と思えば、挑戦が減り、少しの失敗でやめる。</p>
-        <p>すると経験が増えず、「やっぱり続かない」という認識が強まる。</p>
-
-        <h3>心理学での位置づけ</h3>
-        <p>近い概念は<strong>自己効力感（self-efficacy）</strong>で、「自分はその行動を遂行できる」という感覚を指す。バンデューラが提唱した。</p>
-        <p>自己効力感が高い人ほど、難しい課題に取り組み、失敗後も続け、再挑戦する傾向がある。</p>
-        <p>ただし成功を保証するものではなく、能力・経験・環境・運の影響も大きい。</p>
-        <p>セルフイメージは能力そのものではなく、<strong>能力を使うかどうかを左右する要因の一つ</strong>だ。</p>
-
-        <h3>効果は短期ではなく長期に出る</h3>
-        <p>今日「自分はできる」と思っても、明日の結果は変わらない。</p>
-        <p>差が生まれるのは試行回数だ。</p>
-        <p>「自分には無理だ」と思う。すると、試す回数が減る。</p>
-        <p>試す回数が減れば、経験が増えず、能力も伸びにくい。</p>
-        <p>問題は、ネガティブな認識が失敗を直接生むことではない。</p>
-        <p><strong>成功に必要な試行回数を減らすこと</strong>だ。</p>
-        <p>1年、3年、10年と積み重なるほど、経験量の差は大きくなる。</p>
-        <p>逆に、「できる」と唱えるだけでも足りない。</p>
-        <p>勉強しなければ成績は上がらないし、作らなければ作品は完成しない。</p>
-
-        <h3>変えるなら、先に行動する</h3>
-        <p>認識を変えるために、無理に思い込む必要はない。</p>
-        <p>小さく行動して、証拠を作ればいい。</p>
-        <p>運動する人間になりたいなら、10分歩く。</p>
-        <p>本を読む人間になりたいなら、5ページ読む。</p>
-        <p>作る人間になりたいなら、小さくても一つ完成させる。</p>
-        <p>バンデューラは、自己効力感の最も強い源の一つとして<strong>成功体験</strong>を重視した。</p>
-        <p>また、人は自分の行動を観察して自己認識を形成するという考え方もある。ベムの自己知覚理論だ。</p>
-        <p class="question"><strong>小さく行動する → 「できた」という証拠が残る → 自己認識が少し変わる → 次の行動がしやすくなる</strong></p>
-        <p>この循環が長く続くと、「たまたまやった」が「最近よくやっている」に、さらに「自分はこういう人間だ」に変わる。</p>
-
-        <h3>目標より、どんな人間として動くか</h3>
-        <p>目標は達成すれば終わる。</p>
-        <p>「自分は学び続ける人間だ」「自分は作る人間だ」という認識は、達成後も行動を方向づける。</p>
-        <p>目標に加えて、<strong>どんな人間として行動するか</strong>まで決めると続きやすい。</p>
-
-        <h3>まとめ</h3>
-        <p>セルフイメージの影響経路は、次のように長い。</p>
-        <p class="question"><strong>セルフイメージ → 日々の小さな選択 → 行動の反復 → 経験量 → 能力・結果</strong></p>
-        <p>短期の影響は小さい。</p>
-        <p>しかし長期では、無視できない差になる。</p>
-
-        <div class="ending">
-          <p>最後に問いを一つ。</p>
-          <p><strong>「自分にはできない」と思っていることは、本当に能力的に不可能なのか。</strong></p>
-          <p>それとも「自分はそういう人間ではない」と思って、試行回数を減らしているだけではないか。</p>
-          <p>セルフイメージを変える最も現実的な方法は、自分に言い聞かせることではない。</p>
-          <p><strong>今までと少し違う行動を、長く続けることだ。</strong></p>
-        </div>
-      </article>
-      <article class="panel article" id="article-hill">
-        <button class="article-back" id="hill-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.10.02　/　PHILOSOPHY</div>
-        <h2>「思考は現実化する」は、<br>本当なのか。</h2>
-        <p class="lead">ナポレオン・ヒルの『思考は現実化する』。</p>
-        <p>自己啓発の世界では、あまりにも有名な一冊だ。</p>
-        <p>正直に言うと、タイトルだけなら僕も怪しいと思っていた。</p>
-        <p>考えれば叶う。</p>
-        <p>強く願えば、現実になる。</p>
-        <p>そんな話なら、読む価値はない。</p>
-        <p>でも、読んでみて印象が変わった。</p>
-        <p>書いてあるのは魔法ではなく、かなり地味で、現実的な話だった。</p>
-
-        <h3>人間は、考えていないものを追いかけられない</h3>
-        <p>「いつか何かしたい」と思っている人と、</p>
-        <p>「3年以内に、自分のサービスを作って、生活できるくらいの収入を得る」と考えている人がいる。</p>
-        <p>どちらも夢を持っている。</p>
-        <p>でも、日常で目に入るものは違ってくる。</p>
-        <p>後者の人は、何を作るか。誰に届けるか。どんな技術が必要か。誰から学べるか。そんなことを探し始める。</p>
-        <p>世界が変わったわけではない。</p>
-        <p class="question"><strong>見る側が変わったのだ。</strong></p>
-
-        <h3>ヒルが書いているのは、「願望を行動の形にする方法」</h3>
-        <p>ヒルは、願望を現実に変える手順として、たとえばこんなことを挙げている。</p>
-        <p>欲しいものを、曖昧にせず具体的に決める。</p>
-        <p>それと引き換えに、何を差し出すかを決める。</p>
-        <p>「いつまでに」という期限を決める。</p>
-        <p>準備が整っていなくても、計画を作って動き出す。</p>
-        <p>それを紙に書く。</p>
-        <p>毎日、声に出して読み返す。</p>
-        <p>「願えば叶う」ではない。</p>
-        <p><strong>「願望を、行動できる形まで落とし込め」</strong>という話だ。</p>
-        <p>目的地が曖昧なままでは、どちらへ進めばいいのか分からない。</p>
-        <p>「ここへ行く」と決めて、初めて道を選べる。</p>
-        <p>願望は呪文ではなく、<strong>人生に方向を与えるものなのだと思う。</strong></p>
-
-        <h3>思考は、現実を直接変えない</h3>
-        <p>ここは大事なところだ。</p>
-        <p>100万円欲しいと毎日考えても、銀行残高は増えない。</p>
-        <p>理想の身体を想像しても、筋肉はつかない。</p>
-        <p>本を書きたいと思うだけでは、原稿は一文字も進まない。</p>
-        <p class="question"><strong>思考 → 判断 → 行動 → 継続 → 結果</strong></p>
-        <p>思考は、その一番最初にある。</p>
-        <p>そして最初が変わると、そのあとの選択が変わる。</p>
-        <p>朝起きるか、もう少し寝るか。本を読むか、SNSを見るか。作るか、先延ばしするか。</p>
-        <p>一つひとつは小さい。</p>
-        <p>でも、一年、三年、十年と積み重なれば、大きな差になる。</p>
-
-        <h3>現実化するのは、「繰り返された思考」かもしれない</h3>
-        <p>一度思っただけのことは、すぐ消える。</p>
-        <p>でも、何度も考えていることは残る。</p>
-        <p>朝も考える。移動中も考える。寝る前にも考える。</p>
-        <p>そうすると、調べる。人に話す。試す。失敗する。また考える。</p>
-        <p>いつの間にか、その思考が生活の一部になる。</p>
-        <p>生活が変われば、現実も少しずつ変わる。</p>
-        <p>ヒルが「毎日読み返せ」と書いた理由は、ここにあるのかもしれない。</p>
-        <p>これは本にそう書いてあるという意味ではない。<strong>僕なりの解釈だ。</strong></p>
-
-        <h3>ただし、すべてが思考で決まるわけではない</h3>
-        <p>生まれた環境。経済状況。病気。事故。景気。他人の判断。そして、偶然。</p>
-        <p>人生には、自分ではどうにもできないものがある。</p>
-        <p>だから、成功したのは思考が正しかったから。失敗したのは思考が足りなかったから。と単純に考えるのは違うと思う。</p>
-        <p>努力すれば必ず成功するわけでもない。</p>
-        <p>強く願えば、必ず叶うわけでもない。</p>
-        <p>それでも、<strong>自分で変えられる部分の中で、思考が大きな役割を持っている。</strong></p>
-        <p>そこには価値がある。</p>
-
-        <h3>この本は、答えではなく問いを突きつけてくる</h3>
-        <p>読み終えて残ったのは、「信じよう」という気持ちではなかった。</p>
-        <p>むしろ、<strong>「自分は、何が欲しいのか。まだ曖昧だな」</strong>という気づきだった。</p>
-        <p>だからこの本は、やりたいことがなんとなくぼやけている人、考えてはいるけれど行動が続かない人、自己啓発は胡散臭いと感じている人に向いていると思う。</p>
-        <p>最後の人にこそ、読んでみてほしい。</p>
-        <p>疑いながら読んでいい。</p>
-        <p>鵜呑みにしなくていい。</p>
-        <p>全部を信じる必要もない。</p>
-        <p>自分の言葉で、<strong>「ここは使える」</strong>を見つける。</p>
-        <p>それが、この本のいちばんいい読み方だと思う。</p>
-
-        <h3>「思考は現実化する」とは、どういうことなのか</h3>
-        <p>僕はこのタイトルを、「考えれば、宇宙が願いを叶えてくれる」という意味には受け取っていない。</p>
-        <p>考える。方向が決まる。選択が変わる。行動が変わる。それを繰り返す。</p>
-        <p>その結果として、少しずつ現実が変わっていく。</p>
-        <p><strong>「思考は現実化する」という言葉は、急に現実的なものに見えてくる。</strong></p>
-
-        <div class="ending">
-          <p>最後に、ひとつだけ問いを残したい。</p>
-          <p><strong>今、あなたが毎日のように考えていることは、どんな未来につながっているだろう。</strong></p>
-          <p>その思考が、一年後の自分を作っているとしたら。</p>
-          <p>今日、何を考え、何を始めるだろう。</p>
-          <p>答えのヒントは、本の中にある。</p>
-        </div>
-      </article>
-      <article class="panel article" id="article-nietzsche">
-        <button class="article-back" id="article-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.09.30　/　PHILOSOPHY</div>
-        <h2>神は死んだ。<br>それでも、なぜ生きるのか。</h2>
-        <p class="lead">「神は死んだ。」</p>
-        <p>ニーチェの言葉として、あまりにも有名だ。</p>
-        <p>けれど、この言葉は単純に「神なんて存在しない」と言っているのではない。もっと恐ろしい問いを、私たちに突きつけている。</p>
-        <p>長い間、人間には「生きる理由」があった。神のため。家族のため。国家のため。社会のため。善く生きるため。正しい人間になるため。</p>
-        <p>そこには、自分より大きな何かが存在していた。そして、その大きな何かが、「こう生きるべきだ」「これには価値がある」と教えてくれた。</p>
-        <p>しかし、それらを絶対的なものとして信じられなくなったらどうなるのだろう。</p>
-        <p>ニーチェの「神は死んだ」という言葉の先には、この問題がある。</p>
-        <h3>生きる意味は、どこにあるのか。</h3>
-        <p>朝、起きる。仕事や学校へ行く。食事をする。スマートフォンを見る。誰かと話す。眠る。そして、また朝が来る。</p>
-        <p>それを何十年も繰り返す。でも、ある瞬間に立ち止まってしまう。</p>
-        <p class="question">「そもそも、何のために？」</p>
-        <p>お金を稼ぐため？ 幸せになるため？ 家族をつくるため？ 何かを成し遂げるため？</p>
-        <p>では、なぜ幸せになる必要があるのだろう。なぜ何かを成し遂げる必要があるのだろう。</p>
-        <p>その問いに「なぜ？」を繰り返していくと、いつか答えられない場所にたどり着く。</p>
-        <p>宇宙は、私たち一人ひとりに生きる目的を説明してくれない。生まれた瞬間に、「あなたが生きる意味はこれです」という紙を渡されるわけでもない。</p>
-        <p>それでも私たちは生きている。これは、不思議なことだと思う。</p>
-        <h3>君は、なぜ生きている？</h3>
-        <p>もし最初から決められた意味がないのだとしたら。</p>
-        <p>なぜ、今日も起きたのだろう。なぜ、誰かを好きになるのだろう。なぜ、何かを作るのだろう。なぜ、美しい景色を見ると立ち止まるのだろう。なぜ、好きな音楽をもう一度聴くのだろう。なぜ、明日の予定を立てるのだろう。</p>
-        <p class="question">なぜ、生きる意味が分からないのに、私たちは生き続けているのだろう。</p>
-        <p>もしかすると、「生きる意味が存在しない」ということと、「生きる価値が存在しない」ということは、同じではないのかもしれない。</p>
-        <p>あらかじめ意味が決められていないからこそ、自分で意味をつくる余地が残されている。</p>
-        <p>何を見るのか。誰と生きるのか。何を愛するのか。何を作るのか。何を残すのか。</p>
-        <p>その一つひとつによって、自分の人生に意味が生まれていくのかもしれない。</p>
-        <div class="ending">
-          <p>僕はまだ答えを持っていない。だから、この記事も答えではない。これは問いだ。</p>
-          <p>このページを閉じたあと、ほんの少しだけ考えてみてほしい。</p>
-          <p><strong>君は、生きる意味が分からないのに、なぜ今日も生きているのだろう。</strong></p>
-        </div>
-      </article>
-      <article class="panel article" id="article-trampoline">
-        <button class="article-back" id="trampoline-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.09.30　/　BODY</div>
-        <h2>大人は、いつから<br>跳ばなくなったのか。</h2>
-        <p class="lead">——トランポリンを調べたら、「体力」の正体が少し見えてきた。</p>
-        <p>子どもの頃は、よく跳んでいた。水たまりを飛び越えたり、階段からジャンプしたり、意味もなくその場で跳ねたり。</p>
-        <p>でも大人になると、不思議なくらい跳ばなくなる。歩く。座る。立つ。たまに走る。ジムに行けば、重いものを持ち上げる。</p>
-        <p>でも、<strong>「跳ぶ」という動きは、いつの間にか生活から消えている。</strong></p>
-        <p>僕もトランポリンと聞けば、子どもの遊びくらいに思っていた。ところが調べてみると、少し印象が変わった。</p>
-        <p>高齢者が14週間ミニトランポリンでトレーニングした研究では、前方にバランスを崩したとき、身体を立て直す能力が<strong>約35％改善</strong>したと報告されている。</p>
-        <p>心肺。筋力。バランス。代謝。いくつもの機能が動いている。もしかすると「跳ぶ」というのは、僕たちが思っているよりずっと複雑な運動なのかもしれない。</p>
-        <p>なお、この記事で扱うのは主に家庭でも使えるミニトランポリン（リバウンダー）の研究だ。</p>
-        <h3>1. 跳ぶと、心肺が動く</h3>
-        <p>過体重の女性18人を対象にした研究では、12週間のミニトランポリン運動によって、最大酸素摂取量（VO₂max）が<strong>15.4 → 16.9 mL/kg/min</strong>になった。約10％の向上だ。</p>
-        <p>最大運動時の仕事量も、<strong>104W → 123W</strong>と約18％増加した。</p>
-        <p>見た目はその場で上下しているだけだ。でも、身体はそう捉えていない。何度も脚を使い、身体を持ち上げ、着地し、また跳ぶ。そのために酸素が必要になり、心臓が働く。</p>
-        <p><strong>「跳ぶ」は、ちゃんと心肺を使う。</strong></p>
-        <p>ただし、この研究は18人という小規模なものだ。12週間跳べば誰でもVO₂maxが10％上がる、という意味ではない。</p>
-        <h3>2. 跳ぶたびに、身体は小さく崩れている</h3>
-        <p>普通の床とは違って、足元が安定していない。着地する。沈む。跳ね返される。また着地する。</p>
-        <p>実はこの瞬間、<strong>身体は毎回、小さくバランスを崩している。</strong>そして次の瞬間には、それを修正している。</p>
-        <p>高齢者を対象にした14週間の研究では、足首を伸ばす筋力が<strong>約10％向上</strong>した。さらに、前方にバランスを崩したときに身体を立て直す能力が<strong>約35％改善</strong>した。</p>
-        <p>崩れる。気づく。修正する。立て直す。そういう<strong>身体をコントロールする能力</strong>まで使っている。</p>
-        <h3>3. ウォーキングとは少し違う</h3>
-        <p>2026年には、平均71歳の47人を対象に、<strong>トランポリン20分 × 週3回</strong>と<strong>ウォーキング20分 × 週3回</strong>を6週間行った研究も報告されている。</p>
-        <p>歩行能力などは両群で改善した。一方、片脚立ち能力はトランポリン群で改善した。</p>
-        <p>もちろん、この研究だけで「トランポリンはウォーキングより優れている」とは言えない。ウォーキングにはウォーキングの良さがある。</p>
-        <p>ただ、歩くとき地面は基本的に動かない。トランポリンでは地面そのものが動く。だから、<strong>心肺を使いながら、姿勢を制御する。</strong>この組み合わせが面白い。</p>
-        <h3>4. 代謝も動く</h3>
-        <p>2型糖尿病の成人60人を対象に、<strong>30分 × 週3回 × 12週間</strong>のミニトランポリン運動を行った研究では、対照群と比較してインスリン抵抗性、腹囲、血中脂質などに改善が確認された。</p>
-        <p>ただし、<strong>「トランポリンには特殊な血糖改善作用がある」</strong>という意味ではない。そもそも運動そのものが糖代謝に影響する。そして対象者も2型糖尿病の成人だ。</p>
-        <p>健康な若い人に同じ大きさの変化が起こるとは限らない。それでも、あの単純な上下運動が、代謝まで動かすほどの運動になり得ることは興味深い。</p>
-        <h3>5. 「跳ぶ」は意外と全身運動だった</h3>
-        <p><strong>跳ぶ → 着地する → 沈み込む → 姿勢を立て直す → また跳ぶ。</strong></p>
-        <p>ふくらはぎ。太もも。お尻。体幹。そして心肺。さらに、不安定な足元で姿勢を維持する。</p>
-        <p>だからトランポリンは、有酸素運動、筋力トレーニング、バランストレーニングのどれか一つに分類するより、<strong>複数の身体機能を同時に使う運動</strong>と考える方がしっくりくる。</p>
-        <h3>6. だからといって、万能ではない</h3>
-        <p>骨量減少症の女性40人を対象とした12週間の研究では、筋力やバランスなどは改善したものの、腰椎や大腿骨頸部の骨密度について明確な群間差は確認されなかった。</p>
-        <p>だから、<strong>「跳べば骨密度が大幅に上がる」</strong>とは現時点では言えない。</p>
-        <p>また、「リンパが流れる」「デトックスできる」「免疫力が劇的に上がる」といった話も、今回紹介した心肺機能やバランス能力などと同じレベルで臨床的根拠が確立しているとは言いにくい。</p>
-        <p>トランポリンは、誇張しなくても十分面白い。<strong>分かっていることだけで評価すればいい。</strong></p>
-        <h3>7. では、どのくらい跳べばいいのか</h3>
-        <p>今回紹介した研究には、<strong>週3回・20〜30分を、6〜12週間続けたもの</strong>がある。ただし「週3回20分が最適」という意味ではない。</p>
-        <p>運動習慣がないなら、まずは<strong>5分</strong>。慣れたら10分、さらに余裕があれば15分と、身体の反応を見ながら増やしていく。</p>
-        <p>転倒が心配なら、手すり付きのモデルを使ったり、身体を支えられる環境で行う。膝、腰、足首に不安がある人や、運動について制限を受けている持病がある人は、始める前に医師などの専門家へ相談した方がいい。</p>
-        <p>今回紹介した研究は、高齢者、過体重の女性、2型糖尿病の人といった集団を対象にしたものが多い。健康な現役世代に同じ大きさの効果が出るかは、まだ分からない。</p>
-        <h3>「体力」とは何だろう</h3>
-        <p>以前、僕は「体力とは何なのか」を考えた。筋肉が大きいことでも、長距離を走れることでもない。</p>
-        <p>朝起きる。仕事をする。歩く。階段を上る。人と会う。遊ぶ。そして夜になったとき、<strong>まだ少し余力が残っている。</strong></p>
-        <p>僕にとっては、そんな身体が「体力のある身体」だ。</p>
-        <p><strong>心肺機能。筋力。バランス。身体を思い通りに動かす能力。そして代謝。</strong></p>
-        <p>いろいろな能力が少しずつ必要になる。そう考えたとき、トランポリンが急に面白く見えてきた。</p>
-        <h3>大人は、いつから跳ばなくなったのか</h3>
-        <p>筋力を最大化したいなら、筋トレをすればいい。持久力を伸ばしたいなら、ランニングもある。長く身体を動かしたいなら、ウォーキングも素晴らしい。</p>
-        <p>トランポリンが、それらより優れているという話ではない。ただ、<strong>「跳ぶ」という動きには、僕が思っていた以上にいろいろな身体能力が詰まっていた。</strong></p>
-        <p>子どもの頃は、ただ走って、登って、しゃがんで、そして跳んでいた。</p>
-        <p><strong>歩く。走る。しゃがむ。登る。跳ぶ。</strong></p>
-        <div class="ending">
-          <p>トランポリンについて調べていたはずなのに、最後に残ったのは、そんな当たり前のことだった。</p>
-          <p>「トランポリンが最強の運動だ」とは思わない。</p>
-          <p><strong>でも、たまには、跳んでもいい。</strong></p>
-          <p>大人になった僕たちが忘れていた動きを、身体に思い出させるように。</p>
-        </div>
-        <h3>参考文献</h3>
-        <p>Aragão FA, Karamanidis K, Vaz MA, Arampatzis A. <em>Mini-trampoline exercise related to mechanisms of dynamic stability improves the ability to regain balance in elderly.</em> Journal of Electromyography and Kinesiology. 2011;21(3):512–518.</p>
-        <p>Cugusi L, et al. <em>Effects of a mini-trampoline rebounding exercise program on functional parameters, body composition and quality of life in overweight women.</em> Journal of Sports Medicine and Physical Fitness. 2018;58(3):287–294.</p>
-        <p>Nuhu JM, Maharaj SS. <em>Influence of a mini-trampoline rebound exercise program on insulin resistance, lipid profile and central obesity in individuals with type 2 diabetes.</em> Journal of Sports Medicine and Physical Fitness. 2018;58(4):503–509.</p>
-        <p>Posch M, et al. <em>Effectiveness of a Mini-Trampoline Training Program on Balance and Functional Mobility, Gait Performance, Strength, Fear of Falling and Bone Mineral Density in Older Women with Osteopenia.</em> Clinical Interventions in Aging. 2019.</p>
-        <p>Kendall BJ, et al. <em>Six Weeks of Mini-Trampoline Training Improves Balance, Mobility, and Walking Capacity in Older Adults.</em> Journal of Aging and Physical Activity. 2026.</p>
-        <p><small>※本記事は運動・健康に関する研究を紹介するもので、医療上の診断や治療を目的とするものではありません。</small></p>
-      </article>
-      <article class="panel article" id="article-stamina">
-        <button class="article-back" id="stamina-back">← JOURNALへ戻る</button>
-        <div class="article-meta">2026.09.30　/　BODY</div>
-        <h2>筋トレを減らしたら、<br>なぜか「体力」がついた</h2>
-        <p class="lead">以前の僕は、週3回ジムで数時間、がっつり筋トレをしていた。</p>
-        <p>今は隔週くらいで登山に行き、週4回、15分程度の自重トレーニングをしている。どう考えても、昔の方が「鍛えていた」。扱う重量も大きかったし、トレーニング時間も長かった。</p>
-        <p>それなのに不思議なことに、<strong>日常生活で疲れにくいのは圧倒的に今だ。</strong></p>
-        <p>長く歩いても平気になった。外出した後にも余力がある。以前より「もう疲れたから動きたくない」と感じることが減った。</p>
-        <p>そこで疑問に思った。そもそも僕たちが言っている「体力」って何なんだろう。</p>
-        <h3>体力＝筋力ではない</h3>
-        <p>「体力をつけるために筋トレする」という言葉はよく聞く。もちろん間違いではない。筋力が上がれば、荷物を持ったり、階段を上ったりするのは楽になる。</p>
-        <p>でも、ベンチプレスが80kgから100kgになったからといって、一日中歩いても疲れなくなるとは限らない。逆に、毎日よく歩いている人が重いバーベルを持てるとも限らない。</p>
-        <p>どうやら「体力」という一つの言葉の中に、筋力、心肺能力、筋持久力、回復、睡眠、疲労、普段の活動量など、いろいろなものが混ざっている。</p>
-        <h3>もしかすると、体力とは「余力」なのかもしれない</h3>
-        <p>今のところ僕が一番しっくり来ているのは、<strong>体力＝余力</strong>という考え方だ。</p>
-        <p>どれだけ大きな力を出せるかではなく、<strong>普通に一日生活した後、どれだけエネルギーが残っているか。</strong></p>
-        <p>例えば同じ階段でも、身体能力の60％を使って上る人と、30％で上れる人では疲れ方が違う。同じ一万歩でも、それが身体にとって大仕事なのか、軽い活動なのかで意味が変わる。</p>
-        <p>そう考えると、体力がつくとは、<strong>日常生活そのものを「軽い運動」に変えていくこと</strong>なのかもしれない。</p>
-        <h3>だから今の方が疲れない？</h3>
-        <p>ここからはまだ僕自身の仮説だ。</p>
-        <p>昔は筋肉を大きくするために、かなり強い筋トレをしていた。身体能力は上がっていたと思う。でも同時に、筋肉痛になり、脚が重くなり、トレーニング後は休みたくなり、日常で動く量が減ることもあった。</p>
-        <p>今は逆だ。15分くらい身体を動かす。普段も歩く。たまに何時間も山を歩く。そして翌日の生活を潰すほど疲れない。</p>
-        <p>つまり以前は、<strong>「身体能力を大きくする運動」</strong>をしていた。今は、<strong>「生活を楽にする運動」</strong>に近づいているのかもしれない。</p>
-        <h3>筋肉をつけることと、元気になることは同じではない</h3>
-        <p>これは筋トレを否定したいわけではない。僕自身、筋肥大を狙ったトレーニングは好きだ。身体を大きくしたい。腹筋を割りたい。美しい身体を作りたい。それはそれで一つの目的だと思う。</p>
-        <p>ただ、<strong>「身体を美しくする」ことと「一日を疲れずに過ごせる身体を作る」こと</strong>は、一度分けて考えてもいいのではないか。目的が違えば、運動の設計も変わる。</p>
-        <h3>体力について、もう少し考えてみたい</h3>
-        <p>今のところ僕の仮説はこうだ。</p>
-        <p class="question">体力とは、限界の高さではなく、日常と限界の間にある余白なのではないか。</p>
-        <p>だとしたら、歩くこと、心肺能力、筋力、睡眠、疲労、回復、登山、食事。これらを全部「余力を作る」という視点から見直せる。</p>
-        <div class="ending">
-          <p>僕自身、まだ答えは出ていない。だから、これから一つずつ調べてみようと思う。</p>
-          <p><strong>どうすれば、一日を終えたときにまだ何かできる身体を作れるのか。</strong></p>
-          <p>その問いから、「体力」について考えていきたい。</p>
-        </div>
-      </article>
+      
+      
+      
+      
+      
       <div class="panel about" id="about">
         <div>
           <div class="kicker">ABOUT / MOUTON</div>
@@ -501,7 +211,7 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
             <div class="about-start-label">FIRST READ / はじめての方へ</div>
             <div class="about-start-title">まずは、哲学の記事から。</div>
             <p class="about-start-copy">ムートンが何を考え、なぜ記録し、何を残したいのか。その空気を一番感じやすい入口として、この文章を選びました。</p>
-            <a class="about-start-link" href="#article-nietzsche" id="about-first-read">「神は死んだ。それでも、なぜ生きるのか。」を読む <span>→</span></a>
+            <a class="about-start-link" href="nietzsche.html" id="about-first-read">「神は死んだ。それでも、なぜ生きるのか。」を読む <span>→</span></a>
           </div>
           <p class="copy about-copy">ムートンの個人的な制作と記録のための場所。興味を持ったことを試し、作り、その過程を残していきます。</p>
         </div>
@@ -514,34 +224,31 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 
   <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">NOW</button><button class="tab" data-tab="projects">PROJECTS</button><button class="tab" data-tab="journal">JOURNAL</button><button class="tab" data-tab="about">ABOUT</button></nav>
 </div>
-<script>
-const tabs=[...document.querySelectorAll('[data-tab]')];
+<script>const tabs=[...document.querySelectorAll('[data-tab]')];
 const panels=[...document.querySelectorAll('.panel')];
 const hero=document.querySelector('.hero');
-const windowEl=document.querySelector('.window');
-function setHeroVisible(visible){hero.classList.toggle('hidden',!visible)}
-function show(name){panels.forEach(p=>p.classList.toggle('active',p.id===name));tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===name));windowEl.classList.remove('article-mode');setHeroVisible(name==='now');history.replaceState(null,'','#'+name)}
-tabs.forEach(t=>t.addEventListener('click',()=>show(t.dataset.tab)));
-document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();show(a.dataset.jump)}));
-document.getElementById('about-first-read')?.addEventListener('click',e=>{e.preventDefault();openArticle('article-nietzsche')});
-function openArticle(id){panels.forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab==='journal'));windowEl.classList.add('article-mode');setHeroVisible(false);history.replaceState(null,'','#'+id)}
-function bindArticle(entryId,articleId,backId){const e=document.getElementById(entryId);const open=()=>openArticle(articleId);e.addEventListener('click',open);e.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();open()}});document.getElementById(backId).addEventListener('click',()=>show('journal'))}
-bindArticle('self-image-entry','article-self-image','self-image-back');
-bindArticle('hill-entry','article-hill','hill-back');
-bindArticle('nietzsche-entry','article-nietzsche','article-back');
-bindArticle('stamina-entry','article-stamina','stamina-back');
-bindArticle('trampoline-entry','article-trampoline','trampoline-back');
+const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
+function show(name){
+  panels.forEach(p=>p.classList.toggle('active',p.id===name));
+  tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
+  hero.classList.toggle('hidden',name!=='now');
+}
+function route(){
+  const name=location.hash.slice(1);
+  if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
+  show(['now','projects','journal','about'].includes(name)?name:'now');
+}
+tabs.forEach(t=>t.addEventListener('click',()=>{location.hash=t.dataset.tab;}));
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();location.hash=a.dataset.jump;}));
 document.querySelectorAll('[data-journal-filter]').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const filter=btn.dataset.journalFilter;
-    document.querySelectorAll('[data-journal-filter]').forEach(b=>b.classList.toggle('active',b===btn));
-    document.querySelectorAll('#journal .journal-item').forEach(item=>{
-      item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter);
-    });
-  });
+ btn.addEventListener('click',()=>{
+  const filter=btn.dataset.journalFilter;
+  document.querySelectorAll('[data-journal-filter]').forEach(b=>b.classList.toggle('active',b===btn));
+  document.querySelectorAll('#journal .journal-item').forEach(item=>item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter));
+ });
 });
-const initial=location.hash.slice(1); if(['now','projects','journal','about'].includes(initial)) show(initial); else if(['article-self-image','article-hill','article-nietzsche','article-stamina','article-trampoline'].includes(initial)) openArticle(initial);
-</script>
+window.addEventListener('hashchange',route);
+route();</script>
 </body>
 </html>
 
