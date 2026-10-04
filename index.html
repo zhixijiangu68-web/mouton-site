@@ -118,6 +118,33 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
  .card { min-height:120px; padding:20px; }
 }
 
+
+/* Bookshelf */
+.tabs{gap:clamp(12px,2.5vw,36px)}
+.window:has(.bookshelf.active){width:min(1120px,100%)}
+.bookshelf{background:rgba(247,244,236,.94);gap:28px}
+.bookshelf-heading{font-family:"Noto Serif JP",serif;font-size:clamp(28px,3.3vw,40px);font-weight:300;letter-spacing:.08em;margin:8px 0 12px}
+.bookshelf-intro{font-size:1rem;line-height:1.9;color:#444740;margin:0}
+.book-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.book-card{min-width:0;display:flex;flex-direction:column;padding:28px;border:1px solid var(--line);border-top:3px solid #477d72;border-radius:4px 4px 10px 10px;background:rgba(255,255,255,.58)}
+.book-card:nth-child(2){border-top-color:#788765}
+.book-category{font-size:.75rem;letter-spacing:.1em;color:#53584f;margin:0 0 18px}
+.book-title{font-family:"Noto Serif JP",serif;font-size:1.5rem;font-weight:400;line-height:1.55;margin:0 0 10px;overflow-wrap:anywhere}
+.book-subtitle{display:block;font-size:1rem;line-height:1.8;margin-top:8px}
+.book-author{font-size:.875rem;color:#53584f;line-height:1.8;margin:0 0 24px}
+.book-description{font-size:1rem;line-height:1.95;margin:0 0 20px}
+.book-for{font-size:.875rem;line-height:1.9;margin:0 0 24px;padding:14px 16px;background:#edf0e8;border-radius:6px}
+.book-for strong{display:block;font-weight:500;margin-bottom:4px}
+.book-actions{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:auto}
+.book-actions a{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem;text-underline-offset:5px;line-height:1.7}
+.book-actions a:focus-visible{outline:2px solid #303c35;outline-offset:4px}
+@media(max-width:760px){
+ .book-grid{grid-template-columns:1fr}
+ .book-card{padding:24px 20px}
+ .book-title{font-size:1.3rem}
+ .mobile-tabs{grid-template-columns:.7fr .7fr .7fr .7fr 1.6fr}
+}
+
 </style>
 </head>
 <body>
@@ -126,7 +153,7 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
   <header>
     <div class="brand">ムートン</div>
     <nav class="tabs" aria-label="メインナビゲーション">
-      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="about">ムートンについて</button>
+      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button>
     </nav>
     
   </header>
@@ -234,6 +261,39 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
       
       
       
+      
+      <section class="panel bookshelf" id="books" aria-labelledby="books-heading">
+        <div>
+          <div class="kicker">BOOKS / 本棚</div>
+          <h2 class="bookshelf-heading" id="books-heading">おすすめの本</h2>
+          <p class="bookshelf-intro">仕事のこと、日々の習慣のこと。<br>考えるきっかけになる本を、この本棚に。</p>
+        </div>
+        <div class="book-grid">
+          <article class="book-card">
+            <p class="book-category">01 / 経営・マネジメント / 洋書</p>
+            <h3 class="book-title" lang="en">No B.S. Ruthless Management of People and Profits</h3>
+            <p class="book-author">Dan S. Kennedy（ダン・S・ケネディ）</p>
+            <p class="book-description">人の採用や仕事の任せ方を、利益と生産性の視点から問い直す一冊。経営者と従業員の関係、責任の持たせ方、アイデアを実行に移す速さを、率直な切り口で扱います。</p>
+            <p class="book-for"><strong>こんな人に</strong>チームの動き方や、仕事を成果につなげる仕組みを考えたい人。</p>
+            <div class="book-actions">
+              <a href="https://www.amazon.co.jp/s?k=No%20B.S.%20Ruthless%20Management%20of%20People%20and%20Profits%20Dan%20S.%20Kennedy">Amazonで探す <span aria-hidden="true">↗</span></a>
+              <a href="https://www.simonandschuster.com/books/No-B-S-Ruthless-Management-of-People-and-Profits/Dan-S-Kennedy/No-B-S/9781599185408">出版社の紹介を読む <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+          <article class="book-card">
+            <p class="book-category">02 / 習慣・脳科学</p>
+            <h3 class="book-title">習慣と脳の科学<span class="book-subtitle">どうしても変えられないのはどうしてか</span></h3>
+            <p class="book-author">ラッセル・A・ポルドラック<br>神谷之康 監訳 / 児島修 訳<br>みすず書房</p>
+            <p class="book-description">なぜ、やめたい行動を繰り返してしまうのか。習慣が生まれ、続いていく仕組みを脳神経科学と心理学から探り、行動を変えるための研究を紹介する一冊です。</p>
+            <p class="book-for"><strong>こんな人に</strong>習慣の仕組みを知り、日々の行動を科学の視点から見直したい人。</p>
+            <div class="book-actions">
+              <a href="https://www.amazon.co.jp/s?k=%E7%BF%92%E6%85%A3%E3%81%A8%E8%84%B3%E3%81%AE%E7%A7%91%E5%AD%A6%20%E3%83%9D%E3%83%AB%E3%83%89%E3%83%A9%E3%83%83%E3%82%AF">Amazonで探す <span aria-hidden="true">↗</span></a>
+              <a href="https://www.msz.co.jp/book/detail/09588/">出版社の紹介を読む <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <div class="panel about" id="about">
         <div>
           <div class="kicker">ABOUT / MOUTON</div>
@@ -253,7 +313,7 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
 
   <footer class="bottom"><div>2026<br><br>SOMEWHERE IN JAPAN</div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
 
-  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="about">ムートンについて</button></nav>
+  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button></nav>
 </div>
 <script>const tabs=[...document.querySelectorAll('[data-tab]')];
 const panels=[...document.querySelectorAll('.panel')];
@@ -308,7 +368,7 @@ function show(name,restore){
 function route(){
  const name=location.hash.slice(1);
  if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
- show(['now','projects','journal','about'].includes(name)?name:'now',name==='journal');
+ show(['now','projects','journal','books','about'].includes(name)?name:'now',name==='journal');
 }
 function navigate(name){savePosition();if(location.hash==='#'+name)route();else location.hash=name;}
 tabs.forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.tab)));
