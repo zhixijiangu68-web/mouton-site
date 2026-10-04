@@ -87,6 +87,37 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 
 /* Keep inactive panels hidden on narrow screens. */
 .panel:not(.active){display:none!important}
+
+/* Comfortable controls and text on small screens */
+header { grid-template-columns: 1fr auto; }
+.tabs { gap: clamp(20px,3vw,44px); }
+.tab { min-height:44px; font-size:.875rem; letter-spacing:.04em; opacity:1; }
+.tab:focus-visible { outline:2px solid #303c35; outline-offset:4px; }
+.hero p { font-size:1rem; line-height:1.9; letter-spacing:.06em; }
+.hero:not(.hidden) { max-height:none; overflow:visible; }
+.copy, .card p, .about-start-copy { font-size:1rem; line-height:1.9; }
+.kicker, .card span, .about-start-label { font-size:.75rem; opacity:1; color:#53584f; }
+.about-start-link { font-size:.875rem; line-height:1.9; min-height:44px; letter-spacing:.02em; }
+.about-start { padding:20px; }
+.journal-read-time { display:block; margin-top:8px; font-size:.75rem; color:#53584f; line-height:1.8; }
+.journal-filter[aria-pressed="true"] { font-weight:600; }
+html.restoring .panel, html.restoring .hero, html.restoring .window { animation:none!important; transition:none!important; }
+@media(max-width:760px) {
+ header { grid-template-columns:1fr; }
+ main { width:94vw; }
+ .panel { padding:26px 22px; }
+ .now .big { font-size:clamp(1.75rem,7vw,2.25rem); }
+ .now-actions .link { flex:1 1 140px; justify-content:center; padding-inline:14px; }
+ .hero h1 { font-size:clamp(1.75rem,7.5vw,2.125rem); }
+ .hero p { padding-inline:8px; }
+ .journal { padding:26px 22px; }
+ .journal-title { font-size:1.125rem; }
+ .mobile-tabs { left:8px; right:8px; bottom:0; border-radius:15px 15px 0 0; padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px)); grid-template-columns: .8fr .8fr .8fr 1.6fr; }
+ .mobile-tabs .tab { font-size:.8125rem; letter-spacing:0; min-height:48px; padding:10px 2px; }
+ .bottom { padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)); }
+ .card { min-height:120px; padding:20px; }
+}
+
 </style>
 </head>
 <body>
@@ -95,9 +126,9 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
   <header>
     <div class="brand">ムートン</div>
     <nav class="tabs" aria-label="メインナビゲーション">
-      <button class="tab active" data-tab="now">NOW</button><button class="tab" data-tab="projects">PROJECTS</button><button class="tab" data-tab="journal">JOURNAL</button><button class="tab" data-tab="about">ABOUT</button>
+      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="about">ムートンについて</button>
     </nav>
-    <div class="tools">JP / EN　 ☰</div>
+    
   </header>
 
   <main>
@@ -120,65 +151,65 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
       <div class="panel journal" id="journal">
         <div class="journal-intro">
           <div class="journal-no">03</div>
-          <h2 class="journal-heading">JOURNAL</h2>
+          <h2 class="journal-heading">記事</h2>
           <div class="journal-sub">書き留める。</div>
           <p class="journal-copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
-          <div class="journal-filters" aria-label="JOURNALカテゴリー">
-            <button class="journal-filter active" data-journal-filter="all">ALL</button>
-            <button class="journal-filter" data-journal-filter="body">BODY</button>
-            <button class="journal-filter" data-journal-filter="philosophy">PHILOSOPHY</button>
-            <button class="journal-filter" data-journal-filter="making">MAKING</button>
+          <div class="journal-filters" aria-label="記事のカテゴリー">
+            <button class="journal-filter active" data-journal-filter="all">すべて</button>
+            <button class="journal-filter" data-journal-filter="body">身体</button>
+            <button class="journal-filter" data-journal-filter="philosophy">哲学・生き方</button>
+            <button class="journal-filter" data-journal-filter="making">制作</button>
           </div>
         </div>
         <div class="journal-list">
           <a class="journal-item clickable journal-link" href="boundaries.html" data-category="philosophy">
             <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">誰にでも好かれようとすると、なぜ安っぽくなるのか</div><div class="journal-excerpt">100人に薄く好かれるより、「これが自分だ」と言えるものを持って生きたい。</div></div>
+            <div class="journal-body"><div class="journal-title">誰にでも好かれようとすると、なぜ安っぽくなるのか</div><div class="journal-excerpt">100人に薄く好かれるより、「これが自分だ」と言えるものを持って生きたい。</div><span class="journal-read-time">約2分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" href="goggins.html" data-category="philosophy">
             <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">デイビッド・ゴギンズという変人を、僕は尊敬している</div><div class="journal-excerpt">普通ではない。だから、かっこいい。常識の外まで自分を追い込み続ける男の生き方。</div></div>
+            <div class="journal-body"><div class="journal-title">デイビッド・ゴギンズという変人を、僕は尊敬している</div><div class="journal-excerpt">普通ではない。だから、かっこいい。常識の外まで自分を追い込み続ける男の生き方。</div><span class="journal-read-time">約5分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" href="freedom.html" data-category="philosophy">
             <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">愛ではなく、自由を求める</div><div class="journal-excerpt">愛は外にあり、自由は自分の中にある。自分の人生の基準をどこに置くか。</div></div>
+            <div class="journal-body"><div class="journal-title">愛ではなく、自由を求める</div><div class="journal-excerpt">愛は外にあり、自由は自分の中にある。自分の人生の基準をどこに置くか。</div><span class="journal-read-time">約8分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" href="identity.html" data-category="philosophy">
             <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">あなたはどんな人間になりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div></div>
+            <div class="journal-body"><div class="journal-title">あなたはどんな人間になりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div><span class="journal-read-time">約5分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" href="blood-glucose.html" data-category="body">
             <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div></div>
+            <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div><span class="journal-read-time">約6分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="trampoline-entry" href="trampoline.html" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div></div>
+            <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div><span class="journal-read-time">約8分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="stamina-entry" href="stamina.html" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div></div>
+            <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div><span class="journal-read-time">約3分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="self-image-entry" href="self-image.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div></div>
+            <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約3分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="hill-entry" href="hill.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div></div>
+            <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約4分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="nietzsche-entry" href="nietzsche.html" tabindex="0" data-category="philosophy">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div></div>
+            <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div><span class="journal-read-time">約3分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <div class="journal-item is-note" data-category="making">
@@ -222,32 +253,70 @@ main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative
 
   <footer class="bottom"><div>2026<br><br>SOMEWHERE IN JAPAN</div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
 
-  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">NOW</button><button class="tab" data-tab="projects">PROJECTS</button><button class="tab" data-tab="journal">JOURNAL</button><button class="tab" data-tab="about">ABOUT</button></nav>
+  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="about">ムートンについて</button></nav>
 </div>
 <script>const tabs=[...document.querySelectorAll('[data-tab]')];
 const panels=[...document.querySelectorAll('.panel')];
 const hero=document.querySelector('.hero');
+const filters=[...document.querySelectorAll('[data-journal-filter]')];
+const items=[...document.querySelectorAll('#journal .journal-item')];
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
-function show(name){
-  panels.forEach(p=>p.classList.toggle('active',p.id===name));
-  tabs.forEach(t=>t.classList.toggle('active',t.dataset.tab===name));
-  hero.classList.toggle('hidden',name!=='now');
+const storageKey='mouton-journal-view-v1';
+let saved={filter:'all',scrollY:0,href:null,offset:0};
+try { const value=JSON.parse(sessionStorage.getItem(storageKey)); if(value&&typeof value==='object') saved={...saved,...value}; } catch {}
+let activePanel=null;
+let filter=['all','body','philosophy','making'].includes(saved.filter)?saved.filter:'all';
+let restoring=false;
+let restoreId=0;
+function persist(){try{sessionStorage.setItem(storageKey,JSON.stringify(saved));}catch{}}
+function savePosition(link){
+ if(activePanel!=='journal'||restoring)return;
+ saved={filter,scrollY:window.scrollY,href:link?link.getAttribute('href'):null,offset:link?link.getBoundingClientRect().top:0};persist();
+}
+function applyFilter(value){
+ filter=value;
+ filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
+ items.forEach(item=>item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter));
+}
+function restorePosition(){
+ const id=++restoreId;
+ restoring=true;
+ document.documentElement.classList.add('restoring');
+ const position=()=>{
+  if(id!==restoreId||activePanel!=='journal')return;
+  const link=items.find(item=>item.getAttribute('href')===saved.href&&!item.classList.contains('is-hidden'));
+  const y=link?window.scrollY+link.getBoundingClientRect().top-(Number(saved.offset)||0):Number(saved.scrollY)||0;
+  window.scrollTo(0,Math.max(0,y));
+ };
+ position();
+ const ready=document.fonts?document.fonts.ready:Promise.resolve();
+ ready.then(()=>requestAnimationFrame(()=>{if(id!==restoreId)return;position();restoring=false;document.documentElement.classList.remove('restoring');}));
+}
+function show(name,restore){
+ activePanel=name;
+ panels.forEach(p=>p.classList.toggle('active',p.id===name));
+ tabs.forEach(t=>{const selected=t.dataset.tab===name;t.classList.toggle('active',selected);if(selected)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
+ hero.classList.toggle('hidden',name!=='now');
+ if(name==='journal'&&restore)restorePosition();
+ else {restoreId++;restoring=false;document.documentElement.classList.remove('restoring');window.scrollTo(0,0);}
 }
 function route(){
-  const name=location.hash.slice(1);
-  if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
-  show(['now','projects','journal','about'].includes(name)?name:'now');
+ const name=location.hash.slice(1);
+ if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
+ show(['now','projects','journal','about'].includes(name)?name:'now',name==='journal');
 }
-tabs.forEach(t=>t.addEventListener('click',()=>{location.hash=t.dataset.tab;}));
-document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();location.hash=a.dataset.jump;}));
-document.querySelectorAll('[data-journal-filter]').forEach(btn=>{
- btn.addEventListener('click',()=>{
-  const filter=btn.dataset.journalFilter;
-  document.querySelectorAll('[data-journal-filter]').forEach(b=>b.classList.toggle('active',b===btn));
-  document.querySelectorAll('#journal .journal-item').forEach(item=>item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter));
- });
-});
+function navigate(name){savePosition();if(location.hash==='#'+name)route();else location.hash=name;}
+tabs.forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.tab)));
+document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();navigate(a.dataset.jump);}));
+filters.forEach(btn=>btn.addEventListener('click',()=>{
+ applyFilter(btn.dataset.journalFilter);
+ saved={filter,scrollY:window.scrollY,href:null,offset:0};persist();
+}));
+items.forEach(item=>item.addEventListener('click',()=>savePosition(item)));
+window.addEventListener('pagehide',()=>{if(activePanel==='journal'&&!saved.href)savePosition();});
 window.addEventListener('hashchange',route);
+window.addEventListener('pageshow',event=>{if(event.persisted){applyFilter(filter);restoring=false;document.documentElement.classList.remove('restoring');}});
+applyFilter(filter);
 route();</script>
 </body>
 </html>

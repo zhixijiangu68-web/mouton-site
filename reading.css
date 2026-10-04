@@ -32,3 +32,24 @@ a:focus-visible { outline:2px solid #303c35; outline-offset:5px; }
  .reading-card { min-height:80px; padding:20px; }
  .reading-next { margin-top:48px; }
 }
+
+/* Reading aids */
+.reading-time { font-family:Inter,sans-serif; font-size:.875rem; line-height:1.8; color:#53584f; margin:0 0 24px; }
+.reading-toc { margin:0 0 36px; padding:8px 18px; border:1px solid rgba(37,39,36,.22); border-radius:8px; background:rgba(255,255,255,.35); }
+.reading-toc summary { min-height:44px; padding:10px 0; cursor:pointer; font-size:1rem; line-height:1.5; }
+.reading-toc ol { padding-left:1.4rem; margin:8px 0 16px; }
+.reading-toc li { padding-left:4px; }
+.reading-toc a { display:block; padding:10px 0; color:#303c35; font-family:"Noto Serif JP",serif; font-size:1rem; line-height:1.7; text-underline-offset:4px; }
+h2[id] { scroll-margin-top:24px; }
+.reading-toc summary:focus-visible { outline:2px solid #303c35; outline-offset:3px; }
+img,svg { max-width:100%; }
+@media(max-width:760px){
+ .back { font-size:.875rem; }
+ .meta,.eyebrow { letter-spacing:.04em; }
+ article p { font-size:1rem; }
+ .photo-block { margin-inline:0; }
+ .photo-block figcaption { font-size:.75rem; opacity:1; color:#53584f; }
+ .flow { flex-direction:column; }
+ .flow .arrow { display:none; }
+ .bar { grid-template-columns:minmax(0,105px) minmax(0,1fr) 42px; }
+}
