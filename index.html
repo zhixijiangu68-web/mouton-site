@@ -118,7 +118,6 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
  .card { min-height:120px; padding:20px; }
 }
 
-
 /* Bookshelf */
 .tabs{gap:clamp(12px,2.5vw,36px)}
 .window:has(.bookshelf.active){width:min(1120px,100%)}
@@ -146,6 +145,16 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
 }
 
 .book-actions .book-review-link{flex-basis:100%;justify-content:center;padding:12px 16px;margin-bottom:6px;background:#303c35;color:#fff;border-radius:6px;text-decoration:none}.book-actions .book-review-link:hover{background:#202e26}
+.window:has(.foodscience.active){width:min(1120px,100%)}
+.foodscience{background:rgba(247,244,236,.92);grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:start}
+.foodscience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.science-card{display:flex;flex-direction:column;min-height:250px;padding:26px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.42);text-decoration:none;transition:.25s ease}
+.science-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.62)}
+.science-tag{font-size:.75rem;letter-spacing:.1em;color:#53584f;margin-bottom:18px}
+.science-card h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:1.4rem;line-height:1.65;margin:0 0 14px}
+.science-card p{font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.9;color:#444740;margin:0 0 18px}
+.science-card .science-more{margin-top:auto;font-size:.8rem;letter-spacing:.05em}
+@media(max-width:760px){.foodscience{grid-template-columns:1fr;gap:24px}.foodscience-grid{grid-template-columns:1fr}.science-card{min-height:0}.mobile-tabs{overflow-x:auto;display:flex}.mobile-tabs .tab{flex:0 0 auto;padding-inline:10px}}
 </style>
 </head>
 <body>
@@ -154,7 +163,7 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
   <header>
     <div class="brand">ムートン</div>
     <nav class="tabs" aria-label="メインナビゲーション">
-      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button>
+      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="foodscience">食事・化学</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button>
     </nav>
     
   </header>
@@ -273,11 +282,22 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
       
       
       
+      <section class="panel foodscience" id="foodscience" aria-labelledby="foodscience-heading">
+        <div>
+          <div class="kicker">FOOD &amp; SCIENCE</div>
+          <h2 class="journal-heading" id="foodscience-heading">食事・化学</h2>
+          <p class="journal-copy">食べ物、栄養、代謝、成分。健康についての言葉を、論文とデータから確かめる。</p>
+        </div>
+        <div class="foodscience-grid">
+          <a class="science-card" href="blueberry.html"><span class="science-tag">FOOD / POLYPHENOL</span><h3>ブルーベリーは、本当にそんなにすごいのか</h3><p>アントシアニン、血管機能、認知機能、血圧、血糖、腸内細菌。ヒト研究から、どこまで言えるのかを整理する。</p><span class="science-more">約7分で読む →</span></a>
+          <a class="science-card" href="blood-glucose.html"><span class="science-tag">METABOLISM / BLOOD GLUCOSE</span><h3>血糖値は、なぜこれほど健康に重要なのか</h3><p>血糖、血管、筋肉、そして未来の健康。そのつながりを研究データから考える。</p><span class="science-more">約6分で読む →</span></a>
+        </div>
+      </section>
+
       <section class="panel bookshelf" id="books" aria-labelledby="books-heading">
         <div>
           <div class="kicker">BOOKS / 本棚</div>
-          <h2 class="bookshelf-heading" id="books-heading">おすすめの本</h2>
-          <p class="bookshelf-intro">仕事のこと、日々の習慣のこと。<br>考えるきっかけになる本を、この本棚に。</p>
+          <h2 class="bookshelf-heading" id="books-heading">おすすめの本</h2>          <p class="bookshelf-intro">仕事のこと、日々の習慣のこと。<br>考えるきっかけになる本を、この本棚に。</p>
         </div>
         <div class="book-grid">
           <article class="book-card">
@@ -381,7 +401,7 @@ function show(name,restore){
 function route(){
  const name=location.hash.slice(1);
  if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
- show(['now','projects','journal','books','about'].includes(name)?name:'now',name==='journal');
+ show(['now','projects','journal','foodscience','books','about'].includes(name)?name:'now',name==='journal');
 }
 function navigate(name){savePosition();if(location.hash==='#'+name)route();else location.hash=name;}
 tabs.forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.tab)));
