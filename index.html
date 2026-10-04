@@ -182,6 +182,16 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
             <div class="journal-body"><div class="journal-title">あなたはどんな人間になりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div><span class="journal-read-time">約5分</span></div>
             <div class="journal-arrow">→</div>
           </a>
+          <a class="journal-item clickable journal-link" id="self-image-entry" href="self-image.html" tabindex="0" data-category="philosophy">
+            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約3分</span></div>
+            <div class="journal-arrow">→</div>
+          </a>
+          <a class="journal-item clickable journal-link" id="hill-entry" href="hill.html" tabindex="0" data-category="philosophy">
+            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+            <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約4分</span></div>
+            <div class="journal-arrow">→</div>
+          </a>
           <a class="journal-item clickable journal-link" href="blood-glucose.html" data-category="body">
             <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div><span class="journal-read-time">約6分</span></div>
@@ -195,16 +205,6 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
           <a class="journal-item clickable journal-link" id="stamina-entry" href="stamina.html" tabindex="0" data-category="body">
             <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div><span class="journal-read-time">約3分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="self-image-entry" href="self-image.html" tabindex="0" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約3分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="hill-entry" href="hill.html" tabindex="0" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約4分</span></div>
             <div class="journal-arrow">→</div>
           </a>
           <a class="journal-item clickable journal-link" id="nietzsche-entry" href="nietzsche.html" tabindex="0" data-category="philosophy">
@@ -259,6 +259,11 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
 const panels=[...document.querySelectorAll('.panel')];
 const hero=document.querySelector('.hero');
 const filters=[...document.querySelectorAll('[data-journal-filter]')];
+const journalList=document.querySelector('.journal-list');
+[...journalList.children].sort((a,b)=>{
+ const date=node=>node.querySelector('.journal-date')?.textContent.trim()||'';
+ return date(b).localeCompare(date(a));
+}).forEach(item=>journalList.appendChild(item));
 const items=[...document.querySelectorAll('#journal .journal-item')];
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
 const storageKey='mouton-journal-view-v1';

@@ -53,3 +53,14 @@ img,svg { max-width:100%; }
  .flow .arrow { display:none; }
  .bar { grid-template-columns:minmax(0,105px) minmax(0,1fr) 42px; }
 }
+
+/* Copy an article link at the beginning or end of a reading session. */
+.article-share { display:flex; flex-wrap:wrap; align-items:center; gap:10px 16px; margin:24px 0; }
+.copy-link { appearance:none; display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:10px 18px; border:1px solid #69756b; border-radius:999px; color:#303c35; background:rgba(255,255,255,.6); font:inherit; font-size:.875rem; cursor:pointer; }
+.copy-link:hover { background:#fff; }
+.copy-link:focus-visible { outline:2px solid #303c35; outline-offset:4px; }
+.copy-link:disabled { opacity:.65; cursor:wait; }
+.copy-status { font-size:.875rem; color:#303c35; line-height:1.8; }
+.copy-fallback { flex-basis:100%; min-width:0; font-size:.875rem; line-height:1.8; }
+.copy-fallback[hidden] { display:none; }
+.copy-url { display:block; width:100%; min-height:44px; margin-top:8px; padding:10px; border:1px solid #69756b; border-radius:6px; background:#fff; color:#252724; font-size:1rem; }
