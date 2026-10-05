@@ -68,3 +68,4 @@ img,svg { max-width:100%; }
 /* Reading progress */
 .reading-progress { position:fixed; top:0; left:0; right:0; height:3px; z-index:100; pointer-events:none; background:transparent; }
 .reading-progress span { display:block; height:100%; width:100%; background:#303c35; transform:scaleX(0); transform-origin:left center; }
+

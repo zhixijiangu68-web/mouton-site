@@ -16,7 +16,7 @@
    - 日付 `.meta`、読了時間 `.reading-time`、目次 `.reading-toc`、`次に読む`（`.reading-next`）を更新する
    - 末尾で `reading.css` と `article-share.js` を読み込む
 2. `index.html` の `.journal-list` の **先頭** に一覧項目を追加する
-   - `data-category` は `body`（身体）/ `philosophy`（哲学・生き方）/ `making`（制作）のいずれか
+   - `data-category` は `body`（身体）/ `philosophy`（哲学・生き方）/ `work`（仕事・働き方）/ `making`（制作）のいずれか
    - 日付は `YYYY.MM.DD`、読了時間は「約N分」
 3. ファイル名は英小文字とハイフン（例: `olive-oil.html`）
 
@@ -38,4 +38,5 @@
 - 商品リンクは `https://www.amazon.co.jp/dp/<ASIN または ISBN-10>` の形で書く。トラッキング ID の付与と「PR」表示は `site.js` が自動で行う
 - ASIN・ISBN は出版社や Amazon のページで確認できたものだけを使う。推測で書かない
 - 商品を紹介するのは、Issue で指定されたもの、またはムートン本人がすすめているものに限る
+- A8.net などの ASP のリンクは、提携済みの案件の広告リンクをそのまま使う。ASP リンクを含むページには、本文の先頭に `site.js` と同じ形式の PR 表示（`.pr-notice`）を手で入れる
 - 広告や紹介料の取り扱いは `policy.html` に書いてある。内容を変えるときはそちらも更新する
