@@ -56,6 +56,13 @@
 {%- if isArticle %}
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{% articleLd headline, description, page.date, updated, pageUrl, site %}</script>
+{%- set crumbs %}{% breadcrumbLd site, topics | findTopic(topic), headline, pageUrl %}{% endset %}
+{%- if crumbs | trim %}
+<script type="application/ld+json">{{ crumbs | safe }}</script>
+{%- endif %}
+{%- endif %}
+{%- if page.url == '/' %}
+<script type="application/ld+json">{% siteLd site %}</script>
 {%- endif %}
 {%- if site.analytics.ga4 %}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.ga4 }}"></script>

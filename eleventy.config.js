@@ -119,6 +119,32 @@ export default function (eleventyConfig) {
         (m, attrs, inner) => `<p${attrs}>${phraseBreaks(inner)}</p>`);
   });
 
+  // WebSite and author for the home page.
+  eleventyConfig.addShortcode('siteLd', site => {
+    const base = site.url ? site.url.replace(/\/?$/, '/') : null;
+    const data = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        { '@type': 'WebSite', name: site.name, description: site.description, inLanguage: 'ja', ...(base ? { url: base } : {}) },
+        { '@type': 'Person', name: site.author.name, description: site.author.bio, sameAs: [`https://x.com/${site.author.x}`] },
+      ],
+    };
+    return JSON.stringify(data).replace(/</g, '\\u003c');
+  });
+  // Home > topic > article, for search results.
+  eleventyConfig.addShortcode('breadcrumbLd', (site, topic, headline, url) => {
+    if (!site.url) return '';
+    const base = site.url.replace(/\/?$/, '/');
+    const items = [{ name: site.name, item: base }];
+    if (topic) items.push({ name: topic.label, item: new URL(`topic-${topic.key}.html`, base).href });
+    items.push({ name: headline, item: url });
+    return JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: items.map((it, i) => ({ '@type': 'ListItem', position: i + 1, ...it })),
+    }).replace(/</g, '\\u003c');
+  });
+
   eleventyConfig.addCollection('articles', api =>
     api.getFilteredByGlob('src/articles/*.html').sort((a, b) =>
       b.date - a.date || (a.data.journal?.order ?? 999) - (b.data.journal?.order ?? 999)));
