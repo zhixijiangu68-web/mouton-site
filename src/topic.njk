@@ -20,7 +20,7 @@ eleventyComputed:
   <p class="topic-count">{{ list.length }}本の記事</p>
   <div class="topic-list">
     {%- for a in list %}
-    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+    <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
       <span class="topic-date">{{ a.page.date | dotDate }}</span>
       <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.science.title }}</span>
       <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.science.text }}</span>

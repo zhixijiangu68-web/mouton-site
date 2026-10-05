@@ -11,6 +11,16 @@
   sceneEls.forEach(s=>near.observe(s));
  }else sceneEls.forEach(s=>s.classList.add('near'));
 
+ // Items marked data-rise fade up the first time they scroll into view.
+ const risers=[...document.querySelectorAll('[data-rise]')];
+ if(risers.length&&'IntersectionObserver' in window&&!reduce.matches){
+  const rise=new IntersectionObserver(entries=>{
+   let i=0;
+   entries.forEach(e=>{if(e.isIntersecting){e.target.style.setProperty('--rise-i',i++);e.target.classList.add('risen');rise.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px'});
+  risers.forEach(r=>rise.observe(r));
+ }else risers.forEach(r=>r.classList.add('risen'));
+
  // Menu (small screens)
  if(nav){
   const toggle=nav.querySelector('.menu-toggle');
@@ -133,6 +143,8 @@
  if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
  update();
+ const smooth=()=>setTimeout(()=>document.documentElement.classList.add('smooth'),0);
+ if(document.readyState==='complete')smooth();else window.addEventListener('load',smooth,{once:true});
  // Opening the page at an overlapping scene's anchor lands after its dissolve too.
  const start=location.hash&&document.getElementById(location.hash.slice(1));
  if(start&&start.classList.contains('overlap')&&!reduce.matches){

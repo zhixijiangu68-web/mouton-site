@@ -73,7 +73,7 @@ preloadHero: true
 
   <section class="section" id="journal" data-nav="light" data-nav-solid="light" aria-labelledby="journal-heading">
     <div class="section-inner">
-      <div class="section-head">
+      <div class="section-head" data-rise>
         <div>
           <p class="eyebrow">Journal</p>
           <h2 class="section-title" id="journal-heading">記事<em>— notes in progress</em></h2>
@@ -96,14 +96,14 @@ preloadHero: true
       <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
       <div class="journal-list">
         {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">
+        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endif %}{% endfor %}
         {%- for n in notes %}
-        <div class="journal-item is-note" data-category="{{ n.category }}">
+        <div class="journal-item is-note" data-rise data-category="{{ n.category }}">
           <div class="journal-date">{{ n.date | dotDate }}</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">{{ n.title }}</div><div class="journal-excerpt">{{ n.excerpt }}</div></div>
           <div class="journal-arrow">—</div>
@@ -115,7 +115,7 @@ preloadHero: true
 
   <section class="section section-blue" id="foodscience" data-nav="dark" data-nav-solid="dark" aria-labelledby="foodscience-heading">
     <div class="section-inner">
-      <div class="section-head">
+      <div class="section-head" data-rise>
         <div>
           <p class="eyebrow">Food &amp; Science</p>
           <h2 class="section-title" id="foodscience-heading">食事・化学<em>— read the evidence</em></h2>
@@ -125,7 +125,7 @@ preloadHero: true
       <p class="section-more"><a href="topic-food.html">食事・化学の記事をすべて見る <span aria-hidden="true">→</span></a></p>
       <div class="foodscience-grid">
         {%- for a in collections.articles | scienceCards %}
-        <a class="science-card" href="{{ a.page.fileSlug }}.html"><span class="science-tag">{{ a.data.science.tag }}</span><h3>{{ a.data.science.title }}</h3><p>{{ a.data.science.text }}</p><span class="science-more">約{{ a.data.readMinutes }}分で読む →</span></a>
+        <a class="science-card" data-rise href="{{ a.page.fileSlug }}.html"><span class="science-tag">{{ a.data.science.tag }}</span><h3>{{ a.data.science.title }}</h3><p>{{ a.data.science.text }}</p><span class="science-more">約{{ a.data.readMinutes }}分で読む →</span></a>
         {%- endfor %}
       </div>
     </div>
@@ -133,7 +133,7 @@ preloadHero: true
 
   <section class="section" id="books" data-nav="light" data-nav-solid="light" aria-labelledby="books-heading">
     <div class="section-inner">
-      <div class="section-head">
+      <div class="section-head" data-rise>
         <div>
           <p class="eyebrow">Bookshelf</p>
           <h2 class="section-title" id="books-heading">本棚<em>— books worth the time</em></h2>
@@ -141,7 +141,7 @@ preloadHero: true
         <p class="copy">仕事のこと、日々の習慣のこと。考えるきっかけになる本を、この本棚に。</p>
       </div>
       <div class="book-grid">
-          <article class="book-card">
+          <article class="book-card" data-rise>
             <p class="book-category">01 / 経営・マネジメント / 洋書</p>
             <h3 class="book-title" lang="en">No B.S. Ruthless Management of People and Profits</h3>
             <p class="book-author">Dan S. Kennedy（ダン・S・ケネディ）</p>
@@ -153,7 +153,7 @@ preloadHero: true
               <a href="https://www.simonandschuster.com/books/No-B-S-Ruthless-Management-of-People-and-Profits/Dan-S-Kennedy/No-B-S/9781599185408">出版社の紹介を読む <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-          <article class="book-card">
+          <article class="book-card" data-rise>
             <p class="book-category">02 / 習慣・脳科学</p>
             <h3 class="book-title">習慣と脳の科学<span class="book-subtitle">どうしても変えられないのはどうしてか</span></h3>
             <p class="book-author">ラッセル・A・ポルドラック<br>神谷之康 監訳 / 児島修 訳<br>みすず書房</p>
@@ -171,7 +171,7 @@ preloadHero: true
   <section class="section section-night" id="projects" data-nav="dark" data-nav-solid="dark" aria-labelledby="projects-heading">
     <canvas class="stars" aria-hidden="true"></canvas>
     <div class="section-inner">
-      <div class="section-head">
+      <div class="section-head" data-rise>
         <div>
           <p class="eyebrow">Projects</p>
           <h2 class="section-title" id="projects-heading">制作<em>— small constellations</em></h2>
@@ -181,9 +181,9 @@ preloadHero: true
       <div class="projects">
         {%- for p in projects %}
         {%- if p.url %}
-        <a class="card card-link" href="{{ p.url }}"><span>{{ p.label }}</span><h3>{{ p.name }}</h3><p>{{ p.text }}</p><em class="card-more">Open <span aria-hidden="true">→</span></em></a>
+        <a class="card card-link" data-rise href="{{ p.url }}"><span>{{ p.label }}</span><h3>{{ p.name }}</h3><p>{{ p.text }}</p><em class="card-more">Open <span aria-hidden="true">→</span></em></a>
         {%- else %}
-        <article class="card{% if p.placeholder %} placeholder{% endif %}"><span>{{ p.label }}</span><h3>{{ p.name }}</h3><p>{{ p.text }}</p></article>
+        <article data-rise class="card{% if p.placeholder %} placeholder{% endif %}"><span>{{ p.label }}</span><h3>{{ p.name }}</h3><p>{{ p.text }}</p></article>
         {%- endif %}
         {%- endfor %}
       </div>
