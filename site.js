@@ -92,6 +92,14 @@
   }
  }
 
+ // Keyboard focus moving into a scene brings that scene fully into view first.
+ document.addEventListener('focusin',e=>{
+  const scene=e.target.closest&&e.target.closest('.scene.overlap');
+  if(!scene||!scene.classList.contains('pending')&&!scene.style.getPropertyValue('--t').startsWith('0.'))return;
+  const y=scene.getBoundingClientRect().top+window.scrollY+window.innerHeight*1.15;
+  window.scrollTo({top:y,behavior:'auto'});
+ });
+
  // In-page links to an overlapping scene land after its dissolve, not before it.
  document.addEventListener('click',e=>{
   const a=e.target.closest('a[href*="#"]');
