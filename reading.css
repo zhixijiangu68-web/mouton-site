@@ -69,5 +69,3 @@ img,svg { max-width:100%; }
 .reading-progress { position:fixed; top:0; left:0; right:0; height:3px; z-index:100; pointer-events:none; background:transparent; }
 .reading-progress span { display:block; height:100%; width:100%; background:#303c35; transform:scaleX(0); transform-origin:left center; }
 
-/* Advertising disclosure shown at the top of articles that contain affiliate links. */
-.pr-label{display:inline-block;font-size:.75rem;letter-spacing:.08em;padding:2px 10px;border:1px solid rgba(37,39,36,.4);border-radius:999px;margin:0 0 18px}
