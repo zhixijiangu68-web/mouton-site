@@ -112,7 +112,7 @@ body.menu-locked{overflow:hidden}
 /* ---------- Document pages (operator, privacy, contact, 404) ---------- */
 .doc-cover{height:clamp(240px,40vh,380px);background:var(--img,none) center/cover no-repeat,var(--ph)}
 .doc{position:relative;width:min(840px,100%);margin:calc(-1 * clamp(80px,14vh,140px)) auto 0;padding:clamp(32px,6vw,72px) clamp(22px,6vw,72px) clamp(48px,7vw,80px);background:var(--paper);box-shadow:0 -40px 90px rgba(10,20,60,.12)}
-.doc-title{font-family:var(--serif);font-weight:200;font-size:clamp(2rem,5vw,3rem);line-height:1.45;letter-spacing:.04em;margin:0 0 32px}
+.doc-title{font-family:var(--serif);font-weight:200;font-size:clamp(1.625rem,6.2vw,3rem);line-height:1.45;letter-spacing:.04em;margin:0 0 32px}
 .doc h2{font-family:var(--serif);font-weight:300;font-size:clamp(1.25rem,2.4vw,1.5rem);line-height:1.6;margin:48px 0 14px;padding-top:24px;border-top:1px solid var(--line)}
 .doc p,.doc li{font-family:var(--serif);font-size:1rem;line-height:2.05;color:#2c2d29}
 .doc p{margin:0 0 16px}
