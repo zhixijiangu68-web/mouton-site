@@ -64,3 +64,7 @@ img,svg { max-width:100%; }
 .copy-fallback { flex-basis:100%; min-width:0; font-size:.875rem; line-height:1.8; }
 .copy-fallback[hidden] { display:none; }
 .copy-url { display:block; width:100%; min-height:44px; margin-top:8px; padding:10px; border:1px solid #69756b; border-radius:6px; background:#fff; color:#252724; font-size:1rem; }
+
+/* Reading progress */
+.reading-progress { position:fixed; top:0; left:0; right:0; height:3px; z-index:100; pointer-events:none; background:transparent; }
+.reading-progress span { display:block; height:100%; width:100%; background:#303c35; transform:scaleX(0); transform-origin:left center; }
