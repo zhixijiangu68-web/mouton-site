@@ -4,6 +4,13 @@
  const nav=document.querySelector('.site-nav');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
 
+ // Load each scene's art shortly before it scrolls into view.
+ const sceneEls=[...document.querySelectorAll('[data-scene]')];
+ if('IntersectionObserver' in window){
+  const near=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('near');near.unobserve(e.target);}}),{rootMargin:'150% 0px'});
+  sceneEls.forEach(s=>near.observe(s));
+ }else sceneEls.forEach(s=>s.classList.add('near'));
+
  // Menu (small screens)
  if(nav){
   const toggle=nav.querySelector('.menu-toggle');
