@@ -3,7 +3,7 @@ layout: base.njk
 bodyClass: site doc-page
 ---
 {% include "partials/nav.njk" %}
-<div class="doc-cover ph-hero" data-img="images/hero.jpg" data-nav="dark"></div>
+<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
 <main class="doc" data-nav="light" data-nav-solid="light">
   <p class="eyebrow">{{ eyebrow }}</p>
   <h1 class="doc-title">{{ heading or title }}</h1>

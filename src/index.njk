@@ -12,7 +12,7 @@ extraCss: [home.css]
 <main>
   <section class="scene scene-hero" id="top" data-scene data-next-overlap data-nav="dark">
     <div class="scene-pin">
-      <div class="scene-media ph-hero" data-img="images/hero.jpg"></div>
+      <div class="scene-media ph-hero{{ '' if (["images/hero.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/hero.jpg" %}></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
@@ -25,7 +25,7 @@ extraCss: [home.css]
 
   <section class="scene overlap" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
     <div class="scene-pin">
-      <div class="scene-media ph-think" data-img="images/scene-think.jpg"></div>
+      <div class="scene-media ph-think{{ '' if (["images/scene-think.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-think.jpg" %}></div>
       <div class="scene-shade"></div>
       <div class="scene-copy">
         <p class="eyebrow reveal">01 — Philosophy</p>
@@ -40,7 +40,7 @@ extraCss: [home.css]
 
   <section class="scene overlap" id="body" data-scene data-reveal data-next-overlap data-nav="light" data-tone="light">
     <div class="scene-pin">
-      <div class="scene-media ph-body" data-img="images/scene-body.jpg"></div>
+      <div class="scene-media ph-body{{ '' if (["images/scene-body.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-body.jpg" %}></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--x:end;--y:center;--w:640px">
         <p class="eyebrow reveal">02 — Body</p>
@@ -55,7 +55,7 @@ extraCss: [home.css]
 
   <section class="scene overlap" id="food" data-scene data-reveal data-nav="dark" style="--h:330vh">
     <div class="scene-pin">
-      <div class="scene-media ph-food" data-img="images/scene-food.jpg"></div>
+      <div class="scene-media ph-food{{ '' if (["images/scene-food.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-food.jpg" %}></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:900px;text-align:center">
         <p class="eyebrow reveal">03 — Food &amp; Science</p>
@@ -188,7 +188,7 @@ extraCss: [home.css]
 
   <section class="scene" id="about" data-scene data-reveal data-nav="light" data-tone="light" style="--h:250vh">
     <div class="scene-pin">
-      <div class="scene-media ph-about" data-img="images/scene-about.jpg"></div>
+      <div class="scene-media ph-about{{ '' if (["images/scene-about.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-about.jpg" %}></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--w:760px">
         <p class="eyebrow reveal">About — Mouton</p>

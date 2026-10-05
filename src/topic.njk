@@ -12,7 +12,7 @@ eleventyComputed:
 ---
 {%- set list = collections.articles | inTopic(t.key) %}
 {% include "partials/nav.njk" %}
-<div class="doc-cover ph-{{ t.ph }}" data-img="images/cover-{{ t.ph }}.jpg" data-nav="dark"></div>
+<div class="doc-cover ph-{{ t.ph }}" data-nav="dark"{% bgImage "images/cover-" + t.ph + ".jpg" %}></div>
 <main class="doc topic" data-nav="light" data-nav-solid="light">
   <p class="eyebrow">{{ t.en }}</p>
   <h1 class="doc-title">{{ t.label }}</h1>

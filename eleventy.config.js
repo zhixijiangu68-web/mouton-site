@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { loadDefaultJapaneseParser } from 'budoux';
 import site from './src/_data/site.js';
 
@@ -31,6 +32,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('dotDate', d => ymd(new Date(d)).join('.'));
   eleventyConfig.addFilter('scienceCards', items =>
     items.filter(a => a.data.science).sort((a, b) => a.data.science.order - b.data.science.order));
+  // First image in the list that exists, or '' so the placeholder art shows.
+  // Checking at build time avoids requesting images that are not there yet.
+  eleventyConfig.addFilter('firstImage', paths => paths.find(p => existsSync(p)) || '');
+  eleventyConfig.addShortcode('bgImage', (...paths) => {
+    const src = paths.find(p => existsSync(p));
+    return src ? ` style="--img:url('${src}')"` : '';
+  });
   eleventyConfig.addFilter('findTopic', (topics, key) => topics.find(t => t.key === key) || null);
   eleventyConfig.addFilter('inTopic', (items, key) => items.filter(a => a.data.topic === key));
   // Curated picks first, then the newest articles on the same topic.

@@ -3,7 +3,8 @@ layout: base.njk
 bodyClass: article-page
 ---
 {% include "partials/nav.njk" %}
-<div class="cover ph-{{ category }}" data-img="images/articles/{{ page.fileSlug }}.jpg" data-fallback="images/cover-{{ category }}.jpg" data-nav="dark"><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a></div>
+{%- set coverImg = ["images/articles/" + page.fileSlug + ".jpg", "images/cover-" + category + ".jpg"] | firstImage %}
+<div class="cover ph-{{ category }}{{ '' if coverImg else ' is-placeholder' }}" data-nav="dark"{% if coverImg %} style="--img:url('{{ coverImg }}')"{% endif %}><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a></div>
 {{ content | safe }}
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-links.njk" %}

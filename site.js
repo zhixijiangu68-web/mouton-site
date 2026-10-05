@@ -1,22 +1,8 @@
 'use strict';
-// Shared behaviour: navigation theme and menu, images with fallbacks, scroll scenes.
+// Shared behaviour: navigation theme and menu, scroll scenes.
 (()=>{
  const nav=document.querySelector('.site-nav');
  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
-
- // Load each data-img (then data-fallback); keep the placeholder art if none exists.
- document.querySelectorAll('[data-img]').forEach(el=>{
-  const sources=[el.dataset.img,el.dataset.fallback].filter(Boolean);
-  const tryNext=()=>{
-   const src=sources.shift();
-   if(!src){el.classList.add('is-placeholder');return;}
-   const img=new Image();
-   img.onload=()=>{el.style.setProperty('--img','url("'+src+'")');el.classList.add('has-image');};
-   img.onerror=tryNext;
-   img.src=src;
-  };
-  tryNext();
- });
 
  // Menu (small screens)
  if(nav){
@@ -39,53 +25,62 @@
  const clamp=v=>Math.min(1,Math.max(0,v));
  const ease=v=>v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2;
 
- function updateNav(){
+ // Section positions are measured once (and again when the layout changes), so
+ // scrolling only reads scrollY and never forces the browser to recompute layout.
+ let layout={zones:[],targets:[],scenes:[],navProbe:0,vh:0};
+ const measure=()=>{
+  const y=window.scrollY;
+  const box=el=>{const r=el.getBoundingClientRect();return {top:r.top+y,bottom:r.bottom+y,height:r.height};};
+  layout={
+   vh:window.innerHeight,
+   navProbe:nav?nav.offsetHeight/2:0,
+   zones:zones.map(z=>({el:z,...box(z)})),
+   targets:navLinks.map(a=>{const t=document.getElementById(a.hash.slice(1));return t?{a,...box(t)}:null;}).filter(Boolean),
+   scenes:scenes.map(s=>({el:s,...box(s),hero:s.classList.contains('scene-hero'),overlap:s.classList.contains('overlap'),reveal:s.hasAttribute('data-reveal'),nextOverlap:s.hasAttribute('data-next-overlap')})),
+  };
+ };
+
+ let lastTheme='',lastSolid=null,lastCurrent;
+ function updateNav(y){
   if(!nav)return;
-  const probe=nav.offsetHeight/2;
+  const probe=y+layout.navProbe;
   let theme='light',solid='';
-  for(const z of zones){
-   const r=z.getBoundingClientRect();
-   if(r.top<=probe&&r.bottom>probe){theme=z.dataset.nav;solid=z.dataset.navSolid||'';}
-  }
-  nav.dataset.theme=theme;
-  if(solid)nav.dataset.solid=solid;else delete nav.dataset.solid;
+  for(const z of layout.zones)if(z.top<=probe&&z.bottom>probe){theme=z.el.dataset.nav;solid=z.el.dataset.navSolid||'';}
+  if(theme!==lastTheme){nav.dataset.theme=theme;lastTheme=theme;}
+  if(solid!==lastSolid){if(solid)nav.dataset.solid=solid;else delete nav.dataset.solid;lastSolid=solid;}
+  const line=y+layout.vh*.4;
   let current=null;
-  for(const a of navLinks){
-   const target=document.getElementById(a.hash.slice(1));
-   if(!target)continue;
-   const r=target.getBoundingClientRect();
-   if(r.top<=window.innerHeight*.4&&r.bottom>window.innerHeight*.4)current=a;
-  }
-  navLinks.forEach(a=>{if(a===current)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+  for(const t of layout.targets)if(t.top<=line&&t.bottom>line)current=t.a;
+  if(current!==lastCurrent){navLinks.forEach(a=>{if(a===current)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});lastCurrent=current;}
  }
 
- function updateScenes(){
-  const vh=window.innerHeight;
-  for(const s of scenes){
-   const r=s.getBoundingClientRect();
-   if(r.bottom<-vh||r.top>vh*1.5)continue;
+ function updateScenes(y){
+  const vh=layout.vh;
+  for(const s of layout.scenes){
+   const top=s.top-y,bottom=s.bottom-y;
+   if(bottom<-vh||top>vh*1.5)continue;
+   const el=s.el;
    // p: 0 when the scene pins, 1 when it lets go.
-   const p=clamp(-r.top/Math.max(1,r.height-vh));
-   s.style.setProperty('--p',p.toFixed(4));
+   const p=clamp(-top/Math.max(1,s.height-vh));
+   el.style.setProperty('--p',p.toFixed(4));
    // Copy fades in once the scene pins, and out as the next scene covers it
    // (or as it scrolls away when nothing overlaps it).
-   const hero=s.classList.contains('scene-hero');
    // Overlapping scenes spend their first stretch dissolving in over the previous one.
-   const intro=s.classList.contains('overlap')?vh*.7:0;
-   const pinned=-r.top-intro;
-   const tIn=hero?1:ease(clamp(pinned/(vh*.3)));
-   const t2In=hero?1:ease(clamp((pinned-vh*.12)/(vh*.3)));
-   const leave=s.hasAttribute('data-next-overlap')?clamp((2*vh-r.bottom)/(vh*.3)):clamp((1.25*vh-r.bottom)/(vh*.4));
+   const intro=s.overlap?vh*.7:0;
+   const pinned=-top-intro;
+   const tIn=s.hero?1:ease(clamp(pinned/(vh*.3)));
+   const t2In=s.hero?1:ease(clamp((pinned-vh*.12)/(vh*.3)));
+   const leave=s.nextOverlap?clamp((2*vh-bottom)/(vh*.3)):clamp((1.25*vh-bottom)/(vh*.4));
    const tOut=1-ease(leave);
-   s.style.setProperty('--t',Math.min(tIn,tOut).toFixed(3));
-   s.style.setProperty('--t2',Math.min(t2In,tOut).toFixed(3));
-   if(s.hasAttribute('data-reveal')){
+   el.style.setProperty('--t',Math.min(tIn,tOut).toFixed(3));
+   el.style.setProperty('--t2',Math.min(t2In,tOut).toFixed(3));
+   if(s.reveal){
     // Halftone dissolve: dots grow until the image covers the screen.
-    const e=intro?clamp(-r.top/intro):clamp(1-r.top/vh);
+    const e=intro?clamp(-top/intro):clamp(1-top/vh);
     const dot=ease(e)*7.5;
-    s.style.setProperty('--dot',dot.toFixed(2));
-    s.classList.toggle('revealed',dot>=7.2);
-    s.classList.toggle('pending',dot<.05);
+    el.style.setProperty('--dot',dot.toFixed(2));
+    el.classList.toggle('revealed',dot>=7.2);
+    el.classList.toggle('pending',dot<.05);
    }
   }
  }
@@ -102,11 +97,20 @@
   history.pushState(null,'',a.hash);
  });
 
- let ticking=false;
- const update=()=>{ticking=false;if(!reduce.matches)updateScenes();updateNav();};
+ let ticking=false,dirty=true;
+ const update=()=>{
+  ticking=false;
+  if(dirty){measure();dirty=false;}
+  const y=window.scrollY;
+  if(!reduce.matches)updateScenes(y);
+  updateNav(y);
+ };
  const request=()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}};
+ const remeasure=()=>{dirty=true;request();};
  window.addEventListener('scroll',request,{passive:true});
- window.addEventListener('resize',request);
+ window.addEventListener('resize',remeasure);
+ if('ResizeObserver' in window)new ResizeObserver(remeasure).observe(document.body);
+ if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
  update();
 })();

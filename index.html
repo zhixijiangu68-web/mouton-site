@@ -16,7 +16,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="home.css">
 <script src="site.js" defer></script>
@@ -41,7 +43,7 @@
 <main>
   <section class="scene scene-hero" id="top" data-scene data-next-overlap data-nav="dark">
     <div class="scene-pin">
-      <div class="scene-media ph-hero" data-img="images/hero.jpg"></div>
+      <div class="scene-media ph-hero is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
@@ -54,7 +56,7 @@
 
   <section class="scene overlap" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
     <div class="scene-pin">
-      <div class="scene-media ph-think" data-img="images/scene-think.jpg"></div>
+      <div class="scene-media ph-think is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy">
         <p class="eyebrow reveal">01 — Philosophy</p>
@@ -69,7 +71,7 @@
 
   <section class="scene overlap" id="body" data-scene data-reveal data-next-overlap data-nav="light" data-tone="light">
     <div class="scene-pin">
-      <div class="scene-media ph-body" data-img="images/scene-body.jpg"></div>
+      <div class="scene-media ph-body is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--x:end;--y:center;--w:640px">
         <p class="eyebrow reveal">02 — Body</p>
@@ -84,7 +86,7 @@
 
   <section class="scene overlap" id="food" data-scene data-reveal data-nav="dark" style="--h:330vh">
     <div class="scene-pin">
-      <div class="scene-media ph-food" data-img="images/scene-food.jpg"></div>
+      <div class="scene-media ph-food is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:900px;text-align:center">
         <p class="eyebrow reveal">03 — Food &amp; Science</p>
@@ -315,7 +317,7 @@
 
   <section class="scene" id="about" data-scene data-reveal data-nav="light" data-tone="light" style="--h:250vh">
     <div class="scene-pin">
-      <div class="scene-media ph-about" data-img="images/scene-about.jpg"></div>
+      <div class="scene-media ph-about is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--w:760px">
         <p class="eyebrow reveal">About — Mouton</p>
