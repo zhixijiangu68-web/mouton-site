@@ -128,3 +128,14 @@ document.querySelectorAll('.article-share').forEach(group=>{
  if(cover)new IntersectionObserver(([e])=>showSide(!e.isIntersecting)).observe(cover);else showSide(true);
  wide.addEventListener('change',()=>showSide(!cover||cover.getBoundingClientRect().bottom<0));
 })();
+
+// Tables that scroll sideways on small screens can be reached and scrolled with the keyboard.
+(()=>{
+ const wraps=[...document.querySelectorAll('.table-wrap')];
+ const update=()=>wraps.forEach((w,i)=>{
+  if(w.scrollWidth>w.clientWidth+1){w.tabIndex=0;w.setAttribute('role','region');w.setAttribute('aria-label','表'+(i+1)+'（横にスクロールできます）');}
+  else{w.removeAttribute('tabindex');w.removeAttribute('role');w.removeAttribute('aria-label');}
+ });
+ update();
+ window.addEventListener('resize',update);
+})();

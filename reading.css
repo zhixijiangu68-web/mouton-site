@@ -104,7 +104,7 @@ body.article-page > main { padding-bottom:clamp(56px,8vw,96px) !important; margi
 body.article-page h1 { font-weight:200; letter-spacing:.03em; }
 body.article-page h2 { font-weight:300; }
 body.article-page .meta, body.article-page .eyebrow { letter-spacing:.14em; color:#5b5d56; }
-body.article-page article a:not(.reading-card):not(.reading-return):not(.copy-link) { color:#1442c4; text-underline-offset:4px; }
+body.article-page article a:not(.reading-card):not(.reading-return):not(.copy-link):not(.book-buy) { color:#1442c4; text-underline-offset:4px; }
 body.article-page .reading-card { background:#fff; border-color:rgba(27,28,25,.12); border-radius:2px; transition:border-color .3s, transform .5s cubic-bezier(.2,.7,.2,1); }
 body.article-page .reading-card:hover { background:#fff; border-color:#1442c4; transform:translateY(-3px); text-decoration:none; color:#1442c4; }
 body.article-page .copy-link { border-color:rgba(27,28,25,.3); color:#1b1c19; background:transparent; }
@@ -147,3 +147,15 @@ body.article-page article a.copy-link:hover { color:#f8f5ee; }
 }
 @media (prefers-reduced-motion:reduce) { .toc-side { transition:none !important; } }
 @media print { .toc-side { display:none !important; } }
+
+/* Legacy labels and notes were as small as 8px; keep every bit of text at 12px or more. */
+body.article-page :is(main, .wrap) :is(small, .note, .label, .value, .axis-label, .pendulum-left, .pendulum-right, .timeline-no) { font-size:max(.75rem, 1em) !important; }
+body.article-page :is(main, .wrap) small, body.article-page :is(main, .wrap) .timeline-no, body.article-page :is(main, .wrap) .axis-label, body.article-page :is(main, .wrap) [class^="pendulum-"] { font-size:.75rem !important; letter-spacing:.08em; }
+article a[href^="#ref-"] { font-size:max(.75rem, .85em); }
+body.article-page :is(.stat, .metric) span { font-size:.75rem !important; opacity:1 !important; color:#5b5d56; }
+
+/* Muted captions and labels from the older designs, darkened to readable contrast. */
+body.article-page :is(figcaption, figcaption a, .axis-label, .timeline-no) { color:#5b5d56 !important; opacity:1 !important; }
+body.article-page .book-buy { background:#1b1c19 !important; color:#f8f5ee !important; }
+body.article-page .book-buy:hover { background:#1442c4 !important; }
+.table-wrap:focus-visible{outline:2px solid #1442c4;outline-offset:4px}

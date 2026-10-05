@@ -4,7 +4,7 @@ bodyClass: article-page
 ---
 {% include "partials/nav.njk" %}
 {%- set coverImg = ["images/articles/" + page.fileSlug + ".jpg", "images/cover-" + category + ".jpg"] | firstImage %}
-<div class="cover ph-{{ category }}{{ '' if coverImg else ' is-placeholder' }}" data-nav="{{ 'light' if (category in ['books', 'body'] and not coverImg) else 'dark' }}"{% if coverImg %} style="--img:url('{{ coverImg }}')"{% endif %}><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a></div>
+<div class="cover ph-{{ category }}{{ '' if coverImg else ' is-placeholder' }}" data-nav="{{ 'light' if (category in ['books', 'body'] and not coverImg) else 'dark' }}"{% if coverImg %} style="--img:url('{{ coverImg }}')"{% endif %}><nav aria-label="戻る"><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a></nav></div>
 {{ content | safe }}
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-links.njk" %}
