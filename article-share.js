@@ -47,3 +47,29 @@ document.querySelectorAll('.article-share').forEach(group=>{
  window.addEventListener('resize',request);
  update();
 })();
+
+// Button to jump back to the top once the reader is well into the page.
+(()=>{
+ const button=document.createElement('button');
+ button.type='button';
+ button.className='to-top';
+ button.setAttribute('aria-label','ページの先頭へ戻る');
+ button.textContent='↑';
+ button.tabIndex=-1;
+ document.body.appendChild(button);
+ const reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ button.addEventListener('click',()=>{
+  window.scrollTo({top:0,behavior:reduce.matches?'auto':'smooth'});
+  const heading=document.querySelector('h1');
+  if(heading){heading.setAttribute('tabindex','-1');heading.focus({preventScroll:true});}
+ });
+ let ticking=false;
+ const update=()=>{
+  ticking=false;
+  const visible=window.scrollY>window.innerHeight*1.5;
+  button.classList.toggle('visible',visible);
+  button.tabIndex=visible?0:-1;
+ };
+ window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
+ update();
+})();
