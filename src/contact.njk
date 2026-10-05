@@ -1,0 +1,21 @@
+---
+layout: page.njk
+permalink: contact.html
+title: "お問い合わせ — ムートン"
+description: "ムートンのサイトへのお問い合わせ方法。"
+eyebrow: Contact
+heading: お問い合わせ
+---
+<p>記事の感想、内容の誤りのご指摘、お仕事のご相談などは、以下からお気軽にご連絡ください。内容を確認のうえ、必要に応じてお返事します。お返事までにお時間をいただくことがあります。</p>
+<div class="contact-list">
+  {%- if site.contact.formUrl %}
+  <a class="btn btn-dark" href="{{ site.contact.formUrl }}" target="_blank" rel="noopener noreferrer">お問い合わせフォーム <span aria-hidden="true">↗</span></a>
+  {%- endif %}
+  {%- if site.contact.email %}
+  <a class="btn btn-outline" href="mailto:{{ site.contact.email }}">メールで送る（{{ site.contact.email }}）</a>
+  {%- endif %}
+  {%- if site.contact.x %}
+  <a class="btn {{ 'btn-outline' if (site.contact.formUrl or site.contact.email) else 'btn-dark' }}" href="https://x.com/{{ site.contact.x }}" target="_blank" rel="noopener noreferrer">X（@{{ site.contact.x }}）にメッセージを送る <span aria-hidden="true">↗</span></a>
+  {%- endif %}
+</div>
+<p class="doc-small">お知らせいただいた情報の取り扱いについては、<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>

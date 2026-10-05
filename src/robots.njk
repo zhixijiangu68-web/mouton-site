@@ -1,0 +1,10 @@
+---js
+{
+  permalink: data => (data.site.url ? "robots.txt" : false),
+  eleventyExcludeFromCollections: true,
+}
+---
+User-agent: *
+Allow: /
+Disallow: /src/
+Sitemap: {{ "sitemap.xml" | absoluteUrl(site.url) }}

@@ -1,0 +1,15 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+---
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-img="images/hero.jpg" data-nav="dark"></div>
+<main class="doc" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">{{ eyebrow }}</p>
+  <h1 class="doc-title">{{ heading or title }}</h1>
+  {{ content | safe }}
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

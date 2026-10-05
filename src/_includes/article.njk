@@ -1,0 +1,11 @@
+---
+layout: base.njk
+bodyClass: article-page
+---
+{% include "partials/nav.njk" %}
+<div class="cover ph-{{ category }}" data-img="images/articles/{{ page.fileSlug }}.jpg" data-fallback="images/cover-{{ category }}.jpg" data-nav="dark"><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a></div>
+{{ content | safe }}
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

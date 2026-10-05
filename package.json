@@ -1,0 +1,14 @@
+{
+  "name": "mouton-site",
+  "private": true,
+  "description": "ムートンの個人サイト。src/ のテンプレートから、リポジトリ直下に HTML を生成する。",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve",
+    "check": "eleventy && git status --porcelain && test -z \"$(git status --porcelain)\""
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "type": "module"
+}

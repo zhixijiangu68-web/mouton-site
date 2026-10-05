@@ -64,3 +64,7 @@
 | `images/articles/stamina.jpg` | 筋トレを減らしたら、なぜか「体力」がついた | `images/cover-body.jpg` |
 | `images/articles/system-goal.jpg` | システムのないゴールは、動かない | `images/cover-philosophy.jpg` |
 | `images/articles/trampoline.jpg` | 大人は、いつから跳ばなくなったのか。 | `images/cover-body.jpg` |
+
+## 共有用の画像
+
+`images/og-default.jpg`（1200×630）は、SNSで共有したときに出る画像です。いまは仮の絵で作ってあります。差し替えるときは同じ名前・同じサイズで置いてください。独自ドメインを `src/_data/site.js` の `url` に設定すると使われるようになります。
