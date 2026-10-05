@@ -104,7 +104,7 @@ body.article-page > main { padding-bottom:clamp(56px,8vw,96px) !important; margi
 body.article-page h1 { font-weight:200; letter-spacing:.03em; }
 body.article-page h2 { font-weight:300; }
 body.article-page .meta, body.article-page .eyebrow { letter-spacing:.14em; color:#5b5d56; }
-body.article-page article a:not(.reading-card):not(.reading-return) { color:#1442c4; text-underline-offset:4px; }
+body.article-page article a:not(.reading-card):not(.reading-return):not(.copy-link) { color:#1442c4; text-underline-offset:4px; }
 body.article-page .reading-card { background:#fff; border-color:rgba(27,28,25,.12); border-radius:2px; transition:border-color .3s, transform .5s cubic-bezier(.2,.7,.2,1); }
 body.article-page .reading-card:hover { background:#fff; border-color:#1442c4; transform:translateY(-3px); text-decoration:none; color:#1442c4; }
 body.article-page .copy-link { border-color:rgba(27,28,25,.3); color:#1b1c19; background:transparent; }
@@ -130,6 +130,8 @@ article a[href^="#ref-"] { text-decoration:none; font-size:.85em; white-space:no
 .share-x,.share-native{text-decoration:none}
 body.article-page article a.copy-link { color:#1b1c19; }
 body.article-page article a.copy-link:hover { color:#f8f5ee; }
+.cover[data-nav="light"] .cover-back { color:#1b1c19; text-shadow:none; }
+.cover[data-nav="light"]::before { background:linear-gradient(180deg,rgba(248,245,238,.4),rgba(248,245,238,0) 40%); }
 
 /* Table of contents beside the article on wide screens. */
 .toc-side { display:none; }
