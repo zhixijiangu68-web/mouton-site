@@ -92,3 +92,39 @@ document.querySelectorAll('.article-share').forEach(group=>{
  window.addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}},{passive:true});
  update();
 })();
+
+// On wide screens, keep the table of contents beside the article and mark the
+// section being read.
+(()=>{
+ const toc=document.querySelector('.reading-toc nav');
+ const wide=window.matchMedia('(min-width: 1400px)');
+ if(!toc||!('IntersectionObserver' in window))return;
+ const side=document.createElement('aside');
+ side.className='toc-side';
+ side.setAttribute('aria-label','目次（サイド）');
+ const label=document.createElement('p');
+ label.className='toc-side-label';
+ label.textContent='目次';
+ const list=toc.querySelector('ol').cloneNode(true);
+ side.append(label,list);
+ document.body.append(side);
+ const links=[...list.querySelectorAll('a')];
+ const headings=links.map(a=>document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean);
+ const cover=document.querySelector('.cover');
+ let current=null;
+ const setCurrent=id=>{
+  if(id===current)return;current=id;
+  links.forEach(a=>{if(a.hash==='#'+id)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+ };
+ const io=new IntersectionObserver(()=>{
+  const mid=window.innerHeight*.45;
+  let pick=null;
+  for(const h of headings){if(h.getBoundingClientRect().top<mid)pick=h;else break;}
+  setCurrent(pick?pick.id:null);
+ },{rootMargin:'0px 0px -55% 0px',threshold:[0,1]});
+ headings.forEach(h=>io.observe(h));
+ // Show the side list once the cover has scrolled away.
+ const showSide=on=>side.classList.toggle('visible',on&&wide.matches);
+ if(cover)new IntersectionObserver(([e])=>showSide(!e.isIntersecting)).observe(cover);else showSide(true);
+ wide.addEventListener('change',()=>showSide(!cover||cover.getBoundingClientRect().bottom<0));
+})();
