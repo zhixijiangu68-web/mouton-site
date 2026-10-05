@@ -12,17 +12,12 @@ journal:
   category: "body"
   title: "匂いケアは「脇と足の裏」から。原因が違えば、対策も違う"
   excerpt: "脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。"
-  readTime: "約8分"
   order: 2
+related: ["blood-glucose", "trampoline"]
 styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400&display=swap');
   :root{--ink:#252724;--muted:#686b65;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.78)}
-  *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#d8d2c7;color:var(--ink)}
-  body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-  body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(245,241,232,.18),rgba(25,32,29,.18));pointer-events:none}
   .wrap{position:relative;z-index:1;width:min(1120px,94vw);margin:0 auto;padding:28px 0 72px}
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-  .brand{font-family:"Noto Serif JP",serif;font-size:20px;letter-spacing:.18em}.back{font-size:10px;letter-spacing:.18em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25);padding-bottom:3px}
   .article{background:var(--paper);backdrop-filter:blur(16px) saturate(.85);-webkit-backdrop-filter:blur(16px) saturate(.85);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(34px,6vw,84px)}
   .meta{font-size:9px;letter-spacing:.22em;opacity:.52;margin-bottom:22px}
   h1,h2{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:.04em}
@@ -35,7 +30,7 @@ styles: |
   .note{font-size:10px;line-height:1.8;opacity:.62;margin-top:14px}
   .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:720px;margin:26px 0}.metric{padding:18px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.18)}.metric b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;font-size:22px;margin-bottom:6px}.metric span{font-size:10px;opacity:.65;line-height:1.6}
   .sources a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.28)}.sources p{font-size:12px;line-height:1.9;margin-bottom:14px}.ending{padding-top:36px}
-  @media(max-width:700px){body{background-attachment:scroll}.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
+  @media(max-width:700px){.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
 ---
 
 <div class="wrap" data-nav="light" data-nav-solid="light">
@@ -43,7 +38,7 @@ styles: |
   <article class="article">
     <div class="meta">2026.10.05 / BODY / SCIENCE</div>
     <h1>匂いケアは<br>「脇と足の裏」から。<br>原因が違えば、対策も違う</h1>
-    <p class="reading-time">約8分で読めます（目安）</p>
+    <p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p>
     <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
     <details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol>
       <li><a href="#section-1">自分の匂いは、なぜ自分では分かりにくいのか</a></li>
@@ -139,13 +134,6 @@ styles: |
 
     <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
     {% include "partials/article-end.njk" %}
-<nav class="reading-next" aria-labelledby="reading-next-heading">
-      <h2 id="reading-next-heading">次に読む</h2>
-      <div class="reading-next-grid">
-        <a class="reading-card" href="blood-glucose.html">血糖値は、なぜこれほど健康に重要なのか</a>
-        <a class="reading-card" href="trampoline.html">大人は、いつから跳ばなくなったのか。</a>
-      </div>
-      <a class="reading-return" href="index.html#journal">記事一覧へ戻る</a>
-    </nav>
+{% include "partials/reading-next.njk" %}
   </article>
 </div>

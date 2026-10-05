@@ -24,13 +24,14 @@ npm start        # 生成しながら http://localhost:8080 で確認
 | `src/_data/site.js` | サイト全体の設定（ドメイン、アクセス解析、広告、問い合わせ先、書き手の紹介） |
 | `src/_data/projects.json` | トップの「制作」に出すもの。`url` を入れるとカードがリンクになる |
 | `src/_data/notes.json` | 記事一覧に出す、ページのない短いメモ |
+| `src/_data/topics.js` | テーマ別ページ（`topic-philosophy.html` など）の名前と紹介文 |
 | `src/articles/*.html` | 記事。1ファイル = 1ページ |
 | `src/index.njk` | トップページ |
 | `src/operator.njk` / `privacy.njk` / `contact.njk` | 運営者情報 / プライバシーポリシー / お問い合わせ |
 | `src/_includes/` | 共通部分（`<head>`、ナビ、記事の末尾、フッター） |
 | `site.css` / `site.js` | 全ページ共通のデザインと動き |
 | `home.css` | トップページのデザイン |
-| `reading.css` / `article-share.js` | 記事ページのデザインと読書補助 |
+| `article-base.css` / `reading.css` / `article-share.js` | 記事ページの共通スタイルと読書補助 |
 | `images/` | 画像。置き場所と名前は `images/README.md` |
 
 ## 記事を追加する
@@ -50,23 +51,28 @@ health: false                           # 健康の記事なら true（末尾に
 back:
   href: "index.html#journal"
   text: "記事一覧へ戻る"
-journal:                                # 書くとトップの記事一覧に出る
-  category: "philosophy"                # 一覧のフィルター: philosophy / body / making
+journal:                                # 書くとトップの記事一覧とテーマ別ページに出る
+  category: "philosophy"                # philosophy / body / making
   title: "一覧に出すタイトル"
   excerpt: "一覧に出す一言"
-  readTime: "約5分"
-science:                                # 書くとトップの「食事・化学」にカードが出る（任意）
+science:                                # 書くとトップの「食事・化学」と食事・化学のページに出る（任意）
   tag: "FOOD / ..."
   title: "カードのタイトル"
   text: "カードの説明"
-  more: "約5分で読む"
   order: 5
+related: ["nietzsche", "freedom"]       # 「次に読む」に優先して出す記事（ファイル名）。足りない分は同じテーマの新しい記事で埋まる
 styles: |
   /* この記事だけのデザイン（任意） */
 ---
 ```
 
-本文の `{% include "partials/article-end.njk" %}` の位置に、注意書き・広告枠・「この記事を書いた人」が入ります。
+本文の決まった位置に、次のものが自動で入ります。
+
+- `約{{ readMinutes }}分で読めます`：本文の文字数から計算した読了時間（1分500字）。トップや一覧の分数も同じ値
+- `{% include "partials/article-end.njk" %}`：医療の注意書き・広告枠・メールマガジン登録欄・「この記事を書いた人」
+- `{% include "partials/reading-next.njk" %}`：「次に読む」とテーマ別ページへのリンク
+
+見出し（h1〜h3）と記事一覧のタイトルは、生成するときに [BudouX](https://github.com/google/budoux) で文節に区切られ、単語の途中で改行しないようになります。
 Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", "book-buy" %}` と書くと、アフィリエイトの設定に合わせてタグと「PR」表示が自動で付きます。
 
 ## 収益化の設定
@@ -76,10 +82,11 @@ Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", 
 
 | 設定 | 入れると起きること |
 |---|---|
-| `url` | canonical、og:url、共有用画像（`images/og-default.jpg`）、`sitemap.xml`、`robots.txt` が出力される |
+| `url` | canonical、og:url、共有用画像（`images/og-default.jpg`）、`sitemap.xml`、`robots.txt`、RSS（`feed.xml`）が出力される |
 | `analytics.ga4` | Google アナリティクスを読み込み、プライバシーポリシーに説明が載る |
 | `affiliate.amazonTag` | Amazon リンクにタグ・`rel="sponsored"`・「PR」が付き、フッターと本棚ページに広告の表記が出る |
 | `ads.adsenseClient` / `ads.adsenseSlot` | 記事ページの末尾に広告枠が出る（トップには出さない） |
+| `newsletter.action` / `newsletter.service` | 記事末尾・テーマ別ページ・トップにメールマガジンの登録欄が出て、プライバシーポリシーに説明が載る |
 | `contact.formUrl` / `contact.email` | お問い合わせページに表示する |
 
 ## 注意

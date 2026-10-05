@@ -8,7 +8,8 @@
     "check": "eleventy && git status --porcelain && test -z \"$(git status --porcelain)\""
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6"
+    "@11ty/eleventy": "^3.1.6",
+    "budoux": "^0.9.3"
   },
   "type": "module"
 }

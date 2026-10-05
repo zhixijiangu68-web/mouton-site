@@ -1,0 +1,4 @@
+/* Base shared by every article, loaded before each article's own styles. */
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;color:var(--ink)}
+body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}

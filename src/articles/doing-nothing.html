@@ -12,16 +12,10 @@ journal:
   category: "philosophy"
   title: "何もしない時間は、本当に無駄なのか"
   excerpt: "記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。"
-  readTime: "約7分"
   order: 4
+related: ["system-goal", "disliked-priority"]
 styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
   :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-  *{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-  body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab none center/cover fixed no-repeat}
-  body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-  header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-  .brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
   main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
   .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55}.eyebrow{letter-spacing:.3em;margin-bottom:18px}.meta{margin-bottom:28px}
   h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
@@ -36,11 +30,11 @@ styles: |
   .refs{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.refs h2{margin-top:0}.refs ol{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;font-size:12px;line-height:1.85;color:#4f524d;padding-left:1.4em}.refs li{margin-bottom:14px}.refs em{font-family:"Noto Serif JP",serif}
   .note{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;color:#5f625d;padding:18px 20px;border-left:2px solid rgba(32,33,31,.25);margin:36px 0}
   .ending{margin-top:72px;padding-top:48px;border-top:1px solid var(--line)}.footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-  @media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
+  @media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
 ---
 <main data-nav="light" data-nav-solid="light">
 <div class="eyebrow">JOURNAL / MIND / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>何もしない時間は、<br>本当に無駄なのか</h1>
-<p class="reading-time">約7分で読めます（目安）</p>
+<p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 学んだ直後の「10分」が、記憶に残った</a></li><li><a href="#section-2">2. アイデアは、考え続けたときだけ生まれるわけではない</a></li><li><a href="#section-3">3. ぼーっとしているとき、人は未来を考えている</a></li><li><a href="#section-4">4. 「休んでいる脳」は、停止していない</a></li><li><a href="#section-5">5. では、スマホを眺めるのも「休息」なのか</a></li><li><a href="#section-6">6. 何もしない時間にも、代償はある</a></li><li><a href="#section-7">7. 「20分」という数字に、魔法はない</a></li><li><a href="#section-8">結論：休むことも、思考の一部である</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
 <p class="deck">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。研究から「休むこと」の意味を考える。</p><div class="hero-line"></div><article>
 
@@ -194,5 +188,5 @@ styles: |
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/article-end.njk" %}
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="system-goal.html">システムのないゴールは、動かない</a><a class="reading-card" href="disliked-priority.html">嫌われることを「気にしなくなる」のではない</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+{% include "partials/reading-next.njk" %}
 </article></main>

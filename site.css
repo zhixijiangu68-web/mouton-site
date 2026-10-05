@@ -131,3 +131,48 @@ body.menu-locked{overflow:hidden}
 .card-link:hover{background:rgba(20,66,196,.45);transform:translateY(-4px)}
 .card-link:focus-visible{outline:2px solid #fff;outline-offset:4px}
 .card-more{margin-top:14px;font-family:var(--latin);font-size:1.0625rem}
+
+/* Japanese headings break only between phrases: the build marks phrase
+   boundaries with <wbr>, and keep-all stops breaks anywhere else. */
+h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
+
+/* ---------- Topic pages ---------- */
+.doc.topic{width:min(980px,100%)}
+.topic-count{font-size:.875rem!important;color:#5b5d56!important;letter-spacing:.06em}
+.topic-list{margin:24px 0 40px;border-top:1px solid var(--line)}
+.doc .topic-item{color:var(--ink);text-decoration:none}
+.topic-item{display:grid;grid-template-columns:110px minmax(0,1fr);gap:6px 28px;padding:26px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
+.topic-item:hover .topic-title{color:var(--blue)}
+.topic-item:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.topic-date{grid-row:1/span 3;font-family:var(--latin);font-size:1.0625rem;color:#5b5d56;padding-top:4px}
+.topic-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.25rem,2.2vw,1.625rem);line-height:1.6;transition:color .3s}
+.topic-excerpt{font-family:var(--serif);font-size:1rem;line-height:1.9;color:#45473f}
+.topic-time{font-size:.75rem;color:#5b5d56;letter-spacing:.06em}
+.topic-others{display:flex;flex-wrap:wrap;gap:4px 22px;margin:0 0 8px}
+.topic-others a{display:inline-flex;align-items:center;min-height:44px;color:var(--blue);text-underline-offset:4px}
+@media(max-width:600px){.topic-item{grid-template-columns:1fr}.topic-date{grid-row:auto;padding:0;font-size:1rem}}
+.topic-links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 22px;margin:0 0 8px;font-size:.875rem}
+.topic-links > span{color:var(--muted);letter-spacing:.06em}
+.topic-links a{display:inline-flex;align-items:center;gap:6px;min-height:44px;color:var(--ink);text-underline-offset:4px}
+.topic-links a:hover{color:var(--blue)}
+.section-more{margin:-24px 0 32px}
+.section-more a{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:#fff;text-underline-offset:4px;font-size:.9375rem}
+.reading-returns{display:flex;flex-wrap:wrap;gap:0 24px;margin:24px 0 0}
+.reading-returns .reading-return{margin-top:0}
+
+/* ---------- Newsletter ---------- */
+.newsletter{margin:56px 0 0;padding:clamp(26px,4vw,40px);background:linear-gradient(160deg,#0b2f97,#1442c4 70%,#2559d6);color:#fff;font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
+.newsletter p{margin:0}
+.newsletter-eyebrow{font-family:var(--latin);font-style:italic;font-size:1.0625rem;opacity:.85}
+.newsletter-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.375rem,2.6vw,1.875rem);line-height:1.5;margin:8px 0 10px;color:#fff;border:0;padding:0}
+.newsletter-text{font-family:var(--serif);font-size:1rem!important;line-height:1.9!important;color:rgba(255,255,255,.88)!important}
+.newsletter-form{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 12px}
+.newsletter-label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.newsletter-form input[type=email]{flex:1 1 240px;min-height:48px;padding:10px 16px;border:1px solid rgba(255,255,255,.5);border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font:inherit;font-size:1rem}
+.newsletter-form input[type=email]::placeholder{color:rgba(255,255,255,.65)}
+.newsletter-form button{min-height:48px;padding:0 26px;border:0;border-radius:999px;background:#fff;color:var(--ink);font:inherit;font-size:.9375rem;cursor:pointer}
+.newsletter-form button:hover{background:var(--paper)}
+.newsletter-form input:focus-visible,.newsletter-form button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.newsletter-note{font-size:.75rem!important;line-height:1.8!important;color:rgba(255,255,255,.75)!important}
+.newsletter-note a{color:#fff!important}
+.home-newsletter .newsletter{margin:0}

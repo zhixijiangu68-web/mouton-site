@@ -12,25 +12,19 @@ journal:
   category: "philosophy"
   title: "神は死んだ。それでも、なぜ生きるのか。"
   excerpt: "意味が与えられない世界で、自分は何を残していくのか。"
-  readTime: "約3分"
   order: 20
+related: ["freedom", "identity"]
 styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400&display=swap');
   :root{--ink:#252724;--muted:#666a64;--line:rgba(37,39,36,.16);--paper:rgba(244,241,233,.88)}
-  *{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-  body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-  body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(244,240,230,.16),rgba(25,32,29,.18));z-index:-1}
-  header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px)}
-  .brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.3);padding-bottom:5px}
   main{width:min(1040px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.65);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(36px,7vw,88px)}
   .meta{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:28px}.eyebrow{font-size:9px;letter-spacing:.3em;opacity:.55;margin-bottom:18px}
   h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,64px);line-height:1.45;letter-spacing:.04em;margin:0 0 50px;max-width:850px}
   article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.25;margin:0 0 27px}h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,32px);line-height:1.7;margin:68px 0 28px}strong{font-weight:600}.question{font-size:clamp(20px,2.8vw,30px);line-height:1.9;margin:48px 0}.words{line-height:2.5}.exercise{margin:60px 0;padding:clamp(26px,5vw,48px);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.25)}.exercise h2{margin-top:0}.prompt{padding:20px 0;border-bottom:1px solid var(--line);font-family:"Noto Serif JP",serif;line-height:1.9}.identity{font-family:"Noto Serif JP",serif;font-size:clamp(25px,4vw,42px);line-height:1.7;text-align:center;margin:52px 0;padding:38px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.ending{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(21px,3vw,30px);line-height:1.9}.footer{width:min(1040px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;opacity:.7}
-  @media(max-width:700px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:38px}p{font-size:14px;line-height:2.15}h2{margin-top:52px}.exercise{margin:45px 0;padding:24px 20px}}
+  @media(max-width:700px){main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:38px}p{font-size:14px;line-height:2.15}h2{margin-top:52px}.exercise{margin:45px 0;padding:24px 20px}}
 ---
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.09.30　/　PHILOSOPHY</div>
-        <h1>神は死んだ。<br>それでも、なぜ生きるのか。</h1><p class="reading-time">約3分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        <h1>神は死んだ。<br>それでも、なぜ生きるのか。</h1><p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
         <p class="lead">「神は死んだ。」</p>
         <p>ニーチェの言葉として、あまりにも有名だ。</p>
         <p>けれど、この言葉は単純に「神なんて存在しない」と言っているのではない。もっと恐ろしい問いを、私たちに突きつけている。</p>
@@ -63,6 +57,5 @@ styles: |
       
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/article-end.njk" %}
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="freedom.html">愛ではなく、自由を求める</a>
-<a class="reading-card" href="identity.html">あなたはどんな人間になりたいですか？</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+{% include "partials/reading-next.njk" %}
 </article></main>

@@ -1,0 +1,25 @@
+---js
+{
+  permalink: data => (data.site.url ? "feed.xml" : false),
+  eleventyExcludeFromCollections: true,
+}
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>{{ site.name }}</title>
+  <link>{{ '' | absoluteUrl(site.url) }}</link>
+  <atom:link href="{{ 'feed.xml' | absoluteUrl(site.url) }}" rel="self" type="application/rss+xml"/>
+  <description>{{ site.description }}</description>
+  <language>ja</language>
+  {%- for a in collections.articles | head(20) %}
+  <item>
+    <title>{{ a.data.headline }}</title>
+    <link>{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</link>
+    <guid isPermaLink="true">{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</guid>
+    <pubDate>{{ a.page.date | rfc822 }}</pubDate>
+    <description>{{ a.data.description }}</description>
+  </item>
+  {%- endfor %}
+</channel>
+</rss>

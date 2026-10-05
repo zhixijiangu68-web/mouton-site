@@ -16,14 +16,9 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
 :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab none center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
 main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
 .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55}.eyebrow{letter-spacing:.3em;margin-bottom:18px}.meta{margin-bottom:28px}
 h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
@@ -38,11 +33,11 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 .refs{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.refs h2{margin-top:0}.refs ol{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;font-size:12px;line-height:1.85;color:#4f524d;padding-left:1.4em}.refs li{margin-bottom:14px}.refs em{font-family:"Noto Serif JP",serif}
 .note{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;color:#5f625d;padding:18px 20px;border-left:2px solid rgba(32,33,31,.25);margin:36px 0}
 .ending{margin-top:72px;padding-top:48px;border-top:1px solid var(--line)}.footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-@media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
+@media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
 
 </style>
 <link rel="stylesheet" href="reading.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap">
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
 <script src="article-share.js" defer></script>
@@ -65,8 +60,8 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <div class="cover ph-philosophy" data-img="images/articles/disliked-priority.jpg" data-fallback="images/cover-philosophy.jpg" data-nav="dark"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></div>
 <main data-nav="light" data-nav-solid="light">
-<div class="eyebrow">JOURNAL / PSYCHOLOGY / PHILOSOPHY</div><div class="meta">2026.10.05</div><h1>嫌われることを「気にしなくなる」のではない。<br>優先順位が下がるだけだ</h1>
-<p class="reading-time">約6分で読めます（目安）</p>
+<div class="eyebrow">JOURNAL / PSYCHOLOGY / PHILOSOPHY</div><div class="meta">2026.10.05</div><h1>嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<br>優先順位が<wbr>下がるだけだ</h1>
+<p class="reading-time">約7分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 「気にならない」は、おそらく言い過ぎ</a></li><li><a href="#section-2">2. 目的は、他の関心を「後ろに下げる」</a></li><li><a href="#section-3">3. 何を目的にするかで、結果が逆転する</a></li><li><a href="#section-4">4. 「課題の分離」という整理</a></li><li><a href="#section-5">5. それでも「遮断」はしない</a></li><li><a href="#section-6">結論：勇気ではなく、置き場所の問題</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
 <p class="deck">「嫌われてもいい」と思い込むのではなく、自分が何を一番大切にするかを決める。心理学から、他人の評価との距離を考える。</p><div class="hero-line"></div><article>
 
@@ -78,7 +73,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>この記事では、<strong>目的に重心を置くこと</strong>と、他人の評価との関係を、心理学の研究から整理します。結論を先に言うと、嫌われることが「気にならなくなる」のではなく、<strong>気にする順位が下がる</strong>というのが、より正確な見方です。</p>
 
-<h2 id="section-1">1. 「気にならない」は、おそらく言い過ぎ</h2>
+<h2 id="section-1">1. <wbr>「気に<wbr>ならない」は、<wbr>おそらく<wbr>言い<wbr>過ぎ</h2>
 
 <p>最初に、よくある誤解を確認します。</p>
 
@@ -90,7 +85,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>周囲の評価が頭から消えたのではなく、時間や注意を割く順位が変わった、と考える方が自然です。</p>
 
-<h2 id="section-2">2. 目的は、他の関心を「後ろに下げる」</h2>
+<h2 id="section-2">2. 目的は、<wbr>他の<wbr>関心を<wbr>「後ろに<wbr>下げる」</h2>
 
 <p>この考え方の手がかりになるのが、<strong>目標の遮蔽（goal shielding）</strong>です。</p>
 
@@ -107,7 +102,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>この記事での適用は、あくまでそこからの<strong>類推</strong>です。</p>
 
-<h2 id="section-3">3. 何を目的にするかで、結果が逆転する</h2>
+<h2 id="section-3">3. 何を<wbr>目的に<wbr>するかで、<wbr>結果が<wbr>逆転する</h2>
 
 <p>ここが、この記事の中心です。</p>
 
@@ -140,7 +135,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>後者が中心なら、「嫌われること」や「評価されないこと」は、単なるノイズではありません。目的そのものへの脅威になります。</p>
 
-<h2 id="section-4">4. 「課題の分離」という整理</h2>
+<h2 id="section-4">4. <wbr>「課題の<wbr>分離」と<wbr>いう<wbr>整理</h2>
 
 <p>この考え方に近い整理は、日本では『嫌われる勇気』を通じて<strong>「課題の分離」</strong>として広く知られています。<sup><a href="#ref-5">[5]</a></sup></p>
 
@@ -150,7 +145,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <div class="note">ここでは「課題の分離」を、アドラー本人がこの日本語表現で定式化した概念だと断定せず、『嫌われる勇気』で広く知られる整理として扱います。</div>
 
-<h2 id="section-5">5. それでも「遮断」はしない</h2>
+<h2 id="section-5">5. それでも<wbr>「遮断」は<wbr>しない</h2>
 
 <p>最後に、重要な注意点があります。</p>
 
@@ -166,7 +161,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 <p>むしろ目的に本気であるほど、使える批判には価値があります。「誰に言われたか」「好かれているか」ではなく、<strong>その情報が目的に役立つか</strong>で判断できるからです。</p>
 
 <div class="ending">
-<h2 id="section-6">結論：勇気ではなく、置き場所の問題</h2>
+<h2 id="section-6">結論<wbr>：勇気ではなく、<wbr>置き場所の<wbr>問題</h2>
 
 <p>整理します。</p>
 
@@ -199,6 +194,8 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
+
+
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
   <div>
@@ -210,7 +207,10 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
   </div>
 </aside>
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="boundaries.html">誰にでも好かれようとすると、なぜ安っぽくなるのか</a><a class="reading-card" href="system-goal.html">システムのないゴールは、動かない</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="boundaries.html">誰に<wbr>でも<wbr>好かれようと<wbr>すると、<wbr>なぜ<wbr>安っぽくなるのか</a><a class="reading-card" href="system-goal.html">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">

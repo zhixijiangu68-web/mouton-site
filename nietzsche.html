@@ -16,23 +16,18 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400&display=swap');
 :root{--ink:#252724;--muted:#666a64;--line:rgba(37,39,36,.16);--paper:rgba(244,241,233,.88)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(244,240,230,.16),rgba(25,32,29,.18));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.3);padding-bottom:5px}
 main{width:min(1040px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.65);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(36px,7vw,88px)}
 .meta{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:28px}.eyebrow{font-size:9px;letter-spacing:.3em;opacity:.55;margin-bottom:18px}
 h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,64px);line-height:1.45;letter-spacing:.04em;margin:0 0 50px;max-width:850px}
 article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.25;margin:0 0 27px}h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,32px);line-height:1.7;margin:68px 0 28px}strong{font-weight:600}.question{font-size:clamp(20px,2.8vw,30px);line-height:1.9;margin:48px 0}.words{line-height:2.5}.exercise{margin:60px 0;padding:clamp(26px,5vw,48px);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.25)}.exercise h2{margin-top:0}.prompt{padding:20px 0;border-bottom:1px solid var(--line);font-family:"Noto Serif JP",serif;line-height:1.9}.identity{font-family:"Noto Serif JP",serif;font-size:clamp(25px,4vw,42px);line-height:1.7;text-align:center;margin:52px 0;padding:38px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.ending{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(21px,3vw,30px);line-height:1.9}.footer{width:min(1040px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;opacity:.7}
-@media(max-width:700px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:38px}p{font-size:14px;line-height:2.15}h2{margin-top:52px}.exercise{margin:45px 0;padding:24px 20px}}
+@media(max-width:700px){main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:38px}p{font-size:14px;line-height:2.15}h2{margin-top:52px}.exercise{margin:45px 0;padding:24px 20px}}
 
 </style>
 <link rel="stylesheet" href="reading.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap">
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
 <script src="article-share.js" defer></script>
@@ -56,7 +51,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <div class="cover ph-philosophy" data-img="images/articles/nietzsche.jpg" data-fallback="images/cover-philosophy.jpg" data-nav="dark"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></div>
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.09.30　/　PHILOSOPHY</div>
-        <h1>神は死んだ。<br>それでも、なぜ生きるのか。</h1><p class="reading-time">約3分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        <h1>神は<wbr>死んだ。<br>それでも、<wbr>なぜ<wbr>生きるのか。</h1><p class="reading-time">約3分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
         <p class="lead">「神は死んだ。」</p>
         <p>ニーチェの言葉として、あまりにも有名だ。</p>
         <p>けれど、この言葉は単純に「神なんて存在しない」と言っているのではない。もっと恐ろしい問いを、私たちに突きつけている。</p>
@@ -64,7 +59,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p>そこには、自分より大きな何かが存在していた。そして、その大きな何かが、「こう生きるべきだ」「これには価値がある」と教えてくれた。</p>
         <p>しかし、それらを絶対的なものとして信じられなくなったらどうなるのだろう。</p>
         <p>ニーチェの「神は死んだ」という言葉の先には、この問題がある。</p>
-        <h2 id="section-1">生きる意味は、どこにあるのか。</h2>
+        <h2 id="section-1">生きる<wbr>意味は、<wbr>どこに<wbr>あるのか。</h2>
         <p>朝、起きる。仕事や学校へ行く。食事をする。スマートフォンを見る。誰かと話す。眠る。そして、また朝が来る。</p>
         <p>それを何十年も繰り返す。でも、ある瞬間に立ち止まってしまう。</p>
         <p class="question">「そもそも、何のために？」</p>
@@ -73,7 +68,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p>その問いに「なぜ？」を繰り返していくと、いつか答えられない場所にたどり着く。</p>
         <p>宇宙は、私たち一人ひとりに生きる目的を説明してくれない。生まれた瞬間に、「あなたが生きる意味はこれです」という紙を渡されるわけでもない。</p>
         <p>それでも私たちは生きている。これは、不思議なことだと思う。</p>
-        <h2 id="section-2">君は、なぜ生きている？</h2>
+        <h2 id="section-2">君は、<wbr>なぜ<wbr>生きている？</h2>
         <p>もし最初から決められた意味がないのだとしたら。</p>
         <p>なぜ、今日も起きたのだろう。なぜ、誰かを好きになるのだろう。なぜ、何かを作るのだろう。なぜ、美しい景色を見ると立ち止まるのだろう。なぜ、好きな音楽をもう一度聴くのだろう。なぜ、明日の予定を立てるのだろう。</p>
         <p class="question">なぜ、生きる意味が分からないのに、私たちは生き続けているのだろう。</p>
@@ -89,6 +84,8 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
       
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
+
+
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
   <div>
@@ -100,8 +97,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
   </div>
 </aside>
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="freedom.html">愛ではなく、自由を求める</a>
-<a class="reading-card" href="identity.html">あなたはどんな人間になりたいですか？</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="freedom.html">愛ではなく、<wbr>自由を<wbr>求める</a><a class="reading-card" href="identity.html">あなたは<wbr>どんな<wbr>人間に<wbr>なりたいですか？</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">

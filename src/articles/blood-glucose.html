@@ -12,23 +12,17 @@ journal:
   category: "body"
   title: "血糖値は、なぜこれほど健康に重要なのか"
   excerpt: "血糖、血管、そして未来の健康。そのつながりを考える。"
-  readTime: "約6分"
   order: 17
 science:
   tag: "METABOLISM / BLOOD GLUCOSE"
   title: "血糖値は、なぜこれほど健康に重要なのか"
   text: "血糖、血管、筋肉、そして未来の健康。そのつながりを研究データから考える。"
-  more: "約6分で読む"
   order: 4
+related: ["trampoline", "stamina"]
 styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400&display=swap');
   :root{--ink:#252724;--muted:#686b65;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.78)}
-  *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#d8d2c7;color:var(--ink)}
-  body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-  body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(245,241,232,.18),rgba(25,32,29,.18));pointer-events:none}
   .wrap{position:relative;z-index:1;width:min(1120px,94vw);margin:0 auto;padding:28px 0 72px}
   .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-  .brand{font-family:"Noto Serif JP",serif;font-size:20px;letter-spacing:.18em}.back{font-size:10px;letter-spacing:.18em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25);padding-bottom:3px}
   .article{background:var(--paper);backdrop-filter:blur(16px) saturate(.85);-webkit-backdrop-filter:blur(16px) saturate(.85);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(34px,6vw,84px)}
   .meta{font-size:9px;letter-spacing:.22em;opacity:.52;margin-bottom:22px}
   h1,h2{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:.04em}
@@ -41,14 +35,14 @@ styles: |
   .note{font-size:10px;line-height:1.8;opacity:.62;margin-top:14px}
   .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:720px;margin:26px 0}.metric{padding:18px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.18)}.metric b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;font-size:22px;margin-bottom:6px}.metric span{font-size:10px;opacity:.65;line-height:1.6}
   .sources a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.28)}.sources p{font-size:12px;line-height:1.9;margin-bottom:14px}.ending{padding-top:36px}
-  @media(max-width:700px){body{background-attachment:scroll}.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
+  @media(max-width:700px){.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
 ---
 
 <div class="wrap" data-nav="light" data-nav-solid="light">
   
   <article class="article">
     <div class="meta">2026.10.01 / BODY</div>
-    <h1>血糖値は、なぜこれほど<br>健康に重要なのか</h1><p class="reading-time">約6分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
+    <h1>血糖値は、なぜこれほど<br>健康に重要なのか</h1><p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
     <p class="lead">健康診断で目にする「血糖値」。多くの人にとっては、「糖尿病になっていなければ大丈夫」くらいの数字かもしれない。</p>
     <p>しかし、血糖について調べていくと、この数字は想像以上に身体の多くの部分とつながっていることがわかる。</p>
     <p><strong>目。腎臓。神経。心臓。脳。そして、それらをつないでいる血管。</strong></p>
@@ -148,7 +142,6 @@ styles: |
   
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/article-end.njk" %}
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="trampoline.html">大人は、いつから跳ばなくなったのか。</a>
-<a class="reading-card" href="stamina.html">筋トレを減らしたら、なぜか「体力」がついた</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+{% include "partials/reading-next.njk" %}
 </article>
 </div>

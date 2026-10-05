@@ -17,6 +17,16 @@ export default {
   affiliate: { amazonTag: '' },
   // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。記事ページにだけ広告枠を出す。
   ads: { adsenseClient: '', adsenseSlot: '' },
+  // メールマガジンの登録フォームの送信先。空なら登録欄を出さない。
+  // 例（Buttondown）: action: 'https://buttondown.com/api/emails/embed-subscribe/ユーザー名', emailField: 'email'
+  newsletter: {
+    service: '', // プライバシーポリシーに載せるサービス名（例: 'Buttondown'）
+    action: '',
+    emailField: 'email',
+    hidden: {},
+    title: '新しい記事を、メールで受け取る',
+    text: '記事を書いたときに、ときどきお知らせします。',
+  },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },
   // 運営者情報・プライバシーポリシーの制定日

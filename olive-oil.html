@@ -16,21 +16,20 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400&display=swap');
-:root{--ink:#252724;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.88)}*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-.wrap{position:relative;width:min(1120px,94vw);margin:auto;padding:28px 0 72px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.brand{font-family:"Noto Serif JP",serif;font-size:20px;letter-spacing:.18em}.back{font-size:10px;letter-spacing:.14em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25);padding-bottom:3px}
+:root{--ink:#252724;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.88)}
+.wrap{position:relative;width:min(1120px,94vw);margin:auto;padding:28px 0 72px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
 .article{background:var(--paper);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(34px,6vw,84px)}
 .meta{font-size:9px;letter-spacing:.22em;opacity:.52;margin-bottom:22px}h1,h2{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:.04em}h1{font-size:clamp(34px,6vw,58px);line-height:1.5;margin:0 0 30px}h2{font-size:24px;line-height:1.6;margin:54px 0 20px}p,li{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15}p{margin:0 0 24px;max-width:860px}.lead{font-size:19px}.flow{max-width:760px;padding:22px;margin:28px 0;border:1px solid var(--line);border-radius:10px;text-align:center;font-family:"Noto Serif JP",serif;line-height:2;background:rgba(255,255,255,.25)}
 .table-wrap{overflow-x:auto;margin:26px 0 34px}table{width:100%;border-collapse:collapse;min-width:620px;font-family:"Noto Serif JP",serif;font-size:13px;line-height:1.8}th,td{border:1px solid var(--line);padding:14px;text-align:left;vertical-align:top}th{background:rgba(37,39,36,.05)}
 .evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}.evidence div{padding:20px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.22)}.evidence b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;margin-bottom:8px}.evidence span{font-size:12px;line-height:1.7}
 .sources{margin-top:54px;padding-top:30px;border-top:1px solid var(--line)}.sources p{font-family:Inter,sans-serif;font-size:12px;line-height:1.8;margin-bottom:12px}
-@media(max-width:700px){body{background-attachment:scroll}.article{padding:28px 22px}.evidence{grid-template-columns:1fr}p,li{font-size:14px}}
+@media(max-width:700px){.article{padding:28px 22px}.evidence{grid-template-columns:1fr}p,li{font-size:14px}}
 
 </style>
 <link rel="stylesheet" href="reading.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap">
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
 <script src="article-share.js" defer></script>
@@ -53,46 +52,46 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee
 
 <div class="cover ph-food" data-img="images/articles/olive-oil.jpg" data-fallback="images/cover-food.jpg" data-nav="dark"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a></div>
 <div class="wrap" data-nav="light" data-nav-solid="light"><article class="article">
-<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>オリーブ油は、本当に体にいいのか</h1><p class="reading-time">約6分で読めます（目安）</p>
+<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>オリーブ油は、<wbr>本当に<wbr>体に<wbr>いいのか</h1><p class="reading-time">約9分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead">オリーブ油は「地中海食の主役」「健康にいい油」と言われることが多い。</p>
 <p>では、人間を対象にした研究では、どこまで確認されているのか。</p>
 <p>結論から言うと、最も根拠が強いのは<strong>心血管疾患の予防</strong>だ。ただし、その根拠を読むときには、次の3つを区別する必要がある。</p>
 <ul><li>「地中海食＋オリーブ油」というダイエット全体の効果</li><li>「オリーブ油を多く摂る人」を追跡した観察研究</li><li>「バターやマーガリンをオリーブ油に置き換えた」場合の効果</li></ul>
 <p>この3つを混ぜると、「オリーブ油さえ摂れば健康になる」という誤読になる。</p>
-<details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">最も強い根拠は、地中海食のRCT</a></li><li><a href="#section-2">米国の大規模コホートでも、関連が見られた</a></li><li><a href="#section-3">「置き換え」が最も実用的な視点</a></li><li><a href="#section-4">「脳にいい」は、まだ観察研究の段階</a></li><li><a href="#section-5">EVOOと精製オリーブ油は、同じなのか</a></li><li><a href="#section-6">加熱しても大丈夫か</a></li><li><a href="#section-7">どれくらい食べればいい？</a></li><li><a href="#section-8">結局、オリーブ油の何がすごいのか</a></li><li><a href="#section-9">まとめ</a></li><li><a href="#section-10">参考文献</a></li><li><a href="#section-11">次に読む</a></li></ol></nav></details><h2 id="section-1">最も強い根拠は、地中海食のRCT</h2>
+<details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">最も強い根拠は、地中海食のRCT</a></li><li><a href="#section-2">米国の大規模コホートでも、関連が見られた</a></li><li><a href="#section-3">「置き換え」が最も実用的な視点</a></li><li><a href="#section-4">「脳にいい」は、まだ観察研究の段階</a></li><li><a href="#section-5">EVOOと精製オリーブ油は、同じなのか</a></li><li><a href="#section-6">加熱しても大丈夫か</a></li><li><a href="#section-7">どれくらい食べればいい？</a></li><li><a href="#section-8">結局、オリーブ油の何がすごいのか</a></li><li><a href="#section-9">まとめ</a></li><li><a href="#section-10">参考文献</a></li></ol></nav></details><h2 id="section-1">最も<wbr>強い<wbr>根拠は、<wbr>地中海食の<wbr>RCT</h2>
 <p>最大の根拠は、スペインで行われた<strong>PREDIMED試験</strong>だ。心血管疾患のリスクが高い7,447人を3群に分けた。</p>
 <div class="table-wrap"><table><tr><th>群</th><th>内容</th></tr><tr><td>地中海食＋エキストラバージンオリーブ油（EVOO）</td><td>EVOOを無料で配布</td></tr><tr><td>地中海食＋ミックスナッツ</td><td>ナッツを無料で配布</td></tr><tr><td>対照群</td><td>脂肪を減らす指導</td></tr></table></div>
 <p>結果は、主要な心血管イベント（心筋梗塞・脳卒中・心血管死）のハザード比が、EVOO群で0.69（95％CI 0.53～0.91）、ナッツ群で0.72（0.54～0.95）だった [1]。なお、2013年に発表された最初の論文は、方法上の問題を受けて再解析され、2018年に再発表されている [1]。</p>
 <p>ここで重要なのは、これが<strong>オリーブ油単体の試験ではない</strong>ことだ。野菜、豆、魚などを増やす地中海食全体への介入であり、「オリーブ油だけの効果」は切り出せない。それでも、オリーブ油を中心とした食事パターンが、薬ではなく食事の変更で、イベントを減らす可能性を示した大規模RCTとして、価値は大きい。</p>
-<h2 id="section-2">米国の大規模コホートでも、関連が見られた</h2>
+<h2 id="section-2">米国の<wbr>大規模コホートでも、<wbr>関連が<wbr>見られた</h2>
 <p>地中海の人々だけの話ではないのか。この疑問に答えたのが、ハーバード大学の研究グループによる米国の2つのコホート研究だ。</p>
 <div class="table-wrap"><table><tr><th>研究</th><th>対象</th><th>1日7g超（大さじ約半分）の摂取群</th></tr><tr><td>心血管リスク（2020）</td><td>米国の成人、約24年追跡</td><td>心血管疾患リスクが14％低下、冠動脈疾患リスクが18％低下。脳卒中は有意な関連なし [2]</td></tr><tr><td>死亡リスク（2022）</td><td>米国の成人、約9.2万人</td><td>心血管死が19％、がん死が17％、神経変性疾患死が29％、呼吸器疾患死が18％低い [3]</td></tr></table></div>
 <p>ただし、いずれも<strong>観察研究</strong>だ。オリーブ油を多く摂る人は、ほかの生活習慣も違う可能性がある。研究側は主な食事・生活要因を調整しているが、因果関係までは言えない。</p>
 <p>また、最も多い群（1日7g超）に入った人は、研究開始時点で全体の約5％にすぎなかった [3]。</p>
-<h2 id="section-3">「置き換え」が最も実用的な視点</h2>
+<h2 id="section-3">「置き換え」が<wbr>最も<wbr>実用的な<wbr>視点</h2>
 <p>2020年の研究で、特に注目したいのは置き換えの解析だ。</p>
 <ul><li>マーガリン、バター、マヨネーズ、乳脂肪の5g/日を、同量のオリーブ油に置き換えると、心血管疾患・冠動脈疾患のリスクが5～7％低かった [2]</li><li>一方、オリーブ油を「ほかの植物油全体」と比べると、有意な関連は見られなかった [2]</li></ul>
 <p>つまり、オリーブ油の強みは、「ほかの植物油より優れている」ことよりも、<strong>「動物性脂肪や加工脂肪の代わりに使える」</strong>ことのほうにある。</p>
-<h2 id="section-4">「脳にいい」は、まだ観察研究の段階</h2>
+<h2 id="section-4">「脳に<wbr>いい」は、<wbr>まだ<wbr>観察研究の<wbr>段階</h2>
 <p>2024年には、同じコホートを使った認知症に関する研究が発表された。約9.2万人を28年間追跡した結果、1日7g超のオリーブ油を摂る人は、ほとんど摂らない人より、認知症による死亡リスクが28％低かった（調整後ハザード比0.72）[4]。食事の質の高低にかかわらず、同じ傾向が見られた [4]。</p>
 <p>ただし、結果は「認知症の発症」ではなく「認知症を死因とする死亡」であり、観察研究なので「オリーブ油が認知症を防ぐ」とは言えない。置き換えの解析で有意だったのは、マーガリンとマヨネーズからの置き換え（8～14％低下）で、バターやほかの植物油からの置き換えでは有意ではなかった [4]。</p>
-<h2 id="section-5">EVOOと精製オリーブ油は、同じなのか</h2>
+<h2 id="section-5">EVOOと<wbr>精製オリーブ油は、<wbr>同じなのか</h2>
 <p>エキストラバージンオリーブ油（EVOO）は、ポリフェノールを多く含むとされる。では、効果はEVOOに特有なのか。</p>
 <p>米国のコホート研究では、EVOOか通常のオリーブ油かを区別して解析できなかった [2]。PREDIMEDの参加者データを観察研究として分析した報告では、EVOOの摂取量が最も多い群で、心血管疾患リスクが39％低かったとされている [5]。ただし、これも試験の割り付けではなく、参加者の摂取量にもとづく観察的な解析だ。</p>
 <p>したがって現時点では、<strong>「EVOOのほうが有利な可能性はあるが、精製オリーブ油との差を断定するには根拠が足りない」</strong>と整理するのが正確だ。</p>
-<h2 id="section-6">加熱しても大丈夫か</h2>
+<h2 id="section-6">加熱しても<wbr>大丈夫か</h2>
 <p>「オリーブ油は発煙点が低いので、加熱に向かない」という説明もよく聞く。</p>
 <p>2018年に、10種類の食用油を加熱して比較した実験室研究が報告された。EVOOは、高温（180℃で長時間）でも、有害とされる極性化合物の生成が最も少ない部類で、キャノーラ油などの精製された種子油は、生成量が多かった [6]。発煙点の高さと、加熱時の安定性は、必ずしも一致しなかった。</p>
 <p>ただし、この研究には限界がある。</p>
 <ul><li>加熱したのは油そのもので、食材を調理したわけではない [6]。</li><li>研究は、オリーブ油生産企業の子会社の検査機関で行われた。利益相反の可能性は考慮しておくべきだ。</li><li>ヒトの健康への影響を測定した研究ではない。</li></ul>
 <p>だから、「EVOOは加熱調理に向かない」という説明は、少なくとも根拠が弱い。一方で、「揚げ物に使っても健康にいい」とまでは言えない。</p>
-<h2 id="section-7">どれくらい食べればいい？</h2>
+<h2 id="section-7">どれくらい<wbr>食べればいい？</h2>
 <p>最適量を断定することはできない。研究で使われた量は、次のとおりだ。</p>
 <div class="table-wrap"><table><tr><th>研究</th><th>量</th></tr><tr><td>米国コホート [2][3][4]</td><td>1日7g超（大さじ約半分）で、リスク低下との関連</td></tr><tr><td>PREDIMED（EVOO群）[1]</td><td>週約1リットルのEVOOが配布され、1日4大さじ（約50mL）以上の使用が推奨された</td></tr></table></div>
 <p>PREDIMEDの量は、日本の食生活から見ると多い。また、油は1gあたり約9kcalと高エネルギーだ。大さじ1杯で約120kcalになる。「たくさん摂るほど健康になる」と考えるのは危険だ。</p>
 <p>現実的には、<strong>バターやマーガリン、マヨネーズなどを使っている場面を、オリーブ油に置き換える</strong>という使い方が、最も研究に沿っている。</p>
-<h2 id="section-8">結局、オリーブ油の何がすごいのか</h2>
+<h2 id="section-8">結局、<wbr>オリーブ油の<wbr>何が<wbr>すごいのか</h2>
 <div class="table-wrap"><table><tr><th>エビデンスの強さ</th><th>項目</th></tr><tr><td>比較的強い</td><td>地中海食＋EVOOによる心血管イベントの減少（RCT） [1]</td></tr><tr><td>観察研究で関連あり</td><td>心血管疾患・冠動脈疾患、死亡リスク [2][3]、認知症死亡 [4]</td></tr><tr><td>まだ不確か</td><td>オリーブ油単独の因果、EVOOと精製油の差、ほかの植物油より優れるか、加熱調理での長期的な影響</td></tr></table></div>
 <p>オリーブ油は、「飲めば健康になる魔法の油」ではない。</p>
 <p>それでも注目に値するのは、バターやマーガリンといった脂を、オリーブ油に置き換えるという日常の小さな選択が、大規模な研究でリスクの低さと関連していることだ。</p>
@@ -111,6 +110,8 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
 </aside>
+
+
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
   <div>
@@ -122,7 +123,10 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee
   </div>
 </aside>
 
-<nav class="reading-next"><h2 id="section-11">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="blueberry.html">ブルーベリーは、本当にそんなにすごいのか</a><a class="reading-card" href="index.html#foodscience">食事・化学の記事を見る</a></div></nav>
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="blueberry.html">ブルーベリーは、<wbr>本当に<wbr>そんなに<wbr>すごいのか</a><a class="reading-card" href="dark-chocolate.html">ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
+
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">

@@ -12,28 +12,26 @@ science:
   tag: "FOOD / CACAO / FLAVANOL"
   title: "ダークチョコは、本当に体にいいのか"
   text: "カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。"
-  more: "約6分で読む"
   order: 1
+related: ["olive-oil"]
 styles: |
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400&display=swap');
-  :root{--ink:#252724;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.88)}*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-  body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#f8f5ee}
-  .wrap{position:relative;width:min(1120px,94vw);margin:auto;padding:28px 0 72px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.brand{font-family:"Noto Serif JP",serif;font-size:20px;letter-spacing:.18em}.back{font-size:10px;letter-spacing:.14em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25);padding-bottom:3px}
+  :root{--ink:#252724;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.88)}
+  .wrap{position:relative;width:min(1120px,94vw);margin:auto;padding:28px 0 72px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
   .article{background:var(--paper);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(34px,6vw,84px)}
   .meta{font-size:9px;letter-spacing:.22em;opacity:.52;margin-bottom:22px}h1,h2{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:.04em}h1{font-size:clamp(34px,6vw,58px);line-height:1.5;margin:0 0 30px}h2{font-size:24px;line-height:1.6;margin:54px 0 20px}p,li{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15}p{margin:0 0 24px;max-width:860px}.lead{font-size:19px}.flow{max-width:760px;padding:22px;margin:28px 0;border:1px solid var(--line);border-radius:10px;text-align:center;font-family:"Noto Serif JP",serif;line-height:2;background:rgba(255,255,255,.25)}
   .table-wrap{overflow-x:auto;margin:26px 0 34px}table{width:100%;border-collapse:collapse;min-width:620px;font-family:"Noto Serif JP",serif;font-size:13px;line-height:1.8}th,td{border:1px solid var(--line);padding:14px;text-align:left;vertical-align:top}th{background:rgba(37,39,36,.05)}
   .evidence{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}.evidence div{padding:20px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.22)}.evidence b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;margin-bottom:8px}.evidence span{font-size:12px;line-height:1.7}
   .sources{margin-top:54px;padding-top:30px;border-top:1px solid var(--line)}.sources p{font-family:Inter,sans-serif;font-size:12px;line-height:1.8;margin-bottom:12px}
-  @media(max-width:700px){body{background-attachment:scroll}.article{padding:28px 22px}.evidence{grid-template-columns:1fr}p,li{font-size:14px}}
+  @media(max-width:700px){.article{padding:28px 22px}.evidence{grid-template-columns:1fr}p,li{font-size:14px}}
 ---
 <div class="wrap" data-nav="light" data-nav-solid="light"><article class="article">
-<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>ダークチョコは、本当に体にいいのか</h1><p class="reading-time">約6分で読めます（目安）</p>
+<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>ダークチョコは、本当に体にいいのか</h1><p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead">ダークチョコレートは「健康にいいお菓子」と言われることが多い。ポリフェノールが豊富。血圧を下げる。心臓にいい。検索すれば、こうした言葉がいくらでも出てくる。</p>
 <p>では、人間を対象にした研究では、どこまで確認されているのか。</p>
 <p>結論から言うと、血管機能と血圧については、小さいが一貫した改善がランダム化比較試験（RCT）で示されている。一方で、心筋梗塞や脳卒中などの「実際のイベント」を減らすかどうかは、まだ決着していない。</p>
 <p>さらに、重金属と砂糖・カロリーという、見落としやすい注意点もある。</p>
-<details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">ポイントは「チョコ」ではなく「カカオフラバノール」</a></li><li><a href="#section-2">血管機能：比較的一貫した改善</a></li><li><a href="#section-3">血圧：効果は小さい</a></li><li><a href="#section-4">心血管イベント：まだ決着していない</a></li><li><a href="#section-5">注意点1：重金属</a></li><li><a href="#section-6">注意点2：砂糖とカロリー</a></li><li><a href="#section-7">どれくらい食べればいい？</a></li><li><a href="#section-8">結局、ダークチョコの何がすごいのか</a></li><li><a href="#section-9">まとめ</a></li><li><a href="#section-10">参考文献</a></li><li><a href="#section-11">次に読む</a></li></ol></nav></details><h2 id="section-1">ポイントは「チョコ」ではなく「カカオフラバノール」</h2>
+<details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">ポイントは「チョコ」ではなく「カカオフラバノール」</a></li><li><a href="#section-2">血管機能：比較的一貫した改善</a></li><li><a href="#section-3">血圧：効果は小さい</a></li><li><a href="#section-4">心血管イベント：まだ決着していない</a></li><li><a href="#section-5">注意点1：重金属</a></li><li><a href="#section-6">注意点2：砂糖とカロリー</a></li><li><a href="#section-7">どれくらい食べればいい？</a></li><li><a href="#section-8">結局、ダークチョコの何がすごいのか</a></li><li><a href="#section-9">まとめ</a></li><li><a href="#section-10">参考文献</a></li></ol></nav></details><h2 id="section-1">ポイントは「チョコ」ではなく「カカオフラバノール」</h2>
 <p>効果の主役と考えられているのは、カカオに含まれるフラバノール（フラバン-3-オール）という成分だ。ここで重要なのは、研究の多くが<strong>「チョコレート」ではなく、フラバノールを多く含むココア製品やカカオ抽出物</strong>を使っていることだ。</p>
 <p>フラバノールの量は、カカオの加工方法や製品の種類によって大きく変わる [2]。「カカオ70％」と書いてあっても、フラバノール量が同じとは限らない。</p>
 <h2 id="section-2">血管機能：比較的一貫した改善</h2>
@@ -76,4 +74,4 @@ styles: |
 <p>2. Ried K, Fakler P, Stocks NP. (2017). Effect of cocoa on blood pressure. <em>Cochrane Database of Systematic Reviews</em>, Issue 4, CD008893. doi:10.1002/14651858.CD008893.pub3</p>
 <p>3. Sesso HD, et al. (2022). Effect of cocoa flavanol supplementation for prevention of cardiovascular disease events: the COcoa Supplement and Multivitamin Outcomes Study (COSMOS) randomized clinical trial. <em>The American Journal of Clinical Nutrition</em>, 115(6), 1490–1500.</p>
 <p>4. Consumer Reports (2022). Heavy metals in dark chocolate（28製品の検査報告。査読論文ではない）</p></div>{% include "partials/article-end.njk" %}
-<nav class="reading-next"><h2 id="section-11">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="olive-oil.html">オリーブ油は、本当に体にいいのか</a><a class="reading-card" href="index.html#foodscience">食事・化学の記事を見る</a></div></nav></article></div>
+{% include "partials/reading-next.njk" %}</article></div>

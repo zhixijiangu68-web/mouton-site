@@ -89,11 +89,12 @@ extraCss: [home.css]
         </div>
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
+      <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
       <div class="journal-list">
         {%- for a in collections.articles %}{% if a.data.journal %}
         <a class="journal-item clickable journal-link" href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">{{ a.data.journal.readTime }}</span></div>
+          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endif %}{% endfor %}
@@ -117,9 +118,10 @@ extraCss: [home.css]
         </div>
         <p class="copy">食べ物、栄養、代謝、成分。健康についての言葉を、論文とデータから確かめる。</p>
       </div>
+      <p class="section-more"><a href="topic-food.html">食事・化学の記事をすべて見る <span aria-hidden="true">→</span></a></p>
       <div class="foodscience-grid">
         {%- for a in collections.articles | scienceCards %}
-        <a class="science-card" href="{{ a.page.fileSlug }}.html"><span class="science-tag">{{ a.data.science.tag }}</span><h3>{{ a.data.science.title }}</h3><p>{{ a.data.science.text }}</p><span class="science-more">{{ a.data.science.more }} →</span></a>
+        <a class="science-card" href="{{ a.page.fileSlug }}.html"><span class="science-tag">{{ a.data.science.tag }}</span><h3>{{ a.data.science.title }}</h3><p>{{ a.data.science.text }}</p><span class="science-more">約{{ a.data.readMinutes }}分で読む →</span></a>
         {%- endfor %}
       </div>
     </div>
@@ -201,6 +203,9 @@ extraCss: [home.css]
       </div>
     </div>
   </section>
+{%- if site.newsletter.action %}
+  <div class="section home-newsletter" data-nav="light" data-nav-solid="light"><div class="section-inner">{% include "partials/newsletter.njk" %}</div></div>
+  {%- endif %}
 </main>
 
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
