@@ -13,9 +13,10 @@
 npm install      # 初回だけ
 npm run build    # src/ から HTML を生成
 npm start        # 生成しながら http://localhost:8080 で確認
+npm test         # 生成して、リンク切れ・ID の重複・title や説明文の書き忘れを調べる
 ```
 
-コミットの前に `npm run build` を忘れると、GitHub の「Build check」が失敗して知らせてくれます。
+コミットの前に `npm run build` を忘れたり、リンク切れがあったりすると、GitHub の「Build check」が失敗して知らせてくれます。
 
 ## どこに何があるか
 
@@ -33,6 +34,8 @@ npm start        # 生成しながら http://localhost:8080 で確認
 | `home.css` | トップページのデザイン |
 | `article-base.css` / `reading.css` / `article-share.js` | 記事ページの共通スタイルと読書補助 |
 | `images/` | 画像。置き場所と名前は `images/README.md` |
+| `search.json` | 記事一覧の本文検索に使うデータ（生成される。検索欄を使ったときだけ読み込む） |
+| `scripts/check-site.mjs` | 生成したページの自動チェック |
 
 ## 記事を追加する
 
@@ -88,6 +91,14 @@ Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", 
 | `ads.adsenseClient` / `ads.adsenseSlot` | 記事ページの末尾に広告枠が出る（トップには出さない） |
 | `newsletter.action` / `newsletter.service` | 記事末尾・テーマ別ページ・トップにメールマガジンの登録欄が出て、プライバシーポリシーに説明が載る |
 | `contact.formUrl` / `contact.email` | お問い合わせページに表示する |
+
+## サイトの動き
+
+- トップの記事一覧は新しい8本だけを表示し、「すべての記事を見る」で残りを開きます。カテゴリーや検索で絞り込んだときは全件が対象です。
+- 記事一覧の検索は、タイトルだけでなく本文も対象です。
+- 記事の本文中の `[1]` のような出典番号は、`id="ref-1"` の参考文献へリンクします（新しい記事でも同じ書き方にすると揃います）。
+- 画面の広いパソコン（1400px 以上）では、目次が本文の右に表示されます。
+- 「動きを減らす」設定の人には、スクロールの演出・浮かび上がり・ページの切り替え効果を出しません。
 
 ## 注意
 
