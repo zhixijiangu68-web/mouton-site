@@ -247,9 +247,27 @@ const loadText=()=>loadingText||(loadingText=fetch('search.json').then(r=>r.ok?r
  fullText=new Map(d.map(e=>[e.url,{...e,norm:normalize(e.text)}]));
  if(searchInput.value)applyFilter(filter);
 }));
+// Only the newest entries show until the reader asks for the rest.
+const COLLAPSED_COUNT=8;
+const expandKey='mouton-journal-expanded-v1';
+let expanded=false;
+try{expanded=sessionStorage.getItem(expandKey)==='1';}catch{}
+const more=document.createElement('button');
+more.type='button';
+more.className='journal-more';
+more.setAttribute('aria-controls','journal-list');
+journalList.id='journal-list';
+more.addEventListener('click',()=>{
+ expanded=true;
+ try{sessionStorage.setItem(expandKey,'1');}catch{}
+ const first=items.find(i=>i.classList.contains('is-collapsed'));
+ applyFilter(filter);
+ if(first)first.focus({preventScroll:true});
+});
 const extra=document.createElement('div');
 extra.className='journal-extra';
 journalList.after(extra);
+extra.after(more);
 function snippet(entry,raw){
  const text=entry.text,i=text.toLowerCase().indexOf(raw.toLowerCase());
  if(i<0)return null;
@@ -278,6 +296,7 @@ function applyFilter(value){
   const inBody=!inList&&entry&&entry.norm.includes(query);
   const hidden=(filter!=='all'&&item.dataset.category!==filter)||!(inList||inBody);
   item.classList.toggle('is-hidden',hidden);
+  item.classList.remove('is-collapsed');
   if(!hidden){shown++;if(inBody){const s=snippet(entry,raw);if(s)item.querySelector('.journal-body').append(s);}}
  });
  // Articles that are not in the journal list (food & science, books) still turn up in a search.
@@ -300,6 +319,14 @@ function applyFilter(value){
    extra.append(a);shown++;
   }
  }
+ // Collapse the full, unfiltered list to its newest entries.
+ const browsing=query===''&&filter==='all';
+ if(browsing&&!expanded){
+  items.filter(i=>!i.classList.contains('is-hidden')).slice(COLLAPSED_COUNT).forEach(i=>i.classList.add('is-collapsed'));
+ }
+ const rest=items.filter(i=>i.classList.contains('is-collapsed')).length;
+ more.hidden=rest===0;
+ more.textContent='すべての記事を見る（あと'+rest+'件）';
  searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました'+(fullText?'（本文も検索しています）':''):'該当する記事はありませんでした';
 }
 filters.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.journalFilter)));
