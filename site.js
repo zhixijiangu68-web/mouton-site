@@ -15,12 +15,16 @@
  if(nav){
   const toggle=nav.querySelector('.menu-toggle');
   const links=nav.querySelector('.site-links');
+  // While the full-screen menu is open, the page behind it is inert so focus stays in the menu.
+  const behind=[...document.body.children].filter(el=>el!==nav&&el.tagName!=='SCRIPT');
   const setOpen=open=>{
    nav.classList.toggle('menu-open',open);
    document.body.classList.toggle('menu-locked',open);
+   behind.forEach(el=>{el.inert=open;});
    toggle.setAttribute('aria-expanded',String(open));
    toggle.textContent=open?'Close':'Menu';
   };
+  window.matchMedia('(max-width: 860px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
   toggle.addEventListener('click',()=>setOpen(!nav.classList.contains('menu-open')));
   links.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('menu-open')){setOpen(false);toggle.focus();}});
@@ -94,6 +98,7 @@
 
  // Keyboard focus moving into a scene brings that scene fully into view first.
  document.addEventListener('focusin',e=>{
+  if(reduce.matches)return;
   const scene=e.target.closest&&e.target.closest('.scene.overlap');
   if(!scene||!scene.classList.contains('pending')&&!scene.style.getPropertyValue('--t').startsWith('0.'))return;
   const y=scene.getBoundingClientRect().top+window.scrollY+window.innerHeight*1.15;
@@ -103,7 +108,7 @@
  // In-page links to an overlapping scene land after its dissolve, not before it.
  document.addEventListener('click',e=>{
   const a=e.target.closest('a[href*="#"]');
-  if(!a||a.pathname!==location.pathname)return;
+  if(reduce.matches||!a||a.pathname!==location.pathname)return;
   const target=document.getElementById(a.hash.slice(1));
   if(!target||!target.classList.contains('overlap'))return;
   e.preventDefault();
@@ -128,4 +133,11 @@
  if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
  update();
+ // Opening the page at an overlapping scene's anchor lands after its dissolve too.
+ const start=location.hash&&document.getElementById(location.hash.slice(1));
+ if(start&&start.classList.contains('overlap')&&!reduce.matches){
+  const land=()=>window.scrollTo({top:start.getBoundingClientRect().top+window.scrollY+window.innerHeight*1.15,behavior:'auto'});
+  // Wait for the browser's own jump to the anchor, then move past the dissolve.
+  if(document.readyState==='complete')setTimeout(land,0);else window.addEventListener('load',()=>setTimeout(land,0),{once:true});
+ }
 })();
