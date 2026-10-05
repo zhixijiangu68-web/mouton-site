@@ -23,3 +23,27 @@ document.querySelectorAll('.article-share').forEach(group=>{
   } finally { button.disabled=false; }
  });
 });
+
+// Thin bar at the top showing how far through the article the reader is.
+(()=>{
+ const article=document.querySelector('article');
+ if(!article)return;
+ const bar=document.createElement('div');
+ bar.className='reading-progress';
+ bar.setAttribute('aria-hidden','true');
+ const fill=document.createElement('span');
+ bar.appendChild(fill);
+ document.body.prepend(bar);
+ let ticking=false;
+ const update=()=>{
+  ticking=false;
+  const rect=article.getBoundingClientRect();
+  const total=rect.height-window.innerHeight;
+  const ratio=total>0?Math.min(1,Math.max(0,-rect.top/total)):1;
+  fill.style.transform='scaleX('+ratio+')';
+ };
+ const request=()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}};
+ window.addEventListener('scroll',request,{passive:true});
+ window.addEventListener('resize',request);
+ update();
+})();
