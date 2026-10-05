@@ -128,3 +128,5 @@ article a[href^="#ref-"] { text-decoration:none; font-size:.85em; white-space:no
 [id^="ref-"]:target { background:#fff6d9; outline:6px solid #fff6d9; border-radius:2px; }
 [id^="ref-"] { scroll-margin-top:96px; }
 .share-x,.share-native{text-decoration:none}
+body.article-page article a.copy-link { color:#1b1c19; }
+body.article-page article a.copy-link:hover { color:#f8f5ee; }

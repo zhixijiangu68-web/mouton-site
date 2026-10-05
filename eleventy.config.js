@@ -114,7 +114,9 @@ export default function (eleventyConfig) {
     return html
       .replace(/<(h[1-3])(\s[^>]*)?>([\s\S]*?)<\/\1>/g, (m, tag, attrs = '', inner) => `<${tag}${attrs}>${phraseBreaks(inner)}</${tag}>`)
       .replace(/<(div|span|a)(\s[^>]*class="(?:[^"]*\s)?(?:journal-title|topic-title|reading-card)(?:\s[^"]*)?"[^>]*)>([^<]*)<\/\1>/g,
-        (m, tag, attrs, inner) => `<${tag}${attrs}>${phraseBreaks(inner)}</${tag}>`);
+        (m, tag, attrs, inner) => `<${tag}${attrs}>${phraseBreaks(inner)}</${tag}>`)
+      .replace(/<p(\s[^>]*class="(?:[^"]*\s)?(?:lede|scene-text|copy|newsletter-text|topic-intro)(?:\s[^"]*)?"[^>]*)>([\s\S]*?)<\/p>/g,
+        (m, attrs, inner) => `<p${attrs}>${phraseBreaks(inner)}</p>`);
   });
 
   eleventyConfig.addCollection('articles', api =>

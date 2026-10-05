@@ -16,6 +16,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx eleventy
+      - name: Pages have no broken links or missing basics
+        run: node scripts/check-site.mjs
       - name: Generated files are up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then

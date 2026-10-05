@@ -134,7 +134,8 @@ body.menu-locked{overflow:hidden}
 
 /* Japanese headings break only between phrases: the build marks phrase
    boundaries with <wbr>, and keep-all stops breaks anywhere else. */
-h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
+h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}
+.lede,.scene-text,.site .copy,.newsletter-text{word-break:keep-all;overflow-wrap:anywhere}
 
 /* ---------- Topic pages ---------- */
 .doc.topic{width:min(980px,100%)}
