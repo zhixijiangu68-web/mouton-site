@@ -139,3 +139,6 @@
  .reveal,.reveal-2{opacity:1;filter:none;transform:none}
  .scroll-cue::after{animation:none}
 }
+
+.journal-snippet{display:block;margin-top:10px;padding:10px 14px;background:#fff;border-left:2px solid var(--blue);font-family:var(--serif);font-size:.9375rem;line-height:1.8;color:#45473f}
+.journal-snippet mark{background:#fff0b8;color:inherit;padding:0 2px}

@@ -369,21 +369,70 @@ items.forEach(item=>{item.dataset.search=normalize(item.querySelector('.journal-
 filters.forEach(b=>{const v=b.dataset.journalFilter;const c=document.createElement('span');c.className='count';c.textContent=items.filter(i=>v==='all'||i.dataset.category===v).length;b.appendChild(c);});
 let filter='all';
 try{const v=sessionStorage.getItem(storageKey);if(filters.some(b=>b.dataset.journalFilter===v))filter=v;}catch{}
+// Full-text search: the article text is fetched the first time someone searches.
+let fullText=null,loadingText=null;
+const loadText=()=>loadingText||(loadingText=fetch('search.json').then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{
+ fullText=new Map(d.map(e=>[e.url,{...e,norm:normalize(e.text)}]));
+ if(searchInput.value)applyFilter(filter);
+}));
+const extra=document.createElement('div');
+extra.className='journal-extra';
+journalList.after(extra);
+function snippet(entry,raw){
+ const text=entry.text,i=text.toLowerCase().indexOf(raw.toLowerCase());
+ if(i<0)return null;
+ const p=document.createElement('span');
+ p.className='journal-snippet';
+ const start=Math.max(0,i-36),end=Math.min(text.length,i+raw.length+60);
+ const mark=document.createElement('mark');
+ mark.textContent=text.slice(i,i+raw.length);
+ p.append((start>0?'…':'')+text.slice(start,i),mark,text.slice(i+raw.length,end)+(end<text.length?'…':''));
+ return p;
+}
 function applyFilter(value){
  filter=value;
  try{sessionStorage.setItem(storageKey,filter);}catch{}
  filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
- const query=normalize(searchInput.value);
+ const raw=searchInput.value.trim();
+ const query=normalize(raw);
  let shown=0;
+ const listed=new Set();
  items.forEach(item=>{
-  const hidden=(filter!=='all'&&item.dataset.category!==filter)||(query!==''&&!item.dataset.search.includes(query));
+  const href=item.getAttribute('href');
+  if(href)listed.add(href);
+  item.querySelector('.journal-snippet')?.remove();
+  const entry=href&&fullText?fullText.get(href):null;
+  const inList=query===''||item.dataset.search.includes(query);
+  const inBody=!inList&&entry&&entry.norm.includes(query);
+  const hidden=(filter!=='all'&&item.dataset.category!==filter)||!(inList||inBody);
   item.classList.toggle('is-hidden',hidden);
-  if(!hidden)shown++;
+  if(!hidden){shown++;if(inBody){const s=snippet(entry,raw);if(s)item.querySelector('.journal-body').append(s);}}
  });
- searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました':'該当する記事はありませんでした';
+ // Articles that are not in the journal list (food & science, books) still turn up in a search.
+ extra.replaceChildren();
+ if(query!==''&&fullText&&filter==='all'){
+  for(const entry of fullText.values()){
+   if(listed.has(entry.url)||!entry.norm.includes(query))continue;
+   const a=document.createElement('a');
+   a.className='journal-item clickable journal-link';
+   a.href=entry.url;
+   const date=document.createElement('div');date.className='journal-date';date.textContent=entry.date;
+   const body=document.createElement('div');body.className='journal-body';
+   const title=document.createElement('div');title.className='journal-title';title.textContent=entry.title;
+   const ex=document.createElement('div');ex.className='journal-excerpt';ex.textContent=entry.excerpt;
+   const time=document.createElement('span');time.className='journal-read-time';time.textContent='約'+entry.minutes+'分';
+   body.append(title,ex,time);
+   const s=snippet(entry,raw);if(s)body.append(s);
+   const arrow=document.createElement('div');arrow.className='journal-arrow';arrow.textContent='→';
+   a.append(date,body,arrow);
+   extra.append(a);shown++;
+  }
+ }
+ searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました'+(fullText?'（本文も検索しています）':''):'該当する記事はありませんでした';
 }
 filters.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.journalFilter)));
-searchInput.addEventListener('input',()=>applyFilter(filter));
+searchInput.addEventListener('input',()=>{loadText();applyFilter(filter);});
+searchInput.addEventListener('focus',loadText,{once:true});
 document.querySelectorAll('[data-filter-link]').forEach(a=>a.addEventListener('click',()=>{searchInput.value='';applyFilter(a.dataset.filterLink);}));
 applyFilter(filter);
 

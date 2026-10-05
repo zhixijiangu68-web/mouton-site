@@ -1,12 +1,31 @@
 'use strict';
+const shareUrl=()=>{const url=new URL(window.location.href);url.hash='';url.search='';return url.href;};
+const shareTitle=(document.querySelector('meta[property="og:title"]')?.content||document.title).replace(/\s*—\s*ムートン$/,'');
+document.querySelectorAll('.article-share').forEach(group=>{
+ // Post to X, and on phones offer the system share sheet.
+ const post=document.createElement('a');
+ post.className='copy-link share-x';
+ post.href='https://x.com/intent/post?'+new URLSearchParams({text:shareTitle,url:shareUrl(),via:'kodoku__alone'});
+ post.target='_blank';
+ post.rel='noopener noreferrer';
+ post.textContent='Xでポスト';
+ group.querySelector('.copy-link').after(post);
+ if(navigator.share&&matchMedia('(pointer: coarse)').matches){
+  const native=document.createElement('button');
+  native.type='button';
+  native.className='copy-link share-native';
+  native.textContent='共有';
+  native.addEventListener('click',()=>navigator.share({title:shareTitle,url:shareUrl()}).catch(()=>{}));
+  post.after(native);
+ }
+});
 document.querySelectorAll('.article-share').forEach(group=>{
  const button=group.querySelector('.copy-link');
  const status=group.querySelector('.copy-status');
  const fallback=group.querySelector('.copy-fallback');
  const input=group.querySelector('.copy-url');
  button.addEventListener('click',async()=>{
-  const url=new URL(window.location.href);
-  url.hash='';url.search='';
+  const url={href:shareUrl()};
   button.disabled=true;
   status.textContent='';
   fallback.hidden=true;

@@ -122,3 +122,9 @@ body.article-page .footer { text-align:center; padding:40px 20px calc(48px + env
  body.article-page > .wrap { padding-bottom:48px; }
 }
 @media print { .cover, .site-nav { display:none !important; } body.article-page > main, body.article-page > .wrap { margin:0 !important; box-shadow:none !important; } }
+
+/* Citations jump to the reference; the reference is highlighted when targeted. */
+article a[href^="#ref-"] { text-decoration:none; font-size:.85em; white-space:nowrap; }
+[id^="ref-"]:target { background:#fff6d9; outline:6px solid #fff6d9; border-radius:2px; }
+[id^="ref-"] { scroll-margin-top:96px; }
+.share-x,.share-native{text-decoration:none}
