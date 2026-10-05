@@ -1,0 +1,39 @@
+start,end,clip,effect,section
+0:00,0:05,BLACK,none,黒画面 → 「神は死んだ。」
+0:05,0:11,nietzsche,zoom,沈黙 → ニーチェ
+0:11,0:17,night_street_1,zoom,夜の石畳
+0:17,0:22,cathedral,zoom,
+0:22,0:26,misty_path,zoom,神が死んだ後の世界
+0:26,0:41,night_street_2,zoom,
+0:41,0:52,old_books,zoom,本当の意味
+0:52,1:03,church_window,zoom,
+1:03,1:15,cathedral,zoom,絶対的価値の崩壊
+1:15,1:26,cobblestone,zoom,
+1:26,1:37,night_street_2,zoom,19世紀ヨーロッパ
+1:37,1:48,old_books,zoom,
+1:48,1:59,church_window,zoom,宗教・共同体
+1:59,2:10,cathedral,zoom,
+2:10,2:17,smoke_stacks,zoom,産業革命・都市化
+2:17,2:25,steam_train,zoom,
+2:25,2:32,crowd_bw,zoom,
+2:32,2:42,watch_gears,zoom,科学と進歩
+2:42,2:52,steam_train,zoom,
+2:52,3:13,man_window_city,zoom,「何のために生きるのか」
+3:13,3:23,misty_path,zoom,自由か、迷子か
+3:23,3:32,silhouette_forest,zoom,
+3:32,3:54,man_window,zoom,ニヒリズム
+3:54,4:04,silhouette_forest,zoom,静かな虚無
+4:04,4:14,night_street_1,zoom,
+4:14,4:34,crowd_bw,zoom,「最後の人間」
+4:34,5:11,city_crowd,zoom,現代との接続 / 会社・学歴・評価
+5:11,5:23,man_window_city,zoom,
+5:23,5:45,man_back,zoom,自分は何を頼りに生きる？
+5:45,5:57,misty_path,zoom,自分で価値を作る
+5:57,6:09,sunrise_road,zoom,
+6:09,6:20,man_back,zoom,「超人」
+6:20,6:31,dawn,zoom,
+6:31,6:52,sunrise_road,zoom,小さな選択
+6:52,7:03,dawn,zoom,自分の人生へ
+7:03,7:14,man_back,zoom,
+7:14,7:26,sunrise_road,zoom,人生の意味
+7:26,END,dawn,zoom,最後の問い → 余韻 → 黒へ
