@@ -23,3 +23,23 @@ Underrated life advice: get better at recovering fast. You're going to fail. You
 - 失敗しないことではなく「転んでから起き上がるまでの間」を縮める、という目標の置き方
 - 失敗の例が具体的で短い（断られる・判断を誤る・お金を失う・恥をかく）
 - 最後の一言「やり直すことを極める」
+
+### T2 知性の5つのかたち
+
+- 集めた日: 2026-10-06
+- 状態: 未
+- つなげられそうな記事: comparison（人と比べるのを、やめることはできるのか）、boundaries、doing-nothing、refined-taste
+
+```
+Five highest forms of intelligence :
+1. Pattern recognition
+2. Delusional optimism
+3. Quiet discernment
+4. Strategic detachment
+5. Deep curiosity
+```
+
+刺さったところ:
+- 「頭の良さ」を、テストで測れる能力ではなく、物事への向き合い方として並べている
+- 「Delusional optimism（妄想に近い楽観）」「Strategic detachment（戦略的に距離をとる）」と、ふつうは欠点に見えるものを知性に数えている
+- 5つの短い言葉だけで、説明がない。リスト形式なので読まれやすい
