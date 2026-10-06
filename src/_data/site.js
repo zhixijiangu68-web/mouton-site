@@ -8,6 +8,8 @@ export default {
   author: {
     name: 'ムートン',
     x: 'kodoku__alone',
+    // Instagram のユーザー名（@ なし）。フッター・運営者情報・links.html に出る。
+    instagram: 'art.gagaga',
     bio: '興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。',
   },
   // Google アナリティクス 4 の測定ID（例: 'G-XXXXXXXXXX'）。空なら何も読み込まない。

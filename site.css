@@ -203,3 +203,4 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 }
 
 @media print { [data-rise] { opacity: 1 !important; translate: none !important; } }
+.links h2 + .topic-list{border-top:0}

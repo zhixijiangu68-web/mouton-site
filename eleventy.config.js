@@ -24,6 +24,12 @@ function phraseBreaks(inner) {
 
 // Builds the site from src/ into the repository root, so hosting keeps
 // serving the same files from the same place.
+// The author's profiles, for structured data.
+const sameAs = site => [
+  site.author.x && `https://x.com/${site.author.x}`,
+  site.author.instagram && `https://www.instagram.com/${site.author.instagram}/`,
+].filter(Boolean);
+
 export default function (eleventyConfig) {
   const pad = n => String(n).padStart(2, '0');
   const ymd = d => [d.getUTCFullYear(), pad(d.getUTCMonth() + 1), pad(d.getUTCDate())];
@@ -72,6 +78,11 @@ export default function (eleventyConfig) {
     }
     return picks;
   });
+  // Articles in the order of the given slugs (unknown slugs are skipped).
+  eleventyConfig.addFilter('bySlugs', (items, slugs = []) => {
+    const bySlug = new Map(items.map(a => [a.page.fileSlug, a]));
+    return slugs.map(slug => bySlug.get(slug)).filter(Boolean);
+  });
   eleventyConfig.addFilter('head', (items, n) => items.slice(0, n));
   eleventyConfig.addFilter('rfc822', d => new Date(d).toUTCString().replace('GMT', '+0000'));
   eleventyConfig.addFilter('json', v => JSON.stringify(v).replace(/</g, '\\u003c'));
@@ -101,7 +112,7 @@ export default function (eleventyConfig) {
       author: {
         '@type': 'Person',
         name: site.author.name,
-        sameAs: `https://x.com/${site.author.x}`,
+        sameAs: sameAs(site),
         ...(site.url ? { url: new URL('operator.html', site.url.replace(/\/?$/, '/')).href } : {}),
       },
       ...(url ? { mainEntityOfPage: url } : {}),
@@ -126,7 +137,7 @@ export default function (eleventyConfig) {
       '@context': 'https://schema.org',
       '@graph': [
         { '@type': 'WebSite', name: site.name, description: site.description, inLanguage: 'ja', ...(base ? { url: base } : {}) },
-        { '@type': 'Person', name: site.author.name, description: site.author.bio, sameAs: [`https://x.com/${site.author.x}`] },
+        { '@type': 'Person', name: site.author.name, description: site.author.bio, sameAs: sameAs(site) },
       ],
     };
     return JSON.stringify(data).replace(/</g, '\\u003c');
