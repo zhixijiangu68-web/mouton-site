@@ -95,7 +95,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('head', (items, n) => items.slice(0, n));
   eleventyConfig.addFilter('rfc822', d => new Date(d).toUTCString().replace('GMT', '+0000'));
   eleventyConfig.addFilter('json', v => JSON.stringify(v).replace(/</g, '\\u003c'));
-  eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(path, base.replace(/\/?$/, '/')).href : ''));
+  eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(String(path).replace(/^\//, ''), base.replace(/\/?$/, '/')).href : ''));
 
   // Amazon links get the associate tag, rel="sponsored" and a visible PR label
   // only once site.affiliate.amazonTag is set.
