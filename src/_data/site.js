@@ -20,7 +20,7 @@ export default {
   // 入れると Amazon リンクにタグ・rel="sponsored"・「PR」表示が付き、広告の表記も出る。
   // 楽天アフィリエイトID（例: '1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b'）。入れると商品カードに楽天のボタンが出る。
   affiliate: { amazonTag: 'yuiga2003-22', rakutenId: '' },
-  // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。記事ページにだけ広告枠を出す。
+  // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。入れると全ページに AdSense のコードと ads.txt が出る。adsenseSlot も入れると記事の末尾に広告枠を出す。
   ads: { adsenseClient: '', adsenseSlot: '' },
   // メールマガジンの登録フォームの送信先。空なら登録欄を出さない。
   // 例（Buttondown）: action: 'https://buttondown.com/api/emails/embed-subscribe/ユーザー名', emailField: 'email'
