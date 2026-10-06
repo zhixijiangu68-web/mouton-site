@@ -1,0 +1,66 @@
+{
+  "title": "何もしない時間は、本当に無駄なのか",
+  "source": "doing-nothing.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "何もしない\nのは不安。",
+      "duration": 1.5,
+      "size": 72,
+      "cover": true
+    },
+    {
+      "text": "空いた数分",
+      "duration": 1.0
+    },
+    {
+      "text": "すぐスマホ",
+      "duration": 1.0
+    },
+    {
+      "text": "空白を埋める",
+      "duration": 1.1,
+      "size": 71
+    },
+    {
+      "text": "その時間、\n無駄？",
+      "duration": 1.5,
+      "size": 72
+    },
+    {
+      "text": "記憶",
+      "duration": 0.8
+    },
+    {
+      "text": "ひらめき",
+      "duration": 0.8
+    },
+    {
+      "text": "未来の計画",
+      "duration": 0.9
+    },
+    {
+      "text": "休んでいる脳は、\n止まっていない。",
+      "duration": 1.9,
+      "size": 52
+    },
+    {
+      "text": "休むことも、\n思考の一部。",
+      "duration": 2.2,
+      "size": 58,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.6,
+      "size": 46,
+      "sub": "何もしない時間は、\n本当に無駄なのか"
+    }
+  ]
+}

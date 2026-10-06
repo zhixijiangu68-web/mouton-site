@@ -3,25 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>愛ではなく、自由を求める — ムートン</title>
+<meta name="description" content="愛は外側に基準があり、自由は自分の中に基準を置ける。愛と自由、依存と選択、人生の向きについて考える。">
+<link rel="canonical" href="https://moutonarchive.com/freedom.html">
 <meta property="og:title" content="愛ではなく、自由を求める — ムートン">
 <meta property="og:description" content="愛は外側に基準があり、自由は自分の中に基準を置ける。愛と自由、依存と選択、人生の向きについて考える。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://moutonarchive.com/freedom.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/freedom.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<meta name="description" content="愛は外側に基準があり、自由は自分の中に基準を置ける。愛と自由、依存と選択、人生の向きについて考える。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400&display=swap');
 :root{--ink:#252724;--muted:#666a64;--line:rgba(37,39,36,.16);--paper:rgba(244,241,233,.90);--soft:rgba(255,255,255,.28)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#c9c3b7 url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(244,240,230,.16),rgba(25,32,29,.18));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.3);padding-bottom:5px}
 main{width:min(1040px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.65);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(36px,7vw,88px)}
 .meta{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:28px}.eyebrow{font-size:9px;letter-spacing:.3em;opacity:.55;margin-bottom:18px}
 h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,64px);line-height:1.45;letter-spacing:.04em;margin:0 0 28px;max-width:850px}
@@ -41,17 +43,43 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 .pendulum-left,.pendulum-right{position:absolute;top:36px;font-size:9px;letter-spacing:.16em;opacity:.55}.pendulum-left{left:0}.pendulum-right{right:0}.pendulum-note{font-family:"Noto Serif JP",serif;font-size:12px;line-height:2;opacity:.68;max-width:560px;margin:0 auto}
 .ending{margin-top:76px;padding-top:48px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(21px,3vw,30px);line-height:1.9}
 .footer{width:min(1040px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;opacity:.7}
-@media(max-width:700px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:22px}.deck{font-size:14px;margin-bottom:42px}p{font-size:14px;line-height:2.15}h2{margin-top:54px}.axis-grid,.vector-row{grid-template-columns:1fr}.axis,.vector,.pendulum{margin:46px 0}.vector-card{min-height:160px}.pendulum-left,.pendulum-right{font-size:8px}}
+@media(max-width:700px){main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:22px}.deck{font-size:14px;margin-bottom:42px}p{font-size:14px;line-height:2.15}h2{margin-top:54px}.axis-grid,.vector-row{grid-template-columns:1fr}.axis,.vector,.pendulum{margin:46px 0}.vector-card{min-height:160px}.pendulum-left,.pendulum-right{font-size:8px}}
+
 </style>
 <link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
 <script src="article-share.js" defer></script>
-<script src="site.js" defer></script></head>
-<body>
-<header><div class="brand">ムートン</div><a class="back" href="index.html#journal">記事一覧へ戻る</a></header>
-<main>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"愛ではなく、自由を求める","description":"愛は外側に基準があり、自由は自分の中に基準を置ける。愛と自由、依存と選択、人生の向きについて考える。","inLanguage":"ja","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/freedom.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"愛ではなく、自由を求める","item":"https://moutonarchive.com/freedom.html"}]}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+
+
+<main data-nav="light" data-nav-solid="light">
 <div class="eyebrow">JOURNAL / PHILOSOPHY</div>
 <div class="meta">2026.10.03</div>
-<h1>愛ではなく、自由を求める</h1><p class="reading-time">約8分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">愛には、条件がついてくる</a></li><li><a href="#section-2">愛は外にあり、自由は自分の中にある</a></li><li><a href="#section-3">好きでも、離れたいときがある</a></li><li><a href="#section-4">大切なのは、強さではなく向き</a></li><li><a href="#section-5">「必要とされること」に依存しない</a></li><li><a href="#section-6">止まらないことが、自由</a></li><li><a href="#section-7">愛から逃げたいわけではない</a></li><li><a href="#section-8">愛ではなく、自由を求める</a></li></ol></nav></details>
+<h1>愛ではなく、<wbr>自由を<wbr>求める</h1><p class="reading-time">約8分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">愛には、条件がついてくる</a></li><li><a href="#section-2">愛は外にあり、自由は自分の中にある</a></li><li><a href="#section-3">好きでも、離れたいときがある</a></li><li><a href="#section-4">大切なのは、強さではなく向き</a></li><li><a href="#section-5">「必要とされること」に依存しない</a></li><li><a href="#section-6">止まらないことが、自由</a></li><li><a href="#section-7">愛から逃げたいわけではない</a></li><li><a href="#section-8">愛ではなく、自由を求める</a></li></ol></nav></details>
 <p class="deck">誰かに愛されることより、自分の人生の基準を自分の中に置いておくこと。愛、依存、選択、そして自由について。</p>
 
 <article>
@@ -63,7 +91,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>誰かに必要とされることよりも、自分がどこへ向かうのかを自分で選べること。</p>
 <p>僕が求めているのは、そういうものなのかもしれない。</p>
 
-<h2 id="section-1">愛には、条件がついてくる</h2>
+<h2 id="section-1">愛には、<wbr>条件が<wbr>ついてくる</h2>
 <p>人と深く関われば、そこには期待が生まれる。</p>
 <p class="words">もっと連絡してほしい。<br>自分を優先してほしい。<br>そばにいてほしい。<br>変わらないでほしい。</p>
 <p>いつの間にか「愛している」という言葉の中に、「こうしてほしい」が混ざってくる。</p>
@@ -72,7 +100,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>相手を大切にすることと、自分の人生を明け渡すことは違う。</p>
 <p>その境界を失いたくない。</p>
 
-<h2 id="section-2">愛は外にあり、自由は自分の中にある</h2>
+<h2 id="section-2">愛は<wbr>外に<wbr>あり、<wbr>自由は<wbr>自分の<wbr>中に<wbr>ある</h2>
 <p>愛には、必ず相手がいる。</p>
 <p>自分がどれだけ愛していても、相手が同じように愛してくれるとは限らない。どれだけ大切にしても、関係が続くとは限らない。</p>
 
@@ -98,7 +126,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>でも、自分がどう生きるかは決められる。</p>
 <p>だから僕は、愛よりも自由に惹かれるのだと思う。</p>
 
-<h2 id="section-3">好きでも、離れたいときがある</h2>
+<h2 id="section-3">好きでも、<wbr>離れたい<wbr>ときが<wbr>ある</h2>
 <p>好きなのに、一人になりたい。</p>
 <p>大切なのに、距離を取りたい。</p>
 <p>愛しているのに、縛られたくない。</p>
@@ -108,18 +136,18 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>人には、それぞれの距離がある。</p>
 <p>近づきたいときもあれば、離れたいときもある。その距離まで自分で決められることが、僕にとっては大切だ。</p>
 
-<h2 id="section-4">大切なのは、強さではなく向き</h2>
+<h2 id="section-4">大切なのは、<wbr>強さではなく<wbr>向き</h2>
 <p>ここで、人生をベクトルで考えてみる。</p>
 
 <section class="vector">
 <div class="eyebrow">VECTOR / DIRECTION</div>
 <div class="vector-row">
   <div class="vector-card">
-    <h3>依存する愛</h3>
+    <h3>依存する<wbr>愛</h3>
     <div class="center-dot"></div><div class="vline v-a"></div><div class="vline v-b"></div>
   </div>
   <div class="vector-card">
-    <h3>自由な愛</h3>
+    <h3>自由な<wbr>愛</h3>
     <div class="vline v-c"></div><div class="vline v-d"></div>
   </div>
 </div>
@@ -138,7 +166,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>僕は、人生の中心に自分を置いていたい。</p>
 <p>恋愛は人生の中にあればいい。恋愛の中に、人生のすべてを入れるのではなく。</p>
 
-<h2 id="section-5">「必要とされること」に依存しない</h2>
+<h2 id="section-5">「必要と<wbr>される<wbr>こと」に<wbr>依存しない</h2>
 <p>人から必要とされると、自分に価値があるように感じる。愛されると、安心する。</p>
 <p>だからいつの間にか、「この人を失ったら、自分には何も残らない」と思ってしまうことがある。</p>
 <p>でもその瞬間、自分の価値を誰かの愛情に預けてしまっている。</p>
@@ -152,7 +180,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p class="question"><strong>「あなたがいないと生きられない」ではなく、「一人でも生きられる。でも、あなたといたい」。</strong></p>
 <p>そう言える関係のほうが、僕には美しく見える。</p>
 
-<h2 id="section-6">止まらないことが、自由</h2>
+<h2 id="section-6">止まらない<wbr>ことが、<wbr>自由</h2>
 <p>自由とは、一人になることでも、責任を捨てることでもない。</p>
 <p class="words">今日は誰かといたい。<br>明日は一人でいたい。<br>何かに夢中になりたい。<br>突然、知らない場所へ行きたい。<br>一日中、何もしたくない日もある。</p>
 <p>そのときの自分が望む方向へ、自分で動けること。</p>
@@ -183,7 +211,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>それを自分で決められること。</p>
 <p>それが、僕の言う自由だ。</p>
 
-<h2 id="section-7">愛から逃げたいわけではない</h2>
+<h2 id="section-7">愛から<wbr>逃げたいわけではない</h2>
 <p>だからといって、愛を否定したいわけではない。</p>
 <p>むしろ、自由な人間同士だからこそ生まれる愛があると思う。</p>
 <p class="words">相手を所有しない。<br>相手を変えようとしない。<br>離れている時間を恐れない。<br>相手の人生の選択を奪わない。</p>
@@ -197,7 +225,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <p>そのほうが、僕にはずっと深い愛に見える。</p>
 
 <div class="ending">
-<h2 id="section-8">愛ではなく、自由を求める</h2>
+<h2 id="section-8">愛ではなく、<wbr>自由を<wbr>求める</h2>
 <p>若い頃は、愛されることが幸せなのだと思っていた。</p>
 <p>誰かに選ばれること。誰かに必要とされること。誰かにとって特別になること。</p>
 <p>でも今は、それだけでは足りない。</p>
@@ -211,10 +239,40 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="boundaries.html">誰にでも好かれようとすると、なぜ安っぽくなるのか</a>
-<a class="reading-card" href="nietzsche.html">神は死んだ。それでも、なぜ生きるのか。</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.03</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="boundaries.html">誰に<wbr>でも<wbr>好かれようと<wbr>すると、<wbr>なぜ<wbr>安っぽくなるのか</a><a class="reading-card" href="nietzsche.html">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+
 </article>
 </main>
-<div class="footer">MOUTON — PERSONAL ARCHIVE / 2026 · <a href="policy.html" style="color:inherit">PRIVACY &amp; ADS</a></div>
+
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
 </body>
 </html>

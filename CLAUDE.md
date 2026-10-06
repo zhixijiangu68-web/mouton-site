@@ -1,42 +1,41 @@
 # ムートン（mouton-site）
 
-ムートンの個人サイト。ビルド工程のない静的 HTML サイトで、各記事が 1 つの HTML ファイルになっている。
+ムートンの個人サイト。ページは `src/` のテンプレートから Eleventy で生成し、リポジトリ直下に HTML として書き出している。
+
+**リポジトリ直下の `*.html`・`search.json` は生成物。直接編集しない。** `src/` を編集してから `npm run build` で生成し、生成物も一緒にコミットする。
 
 ## 構成
 
-- `index.html`: トップページ。「記事」パネルの `.journal-list` に記事一覧がある
-- `*.html`: 記事ページ（例: `goggins.html`, `halitosis.html`）。スタイルは各ファイルの `<style>` と共通の `reading.css`
-- `article-share.js`: 記事の「リンクをコピー」ボタン
-- 依存パッケージ・ビルド・テストはない
+- `src/articles/*.html`: 記事。1ファイル = 1ページ（ファイル名がそのまま URL になる）。先頭の front matter にタイトル・日付・カテゴリーなど、その下に本文
+- `src/index.njk`: トップページ。記事一覧・「食事・化学」のカードは記事の front matter から自動で作られる（手で書き足さない）
+- `src/_data/site.js`: サイト全体の設定。`src/_data/topics.js`: テーマ別ページ。`src/_data/notes.json`: ページのない短いメモ
+- `src/_includes/`: 共通部分（head、ナビ、記事の末尾、フッター）
+- `site.css` / `site.js` / `home.css` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
+- 詳しい書き方は README.md の「記事を追加する」
 
 ## 記事を追加するとき
 
-1. 既存の記事（同じカテゴリーのもの）をコピーして、同じ構造・クラス名で書く
-   - `<head>` の `title`・`description`・`og:title`・`og:description` を記事に合わせて書き換える
-   - 日付 `.meta`、読了時間 `.reading-time`、目次 `.reading-toc`、`次に読む`（`.reading-next`）を更新する
-   - 末尾で `reading.css` と `article-share.js` を読み込む
-2. `index.html` の `.journal-list` の **先頭** に一覧項目を追加する
-   - `data-category` は `body`（身体）/ `philosophy`（哲学・生き方）/ `work`（仕事・働き方）/ `making`（制作）のいずれか
-   - 日付は `YYYY.MM.DD`、読了時間は「約N分」
-3. ファイル名は英小文字とハイフン（例: `olive-oil.html`）
+1. 同じカテゴリーの既存の記事（`src/articles/` の中）をコピーして、front matter と本文を書き換える
+   - `title`（末尾に「 — ムートン」）、`headline`、`description`（80〜120字）、`date`、`category`（philosophy / body / food / books / work）、`health`（健康の記事なら true）
+   - トップの記事一覧に出すなら `journal`（`category` は body / philosophy / work / making、`title`、`excerpt`）を書く
+   - 「次に読む」に優先して出したい記事があれば `related: ["ファイル名", ...]`
+   - 商品を紹介するときは `{% productCard "商品名", "ひとこと", { asin: "ASIN", rakuten: "検索語かURL" } %}` を使い、front matter に `affiliate: true` を書く（冒頭のPR表示・リンクのPRラベル・末尾の注意書きが自動で付く。IDは `src/_data/site.js` の `affiliate`）
+   - 「選び方」の記事は front matter に `guide`（`tag`、`title`、`text`、`order`）を書くと、トップの「選び方」に自動で並ぶ
+   - 読了時間は `約{{ readMinutes }}分で読めます（目安）` と書けば自動で計算される
+   - 本文の末尾近くに `{% include "partials/article-end.njk" %}` と `{% include "partials/reading-next.njk" %}` を置く（既存の記事と同じ位置）
+2. ファイル名は英小文字とハイフン（例: `olive-oil.html`）
+3. `npm ci`（初回）→ `npm run build` → `npm test` を実行し、エラーがないことを確かめる
+   - シェア用の画像（`images/og/<ファイル名>.jpg`）は `cd scripts/og && npm install && node make.mjs` で作り直せる（記事を足したら実行し、画像もコミットする）
+4. `src/articles/` の記事と、生成されたリポジトリ直下の HTML・`search.json` をまとめてコミットする
 
 ## 文章のルール
 
 - 日本語。一人称は「僕」。常体の記事と敬体（です・ます）の記事があるので、1 本の記事の中では文体を統一し、Issue で指定がなければ同じカテゴリーの最近の記事に合わせる
 - 健康・科学の記事は研究や公的機関の情報に基づき、末尾に参考文献を番号付きで載せる。存在を確認できない文献は書かない
-- 医療に関わる記事には「個別の診断や治療を目的とするものではありません」の注記を入れる
+- 本文中の出典番号は `<a href="#ref-1">[1]</a>`、参考文献の側は `id="ref-1"` を付けるとリンクになる
+- 医療に関わる記事は front matter の `health: true` で末尾に注意書きが自動で入る。本文でも「治る」「効く」と言い切らない
 
 ## 確認
 
-- HTML のタグの閉じ忘れがないこと、`index.html` から新しい記事へのリンクが正しいことを確認する
-- スマホ幅（760px 以下）でも崩れないよう、既存のクラスを使い、独自の固定幅を増やさない
-
-## 収益化（アクセス解析・アフィリエイト）
-
-- 全ページで `site.js` を `</head>` の直前に読み込む。新しいページにも必ず入れる
-- アクセス解析（GoatCounter）と Amazon アソシエイトの ID は `site.js` 冒頭の定数で設定する。HTML に直接書かない
-- 商品リンクは `https://www.amazon.co.jp/dp/<ASIN または ISBN-10>` の形で書く。トラッキング ID の付与と「PR」表示は `site.js` が自動で行う
-- ASIN・ISBN は出版社や Amazon のページで確認できたものだけを使う。推測で書かない
-- 商品を紹介するのは、Issue で指定されたもの、またはムートン本人がすすめているものに限る
-- A8.net などの ASP のリンクは、提携済みの案件の広告リンクをそのまま使う。ASP リンクを含むページには、本文の先頭に `site.js` と同じ形式の PR 表示（`.pr-notice`）を手で入れる
-- 広告や紹介料の取り扱いは `policy.html` に書いてある。内容を変えるときはそちらも更新する
+- `npm test` が通ること（リンク切れ・ID の重複・title や description の書き忘れ・h1 の数を調べる）
+- スマホ幅（390px）でも崩れないよう、既存のクラスを使い、独自の固定幅を増やさない

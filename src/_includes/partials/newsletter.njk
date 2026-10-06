@@ -1,0 +1,16 @@
+{%- if site.newsletter.action %}
+<section class="newsletter" aria-labelledby="newsletter-heading-{{ page.fileSlug or 'home' }}">
+  <p class="newsletter-eyebrow">Newsletter</p>
+  <h2 class="newsletter-title" id="newsletter-heading-{{ page.fileSlug or 'home' }}">{{ site.newsletter.title }}</h2>
+  <p class="newsletter-text">{{ site.newsletter.text }}</p>
+  <form class="newsletter-form" action="{{ site.newsletter.action }}" method="post" target="_blank">
+    <label class="newsletter-label" for="newsletter-email-{{ page.fileSlug or 'home' }}">メールアドレス</label>
+    <input id="newsletter-email-{{ page.fileSlug or 'home' }}" type="email" name="{{ site.newsletter.emailField }}" required autocomplete="email" placeholder="you@example.com">
+    {%- for name, value in site.newsletter.hidden %}
+    <input type="hidden" name="{{ name }}" value="{{ value }}">
+    {%- endfor %}
+    <button type="submit">登録する</button>
+  </form>
+  <p class="newsletter-note">いつでも解除できます。登録したメールアドレスの扱いは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+</section>
+{%- endif %}

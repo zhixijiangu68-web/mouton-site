@@ -1,0 +1,64 @@
+{
+  "title": "システムのないゴールは、動かない",
+  "source": "system-goal.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "今年こそ。",
+      "duration": 1.4,
+      "size": 86,
+      "cover": true
+    },
+    {
+      "text": "痩せる",
+      "duration": 0.9
+    },
+    {
+      "text": "稼ぐ",
+      "duration": 0.9
+    },
+    {
+      "text": "事業を\nつくる",
+      "duration": 1.0
+    },
+    {
+      "text": "で、今日\n何をする？",
+      "duration": 1.6,
+      "size": 68
+    },
+    {
+      "text": "ゴールだけでは\n動かない。",
+      "duration": 1.6,
+      "size": 56
+    },
+    {
+      "text": "入力",
+      "duration": 1.8,
+      "size": 88,
+      "strike": "結果"
+    },
+    {
+      "text": "いつ・どこで・\n何をするか。",
+      "duration": 2.0,
+      "size": 54
+    },
+    {
+      "text": "1日抜けても、\n戻ればいい。",
+      "duration": 2.2,
+      "size": 56,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.8,
+      "size": 46,
+      "sub": "システムのないゴールは、\n動かない"
+    }
+  ]
+}

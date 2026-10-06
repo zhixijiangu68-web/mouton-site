@@ -1,26 +1,29 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>転職すれば、幸せになれるのか — ムートン</title>
+<meta name="description" content="転職直後の満足度は上がり、その後下がる。研究が示す「ハネムーン」と「二日酔い」、そして変化を選んだ人のその後から、転職と幸福の関係を考える。">
+<link rel="canonical" href="https://moutonarchive.com/job-change-happiness.html">
 <meta property="og:title" content="転職すれば、幸せになれるのか — ムートン">
 <meta property="og:description" content="転職直後の満足度は上がり、その後下がる。研究が示す「ハネムーン」と「二日酔い」、そして変化を選んだ人のその後から、転職と幸福の関係を考える。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://moutonarchive.com/job-change-happiness.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/job-change-happiness.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<meta name="description" content="転職直後の満足度は上がり、その後下がる。研究が示す「ハネムーン」と「二日酔い」、そして変化を選んだ人のその後から、転職と幸福の関係を考える。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
 :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
 main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
 .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:20px}h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
 .deck{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2;opacity:.73;max-width:720px;margin:0 0 52px}.hero-line{height:1px;background:linear-gradient(90deg,var(--ink),transparent);opacity:.28;margin-bottom:58px}
@@ -31,21 +34,47 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 .work{margin:38px 0;padding:30px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.22)}
 .refs{margin-top:56px;padding-top:34px;border-top:1px solid var(--line)}.refs p{font-family:Inter,sans-serif;font-size:12px;line-height:1.8;opacity:.7;margin-bottom:12px}.ending{margin-top:64px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(20px,3vw,28px)}
 .footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-@media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+@media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+
 </style>
-<link rel="stylesheet" href="reading.css"><script src="article-share.js" defer></script>
-<script src="site.js" defer></script></head><body>
-<header><div class="brand">ムートン</div><a class="back" href="index.html#journal">記事一覧へ戻る</a></header>
-<main><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
-<h1>転職すれば、幸せになれるのか</h1>
-<p class="reading-time">約7分で読めます（目安）</p>
+<link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script src="article-share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"転職すれば、幸せになれるのか","description":"転職直後の満足度は上がり、その後下がる。研究が示す「ハネムーン」と「二日酔い」、そして変化を選んだ人のその後から、転職と幸福の関係を考える。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/job-change-happiness.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"仕事・働き方","item":"https://moutonarchive.com/topic-work.html"},{"@type":"ListItem","position":3,"name":"転職すれば、幸せになれるのか","item":"https://moutonarchive.com/job-change-happiness.html"}]}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-work is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+<main data-nav="light" data-nav-solid="light"><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
+<h1>転職すれば、<wbr>幸せに<wbr>なれるのか</h1>
+<p class="reading-time">約5分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 <p class="deck">転職直後、仕事の満足度は上がる。問題はその後だ。研究が示す「ハネムーン」と「二日酔い」、そして変化を選んだ人のその後。</p><div class="hero-line"></div>
 <article>
 <p>「転職すれば、今よりましになるはずだ」。</p>
 <p>そう思う一方で、「転職して後悔した」という話もよく聞く。どちらが本当なのか。研究は、意外とはっきりした形を示している。</p>
 
-<h2>転職直後、満足度は跳ね上がる</h2>
+<h2>転職直後、<wbr>満足度は<wbr>跳ね上がる</h2>
 <p>Boswellらは、管理職を対象に、転職の前後で仕事の満足度がどう変わるかを追跡した（Boswell, Boudreau &amp; Tichy, 2005）。</p>
 <p>結果は、きれいな山の形だった。転職する前の職場では、満足度は時間とともに下がっていく。転職すると、新しい職場で満足度は一気に上がる。しかしその後、翌年にかけて満足度は下がっていった。</p>
 <p>研究者たちはこれを<strong>「ハネムーン－ハングオーバー効果」</strong>と名づけた。新しい職場での高揚（ハネムーン）のあとに、酔いが覚める時期（ハングオーバー＝二日酔い）が来る、という意味だ。</p>
@@ -53,19 +82,19 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>ドイツの大規模なパネルデータを使った研究でも、転職直後に満足度が大きく上がり、その上昇が年を追うごとに小さくなっていく傾向が確認されている（Chadi &amp; Hetschko, 2018）。</p>
 <p>つまり、「転職して最初の数ヶ月は良かったのに、だんだん前と同じような気持ちになってきた」というのは、珍しいことではない。多くの人に起きる、典型的なパターンだ。</p>
 
-<h2>それでも、変化を選んだ人は幸せだった</h2>
+<h2>それでも、<wbr>変化を<wbr>選んだ人は<wbr>幸せだった</h2>
 <p>では、転職は結局、意味がないのか。そう結論づけるのは早い。</p>
 <p>経済学者のLevittは、人生の大きな決断に迷っている人に、オンラインでコイン投げをしてもらう実験を行った（Levitt, 2021）。「表なら変える、裏なら現状維持」という具合だ。決断の中には「仕事を辞めるかどうか」も含まれていた。</p>
 <p>コインの結果に従う義務はなかったが、表が出た人は実際に変化を選ぶ傾向が高かった。そして約半年後、<strong>変化を選んだ人は、現状維持を選んだ人より幸福度が高かった</strong>。特に、仕事を辞めるかどうかのような重要な決断では、その差が大きかった。</p>
 <p>もちろん、この実験の参加者は「すでに迷っていた人」だ。誰にでも転職を勧める根拠にはならない。ただ、少なくとも次のことは言える。</p>
 <p><strong>長く迷い続けている人は、変化のメリットを小さく見積もっている可能性がある。</strong></p>
 
-<h2>なぜ人は、変化を先延ばしにするのか</h2>
+<h2>な<wbr>ぜ人は、<wbr>変化を<wbr>先延ばしに<wbr>するのか</h2>
 <p>人には、今の状態を必要以上に好む傾向がある。これは「現状維持バイアス」と呼ばれる（Samuelson &amp; Zeckhauser, 1988）。</p>
 <p>変化によって失うかもしれないもの（安定、慣れた人間関係、積み上げた評価）は、はっきりと想像できる。一方で、変化によって得られるもの（新しい環境、合う仕事）は、ぼんやりしている。だから、失うものが実際より大きく見える。</p>
 <p>「辞めたい」と思い続けて何年も経っているなら、それは慎重さだけでなく、このバイアスの影響も受けているかもしれない。</p>
 
-<h2>二日酔いを小さくする方法</h2>
+<h2>二日酔いを<wbr>小さく<wbr>する<wbr>方法</h2>
 <p>ハネムーンのあとに二日酔いが来ること自体は、避けにくい。大切なのは、二日酔いが来たときに「また間違えた」と思わずにすむ転職をすることだ。</p>
 <p>そのためには、<strong>前の職場で何が不満だったのかを、次の職場でどう確かめるか</strong>を決めておく。</p>
 <div class="table-wrap"><table><thead><tr><th>前職の不満</th><th>面接・面談で確かめること</th></tr></thead><tbody>
@@ -77,7 +106,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 </tbody></table></div>
 <p>もう一つ、転職の前に<strong>「次の職場に期待していること」を三つ書いておく</strong>といい。入社して半年後、満足度が下がってきたときに見返す。三つのうち二つが叶っているなら、それは失敗ではなく、二日酔いだ。</p>
 
-<h2>今日のワーク</h2>
+<h2>今日の<wbr>ワーク</h2>
 <ol><li>今の仕事で、一番変えたいことを一つ書く</li><li>それが転職で変わるかどうかを確かめるための質問を、一つ作る</li><li>転職したら叶えたいことを三つ書いて、保存しておく</li></ol>
 
 <div class="ending"><p>転職は、幸せを保証してくれない。でも、迷い続けることもまた、一つの選択だ。</p><p><strong>何を変えたいのかを言葉にできたとき、転職は賭けではなく、設計になる。</strong></p></div>
@@ -85,5 +114,39 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <section class="refs"><h2>参考文献・出典</h2>
 <p>Boswell, W. R., Boudreau, J. W., &amp; Tichy, J. (2005). The relationship between employee job change and job satisfaction: The honeymoon-hangover effect. Journal of Applied Psychology, 90(5), 882–892.</p><p>Chadi, A., &amp; Hetschko, C. (2018). The magic of the new: How job changes affect job satisfaction. Journal of Economics &amp; Management Strategy, 27(1), 23–39.</p><p>Levitt, S. D. (2021). Heads or tails: The impact of a coin toss on major life decisions and subsequent happiness. The Review of Economic Studies, 88(1), 378–405.</p><p>Samuelson, W., &amp; Zeckhauser, R. (1988). Status quo bias in decision making. Journal of Risk and Uncertainty, 1, 7–59.</p></section>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="quit-or-escape.html">「仕事を辞めたい」は、逃げなのか</a><a class="reading-card" href="job-agent.html">転職エージェントは、なぜ無料なのか</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
-</article></main><div class="footer">MOUTON — PERSONAL ARCHIVE / 2026 · <a href="policy.html" style="color:inherit">PRIVACY &amp; ADS</a></div></body></html>
+
+
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.05</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="books-career.html">転職を<wbr>考えはじめた<wbr>ときに<wbr>読む本</a><a class="reading-card" href="quit-or-escape.html">「仕事を<wbr>辞めたい」は、<wbr>逃げなのか</a><a class="reading-card" href="job-agent.html">転職エージェントは、<wbr>なぜ<wbr>無料なのか</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-work.html">「仕事・働き方」の記事をすべて見る</a></p></nav>
+
+</article></main>
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+---js
+{
+  permalink: "search.json",
+  eleventyExcludeFromCollections: true,
+}
+---
+{{ collections.articles | searchIndex | safe }}

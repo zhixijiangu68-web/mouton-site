@@ -1,0 +1,40 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+pagination:
+  data: topics
+  size: 1
+  alias: t
+permalink: "topic-{{ t.key }}.html"
+eleventyComputed:
+  title: "{{ t.label }}の記事 — ムートン"
+  description: "{{ t.intro }}"
+---
+{%- set list = collections.articles | inTopic(t.key) %}
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-{{ t.ph }}" data-nav="dark"{% bgImage "images/cover-" + t.ph + ".jpg" %}></div>
+<main class="doc topic" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">{{ t.en }}</p>
+  <h1 class="doc-title">{{ t.label }}</h1>
+  <p>{{ t.intro }}</p>
+  <p class="topic-count">{{ list.length }}本の記事</p>
+  <div class="topic-list">
+    {%- for a in list %}
+    <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.page.date | dotDate }}</span>
+      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.science.title }}</span>
+      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.science.text }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+  <nav class="topic-others" aria-label="ほかのテーマ">
+    {%- for o in topics %}{% if o.key != t.key %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endif %}{% endfor %}
+    <a href="index.html#journal">すべての記事</a>
+  </nav>
+  {% include "partials/newsletter.njk" %}
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

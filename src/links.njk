@@ -1,0 +1,64 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: links.html
+title: "リールの続き — ムートン"
+description: "Instagram（@art.gagaga）のリールで紹介した記事の続きを読むための入口のページ。リールの元になった記事と、最近の記事、テーマ別の記事一覧へのリンクをまとめています。"
+---
+{%- set reelSlugs = [] %}
+{%- for r in reels %}{% set reelSlugs = (reelSlugs.push(r.article), reelSlugs) %}{% endfor %}
+{%- set fromReels = collections.articles | bySlugs(reelSlugs) %}
+{%- set latest = [] %}
+{%- for a in collections.articles %}{% if a.data.journal and latest.length < 5 %}{% set latest = (latest.push(a), latest) %}{% endif %}{% endfor %}
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
+<main class="doc topic links" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">From Instagram</p>
+  <h1 class="doc-title">リールの続きは、ここから。</h1>
+  <p>リールは記事の入口です。根拠や細かいところは、元の記事に書いています。</p>
+  {%- if fromReels.length %}
+  <h2>リールで紹介した記事</h2>
+  <div class="topic-list">
+    {%- for a in fromReels %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.page.date | dotDate }}</span>
+      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+  <h2>最近の記事</h2>
+  <div class="topic-list">
+    {%- for a in latest %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.page.date | dotDate }}</span>
+      <span class="topic-title">{{ a.data.journal.title }}</span>
+      <span class="topic-excerpt">{{ a.data.journal.excerpt }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+  <h2>選び方</h2>
+  <div class="topic-list">
+    {%- for a in collections.articles | guideCards %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.data.guide.tag }}</span>
+      <span class="topic-title">{{ a.data.guide.title }}</span>
+      <span class="topic-excerpt">{{ a.data.guide.text }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+  <h2>テーマから探す</h2>
+  <nav class="topic-others" aria-label="テーマ">
+    {%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }}</a>{% endfor %}
+    <a href="index.html#journal">すべての記事</a>
+  </nav>
+  {% include "partials/newsletter.njk" %}
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

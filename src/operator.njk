@@ -1,0 +1,34 @@
+---
+layout: page.njk
+permalink: operator.html
+title: "運営者情報 — ムートン"
+description: "ムートンのサイトの運営者情報。運営者、サイトの目的、記事の書き方の方針、連絡先について。"
+eyebrow: About the author
+heading: 運営者情報
+---
+<dl class="doc-table">
+  <div><dt>サイト名</dt><dd>{{ site.name }}</dd></div>
+  <div><dt>運営者</dt><dd>{{ site.author.name }}</dd></div>
+  <div><dt>所在地</dt><dd>日本</dd></div>
+  <div><dt>連絡先</dt><dd><a href="contact.html">お問い合わせ</a>をご覧ください</dd></div>
+  <div><dt>SNS</dt><dd><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }}</a>{% if site.author.instagram %}<br><a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }}</a>{% endif %}</dd></div>
+</dl>
+
+<h2>このサイトについて</h2>
+<p>{{ site.author.bio }}</p>
+<p>完成したものだけでなく、考えている途中のことや、作っている途中のものも記録していく、個人的なアーカイブです。</p>
+
+<h2>記事の書き方</h2>
+<ul>
+  <li>身体・食事・健康についての記事は、できるかぎり論文や公的機関の情報を確認し、本文中に出典を示しています。</li>
+  <li>研究で分かっていることと、まだ分かっていないこと、個人の感想を、なるべく区別して書いています。</li>
+  <li>健康に関する記事は一般的な情報提供を目的としたもので、医師による診断や治療の代わりにはなりません。</li>
+  <li>内容に誤りが見つかった場合は、確認のうえ修正し、記事に更新日を記載します。</li>
+</ul>
+
+<h2>広告について</h2>
+{%- if site.affiliate.amazonTag or site.affiliate.rakutenId or site.ads.adsenseClient %}
+<p>当サイトは広告を掲載しています。広告であることが分かるよう、該当するリンクや枠には「PR」「広告」と表示しています。詳しくは<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>
+{%- else %}
+<p>現在、当サイトに広告は掲載していません。今後掲載する場合は、広告であることが分かるよう表示し、このページと<a href="privacy.html">プライバシーポリシー</a>でお知らせします。</p>
+{%- endif %}

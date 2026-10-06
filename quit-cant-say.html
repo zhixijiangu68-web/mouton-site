@@ -1,26 +1,29 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>会社を「辞める」と言い出せないときに、知っておくこと — ムートン</title>
+<meta name="description" content="退職は、会社の許可がなくてもできる。民法627条の2週間ルール、就業規則との関係、引き止めへの向き合い方、退職代行の3つの種類を整理する。">
+<link rel="canonical" href="https://moutonarchive.com/quit-cant-say.html">
 <meta property="og:title" content="会社を「辞める」と言い出せないときに、知っておくこと — ムートン">
 <meta property="og:description" content="退職は、会社の許可がなくてもできる。民法627条の2週間ルール、就業規則との関係、引き止めへの向き合い方、退職代行の3つの種類を整理する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary">
+<meta property="og:url" content="https://moutonarchive.com/quit-cant-say.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/quit-cant-say.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<meta name="description" content="退職は、会社の許可がなくてもできる。民法627条の2週間ルール、就業規則との関係、引き止めへの向き合い方、退職代行の3つの種類を整理する。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
 :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
 main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
 .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:20px}h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
 .deck{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2;opacity:.73;max-width:720px;margin:0 0 52px}.hero-line{height:1px;background:linear-gradient(90deg,var(--ink),transparent);opacity:.28;margin-bottom:58px}
@@ -31,14 +34,40 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 .work{margin:38px 0;padding:30px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.22)}
 .refs{margin-top:56px;padding-top:34px;border-top:1px solid var(--line)}.refs p{font-family:Inter,sans-serif;font-size:12px;line-height:1.8;opacity:.7;margin-bottom:12px}.ending{margin-top:64px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(20px,3vw,28px)}
 .footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-@media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+@media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+
 </style>
-<link rel="stylesheet" href="reading.css"><script src="article-share.js" defer></script>
-<script src="site.js" defer></script></head><body>
-<header><div class="brand">ムートン</div><a class="back" href="index.html#journal">記事一覧へ戻る</a></header>
-<main><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
-<h1>会社を「辞める」と言い出せないときに、知っておくこと</h1>
-<p class="reading-time">約7分で読めます（目安）</p>
+<link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script src="article-share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"会社を「辞める」と言い出せないときに、知っておくこと","description":"退職は、会社の許可がなくてもできる。民法627条の2週間ルール、就業規則との関係、引き止めへの向き合い方、退職代行の3つの種類を整理する。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/quit-cant-say.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"仕事・働き方","item":"https://moutonarchive.com/topic-work.html"},{"@type":"ListItem","position":3,"name":"会社を「辞める」と言い出せないときに、知っておくこと","item":"https://moutonarchive.com/quit-cant-say.html"}]}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-work is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+<main data-nav="light" data-nav-solid="light"><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
+<h1>会社を<wbr>「辞める」と<wbr>言い出せない<wbr>ときに、<wbr>知って<wbr>おく<wbr>こと</h1>
+<p class="reading-time">約5分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 <p class="deck">辞めると決めたのに、言い出せない。その重さの半分は、ルールを知らないことから来ている。</p><div class="hero-line"></div>
 <article>
@@ -46,14 +75,14 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>「忙しい時期に迷惑をかける」「引き止められたらどうしよう」「怒られるかもしれない」。言い出せない理由は、たいてい気持ちの問題に見える。</p>
 <p>でも、その重さの半分は、<strong>ルールを知らないこと</strong>から来ている。退職について、法律はかなりはっきり決めている。</p>
 
-<h2>退職に、会社の許可はいらない</h2>
+<h2>退職に、<wbr>会社の<wbr>許可は<wbr>いらない</h2>
 <p>正社員のように雇用期間の定めがない場合、民法627条により、労働者はいつでも退職を申し入れることができる。そして申し入れから<strong>2週間</strong>が経つと、雇用契約は終了する。</p>
 <p>ここで大切なのは、これが「お願い」ではなく「申し入れ」だということだ。会社が承諾しなくても、2週間が経てば契約は終わる。</p>
 <p>就業規則に「退職は1ヶ月前までに申し出ること」と書かれている会社も多い。一般には民法の2週間ルールが優先されると考えられている。ただ、引き継ぎや人間関係を考えれば、就業規則の期間に合わせて伝えるほうが、結果的にスムーズに辞めやすい。</p>
-<p>なお、契約社員など雇用期間が決まっている場合は、ルールが異なる。期間の途中で辞めるには「やむを得ない事由」が必要とされるなど条件があるので、契約書を確認しておきたい。</p>
+<p>なお、契約社員など雇用期間が決まっている場合は、ルールが異なる。期間の途中で辞めるには、原則として「やむを得ない事由」が必要とされる。ただし、契約期間が1年を超える場合は、契約の初日から1年が過ぎれば、いつでも退職を申し出られる（労働基準法137条。一部の専門職などは除く）。まずは契約書を確認しておきたい。</p>
 <div class="flow">退職を申し入れる → 2週間が経つ → 会社の承諾がなくても契約は終わる</div>
 
-<h2>「相談」ではなく「報告」として伝える</h2>
+<h2>「相談」ではなく<wbr>「報告」と<wbr>して<wbr>伝える</h2>
 <p>言い出しにくさの正体の一つは、伝え方にある。「辞めようか迷っていて……」と相談の形で切り出すと、話し合いの余地が生まれ、引き止めにつながりやすい。</p>
 <p>決めているなら、<strong>「〇月〇日付で退職します」と、決定事項として伝える</strong>。最初に伝える相手は直属の上司だ。人事や同僚に先に話すと、上司との関係がこじれやすい。</p>
 <div class="work"><strong>伝え方の例</strong><p>「お時間をいただきありがとうございます。一身上の都合により、〇月〇日をもって退職させていただきたく、ご報告に参りました。引き継ぎは責任を持って行います」</p></div>
@@ -69,7 +98,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 </tbody></table></div>
 <p>引き止められるのは、あなたが必要とされている証拠でもある。それ自体は悪いことではない。ただ、<strong>迷ったまま残ると、同じ問題がまた戻ってくる</strong>。辞める理由を自分の中で整理してから伝えれば、揺らぎにくくなる。</p>
 
-<h2>どうしても言えないなら、退職代行という選択肢</h2>
+<h2>どうしても<wbr>言えないなら、<wbr>退職代行と<wbr>いう<wbr>選択肢</h2>
 <p>上司からの強い圧力がある、体調を崩していて出社できない。そういう状況なら、本人の代わりに退職の意思を伝える「退職代行」を使う人もいる。</p>
 <p>退職代行には、運営元によって大きく3つの種類があり、<strong>できることが法律で違う</strong>。</p>
 <div class="table-wrap"><table><thead><tr><th>運営元</th><th>退職の意思を伝える</th><th>退職日・有給などの交渉</th><th>裁判の代理</th></tr></thead><tbody>
@@ -80,7 +109,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>弁護士でない者が報酬を得て他人の法律事務を扱うことは、弁護士法72条で禁じられている（非弁行為）。そのため民間企業の代行は「伝えること」しかできず、未払いの残業代の請求や有給休暇の交渉はできない。</p>
 <p>伝えるだけで済むなら民間や労働組合、お金のトラブルや会社との争いが予想されるなら弁護士。状況に合わせて選ぶことが大切だ。</p>
 
-<h2>今日のワーク</h2>
+<h2>今日の<wbr>ワーク</h2>
 <ol><li>雇用契約書と就業規則で、退職の申し出期限を確認する</li><li>退職したい日を決め、そこから逆算して伝える日を決める</li><li>伝える一文を、実際に書いておく</li></ol>
 
 <div class="ending"><p>言い出せないのは、あなたが弱いからではない。真面目に働いてきたからだ。</p><p><strong>ルールを知れば、退職は「許可をもらうこと」ではなく、「自分で決めること」になる。</strong></p></div>
@@ -88,5 +117,39 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <section class="refs"><h2>参考文献・出典</h2>
 <p>民法（明治29年法律第89号）第627条・第628条</p><p>弁護士法（昭和24年法律第205号）第72条</p><p>マネーフォワード クラウド契約「民法627条とは」 https://biz.moneyforward.com/contract/basic/20099/</p><p>LegalOn Technologies「退職代行サービスとは」 https://www.legalontech.com/jp/media/resignation-agency</p><p>弁護士ドットコムニュース（退職代行と非弁行為） https://www.bengo4.com/c_5/n_20376/</p></section>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="quit-or-escape.html">「仕事を辞めたい」は、逃げなのか</a><a class="reading-card" href="job-agent.html">転職エージェントは、なぜ無料なのか</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
-</article></main><div class="footer">MOUTON — PERSONAL ARCHIVE / 2026 · <a href="policy.html" style="color:inherit">PRIVACY &amp; ADS</a></div></body></html>
+
+
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.05</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="quit-or-escape.html">「仕事を<wbr>辞めたい」は、<wbr>逃げなのか</a><a class="reading-card" href="job-agent.html">転職エージェントは、<wbr>なぜ<wbr>無料なのか</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-work.html">「仕事・働き方」の記事をすべて見る</a></p></nav>
+
+</article></main>
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>
