@@ -168,3 +168,4 @@
 .guide-card p{font-family:var(--serif);font-size:1rem;line-height:1.9;color:#45473f;margin:0 0 18px}
 .guide-more{font-family:var(--latin);font-style:italic;font-size:1.0625rem;color:var(--blue)}
 @media(max-width:900px){.guide-grid{grid-template-columns:1fr}.guide-card{min-height:0}}
+.section-more-dark a{color:var(--blue)}

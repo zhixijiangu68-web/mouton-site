@@ -123,8 +123,9 @@ preloadHero: true
         </div>
         <p class="copy">買う前に、何を見ればいいのか。記事で調べたことを、選ぶときの目安にまとめています。</p>
       </div>
+      <p class="section-more section-more-dark"><a href="guides.html">選び方の記事をすべて見る <span aria-hidden="true">→</span></a></p>
       <div class="guide-grid">
-        {%- for a in collections.articles | guideCards %}
+        {%- for a in collections.articles | guideCards | head(6) %}
         <a class="guide-card" data-rise href="{{ a.page.fileSlug }}.html"><span class="guide-tag">{{ a.data.guide.tag }}</span><h3>{{ a.data.guide.title }}</h3><p>{{ a.data.guide.text }}</p><span class="guide-more">約{{ a.data.readMinutes }}分で読む →</span></a>
         {%- endfor %}
       </div>
