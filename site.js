@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
   a.rel = 'sponsored noopener';
  });
  // ステマ規制への対応: 広告リンクを含むページには、その旨を本文の先頭に表示する
- const article = document.querySelector('#books, main article, main');
+ const article = document.querySelector('#books, main article, article, main');
  if (article && !document.querySelector('.pr-notice')) {
   const notice = document.createElement('p');
   notice.className = 'pr-notice';
