@@ -9,6 +9,13 @@ const report = (page, message) => problems.push(`${page}: ${message}`);
 
 for (const page of pages) {
   const html = readFileSync(page, 'utf8');
+  // Duplicate behaviour scripts attach duplicate click handlers (Menu opens then closes).
+  const scripts = [...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m => m[1]);
+  const loaded = new Set();
+  for (const src of scripts) {
+    if (loaded.has(src)) report(page, `duplicate script "${src}"`);
+    loaded.add(src);
+  }
   const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]);
   const idSet = new Set(ids);
 
