@@ -19,7 +19,7 @@
    - `title`（末尾に「 — ムートン」）、`headline`、`description`（80〜120字）、`date`、`category`（philosophy / body / food / books）、`health`（健康の記事なら true）
    - トップの記事一覧に出すなら `journal`（`category` は body / philosophy / making、`title`、`excerpt`）を書く
    - 「次に読む」に優先して出したい記事があれば `related: ["ファイル名", ...]`
-   - 商品を紹介するときは `{% productCard "商品名", "ひとこと", { asin: "ASIN", rakuten: "検索語かURL" } %}` を使い、front matter に `affiliate: true` を書く（PR表示と注意書きが自動で付く。IDは `src/_data/site.js` の `affiliate`）
+   - 商品を紹介するときは `{% productCard "商品名", "ひとこと", { asin: "ASIN", rakuten: "検索語かURL" } %}` を使い、front matter に `affiliate: true` を書く（冒頭のPR表示・リンクのPRラベル・末尾の注意書きが自動で付く。IDは `src/_data/site.js` の `affiliate`）
    - 「選び方」の記事は front matter に `guide`（`tag`、`title`、`text`、`order`）を書くと、トップの「選び方」に自動で並ぶ
    - 読了時間は `約{{ readMinutes }}分で読めます（目安）` と書けば自動で計算される
    - 本文の末尾近くに `{% include "partials/article-end.njk" %}` と `{% include "partials/reading-next.njk" %}` を置く（既存の記事と同じ位置）
