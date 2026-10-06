@@ -25,6 +25,7 @@
    - 本文の末尾近くに `{% include "partials/article-end.njk" %}` と `{% include "partials/reading-next.njk" %}` を置く（既存の記事と同じ位置）
 2. ファイル名は英小文字とハイフン（例: `olive-oil.html`）
 3. `npm ci`（初回）→ `npm run build` → `npm test` を実行し、エラーがないことを確かめる
+   - シェア用の画像（`images/og/<ファイル名>.jpg`）は `cd scripts/og && npm install && node make.mjs` で作り直せる（記事を足したら実行し、画像もコミットする）
 4. `src/articles/` の記事と、生成されたリポジトリ直下の HTML・`search.json` をまとめてコミットする
 
 ## 文章のルール
