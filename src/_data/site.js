@@ -12,6 +12,8 @@ export default {
     instagram: 'art.gagaga',
     bio: '興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。',
   },
+  // Google Search Console の「HTML タグ」で確認するときの content の値。空なら出さない。
+  searchConsole: '',
   // Google アナリティクス 4 の測定ID（例: 'G-XXXXXXXXXX'）。空なら何も読み込まない。
   analytics: { ga4: '' },
   // AmazonアソシエイトのトラッキングID（例: 'mouton-22'）。
