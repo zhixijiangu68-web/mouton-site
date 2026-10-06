@@ -130,6 +130,50 @@ https://zhixijiangu68-web.github.io/mouton-site/weekend-sleep.html
 https://zhixijiangu68-web.github.io/mouton-site/comparison.html
 ```
 
+### 12. コーヒーの選び方と淹れ方（商品紹介あり）
+```
+同じコーヒーでも、淹れ方でコレステロールへの影響が変わる。
+
+煮出したコーヒーは上げやすく、紙のフィルターで淹れたコーヒーはほとんど上げなかった（メタ解析）。
+
+デカフェの選び方と一緒にまとめた。
+
+https://zhixijiangu68-web.github.io/mouton-site/coffee-guide.html
+```
+
+### 13. プロテインの選び方（商品紹介あり）
+```
+プロテインは「飲めば筋肉がつくもの」ではなかった。
+
+49の試験をまとめると、筋トレと一緒なら効果はある。ただし小さい。そして体重1kgあたり約1.6gを超えると、それ以上は増えにくかった。
+
+まず食事で足りているかを確かめる。
+
+https://zhixijiangu68-web.github.io/mouton-site/protein-guide.html
+```
+
+### 14. 昼寝は、何分がいいのか
+```
+昼寝のあと、かえって頭が重い。
+
+長さを変えて比べた実験では、いちばん効いたのは10分。30分寝ると、起きた直後はかえって成績が下がった。
+
+昼寝は、短く切り上げるほうがいい。
+
+https://zhixijiangu68-web.github.io/mouton-site/nap.html
+```
+
+### 15. SNSを見る時間は、減らしたほうがいいのか
+```
+SNSを1日30分に制限した実験では、3週間で孤独感と落ち込みが減った。
+
+Facebookを4週間止めた実験では、幸福感がわずかに上がった。
+
+やめなくていい。でも、見る時間は自分で決めたい。
+
+https://zhixijiangu68-web.github.io/mouton-site/social-media-time.html
+```
+
 ## 記録
 
 | # | 記事 | 投稿日 | メモ |
@@ -145,3 +189,7 @@ https://zhixijiangu68-web.github.io/mouton-site/comparison.html
 | 9 | コーヒーは、本当に体に悪いのか |  |  |
 | 10 | 休日の「寝だめ」で、睡眠不足は取り返せるのか |  |  |
 | 11 | 人と比べるのを、やめることはできるのか |  |  |
+| 12 | コーヒーの選び方と淹れ方 |  |  |
+| 13 | プロテインの選び方 |  |  |
+| 14 | 昼寝は、何分がいいのか |  |  |
+| 15 | SNSを見る時間は、減らしたほうがいいのか |  |  |
