@@ -16,7 +16,8 @@ export default {
   analytics: { ga4: '' },
   // AmazonアソシエイトのトラッキングID（例: 'mouton-22'）。
   // 入れると Amazon リンクにタグ・rel="sponsored"・「PR」表示が付き、広告の表記も出る。
-  affiliate: { amazonTag: '' },
+  // 楽天アフィリエイトID（例: '1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b'）。入れると商品カードに楽天のボタンが出る。
+  affiliate: { amazonTag: '', rakutenId: '' },
   // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。記事ページにだけ広告枠を出す。
   ads: { adsenseClient: '', adsenseSlot: '' },
   // メールマガジンの登録フォームの送信先。空なら登録欄を出さない。

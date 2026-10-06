@@ -4,7 +4,7 @@
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
 </aside>
 {%- endif %}
-{%- if category == 'books' and site.affiliate.amazonTag %}
+{%- if (category == 'books' or affiliate) and (site.affiliate.amazonTag or site.affiliate.rakutenId) %}
 <p class="article-pr">このページには広告（アフィリエイトリンク）が含まれます。リンクから商品が購入されると、当サイトに紹介料が支払われることがあります。</p>
 {%- endif %}
 {%- if site.ads.adsenseClient and site.ads.adsenseSlot %}

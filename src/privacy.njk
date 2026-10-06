@@ -31,7 +31,10 @@ heading: プライバシーポリシー
 {%- if site.affiliate.amazonTag %}
 <p>当サイトは、Amazon.co.jp を宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定されたアフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。アフィリエイトリンクには「PR」と表示しています。</p>
 {%- endif %}
-{%- if not site.ads.adsenseClient and not site.affiliate.amazonTag %}
+{%- if site.affiliate.rakutenId %}
+<p>当サイトは、楽天アフィリエイトを利用しています。リンク先で商品が購入されると、当サイトに紹介料が支払われることがあります。アフィリエイトリンクには「PR」と表示しています。</p>
+{%- endif %}
+{%- if not site.ads.adsenseClient and not site.affiliate.amazonTag and not site.affiliate.rakutenId %}
 <p>現在、当サイトに広告は掲載していません。今後、広告やアフィリエイトプログラムを利用する場合は、このページに記載します。</p>
 {%- endif %}
 

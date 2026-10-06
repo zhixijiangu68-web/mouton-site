@@ -7,6 +7,6 @@
   {%- endif %}
   <a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }} <span aria-hidden="true">↗</span></a>
 </nav>
-{%- if site.affiliate.amazonTag %}
-<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+{%- if site.affiliate.amazonTag or site.affiliate.rakutenId %}
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。{% if site.affiliate.amazonTag %}Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。{% endif %}</p>
 {%- endif %}
