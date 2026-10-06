@@ -16,8 +16,8 @@
 ## 記事を追加するとき
 
 1. 同じカテゴリーの既存の記事（`src/articles/` の中）をコピーして、front matter と本文を書き換える
-   - `title`（末尾に「 — ムートン」）、`headline`、`description`（80〜120字）、`date`、`category`（philosophy / body / food / books）、`health`（健康の記事なら true）
-   - トップの記事一覧に出すなら `journal`（`category` は body / philosophy / making、`title`、`excerpt`）を書く
+   - `title`（末尾に「 — ムートン」）、`headline`、`description`（80〜120字）、`date`、`category`（philosophy / body / food / books / work）、`health`（健康の記事なら true）
+   - トップの記事一覧に出すなら `journal`（`category` は body / philosophy / work / making、`title`、`excerpt`）を書く
    - 「次に読む」に優先して出したい記事があれば `related: ["ファイル名", ...]`
    - 商品を紹介するときは `{% productCard "商品名", "ひとこと", { asin: "ASIN", rakuten: "検索語かURL" } %}` を使い、front matter に `affiliate: true` を書く（冒頭のPR表示・リンクのPRラベル・末尾の注意書きが自動で付く。IDは `src/_data/site.js` の `affiliate`）
    - 「選び方」の記事は front matter に `guide`（`tag`、`title`、`text`、`order`）を書くと、トップの「選び方」に自動で並ぶ
