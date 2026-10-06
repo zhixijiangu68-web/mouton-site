@@ -1,0 +1,6 @@
+*.mp4
+.frames/
+# 素材の動画・画像は重いので入れない（出典は各フォルダの assets.md に書く）
+cuts/*/clips/*
+!cuts/*/clips/.gitkeep
+.cuts/

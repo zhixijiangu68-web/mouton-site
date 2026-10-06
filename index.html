@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>ムートン — Personal Archive</title>
 <meta name="description" content="ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。">
 <meta property="og:title" content="ムートン — Personal Archive">
@@ -12,568 +13,320 @@
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400&family=Inter:wght@300;400&display=swap');
-:root{--ink:#252724;--muted:#686b65;--line:rgba(37,39,36,.18);--glass:rgba(247,244,236,.50);--paper:#eee9dd;}
-*{box-sizing:border-box} html,body{margin:0;min-height:100%;background:#e9e4d8;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;overflow-x:hidden}
-button,a{font:inherit;color:inherit} button{cursor:pointer}
-.scene{min-height:100svh;position:relative;isolation:isolate;overflow:hidden;background:#c9c3b7 url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center center/cover fixed no-repeat}
-.scene:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,rgba(244,240,230,.08) 0%,rgba(235,226,210,.02) 45%,rgba(25,32,29,.13) 100%);pointer-events:none}
-.scene:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at 50% 42%,transparent 28%,rgba(28,34,31,.12) 100%);pointer-events:none}
-.grain{pointer-events:none;position:absolute;inset:0;z-index:8;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
-.arc{position:absolute;width:72vw;height:72vw;border:1px solid rgba(255,255,255,.42);border-radius:50%;left:-24vw;top:34vh;pointer-events:none;border-color:rgba(255,255,255,.48)}
-.arc.two{left:57vw;top:12vh;width:50vw;height:50vw;opacity:.55}
-header{height:84px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 clamp(22px,4vw,64px);position:relative;z-index:10}
-.brand{font-family:"Noto Serif JP",serif;font-size:clamp(20px,2vw,29px);letter-spacing:.2em;white-space:nowrap}.tools{justify-self:end;font-size:11px;letter-spacing:.28em}.tabs{display:flex;gap:clamp(24px,5vw,74px);align-items:center}.tab{border:0;background:none;padding:12px 0;font-size:11px;letter-spacing:.24em;position:relative;opacity:.65}.tab.active{opacity:1}.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1px;background:var(--ink)}
-main{width:min(1120px,90vw);margin:clamp(10px,2vh,24px) auto 0;position:relative;z-index:3}
-.hero{text-align:center;margin-bottom:clamp(20px,3vh,38px);transition:opacity .35s ease,transform .35s ease,max-height .45s ease,margin .45s ease;max-height:260px;overflow:hidden}.hero.hidden{opacity:0;transform:translateY(-10px);max-height:0;margin:0;pointer-events:none}.hero h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,4.2vw,64px);line-height:1.45;letter-spacing:.08em;margin:0}.hero p{font-family:"Noto Serif JP",serif;margin:14px 0 0;font-size:13px;letter-spacing:.16em}.hero .en{font-family:Inter,sans-serif;font-size:9px;letter-spacing:.38em;line-height:1.8;opacity:.62;text-transform:uppercase;margin-top:14px}
-.window{width:min(900px,100%);min-height:330px;transition:width .45s ease;margin:auto;border:1px solid rgba(255,255,255,.7);border-radius:12px;background:var(--glass);backdrop-filter:blur(13px) saturate(.82);-webkit-backdrop-filter:blur(13px) saturate(.82);box-shadow:0 24px 80px rgba(40,45,39,.10);overflow:hidden;position:relative;box-shadow:0 28px 90px rgba(25,31,28,.18);border:1px solid rgba(255,255,255,.62);backdrop-filter:blur(16px) saturate(.82)}
-.panel{display:none;min-height:330px;padding:clamp(28px,4vw,54px);animation:enter .55s cubic-bezier(.2,.75,.25,1)}.panel.active{display:grid}@keyframes enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.kicker{font-size:9px;letter-spacing:.32em;text-transform:uppercase;opacity:.6}.big{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,50px);margin:14px 0 8px;letter-spacing:.08em}.copy{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;max-width:480px;color:#444740}.link{display:inline-flex;align-items:center;gap:16px;border:1px solid rgba(37,39,36,.35);border-radius:999px;padding:11px 20px;text-decoration:none;font-size:9px;letter-spacing:.25em;margin-top:22px;background:rgba(255,255,255,.18)}
-.now{grid-template-columns:1fr 1.1fr;gap:40px;align-items:center}.art{height:230px;border-radius:7px;position:relative;overflow:hidden;background:radial-gradient(circle at 72% 25%,rgba(255,225,187,.9),transparent 23%),radial-gradient(ellipse at 35% 62%,rgba(231,233,224,.78),transparent 38%),linear-gradient(165deg,#aebbb6 0%,#ddd3c3 47%,#687d74 100%)}.art:before{content:"";position:absolute;width:68%;aspect-ratio:1;border-radius:50%;background:rgba(246,231,194,.68);filter:blur(2px);right:-17%;top:-30%}.art:after{content:"";position:absolute;left:-5%;right:-5%;bottom:-25%;height:68%;background:linear-gradient(160deg,rgba(43,57,50,.75),rgba(95,110,100,.42));clip-path:polygon(0 72%,22% 42%,42% 63%,65% 24%,100% 58%,100% 100%,0 100%)}
-.projects{grid-template-columns:repeat(3,1fr);gap:16px;align-content:center}.card{min-height:220px;padding:24px;border:1px solid rgba(37,39,36,.13);border-radius:8px;background:rgba(255,255,255,.17);display:flex;flex-direction:column;justify-content:flex-end;transition:.35s ease}.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.3)}.card span{font-size:8px;letter-spacing:.25em;opacity:.55}.card h3{font-family:"Noto Serif JP",serif;font-weight:300;font-size:24px;margin:10px 0}.card p{font-size:11px;line-height:1.8;opacity:.7;margin:0}.card.placeholder{border-style:dashed;opacity:.58}
-.journal{grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:start;align-content:center;min-height:390px}
-.journal-intro{padding-top:2px}
-.journal-no{font-family:"Noto Serif JP",serif;font-size:13px;letter-spacing:.22em;opacity:.72;margin-bottom:10px}
-.journal-heading{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,3.3vw,40px);letter-spacing:.10em;margin:0 0 10px}
-.journal-sub{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.08em;margin:0 0 22px}
-.journal-copy{font-family:"Noto Serif JP",serif;font-size:11px;line-height:2;color:#4e514c;margin:0;max-width:180px}
-.journal-filters{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 18px}.journal-filter{border:0;background:none;padding:4px 0;font-size:8px;letter-spacing:.18em;opacity:.45;position:relative}.journal-filter.active{opacity:1}.journal-filter.active:after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:1px;background:var(--ink)}.journal-list{border-top:1px solid var(--line)}.journal-item.is-hidden{display:none}
-.journal-link{text-decoration:none;color:inherit}
-.journal-item{display:grid;grid-template-columns:86px 12px minmax(0,1fr) 22px;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid var(--line);min-height:70px;transition:.28s ease}
-.journal-date{font-size:8px;letter-spacing:.14em;opacity:.5;white-space:nowrap}
-.journal-dot{width:6px;height:6px;border-radius:50%;background:rgba(37,39,36,.38);justify-self:center}
-.journal-body{min-width:0}
-.journal-title{font-family:"Noto Serif JP",serif;font-size:14px;line-height:1.55;transition:.28s ease}
-.journal-excerpt{font-family:"Noto Serif JP",serif;font-size:9px;line-height:1.7;opacity:.56;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.journal-arrow{font-size:13px;opacity:.48;transition:.28s ease}
-.journal-item.clickable{cursor:pointer}
-.journal-item.clickable:hover{padding-left:4px}
-.journal-item.clickable:hover .journal-title{opacity:.66}
-.journal-item.clickable:hover .journal-arrow{transform:translateX(3px);opacity:.9}
-.journal-item.is-note{opacity:.68}.window.article-mode{width:min(1120px,100%)}.article{display:none!important;background:rgba(244,241,233,.78);overflow:auto;max-height:min(78vh,860px);padding:clamp(34px,5vw,72px) clamp(34px,7vw,96px)}.article.active{display:block!important}.article-back{border:0;background:none;padding:0 0 24px;font-size:9px;letter-spacing:.22em;opacity:.65}.article-meta{font-size:9px;letter-spacing:.22em;opacity:.5;margin-bottom:22px}.article h2{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(28px,4vw,46px);line-height:1.55;letter-spacing:.04em;margin:0 0 34px}.article h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:20px;margin:46px 0 18px}.article p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.2;margin:0 0 26px;max-width:820px}.article .lead{font-size:18px;line-height:2.1}.article .question{font-size:clamp(20px,2.7vw,30px);line-height:1.9;margin:50px 0}.article .ending{min-height:32vh;padding-top:42px}.article .ending strong{font-weight:400;font-size:clamp(19px,2.4vw,27px);line-height:2}
-.about{grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;min-height:470px}.about-start{margin-top:18px;padding:20px 22px;border:1px solid rgba(37,39,36,.15);border-radius:10px;background:rgba(255,255,255,.18);max-width:520px}.about-start-label{font-size:8px;letter-spacing:.22em;opacity:.58;margin-bottom:10px;text-transform:uppercase}.about-start-title{font-family:"Noto Serif JP",serif;font-size:19px;line-height:1.65;margin-bottom:8px}.about-start-copy{font-family:"Noto Serif JP",serif;font-size:11px;line-height:1.9;opacity:.72;margin:0 0 14px}.about-start-link{display:inline-flex;align-items:center;gap:12px;text-decoration:none;font-size:9px;letter-spacing:.15em;border-bottom:1px solid rgba(37,39,36,.28);padding-bottom:4px}.about-copy{margin-top:22px}.portrait{height:235px;border-radius:7px;background:linear-gradient(150deg,rgba(255,255,255,.28),rgba(95,111,99,.34)),linear-gradient(25deg,#8b9a91,#e7d9bd);position:relative;overflow:hidden}.portrait:after{content:"";position:absolute;width:1px;height:150%;background:rgba(255,255,255,.5);left:55%;top:-25%;transform:rotate(30deg)}
-.bottom{width:min(1120px,90vw);margin:20px auto 0;display:flex;justify-content:space-between;align-items:flex-end;font-size:9px;letter-spacing:.25em;position:relative;z-index:3;padding-bottom:24px}.quote{font-family:"Noto Serif JP",serif;font-size:14px;letter-spacing:.15em;text-align:right}.quote small{font-family:Inter,sans-serif;display:block;font-size:7px;letter-spacing:.28em;margin-top:8px;opacity:.55;text-transform:uppercase}
-.mobile-tabs{display:none}
-@media(max-width:760px){.window{min-height:0;overflow:visible}.window.article-mode{width:100%;overflow:hidden}.panel{min-height:0}.about{min-height:0!important;height:auto;overflow:visible;padding:24px 22px 34px;display:grid!important;grid-template-columns:1fr}.about-start{display:block!important;margin-top:14px;background:rgba(255,255,255,.28)}.about-start-label{font-size:9px}.about-start-title{font-size:20px}.about-start-copy{font-size:12px}.about-start-link{font-size:10px;line-height:1.7}.about .portrait{display:none}.article{max-height:76vh;padding:28px 22px}.article p{font-size:14px;line-height:2.05}header{height:68px;padding:0 20px}.tabs{display:none}.tools{font-size:9px}.brand{font-size:20px}.hero{margin-top:3vh}.hero h1{font-size:34px}.hero p{font-size:11px}.window{min-height:360px}.panel{min-height:360px;padding:28px}.now,.about{grid-template-columns:1fr}.about{align-content:start}.art,.portrait{height:130px}.projects{grid-template-columns:1fr;gap:10px}.card{min-height:86px;padding:15px}.card h3{font-size:18px;margin:5px 0}.journal{grid-template-columns:1fr;gap:26px;align-content:start}.journal-filters{gap:14px;margin-top:18px}.journal-copy{max-width:100%}.journal-list{margin-top:0}.journal-item{grid-template-columns:72px 10px minmax(0,1fr) 18px;gap:8px;padding:13px 0}.journal-excerpt{white-space:normal}.journal-heading{font-size:28px}.bottom{padding-bottom:86px}.bottom>div:first-child{display:none}.quote{font-size:12px;margin-left:auto}.mobile-tabs{position:fixed;display:grid;grid-template-columns:repeat(4,1fr);left:12px;right:12px;bottom:12px;z-index:20;background:rgba(239,235,225,.78);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.65);border-radius:15px;padding:5px}.mobile-tabs .tab{font-size:8px;letter-spacing:.08em;padding:12px 4px}.arc{width:110vw;height:110vw}.arc.two{display:none}}
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preload" as="image" href="images/placeholder/hero.jpg" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="home.css">
+<script src="site.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。","inLanguage":"ja"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"]}]}</script>
+</head>
+<body class="site">
+<a class="skip" href="#journal">記事一覧へスキップ</a>
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
 
-/* Reading entrance and journal legibility */
-.now > div { min-width: 0; }
-.now .big { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.6; letter-spacing: .04em; }
-.now .big span { display: inline-block; }
-.now .copy { font-size: 1rem; line-height: 2; }
-.now-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
-.now-actions .link { font-size: .875rem; letter-spacing: .04em; margin: 0; min-height: 44px; padding: 12px 20px; }
-.now-actions .link-primary { background: #303c35; border-color: #303c35; color: #fff; }
-.now-actions .link:hover { background: rgba(255,255,255,.55); }
-.now-actions .link-primary:hover { background: #202e26; }
-.now-actions .link:focus-visible, .journal-item:focus-visible, .journal-filter:focus-visible { outline: 2px solid #303c35; outline-offset: 5px; }
-.window:has(.journal.active) { width: min(1120px,100%); }
-.journal { background: rgba(247,244,236,.84); }
-.journal-copy { font-size: 1rem; line-height: 1.9; max-width: none; color: #444740; }
-.journal-filters { gap: 8px 16px; margin-top: 20px; }
-.journal-filter { font-size: .875rem; letter-spacing: .06em; min-height: 44px; padding: 10px 0; opacity: 1; color: #53584f; }
-.journal-filter.active { color: #252724; }
-.journal-item { grid-template-columns: 90px 8px minmax(0,1fr) 22px; padding: 22px 0; gap: 14px; }
-.journal-date { font-size: .75rem; letter-spacing: .03em; opacity: 1; color: #53584f; }
-.journal-title { font-size: 1.125rem; font-weight: 400; line-height: 1.8; color: #252724; }
-.journal-excerpt { font-size: 1rem; line-height: 1.9; opacity: 1; color: #444740; white-space: normal; overflow: visible; margin-top: 8px; }
-.journal-item.clickable:hover .journal-title { opacity: 1; text-decoration: underline; text-underline-offset: 5px; }
-.journal-item.is-note { opacity: 1; }
-@media(max-width:760px) {
-  .now { gap: 28px; }
-  .journal { padding: 28px 22px; }
-  .journal-item { grid-template-columns: minmax(0,1fr) 22px; gap: 8px 12px; padding: 22px 0; }
-  .journal-date { grid-column: 1 / -1; }
-  .journal-dot { display: none; }
-  .journal-body { grid-column: 1; }
-  .journal-arrow { grid-column: 2; align-self: center; }
-}
 
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-
-/* Keep inactive panels hidden on narrow screens. */
-.panel:not(.active){display:none!important}
-
-/* Comfortable controls and text on small screens */
-header { grid-template-columns: 1fr auto; }
-.tabs { gap: clamp(20px,3vw,44px); }
-.tab { min-height:44px; font-size:.875rem; letter-spacing:.04em; opacity:1; }
-.tab:focus-visible { outline:2px solid #303c35; outline-offset:4px; }
-.hero p { font-size:1rem; line-height:1.9; letter-spacing:.06em; }
-.hero:not(.hidden) { max-height:none; overflow:visible; }
-.copy, .card p, .about-start-copy { font-size:1rem; line-height:1.9; }
-.kicker, .card span, .about-start-label { font-size:.75rem; opacity:1; color:#53584f; }
-.about-start-link { font-size:.875rem; line-height:1.9; min-height:44px; letter-spacing:.02em; }
-.about-start { padding:20px; }
-.journal-read-time { display:block; margin-top:8px; font-size:.75rem; color:#53584f; line-height:1.8; }
-.journal-filter[aria-pressed="true"] { font-weight:600; }
-html.restoring .panel, html.restoring .hero, html.restoring .window { animation:none!important; transition:none!important; }
-@media(max-width:760px) {
- header { grid-template-columns:1fr; }
- main { width:94vw; }
- .panel { padding:26px 22px; }
- .now .big { font-size:clamp(1.75rem,7vw,2.25rem); }
- .now-actions .link { flex:1 1 140px; justify-content:center; padding-inline:14px; }
- .hero h1 { font-size:clamp(1.75rem,7.5vw,2.125rem); }
- .hero p { padding-inline:8px; }
- .journal { padding:26px 22px; }
- .journal-title { font-size:1.125rem; }
- .mobile-tabs { left:8px; right:8px; bottom:0; border-radius:15px 15px 0 0; padding:5px 4px calc(5px + env(safe-area-inset-bottom,0px)); grid-template-columns: .8fr .8fr .8fr 1.6fr; }
- .mobile-tabs .tab { font-size:.8125rem; letter-spacing:0; min-height:48px; padding:10px 2px; }
- .bottom { padding-bottom:calc(90px + env(safe-area-inset-bottom,0px)); }
- .card { min-height:120px; padding:20px; }
-}
-
-/* Bookshelf */
-.tabs{gap:clamp(12px,2.5vw,36px)}
-.window:has(.bookshelf.active){width:min(1120px,100%)}
-.bookshelf{background:rgba(247,244,236,.94);gap:28px}
-.bookshelf-heading{font-family:"Noto Serif JP",serif;font-size:clamp(28px,3.3vw,40px);font-weight:300;letter-spacing:.08em;margin:8px 0 12px}
-.bookshelf-intro{font-size:1rem;line-height:1.9;color:#444740;margin:0}
-.book-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.book-card{min-width:0;display:flex;flex-direction:column;padding:28px;border:1px solid var(--line);border-top:3px solid #477d72;border-radius:4px 4px 10px 10px;background:rgba(255,255,255,.58)}
-.book-card:nth-child(2){border-top-color:#788765}
-.book-category{font-size:.75rem;letter-spacing:.1em;color:#53584f;margin:0 0 18px}
-.book-title{font-family:"Noto Serif JP",serif;font-size:1.5rem;font-weight:400;line-height:1.55;margin:0 0 10px;overflow-wrap:anywhere}
-.book-subtitle{display:block;font-size:1rem;line-height:1.8;margin-top:8px}
-.book-author{font-size:.875rem;color:#53584f;line-height:1.8;margin:0 0 24px}
-.book-description{font-size:1rem;line-height:1.95;margin:0 0 20px}
-.book-for{font-size:.875rem;line-height:1.9;margin:0 0 24px;padding:14px 16px;background:#edf0e8;border-radius:6px}
-.book-for strong{display:block;font-weight:500;margin-bottom:4px}
-.book-actions{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:auto}
-.book-actions a{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem;text-underline-offset:5px;line-height:1.7}
-.book-actions a:focus-visible{outline:2px solid #303c35;outline-offset:4px}
-@media(max-width:760px){
- .book-grid{grid-template-columns:1fr}
- .book-card{padding:24px 20px}
- .book-title{font-size:1.3rem}
- .mobile-tabs{grid-template-columns:.7fr .7fr .7fr .7fr 1.6fr}
-}
-
-.book-actions .book-review-link{flex-basis:100%;justify-content:center;padding:12px 16px;margin-bottom:6px;background:#303c35;color:#fff;border-radius:6px;text-decoration:none}.book-actions .book-review-link:hover{background:#202e26}
-.window:has(.foodscience.active){width:min(1120px,100%)}
-.foodscience{background:rgba(247,244,236,.92);grid-template-columns:220px minmax(0,1fr);gap:44px;align-items:start}
-.foodscience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
-.science-card{display:flex;flex-direction:column;min-height:250px;padding:26px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.42);text-decoration:none;transition:.25s ease}
-.science-card:hover{transform:translateY(-3px);background:rgba(255,255,255,.62)}
-.science-tag{font-size:.75rem;letter-spacing:.1em;color:#53584f;margin-bottom:18px}
-.science-card h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:1.4rem;line-height:1.65;margin:0 0 14px}
-.science-card p{font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.9;color:#444740;margin:0 0 18px}
-.science-card .science-more{margin-top:auto;font-size:.8rem;letter-spacing:.05em}
-@media(max-width:760px){.foodscience{grid-template-columns:1fr;gap:24px}.foodscience-grid{grid-template-columns:1fr}.science-card{min-height:0}.mobile-tabs{overflow-x:auto;display:flex}.mobile-tabs .tab{flex:0 0 auto;padding-inline:10px}}
-
-.social-link{display:inline-flex;align-items:center;gap:10px;margin-top:18px;text-decoration:none;font-size:9px;letter-spacing:.18em;border-bottom:1px solid rgba(37,39,36,.35);padding-bottom:5px;transition:.25s ease}.social-link:hover{opacity:.55;transform:translateY(-1px)}
-@media(max-width:760px){.scene{background-attachment:scroll;background-position:58% center}}
-.journal-filter .count{margin-left:6px;font-size:.75rem;color:#53584f;font-weight:400}
-.footer-social{display:inline-block;margin-top:12px;color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px}
-
-/* Clear entrances and accessible navigation, preserving the archive's quiet palette. */
-:focus-visible { outline:2px solid #303c35; outline-offset:4px; }
-.skip-link { position:fixed; left:16px; top:12px; z-index:100; padding:12px 18px; background:#f7f4ec; color:#252724; transform:translateY(-160%); }
-.skip-link:focus { transform:none; }
-.now-recent { grid-column:1 / -1; padding-top:24px; border-top:1px solid var(--line); }
-.now-recent h2 { font-family:"Noto Serif JP",serif; font-size:1.125rem; font-weight:400; margin:0 0 12px; }
-.recent-list { display:grid; gap:0; }
-.recent-link { display:flex; justify-content:space-between; gap:16px; padding:14px 0; color:var(--ink); text-decoration:none; line-height:1.8; border-bottom:1px solid var(--line); font-size:.9375rem; }
-.recent-link:hover { text-decoration:underline; text-underline-offset:4px; }
-.project-status { margin:0 0 12px; font-size:.75rem; color:#53584f; }
-.journal-search { margin-top:24px; }
-.journal-search label { display:block; margin-bottom:8px; font-size:.875rem; }
-.journal-search input { width:100%; min-height:44px; border:1px solid #69756b; border-radius:6px; padding:10px 12px; background:rgba(255,255,255,.7); color:var(--ink); font:inherit; font-size:1rem; }
-.journal-results { font-size:.875rem; color:#53584f; line-height:1.8; margin:12px 0; }
-.journal-empty { padding:24px 0; font-size:1rem; line-height:1.9; }
-.journal-empty[hidden] { display:none; }
-.footer-links { display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; }
-.footer-links a { font-size:.8125rem; letter-spacing:.02em; min-height:44px; display:inline-flex; align-items:center; }
-@media(max-width:960px) and (min-width:761px) { header { padding-inline:20px; gap:20px; } .tabs { gap:16px; } .tab { font-size:.8125rem; white-space:nowrap; } }
-@media(max-width:760px) {
- .mobile-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:visible; }
- .mobile-tabs .tab { min-width:0; min-height:44px; padding:10px 2px; font-size:.8125rem; }
- .mobile-tabs .tab.active { border-radius:8px; background:rgba(48,60,53,.09); }
- .mobile-tabs .tab.active:after { left:20%; right:20%; }
- .bottom { display:flex; flex-direction:column; align-items:stretch; gap:24px; padding-bottom:calc(126px + env(safe-area-inset-bottom,0px)); }
- .bottom>div:first-child { display:block; }
- .bottom .quote { align-self:flex-end; }
- .footer-links { gap:0 16px; }
- .now-recent { padding-top:20px; }
-}
-
-/* NOW: dated editorial snapshot; styles are scoped to this panel. */
-.now-detailed { display:none; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; background:rgba(247,244,236,.94); }
-.now-detailed > * { min-width:0; }
-.now-detailed .now-masthead { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px; height:auto; padding:0 0 28px; border-bottom:1px solid var(--line); z-index:auto; }
-.now-detailed .now-eyebrow { font-family:Inter,sans-serif; font-size:.75rem; line-height:1.8; letter-spacing:.1em; color:#53584f; margin:0 0 10px; }
-.now-detailed h2,.now-detailed h3,.now-detailed h4 { font-family:"Noto Serif JP",serif; font-weight:400; color:var(--ink); }
-.now-detailed h2 { font-size:clamp(1.5rem,3vw,2rem); line-height:1.7; margin:0; letter-spacing:.03em; }
-.now-detailed h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); line-height:1.8; margin:0 0 20px; }
-.now-detailed h4 { font-size:1.25rem; line-height:1.7; margin:16px 0 12px; }
-.now-detailed p,.now-detailed dd,.now-detailed li { font-size:1rem; line-height:1.95; color:#444740; overflow-wrap:anywhere; }
-.now-detailed p { margin:0 0 16px; }
-.now-detailed .now-updated { font-size:.75rem; margin:0; color:#53584f; }
-.now-updated time { display:inline-block; margin-left:8px; }
-.now-theme { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:32px; align-items:center; padding:32px 0; }
-.now-detailed .now-art { height:220px; }
-.now-detailed .now-theme h3 { font-size:clamp(1.5rem,3vw,2rem); }
-.now-section { padding:32px 0; border-top:1px solid var(--line); }
-.now-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
-.now-note { min-width:0; display:flex; flex-direction:column; padding:24px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.42); }
-.now-note-top { display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:space-between; align-items:center; font-size:.6875rem; line-height:1.7; color:#53584f; }
-.now-state { padding:3px 9px; border-radius:99px; background:#e5eae1; color:#344b3d; }
-.now-detailed .now-note-lead { font-family:"Noto Serif JP",serif; color:#252724; font-size:1rem; }
-.now-steps { margin:0 0 16px; padding-top:16px; border-top:1px solid var(--line); }
-.now-steps dt { font-size:.75rem; color:#53584f; margin:0 0 4px; }
-.now-steps dd { margin:0 0 12px; }
-.now-steps dd:last-child { margin-bottom:0; }
-.now-text-link { display:inline-flex; align-items:center; gap:10px; min-height:44px; font-size:.875rem; line-height:1.8; color:#303c35; text-decoration:underline; text-underline-offset:5px; overflow-wrap:anywhere; }
-.now-text-link:hover { text-decoration-thickness:2px; }
-.now-note > .now-text-link { margin-top:auto; }
-.now-note-plain { background:transparent; }
-.now-detailed .now-open-question { padding-left:16px; border-left:2px solid #8b9d89; font-size:.9375rem; }
-.now-open-question strong { display:block; font-size:.75rem; font-weight:400; margin-bottom:6px; color:#53584f; }
-.now-next ul { padding-left:1.3em; margin:0 0 20px; }
-.now-next li { padding-left:4px; margin-bottom:8px; }
-.now-detailed .now-small { font-size:.875rem; margin:0; color:#53584f; }
-.now-recent-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 16px; }
-.now-detailed .now-recent h3 { margin:0; font-size:1.125rem; }
-.now-detailed .now-recent { padding-top:24px; }
-@media(max-width:760px) {
- .now-detailed { padding:26px 22px; gap:0; }
- .now-detailed .now-masthead { padding-bottom:22px; }
- .now-theme { grid-template-columns:minmax(0,1fr); gap:22px; padding:26px 0; }
- .now-detailed .now-art { height:110px; }
- .now-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
- .now-note { padding:20px 18px; }
- .now-section { padding:26px 0; }
-}
-</style>
-<script src="site.js" defer></script><noscript><style>.panel:not(.active){display:grid!important}.hero.hidden{opacity:1;max-height:none}.tabs,.mobile-tabs,.journal-search,.journal-filters,.journal-results,.now-recent{display:none!important}.panel{margin-bottom:24px}</style></noscript></head>
-<body><a class="skip-link" href="#main-content">本文へ移動</a><div class="scene">
-  <div class="grain"></div><div class="arc"></div><div class="arc two"></div>
-  <header>
-    <div class="brand">ムートン</div>
-    <nav class="tabs" aria-label="メインナビゲーション">
-      <button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="foodscience">食事・化学</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button>
-    </nav>
-    
-  </header>
-
-  <main id="main-content" tabindex="-1">
-    <section class="hero">
-      <h1>作る。記録する。<br>残していく。</h1>
-      <p>考えたこと。作ったもの。変わっていく自分。その途中を残していく。</p>
-      <div class="en">A personal archive<br>for things yet to come.</div>
-    </section>
-
-    <section class="window" aria-label="ムートンの記録">
-      <div class="panel now active now-detailed" id="now" aria-labelledby="now-heading">
-        <!-- NOW editorial snapshot: update this date only when the content is reviewed.
-             Describe confirmed progress; keep future work explicitly labelled as next steps. -->
-        <header class="now-masthead">
-          <div><p class="now-eyebrow">NOW / OCTOBER 2026</p><h2 id="now-heading">いま、取り組んでいること。</h2></div>
-          <p class="now-updated">最終更新 <time datetime="2026-10-06">2026.10.06</time></p>
-        </header>
-
-        <section class="now-theme" aria-labelledby="now-theme-heading">
-          <div>
-            <p class="now-eyebrow">01 / いまのテーマ</p>
-            <h3 id="now-theme-heading">記録を、次の行動につなげる。</h3>
-            <p>観た作品を残す。気になったことを調べる。身体を動かして、感じたことを書く。いま取り組んでいるのは、そんな日々の経験を、あとから振り返れる形にすること。</p>
-            <p>この場所には、完成したものだけでなく、制作の途中や、まだ答えの出ていない問いも残していきたい。</p>
-            <a class="now-text-link" href="#journal" data-jump="journal">これまでの記録を読む <span aria-hidden="true">→</span></a>
-          </div>
-          <div class="art now-art" role="img" aria-label="淡い光と緑の重なりを描いた抽象風景"></div>
-        </section>
-
-        <section class="now-section" aria-labelledby="now-making-heading">
-          <p class="now-eyebrow">02 / 作っているもの</p>
-          <h3 id="now-making-heading">記憶と問いを、形にする。</h3>
-          <div class="now-grid">
-            <article class="now-note">
-              <div class="now-note-top"><span>APP / 視聴記録</span><span class="now-state">制作中</span></div>
-              <h4>KIOKU</h4>
-              <p class="now-note-lead">「観た」を、記憶に。</p>
-              <p>好きな作品をひとつにまとめ、観た時間を振り返るためのアプリ。作品を探して記録する流れを作っている。</p>
-              <dl class="now-steps"><dt>いまの焦点</dt><dd>日本語で作品を探し、迷わず記録できること。</dd><dt>次に詰めたいこと</dt><dd>検索から追加、履歴を振り返るまでの使いやすさ。</dd></dl>
-              <a class="now-text-link" href="#projects" data-jump="projects">制作しているものを見る <span aria-hidden="true">→</span></a>
-            </article>
-            <article class="now-note">
-              <div class="now-note-top"><span>VIDEO / 哲学</span><span class="now-state">試作中</span></div>
-              <h4>哲学を、声と映像で。</h4>
-              <p class="now-note-lead">読んだあとに残る問いを、動画にも。</p>
-              <p>ニーチェの記事をもとに、ナレーションと背景映像を組み合わせた動画を制作している。文章とは違う伝わり方を探す試み。</p>
-              <dl class="now-steps"><dt>いまの焦点</dt><dd>声の自然さと、映像の空気感を合わせること。</dd><dt>次に詰めたいこと</dt><dd>言葉の間に、見る人が考えられる余白をつくる。</dd></dl>
-              <a class="now-text-link" href="nietzsche.html">もとになったニーチェの記事 <span aria-hidden="true">→</span></a>
-            </article>
-          </div>
-        </section>
-
-        <section class="now-section" aria-labelledby="now-life-heading">
-          <p class="now-eyebrow">03 / 暮らしの中で考える</p>
-          <h3 id="now-life-heading">試したことと、残っている問い。</h3>
-          <div class="now-grid">
-            <article class="now-note now-note-plain">
-              <div class="now-note-top"><span>BODY / 身体</span><span class="now-state">記事にした気づき</span></div>
-              <h4>一日の終わりに、余力を残せるか。</h4>
-              <p>筋トレを減らした時期に、以前より日常で疲れにくいと感じた。その経験から、体力を「限界の高さ」だけでなく、「生活のあとに残る余力」として考えるようになった。</p>
-              <p class="now-open-question"><strong>まだ考えたいこと</strong>筋力を伸ばすことと、日々を元気に過ごすことを、どう両立するか。</p>
-              <a class="now-text-link" href="stamina.html">体力についての記録を読む <span aria-hidden="true">→</span></a>
-            </article>
-            <article class="now-note now-note-plain">
-              <div class="now-note-top"><span>BOOK / 読書</span><span class="now-state">読書記録を公開</span></div>
-              <h4>「やめられない」の仕組みを知る。</h4>
-              <p>『快感回路』を読んだ感想を本棚に追加した。身近な行動から話が始まるので、脳科学の本が初めてでも読み進めやすいと感じた一冊。</p>
-              <p class="now-open-question"><strong>ここから考えたいこと</strong>意志の強さだけで片づけず、習慣と快感の仕組みから自分の行動を見る。</p>
-              <a class="now-text-link" href="book-pleasure-circuit.html">『快感回路』の読書記録 <span aria-hidden="true">→</span></a>
-            </article>
-          </div>
-        </section>
-
-        <section class="now-section now-next" aria-labelledby="now-next-heading">
-          <div><p class="now-eyebrow">04 / 次の一歩</p><h3 id="now-next-heading">次に、ここへ残したいこと。</h3></div>
-          <ul><li>KIOKUで、作品を探して記録する流れ。</li><li>哲学動画で、声と映像を合わせたときの気づき。</li><li>運動と日常の余力を、どう両立するか。</li></ul>
-          <p class="now-small">ここにあるのは、いまの関心と取り組み。進んだことも、途中で変わったことも、更新していく。</p>
-        </section>
-
-        <section class="now-recent" aria-labelledby="recent-heading">
-          <div class="now-recent-heading"><h3 id="recent-heading">最近の記事</h3><a class="now-text-link" href="#journal" data-jump="journal">記事一覧 <span aria-hidden="true">→</span></a></div>
-          <div class="recent-list"></div>
-        </section>
+<main>
+  <section class="scene scene-hero" id="top" data-scene data-next-overlap data-nav="dark">
+    <div class="scene-pin">
+      <div class="scene-media ph-hero is-placeholder"></div>
+      <div class="scene-shade"></div>
+      <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
+        <p class="eyebrow reveal">A personal archive for things yet to come</p>
+        <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
+        <p class="lede reveal-2">考えた<wbr>こと。<wbr>作った<wbr>もの。<wbr>変わっていく<wbr>自分。<br>その<wbr>途中を、<wbr>静かに<wbr>残していく。</p>
+        <a class="hero-latest reveal-2" href="book-pleasure-circuit.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">気持ちよさの仕組みを知ると、やめられない理由が見えてくる。</span><span aria-hidden="true">→</span></a>
       </div>
-      <div class="panel projects" id="projects">
-        <article class="card"><span>PROJECT 001</span><div class="project-status">制作中</div><h3>KIOKU</h3><p>「観た」を記録し、記憶として残すためのアプリ。</p></article>
-        <article class="card"><span>PROJECT 002</span><div class="project-status">制作中</div><h3>DIARY</h3><p>日々の記録を積み重ねる、小さな実験。</p></article>
-        <article class="card placeholder"><span>NEXT</span><h3>...</h3><p>まだ名前のないもの。</p></article>
+      <a class="scroll-cue" href="#think">Scroll</a>
+    </div>
+  </section>
+
+  <section class="scene overlap" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
+    <div class="scene-pin">
+      <div class="scene-media ph-think is-placeholder"></div>
+      <div class="scene-shade"></div>
+      <div class="scene-copy">
+        <p class="eyebrow reveal">01 — Philosophy</p>
+        <h2 class="scene-title reveal">考える。</h2>
+        <p class="scene-latin reveal">Meaning is not given; <em>it is left behind.</em></p>
+        <p class="scene-text reveal-2">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。<wbr>自由、<wbr>恐怖、<wbr>セルフイメージ。<wbr>答えを<wbr>急がず、<wbr>問いの<wbr>まま<wbr>残していく。</p>
+        <a class="btn btn-light reveal-2" href="#journal" data-filter-link="philosophy">哲学・生き方の記事 <span aria-hidden="true">→</span></a>
       </div>
-      <div class="panel journal" id="journal">
-        <div class="journal-intro">
-          <div class="journal-no">03</div>
-          <h2 class="journal-heading">記事</h2>
-          <div class="journal-sub">書き留める。</div>
-          <p class="journal-copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
-          <div class="journal-search"><label for="journal-query">記事を探す</label><input id="journal-query" type="search" placeholder="タイトル・キーワード" autocomplete="off" aria-controls="journal-list"></div>
-          <p class="journal-results" role="status" aria-live="polite" aria-atomic="true"></p>
-          <div class="journal-filters" aria-label="記事のカテゴリー">
-            <button class="journal-filter active" data-journal-filter="all">すべて</button>
-            <button class="journal-filter" data-journal-filter="body">身体</button>
-            <button class="journal-filter" data-journal-filter="philosophy">哲学・生き方</button>
-            <button class="journal-filter" data-journal-filter="work">仕事・働き方</button>
-            <button class="journal-filter" data-journal-filter="making">制作</button>
-          </div>
-        </div>
-        <div><div class="journal-list" id="journal-list">
-          <a class="journal-item clickable journal-link" href="sunday-blues.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">日曜の夜が憂うつなのは、なぜか</div><div class="journal-excerpt">週末に満たされていたものと、仕事から離れる時間の研究から考える。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
+      <div class="scene-count" aria-hidden="true">01</div>
+    </div>
+  </section>
 
-          <a class="journal-item clickable journal-link" href="fear-of-change.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職が怖くて、踏み出せないとき</div><div class="journal-excerpt">損失回避と後悔の研究から、転職の怖さとの付き合い方を考える。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="job-change-start.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職は、何から始めればいいのか</div><div class="journal-excerpt">理由と軸、棚卸し、市場を知る、応募、条件確認、退職。6つの順番で整理する。</div><span class="journal-read-time">約7分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="multiple-agents.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職エージェントは、何社使えばいいのか</div><div class="journal-excerpt">2〜3社を併用する理由、組み合わせ方、併用のルールと断り方。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="quit-cant-say.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">会社を「辞める」と言い出せないときに、知っておくこと</div><div class="journal-excerpt">民法627条の2週間ルール、引き止め、退職代行の3つの種類を整理する。</div><span class="journal-read-time">約7分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="job-fit.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">「この仕事、向いていない」は、どこまで本当か</div><div class="journal-excerpt">仕事との相性か、職場との相性か。適合の研究とジョブ・クラフティングから考える。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="salary-change.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職で、年収は上がるのか</div><div class="journal-excerpt">転職で賃金が増えた人は40.5%、減った人は29.4%。その差を分けるものを考える。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="quit-or-escape.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">「仕事を辞めたい」は、逃げなのか</div><div class="journal-excerpt">仕事の要求と資源、バーンアウトの研究から、辞めるべきか変えるべきかを分解する。</div><span class="journal-read-time">約7分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="job-change-happiness.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職すれば、幸せになれるのか</div><div class="journal-excerpt">転職直後の満足度は上がり、その後下がる。ハネムーンと二日酔いの研究から考える。</div><span class="journal-read-time">約7分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="job-agent.html" data-category="work">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">転職エージェントは、なぜ無料なのか</div><div class="journal-excerpt">報酬の仕組みから生まれる癖を知り、使われる側ではなく使う側になる。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="halitosis.html" data-category="body">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">口臭の多くは「胃」ではなく、口の中から生まれる</div><div class="journal-excerpt">2,000人の口臭外来データから、舌苔・歯周病・唾液と本当に効く対策を考える。</div><span class="journal-read-time">約10分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="odor-care.html" data-category="body">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">匂いケアは「脇と足の裏」から。原因が違えば、対策も違う</div><div class="journal-excerpt">脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。</div><span class="journal-read-time">約8分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-
-          <a class="journal-item clickable journal-link" href="music-life.html" data-category="philosophy">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">音楽は人生を豊かにするのか。頭は良くならなくても、残るもの</div><div class="journal-excerpt">IQでは測れない音楽の価値。快感、感情、人とのつながり、健康関連QOLを研究から考える。</div><span class="journal-read-time">約8分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="doing-nothing.html" data-category="philosophy">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">何もしない時間は、本当に無駄なのか</div><div class="journal-excerpt">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。</div><span class="journal-read-time">約7分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="disliked-priority.html" data-category="philosophy">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ</div><div class="journal-excerpt">他人の目が消えるのではない。自分が向かう目的の方が重要になり、評価の順位が下がる。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="smell.html" data-category="body">
-            <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">匂いは、人の印象をどこまで決めているのか</div><div class="journal-excerpt">「なんとなく感じがいい」は、匂いにも左右される。好感度、感情、魅力、フェロモン、記憶を研究から考える。</div><span class="journal-read-time">約8分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="influence.html" data-category="philosophy">
-            <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">人は、あらゆるものに影響されて生きている</div><div class="journal-excerpt">影響を否定せず、向かう場所を決め、自分なりのチューニングを持つ。</div><span class="journal-read-time">約4分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          
-          <a class="journal-item clickable journal-link" href="refined-taste.html" data-category="philosophy">
-            <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">目が肥えると、満足できなくなる</div><div class="journal-excerpt">良いものを知るほど基準は上がる。芸術からポルノまで、刺激と満足度の関係を考える。</div><span class="journal-read-time">約5分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="system-goal.html" data-category="philosophy">
-            <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">システムのないゴールは、動かない</div><div class="journal-excerpt">ゴールを日常の行動まで分解し、習慣とルーティンとして設計する。</div><span class="journal-read-time">約5分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="fear.html" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">恐怖の正体は「危険」ではなく「不快感」かもしれない</div><div class="journal-excerpt">怖いと感じたとき、それは本当に危険なのか。ただ不快なだけなのか。</div><span class="journal-read-time">約5分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="boundaries.html" data-category="philosophy">
-            <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">誰にでも好かれようとすると、なぜ安っぽくなるのか</div><div class="journal-excerpt">100人に薄く好かれるより、「これが自分だ」と言えるものを持って生きたい。</div><span class="journal-read-time">約2分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="goggins.html" data-category="philosophy">
-            <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">デイビッド・ゴギンズという変人を、僕は尊敬している</div><div class="journal-excerpt">普通ではない。だから、かっこいい。常識の外まで自分を追い込み続ける男の生き方。</div><span class="journal-read-time">約5分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="freedom.html" data-category="philosophy">
-            <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">愛ではなく、自由を求める</div><div class="journal-excerpt">愛は外にあり、自由は自分の中にある。自分の人生の基準をどこに置くか。</div><span class="journal-read-time">約8分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="identity.html" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">あなたはどんな人間になりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div><span class="journal-read-time">約5分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="self-image-entry" href="self-image.html" tabindex="0" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">セルフイメージは、長期の行動を変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約3分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="hill-entry" href="hill.html" tabindex="0" data-category="philosophy">
-            <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">「思考は現実化する」は、本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約4分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" href="blood-glucose.html" data-category="body">
-            <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">血糖値は、なぜこれほど健康に重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div><span class="journal-read-time">約6分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="trampoline-entry" href="trampoline.html" tabindex="0" data-category="body">
-            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">大人は、いつから跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div><span class="journal-read-time">約8分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="stamina-entry" href="stamina.html" tabindex="0" data-category="body">
-            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">筋トレを減らしたら、なぜか「体力」がついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div><span class="journal-read-time">約3分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <a class="journal-item clickable journal-link" id="nietzsche-entry" href="nietzsche.html" tabindex="0" data-category="philosophy">
-            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">神は死んだ。それでも、なぜ生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div><span class="journal-read-time">約3分</span></div>
-            <div class="journal-arrow">→</div>
-          </a>
-          <div class="journal-item is-note" data-category="making">
-            <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">自分のWebサイトを作り始めた。</div><div class="journal-excerpt">自分の基地のような場所を、ようやく形にし始めた。</div></div>
-            <div class="journal-arrow">—</div>
-          </div>
-          <div class="journal-item is-note" data-category="making">
-            <div class="journal-date">2026.09.29</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">作ること、残すことについて。</div><div class="journal-excerpt">完成だけではなく、途中の思考にも価値がある。</div></div>
-            <div class="journal-arrow">—</div>
-          </div>
-          <div class="journal-item is-note" data-category="making">
-            <div class="journal-date">2026.09.28</div><div class="journal-dot"></div>
-            <div class="journal-body"><div class="journal-title">小さな一歩を記録する。</div><div class="journal-excerpt">あとから振り返ったとき、始まりが見えるように。</div></div>
-            <div class="journal-arrow">—</div>
-          </div>
-        </div>
-      <p class="journal-empty" hidden>一致する記事がありません。検索語を変えるか、「すべて」を選んでください。</p>
+  <section class="scene overlap" id="body" data-scene data-reveal data-next-overlap data-nav="light" data-tone="light">
+    <div class="scene-pin">
+      <div class="scene-media ph-body is-placeholder"></div>
+      <div class="scene-shade"></div>
+      <div class="scene-copy" style="--x:end;--y:center;--w:640px">
+        <p class="eyebrow reveal">02 — Body</p>
+        <h2 class="scene-title reveal">身体で、<br>確かめる。</h2>
+        <p class="scene-latin reveal">Measured, <em>not imagined.</em></p>
+        <p class="scene-text reveal-2">体力、<wbr>血糖値、<wbr>匂い、<wbr>口臭。<wbr>なんとなくの<wbr>感覚を、<wbr>研究と<wbr>データでもう<wbr>一度<wbr>確かめ直す。</p>
+        <a class="btn btn-dark reveal-2" href="#journal" data-filter-link="body">身体の記事 <span aria-hidden="true">→</span></a>
       </div>
+      <div class="scene-count" aria-hidden="true" style="right:auto;left:var(--gutter)">02</div>
+    </div>
+  </section>
+
+  <section class="scene overlap" id="food" data-scene data-reveal data-nav="dark" style="--h:330vh">
+    <div class="scene-pin">
+      <div class="scene-media ph-food is-placeholder"></div>
+      <div class="scene-shade"></div>
+      <div class="scene-copy" style="--y:center;--x:center;--w:900px;text-align:center">
+        <p class="eyebrow reveal">03 — Food &amp; Science</p>
+        <h2 class="scene-title reveal">食べる<wbr>ことを、<em>evidence</em>で。</h2>
+        <p class="scene-text reveal-2" style="margin-inline:auto">ダークチョコ、<wbr>オリーブ油、<wbr>ブルーベリー。<wbr>健康に<wbr>ついての<wbr>言葉を、<wbr>論文と<wbr>データから<wbr>確かめる。</p>
+        <a class="btn btn-light reveal-2" href="#foodscience">食事・化学を読む <span aria-hidden="true">→</span></a>
       </div>
-      
-      
-      
-      
-      
-      
-      <section class="panel foodscience" id="foodscience" aria-labelledby="foodscience-heading">
+      <div class="scene-count" aria-hidden="true">03</div>
+    </div>
+  </section>
+
+  <section class="section" id="journal" data-nav="light" data-nav-solid="light" aria-labelledby="journal-heading">
+    <div class="section-inner">
+      <div class="section-head" data-rise>
         <div>
-          <div class="kicker">FOOD &amp; SCIENCE</div>
-          <h2 class="journal-heading" id="foodscience-heading">食事・化学</h2>
-          <p class="journal-copy">食べ物、栄養、代謝、成分。健康についての言葉を、論文とデータから確かめる。</p>
+          <p class="eyebrow">Journal</p>
+          <h2 class="section-title" id="journal-heading">記事<em>— notes in progress</em></h2>
         </div>
-        <div class="foodscience-grid">
-          <a class="science-card" href="dark-chocolate.html"><span class="science-tag">FOOD / CACAO / FLAVANOL</span><h3>ダークチョコは、本当に体にいいのか</h3><p>カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。</p><span class="science-more">約6分で読む →</span></a>
-          <a class="science-card" href="olive-oil.html"><span class="science-tag">FOOD / FAT / POLYPHENOL</span><h3>オリーブ油は、本当に身体にいいのか</h3><p>EVOO、心血管疾患、酸化LDL、血糖、加熱。人間を対象にしたRCTとメタ解析から、どこまで言えるのかを整理する。</p><span class="science-more">約8分で読む →</span></a>
-          <a class="science-card" href="blueberry.html"><span class="science-tag">FOOD / POLYPHENOL</span><h3>ブルーベリーは、本当にそんなにすごいのか</h3><p>アントシアニン、血管機能、認知機能、血圧、血糖、腸内細菌。ヒト研究から、どこまで言えるのかを整理する。</p><span class="science-more">約7分で読む →</span></a>
-          <a class="science-card" href="blood-glucose.html"><span class="science-tag">METABOLISM / BLOOD GLUCOSE</span><h3>血糖値は、なぜこれほど健康に重要なのか</h3><p>血糖、血管、筋肉、そして未来の健康。そのつながりを研究データから考える。</p><span class="science-more">約6分で読む →</span></a>
+        <p class="copy">思った<wbr>こと、<wbr>気づいた<wbr>こと、<wbr>迷った<wbr>こと、<wbr>嬉しかった<wbr>こと。<wbr>完成した<wbr>答えより、<wbr>途中に<wbr>残った<wbr>ものを<wbr>記録する。</p>
+      </div>
+      <div class="journal-tools">
+        <div class="journal-filters" role="group" aria-label="記事のカテゴリー">
+          <button class="journal-filter active" type="button" data-journal-filter="all">すべて</button>
+          <button class="journal-filter" type="button" data-journal-filter="body">身体</button>
+          <button class="journal-filter" type="button" data-journal-filter="philosophy">哲学・生き方</button>
+          <button class="journal-filter" type="button" data-journal-filter="work">仕事・働き方</button>
+          <button class="journal-filter" type="button" data-journal-filter="making">制作</button>
         </div>
-      </section>
+        <div class="journal-search">
+          <label for="journal-search-input">記事を検索</label>
+          <input id="journal-search-input" type="search" placeholder="記事を検索（例：血糖、自由、匂い）" autocomplete="off" enterkeyhint="search">
+        </div>
+      </div>
+      <p class="journal-search-status" role="status" aria-live="polite"></p>
+      <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span><a href="topic-philosophy.html">哲学・生き方 <span aria-hidden="true">→</span></a><a href="topic-body.html">身体 <span aria-hidden="true">→</span></a><a href="topic-work.html">仕事・働き方 <span aria-hidden="true">→</span></a><a href="topic-food.html">食事・化学 <span aria-hidden="true">→</span></a></nav>
+      <div class="journal-list">
+        <a class="journal-item clickable journal-link" data-rise href="halitosis.html" data-category="body">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">口臭の<wbr>多くは<wbr>「胃」ではなく、<wbr>口の<wbr>中から<wbr>生まれる</div><div class="journal-excerpt">2,000人の口臭外来データから、舌苔・歯周病・唾液と本当に効く対策を考える。</div><span class="journal-read-time">約12分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="sunday-blues.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">日曜の<wbr>夜が<wbr>憂う<wbr>つなのは、<wbr>なぜか</div><div class="journal-excerpt">週末に満たされていたものと、仕事から離れる時間の研究から考える。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="fear-of-change.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職が<wbr>怖くて、<wbr>踏み出せない<wbr>とき</div><div class="journal-excerpt">損失回避と後悔の研究から、転職の怖さとの付き合い方を考える。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="odor-care.html" data-category="body">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">匂い<wbr>ケアは<wbr>「脇と<wbr>足の<wbr>裏」から。<wbr>原因が<wbr>違えば、<wbr>対策も<wbr>違う</div><div class="journal-excerpt">脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="job-change-start.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職は、<wbr>何から<wbr>始めればいいのか</div><div class="journal-excerpt">理由と軸、棚卸し、市場を知る、応募、条件確認、退職。6つの順番で整理する。</div><span class="journal-read-time">約3分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="music-life.html" data-category="philosophy">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">音楽は<wbr>人生を<wbr>豊かに<wbr>するのか。<wbr>頭は<wbr>良くならなくても、<wbr>残る<wbr>もの</div><div class="journal-excerpt">IQでは測れない音楽の価値。快感、感情、人とのつながり、健康関連QOLを研究から考える。</div><span class="journal-read-time">約12分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="doing-nothing.html" data-category="philosophy">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">何もしない<wbr>時間は、<wbr>本当に<wbr>無駄なのか</div><div class="journal-excerpt">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。</div><span class="journal-read-time">約10分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="multiple-agents.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職エージェントは、<wbr>何社<wbr>使えば<wbr>いいのか</div><div class="journal-excerpt">2〜3社を併用する理由、組み合わせ方、併用のルールと断り方。</div><span class="journal-read-time">約3分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="disliked-priority.html" data-category="philosophy">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</div><div class="journal-excerpt">他人の目が消えるのではない。自分が向かう目的の方が重要になり、評価の順位が下がる。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="quit-cant-say.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">会社を<wbr>「辞める」と<wbr>言い出せない<wbr>ときに、<wbr>知って<wbr>おく<wbr>こと</div><div class="journal-excerpt">民法627条の2週間ルール、引き止め、退職代行の3つの種類を整理する。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="job-fit.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">「この<wbr>仕事、<wbr>向いていない」は、<wbr>どこまで<wbr>本当か</div><div class="journal-excerpt">仕事との相性か、職場との相性か。適合の研究とジョブ・クラフティングから考える。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="smell.html" data-category="body">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">匂いは、<wbr>人の<wbr>印象を<wbr>どこまで<wbr>決めているのか</div><div class="journal-excerpt">「なんとなく感じがいい」は、匂いにも左右される。好感度、感情、魅力、フェロモン、記憶を研究から考える。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="salary-change.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職で、<wbr>年収は<wbr>上がるのか</div><div class="journal-excerpt">転職で賃金が増えた人は40.5%、減った人は29.4%。その差を分けるものを考える。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="quit-or-escape.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">「仕事を<wbr>辞めたい」は、<wbr>逃げなのか</div><div class="journal-excerpt">仕事の要求と資源、バーンアウトの研究から、辞めるべきか変えるべきかを分解する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="job-change-happiness.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職すれば、<wbr>幸せに<wbr>なれるのか</div><div class="journal-excerpt">転職直後の満足度は上がり、その後下がる。ハネムーンと二日酔いの研究から考える。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="job-agent.html" data-category="work">
+          <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">転職エージェントは、<wbr>なぜ<wbr>無料なのか</div><div class="journal-excerpt">報酬の仕組みから生まれる癖を知り、使われる側ではなく使う側になる。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="influence.html" data-category="philosophy">
+          <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</div><div class="journal-excerpt">影響を否定せず、向かう場所を決め、自分なりのチューニングを持つ。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="refined-taste.html" data-category="philosophy">
+          <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">目が<wbr>肥えると、<wbr>満足できなくなる</div><div class="journal-excerpt">良いものを知るほど基準は上がる。芸術からポルノまで、刺激と満足度の関係を考える。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="system-goal.html" data-category="philosophy">
+          <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</div><div class="journal-excerpt">ゴールを日常の行動まで分解し、習慣とルーティンとして設計する。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="boundaries.html" data-category="philosophy">
+          <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">誰に<wbr>でも<wbr>好かれようと<wbr>すると、<wbr>なぜ<wbr>安っぽくなるのか</div><div class="journal-excerpt">100人に薄く好かれるより、「これが自分だ」と言えるものを持って生きたい。</div><span class="journal-read-time">約2分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="goggins.html" data-category="philosophy">
+          <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">デイビッド・ゴギンズと<wbr>いう<wbr>変人を、<wbr>僕は<wbr>尊敬している</div><div class="journal-excerpt">普通ではない。だから、かっこいい。常識の外まで自分を追い込み続ける男の生き方。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="freedom.html" data-category="philosophy">
+          <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">愛ではなく、<wbr>自由を<wbr>求める</div><div class="journal-excerpt">愛は外にあり、自由は自分の中にある。自分の人生の基準をどこに置くか。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="fear.html" data-category="philosophy">
+          <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">恐怖の<wbr>正体は<wbr>「危険」ではなく<wbr>「不快感」かもしれない</div><div class="journal-excerpt">怖いと感じたとき、それは本当に危険なのか。ただ不快なだけなのか。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="identity.html" data-category="philosophy">
+          <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">あなたは<wbr>どんな<wbr>人間に<wbr>なりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="self-image.html" data-category="philosophy">
+          <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">セルフイメージは、<wbr>長期の<wbr>行動を<wbr>変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="hill.html" data-category="philosophy">
+          <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">「思考は<wbr>現実化する」は、<wbr>本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="blood-glucose.html" data-category="body">
+          <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">血糖値は、<wbr>なぜ<wbr>これほど<wbr>健康に<wbr>重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="trampoline.html" data-category="body">
+          <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">大人は、<wbr>いつから<wbr>跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="stamina.html" data-category="body">
+          <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div><span class="journal-read-time">約3分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="nietzsche.html" data-category="philosophy">
+          <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div><span class="journal-read-time">約3分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <div class="journal-item is-note" data-rise data-category="making">
+          <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">自分の<wbr>Webサイトを<wbr>作り<wbr>始めた。</div><div class="journal-excerpt">自分の基地のような場所を、ようやく形にし始めた。</div></div>
+          <div class="journal-arrow">—</div>
+        </div>
+        <div class="journal-item is-note" data-rise data-category="making">
+          <div class="journal-date">2026.09.29</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">作る<wbr>こと、<wbr>残すことに<wbr>ついて。</div><div class="journal-excerpt">完成だけではなく、途中の思考にも価値がある。</div></div>
+          <div class="journal-arrow">—</div>
+        </div>
+        <div class="journal-item is-note" data-rise data-category="making">
+          <div class="journal-date">2026.09.28</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">小さな<wbr>一歩を<wbr>記録する。</div><div class="journal-excerpt">あとから振り返ったとき、始まりが見えるように。</div></div>
+          <div class="journal-arrow">—</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <section class="panel bookshelf" id="books" aria-labelledby="books-heading">
+  <section class="section section-blue" id="foodscience" data-nav="dark" data-nav-solid="dark" aria-labelledby="foodscience-heading">
+    <div class="section-inner">
+      <div class="section-head" data-rise>
         <div>
-          <div class="kicker">BOOKS / 本棚</div>
-          <h2 class="bookshelf-heading" id="books-heading">おすすめの本</h2>          <p class="bookshelf-intro">仕事のこと、日々の習慣のこと。<br>考えるきっかけになる本を、この本棚に。</p>
+          <p class="eyebrow">Food &amp; Science</p>
+          <h2 class="section-title" id="foodscience-heading">食事・化学<em>— read the evidence</em></h2>
         </div>
-        <div class="book-grid">
-          <article class="book-card">
+        <p class="copy">食べ物、<wbr>栄養、<wbr>代謝、<wbr>成分。<wbr>健康に<wbr>ついての<wbr>言葉を、<wbr>論文と<wbr>データから<wbr>確かめる。</p>
+      </div>
+      <p class="section-more"><a href="topic-food.html">食事・化学の記事をすべて見る <span aria-hidden="true">→</span></a></p>
+      <div class="foodscience-grid">
+        <a class="science-card" data-rise href="dark-chocolate.html"><span class="science-tag">FOOD / CACAO / FLAVANOL</span><h3>ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</h3><p>カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。</p><span class="science-more">約8分で読む →</span></a>
+        <a class="science-card" data-rise href="olive-oil.html"><span class="science-tag">FOOD / FAT / POLYPHENOL</span><h3>オリーブ油は、<wbr>本当に<wbr>身体に<wbr>いいのか</h3><p>EVOO、心血管疾患、酸化LDL、血糖、加熱。人間を対象にしたRCTとメタ解析から、どこまで言えるのかを整理する。</p><span class="science-more">約9分で読む →</span></a>
+        <a class="science-card" data-rise href="blueberry.html"><span class="science-tag">FOOD / POLYPHENOL</span><h3>ブルーベリーは、<wbr>本当に<wbr>そんなに<wbr>すごいのか</h3><p>アントシアニン、血管機能、認知機能、血圧、血糖、腸内細菌。ヒト研究から、どこまで言えるのかを整理する。</p><span class="science-more">約10分で読む →</span></a>
+        <a class="science-card" data-rise href="blood-glucose.html"><span class="science-tag">METABOLISM / BLOOD GLUCOSE</span><h3>血糖値は、<wbr>なぜ<wbr>これほど<wbr>健康に<wbr>重要なのか</h3><p>血糖、血管、筋肉、そして未来の健康。そのつながりを研究データから考える。</p><span class="science-more">約6分で読む →</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="books" data-nav="light" data-nav-solid="light" aria-labelledby="books-heading">
+    <div class="section-inner">
+      <div class="section-head" data-rise>
+        <div>
+          <p class="eyebrow">Bookshelf</p>
+          <h2 class="section-title" id="books-heading">本棚<em>— books worth the time</em></h2>
+        </div>
+        <p class="copy">仕事の<wbr>こと、<wbr>日々の<wbr>習慣の<wbr>こと。<wbr>考える<wbr>きっかけに<wbr>なる本を、<wbr>この<wbr>本棚に。</p>
+      </div>
+      <div class="book-grid">
+          <article class="book-card" data-rise>
             <p class="book-category">01 / 経営・マネジメント / 洋書</p>
             <h3 class="book-title" lang="en">No B.S. Ruthless Management of People and Profits</h3>
             <p class="book-author">Dan S. Kennedy（ダン・S・ケネディ）</p>
@@ -581,148 +334,249 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
             <p class="book-for"><strong>こんな人に</strong>チームの動き方や、仕事を成果につなげる仕組みを考えたい人。</p>
             <div class="book-actions">
               <a class="book-review-link" href="book-ruthless-management.html">この本をすすめる理由を読む <span aria-hidden="true">→</span></a>
-<a href="https://www.amazon.co.jp/dp/1599185407">Amazonでこの本を見る <span aria-hidden="true">↗</span></a>
+<a href="https://www.amazon.co.jp/dp/1599185407?tag=yuiga2003-22" rel="sponsored noopener">Amazonでこの本を見る <span aria-hidden="true">↗</span> <span class="pr-label">PR</span></a>
               <a href="https://www.simonandschuster.com/books/No-B-S-Ruthless-Management-of-People-and-Profits/Dan-S-Kennedy/No-B-S/9781599185408">出版社の紹介を読む <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-          <article class="book-card">
+          <article class="book-card" data-rise>
             <p class="book-category">02 / 習慣・脳科学</p>
-            <h3 class="book-title">習慣と脳の科学<span class="book-subtitle">どうしても変えられないのはどうしてか</span></h3>
+            <h3 class="book-title">習慣と<wbr>脳の<wbr>科学<span class="book-subtitle">どうしても<wbr>変えられないのは<wbr>どうしてか</span></h3>
             <p class="book-author">ラッセル・A・ポルドラック<br>神谷之康 監訳 / 児島修 訳<br>みすず書房</p>
             <p class="book-description">なぜ、やめたい行動を繰り返してしまうのか。習慣が生まれ、続いていく仕組みを脳神経科学と心理学から探り、行動を変えるための研究を紹介する一冊です。</p>
             <p class="book-for"><strong>こんな人に</strong>習慣の仕組みを知り、日々の行動を科学の視点から見直したい人。</p>            <div class="book-actions">
               <a class="book-review-link" href="book-habits-brain.html">この本をすすめる理由を読む <span aria-hidden="true">→</span></a>
-<a href="https://www.amazon.co.jp/dp/4622095882">Amazonでこの本を見る <span aria-hidden="true">↗</span></a>
+<a href="https://www.amazon.co.jp/dp/4622095882?tag=yuiga2003-22" rel="sponsored noopener">Amazonでこの本を見る <span aria-hidden="true">↗</span> <span class="pr-label">PR</span></a>
               <a href="https://www.msz.co.jp/book/detail/09588/">出版社の紹介を読む <span aria-hidden="true">↗</span></a>
             </div>
           </article>
-          <article class="book-card">
+          <article class="book-card" data-rise>
             <p class="book-category">03 / 脳科学・依存</p>
-            <h3 class="book-title">快感回路<span class="book-subtitle">なぜ気持ちいいのか なぜやめられないのか</span></h3>
+            <h3 class="book-title">快感回路<span class="book-subtitle">なぜ気持ちいいのか な<wbr>ぜやめられないのか</span></h3>
             <p class="book-author">デイヴィッド・J・リンデン<br>岩坂彰 訳<br>河出文庫</p>
             <p class="book-description">食べ物、お酒、ギャンブル、そして寄付まで。人が「気持ちいい」と感じる脳の仕組みを、神経科学から解き明かす一冊です。</p>
-            <p class="book-for"><strong>こんな人に</strong>やめられない行動の理由を、仕組みから考えたい人。脳科学の本が初めての人にも読みやすい。</p>
-            <div class="book-actions">
+            <p class="book-for"><strong>こんな人に</strong>やめられない行動の理由を、仕組みから考えたい人。脳科学の本が初めての人にも読みやすい。</p>            <div class="book-actions">
               <a class="book-review-link" href="book-pleasure-circuit.html">この本をすすめる理由を読む <span aria-hidden="true">→</span></a>
-<a href="https://www.amazon.co.jp/dp/4309463983">Amazonでこの本を見る <span aria-hidden="true">↗</span></a>
+<a href="https://www.amazon.co.jp/dp/4309463983?tag=yuiga2003-22" rel="sponsored noopener">Amazonでこの本を見る <span aria-hidden="true">↗</span> <span class="pr-label">PR</span></a>
             </div>
           </article>
-        </div>
-      </section>
-
-      <div class="panel about" id="about">
-        <div>
-          <div class="kicker">ABOUT / MOUTON</div>
-          <div class="big">好奇心を、形に。</div>
-          <div class="about-start">
-            <div class="about-start-label">FIRST READ / はじめての方へ</div>
-            <div class="about-start-title">まずは、哲学の記事から。</div>
-            <p class="about-start-copy">ムートンが何を考え、なぜ記録し、何を残したいのか。その空気を一番感じやすい入口として、この文章を選びました。</p>
-            <a class="about-start-link" href="nietzsche.html" id="about-first-read">「神は死んだ。それでも、なぜ生きるのか。」を読む <span>→</span></a>
-          </div>
-          <p class="copy about-copy">ムートンの個人的な制作と記録のための場所。興味を持ったことを試し、作り、その過程を残していきます。</p><a class="social-link" href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer" aria-label="X @kodoku__alone">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="portrait" aria-hidden="true"></div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
 
-  <footer class="bottom"><div><span>2026 / SOMEWHERE IN JAPAN</span><div class="footer-links"><a class="footer-social" href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone ↗</a><a class="footer-social" href="policy.html">プライバシーポリシー・広告について</a></div></div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
+  <section class="section section-night" id="projects" data-nav="dark" data-nav-solid="dark" aria-labelledby="projects-heading">
+    <canvas class="stars" aria-hidden="true"></canvas>
+    <div class="section-inner">
+      <div class="section-head" data-rise>
+        <div>
+          <p class="eyebrow">Projects</p>
+          <h2 class="section-title" id="projects-heading">制作<em>— small constellations</em></h2>
+        </div>
+        <p class="copy">点のような<wbr>小さな<wbr>試みも、<wbr>つなげれば<wbr>いつか形に<wbr>なる。<wbr>いま作っている<wbr>もの。</p>
+      </div>
+      <div class="projects">
+        <article data-rise class="card"><span>PROJECT 001</span><h3>KIOKU</h3><p>「観た」を記録し、記憶として残すためのアプリ。</p></article>
+        <article data-rise class="card"><span>PROJECT 002</span><h3>DIARY</h3><p>日々の記録を積み重ねる、小さな実験。</p></article>
+        <article data-rise class="card placeholder"><span>NEXT</span><h3>…</h3><p>まだ名前のないもの。</p></article>
+      </div>
+    </div>
+  </section>
 
-  <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="foodscience">食事・化学</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button></nav>
+  <section class="scene" id="about" data-scene data-reveal data-nav="light" data-tone="light" style="--h:250vh">
+    <div class="scene-pin">
+      <div class="scene-media ph-about is-placeholder"></div>
+      <div class="scene-shade"></div>
+      <div class="scene-copy" style="--y:center;--w:760px">
+        <p class="eyebrow reveal">About — Mouton</p>
+        <h2 class="scene-title reveal">好奇心を、<br>形に。</h2>
+        <p class="scene-text reveal-2">ムートンの<wbr>個人的な<wbr>制作と<wbr>記録の<wbr>ための<wbr>場所。<wbr>興味を<wbr>持った<wbr>ことを<wbr>試し、<wbr>作り、<wbr>その<wbr>過程を<wbr>残していきます。</p>
+        <div class="about-first reveal-2">
+          <p class="eyebrow">First read / はじめての方へ</p>
+          <p>ムートンが何を考え、なぜ記録し、何を残したいのか。その空気を一番感じやすい入口として。</p>
+          <a href="nietzsche.html" id="about-first-read">「神は死んだ。それでも、なぜ生きるのか。」を読む <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="about-actions reveal-2"><a class="btn btn-dark" href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" data-nav="dark" data-nav-solid="dark">
+  <p class="quote">千里の道も、一歩から。</p>
+  <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
+  <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span><nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
 </div>
-<script>const tabs=[...document.querySelectorAll('[data-tab]')];
-const panels=[...document.querySelectorAll('.panel')];
-const hero=document.querySelector('.hero');
-const filters=[...document.querySelectorAll('[data-journal-filter]')];
+</footer>
+
+<script src="site.js" defer></script>
+<script>
+'use strict';
+const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
+const legacy={now:'top'};
+(()=>{const name=location.hash.slice(1);if(articleRoutes[name])location.replace(articleRoutes[name]);else if(legacy[name])history.replaceState(null,'','#'+legacy[name]);})();
+
+// Journal: newest first, category filters, search.
 const journalList=document.querySelector('.journal-list');
 [...journalList.children].sort((a,b)=>{
  const date=node=>node.querySelector('.journal-date')?.textContent.trim()||'';
  return date(b).localeCompare(date(a));
 }).forEach(item=>journalList.appendChild(item));
-const items=[...document.querySelectorAll('#journal .journal-item')];
-const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
-const queryInput=document.querySelector('#journal-query');
-const resultStatus=document.querySelector('.journal-results');
-const emptyState=document.querySelector('.journal-empty');
-const normalize=value=>value.normalize('NFKC').toLocaleLowerCase('ja');
-const recentList=document.querySelector('.recent-list');
-items.filter(item=>item.matches('a[href]')).slice(0,3).forEach(item=>{
- const link=document.createElement('a');link.className='recent-link';link.href=item.getAttribute('href');
- const title=document.createElement('span');title.textContent=item.querySelector('.journal-title').textContent;
- const arrow=document.createElement('span');arrow.textContent='→';arrow.setAttribute('aria-hidden','true');
- link.append(title,arrow);recentList.appendChild(link);
+const items=[...journalList.querySelectorAll('.journal-item')];
+const filters=[...document.querySelectorAll('[data-journal-filter]')];
+const searchInput=document.getElementById('journal-search-input');
+const searchStatus=document.querySelector('.journal-search-status');
+const normalize=text=>text.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
+const storageKey='mouton-journal-filter-v2';
+items.forEach(item=>{item.dataset.search=normalize(item.querySelector('.journal-body').textContent);});
+filters.forEach(b=>{const v=b.dataset.journalFilter;const c=document.createElement('span');c.className='count';c.textContent=items.filter(i=>v==='all'||i.dataset.category===v).length;b.appendChild(c);});
+let filter='all';
+try{const v=sessionStorage.getItem(storageKey);if(filters.some(b=>b.dataset.journalFilter===v))filter=v;}catch{}
+// Full-text search: the article text is fetched the first time someone searches.
+let fullText=null,loadingText=null;
+const loadText=()=>loadingText||(loadingText=fetch('search.json').then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{
+ fullText=new Map(d.map(e=>[e.url,{...e,norm:normalize(e.text)}]));
+ if(searchInput.value)applyFilter(filter);
+}));
+// Only the newest entries show until the reader asks for the rest.
+const COLLAPSED_COUNT=8;
+const expandKey='mouton-journal-expanded-v1';
+let expanded=false;
+try{expanded=sessionStorage.getItem(expandKey)==='1';}catch{}
+const more=document.createElement('button');
+more.type='button';
+more.className='journal-more';
+more.setAttribute('aria-controls','journal-list');
+journalList.id='journal-list';
+more.addEventListener('click',()=>{
+ expanded=true;
+ try{sessionStorage.setItem(expandKey,'1');}catch{}
+ const first=items.find(i=>i.classList.contains('is-collapsed'));
+ applyFilter(filter);
+ if(first)first.focus({preventScroll:true});
 });
-const storageKey='mouton-journal-view-v1';
-let saved={filter:'all',query:'',scrollY:0,href:null,offset:0};
-try { const value=JSON.parse(sessionStorage.getItem(storageKey)); if(value&&typeof value==='object') saved={...saved,...value}; } catch {}
-queryInput.value=typeof saved.query==='string'?saved.query:'';
-let activePanel=null;
-let filter=['all','body','philosophy','work','making'].includes(saved.filter)?saved.filter:'all';
-let restoring=false;
-let restoreId=0;
-function persist(){try{sessionStorage.setItem(storageKey,JSON.stringify(saved));}catch{}}
-function savePosition(link){
- if(activePanel!=='journal'||restoring)return;
- saved={filter,query:queryInput.value,scrollY:window.scrollY,href:link?link.getAttribute('href'):null,offset:link?link.getBoundingClientRect().top:0};persist();
+const extra=document.createElement('div');
+extra.className='journal-extra';
+journalList.after(extra);
+extra.after(more);
+function snippet(entry,raw){
+ const text=entry.text,i=text.toLowerCase().indexOf(raw.toLowerCase());
+ if(i<0)return null;
+ const p=document.createElement('span');
+ p.className='journal-snippet';
+ const start=Math.max(0,i-36),end=Math.min(text.length,i+raw.length+60);
+ const mark=document.createElement('mark');
+ mark.textContent=text.slice(i,i+raw.length);
+ p.append((start>0?'…':'')+text.slice(start,i),mark,text.slice(i+raw.length,end)+(end<text.length?'…':''));
+ return p;
 }
 function applyFilter(value){
  filter=value;
+ try{sessionStorage.setItem(storageKey,filter);}catch{}
  filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
- const words=normalize(queryInput.value.trim()).split(/\s+/).filter(Boolean);
- let visible=0;
+ const raw=searchInput.value.trim();
+ const query=normalize(raw);
+ let shown=0;
+ const listed=new Set();
  items.forEach(item=>{
-  const text=normalize(item.querySelector('.journal-body').textContent);
-  const match=(filter==='all'||item.dataset.category===filter)&&words.every(word=>text.includes(word));
-  item.classList.toggle('is-hidden',!match);if(match)visible++;
+  const href=item.getAttribute('href');
+  if(href)listed.add(href);
+  item.querySelector('.journal-snippet')?.remove();
+  const entry=href&&fullText?fullText.get(href):null;
+  const inList=query===''||item.dataset.search.includes(query);
+  const inBody=!inList&&entry&&entry.norm.includes(query);
+  const hidden=(filter!=='all'&&item.dataset.category!==filter)||!(inList||inBody);
+  item.classList.toggle('is-hidden',hidden);
+  item.classList.remove('is-collapsed');
+  if(!hidden){shown++;if(inBody){const s=snippet(entry,raw);if(s)item.querySelector('.journal-body').append(s);}}
  });
- resultStatus.textContent=visible+'件 / 全'+items.length+'件';
- emptyState.hidden=visible!==0;
+ // Articles that are not in the journal list (food & science, books) still turn up in a search.
+ extra.replaceChildren();
+ if(query!==''&&fullText&&filter==='all'){
+  for(const entry of fullText.values()){
+   if(listed.has(entry.url)||!entry.norm.includes(query))continue;
+   const a=document.createElement('a');
+   a.className='journal-item clickable journal-link';
+   a.href=entry.url;
+   const date=document.createElement('div');date.className='journal-date';date.textContent=entry.date;
+   const body=document.createElement('div');body.className='journal-body';
+   const title=document.createElement('div');title.className='journal-title';title.textContent=entry.title;
+   const ex=document.createElement('div');ex.className='journal-excerpt';ex.textContent=entry.excerpt;
+   const time=document.createElement('span');time.className='journal-read-time';time.textContent='約'+entry.minutes+'分';
+   body.append(title,ex,time);
+   const s=snippet(entry,raw);if(s)body.append(s);
+   const arrow=document.createElement('div');arrow.className='journal-arrow';arrow.textContent='→';
+   a.append(date,body,arrow);
+   extra.append(a);shown++;
+  }
+ }
+ // Collapse the full, unfiltered list to its newest entries.
+ const browsing=query===''&&filter==='all';
+ if(browsing&&!expanded){
+  items.filter(i=>!i.classList.contains('is-hidden')).slice(COLLAPSED_COUNT).forEach(i=>i.classList.add('is-collapsed'));
+ }
+ const rest=items.filter(i=>i.classList.contains('is-collapsed')).length;
+ more.hidden=rest===0;
+ more.textContent='すべての記事を見る（あと'+rest+'件）';
+ searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました'+(fullText?'（本文も検索しています）':''):'該当する記事はありませんでした';
 }
-function restorePosition(){
- const id=++restoreId;
- restoring=true;
- document.documentElement.classList.add('restoring');
- const position=()=>{
-  if(id!==restoreId||activePanel!=='journal')return;
-  const link=items.find(item=>item.getAttribute('href')===saved.href&&!item.classList.contains('is-hidden'));
-  const y=link?window.scrollY+link.getBoundingClientRect().top-(Number(saved.offset)||0):Number(saved.scrollY)||0;
-  window.scrollTo(0,Math.max(0,y));
- };
- position();
- const ready=document.fonts?document.fonts.ready:Promise.resolve();
- ready.then(()=>requestAnimationFrame(()=>{if(id!==restoreId)return;position();restoring=false;document.documentElement.classList.remove('restoring');}));
-}
-function show(name,restore){
- activePanel=name;
- panels.forEach(p=>p.classList.toggle('active',p.id===name));
- tabs.forEach(t=>{const selected=t.dataset.tab===name;t.classList.toggle('active',selected);if(selected)t.setAttribute('aria-current','page');else t.removeAttribute('aria-current');});
- hero.classList.toggle('hidden',name!=='now');
- if(name==='journal'&&restore)restorePosition();
- else {restoreId++;restoring=false;document.documentElement.classList.remove('restoring');window.scrollTo(0,0);}
-}
-function route(){
- const name=location.hash.slice(1);
- if(name==='main-content'){document.querySelector('#main-content').focus();return;}
- if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
- show(['now','projects','journal','foodscience','books','about'].includes(name)?name:'now',name==='journal');
-}
-function navigate(name){savePosition();if(location.hash==='#'+name)route();else location.hash=name;}
-tabs.forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.tab)));
-document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();navigate(a.dataset.jump);}));
-filters.forEach(btn=>btn.addEventListener('click',()=>{
- applyFilter(btn.dataset.journalFilter);
- saved={filter,query:queryInput.value,scrollY:window.scrollY,href:null,offset:0};persist();
-}));
-queryInput.addEventListener('input',()=>{
- applyFilter(filter);saved={filter,query:queryInput.value,scrollY:window.scrollY,href:null,offset:0};persist();
-});
-items.forEach(item=>item.addEventListener('click',()=>savePosition(item)));
-window.addEventListener('pagehide',()=>{if(activePanel==='journal'&&!saved.href)savePosition();});
-window.addEventListener('hashchange',route);
-window.addEventListener('pageshow',event=>{if(event.persisted){applyFilter(filter);restoring=false;document.documentElement.classList.remove('restoring');}});
-filters.forEach(b=>{const v=b.dataset.journalFilter;const n=items.filter(i=>v==='all'||i.dataset.category===v).length;const c=document.createElement('span');c.className='count';c.textContent=n;b.appendChild(c);});
+filters.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.journalFilter)));
+searchInput.addEventListener('input',()=>{loadText();applyFilter(filter);});
+searchInput.addEventListener('focus',loadText,{once:true});
+document.querySelectorAll('[data-filter-link]').forEach(a=>a.addEventListener('click',()=>{searchInput.value='';applyFilter(a.dataset.filterLink);}));
 applyFilter(filter);
-route();</script>
+
+// Constellation: drifting stars that link up near each other and the pointer.
+(()=>{
+ const canvas=document.querySelector('.stars');
+ const section=canvas.parentElement;
+ const ctx=canvas.getContext('2d');
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let w=0,h=0,dpr=1,stars=[],pointer=null,running=false,frame=0;
+ function resize(){
+  dpr=Math.min(2,window.devicePixelRatio||1);
+  w=section.clientWidth;h=section.clientHeight;
+  canvas.width=w*dpr;canvas.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  const count=Math.round(Math.min(110,w*h/14000));
+  stars=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.3+.4,tw:Math.random()*Math.PI*2}));
+  draw(0);
+ }
+ function draw(t){
+  ctx.clearRect(0,0,w,h);
+  const link=Math.min(150,w/7);
+  for(const s of stars){
+   if(!reduce){s.x+=s.vx;s.y+=s.vy;if(s.x<0||s.x>w)s.vx*=-1;if(s.y<0||s.y>h)s.vy*=-1;}
+  }
+  ctx.lineWidth=.6;
+  for(let i=0;i<stars.length;i++){
+   const a=stars[i];
+   for(let j=i+1;j<stars.length;j++){
+    const b=stars[j];const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<link){ctx.strokeStyle='rgba(190,210,255,'+(.28*(1-d/link))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+   }
+   if(pointer){const d=Math.hypot(a.x-pointer.x,a.y-pointer.y);if(d<link*1.4){ctx.strokeStyle='rgba(255,236,190,'+(.6*(1-d/(link*1.4)))+')';ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(pointer.x,pointer.y);ctx.stroke();}}
+  }
+  for(const s of stars){
+   const glow=.65+.35*Math.sin(t/900+s.tw);
+   ctx.fillStyle='rgba(255,255,255,'+glow+')';
+   ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+  }
+ }
+ function loop(t){if(!running)return;draw(t);frame=requestAnimationFrame(loop);}
+ new IntersectionObserver(([e])=>{
+  if(e.isIntersecting&&!reduce&&!running){running=true;frame=requestAnimationFrame(loop);}
+  else if(!e.isIntersecting){running=false;cancelAnimationFrame(frame);}
+ }).observe(section);
+ section.addEventListener('pointermove',e=>{const r=section.getBoundingClientRect();pointer={x:e.clientX-r.left,y:e.clientY-r.top};if(reduce)draw(0);});
+ section.addEventListener('pointerleave',()=>{pointer=null;if(reduce)draw(0);});
+ new ResizeObserver(resize).observe(section);
+})();
+</script>
+
 </body>
 </html>

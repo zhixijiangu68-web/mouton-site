@@ -1,0 +1,13 @@
+{
+  "name": "instagram-reel-render",
+  "private": true,
+  "type": "module",
+  "description": "reel.json から、線画の頭と「心の窓」のリール動画（1080x1920 mp4）を書き出す。",
+  "scripts": {
+    "render": "node render.mjs"
+  },
+  "dependencies": {
+    "@fontsource/noto-serif-jp": "^5.2.5",
+    "playwright": "^1.55.0"
+  }
+}

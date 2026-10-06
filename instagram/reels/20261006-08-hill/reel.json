@@ -1,0 +1,60 @@
+{
+  "title": "「思考は現実化する」は、本当なのか。",
+  "source": "hill.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "願えば\n叶う？",
+      "duration": 1.5,
+      "size": 88,
+      "cover": true
+    },
+    {
+      "text": "想像しても",
+      "duration": 1.0
+    },
+    {
+      "text": "願っても",
+      "duration": 1.0
+    },
+    {
+      "text": "残高は\n増えない。",
+      "duration": 1.3,
+      "size": 76
+    },
+    {
+      "text": "方向",
+      "duration": 1.8,
+      "size": 88,
+      "strike": "呪文"
+    },
+    {
+      "text": "具体的に決める。\n期限を決める。",
+      "duration": 2.0,
+      "size": 50
+    },
+    {
+      "text": "紙に書いて、\n毎日読む。",
+      "duration": 1.9,
+      "size": 58
+    },
+    {
+      "text": "準備が整う前に、\n動き出す。",
+      "duration": 2.2,
+      "size": 53,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.6,
+      "size": 46,
+      "sub": "「思考は現実化する」は、\n本当なのか。"
+    }
+  ]
+}

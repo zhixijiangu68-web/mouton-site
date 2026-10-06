@@ -1,0 +1,59 @@
+{
+  "title": "セルフイメージは、長期の行動を変える",
+  "source": "self-image.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "どうせ\n続かない。",
+      "duration": 1.5,
+      "size": 80,
+      "cover": true
+    },
+    {
+      "text": "挑戦が減る",
+      "duration": 1.0
+    },
+    {
+      "text": "経験が減る",
+      "duration": 1.0
+    },
+    {
+      "text": "やっぱり\n続かない",
+      "duration": 1.2
+    },
+    {
+      "text": "減っていたのは\n試行回数。",
+      "duration": 1.9,
+      "size": 58
+    },
+    {
+      "text": "証拠を作る",
+      "duration": 1.9,
+      "size": 64,
+      "strike": "思い込む"
+    },
+    {
+      "text": "10分歩く。\n5ページ読む。",
+      "duration": 2.0,
+      "size": 56
+    },
+    {
+      "text": "小さく動いて、\n証拠を作る。",
+      "duration": 2.2,
+      "size": 56,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.8,
+      "size": 46,
+      "sub": "セルフイメージは、\n長期の行動を変える"
+    }
+  ]
+}

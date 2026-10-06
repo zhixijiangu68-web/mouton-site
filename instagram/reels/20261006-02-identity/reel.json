@@ -1,0 +1,59 @@
+{
+  "title": "あなたはどんな人間になりたいですか？",
+  "source": "identity.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "何をすれば\n変わる？",
+      "duration": 1.7,
+      "size": 80,
+      "cover": true
+    },
+    {
+      "text": "早起き",
+      "duration": 0.9
+    },
+    {
+      "text": "読書",
+      "duration": 0.9
+    },
+    {
+      "text": "筋トレ",
+      "duration": 0.9
+    },
+    {
+      "text": "続かない。",
+      "duration": 1.5,
+      "size": 84
+    },
+    {
+      "text": "どんな人間か",
+      "duration": 1.9,
+      "size": 64,
+      "strike": "何をするか"
+    },
+    {
+      "text": "誰も見て\nいなかったら、\nどう生きる？",
+      "duration": 1.8,
+      "size": 54
+    },
+    {
+      "text": "今日、最初の\n証拠をつくる。",
+      "duration": 2.4,
+      "size": 56,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 3.0,
+      "size": 46,
+      "sub": "あなたはどんな人間に\nなりたいですか？"
+    }
+  ]
+}

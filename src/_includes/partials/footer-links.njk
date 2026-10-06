@@ -1,0 +1,12 @@
+<nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  {%- if site.author.instagram %}
+  <a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }} <span aria-hidden="true">↗</span></a>
+  {%- endif %}
+  <a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }} <span aria-hidden="true">↗</span></a>
+</nav>
+{%- if site.affiliate.amazonTag or site.affiliate.rakutenId %}
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。{% if site.affiliate.amazonTag %}Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。{% endif %}</p>
+{%- endif %}

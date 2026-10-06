@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
+<title>{{ title }}</title>
+{%- set pageUrl = page.url | absoluteUrl(site.url) %}
+<meta name="description" content="{{ description }}">
+{%- if noindex %}
+<meta name="robots" content="noindex">
+{%- elif site.url %}
+<link rel="canonical" href="{{ pageUrl }}">
+{%- endif %}
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:type" content="{{ 'article' if isArticle else 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:locale" content="ja_JP">
+{%- if site.url %}
+<meta property="og:url" content="{{ pageUrl }}">
+<meta property="og:image" content="{{ ('images/' + (ogImage or 'og-default.jpg')) | absoluteUrl(site.url) }}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ 'feed.xml' | absoluteUrl(site.url) }}">
+{%- else %}
+<meta name="twitter:card" content="summary">
+{%- endif %}
+<meta name="twitter:site" content="@{{ site.author.x }}">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+{%- if preloadHero %}
+<link rel="preload" as="image" href="{{ (['images/hero.jpg'] | firstImage) or 'images/placeholder/hero.jpg' }}" fetchpriority="high">
+{%- endif %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+{%- if isArticle %}
+<link rel="stylesheet" href="article-base.css">
+{%- endif %}
+{%- if styles %}
+<style>
+{{ styles | safe }}
+</style>
+{%- endif %}
+{%- if isArticle %}
+<link rel="stylesheet" href="reading.css">
+{%- endif %}
+{%- set fontsUrl = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap" %}
+<link rel="preload" as="style" href="{{ fontsUrl }}">
+<link rel="stylesheet" href="{{ fontsUrl }}" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="{{ fontsUrl }}"></noscript>
+<link rel="stylesheet" href="site.css">
+{%- for css in extraCss %}
+<link rel="stylesheet" href="{{ css }}">
+{%- endfor %}
+<script src="site.js" defer></script>
+{%- if isArticle %}
+<script src="article-share.js" defer></script>
+<script type="application/ld+json">{% articleLd headline, description, page.date, updated, pageUrl, site %}</script>
+{%- set crumbs %}{% breadcrumbLd site, topics | findTopic(topic), headline, pageUrl %}{% endset %}
+{%- if crumbs | trim %}
+<script type="application/ld+json">{{ crumbs | safe }}</script>
+{%- endif %}
+{%- endif %}
+{%- if page.url == '/' %}
+<script type="application/ld+json">{% siteLd site %}</script>
+{%- endif %}
+{%- if site.analytics.ga4 %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.ga4 }}"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.analytics.ga4 }}');</script>
+{%- endif %}
+{%- if isArticle and site.ads.adsenseClient %}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.ads.adsenseClient }}" crossorigin="anonymous"></script>
+{%- endif %}
+</head>
+<body{% if bodyClass %} class="{{ bodyClass }}"{% endif %}{% if bodyAttrs %} {{ bodyAttrs | safe }}{% endif %}>
+{{ content | safe }}
+</body>
+</html>

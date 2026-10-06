@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
+<title>いま、取り組んでいること — ムートン</title>
+<meta name="description" content="ムートンがいま取り組んでいること。テーマ、作っているもの（KIOKU、哲学の動画）、暮らしの中で試したことと残っている問い、次の一歩をまとめた近況のページ。">
+<meta property="og:title" content="いま、取り組んでいること — ムートン">
+<meta property="og:description" content="ムートンがいま取り組んでいること。テーマ、作っているもの（KIOKU、哲学の動画）、暮らしの中で試したことと残っている問い、次の一歩をまとめた近況のページ。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+/* NOW: dated editorial snapshot; styles are scoped to this panel. */
+.now-detailed { display:grid; grid-template-columns:minmax(0,1fr); gap:0; align-items:start; }
+.now-detailed > * { min-width:0; }
+.now-detailed .now-masthead { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:16px; height:auto; padding:0 0 28px; border-bottom:1px solid var(--line); z-index:auto; }
+.now-detailed .now-eyebrow { font-family:Inter,sans-serif; font-size:.75rem; line-height:1.8; letter-spacing:.1em; color:#53584f; margin:0 0 10px; }
+.now-detailed h2,.now-detailed h3,.now-detailed h4 { font-family:"Noto Serif JP",serif; font-weight:400; color:var(--ink); }
+.now-detailed h2 { font-size:clamp(1.5rem,3vw,2rem); line-height:1.7; margin:0; letter-spacing:.03em; }
+.now-detailed h3 { font-size:clamp(1.25rem,2.5vw,1.6rem); line-height:1.8; margin:0 0 20px; }
+.now-detailed h4 { font-size:1.25rem; line-height:1.7; margin:16px 0 12px; }
+.now-detailed p,.now-detailed dd,.now-detailed li { font-size:1rem; line-height:1.95; color:#444740; overflow-wrap:anywhere; }
+.now-detailed p { margin:0 0 16px; }
+.now-detailed .now-updated { font-size:.75rem; margin:0; color:#53584f; }
+.now-updated time { display:inline-block; margin-left:8px; }
+.now-theme { display:grid; grid-template-columns:minmax(0,1.7fr) minmax(0,1fr); gap:32px; align-items:center; padding:32px 0; }
+.now-detailed .now-art { height:220px; }
+.now-detailed .now-theme h3 { font-size:clamp(1.5rem,3vw,2rem); }
+.now-section { padding:32px 0; border-top:1px solid var(--line); }
+.now-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.now-note { min-width:0; display:flex; flex-direction:column; padding:24px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.42); }
+.now-note-top { display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:space-between; align-items:center; font-size:.6875rem; line-height:1.7; color:#53584f; }
+.now-state { padding:3px 9px; border-radius:99px; background:#e5eae1; color:#344b3d; }
+.now-detailed .now-note-lead { font-family:"Noto Serif JP",serif; color:#252724; font-size:1rem; }
+.now-steps { margin:0 0 16px; padding-top:16px; border-top:1px solid var(--line); }
+.now-steps dt { font-size:.75rem; color:#53584f; margin:0 0 4px; }
+.now-steps dd { margin:0 0 12px; }
+.now-steps dd:last-child { margin-bottom:0; }
+.now-text-link { display:inline-flex; align-items:center; gap:10px; min-height:44px; font-size:.875rem; line-height:1.8; color:#303c35; text-decoration:underline; text-underline-offset:5px; overflow-wrap:anywhere; }
+.now-text-link:hover { text-decoration-thickness:2px; }
+.now-note > .now-text-link { margin-top:auto; }
+.now-note-plain { background:transparent; }
+.now-detailed .now-open-question { padding-left:16px; border-left:2px solid #8b9d89; font-size:.9375rem; }
+.now-open-question strong { display:block; font-size:.75rem; font-weight:400; margin-bottom:6px; color:#53584f; }
+.now-next ul { padding-left:1.3em; margin:0 0 20px; }
+.now-next li { padding-left:4px; margin-bottom:8px; }
+.now-detailed .now-small { font-size:.875rem; margin:0; color:#53584f; }
+.now-recent-heading { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px 16px; }
+.now-detailed .now-recent h3 { margin:0; font-size:1.125rem; }
+.now-detailed .now-recent { padding-top:24px; }
+@media(max-width:760px) {
+ .now-detailed .now-masthead { padding-bottom:22px; }
+ .now-theme { grid-template-columns:minmax(0,1fr); gap:22px; padding:26px 0; }
+ .now-detailed .now-art { height:110px; }
+ .now-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+ .now-note { padding:20px 18px; }
+ .now-section { padding:26px 0; }
+}
+.now-detailed .now-art { border-radius:8px; background:radial-gradient(circle at 70% 35%,rgba(255,240,205,.9) 0 8%,transparent 32%),linear-gradient(160deg,#cfdcc8 0%,#e8e4d2 55%,#d6dfe9 100%); }
+.doc .now-text-link{color:#303c35}
+.now-detailed h4{margin-top:4px}
+
+</style>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-hero" data-nav="dark"></div>
+<main class="doc topic now-detailed" data-nav="light" data-nav-solid="light">
+<header class="now-masthead">
+          <div><p class="now-eyebrow">NOW / OCTOBER 2026</p><h1 class="doc-title" id="now-heading">いま、<wbr>取り組んでいる<wbr>こと。</h1></div>
+          <p class="now-updated">最終更新 <time datetime="2026-10-06">2026.10.06</time></p>
+        </header>
+
+        <section class="now-theme" aria-labelledby="now-theme-heading">
+          <div>
+            <p class="now-eyebrow">01 / いまのテーマ</p>
+            <h3 id="now-theme-heading">記録を、<wbr>次の<wbr>行動に<wbr>つなげる。</h3>
+            <p>観た作品を残す。気になったことを調べる。身体を動かして、感じたことを書く。いま取り組んでいるのは、そんな日々の経験を、あとから振り返れる形にすること。</p>
+            <p>この場所には、完成したものだけでなく、制作の途中や、まだ答えの出ていない問いも残していきたい。</p>
+            <a class="now-text-link" href="index.html#journal">これまでの記録を読む <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="art now-art" role="img" aria-label="淡い光と緑の重なりを描いた抽象風景"></div>
+        </section>
+
+        <section class="now-section" aria-labelledby="now-making-heading">
+          <p class="now-eyebrow">02 / 作っているもの</p>
+          <h3 id="now-making-heading">記憶と<wbr>問いを、<wbr>形に<wbr>する。</h3>
+          <div class="now-grid">
+            <article class="now-note">
+              <div class="now-note-top"><span>APP / 視聴記録</span><span class="now-state">制作中</span></div>
+              <h4>KIOKU</h4>
+              <p class="now-note-lead">「観た」を、記憶に。</p>
+              <p>好きな作品をひとつにまとめ、観た時間を振り返るためのアプリ。作品を探して記録する流れを作っている。</p>
+              <dl class="now-steps"><dt>いまの焦点</dt><dd>日本語で作品を探し、迷わず記録できること。</dd><dt>次に詰めたいこと</dt><dd>検索から追加、履歴を振り返るまでの使いやすさ。</dd></dl>
+              <a class="now-text-link" href="index.html#projects">制作しているものを見る <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="now-note">
+              <div class="now-note-top"><span>VIDEO / 哲学</span><span class="now-state">試作中</span></div>
+              <h4>哲学を、声と映像で。</h4>
+              <p class="now-note-lead">読んだあとに残る問いを、動画にも。</p>
+              <p>ニーチェの記事をもとに、ナレーションと背景映像を組み合わせた動画を制作している。文章とは違う伝わり方を探す試み。</p>
+              <dl class="now-steps"><dt>いまの焦点</dt><dd>声の自然さと、映像の空気感を合わせること。</dd><dt>次に詰めたいこと</dt><dd>言葉の間に、見る人が考えられる余白をつくる。</dd></dl>
+              <a class="now-text-link" href="nietzsche.html">もとになったニーチェの記事 <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section class="now-section" aria-labelledby="now-life-heading">
+          <p class="now-eyebrow">03 / 暮らしの中で考える</p>
+          <h3 id="now-life-heading">試した<wbr>ことと、<wbr>残っている<wbr>問い。</h3>
+          <div class="now-grid">
+            <article class="now-note now-note-plain">
+              <div class="now-note-top"><span>BODY / 身体</span><span class="now-state">記事にした気づき</span></div>
+              <h4>一日の終わりに、余力を残せるか。</h4>
+              <p>筋トレを減らした時期に、以前より日常で疲れにくいと感じた。その経験から、体力を「限界の高さ」だけでなく、「生活のあとに残る余力」として考えるようになった。</p>
+              <p class="now-open-question"><strong>まだ考えたいこと</strong>筋力を伸ばすことと、日々を元気に過ごすことを、どう両立するか。</p>
+              <a class="now-text-link" href="stamina.html">体力についての記録を読む <span aria-hidden="true">→</span></a>
+            </article>
+            <article class="now-note now-note-plain">
+              <div class="now-note-top"><span>BOOK / 読書</span><span class="now-state">読書記録を公開</span></div>
+              <h4>「やめられない」の仕組みを知る。</h4>
+              <p>『快感回路』を読んだ感想を本棚に追加した。身近な行動から話が始まるので、脳科学の本が初めてでも読み進めやすいと感じた一冊。</p>
+              <p class="now-open-question"><strong>ここから考えたいこと</strong>意志の強さだけで片づけず、習慣と快感の仕組みから自分の行動を見る。</p>
+              <a class="now-text-link" href="book-pleasure-circuit.html">『快感回路』の読書記録 <span aria-hidden="true">→</span></a>
+            </article>
+          </div>
+        </section>
+
+        <section class="now-section now-next" aria-labelledby="now-next-heading">
+          <div><p class="now-eyebrow">04 / 次の一歩</p><h3 id="now-next-heading">次に、<wbr>ここへ<wbr>残したい<wbr>こと。</h3></div>
+          <ul><li>KIOKUで、作品を探して記録する流れ。</li><li>哲学動画で、声と映像を合わせたときの気づき。</li><li>運動と日常の余力を、どう両立するか。</li></ul>
+          <p class="now-small">ここにあるのは、いまの関心と取り組み。進んだことも、途中で変わったことも、更新していく。</p>
+        </section>
+
+        <section class="now-section" aria-labelledby="recent-heading">
+  <h3 id="recent-heading">最近の<wbr>記事</h3>
+  <div class="topic-list">
+    <a class="topic-item" href="halitosis.html"><span class="topic-date">2026.10.05</span><span class="topic-title">口臭の<wbr>多くは<wbr>「胃」ではなく、<wbr>口の<wbr>中から<wbr>生まれる</span><span class="topic-excerpt">2,000人の口臭外来データから、舌苔・歯周病・唾液と本当に効く対策を考える。</span></a>
+    <a class="topic-item" href="sunday-blues.html"><span class="topic-date">2026.10.05</span><span class="topic-title">日曜の<wbr>夜が<wbr>憂う<wbr>つなのは、<wbr>なぜか</span><span class="topic-excerpt">週末に満たされていたものと、仕事から離れる時間の研究から考える。</span></a>
+    <a class="topic-item" href="fear-of-change.html"><span class="topic-date">2026.10.05</span><span class="topic-title">転職が<wbr>怖くて、<wbr>踏み出せない<wbr>とき</span><span class="topic-excerpt">損失回避と後悔の研究から、転職の怖さとの付き合い方を考える。</span></a>
+    <a class="topic-item" href="odor-care.html"><span class="topic-date">2026.10.05</span><span class="topic-title">匂い<wbr>ケアは<wbr>「脇と<wbr>足の<wbr>裏」から。<wbr>原因が<wbr>違えば、<wbr>対策も<wbr>違う</span><span class="topic-excerpt">脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。</span></a>
+    <a class="topic-item" href="job-change-start.html"><span class="topic-date">2026.10.05</span><span class="topic-title">転職は、<wbr>何から<wbr>始めればいいのか</span><span class="topic-excerpt">理由と軸、棚卸し、市場を知る、応募、条件確認、退職。6つの順番で整理する。</span></a>
+  </div>
+</section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

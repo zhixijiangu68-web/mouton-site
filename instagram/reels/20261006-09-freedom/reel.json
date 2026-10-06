@@ -1,0 +1,59 @@
+{
+  "title": "愛ではなく、自由を求める",
+  "source": "freedom.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "必要と\nされたい。",
+      "duration": 1.5,
+      "size": 84,
+      "cover": true
+    },
+    {
+      "text": "特別に\nなりたい",
+      "duration": 1.0
+    },
+    {
+      "text": "選ばれたい",
+      "duration": 1.0
+    },
+    {
+      "text": "愛されたい",
+      "duration": 1.0
+    },
+    {
+      "text": "基準が、\n外にある。",
+      "duration": 1.6,
+      "size": 64
+    },
+    {
+      "text": "自由",
+      "duration": 1.8,
+      "size": 96,
+      "strike": "愛"
+    },
+    {
+      "text": "何を選ぶか。\nどこへ向かうか。",
+      "duration": 2.0,
+      "size": 52
+    },
+    {
+      "text": "基準を、\n自分の中に置く。",
+      "duration": 2.2,
+      "size": 53,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.9,
+      "size": 46,
+      "sub": "愛ではなく、\n自由を求める"
+    }
+  ]
+}

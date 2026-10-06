@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>血糖値は、なぜこれほど健康に重要なのか — ムートン</title>
 <meta name="description" content="血糖、血管、そして未来の健康。そのつながりを考える。">
 <meta property="og:title" content="血糖値は、なぜこれほど健康に重要なのか — ムートン">
@@ -12,17 +13,15 @@
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500&family=Inter:wght@300;400&display=swap');
 :root{--ink:#252724;--muted:#686b65;--line:rgba(37,39,36,.16);--paper:rgba(247,244,236,.78)}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#d8d2c7;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#c9c3b7 url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(245,241,232,.18),rgba(25,32,29,.18));pointer-events:none}
 .wrap{position:relative;z-index:1;width:min(1120px,94vw);margin:0 auto;padding:28px 0 72px}
 .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.brand{font-family:"Noto Serif JP",serif;font-size:20px;letter-spacing:.18em}.back{font-size:10px;letter-spacing:.18em;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.25);padding-bottom:3px}
 .article{background:var(--paper);backdrop-filter:blur(16px) saturate(.85);-webkit-backdrop-filter:blur(16px) saturate(.85);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 28px 90px rgba(25,31,28,.16);padding:clamp(34px,6vw,84px)}
 .meta{font-size:9px;letter-spacing:.22em;opacity:.52;margin-bottom:22px}
 h1,h2{font-family:"Noto Serif JP",serif;font-weight:300;letter-spacing:.04em}
@@ -35,31 +34,52 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
 .note{font-size:10px;line-height:1.8;opacity:.62;margin-top:14px}
 .metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:720px;margin:26px 0}.metric{padding:18px;border:1px solid var(--line);border-radius:9px;background:rgba(255,255,255,.18)}.metric b{display:block;font-family:"Noto Serif JP",serif;font-weight:400;font-size:22px;margin-bottom:6px}.metric span{font-size:10px;opacity:.65;line-height:1.6}
 .sources a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(37,39,36,.28)}.sources p{font-size:12px;line-height:1.9;margin-bottom:14px}.ending{padding-top:36px}
-@media(max-width:700px){body{background-attachment:scroll}.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
+@media(max-width:700px){.article{padding:28px}.flow{flex-direction:column}.arrow{display:none}.bar{grid-template-columns:105px 1fr 42px}.metrics{grid-template-columns:1fr}.top{padding:0 4px}}
+
 </style>
 <link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
 <script src="article-share.js" defer></script>
-<script src="site.js" defer></script></head>
-<body>
-<div class="wrap">
-  <div class="top">
-    <div class="brand">ムートン</div>
-    <a class="back" href="index.html#journal">記事一覧へ戻る</a>
-  </div>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"血糖値は、なぜこれほど健康に重要なのか","description":"血糖、血管、そして未来の健康。そのつながりを考える。","inLanguage":"ja","datePublished":"2026-10-01","dateModified":"2026-10-01","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"]}}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light">
+  
   <article class="article">
     <div class="meta">2026.10.01 / BODY</div>
-    <h1>血糖値は、なぜこれほど<br>健康に重要なのか</h1><p class="reading-time">約6分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
+    <h1>血糖値は、<wbr>なぜ<wbr>これほど<br>健康に<wbr>重要なのか</h1><p class="reading-time">約6分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
     <p class="lead">健康診断で目にする「血糖値」。多くの人にとっては、「糖尿病になっていなければ大丈夫」くらいの数字かもしれない。</p>
     <p>しかし、血糖について調べていくと、この数字は想像以上に身体の多くの部分とつながっていることがわかる。</p>
     <p><strong>目。腎臓。神経。心臓。脳。そして、それらをつないでいる血管。</strong></p>
     <p>血糖値は、身体がエネルギーをどう扱い、血管をどんな環境に置いているかを示す重要な指標の一つだ。</p>
 
-    <h2 id="section-1">そもそも血糖値とは何か</h2>
+    <h2 id="section-1">そもそも<wbr>血糖値とは<wbr>何か</h2>
     <p>ご飯やパン、麺類、果物などに含まれる炭水化物の多くは、消化されてブドウ糖になる。ブドウ糖は血液に入り、全身へ運ばれる。この血液中のブドウ糖の濃度が「血糖値」だ。</p>
     <p>ブドウ糖そのものは悪者ではない。人間が生きていくための重要なエネルギー源だ。</p>
     <p>問題は、<strong>必要以上に高い状態が長く続くこと</strong>にある。</p>
 
-    <h2 id="section-2">鍵は「血管」</h2>
+    <h2 id="section-2">鍵は<wbr>「血管」</h2>
     <p>なぜ血糖値が目や腎臓、神経、心臓まで関係するのか。その答えの一つが血管だ。</p>
     <p>血管は全身に張り巡らされている。心臓や脳のような大きな臓器だけでなく、目にも、腎臓にも、神経の周囲にも、非常に細い血管がある。酸素や栄養を届ける物流網のようなものだ。</p>
     <p>慢性的な高血糖は、この血管や神経にダメージを与えることが知られている。</p>
@@ -76,11 +96,11 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
 
     <p class="question"><strong>血糖 → 血管・神経 → 全身</strong></p>
 
-    <h2 id="section-3">とくに影響を受けやすい「細い血管」</h2>
+    <h2 id="section-3">とくに<wbr>影響を<wbr>受けやすい<wbr>「細い<wbr>血管」</h2>
     <p>糖尿病の代表的な合併症は、<strong>網膜症・腎症・神経障害</strong>だ。</p>
     <p>一見すると別々の病気だが、目の網膜や腎臓には微小血管が密集している。神経障害にも、神経そのものの代謝異常だけでなく、神経を養う小血管の障害など複数の要因が関係する。</p>
 
-    <h2 id="section-4">血糖を改善すると、何が変わるのか</h2>
+    <h2 id="section-4">血糖を<wbr>改善すると、<wbr>何が<wbr>変わるのか</h2>
     <p>2型糖尿病患者を追跡した<strong>UKPDS 35</strong>では、更新平均HbA1cが1ポイント低いことが、糖尿病関連のあらゆるエンドポイント約21％、細小血管合併症約37％、心筋梗塞約14％の低いリスクと関連していた。</p>
 
     <div class="figure">
@@ -96,12 +116,12 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
     <p>さらに1型糖尿病を対象にした<strong>DCCT</strong>では、強化療法群で、従来療法群と比較して網膜症の発症が約76％低下し、微量アルブミン尿は約39％、臨床的神経障害は約60％低下した。</p>
     <p>どちらも糖尿病患者を対象とした研究だ。健康な人にそのまま同じ数字を当てはめることはできない。それでも、長期的な血糖状態と血管・臓器の健康が強く結びついていることを示す重要なデータだ。</p>
 
-    <h2 id="section-5">糖尿病と診断される前から、連続している</h2>
+    <h2 id="section-5">糖尿病と<wbr>診断される<wbr>前から、<wbr>連続している</h2>
     <p>血糖値は、正常から糖尿病まで連続的に変化する。診断基準は、その連続線上に医学的な判断のための線を引いたものだ。</p>
     <p><strong>DECODE研究</strong>では、75g経口ブドウ糖負荷試験（OGTT）の2時間値が、空腹時血糖とは別の予後情報を持つことが示された。</p>
     <p>ただし、「少し血糖が上がったら危険」という意味ではない。大切なのは、一回一回の小さな変動を恐れることではなく、<strong>長期的に身体が血糖を適切に処理できているか</strong>を見ることだ。</p>
 
-    <h2 id="section-6">健診の数字をどう読むか：HbA1c</h2>
+    <h2 id="section-6">健診の<wbr>数字を<wbr>どう<wbr>読むか<wbr>：HbA1c</h2>
     <p>血糖値は食事、運動、睡眠、ストレスなどで変動する。そこで使われるのが<strong>HbA1c</strong>だ。直前の食事ではなく、過去1〜2か月を中心とする数か月間の血糖状態を反映する。</p>
     <div class="metrics">
       <div class="metric"><b>126 mg/dL以上</b><span>空腹時血糖：糖尿病型を示す基準の一つ</span></div>
@@ -109,23 +129,23 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
     </div>
     <p>1回の測定だけで自己診断するものではない。検査値や症状などを合わせて医療機関で判断する。</p>
 
-    <h2 id="section-7">「血糖を上げない」ことが目的ではない</h2>
+    <h2 id="section-7">「血糖を<wbr>上げない」ことが<wbr>目的ではない</h2>
     <p>食後に血糖値が上がること自体は異常ではない。食事をすれば血糖は上がり、インスリンが分泌され、筋肉などがブドウ糖を取り込み、再び適切な範囲へ戻っていく。</p>
     <p><strong>重要なのは、上がった血糖を適切に処理できる身体を維持することだ。</strong></p>
 
-    <h2 id="section-8">筋肉は、ブドウ糖の巨大な消費場所</h2>
+    <h2 id="section-8">筋肉は、<wbr>ブドウ糖の<wbr>巨大な<wbr>消費場所</h2>
     <p>筋肉はブドウ糖を大量に使う組織でもある。歩く、スクワットをする、自転車に乗る。筋肉を動かすとブドウ糖がエネルギーとして使われ、継続的な運動はインスリン感受性の改善にもつながる。</p>
 
-    <h2 id="section-9">食後10分歩く、という小さな行動</h2>
+    <h2 id="section-9">食後10分歩く、と<wbr>いう<wbr>小さな<wbr>行動</h2>
     <p>2型糖尿病の成人を対象にしたランダム化クロスオーバー試験では、1日30分まとめて歩く場合より、朝・昼・夕食後にそれぞれ10分歩く方が、食後血糖を抑えるのに有効だった。</p>
     <p>健康な若年成人を対象とした小規模試験でも、ブドウ糖摂取直後の10分歩行で血糖ピークが低くなった。</p>
     <p>誰にでも同じ変化が起きるとは限らない。それでも、<strong>食後に少し身体を動かす</strong>という小さな行動が血糖に影響しうることは興味深い。</p>
 
-    <h2 id="section-10">血糖値は「未来の健康」のための数字</h2>
+    <h2 id="section-10">血糖値は<wbr>「未来の<wbr>健康」の<wbr>ための<wbr>数字</h2>
     <p>血糖について考える最大の理由は、今日の数値を数mg/dL下げることではない。10年、20年、30年という時間で身体を見ることにある。</p>
     <p>だから、症状が出てから考えるのではなく、症状がない段階から自分の代謝を知っておく価値がある。</p>
 
-    <h2 id="section-11">血糖値は健康のすべてではない。でも、無視できない</h2>
+    <h2 id="section-11">血糖値は<wbr>健康の<wbr>すべてではない。<wbr>でも、<wbr>無視できない</h2>
     <p>血管の健康を決めるのは血糖だけではない。血圧、LDLコレステロール、中性脂肪、喫煙、肥満、運動不足、睡眠、遺伝。多くの要因が関係する。</p>
     <p>それでも血糖値が重要なのは、<strong>食事、運動、筋肉、インスリン、血管、そして全身の臓器を結ぶ場所にある数字</strong>だからだ。</p>
 
@@ -147,9 +167,43 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
     </div>
   
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="trampoline.html">大人は、いつから跳ばなくなったのか。</a>
-<a class="reading-card" href="stamina.html">筋トレを減らしたら、なぜか「体力」がついた</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
+
+<aside class="article-note" aria-label="ご注意">
+  <p class="article-note-title">この記事について</p>
+  <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
+</aside>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.01</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="trampoline.html">大人は、<wbr>いつから<wbr>跳ばなくなったのか。</a><a class="reading-card" href="stamina.html">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-body.html">「身体」の記事をすべて見る</a></p></nav>
+
 </article>
 </div>
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
 </body>
 </html>

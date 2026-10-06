@@ -1,6 +1,11 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>音楽は人生を豊かにするのか。頭は良くならなくても、残るもの — ムートン</title>
+<meta name="description" content="音楽は本当に人生を豊かにするのか。報酬系、気分調整、社会的つながり、健康関連QOL、知能への転移効果を研究から整理する。">
 <meta property="og:title" content="音楽は人生を豊かにするのか。頭は良くならなくても、残るもの — ムートン">
 <meta property="og:description" content="音楽は本当に人生を豊かにするのか。報酬系、気分調整、社会的つながり、健康関連QOL、知能への転移効果を研究から整理する。">
 <meta property="og:type" content="article">
@@ -8,17 +13,13 @@
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<meta name="description" content="音楽は本当に人生を豊かにするのか。報酬系、気分調整、社会的つながり、健康関連QOL、知能への転移効果を研究から整理する。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
 :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
 main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
 .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55}.eyebrow{letter-spacing:.3em;margin-bottom:18px}.meta{margin-bottom:28px}
 h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
@@ -33,12 +34,39 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 .refs{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.refs h2{margin-top:0}.refs ol{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;font-size:12px;line-height:1.85;color:#4f524d;padding-left:1.4em}.refs li{margin-bottom:14px}.refs em{font-family:"Noto Serif JP",serif}
 .note{font-family:"Noto Serif JP",serif;font-size:13px;line-height:2;color:#5f625d;padding:18px 20px;border-left:2px solid rgba(32,33,31,.25);margin:36px 0}
 .ending{margin-top:72px;padding-top:48px;border-top:1px solid var(--line)}.footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-@media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
-</style><link rel="stylesheet" href="reading.css"><script src="article-share.js" defer></script><script src="site.js" defer></script></head>
-<body><header><div class="brand">ムートン</div><a class="back" href="index.html#journal">記事一覧へ戻る</a></header><main>
-<div class="eyebrow">JOURNAL / MUSIC / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>音楽は人生を豊かにするのか。<br>頭は良くならなくても、残るもの</h1>
-<p class="reading-time">約8分で読めます（目安）</p>
-<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+@media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p{font-size:14px;line-height:2.15}.pull{margin:44px 0;padding:28px 22px}ul{font-size:14px}.comparison{font-size:12px}.comparison th,.comparison td{padding:12px 9px}}
+
+</style>
+<link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script src="article-share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"音楽は人生を豊かにするのか。頭は良くならなくても、残るもの","description":"音楽は本当に人生を豊かにするのか。報酬系、気分調整、社会的つながり、健康関連QOL、知能への転移効果を研究から整理する。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"]}}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+<main data-nav="light" data-nav-solid="light">
+<div class="eyebrow">JOURNAL / MUSIC / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>音楽は<wbr>人生を<wbr>豊かに<wbr>するのか。<br>頭は<wbr>良くならなくても、<wbr>残る<wbr>もの</h1>
+<p class="reading-time">約12分で読めます（目安）</p>
+<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 好きな音楽は、脳の報酬系に触れる</a></li><li><a href="#section-2">2. 音楽は、感情を扱う道具になる</a></li><li><a href="#section-3">3. 一緒に音楽をすることは、人との距離を縮める</a></li><li><a href="#section-4">4. 健康やウェルビーイングには、どこまで言えるか</a></li><li><a href="#section-5">5. それでも、「頭が良くなる」はかなり怪しい</a></li><li><a href="#section-6">6. 「音楽をする子は賢い」と「音楽が賢くした」は違う</a></li><li><a href="#section-7">7. 音楽は、役に立たなくても価値がある</a></li><li><a href="#section-8">結論：頭は良くならなくても、残るもの</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
 <p class="deck">音楽はIQを上げる魔法ではない。それでも、感情、社会的つながり、健康関連QOLには、研究で確かめられているものがある。</p><div class="hero-line"></div><article>
 
 <p class="lead">「音楽を習うと、頭が良くなる」。一度は耳にしたことがある話だと思います。</p>
@@ -51,7 +79,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <section class="pull"><small>QUESTION</small><p>音楽の価値は、<strong>賢くなること以外の場所</strong>にあるのかもしれない。</p></section>
 
-<h2>1. 好きな音楽は、脳の報酬系に触れる</h2>
+<h2 id="section-1">1. 好きな<wbr>音楽は、<wbr>脳の<wbr>報酬系に<wbr>触れる</h2>
 
 <p>好きな曲を聴いて、背筋がぞくっとした経験はないでしょうか。</p>
 
@@ -63,7 +91,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>次の展開を待つ。サビが来ると分かる。少しずつ緊張が高まる。その<strong>期待</strong>そのものにも、報酬の仕組みが関わっています。</p>
 
-<h2>2. 音楽は、感情を扱う道具になる</h2>
+<h2 id="section-2">2. 音楽は、<wbr>感情を<wbr>扱う<wbr>道具に<wbr>なる</h2>
 
 <p>音楽は、気分を変えるためにも使われています。</p>
 
@@ -79,7 +107,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p><strong>聴いたあと、自分の状態がどう変わっているか。</strong> 音楽は感情を動かす道具だからこそ、使い方によって方向も変わります。</p>
 
-<h2>3. 一緒に音楽をすることは、人との距離を縮める</h2>
+<h2 id="section-3">3. 一緒に<wbr>音楽を<wbr>する<wbr>ことは、<wbr>人との<wbr>距離を<wbr>縮める</h2>
 
 <p>音楽の価値で、個人的な快感と同じくらい興味深いのが、社会的な側面です。</p>
 
@@ -95,7 +123,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <section class="pull"><small>TOGETHER</small><p>音楽は、聴くものだけではない。<br><strong>人と同じ時間を作るものでもある。</strong></p></section>
 
-<h2>4. 健康やウェルビーイングには、どこまで言えるか</h2>
+<h2 id="section-4">4. 健康や<wbr>ウェルビーイングには、<wbr>どこまで<wbr>言えるか</h2>
 
 <p>健康については、少し慎重に整理する必要があります。</p>
 
@@ -109,7 +137,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>うつ病については、Cochraneレビューで、音楽療法を通常治療に追加した場合、短期的な抑うつ症状の改善が示されました。主要な比較では中程度の質のエビデンスと評価されています。ただし対象研究は9件・421人と大きくはなく、心理療法との直接比較については不確実性が残ります。<sup><a href="#ref-10">[10]</a></sup></p>
 
-<h2>5. それでも、「頭が良くなる」はかなり怪しい</h2>
+<h2 id="section-5">5. それでも、<wbr>「頭が<wbr>良くなる」は<wbr>かなり<wbr>怪しい</h2>
 
 <p>ここで冒頭の話に戻ります。</p>
 
@@ -132,7 +160,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </tbody>
 </table>
 
-<h2>6. 「音楽をする子は賢い」と「音楽が賢くした」は違う</h2>
+<h2 id="section-6">6. <wbr>「音楽を<wbr>する<wbr>子は<wbr>賢い」と<wbr>「音楽が<wbr>賢くした」は<wbr>違う</h2>
 
 <p>音楽経験が長い人ほど、認知能力が高いという相関研究はあります。</p>
 
@@ -144,7 +172,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>「音楽経験者の成績が高い」という観察だけでは、<strong>音楽が成績を上げたのか、そういう子が音楽を選びやすいのか</strong>を分けられません。</p>
 
-<h2>7. 音楽は、役に立たなくても価値がある</h2>
+<h2 id="section-7">7. 音楽は、<wbr>役に<wbr>立たなくても<wbr>価値が<wbr>ある</h2>
 
 <p>ここまでの研究を読むと、少し不思議なことに気づきます。</p>
 
@@ -159,7 +187,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 <p>それはIQの上昇とは別のものです。</p>
 
 <div class="ending">
-<h2>結論：頭は良くならなくても、残るもの</h2>
+<h2 id="section-8">結論<wbr>：頭は<wbr>良くならなくても、<wbr>残る<wbr>もの</h2>
 
 <p>「音楽は人生を豊かにするか」という問いに、科学だけで一つの数字を返すことはできません。</p>
 
@@ -203,5 +231,38 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </section>
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="doing-nothing.html">何もしない時間は、本当に無駄なのか</a><a class="reading-card" href="disliked-priority.html">嫌われることを「気にしなくなる」のではない</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
-</article></main><div class="footer">MOUTON — PERSONAL ARCHIVE / 2026 · <a href="policy.html" style="color:inherit">PRIVACY &amp; ADS</a></div></body></html>
+
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.05</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="doing-nothing.html">何もしない<wbr>時間は、<wbr>本当に<wbr>無駄なのか</a><a class="reading-card" href="disliked-priority.html">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+
+</article></main>
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

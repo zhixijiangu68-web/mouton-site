@@ -1,0 +1,7 @@
+{%- set picks = collections.articles | relatedTo({ fileSlug: page.fileSlug, topic: topic }, related) %}
+{%- set topicInfo = topics | findTopic(topic) %}
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2>
+{%- if picks.length %}<div class="reading-next-grid">
+{%- for a in picks %}<a class="reading-card" href="{{ a.page.fileSlug }}.html">{{ a.data.journal.title if a.data.journal else a.data.headline }}</a>{% endfor %}</div>{% endif %}
+<p class="reading-returns"><a class="reading-return" href="{{ back.href }}">{{ back.text }}</a>
+{%- if topicInfo %}<a class="reading-return" href="topic-{{ topicInfo.key }}.html">「{{ topicInfo.label }}」の記事をすべて見る</a>{% endif %}</p></nav>

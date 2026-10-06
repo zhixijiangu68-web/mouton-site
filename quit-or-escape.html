@@ -1,8 +1,11 @@
 <!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
 <title>「仕事を辞めたい」は、逃げなのか — ムートン</title>
+<meta name="description" content="辞めたい気持ちは、怠けのサインとは限らない。仕事の要求と資源、バーンアウトの研究から、辞めるべきか、変えるべきかを分解する。">
 <meta property="og:title" content="「仕事を辞めたい」は、逃げなのか — ムートン">
 <meta property="og:description" content="辞めたい気持ちは、怠けのサインとは限らない。仕事の要求と資源、バーンアウトの研究から、辞めるべきか、変えるべきかを分解する。">
 <meta property="og:type" content="article">
@@ -10,17 +13,13 @@
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@kodoku__alone">
-<meta name="theme-color" content="#e9e4d8">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23303c35%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f7f4ec%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
-<meta name="description" content="辞めたい気持ちは、怠けのサインとは限らない。仕事の要求と資源、バーンアウトの研究から、辞めるべきか、変えるべきかを分解する。">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="article-base.css">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Inter:wght@300;400;500&display=swap');
 :root{--ink:#20211f;--muted:#686b65;--line:rgba(32,33,31,.16);--paper:rgba(242,239,231,.92);--dark:#1f211f}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;color:var(--ink)}
-body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;background:#b8b4ab url('https://images.unsplash.com/photo-1750059397834-5b359a05dba0?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=3000') center/cover fixed no-repeat}
-body:before{content:"";position:fixed;inset:0;background:linear-gradient(180deg,rgba(24,26,24,.28),rgba(240,236,226,.06) 38%,rgba(22,24,22,.34));z-index:-1}
-header{height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,5vw,72px);color:#f3f0e8;text-shadow:0 1px 18px rgba(0,0,0,.35)}
-.brand{font-family:"Noto Serif JP",serif;font-size:24px;letter-spacing:.2em}.back{font-size:9px;letter-spacing:.2em;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.45);padding-bottom:5px}
 main{width:min(980px,92vw);margin:20px auto 70px;background:var(--paper);backdrop-filter:blur(17px);border:1px solid rgba(255,255,255,.62);border-radius:14px;box-shadow:0 30px 100px rgba(10,12,10,.24);padding:clamp(36px,7vw,88px)}
 .meta,.eyebrow{font-size:9px;letter-spacing:.24em;opacity:.55;margin-bottom:20px}h1{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(34px,5vw,60px);line-height:1.5;letter-spacing:.035em;margin:0 0 28px}
 .deck{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2;opacity:.73;max-width:720px;margin:0 0 52px}.hero-line{height:1px;background:linear-gradient(90deg,var(--ink),transparent);opacity:.28;margin-bottom:58px}
@@ -31,14 +30,38 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 .work{margin:38px 0;padding:30px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.22)}
 .refs{margin-top:56px;padding-top:34px;border-top:1px solid var(--line)}.refs p{font-family:Inter,sans-serif;font-size:12px;line-height:1.8;opacity:.7;margin-bottom:12px}.ending{margin-top:64px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(20px,3vw,28px)}
 .footer{width:min(980px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;color:#f3f0e8;opacity:.8}
-@media(max-width:760px){body{background-attachment:scroll}header{height:68px}.brand{font-size:19px}main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+@media(max-width:760px){main{width:94vw;margin-top:8px;padding:30px 22px}p,li{font-size:14px;line-height:2.15}h2{margin-top:52px}table{font-size:12px;min-width:620px}}
+
 </style>
-<link rel="stylesheet" href="reading.css"><script src="article-share.js" defer></script>
-<script src="site.js" defer></script></head><body>
-<header><div class="brand">ムートン</div><a class="back" href="index.html#journal">記事一覧へ戻る</a></header>
-<main><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
-<h1>「仕事を辞めたい」は、逃げなのか</h1>
-<p class="reading-time">約7分で読めます（目安）</p>
+<link rel="stylesheet" href="reading.css">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script src="article-share.js" defer></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"「仕事を辞めたい」は、逃げなのか","description":"辞めたい気持ちは、怠けのサインとは限らない。仕事の要求と資源、バーンアウトの研究から、辞めるべきか、変えるべきかを分解する。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone","https://www.instagram.com/art.gagaga/"]}}</script>
+</head>
+<body class="article-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="cover ph-work is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a></nav></div>
+<main data-nav="light" data-nav-solid="light"><div class="eyebrow">JOURNAL / WORK</div><div class="meta">2026.10.05</div>
+<h1>「仕事を<wbr>辞めたい」は、<wbr>逃げなのか</h1>
+<p class="reading-time">約6分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 <p class="deck">辞めたい気持ちは、怠けのサインとは限らない。何がすり減っているのかを分解すれば、辞めるべきか、変えるべきかが見えてくる。</p><div class="hero-line"></div>
 <article>
@@ -46,7 +69,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>そして、同じくらいの頻度で、もう一つの声が聞こえる。<strong>「でも、それは逃げじゃないのか」</strong>。</p>
 <p>この二つの声のあいだで、多くの人が何ヶ月も、ときには何年も止まっている。この記事では、どちらの声が正しいかを決めるのではなく、「辞めたい」という気持ちの中身を分解してみる。</p>
 
-<h2>「辞めたい」は、一つの感情ではない</h2>
+<h2>「辞めたい」は、<wbr>一つの<wbr>感情ではない</h2>
 <p>「辞めたい」は、ひとまとまりの気持ちに見える。しかし実際には、いくつもの原因が絡み合っていることが多い。</p>
 <p>働く人の消耗を説明する枠組みとして、よく使われるのが「仕事の要求度－資源モデル（Job Demands-Resources model）」だ（Bakker &amp; Demerouti, 2007）。このモデルは、仕事を二つの側面に分ける。</p>
 <div class="table-wrap"><table><thead><tr><th>仕事の要求</th><th>仕事の資源</th></tr></thead><tbody>
@@ -56,7 +79,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>問題は、<strong>要求が資源を上回る状態が長く続くこと</strong>だ。そのとき人は少しずつすり減っていく。逆に、要求がそれほど高くなくても、資源が乏しい職場では、意欲そのものが枯れていく。</p>
 <p>つまり「辞めたい」と感じたときに最初に問うべきなのは、「自分は弱いのか」ではない。<strong>「何が多すぎて、何が足りないのか」</strong>だ。</p>
 
-<h2>バーンアウトの三つのサイン</h2>
+<h2>バーンアウトの<wbr>三つの<wbr>サイン</h2>
 <p>消耗が進んだ状態は「バーンアウト（燃え尽き症候群）」と呼ばれる。WHOは2019年、国際疾病分類（ICD-11）の中で、バーンアウトを病気ではなく<strong>「職業上の現象」</strong>として位置づけた。うまく管理されていない慢性的な職場ストレスから生じるもの、という定義だ。</p>
 <p>研究者のMaslachらは、バーンアウトを三つの側面で説明している（Maslach &amp; Leiter, 2016）。</p>
 <ul>
@@ -67,7 +90,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>この三つがそろっているなら、それは根性の問題ではなく、環境と自分の組み合わせがうまくいっていないというサインだ。</p>
 <p>なお、眠れない、食べられない、涙が止まらないといった状態が続いているなら、辞めるかどうかを考える前に、医療機関や産業医に相談してほしい。判断は、回復してからでも遅くない。</p>
 
-<h2>社内で変わるもの、転職で変わるもの</h2>
+<h2>社内で<wbr>変わる<wbr>もの、<wbr>転職で<wbr>変わる<wbr>もの</h2>
 <p>「何が多すぎて、何が足りないのか」が見えたら、次はそれが<strong>今の会社の中で変えられるかどうか</strong>を考える。</p>
 <div class="table-wrap"><table><thead><tr><th>辞めたい理由</th><th>社内で変わる可能性</th><th>転職で変わる可能性</th></tr></thead><tbody>
 <tr><td>上司との関係</td><td>異動や担当替えで変わることがある</td><td>変わるが、次の上司は選べない</td></tr>
@@ -78,13 +101,13 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 </tbody></table></div>
 <p>この表のポイントは、「辞める」と「我慢する」の二択にしないことだ。あいだには、異動、交渉、役割の変更といった選択肢がある。それを試したうえで変わらないなら、辞める判断はずっと明確になる。</p>
 
-<h2>「逃げ」かどうかを分ける問い</h2>
+<h2>「逃げ」か<wbr>どうかを<wbr>分ける<wbr>問い</h2>
 <p>逃げることそのものは、悪いことではない。危険な場所から離れるのは、生き物として正しい反応だ。</p>
 <p>問題になるのは、<strong>何から逃げているのかが分からないまま逃げること</strong>だ。原因を分解しないまま職場を変えると、次の職場で同じ問題にぶつかる可能性が高い。上司が原因だと思っていたら、実は仕事内容が合っていなかった。そういうことはよくある。</p>
 <p>逆に、何がすり減っていて、何を求めて動くのかを言葉にできるなら、それは逃げではなく<strong>移動</strong>だ。</p>
 <div class="flow">何から離れたいのか → 何が足りないのか → それはどこで手に入るのか</div>
 
-<h2>今日のワーク</h2>
+<h2>今日の<wbr>ワーク</h2>
 <p>紙かメモアプリに、三つのことを書き出す。</p>
 <ol><li>いま、仕事で一番すり減っているものは何か（時間、気持ち、人間関係、意味）</li><li>足りない「資源」は何か（裁量、支え、評価、成長）</li><li>それは、今の会社の中で手に入る可能性があるか</li></ol>
 <div class="work"><strong>例</strong><p>すり減っているもの：毎日の残業と、深夜のチャット対応</p><strong>足りない資源</strong><p>自分で仕事の量を決められる裁量</p><strong>社内で手に入るか</strong><p>部署全体の文化なので、異動しない限り難しい → 社内公募を確認し、なければ転職を検討する</p></div>
@@ -95,5 +118,39 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <section class="refs"><h2>参考文献・出典</h2>
 <p>Bakker, A. B., &amp; Demerouti, E. (2007). The Job Demands-Resources model: State of the art. Journal of Managerial Psychology, 22(3), 309–328.</p><p>Maslach, C., &amp; Leiter, M. P. (2016). Understanding the burnout experience: Recent research and its implications for psychiatry. World Psychiatry, 15(2), 103–111.</p><p>World Health Organization. (2019). Burn-out an “occupational phenomenon”: International Classification of Diseases.</p></section>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に読む</h2><div class="reading-next-grid"><a class="reading-card" href="job-change-happiness.html">転職すれば、幸せになれるのか</a><a class="reading-card" href="system-goal.html">システムのないゴールは、動かない</a></div><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a></nav>
-</article></main><div class="footer">MOUTON — PERSONAL ARCHIVE / 2026 · <a href="policy.html" style="color:inherit">PRIVACY &amp; ADS</a></div></body></html>
+
+
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.10.05</p>
+  </div>
+</aside>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="job-change-happiness.html">転職すれば、<wbr>幸せに<wbr>なれるのか</a><a class="reading-card" href="system-goal.html">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</a></div>
+<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-work.html">「仕事・働き方」の記事をすべて見る</a></p></nav>
+
+</article></main>
+
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://www.instagram.com/art.gagaga/" target="_blank" rel="noopener noreferrer">Instagram / @art.gagaga <span aria-hidden="true">↗</span></a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

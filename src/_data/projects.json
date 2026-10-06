@@ -1,0 +1,5 @@
+[
+  { "label": "PROJECT 001", "name": "KIOKU", "text": "「観た」を記録し、記憶として残すためのアプリ。", "url": "" },
+  { "label": "PROJECT 002", "name": "DIARY", "text": "日々の記録を積み重ねる、小さな実験。", "url": "" },
+  { "label": "NEXT", "name": "…", "text": "まだ名前のないもの。", "url": "", "placeholder": true }
+]

@@ -1,0 +1,63 @@
+{
+  "title": "恐怖の正体は「不快感」かもしれない",
+  "source": "fear.html",
+  "fps": 30,
+  "screens": [
+    {
+      "text": "怖い。",
+      "duration": 1.4,
+      "size": 96,
+      "cover": true
+    },
+    {
+      "text": "失敗したら",
+      "duration": 1.0
+    },
+    {
+      "text": "笑われたら",
+      "duration": 1.0
+    },
+    {
+      "text": "お金を\n失ったら",
+      "duration": 1.1
+    },
+    {
+      "text": "それは\n「危険」？",
+      "duration": 1.6
+    },
+    {
+      "strike": "危険",
+      "text": "不快",
+      "duration": 1.8,
+      "size": 88
+    },
+    {
+      "text": "不快なだけなら\n小さく進む。",
+      "duration": 2.0,
+      "size": 58
+    },
+    {
+      "text": "動いた記録が、\n自信になる。",
+      "duration": 2.2,
+      "size": 58,
+      "marker": true
+    },
+    {
+      "text": "Do the thing,\nget the power.",
+      "duration": 1.8,
+      "size": 56
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "sub": "恐怖の正体は\n「不快感」かもしれない",
+      "duration": 2.6,
+      "size": 46
+    }
+  ],
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  }
+}

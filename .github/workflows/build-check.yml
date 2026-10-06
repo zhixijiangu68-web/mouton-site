@@ -1,0 +1,27 @@
+name: Build check
+
+# src/ を変えたのに `npm run build` を忘れてコミットした場合に知らせる。
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx eleventy
+      - name: Pages have no broken links or missing basics
+        run: node scripts/check-site.mjs
+      - name: Generated files are up to date
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --short
+            echo "::error::生成されたファイルが src/ と一致していません。npm run build を実行してからコミットしてください。"
+            exit 1
+          fi
