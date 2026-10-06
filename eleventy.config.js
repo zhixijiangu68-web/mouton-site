@@ -101,13 +101,16 @@ export default function (eleventyConfig) {
 
   // Product card for articles that recommend something. Buttons appear only
   // for shops with an affiliate ID set; without any, the card is a plain note.
-  //   {% productCard "名前", "ひとこと", { asin: "B0...", rakuten: "検索語" } %}
+  //   {% productCard "名前", "ひとこと", { asin: "B0...", amazon: "検索語", rakuten: "検索語" } %}
   eleventyConfig.addShortcode('productCard', function (name, note = '', shops = {}) {
     const { amazonTag, rakutenId } = site.affiliate;
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const buttons = [];
-    if (amazonTag && shops.asin) {
-      buttons.push(`<a class="product-btn product-amazon" href="https://www.amazon.co.jp/dp/${encodeURIComponent(shops.asin)}?tag=${encodeURIComponent(amazonTag)}" rel="sponsored noopener" target="_blank">Amazonで見る</a>`);
+    if (amazonTag && (shops.asin || shops.amazon)) {
+      const href = shops.asin
+        ? `https://www.amazon.co.jp/dp/${encodeURIComponent(shops.asin)}?tag=${encodeURIComponent(amazonTag)}`
+        : `https://www.amazon.co.jp/s?k=${encodeURIComponent(shops.amazon)}&amp;tag=${encodeURIComponent(amazonTag)}`;
+      buttons.push(`<a class="product-btn product-amazon" href="${href}" rel="sponsored noopener" target="_blank">Amazonで見る</a>`);
     }
     if (rakutenId && shops.rakuten) {
       const target = /^https?:/.test(shops.rakuten) ? shops.rakuten : `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(shops.rakuten)}/`;

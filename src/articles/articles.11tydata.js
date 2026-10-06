@@ -20,7 +20,7 @@ export default {
   isArticle: true,
   eleventyComputed: {
     readMinutes: data => readMinutes(data.page.inputPath),
-    // Which topic page the article belongs to (philosophy / body / food), if any.
+    // Which topic page the article belongs to (philosophy / body / work / food), if any.
     topic: data => data.journal?.category ?? (data.science ? 'food' : null),
   },
 };

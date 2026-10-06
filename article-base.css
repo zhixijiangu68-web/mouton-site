@@ -9,7 +9,7 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .product-name{font-family:"Noto Serif JP",serif;font-size:1.0625rem;line-height:1.7;font-weight:500}
 .product-note{margin-top:6px!important;font-size:.9375rem;line-height:1.9;color:#45473f}
 .product-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px!important}
-.product-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 20px;border-radius:999px;font-size:.875rem;letter-spacing:.04em;text-decoration:none;color:#fff}
+.product-card .product-btn,.product-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:8px 20px;border-radius:999px;font-size:.875rem;letter-spacing:.04em;text-decoration:none;color:#fff!important}
 .product-amazon{background:#1b1c19}
 .product-rakuten{background:#a3121a}
 .product-btn:hover{opacity:.88}
