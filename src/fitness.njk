@@ -1,0 +1,57 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: fitness.html
+title: "フィットネス — ムートン"
+description: "体を動かすことについて、僕がおすすめしたい人と記事をまとめたページ。Instagram で鍛えた体と毎日の練習を発信している Teagan（@teagan.kirin・@tea.trunks）と、体力・筋トレについての記事。"
+---
+{%- set fitnessArticles = collections.articles | bySlugs(["stamina", "trampoline", "protein-guide", "goggins"]) %}
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-body" data-nav="dark"{% bgImage "images/cover-body.jpg" %}></div>
+<main class="doc topic links" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Fitness</p>
+  <h1 class="doc-title">フィットネス</h1>
+  <p>体を動かすことについて、僕が見ていて「いいな」と思う人と、自分で調べて書いた記事をまとめています。</p>
+
+  <h2>おすすめの人：Teagan（ティーガン）</h2>
+  <p>Instagram で、鍛えた体と練習の様子を発信している人です。メインのアカウントのプロフィールには「Become your own hero（自分自身のヒーローになろう）」、そして「helping women build superhero physiques（女性が、スーパーヒーローのような体をつくる手助けをしている）」と書かれています。オンラインでのコーチングもしていて、ハイライトには自分の体の変化を記録した「my progress」もあります。</p>
+  <p>固定されている投稿のひとつに「Luck didn't bring me here（運でここまで来たわけじゃない）」という言葉が添えられています。あの体は、才能や偶然ではなく、毎日の積み重ねでできたもの。そう言い切れるところが、僕は好きです。</p>
+  <p>もうひとつのアカウント @tea.trunks は、リールが中心のくだけた雰囲気のアカウントです。プロフィールには冗談めかして「@teagan.kirin とは無関係」と書いてありますが、名前もリンク先も同じ Teagan さんです。鍛えている人の、肩の力が抜けた一面が見られます。</p>
+  <p>どちらも英語のアカウントですが、体を見るだけでも伝わるものがあります。</p>
+  <div class="topic-list">
+    <a class="topic-item" href="https://www.instagram.com/teagan.kirin/" target="_blank" rel="noopener noreferrer">
+      <span class="topic-date">Instagram</span>
+      <span class="topic-title">@teagan.kirin <span aria-hidden="true">↗</span></span>
+      <span class="topic-excerpt">メインのアカウント。トレーニング、体の変化、コーチングの話。フォロワー47.6万人（2026年10月時点）。</span>
+    </a>
+    <a class="topic-item" href="https://www.instagram.com/tea.trunks/" target="_blank" rel="noopener noreferrer">
+      <span class="topic-date">Instagram</span>
+      <span class="topic-title">@tea.trunks <span aria-hidden="true">↗</span></span>
+      <span class="topic-excerpt">リールが中心の、もうひとつのアカウント。フォロワー42万人（2026年10月時点）。</span>
+    </a>
+  </div>
+  <p class="topic-count">紹介は僕が個人的にいいと思ったもので、このページからの報酬はありません。</p>
+
+  <h2>体を動かすことについての記事</h2>
+  <div class="topic-list">
+    {%- for a in fitnessArticles %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.page.date | dotDate }}</span>
+      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+
+  <h2>テーマから探す</h2>
+  <nav class="topic-others" aria-label="テーマ">
+    {%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }}</a>{% endfor %}
+    <a href="index.html#journal">すべての記事</a>
+  </nav>
+  {% include "partials/newsletter.njk" %}
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
