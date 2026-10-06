@@ -3,7 +3,7 @@ export default {
   name: 'ムートン',
   // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
-  url: 'https://zhixijiangu68-web.github.io/mouton-site/',
+  url: 'https://moutonarchive.com/',
   description: 'ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。',
   author: {
     name: 'ムートン',

@@ -2,7 +2,7 @@
 
 あなたが @kodoku__alone から投稿する用の下書きです。1日1〜2本を目安に、上から順に使ってください。
 
-- リンクの `https://zhixijiangu68-web.github.io/mouton-site/` は、公開しているサイトのアドレスに置き換えます。ドメインが決まるまでは GitHub Pages のアドレス（例：`https://zhixijiangu68-web.github.io/mouton-site/`。実際のアドレスは GitHub の Settings → Pages で確認）を使います
+- リンクの `https://moutonarchive.com/` は、公開しているサイトのアドレスに置き換えます。ドメインが決まるまでは GitHub Pages のアドレス（例：`https://moutonarchive.com/`。実際のアドレスは GitHub の Settings → Pages で確認）を使います
 - 投稿したら、下の表の「投稿日」に日付を書いておくと、あとで効果を比べられます
 - 文字数はどれも140字以内（URL を除く）です
 
@@ -16,7 +16,7 @@
 
 じゃあ店で何を見ればいいのか。容器、日付、表示、量。研究をもとに5つに絞った。
 
-https://zhixijiangu68-web.github.io/mouton-site/olive-oil-guide.html
+https://moutonarchive.com/olive-oil-guide.html
 ```
 
 ### 2. ダークチョコの選び方
@@ -27,7 +27,7 @@ https://zhixijiangu68-web.github.io/mouton-site/olive-oil-guide.html
 
 ダークチョコとココアを選ぶときに見るところをまとめた。
 
-https://zhixijiangu68-web.github.io/mouton-site/dark-chocolate-guide.html
+https://moutonarchive.com/dark-chocolate-guide.html
 ```
 
 ### 3. 口臭ケアの道具の選び方
@@ -38,7 +38,7 @@ https://zhixijiangu68-web.github.io/mouton-site/dark-chocolate-guide.html
 
 舌ブラシ、フロス、歯間ブラシ、洗口液。何をどう使うかを研究から整理した。
 
-https://zhixijiangu68-web.github.io/mouton-site/oral-care-guide.html
+https://moutonarchive.com/oral-care-guide.html
 ```
 
 ### 4. 習慣を変えたいときに読む本
@@ -47,7 +47,7 @@ https://zhixijiangu68-web.github.io/mouton-site/oral-care-guide.html
 
 習慣、意志力、GRIT、マインドセット。6冊を、その後の研究で分かった注意点と一緒に紹介した。
 
-https://zhixijiangu68-web.github.io/mouton-site/books-habits.html
+https://moutonarchive.com/books-habits.html
 ```
 
 ### 5. 転職を考えはじめたときに読む本
@@ -58,7 +58,7 @@ https://zhixijiangu68-web.github.io/mouton-site/books-habits.html
 
 迷っている段階ごとに、1冊ずつ選んだ。
 
-https://zhixijiangu68-web.github.io/mouton-site/books-career.html
+https://moutonarchive.com/books-career.html
 ```
 
 ## 読み物（読者を増やす記事）
@@ -71,7 +71,7 @@ https://zhixijiangu68-web.github.io/mouton-site/books-career.html
 
 つらさの中心は、月曜そのものではなく、月曜を待つ時間なのかもしれない。
 
-https://zhixijiangu68-web.github.io/mouton-site/sunday-blues.html
+https://moutonarchive.com/sunday-blues.html
 ```
 
 ### 7. 恐怖の正体は「不快感」かもしれない
@@ -82,7 +82,7 @@ https://zhixijiangu68-web.github.io/mouton-site/sunday-blues.html
 
 危険なら守る。不快なだけなら、小さく進む。
 
-https://zhixijiangu68-web.github.io/mouton-site/fear.html
+https://moutonarchive.com/fear.html
 ```
 
 ### 8. 制汗剤とデオドラントの選び方（商品紹介あり）
@@ -93,7 +93,7 @@ https://zhixijiangu68-web.github.io/mouton-site/fear.html
 
 パッケージの「有効成分」を見れば、どっちか分かる。アルミニウムの安全性の評価も含めてまとめた。
 
-https://zhixijiangu68-web.github.io/mouton-site/deodorant-guide.html
+https://moutonarchive.com/deodorant-guide.html
 ```
 
 ### 9. コーヒーは、本当に体に悪いのか
@@ -104,7 +104,7 @@ https://zhixijiangu68-web.github.io/mouton-site/deodorant-guide.html
 
 ただし見落としやすいのが睡眠。寝る6時間前のカフェインでも、眠りが短くなった実験がある。
 
-https://zhixijiangu68-web.github.io/mouton-site/coffee.html
+https://moutonarchive.com/coffee.html
 ```
 
 ### 10. 休日の「寝だめ」で、睡眠不足は取り返せるのか
@@ -116,7 +116,7 @@ https://zhixijiangu68-web.github.io/mouton-site/coffee.html
 
 矛盾じゃなくて、見ているものが違う。
 
-https://zhixijiangu68-web.github.io/mouton-site/weekend-sleep.html
+https://moutonarchive.com/weekend-sleep.html
 ```
 
 ### 11. 人と比べるのを、やめることはできるのか
@@ -127,7 +127,7 @@ https://zhixijiangu68-web.github.io/mouton-site/weekend-sleep.html
 
 やめるんじゃなくて、比べる相手を選び直す。
 
-https://zhixijiangu68-web.github.io/mouton-site/comparison.html
+https://moutonarchive.com/comparison.html
 ```
 
 ### 12. コーヒーの選び方と淹れ方（商品紹介あり）
@@ -138,7 +138,7 @@ https://zhixijiangu68-web.github.io/mouton-site/comparison.html
 
 デカフェの選び方と一緒にまとめた。
 
-https://zhixijiangu68-web.github.io/mouton-site/coffee-guide.html
+https://moutonarchive.com/coffee-guide.html
 ```
 
 ### 13. プロテインの選び方（商品紹介あり）
@@ -149,7 +149,7 @@ https://zhixijiangu68-web.github.io/mouton-site/coffee-guide.html
 
 まず食事で足りているかを確かめる。
 
-https://zhixijiangu68-web.github.io/mouton-site/protein-guide.html
+https://moutonarchive.com/protein-guide.html
 ```
 
 ### 14. 昼寝は、何分がいいのか
@@ -160,7 +160,7 @@ https://zhixijiangu68-web.github.io/mouton-site/protein-guide.html
 
 昼寝は、短く切り上げるほうがいい。
 
-https://zhixijiangu68-web.github.io/mouton-site/nap.html
+https://moutonarchive.com/nap.html
 ```
 
 ### 15. SNSを見る時間は、減らしたほうがいいのか
@@ -171,7 +171,7 @@ Facebookを4週間止めた実験では、幸福感がわずかに上がった�
 
 やめなくていい。でも、見る時間は自分で決めたい。
 
-https://zhixijiangu68-web.github.io/mouton-site/social-media-time.html
+https://moutonarchive.com/social-media-time.html
 ```
 
 ### 16. 朝型と夜型は、変えられるのか
@@ -182,7 +182,7 @@ https://zhixijiangu68-web.github.io/mouton-site/social-media-time.html
 
 一方、自然の光だけで1週間キャンプしたら、夜型の人ほど体内時計が早まった。
 
-https://zhixijiangu68-web.github.io/mouton-site/chronotype.html
+https://moutonarchive.com/chronotype.html
 ```
 
 ### 17. ブルーライトカットの眼鏡は、目の疲れに効くのか
@@ -193,7 +193,7 @@ https://zhixijiangu68-web.github.io/mouton-site/chronotype.html
 
 効きそうなのは、もっと地味な「休憩」。
 
-https://zhixijiangu68-web.github.io/mouton-site/blue-light.html
+https://moutonarchive.com/blue-light.html
 ```
 
 ## 記録
