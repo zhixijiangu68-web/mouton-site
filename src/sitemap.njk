@@ -11,6 +11,7 @@
   <url><loc>{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</loc><lastmod>{{ (a.data.updated or a.page.date) | isoDate }}</lastmod></url>
   {%- endfor %}
   <url><loc>{{ 'guides.html' | absoluteUrl(site.url) }}</loc></url>
+  <url><loc>{{ 'fitness.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'now.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'links.html' | absoluteUrl(site.url) }}</loc></url>
   {%- for t in topics %}
