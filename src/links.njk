@@ -40,6 +40,17 @@ description: "Instagram（@art.gagaga）のリールで紹介した記事の続�
     </a>
     {%- endfor %}
   </div>
+  <h2>選び方</h2>
+  <div class="topic-list">
+    {%- for a in collections.articles | guideCards %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ a.data.guide.tag }}</span>
+      <span class="topic-title">{{ a.data.guide.title }}</span>
+      <span class="topic-excerpt">{{ a.data.guide.text }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
   <h2>テーマから探す</h2>
   <nav class="topic-others" aria-label="テーマ">
     {%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }}</a>{% endfor %}
