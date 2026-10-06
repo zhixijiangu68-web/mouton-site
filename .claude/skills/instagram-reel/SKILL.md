@@ -44,6 +44,7 @@ node render.mjs ../../../../instagram/reels/<フォルダ>/reel.json
 
 - ffmpeg と Chromium が必要。クラウド環境では `CHROME_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome` を付ける
 - `reel.json` の書き方は `render/README.md`、見本は `examples/fear/reel.json`
+- 早送りカット型（素材の映像を0.5秒ずつ切り替える型）は `render/cuts.mjs` と `instagram/cuts/README.md`。素材は自分で撮った映像か、商用利用でき出典表示の要らないフリー素材だけ
 - 書き出した動画は無音。BGM と（使う回は）AI 音声は、`audio.md` を見てユーザーがアプリで入れる
 
 ## 守ること

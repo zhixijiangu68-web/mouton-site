@@ -40,3 +40,7 @@ ffmpeg が必要。Chromium は Playwright のものを使う（`CHROME_PATH` �
 | `window` | 心の窓の位置と大きさ（省略可） |
 
 見本：`../examples/fear/reel.json`
+
+## 早送りカット型（cuts.mjs）
+
+素材の映像を約0.5秒ずつ切り替え、一言を重ねる型。`node cuts.mjs <cuts.json>`。書き方は `instagram/cuts/README.md`。
