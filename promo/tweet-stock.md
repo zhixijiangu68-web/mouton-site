@@ -4,7 +4,7 @@
 
 - 集めるときは「原文」と、どこが良かったか（「刺さったところ」）を書いておく
 - アレンジするときは、訳したり言い換えたりするだけで終わらせない。僕の体験や、サイトの記事（研究・数字）につなげて自分の話にする
-- アレンジしたら「状態」を「済」にして、`x-posts.md` での番号を書く
+- アレンジしたら「状態」を「済」にして、`x-posts.md`（英語なら `x-posts-en.md`）での番号を書く
 - 元の投稿をそのまま翻訳して自分の投稿として出すのはしない（引用するなら引用だと分かる形で）
 
 ## ストック
@@ -12,7 +12,7 @@
 ### T1 早く立ち直る技術
 
 - 集めた日: 2026-10-06
-- 状態: 未
+- 状態: 済（x-posts-en.md の EN-1〜4）
 - つなげられそうな記事: fear（恐怖の正体は「不快感」）、fear-of-change（転職が怖くて踏み出せないとき）、trampoline（大人は、いつから跳ばなくなったのか）、system-goal
 
 ```
@@ -27,7 +27,7 @@ Underrated life advice: get better at recovering fast. You're going to fail. You
 ### T2 知性の5つのかたち
 
 - 集めた日: 2026-10-06
-- 状態: 未
+- 状態: 済（x-posts-en.md の EN-5〜9）
 - つなげられそうな記事: comparison（人と比べるのを、やめることはできるのか）、boundaries、doing-nothing、refined-taste
 
 ```
@@ -47,7 +47,7 @@ Five highest forms of intelligence :
 ### T3 真実より、心地よい幻想
 
 - 集めた日: 2026-10-06
-- 状態: 未
+- 状態: 済（x-posts-en.md の EN-10〜13）
 - つなげられそうな記事: nietzsche（神は死んだ。それでも、なぜ生きるのか。）、books-philosophy（生き方を考えたいときに読む本）、self-image
 
 ```
@@ -69,7 +69,7 @@ Nietzsche was not playing around when he said:
 ### T4 ソウルメイトより、自分の魂
 
 - 集めた日: 2026-10-06
-- 状態: 未
+- 状態: 済（x-posts-en.md の EN-14〜16）
 - つなげられそうな記事: identity（あなたはどんな人間になりたいですか？）、nietzsche（神は死んだ。それでも、なぜ生きるのか。）、freedom、doing-nothing
 
 ```
@@ -84,7 +84,7 @@ My death is more guaranteed than my wedding so instead of looking for my soulmat
 ### T5 目標の解像度を上げる
 
 - 集めた日: 2026-10-06
-- 状態: 未
+- 状態: 済（x-posts-en.md の EN-17〜20）
 - つなげられそうな記事: system-goal（システムのないゴールは、動かない）、identity（あなたはどんな人間になりたいですか？）、self-image（セルフイメージは、長期の行動を変える）、freedom（愛ではなく、自由を求める）
 
 原文は冒頭が切れている（「〜らしく生きたい」から始まる。「自由になりたい」「自分らしく生きたい」のような例が並んでいたと思われる）。書いた人は未記入。
