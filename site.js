@@ -3,7 +3,7 @@
 // GoatCounter のコード: https://<ここ>.goatcounter.com の <ここ> の部分
 const GOATCOUNTER_CODE = '';
 // Amazon アソシエイトのトラッキング ID（例: mouton-22）
-const AMAZON_TAG = '';
+const AMAZON_TAG = 'yuiga2003-22';
 
 if (GOATCOUNTER_CODE && !/^(localhost|127\.)/.test(location.hostname)) {
  const s = document.createElement('script');
