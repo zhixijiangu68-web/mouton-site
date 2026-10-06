@@ -15,7 +15,7 @@ export default {
   // Google Search Console の「HTML タグ」で確認するときの content の値。空なら出さない。
   searchConsole: '',
   // Google アナリティクス 4 の測定ID（例: 'G-XXXXXXXXXX'）。空なら何も読み込まない。
-  analytics: { ga4: 'G-P0NJ3Y2CXE' },
+  analytics: { ga4: 'G-CLF0SMB36X' },
   // AmazonアソシエイトのトラッキングID（例: 'mouton-22'）。
   // 入れると Amazon リンクにタグ・rel="sponsored"・「PR」表示が付き、広告の表記も出る。
   // 楽天アフィリエイトID（例: '1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b'）。入れると商品カードに楽天のボタンが出る。
