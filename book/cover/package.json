@@ -1,0 +1,10 @@
+{
+  "name": "mouton-book-cover",
+  "private": true,
+  "description": "電子書籍の表紙（1600x2560）を作る。サイトのビルドには不要。",
+  "type": "module",
+  "dependencies": {
+    "@fontsource/noto-serif-jp": "^5.2.5",
+    "playwright": "^1.55.0"
+  }
+}
