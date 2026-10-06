@@ -65,3 +65,18 @@ Nietzsche was not playing around when he said:
 - 『アンチクリスト』52節：「信仰とは、何が真実であるかを知ろうとしないことだ」（大意）
 
 「ニーチェはこう言った」として原文のまま投稿するのはやめる。
+
+### T4 ソウルメイトより、自分の魂
+
+- 集めた日: 2026-10-06
+- 状態: 未
+- つなげられそうな記事: identity（あなたはどんな人間になりたいですか？）、nietzsche（神は死んだ。それでも、なぜ生きるのか。）、freedom、doing-nothing
+
+```
+My death is more guaranteed than my wedding so instead of looking for my soulmate im going to look for my soul
+```
+
+刺さったところ:
+- 「結婚より死のほうが確実」という、身もふたもない比べ方で笑わせてから本題に入る
+- soulmate → soul と、一語を削るだけでひっくり返す言葉遊び（日本語では「運命の人」→「自分」などで置き換えを考える）
+- 誰かを探す前に、まず自分を知る。恋愛の話に見せて、生き方の話になっている
