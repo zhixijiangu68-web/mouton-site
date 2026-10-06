@@ -2,7 +2,7 @@
 
 あなたが @kodoku__alone から投稿する用の下書きです。1日1〜2本を目安に、上から順に使ってください。
 
-- リンクの `{URL}` は、公開しているサイトのアドレスに置き換えます。ドメインが決まるまでは GitHub Pages のアドレス（例：`https://zhixijiangu68-web.github.io/mouton-site/`。実際のアドレスは GitHub の Settings → Pages で確認）を使います
+- リンクの `https://zhixijiangu68-web.github.io/mouton-site/` は、公開しているサイトのアドレスに置き換えます。ドメインが決まるまでは GitHub Pages のアドレス（例：`https://zhixijiangu68-web.github.io/mouton-site/`。実際のアドレスは GitHub の Settings → Pages で確認）を使います
 - 投稿したら、下の表の「投稿日」に日付を書いておくと、あとで効果を比べられます
 - 文字数はどれも140字以内（URL を除く）です
 
@@ -16,7 +16,7 @@
 
 じゃあ店で何を見ればいいのか。容器、日付、表示、量。研究をもとに5つに絞った。
 
-{URL}olive-oil-guide.html
+https://zhixijiangu68-web.github.io/mouton-site/olive-oil-guide.html
 ```
 
 ### 2. ダークチョコの選び方
@@ -27,7 +27,7 @@
 
 ダークチョコとココアを選ぶときに見るところをまとめた。
 
-{URL}dark-chocolate-guide.html
+https://zhixijiangu68-web.github.io/mouton-site/dark-chocolate-guide.html
 ```
 
 ### 3. 口臭ケアの道具の選び方
@@ -38,7 +38,7 @@
 
 舌ブラシ、フロス、歯間ブラシ、洗口液。何をどう使うかを研究から整理した。
 
-{URL}oral-care-guide.html
+https://zhixijiangu68-web.github.io/mouton-site/oral-care-guide.html
 ```
 
 ### 4. 習慣を変えたいときに読む本
@@ -47,7 +47,7 @@
 
 習慣、意志力、GRIT、マインドセット。6冊を、その後の研究で分かった注意点と一緒に紹介した。
 
-{URL}books-habits.html
+https://zhixijiangu68-web.github.io/mouton-site/books-habits.html
 ```
 
 ### 5. 転職を考えはじめたときに読む本
@@ -58,7 +58,7 @@
 
 迷っている段階ごとに、1冊ずつ選んだ。
 
-{URL}books-career.html
+https://zhixijiangu68-web.github.io/mouton-site/books-career.html
 ```
 
 ## 読み物（読者を増やす記事）
@@ -71,7 +71,7 @@
 
 つらさの中心は、月曜そのものではなく、月曜を待つ時間なのかもしれない。
 
-{URL}sunday-blues.html
+https://zhixijiangu68-web.github.io/mouton-site/sunday-blues.html
 ```
 
 ### 7. 恐怖の正体は「不快感」かもしれない
@@ -82,7 +82,7 @@
 
 危険なら守る。不快なだけなら、小さく進む。
 
-{URL}fear.html
+https://zhixijiangu68-web.github.io/mouton-site/fear.html
 ```
 
 ## 記録

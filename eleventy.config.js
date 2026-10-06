@@ -36,6 +36,13 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter('isoDate', d => ymd(new Date(d)).join('-'));
   eleventyConfig.addFilter('dotDate', d => ymd(new Date(d)).join('.'));
+  // Pages with affiliate links say so near the top, not only at the end
+  // (Japan's stealth-marketing rules): right after the reading time line.
+  eleventyConfig.addFilter('prNotice', (html, show) => {
+    if (!show) return html;
+    const notice = '<p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>';
+    return html.replace(/(<p class="reading-time">[\s\S]*?<\/p>)/, `$1${notice}`);
+  });
   eleventyConfig.addFilter('guideCards', items =>
     items.filter(a => a.data.guide).sort((a, b) => a.data.guide.order - b.data.guide.order));
   eleventyConfig.addFilter('scienceCards', items =>
@@ -88,7 +95,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('head', (items, n) => items.slice(0, n));
   eleventyConfig.addFilter('rfc822', d => new Date(d).toUTCString().replace('GMT', '+0000'));
   eleventyConfig.addFilter('json', v => JSON.stringify(v).replace(/</g, '\\u003c'));
-  eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(path, base.replace(/\/?$/, '/')).href : ''));
+  eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(String(path).replace(/^\//, ''), base.replace(/\/?$/, '/')).href : ''));
 
   // Amazon links get the associate tag, rel="sponsored" and a visible PR label
   // only once site.affiliate.amazonTag is set.

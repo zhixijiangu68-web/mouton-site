@@ -1,9 +1,9 @@
 // サイト全体の設定。ここを書き換えて `npm run build` すると全ページに反映される。
 export default {
   name: 'ムートン',
-  // 独自ドメインが決まったら入れる（例: 'https://mouton.example'）。
+  // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
-  url: '',
+  url: 'https://zhixijiangu68-web.github.io/mouton-site/',
   description: 'ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。',
   author: {
     name: 'ムートン',

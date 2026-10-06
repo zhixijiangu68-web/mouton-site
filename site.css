@@ -204,3 +204,5 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 
 @media print { [data-rise] { opacity: 1 !important; translate: none !important; } }
 .links h2 + .topic-list{border-top:0}
+.pr-notice{margin:0 0 20px!important;font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif!important;font-size:.75rem!important;line-height:1.8!important;letter-spacing:.04em;color:#5b5d56!important;opacity:1!important}
+.pr-notice a{color:inherit!important;text-underline-offset:3px}
