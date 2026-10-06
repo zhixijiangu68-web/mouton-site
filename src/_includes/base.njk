@@ -72,7 +72,8 @@
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.ga4 }}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.analytics.ga4 }}');</script>
 {%- endif %}
-{%- if isArticle and site.ads.adsenseClient %}
+{#- AdSense の審査と自動広告のため全ページで読み込む。手動の広告枠は記事の末尾だけ（partials/article-end.njk）。 #}
+{%- if site.ads.adsenseClient %}
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.ads.adsenseClient }}" crossorigin="anonymous"></script>
 {%- endif %}
 </head>

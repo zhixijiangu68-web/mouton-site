@@ -1,0 +1,8 @@
+---js
+{
+  // AdSense の ads.txt。パブリッシャーID（site.ads.adsenseClient）を入れたときだけ書き出す。
+  permalink: data => (data.site.ads.adsenseClient ? "ads.txt" : false),
+  eleventyExcludeFromCollections: true,
+}
+---
+google.com, {{ site.ads.adsenseClient | replace("ca-", "") }}, DIRECT, f08c47fec0942fa0
