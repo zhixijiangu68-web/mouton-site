@@ -1,0 +1,61 @@
+{
+  "title": "嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ",
+  "source": "disliked-priority.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "嫌われたく\nない。",
+      "duration": 1.5,
+      "size": 84,
+      "cover": true
+    },
+    {
+      "text": "否定されたら",
+      "duration": 1.0,
+      "size": 71
+    },
+    {
+      "text": "無視されたら",
+      "duration": 1.0,
+      "size": 71
+    },
+    {
+      "text": "評価され\nなかったら",
+      "duration": 1.1
+    },
+    {
+      "text": "気にしない\nなんて無理。",
+      "duration": 1.6,
+      "size": 64
+    },
+    {
+      "text": "下げる",
+      "duration": 1.9,
+      "size": 84,
+      "strike": "消す"
+    },
+    {
+      "text": "もっと大事な\n目的がある。",
+      "duration": 2.0,
+      "size": 58
+    },
+    {
+      "text": "勇気ではなく、\n置き場所。",
+      "duration": 2.2,
+      "size": 58,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.8,
+      "size": 46,
+      "sub": "嫌われることは、\n優先順位が下がるだけ"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "title": "デイビッド・ゴギンズという変人を、僕は尊敬している",
+  "source": "goggins.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "やりたく\nない。",
+      "duration": 1.5,
+      "size": 88,
+      "cover": true
+    },
+    {
+      "text": "面倒だ",
+      "duration": 0.9
+    },
+    {
+      "text": "気分じゃない",
+      "duration": 1.0,
+      "size": 71
+    },
+    {
+      "text": "明日でいい",
+      "duration": 1.0
+    },
+    {
+      "text": "それは\nやらない理由？",
+      "duration": 1.7,
+      "size": 61
+    },
+    {
+      "text": "苦痛の\n向こう側を\n見る。",
+      "duration": 1.9,
+      "size": 60
+    },
+    {
+      "text": "変人",
+      "duration": 1.8,
+      "size": 96,
+      "strike": "普通"
+    },
+    {
+      "text": "少しだけ、\n変人になる。",
+      "duration": 2.4,
+      "size": 60,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.8,
+      "size": 46,
+      "sub": "ゴギンズという変人を、\n僕は尊敬している"
+    }
+  ]
+}

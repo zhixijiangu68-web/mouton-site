@@ -1,0 +1,58 @@
+{
+  "title": "誰にでも好かれようとすると、なぜ安っぽくなるのか",
+  "source": "boundaries.html",
+  "fps": 30,
+  "window": {
+    "x": 545,
+    "y": 760,
+    "width": 620,
+    "height": 450
+  },
+  "screens": [
+    {
+      "text": "誰にでも\n好かれたい。",
+      "duration": 1.6,
+      "size": 71,
+      "cover": true
+    },
+    {
+      "text": "合わせる",
+      "duration": 0.9
+    },
+    {
+      "text": "合わせる",
+      "duration": 0.9
+    },
+    {
+      "text": "また\n合わせる",
+      "duration": 1.0
+    },
+    {
+      "text": "自分の輪郭が\n薄くなる。",
+      "duration": 1.7,
+      "size": 58
+    },
+    {
+      "text": "ここから先は\n合わせない。",
+      "duration": 2.0,
+      "size": 58
+    },
+    {
+      "text": "わかる人には\nわかる。",
+      "duration": 1.8,
+      "size": 60
+    },
+    {
+      "text": "これが自分だと\n言えるものを。",
+      "duration": 2.2,
+      "size": 54,
+      "marker": true
+    },
+    {
+      "text": "続きは\nプロフィールの\nリンクから",
+      "duration": 2.9,
+      "size": 46,
+      "sub": "誰にでも好かれようと\nすると、なぜ\n安っぽくなるのか"
+    }
+  ]
+}
