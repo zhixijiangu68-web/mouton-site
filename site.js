@@ -153,3 +153,13 @@
   if(document.readyState==='complete')setTimeout(land,0);else window.addEventListener('load',()=>setTimeout(land,0),{once:true});
  }
 })();
+
+// GA4: record clicks on affiliate links (Amazon / Rakuten) with the page and product,
+// so we can see which article sends readers to a shop. No-op when GA4 is off.
+document.addEventListener('click',e=>{
+ const a=e.target.closest&&e.target.closest('a[rel~="sponsored"]');
+ if(!a||typeof window.gtag!=='function')return;
+ const card=a.closest('.product-card');
+ const name=card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
+ window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,transport_type:'beacon'});
+});
