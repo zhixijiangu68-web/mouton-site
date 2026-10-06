@@ -174,6 +174,28 @@ Facebookを4週間止めた実験では、幸福感がわずかに上がった�
 https://zhixijiangu68-web.github.io/mouton-site/social-media-time.html
 ```
 
+### 16. 朝型と夜型は、変えられるのか
+```
+朝が弱いのは、生まれつき？
+
+約70万人の遺伝子研究では、朝型に関わる遺伝子の差で変わる眠る時刻は平均25分ほど。
+
+一方、自然の光だけで1週間キャンプしたら、夜型の人ほど体内時計が早まった。
+
+https://zhixijiangu68-web.github.io/mouton-site/chronotype.html
+```
+
+### 17. ブルーライトカットの眼鏡は、目の疲れに効くのか
+```
+ブルーライトカットの眼鏡、目の疲れに効く？
+
+ランダム化比較試験をまとめたコクランレビューでは、目の疲れへの短期的な効果はおそらくない、という結論だった。
+
+効きそうなのは、もっと地味な「休憩」。
+
+https://zhixijiangu68-web.github.io/mouton-site/blue-light.html
+```
+
 ## 記録
 
 | # | 記事 | 投稿日 | メモ |
@@ -193,3 +215,5 @@ https://zhixijiangu68-web.github.io/mouton-site/social-media-time.html
 | 13 | プロテインの選び方 |  |  |
 | 14 | 昼寝は、何分がいいのか |  |  |
 | 15 | SNSを見る時間は、減らしたほうがいいのか |  |  |
+| 16 | 朝型と夜型は、変えられるのか |  |  |
+| 17 | ブルーライトカットの眼鏡は、目の疲れに効くのか |  |  |
