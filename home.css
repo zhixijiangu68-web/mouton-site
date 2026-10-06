@@ -157,3 +157,14 @@
 .journal-more:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .journal-more:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
 .journal-more[hidden]{display:none}
+
+/* ---------- Guides (front matter `guide`) ---------- */
+.guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.guide-card{display:flex;flex-direction:column;min-height:260px;padding:clamp(24px,3vw,36px);border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.6);color:var(--ink);text-decoration:none;transition:border-color .4s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.guide-card:hover{border-color:var(--blue);transform:translateY(-6px)}
+.guide-card:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.guide-tag{font-size:.75rem;letter-spacing:.14em;color:#5b5d56;margin-bottom:auto;padding-bottom:24px}
+.guide-card h3{font-family:var(--serif);font-weight:300;font-size:clamp(1.25rem,2vw,1.625rem);line-height:1.6;margin:0 0 12px}
+.guide-card p{font-family:var(--serif);font-size:1rem;line-height:1.9;color:#45473f;margin:0 0 18px}
+.guide-more{font-family:var(--latin);font-style:italic;font-size:1.0625rem;color:var(--blue)}
+@media(max-width:900px){.guide-grid{grid-template-columns:1fr}.guide-card{min-height:0}}
