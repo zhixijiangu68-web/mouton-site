@@ -19,7 +19,8 @@
 <meta property="og:locale" content="ja_JP">
 {%- if site.url %}
 <meta property="og:url" content="{{ pageUrl }}">
-<meta property="og:image" content="{{ ('images/' + (ogImage or 'og-default.jpg')) | absoluteUrl(site.url) }}">
+{%- set shareImage = ('images/' + ogImage) if ogImage else ((['images/og/' + page.fileSlug + '.jpg'] | firstImage) or 'images/og-default.jpg') %}
+<meta property="og:image" content="{{ shareImage | absoluteUrl(site.url) }}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ 'feed.xml' | absoluteUrl(site.url) }}">
 {%- else %}
