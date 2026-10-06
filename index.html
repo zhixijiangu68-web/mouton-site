@@ -170,9 +170,40 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
 @media(max-width:760px){.scene{background-attachment:scroll;background-position:58% center}}
 .journal-filter .count{margin-left:6px;font-size:.75rem;color:#53584f;font-weight:400}
 .footer-social{display:inline-block;margin-top:12px;color:inherit;text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:3px}
+
+/* Clear entrances and accessible navigation, preserving the archive's quiet palette. */
+:focus-visible { outline:2px solid #303c35; outline-offset:4px; }
+.skip-link { position:fixed; left:16px; top:12px; z-index:100; padding:12px 18px; background:#f7f4ec; color:#252724; transform:translateY(-160%); }
+.skip-link:focus { transform:none; }
+.now-recent { grid-column:1 / -1; padding-top:24px; border-top:1px solid var(--line); }
+.now-recent h2 { font-family:"Noto Serif JP",serif; font-size:1.125rem; font-weight:400; margin:0 0 12px; }
+.recent-list { display:grid; gap:0; }
+.recent-link { display:flex; justify-content:space-between; gap:16px; padding:14px 0; color:var(--ink); text-decoration:none; line-height:1.8; border-bottom:1px solid var(--line); font-size:.9375rem; }
+.recent-link:hover { text-decoration:underline; text-underline-offset:4px; }
+.project-status { margin:0 0 12px; font-size:.75rem; color:#53584f; }
+.journal-search { margin-top:24px; }
+.journal-search label { display:block; margin-bottom:8px; font-size:.875rem; }
+.journal-search input { width:100%; min-height:44px; border:1px solid #69756b; border-radius:6px; padding:10px 12px; background:rgba(255,255,255,.7); color:var(--ink); font:inherit; font-size:1rem; }
+.journal-results { font-size:.875rem; color:#53584f; line-height:1.8; margin:12px 0; }
+.journal-empty { padding:24px 0; font-size:1rem; line-height:1.9; }
+.journal-empty[hidden] { display:none; }
+.footer-links { display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; }
+.footer-links a { font-size:.8125rem; letter-spacing:.02em; min-height:44px; display:inline-flex; align-items:center; }
+@media(max-width:960px) and (min-width:761px) { header { padding-inline:20px; gap:20px; } .tabs { gap:16px; } .tab { font-size:.8125rem; white-space:nowrap; } }
+@media(max-width:760px) {
+ .mobile-tabs { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:visible; }
+ .mobile-tabs .tab { min-width:0; min-height:44px; padding:10px 2px; font-size:.8125rem; }
+ .mobile-tabs .tab.active { border-radius:8px; background:rgba(48,60,53,.09); }
+ .mobile-tabs .tab.active:after { left:20%; right:20%; }
+ .bottom { display:flex; flex-direction:column; align-items:stretch; gap:24px; padding-bottom:calc(126px + env(safe-area-inset-bottom,0px)); }
+ .bottom>div:first-child { display:block; }
+ .bottom .quote { align-self:flex-end; }
+ .footer-links { gap:0 16px; }
+ .now-recent { padding-top:20px; }
+}
 </style>
-<script src="site.js" defer></script></head>
-<body><div class="scene">
+<script src="site.js" defer></script><noscript><style>.panel:not(.active){display:grid!important}.hero.hidden{opacity:1;max-height:none}.tabs,.mobile-tabs,.journal-search,.journal-filters,.journal-results,.now-recent{display:none!important}.panel{margin-bottom:24px}</style></noscript></head>
+<body><a class="skip-link" href="#main-content">本文へ移動</a><div class="scene">
   <div class="grain"></div><div class="arc"></div><div class="arc two"></div>
   <header>
     <div class="brand">ムートン</div>
@@ -182,21 +213,22 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
     
   </header>
 
-  <main>
+  <main id="main-content" tabindex="-1">
     <section class="hero">
       <h1>作る。記録する。<br>残していく。</h1>
       <p>考えたこと。作ったもの。変わっていく自分。その途中を残していく。</p>
       <div class="en">A personal archive<br>for things yet to come.</div>
     </section>
 
-    <section class="window" aria-live="polite">
+    <section class="window" aria-label="ムートンの記録">
       <div class="panel now active" id="now">
         <div><div class="kicker">NOW / 2026</div><div class="big"><span>いま、</span><span>ここから。</span></div><p class="copy">作っているもの、考えていること、これから試したいこと。完成だけではなく、その途中も静かに残していく場所。</p><div class="now-actions"><a class="link link-primary" href="#journal" data-jump="journal">記事を読む</a><a class="link" href="#projects" data-jump="projects">制作しているもの</a></div></div>
-        <div class="art" aria-label="静かな抽象風景"></div>
+        <div class="art" role="img" aria-label="静かな抽象風景"></div>
+        <section class="now-recent" aria-labelledby="recent-heading"><h2 id="recent-heading">最近の記事</h2><div class="recent-list"></div></section>
       </div>
       <div class="panel projects" id="projects">
-        <article class="card"><span>PROJECT 001</span><h3>KIOKU</h3><p>「観た」を記録し、記憶として残すためのアプリ。</p></article>
-        <article class="card"><span>PROJECT 002</span><h3>DIARY</h3><p>日々の記録を積み重ねる、小さな実験。</p></article>
+        <article class="card"><span>PROJECT 001</span><div class="project-status">制作中</div><h3>KIOKU</h3><p>「観た」を記録し、記憶として残すためのアプリ。</p></article>
+        <article class="card"><span>PROJECT 002</span><div class="project-status">制作中</div><h3>DIARY</h3><p>日々の記録を積み重ねる、小さな実験。</p></article>
         <article class="card placeholder"><span>NEXT</span><h3>...</h3><p>まだ名前のないもの。</p></article>
       </div>
       <div class="panel journal" id="journal">
@@ -205,6 +237,8 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
           <h2 class="journal-heading">記事</h2>
           <div class="journal-sub">書き留める。</div>
           <p class="journal-copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
+          <div class="journal-search"><label for="journal-query">記事を探す</label><input id="journal-query" type="search" placeholder="タイトル・キーワード" autocomplete="off" aria-controls="journal-list"></div>
+          <p class="journal-results" role="status" aria-live="polite" aria-atomic="true"></p>
           <div class="journal-filters" aria-label="記事のカテゴリー">
             <button class="journal-filter active" data-journal-filter="all">すべて</button>
             <button class="journal-filter" data-journal-filter="body">身体</button>
@@ -213,7 +247,7 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
             <button class="journal-filter" data-journal-filter="making">制作</button>
           </div>
         </div>
-        <div class="journal-list">
+        <div><div class="journal-list" id="journal-list">
           <a class="journal-item clickable journal-link" href="sunday-blues.html" data-category="work">
             <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
             <div class="journal-body"><div class="journal-title">日曜の夜が憂うつなのは、なぜか</div><div class="journal-excerpt">週末に満たされていたものと、仕事から離れる時間の研究から考える。</div><span class="journal-read-time">約6分</span></div>
@@ -393,6 +427,8 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
             <div class="journal-arrow">—</div>
           </div>
         </div>
+      <p class="journal-empty" hidden>一致する記事がありません。検索語を変えるか、「すべて」を選んでください。</p>
+      </div>
       </div>
       
       
@@ -474,7 +510,7 @@ html.restoring .panel, html.restoring .hero, html.restoring .window { animation:
     </section>
   </main>
 
-  <footer class="bottom"><div>2026<br><br>SOMEWHERE IN JAPAN<br><a class="footer-social" href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone ↗</a><br><a class="footer-social" href="policy.html">プライバシーポリシー・広告について</a></div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
+  <footer class="bottom"><div><span>2026 / SOMEWHERE IN JAPAN</span><div class="footer-links"><a class="footer-social" href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone ↗</a><a class="footer-social" href="policy.html">プライバシーポリシー・広告について</a></div></div><div class="quote">千里の道も一歩から。<small>A journey of a thousand miles begins with a single step.</small></div></footer>
 
   <nav class="mobile-tabs" aria-label="モバイルナビゲーション"><button class="tab active" data-tab="now">いま</button><button class="tab" data-tab="projects">制作</button><button class="tab" data-tab="journal">記事</button><button class="tab" data-tab="foodscience">食事・化学</button><button class="tab" data-tab="books">本棚</button><button class="tab" data-tab="about">ムートンについて</button></nav>
 </div>
@@ -489,9 +525,21 @@ const journalList=document.querySelector('.journal-list');
 }).forEach(item=>journalList.appendChild(item));
 const items=[...document.querySelectorAll('#journal .journal-item')];
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
+const queryInput=document.querySelector('#journal-query');
+const resultStatus=document.querySelector('.journal-results');
+const emptyState=document.querySelector('.journal-empty');
+const normalize=value=>value.normalize('NFKC').toLocaleLowerCase('ja');
+const recentList=document.querySelector('.recent-list');
+items.filter(item=>item.matches('a[href]')).slice(0,3).forEach(item=>{
+ const link=document.createElement('a');link.className='recent-link';link.href=item.getAttribute('href');
+ const title=document.createElement('span');title.textContent=item.querySelector('.journal-title').textContent;
+ const arrow=document.createElement('span');arrow.textContent='→';arrow.setAttribute('aria-hidden','true');
+ link.append(title,arrow);recentList.appendChild(link);
+});
 const storageKey='mouton-journal-view-v1';
-let saved={filter:'all',scrollY:0,href:null,offset:0};
+let saved={filter:'all',query:'',scrollY:0,href:null,offset:0};
 try { const value=JSON.parse(sessionStorage.getItem(storageKey)); if(value&&typeof value==='object') saved={...saved,...value}; } catch {}
+queryInput.value=typeof saved.query==='string'?saved.query:'';
 let activePanel=null;
 let filter=['all','body','philosophy','work','making'].includes(saved.filter)?saved.filter:'all';
 let restoring=false;
@@ -499,12 +547,20 @@ let restoreId=0;
 function persist(){try{sessionStorage.setItem(storageKey,JSON.stringify(saved));}catch{}}
 function savePosition(link){
  if(activePanel!=='journal'||restoring)return;
- saved={filter,scrollY:window.scrollY,href:link?link.getAttribute('href'):null,offset:link?link.getBoundingClientRect().top:0};persist();
+ saved={filter,query:queryInput.value,scrollY:window.scrollY,href:link?link.getAttribute('href'):null,offset:link?link.getBoundingClientRect().top:0};persist();
 }
 function applyFilter(value){
  filter=value;
  filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
- items.forEach(item=>item.classList.toggle('is-hidden',filter!=='all'&&item.dataset.category!==filter));
+ const words=normalize(queryInput.value.trim()).split(/\s+/).filter(Boolean);
+ let visible=0;
+ items.forEach(item=>{
+  const text=normalize(item.querySelector('.journal-body').textContent);
+  const match=(filter==='all'||item.dataset.category===filter)&&words.every(word=>text.includes(word));
+  item.classList.toggle('is-hidden',!match);if(match)visible++;
+ });
+ resultStatus.textContent=visible+'件 / 全'+items.length+'件';
+ emptyState.hidden=visible!==0;
 }
 function restorePosition(){
  const id=++restoreId;
@@ -530,6 +586,7 @@ function show(name,restore){
 }
 function route(){
  const name=location.hash.slice(1);
+ if(name==='main-content'){document.querySelector('#main-content').focus();return;}
  if(articleRoutes[name]){location.replace(articleRoutes[name]);return;}
  show(['now','projects','journal','foodscience','books','about'].includes(name)?name:'now',name==='journal');
 }
@@ -538,8 +595,11 @@ tabs.forEach(t=>t.addEventListener('click',()=>navigate(t.dataset.tab)));
 document.querySelectorAll('[data-jump]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();navigate(a.dataset.jump);}));
 filters.forEach(btn=>btn.addEventListener('click',()=>{
  applyFilter(btn.dataset.journalFilter);
- saved={filter,scrollY:window.scrollY,href:null,offset:0};persist();
+ saved={filter,query:queryInput.value,scrollY:window.scrollY,href:null,offset:0};persist();
 }));
+queryInput.addEventListener('input',()=>{
+ applyFilter(filter);saved={filter,query:queryInput.value,scrollY:window.scrollY,href:null,offset:0};persist();
+});
 items.forEach(item=>item.addEventListener('click',()=>savePosition(item)));
 window.addEventListener('pagehide',()=>{if(activePanel==='journal'&&!saved.href)savePosition();});
 window.addEventListener('hashchange',route);
