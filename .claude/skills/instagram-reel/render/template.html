@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/300.css">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/600.css">
+<style>
+  html, body { margin: 0; width: 1080px; height: 1920px; background: #000; overflow: hidden; }
+  #stage { position: relative; width: 1080px; height: 1920px; }
+  svg#head { position: absolute; inset: 0; }
+  /* The "mind window": a soft white oval inside the head. */
+  #mind { position: absolute; left: var(--mx); top: var(--my); width: var(--mw); height: var(--mh); transform: translate(-50%, -50%); border-radius: 50%;
+          background: radial-gradient(closest-side, #fff 0 78%, rgba(255,255,255,.85) 86%, rgba(255,255,255,0) 100%); overflow: hidden; }
+  #content { position: absolute; inset: 12% 13%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; color: #111;
+             font-family: "Noto Serif JP", serif; }
+  #content .word { font-weight: 600; font-size: var(--fs, 76px); line-height: 1.3; letter-spacing: .04em; white-space: pre-line; word-break: keep-all; overflow-wrap: anywhere; }
+  #content .sub { font-weight: 300; font-size: 30px; word-break: keep-all; line-height: 1.5; letter-spacing: .06em; white-space: pre-line; color: #333; }
+  #content .strike { font-weight: 600; font-size: calc(var(--fs, 76px) * .78); text-decoration: line-through; text-decoration-thickness: 6px; color: #333; }
+  #content img { max-width: 78%; max-height: 52%; object-fit: contain; filter: grayscale(1) contrast(1.1); }
+  #content .marker { background: linear-gradient(transparent 55%, #f2e14a 55% 90%, transparent 90%); padding: 0 .1em; }
+  #grain { position: absolute; inset: 0; pointer-events: none; opacity: .09; mix-blend-mode: screen;
+           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+</style>
+</head>
+<body>
+<div id="stage">
+  <svg id="head" viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="mind"><div id="content"></div></div>
+  <div id="grain"></div>
+</div>
+<script>
+// ---- Seeded randomness so every render of the same reel looks identical. ----
+let seed = 7;
+const rand = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+const jitter = a => (rand() - .5) * 2 * a;
+
+// Head profile facing right (1080x1920 canvas), as control points.
+const OUTLINE = [[330,1640],[328,1400],[300,1190],[235,1040],[205,830],[255,630],[400,490],[600,445],[760,500],[860,620],[900,770],[884,830],[955,935],[900,980],[915,1030],[896,1060],[910,1090],[880,1170],[790,1215],[715,1255],[700,1400],[705,1640]];
+
+// Catmull-Rom spline through the points, returned as an SVG path.
+function spline(pts) {
+  let d = `M${pts[0][0]},${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0]},${p2[1]}`;
+  }
+  return d;
+}
+const shaky = (pts, a) => pts.map(([x, y]) => [x + jitter(a), y + jitter(a)]);
+const scaled = (pts, s, cx, cy) => pts.map(([x, y]) => [cx + (x - cx) * s, cy + (y - cy) * s]);
+
+function drawHead() {
+  const svg = document.getElementById('head');
+  const strokes = [];
+  const line = (pts, w, o) => strokes.push(`<path d="${spline(pts)}" fill="none" stroke="#fff" stroke-width="${w}" stroke-opacity="${o}" stroke-linecap="round"/>`);
+  // Many loose copies of the outline give the hand-sketched look.
+  for (let i = 0; i < 70; i++) line(shaky(OUTLINE, 13), .7 + rand() * .9, .1 + rand() * .3);
+  // Short sketchy contours echoing the outline inside the head, like pencil hatching.
+  for (let i = 0; i < 140; i++) {
+    const a = Math.floor(rand() * (OUTLINE.length - 5)) + 1, n = 3 + Math.floor(rand() * 3);
+    line(shaky(scaled(OUTLINE.slice(a, a + n), .72 + rand() * .26, 560, 980), 20), .5 + rand() * .5, .06 + rand() * .14);
+  }
+  // Inner contours: the skull and the face, pulled toward the centre.
+  for (let i = 0; i < 26; i++) line(shaky(scaled(OUTLINE.slice(2, 12), .9 + rand() * .06, 560, 860), 12), .7, .12 + rand() * .18);
+  // Ear, jaw, cheekbone and neck muscles.
+  const ear = [[470,900],[430,880],[405,930],[415,1000],[450,1030],[480,1010]];
+  for (let i = 0; i < 12; i++) line(shaky(ear, 6), .8, .3);
+  const jaw = [[470,1040],[560,1120],[680,1170],[800,1195]];
+  for (let i = 0; i < 14; i++) line(shaky(jaw, 10), .8, .22);
+  const cheek = [[560,880],[680,860],[800,900],[860,960]];
+  for (let i = 0; i < 10; i++) line(shaky(cheek, 12), .7, .16);
+  for (let i = 0; i < 18; i++) { const x = 420 + rand() * 240; line(shaky([[x,1180],[x + 30,1380],[x + jitter(30),1640]], 14), .7, .14); }
+  // Eye and brow.
+  for (let i = 0; i < 8; i++) line(shaky([[805,770],[845,760],[880,775]], 4), .9, .4);
+  for (let i = 0; i < 6; i++) line(shaky([[815,800],[845,792],[868,805],[845,812],[815,800]], 3), .9, .5);
+  svg.innerHTML = strokes.join('');
+}
+
+// ---- Reel playback: show(t) renders the frame at time t (seconds). ----
+let reel = null;
+const mind = document.getElementById('mind');
+const content = document.getElementById('content');
+let shown = -1;
+
+function setScreen(i) {
+  if (i === shown) return;
+  shown = i;
+  const s = reel.screens[i];
+  content.innerHTML = '';
+  content.style.setProperty('--fs', (s.size || 76) + 'px');
+  if (s.image) { const img = document.createElement('img'); img.src = s.image; content.append(img); }
+  if (s.strike) { const el = document.createElement('div'); el.className = 'strike'; el.textContent = s.strike; content.append(el); }
+  if (s.text) {
+    const el = document.createElement('div'); el.className = 'word';
+    if (s.marker) { const m = document.createElement('span'); m.className = 'marker'; m.textContent = s.text; el.append(m); }
+    else el.textContent = s.text;
+    content.append(el);
+  }
+  if (s.sub) { const el = document.createElement('div'); el.className = 'sub'; el.textContent = s.sub; content.append(el); }
+}
+
+window.setupReel = data => {
+  reel = data;
+  const w = reel.window || {};
+  mind.style.setProperty('--mx', (w.x ?? 545) + 'px');
+  mind.style.setProperty('--my', (w.y ?? 760) + 'px');
+  mind.style.setProperty('--mw', (w.width ?? 560) + 'px');
+  mind.style.setProperty('--mh', (w.height ?? 400) + 'px');
+  drawHead();
+  let t = 0;
+  reel.screens.forEach(s => { s.start = t; t += s.duration; });
+  return t;
+};
+
+window.show = t => {
+  const screens = reel.screens;
+  let i = screens.findIndex(s => t < s.start + s.duration);
+  if (i < 0) i = screens.length - 1;
+  setScreen(i);
+  const local = t - screens[i].start;
+  // Each screen settles in over 0.18s: a slight zoom and a flicker of the window.
+  const k = Math.min(1, local / .18);
+  content.style.opacity = String(.2 + .8 * k);
+  content.style.transform = `scale(${1.06 - .06 * k})`;
+  content.style.filter = `blur(${(1 - k) * 6}px)`;
+  mind.style.opacity = String(local < .06 ? .82 : 1);
+};
+</script>
+</body>
+</html>
