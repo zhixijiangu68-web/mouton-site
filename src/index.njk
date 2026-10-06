@@ -114,6 +114,23 @@ preloadHero: true
     </div>
   </section>
 
+  <section class="section" id="guides" data-nav="light" data-nav-solid="light" aria-labelledby="guides-heading">
+    <div class="section-inner">
+      <div class="section-head" data-rise>
+        <div>
+          <p class="eyebrow">Guides</p>
+          <h2 class="section-title" id="guides-heading">選び方<em>— before you buy</em></h2>
+        </div>
+        <p class="copy">買う前に、何を見ればいいのか。記事で調べたことを、選ぶときの目安にまとめています。</p>
+      </div>
+      <div class="guide-grid">
+        {%- for a in collections.articles | guideCards %}
+        <a class="guide-card" data-rise href="{{ a.page.fileSlug }}.html"><span class="guide-tag">{{ a.data.guide.tag }}</span><h3>{{ a.data.guide.title }}</h3><p>{{ a.data.guide.text }}</p><span class="guide-more">約{{ a.data.readMinutes }}分で読む →</span></a>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
   <section class="section section-blue" id="foodscience" data-nav="dark" data-nav-solid="dark" aria-labelledby="foodscience-heading">
     <div class="section-inner">
       <div class="section-head" data-rise>

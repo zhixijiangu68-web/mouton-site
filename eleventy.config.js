@@ -36,6 +36,8 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter('isoDate', d => ymd(new Date(d)).join('-'));
   eleventyConfig.addFilter('dotDate', d => ymd(new Date(d)).join('.'));
+  eleventyConfig.addFilter('guideCards', items =>
+    items.filter(a => a.data.guide).sort((a, b) => a.data.guide.order - b.data.guide.order));
   eleventyConfig.addFilter('scienceCards', items =>
     items.filter(a => a.data.science).sort((a, b) => a.data.science.order - b.data.science.order));
   // First image in the list that exists, or '' so the placeholder art shows.
