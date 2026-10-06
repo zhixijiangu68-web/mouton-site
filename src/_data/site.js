@@ -9,7 +9,8 @@ export default {
     name: 'ムートン',
     x: 'kodoku__alone',
     // Instagram のユーザー名（@ なし）。フッター・運営者情報・links.html に出る。
-    instagram: 'art.gagaga',
+    // 休止中（2026-10-06〜）は空。再開するときは 'art.gagaga' に戻す。
+    instagram: '',
     bio: '興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。',
   },
   // Google Search Console の「HTML タグ」で確認するときの content の値。空なら出さない。
