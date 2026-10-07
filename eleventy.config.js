@@ -61,6 +61,13 @@ export default function (eleventyConfig) {
       return { id: `${q.slug}-${n[q.slug]}`, slug: q.slug, title: titles[q.slug], q: q.q, a: q.a, head: q.head, why: q.why };
     }));
   });
+  // Every article for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
+  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.map(a => ({
+    s: a.page.fileSlug,
+    t: a.data.journal ? a.data.journal.title : a.data.headline,
+    m: a.data.readMinutes,
+    q: (quizzes.find(q => q.slug === a.page.fileSlug) || {}).q || '',
+  }))));
   // First quiz question for an article, used as a teaser on "next to read" cards.
   eleventyConfig.addFilter('quizFor', (quizzes = [], slug) => (quizzes.find(q => q.slug === slug) || {}).q || '');
   eleventyConfig.addFilter('guideCards', items =>

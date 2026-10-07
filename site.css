@@ -331,3 +331,22 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .journal-item.is-read .journal-title::after,.guide-card.is-read h3::after,.topic-item.is-read .topic-title::after{content:"読んだ";display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;font-family:Inter,sans-serif;font-size:.6875rem;font-weight:400;letter-spacing:.06em;vertical-align:4px;background:rgba(27,28,25,.07);color:#5a5d55}
 .quiz-page .qloop{margin:30px 0 26px}
 .quiz-page-note{font-size:.8125rem!important;opacity:.65}
+
+/* "Pick one for me" (site.js) */
+.lucky{display:none;margin:22px 0 0}
+.js .lucky{display:block}
+.lucky-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 22px;border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;font:400 .9375rem/1.4 "Noto Serif JP",serif;cursor:pointer;transition:background .2s,color .2s}
+.lucky-btn:hover{background:#1b1c19;color:#fff;border-color:#1b1c19}
+.lucky-btn:focus-visible,.lucky-card:focus-visible{outline:2px solid #1442c4;outline-offset:3px}
+.lucky-out:empty{display:none}
+.lucky-out{margin-top:14px}
+.lucky-card{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid rgba(27,28,25,.16);border-radius:12px;background:#fff;color:#1b1c19!important;text-decoration:none!important}
+.lucky-card.is-spinning{opacity:.55;filter:blur(.4px)}
+.lucky-out.is-landed .lucky-card{animation:qloopPop .4s ease}
+.lucky-title{font:400 1.0625rem/1.7 "Noto Serif JP",serif}
+.lucky-q{font-size:.875rem;line-height:1.8;color:#5a5d55}
+.lucky-q b{font:500 .875rem Inter,sans-serif;color:#1442c4;margin-right:2px}
+.lucky-q em{margin-left:6px;font:normal .75rem Inter,sans-serif;color:#1442c4;white-space:nowrap}
+.lucky-meta{font:400 .8125rem Inter,sans-serif;color:#1442c4}
+.lucky-card:hover .lucky-title{color:#1442c4}
+@media (prefers-reduced-motion: reduce){.lucky-out.is-landed .lucky-card{animation:none}}

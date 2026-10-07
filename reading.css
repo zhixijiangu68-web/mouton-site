@@ -181,3 +181,4 @@ body.article-page .book-buy:hover { background:#1442c4 !important; }
 .read-mark-count { font-family:Inter,sans-serif; font-size:.8125rem; color:#5a5d55; }
 .read-mark-count b { font-weight:500; color:#1b1c19; }
 @media (prefers-reduced-motion: reduce){ .read-mark{ transition:none; } .read-mark.is-on .read-mark-check{ animation:none; } }
+.reading-card-q { word-break:normal; line-break:strict; }
