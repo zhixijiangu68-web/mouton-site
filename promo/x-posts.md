@@ -11,7 +11,7 @@
 
 ## 選び方（商品紹介がある記事。収益につながる）
 
-`src/articles/` で front matter に `guide` がある9本。1記事につき切り口の違う案を4本ずつ（順番表で使うのは35本。BP-4 は予備）。
+`src/articles/` で front matter に `guide` がある11本。最初の9本は切り口の違う案を4本ずつ、10/7 に加わった2本（TR・ES）は2本ずつ。BP-4・TR-2・ES-2 は予備。
 
 ### OL オリーブオイルの選び方（olive-oil-guide）
 
@@ -424,6 +424,54 @@ https://moutonarchive.com/books-philosophy.html?utm_source=x&utm_medium=social&u
 https://moutonarchive.com/books-philosophy.html?utm_source=x&utm_medium=social&utm_campaign=books-philosophy
 ```
 
+### TR 家庭用ミニトランポリンの選び方（mini-trampoline-guide）
+
+#### TR-1 決める順番
+```
+家で使うミニトランポリン、何から決める？
+
+置き場所に合う直径。体重に余裕のある耐荷重。音と振動が気になるならゴム式。ふらつきが心配なら手すり付き。
+
+この順に決めていけば、大きく外さない。研究と公的機関の注意喚起をもとに整理した。
+
+https://moutonarchive.com/mini-trampoline-guide.html?utm_source=x&utm_medium=social&utm_campaign=mini-trampoline-guide
+```
+
+#### TR-2 集合住宅と安全
+```
+集合住宅でミニトランポリンを使うなら。
+
+金属のバネがきしむ音が出ないゴム式を選び、下に防振・防音のマットを敷く。それでも振動はゼロにはならないので、使う時間帯に気を配る。
+
+跳ぶのは1人ずつ。宙返りはしない。
+
+https://moutonarchive.com/mini-trampoline-guide.html?utm_source=x&utm_medium=social&utm_campaign=mini-trampoline-guide
+```
+
+### ES 耳栓とアイマスクの選び方（earplug-eyemask-guide）
+
+#### ES-1 寝室の光
+```
+寝室の音と光、そのままにしてない？
+
+照明をつけた部屋で眠った晩は、暗い部屋より睡眠中の心拍数が高く、翌朝のインスリン抵抗性が上がっていた実験がある（人数の少ない短期間の実験）。
+
+耳栓とアイマスクの選び方をまとめた。
+
+https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide
+```
+
+#### ES-2 耳栓は耳に合うか
+```
+耳栓は、遮音の数値より「耳に合うか」。
+
+正しく入っていなければ、数値ほど遮音できない。フォームで耳が痛いなら、耳の入口をふさぐシリコンの耳栓もある。
+
+アイマスクは、目を押さない立体型か、鼻の横のすき間を見る。
+
+https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
@@ -597,7 +645,7 @@ https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_camp
 ## 順番表（10/7〜10/31）
 
 - 朝は 7〜8時ごろ、夜は 21〜22時ごろが目安（時間はオーナーの都合で動かしてよい）
-- 50枠のうち、選び方の記事が35枠（70%）、その他の記事が15枠（30%）
+- 50枠のうち、選び方の記事が37枠（74%）、その他の記事が13枠（26%）。10/7 に、新しい選び方2本（TR-1・ES-1）を読み物の2枠（R12・R1）と差し替えた。R12・R1 は予備
 - 朝は食事・体の「選び方」、夜は本の「選び方」か読み物。同じ記事の案は5日以上あけています
 - 投稿したら「投稿」に ✓、気づいたこと（いいね・リンクのクリック数など）は「メモ」へ
 
@@ -608,11 +656,11 @@ https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_camp
 | 10/8（木） | 朝 | CH-1 | 選び方 | ダークチョコの選び方 |  |  |
 | 10/8（木） | 夜 | BH-1 | 選び方 | 習慣を変えたいときに読む本 |  |  |
 | 10/9（金） | 朝 | OR-1 | 選び方 | 口臭ケアの道具の選び方 |  |  |
-| 10/9（金） | 夜 | R12 | 読み物 | 口臭の多くは「胃」ではなく、口の中から生まれる |  |  |
+| 10/9（金） | 夜 | TR-1 | 選び方 | 家庭用ミニトランポリンの選び方 |  |  |
 | 10/10（土） | 朝 | CF-1 | 選び方 | コーヒーの選び方と淹れ方 |  |  |
 | 10/10（土） | 夜 | BC-1 | 選び方 | 転職を考えはじめたときに読む本 |  |  |
 | 10/11（日） | 朝 | DE-1 | 選び方 | 制汗剤とデオドラントの選び方 |  |  |
-| 10/11（日） | 夜 | R1 | 読み物 | 日曜の夜が憂うつなのは、なぜか |  |  |
+| 10/11（日） | 夜 | ES-1 | 選び方 | 耳栓とアイマスクの選び方 |  |  |
 | 10/12（月） | 朝 | PT-1 | 選び方 | プロテインの選び方 |  |  |
 | 10/12（月） | 夜 | R6 | 読み物 | 昼寝は、何分がいいのか |  |  |
 | 10/13（火） | 朝 | OL-2 | 選び方 | オリーブオイルの選び方 |  |  |
