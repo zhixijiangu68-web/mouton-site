@@ -1,0 +1,50 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: en/guides.html
+jaPage: guides.html
+title: "Buying Guides — Mouton"
+description: "What to look at before you buy. Guides to food, body care, and books, based on the research and public information checked in the articles, focused on helping you choose for yourself."
+---
+{% include "partials/nav-en.njk" %}
+<div class="doc-cover ph-food" data-nav="dark"{% if (['images/cover-food.jpg'] | firstImage) %} style="--img:url('../images/cover-food.jpg')"{% endif %}></div>
+<main class="doc topic" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Guides</p>
+  <h1 class="doc-title">Buying guides</h1>
+  <p>What should you look at before you buy? These guides lay out what to check, based on the research and public information covered in the articles. The aim is to help you choose for yourself, rather than to push a particular brand.</p>
+  <div class="guide-policy">
+    <p class="guide-policy-head">How these guides are written</p>
+    <ul>
+      <li>They're based on research and information from public bodies, with sources listed at the end of each article.</li>
+      <li>They never claim that something "works" or "cures." What's known and what isn't are kept separate.</li>
+      <li>Some products are sold mainly in Japan. The English edition carries no affiliate links.</li>
+    </ul>
+  </div>
+  {%- set list = collections.articles | guideCards %}
+  <nav class="guide-jump" aria-label="Categories">
+    {%- for g in guideGroups %}<a href="#g-{{ g.key }}">{{ g.en }}</a>{% endfor %}
+  </nav>
+  {%- for g in guideGroups %}
+  <section class="guide-group" aria-labelledby="g-{{ g.key }}">
+    <h2 class="guide-group-title" id="g-{{ g.key }}">{{ g.en }}</h2>
+    <div class="topic-list">
+      {%- for a in list %}{% if a.data.guide.tag in g.tags and a.page.fileSlug in enSlugs %}
+      {%- set e = (collections.articlesEn | bySlugs([a.page.fileSlug]))[0] %}
+      <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+        <span class="topic-date">{{ a.data.guide.tag }}</span>
+        <span class="topic-title">{{ e.data.journal.title if e.data.journal else (e.data.science.title if e.data.science else e.data.headline) }}</span>
+        <span class="topic-excerpt">{{ e.data.journal.excerpt if e.data.journal else (e.data.science.text if e.data.science else e.data.description) }}</span>
+        <span class="topic-time">{{ e.data.readMinutes }} min read</span>
+      </a>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endfor %}
+  <nav class="topic-others" aria-label="More">
+    <a href="index.html#journal">All articles</a>
+  </nav>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links-en.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
