@@ -14,13 +14,13 @@
 
 ### 実験の中身
 
-ある実験では、参加者に中立的な表情の顔写真を見せながら、意識的には判別できないほど弱い匂いを同時に出した[1]。匂いは、心地よいものと不快なものの2種類だ。
+ある実験では、参加者に、気づけないほど弱くした匂いを嗅いでもらい、その直後に中立的な表情の顔写真を見せて、好感度を評価してもらった[1]。匂いは、心地よいもの・中立のもの・不快なものの3種類だ。
 
-そのあと顔の好感度を評価してもらうと、評価が変わった。心地よい匂いと組み合わされた顔のほうが、好意的に評価される傾向があった。ポイントは、参加者が匂いに気づいていないことだ。
+すると、直前に嗅いだ匂いによって、顔の好感度の評価が変わった。おもしろいのは、評価が動いたのは、匂いに気づかなかった参加者だけだったことだ。匂いに気づいた人では、この効果ははっきりしなかった。
 
 ### ただし、体臭の実験ではない
 
-ここは正確に書いておきたい。この実験は「顔写真と弱い匂い」の組み合わせを調べたもので、体臭そのものを使ったものではない。体臭で仕事の評価が下がる、と示した研究でもない。
+ここは正確に書いておきたい。この実験は「弱い匂いのあとに見た顔写真」の評価を調べたもので、体臭そのものを使ったものではない。体臭で仕事の評価が下がる、と示した研究でもない。
 
 それでも、一つのことは言える。匂いは、「臭い」とはっきり意識される前から、人の印象に影響する可能性がある。そもそも嫌悪は、腐ったものや病原体のように害になりうるものを避けるために発達した仕組みだと考えられている[2]。匂いを「たかが匂い」と軽く見ないほうがいい、と僕が思うのはそのためだ。
 
@@ -84,10 +84,8 @@ https://moutonarchive.com/deodorant-guide.html?utm_source=note&utm_medium=referr
 
 ## 参考文献
 
-【要確認：以下の文献はすべて、サイト記事の参考文献欄から写したもので、原著は未確認。公開前に原著を開いて内容と書誌を確かめ、確認できたらこの行を消す】
-
 1. Li W, Moallem I, Paller KA, Gottfried JA. Subliminal smells can guide social preferences. Psychological Science. 2007;18(12):1044–1049.
-2. Curtis V, de Barra M, Aunger R. Disgust as an adaptive system for disease avoidance behaviour. Phil Trans R Soc B. 2011;366(1563):389–401. https://pmc.ncbi.nlm.nih.gov/articles/PMC3013466/
+2. Curtis V, de Barra M, Aunger R. Disgust as an adaptive system for disease avoidance behaviour. Phil Trans R Soc B. 2011;366(1563):389–401. https://pmc.ncbi.nlm.nih.gov/articles/PMC3061113/
 3. Dalton P. Psychophysical and behavioral characteristics of olfactory adaptation. Chemical Senses. 2000;25(4):487–492. https://pubmed.ncbi.nlm.nih.gov/10944515/
 4. Quirynen M, Dadamio J, Van den Velde S, et al. Characteristics of 2000 patients who visited a halitosis clinic. J Clin Periodontol. 2009;36(11):970–975. PMID: 19811581.
 5. Natsch A, et al. A specific bacterial aminoacylase cleaves odorant precursors secreted in the human axilla. J Biol Chem. 2003;278(8):5718–5727. https://pubmed.ncbi.nlm.nih.gov/12419804/
