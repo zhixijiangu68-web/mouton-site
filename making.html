@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
+<title>制作 — ムートン</title>
+<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<link rel="canonical" href="https://moutonarchive.com/making.html">
+<meta property="og:title" content="制作 — ムートン">
+<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/making.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+/* MAKING: project status cards + dated log. Data lives in _data/projects.json and _data/makingLog.json. */
+.making { display:grid; grid-template-columns:minmax(0,1fr); }
+.making > * { min-width:0; }
+.making .mk-eyebrow { font-family:Inter,sans-serif; font-size:.75rem; line-height:1.8; letter-spacing:.1em; color:#53584f; margin:0 0 10px; }
+.making h2,.making h3 { font-family:"Noto Serif JP",serif; font-weight:400; color:var(--ink); }
+.making h2 { font-size:clamp(1.25rem,2.5vw,1.6rem); line-height:1.8; margin:0 0 20px; }
+.making h3 { font-size:1.25rem; line-height:1.7; margin:12px 0 8px; }
+.making p,.making li,.making dd { font-size:1rem; line-height:1.95; color:#444740; overflow-wrap:anywhere; }
+.making p { margin:0 0 16px; }
+.mk-head { padding:0 0 28px; border-bottom:1px solid var(--line); }
+.mk-section { padding:32px 0; border-top:1px solid var(--line); }
+.mk-section:first-of-type { border-top:0; }
+.mk-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+.mk-card { min-width:0; padding:24px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.42); scroll-margin-top:96px; }
+.mk-top { display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:space-between; align-items:center; font-size:.6875rem; line-height:1.7; color:#53584f; }
+.mk-state { padding:3px 9px; border-radius:99px; background:#e5eae1; color:#344b3d; }
+.making .mk-lead { font-family:"Noto Serif JP",serif; color:#252724; }
+.mk-card dl { margin:0; padding-top:14px; border-top:1px solid var(--line); }
+.mk-card dt { font-size:.75rem; color:#53584f; margin:0 0 4px; }
+.mk-card dd { margin:0 0 12px; }
+.mk-card ul { margin:0; padding-left:1.2em; }
+.mk-log { list-style:none; margin:0; padding:0; }
+.mk-log li { display:grid; grid-template-columns:7.5em minmax(0,1fr); gap:4px 16px; padding:18px 0; border-top:1px solid var(--line); }
+.mk-log li:first-child { border-top:0; }
+.mk-log time { font-family:Inter,sans-serif; font-size:.8125rem; color:#53584f; padding-top:4px; }
+.making .mk-log h3 { margin:0 0 4px; font-size:1.0625rem; }
+.making .mk-log p { margin:0; }
+.mk-tag { font-size:.6875rem; color:#53584f; letter-spacing:.06em; }
+@media(max-width:760px) {
+ .mk-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+ .mk-card { padding:20px 18px; }
+ .mk-section { padding:26px 0; }
+ .mk-log li { grid-template-columns:minmax(0,1fr); }
+}
+
+</style>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-hero" data-nav="dark"></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <header class="mk-head">
+    <p class="mk-eyebrow">PROJECTS / MAKING</p>
+    <h1 class="doc-title">作っている<wbr>もの。</h1>
+    <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
+  </header>
+
+  <section class="mk-section" aria-labelledby="mk-projects">
+    <p class="mk-eyebrow">01 / いま作っているもの</p>
+    <h2 id="mk-projects">それぞれの、<wbr>今の<wbr>状態。</h2>
+    <div class="mk-grid">
+      <article class="mk-card" id="kioku">
+        <div class="mk-top"><span>PROJECT 001 · APP / 視聴記録</span><span class="mk-state">制作中</span></div>
+        <h3>KIOKU</h3>
+        <p class="mk-lead">「観た」を、記憶に。</p>
+        <p>観たアニメを記録して、あとから振り返るためのアプリ。作品を探す、今夜観るものを選ぶ、観たものをマイページにまとめる、という流れを1つの画面で試している。</p>
+        <dl>
+          <dt>ここまで</dt><dd><ul><li>最初の画面を作った（作品を探す・今夜観るものを選ぶ・アニメの今を知る・マイページ）</li></ul></dd>
+          <dt>次にやること</dt><dd>日本語で作品を探し、迷わず記録できるようにする。検索から追加、履歴を振り返るまでの使いやすさを詰める。</dd>
+        </dl>
+      </article>
+      <article class="mk-card" id="diary">
+        <div class="mk-top"><span>PROJECT 002 · APP / 日記</span><span class="mk-state">試作中</span></div>
+        <h3>DIARY</h3>
+        <p class="mk-lead">一日を、AIと一緒に振り返る。</p>
+        <p>日記を書くと、振り返り・今日の気づき・自分への問いが返ってくる日記アプリの試作（AI JOURNAL）。日記はブラウザの中に保存して、過去の日を開き直せる。</p>
+        <dl>
+          <dt>ここまで</dt><dd><ul><li>バージョン0.1：日記を書く、振り返り・気づき・問いを表示する、過去の日記を開く</li><li>振り返りをもう一段深める流れと、見た目を整えた</li></ul></dd>
+          <dt>次にやること</dt><dd>いまの振り返りはブラウザ内の簡単な仕組み。安全なサーバーを経由して AI につなぎ、本文に合わせた振り返りを返せるようにする。</dd>
+        </dl>
+      </article>
+      <article class="mk-card" id="site">
+        <div class="mk-top"><span>PROJECT 003 · WEB / このサイト</span><span class="mk-state">毎日更新</span></div>
+        <h3>MOUTON</h3>
+        <p class="mk-lead">書いたものと作ったものを、1か所に。</p>
+        <p>このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。</p>
+        <dl>
+          <dt>ここまで</dt><dd><ul><li>9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた</li><li>記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした</li><li>独自ドメイン moutonarchive.com に移り、アクセス解析を入れた</li><li>AI の社員チーム（記事・編集・X・保守）が毎日動く形にした</li></ul></dd>
+          <dt>次にやること</dt><dd>10月中に、記事から最初の1件が売れるところまで持っていく。</dd>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ<wbr>日の<wbr>こと。</h2>
+    <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-07">2026.10.07</time>
+        <div><span class="mk-tag">MOUTON</span><h3>選び方の<wbr>記事が<wbr>11本に<wbr>なった。</h3><p>ミニトランポリンと、耳栓・アイマスクの選び方を足した。読み物から選び方へのリンクも5本につないだ。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-06">2026.10.06</time>
+        <div><span class="mk-tag">MOUTON</span><h3>サイトに<wbr>住所が<wbr>できた。</h3><p>独自ドメイン moutonarchive.com に移った。アクセス解析と Search Console も入れて、読まれ方が見えるようにした。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-05">2026.10.05</time>
+        <div><span class="mk-tag">MOUTON</span><h3>記事を<wbr>テンプレートから<wbr>作る<wbr>形にした。</h3><p>1本ずつ手で書いていたページを、テンプレートから自動で作る仕組みに移した。AI の社員に仕事を頼み始めた。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-01">2026.10.01</time>
+        <div><span class="mk-tag">DIARY</span><h3>日記アプリの<wbr>試作を<wbr>作った。</h3><p>日記を書くと、振り返り・気づき・問いが返ってくる。その日のうちに、振り返りを深める流れも足した。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-09-30">2026.09.30</time>
+        <div><span class="mk-tag">MOUTON</span><h3>自分の<wbr>Webサイトを<wbr>作り<wbr>始めた。</h3><p>自分の基地のような場所を、ようやく形にし始めた。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-09-25">2026.09.25</time>
+        <div><span class="mk-tag">KIOKU</span><h3>KIOKU の<wbr>最初の<wbr>画面を<wbr>作った。</h3><p>作品を探す、今夜観るものを選ぶ、マイページ。まずは1枚の画面に、流れ全体を置いてみた。</p></div>
+      </li>
+    </ol>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>
