@@ -41,6 +41,8 @@ description: "買う前に、何を見ればいいのか。食べ物、身体の
     </div>
   </section>
   {%- endfor %}
+  <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">買う前に、1問 <span>○×クイズ</span></p>
+  <div class="qloop" data-qloop data-prefer="{% for a in list %}{{ a.page.fileSlug }},{% endfor %}"></div></section>
   <nav class="topic-others" aria-label="ほかのテーマ">
     {%- for o in topics %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endfor %}
     <a href="index.html#journal">すべての記事</a>

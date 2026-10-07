@@ -350,3 +350,8 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .lucky-meta{font:400 .8125rem Inter,sans-serif;color:#1442c4}
 .lucky-card:hover .lucky-title{color:#1442c4}
 @media (prefers-reduced-motion: reduce){.lucky-out.is-landed .lucky-card{animation:none}}
+.quiz-more{display:none}
+.js .quiz-more{display:block}
+.doc-quiz{margin:56px 0 8px}
+.doc-quiz .quiz-more-title{margin:0 0 14px;font-family:"Noto Serif JP",serif;font-size:1.25rem;line-height:1.6}
+.doc-quiz .quiz-more-title span{margin-left:8px;font-family:Inter,sans-serif;font-size:.75rem;letter-spacing:.12em;opacity:.55}
