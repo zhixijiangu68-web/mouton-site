@@ -1299,6 +1299,38 @@ SPF50の日焼け止めを塗れば、SPF50の効果がある。
 https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=body
 ```
 
+### BM お金について最初に読む本（books-money）
+
+10/7 に加わった記事。順番表にはまだ入れていない（入れる枠はオーナーと X担当で決める）。
+
+#### BM-1 ○×：アマチュアのテニスは「ミス」で決まる
+```
+クイズ。
+
+アマチュアのテニスの試合で、勝ち負けを決めているのは「いいショット」か「ミス」か。
+
+答えはミス。プロはいいショットで点を取るが、アマチュアは相手のミスで点が入ることのほうが多い。投資の本『敗者のゲーム』の題名は、この話から来ている。
+```
+リプライ（自分の投稿に返信）：
+```
+「お金について最初に読む本」の記事はこちら → https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=reply
+```
+
+#### BM-2 【PR】考える順番別の4冊（新記事の告知）
+型：**本文リンク**
+```
+【PR】お金の本は、考える順番で選ぶ。
+
+1. 全体像：お金の大学
+2. 増やし方：敗者のゲーム
+3. 心理：サイコロジー・オブ・マネー
+4. 使い方：DIE WITH ZERO
+
+全部読まなくていい。いま迷っている順番の1冊から。
+
+https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=body
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
