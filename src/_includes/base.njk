@@ -15,6 +15,12 @@
 {%- if isArticle and page.fileSlug in enSlugs %}
 <link rel="alternate" hreflang="ja" href="{{ (page.fileSlug + '.html') | absoluteUrl(site.url) }}">
 <link rel="alternate" hreflang="en" href="{{ ('en/' + page.fileSlug + '.html') | absoluteUrl(site.url) }}">
+{%- elif enPage %}
+<link rel="alternate" hreflang="ja" href="{{ page.url | absoluteUrl(site.url) }}">
+<link rel="alternate" hreflang="en" href="{{ enPage | absoluteUrl(site.url) }}">
+{%- elif jaPage %}
+<link rel="alternate" hreflang="ja" href="{{ jaPage | absoluteUrl(site.url) }}">
+<link rel="alternate" hreflang="en" href="{{ page.url | absoluteUrl(site.url) }}">
 {%- elif page.url == '/' or page.url == '/en/' %}
 <link rel="alternate" hreflang="ja" href="{{ '' | absoluteUrl(site.url) }}">
 <link rel="alternate" hreflang="en" href="{{ 'en/' | absoluteUrl(site.url) }}">

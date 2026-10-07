@@ -2,14 +2,14 @@
 layout: base.njk
 bodyClass: site doc-page
 ---
-{% include "partials/nav.njk" %}
-<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
+{% include "partials/nav-en.njk" if lang == "en" else "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% if (['images/hero.jpg'] | firstImage) %} style="--img:url('{{ root }}images/hero.jpg')"{% endif %}></div>
 <main class="doc" data-nav="light" data-nav-solid="light">
   <p class="eyebrow">{{ eyebrow }}</p>
   <h1 class="doc-title">{{ heading or title }}</h1>
   {{ content | safe }}
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
-  {% include "partials/footer-links.njk" %}
+  {% include "partials/footer-links-en.njk" if lang == "en" else "partials/footer-links.njk" %}
   <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
 </footer>

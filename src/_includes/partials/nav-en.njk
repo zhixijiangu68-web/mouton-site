@@ -7,7 +7,7 @@
       {%- for t in topics %}
       <li><a href="index.html#{{ t.key }}">{{ t.en }}<span class="site-links-en">Articles</span></a></li>
       {%- endfor %}
-      <li><a href="../{{ (page.fileSlug + '.html') if isArticle else 'index.html' }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
+      <li><a href="../{{ jaPage or ((page.fileSlug + '.html') if isArticle else 'index.html') }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
     </ul>
   </nav>
 </div>

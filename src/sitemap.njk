@@ -14,6 +14,9 @@
   {%- for a in collections.articlesEn %}
   <url><loc>{{ ('en/' + a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</loc><lastmod>{{ (a.data.updated or a.page.date) | isoDate }}</lastmod></url>
   {%- endfor %}
+  <url><loc>{{ 'en/operator.html' | absoluteUrl(site.url) }}</loc></url>
+  <url><loc>{{ 'en/privacy.html' | absoluteUrl(site.url) }}</loc></url>
+  <url><loc>{{ 'en/contact.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'guides.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'now.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'making.html' | absoluteUrl(site.url) }}</loc></url>
