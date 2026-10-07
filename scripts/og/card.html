@@ -24,9 +24,10 @@
 </style></head>
 <body><div class="band"></div><div class="sun"></div><div class="face" id="face"></div>
 <div class="wrap"><div class="label" id="label"></div><span class="qtag">QUIZ</span><h1 id="title"></h1>
-<div class="foot"><span>ムートン</span><small>personal archive</small></div></div>
+<div class="foot"><span id="brand">ムートン</span><small>personal archive</small></div></div>
 <script>
-window.render = ({ title, label, quiz, face }) => {
+window.render = ({ title, label, quiz, face, brand = 'ムートン' }) => {
+  document.getElementById('brand').textContent = brand;
   document.body.classList.toggle('quiz', !!quiz);
   document.body.classList.toggle('has-face', !!face);
   document.body.style.setProperty('--right', face ? '500px' : '90px');
@@ -35,6 +36,6 @@ window.render = ({ title, label, quiz, face }) => {
   const h = document.getElementById('title');
   h.innerHTML = title;
   const len = h.textContent.length;
-  h.style.setProperty('--fs', (face ? (len > 40 ? 38 : len > 28 ? 44 : 52) : (len > 34 ? 50 : len > 24 ? 58 : 68)) + 'px');
+  h.style.setProperty('--fs', (face ? (len > 40 ? 38 : len > 28 ? 44 : 52) : (len > 80 ? 42 : len > 34 ? 50 : len > 24 ? 58 : 68)) + 'px');
 };
 </script></body></html>

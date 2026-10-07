@@ -5,7 +5,7 @@
     <ul class="site-links" id="site-links">
       <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
       {%- for t in topics %}
-      <li><a href="index.html#{{ t.key }}">{{ t.en }}<span class="site-links-en">{{ t.label }}</span></a></li>
+      <li><a href="index.html#{{ t.key }}">{{ t.en }}<span class="site-links-en">Articles</span></a></li>
       {%- endfor %}
       <li><a href="../{{ (page.fileSlug + '.html') if isArticle else 'index.html' }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
     </ul>

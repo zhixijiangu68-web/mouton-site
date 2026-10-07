@@ -162,7 +162,7 @@ export default function (eleventyConfig) {
       dateModified: iso(updated || date),
       author: {
         '@type': 'Person',
-        name: site.author.name,
+        name: lang === 'en' ? 'Mouton' : site.author.name,
         sameAs: sameAs(site),
         ...(site.url ? { url: new URL('operator.html', site.url.replace(/\/?$/, '/')).href } : {}),
       },

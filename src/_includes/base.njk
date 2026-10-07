@@ -23,14 +23,16 @@
 <meta property="og:title" content="{{ title }}">
 <meta property="og:description" content="{{ description }}">
 <meta property="og:type" content="{{ 'article' if isArticle else 'website' }}">
-<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:site_name" content="{{ 'Mouton' if lang == 'en' else site.name }}">
 <meta property="og:locale" content="{{ 'en_US' if lang == 'en' else 'ja_JP' }}">
 {%- if site.url %}
 <meta property="og:url" content="{{ pageUrl }}">
 {%- set shareImage = ('images/' + ogImage) if ogImage else ((['images/og/en/' + page.fileSlug + '.jpg', 'images/og/' + page.fileSlug + '.jpg'] if lang == 'en' else ['images/og/' + page.fileSlug + '.jpg']) | firstImage) or 'images/og-default.jpg' %}
 <meta property="og:image" content="{{ shareImage | absoluteUrl(site.url) }}">
 <meta name="twitter:card" content="summary_large_image">
+{%- if lang != 'en' %}
 <link rel="alternate" type="application/rss+xml" title="{{ site.name }}" href="{{ 'feed.xml' | absoluteUrl(site.url) }}">
+{%- endif %}
 {%- else %}
 <meta name="twitter:card" content="summary">
 {%- endif %}

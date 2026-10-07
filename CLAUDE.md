@@ -21,6 +21,7 @@
 - `src/_includes/`: 共通部分（head、ナビ、記事の末尾、フッター）
 - `site.css` / `site.js` / `home.css` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
 - 詳しい書き方は README.md の「記事を追加する」
+- `src/en/`: 英語版（`moutonarchive.com/en/`）。`src/en/articles/<ファイル名>.html` は日本語の記事と同じファイル名にする（hreflang と言語の切り替えが自動で付く）。英語版にはアフィリエイトのボタンと PR 表示を出さない（日本のお店のため。`productCard` はボタンなしのカードになる）。まだ訳していない記事へのリンクは、自動で日本語版に向く
 
 ## 記事を追加するとき
 
@@ -36,6 +37,7 @@
 3. `npm ci`（初回）→ `npm run build` → `npm test` を実行し、エラーがないことを確かめる
    - シェア用の画像（`images/og/<ファイル名>.jpg`）は `cd scripts/og && npm install && node make.mjs` で作り直せる（記事を足したら実行し、画像もコミットする）
 4. `src/articles/` の記事と、生成されたリポジトリ直下の HTML・`search.json` をまとめてコミットする
+5. 英語版も作るなら、`src/en/articles/` に同じファイル名で置く（既存の英語の記事をコピーし、末尾の include は `article-end-en.njk` / `reading-next-en.njk`）。シェア用の画像は `images/og/en/` に作られる
 
 ## 文章のルール
 
