@@ -34,6 +34,7 @@
   const exclude=(el.dataset.exclude||'').split(',').filter(Boolean);
   const prefer=(el.dataset.prefer||'').split(',').filter(Boolean);
   const run=+el.dataset.run||0;
+  const compact=el.hasAttribute('data-compact');
   const seen=new Set();
   let score=0,count=0,streak=0;
   const wrong=[];
@@ -62,6 +63,7 @@
      if((b.dataset.v==='1')===q.a)b.classList.add('is-answer');
     });
     btn.classList.add(right?'is-right':'is-wrong');
+    el.closest('.scene-hero')?.classList.add('is-quizzing');
     if(right){score++;streak++;}else{streak=0;wrong.push(q);}
     const answered=store.get('answered',{});answered[q.id]=right?1:0;store.set('answered',answered);
     const best=store.get('bestStreak',0);
@@ -71,10 +73,10 @@
     const last=run&&count>=run;
     el.querySelector('.qloop-result').innerHTML=
      `<p class="qloop-verdict ${right?'is-right':'is-wrong'}">${right?'正解':'ざんねん'}${right&&streak>1?`<span class="qloop-pop">${streak}問連続${newBest?'・自己ベスト':''}</span>`:''}</p>`
-     +`<p class="qloop-head">${esc(q.head)}</p><p class="qloop-why">${esc(q.why)}</p>`
+     +`<p class="qloop-head">${esc(q.head)}</p>${compact?'':`<p class="qloop-why">${esc(q.why)}</p>`}`
      +`<div class="qloop-actions">`
      +(last?`<button type="button" class="qloop-next">結果を見る <span aria-hidden="true">→</span></button>`:`<button type="button" class="qloop-next">次の問題 <span aria-hidden="true">→</span></button>`)
-     +`<a class="qloop-read" href="${root}${q.slug}.html">「${esc(q.title)}」を読む</a></div>`;
+     +(compact?`<a class="qloop-read" href="${root}${q.slug}.html">理由を記事で読む <span aria-hidden="true">→</span></a></div>`:`<a class="qloop-read" href="${root}${q.slug}.html">「${esc(q.title)}」を読む</a></div>`);
     const next=el.querySelector('.qloop-next');
     next.addEventListener('click',()=>{track('quiz_next',{where:run?'challenge':location.pathname});last?finish():show();});
     el.querySelector('.qloop-read').addEventListener('click',()=>track('quiz_read',{article:q.slug,where:run?'challenge':location.pathname}));
