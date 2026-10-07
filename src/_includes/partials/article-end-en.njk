@@ -1,0 +1,16 @@
+{%- if health %}
+<aside class="article-note" aria-label="Note">
+  <p class="article-note-title">About this article</p>
+  <p>This article is general information based on published research and public health sources. It is not a substitute for diagnosis or treatment by a doctor. If you are worried about your health, or have a condition or take medication, please talk to a medical professional.</p>
+</aside>
+{%- endif %}
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">Written by</p>
+    <p class="author-name" id="author-box-name">Mouton</p>
+    <p class="author-bio">I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, and about the body and food, checking papers and data along the way. This is the English edition of a Japanese site.</p>
+    <p class="author-links"><a href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }} <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">Published {{ page.date | dotDate }}{% if updated %}　Updated {{ updated | dotDate }}{% endif %}</p>
+  </div>
+</aside>
