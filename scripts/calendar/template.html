@@ -2,197 +2,284 @@
 <!-- 生成物: scripts/calendar/make.mjs が promo/x-posts.md から作る。直接編集しない -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: 上に1か月の帯（進み具合）、その下に「時間帯 × 曜日」の時間割。ブロックを押すと右（スマホは下）にその日の段取り。
-   色は「どこで」：X＝藍、Claude＝青緑、管理画面＝朱。 */
+/* Layout: 左に小さな月と進み具合、中央に「日・週・月」を切り替える予定表、右（スマホは下から出るシート）に予定の中身。
+   色は「どこで」：X＝藍、Claude＝青緑、管理画面＝黄土。赤い線は今の時刻。 */
 :root {
-  --bg: #f3f4f1;
+  --bg: #f5f6f4;
   --surface: #ffffff;
-  --ink: #1d2226;
-  --muted: #646d73;
-  --line: #d9ddd8;
-  --accent: #2a6b70;
-  --x: #3f4aa0;
-  --x-soft: #e4e6f6;
-  --claude: #22706f;
-  --claude-soft: #d9ecea;
-  --admin: #a2463b;
-  --admin-soft: #f6e2de;
-  --done: #3d7a3a;
-  --warn: #b3261e;
-  --now: #c7880f;
+  --sunk: #eef0ed;
+  --ink: #1b1f22;
+  --muted: #6b7378;
+  --faint: #a3aaae;
+  --line: #e4e7e3;
+  --x: #4651b5;
+  --x-soft: #e8eafb;
+  --claude: #1d776f;
+  --claude-soft: #dcefec;
+  --admin: #a8680f;
+  --admin-soft: #f7ecd9;
+  --done: #2f7d4a;
+  --now: #e2453c;
+  --shadow: 0 1px 2px rgb(20 30 40 / 0.05), 0 8px 24px rgb(20 30 40 / 0.06);
   --f-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  --hour: 52px;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e; --accent: #7cc2c6;
-    --x: #a7aef2; --x-soft: #2a2e4c; --claude: #7cc8c4; --claude-soft: #1f3a39; --admin: #ef9a8f; --admin-soft: #45292a;
-    --done: #86c77f; --warn: #ff8a80; --now: #f0b54a;
+    --bg: #111416; --surface: #191d20; --sunk: #14181a; --ink: #e8ebe9; --muted: #9aa3a8; --faint: #5f686d; --line: #2a3034;
+    --x: #a9b0ff; --x-soft: #262a4a; --claude: #78cdc3; --claude-soft: #183633; --admin: #e8b464; --admin-soft: #3a2e1a;
+    --done: #7fd39a; --now: #ff6b61; --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e; --accent: #7cc2c6;
-  --x: #a7aef2; --x-soft: #2a2e4c; --claude: #7cc8c4; --claude-soft: #1f3a39; --admin: #ef9a8f; --admin-soft: #45292a;
-  --done: #86c77f; --warn: #ff8a80; --now: #f0b54a;
+  --bg: #111416; --surface: #191d20; --sunk: #14181a; --ink: #e8ebe9; --muted: #9aa3a8; --faint: #5f686d; --line: #2a3034;
+  --x: #a9b0ff; --x-soft: #262a4a; --claude: #78cdc3; --claude-soft: #183633; --admin: #e8b464; --admin-soft: #3a2e1a;
+  --done: #7fd39a; --now: #ff6b61; --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px rgb(0 0 0 / 0.25);
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
-.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
-h1, h2, h3 { text-wrap: balance; margin: 0; }
-h1 { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
-h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; }
-.sub { color: var(--muted); font-size: 0.8125rem; font-family: var(--f-body); font-weight: 400; margin-left: 8px; }
-.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 24px; }
-.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 0; font-size: 0.875rem; color: var(--muted); }
-.flow b { color: var(--ink); font-weight: 500; }
-.kpis { display: flex; flex-wrap: wrap; gap: 8px; }
-.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 14px; min-width: 7.5rem; }
-.kpi span { display: block; font-size: 0.6875rem; color: var(--muted); letter-spacing: 0.04em; }
-.kpi b { font-family: var(--f-mono); font-weight: 500; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
-.kpi small { color: var(--muted); font-size: 0.75rem; margin-left: 2px; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 0.8125rem; color: var(--muted); }
-.legend span { display: inline-flex; gap: 6px; align-items: center; }
-.sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 2px solid; }
-.sw.x { background: var(--x-soft); border-color: var(--x); }
-.sw.c { background: var(--claude-soft); border-color: var(--claude); }
-.sw.a { background: var(--admin-soft); border-color: var(--admin); }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+button { font: inherit; color: inherit; }
+button:focus-visible { outline: 2px solid var(--x); outline-offset: 2px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
 
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
-.panel-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
-.btn { font: inherit; font-size: 0.8125rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
-.btn:hover { border-color: var(--accent); }
-.btn:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.btn:disabled { opacity: 0.4; cursor: default; }
-.btn[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
-.nav { display: flex; gap: 6px; margin-left: auto; }
+.app { max-width: 1440px; margin: 0 auto; padding-inline: 16px; padding-block: 20px 40px; display: grid; gap: 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1100px) { .app { grid-template-columns: 252px minmax(0, 1fr) 360px; align-items: start; } }
 
-/* 1か月の帯 */
-.strip { margin-top: 20px; }
-.scroll { overflow-x: auto; }
-.months { display: grid; grid-template-columns: 3.2rem repeat(31, minmax(18px, 1fr)); gap: 3px 2px; min-width: 640px; margin-top: 12px; align-items: center; }
-.rl { font-size: 0.6875rem; color: var(--muted); white-space: nowrap; }
-.phase { height: 26px; border-radius: 4px; background: var(--claude-soft); color: var(--claude); font-size: 0.6875rem; font-weight: 700; display: flex; align-items: center; padding: 0 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; border: 1px solid transparent; cursor: pointer; }
-.phase.cur { border-color: var(--claude); }
-.dnum { font-family: var(--f-mono); font-size: 0.625rem; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; line-height: 1.2; }
-.dnum.mon { color: var(--ink); }
-.dnum.today { color: var(--surface); background: var(--now); border-radius: 3px; }
-.sq { height: 18px; border-radius: 3px; border: 1.5px solid var(--x); background: transparent; padding: 0; cursor: pointer; }
-.sq.done { background: var(--x); }
-.sq.miss { border-color: var(--warn); border-style: dashed; }
-.sq.none { border: none; cursor: default; }
-.sq.ev { border-color: var(--admin); background: var(--admin-soft); border-radius: 50%; height: 14px; width: 14px; justify-self: center; }
-.sq.sel { outline: 2px solid var(--now); outline-offset: 1px; }
-.col-today { box-shadow: inset 0 0 0 999px color-mix(in srgb, var(--now) 10%, transparent); }
+/* 左：小さな月・進み具合 */
+.side { display: none; }
+@media (min-width: 1100px) { .side { display: grid; gap: 22px; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); } }
+.brand h1 { font-family: var(--f-display); font-weight: 600; font-size: 1.375rem; line-height: 1.35; }
+.brand p { margin: 4px 0 0; font-size: 0.8125rem; color: var(--muted); }
+.mini-head { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 0.875rem; }
+.mini { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; margin-top: 8px; text-align: center; }
+.mini .w { font-size: 0.6875rem; color: var(--faint); padding-bottom: 2px; }
+.mini button { border: none; background: none; aspect-ratio: 1; border-radius: 50%; font-family: var(--f-mono); font-size: 0.75rem; cursor: pointer; position: relative; transition: background .2s var(--ease); font-variant-numeric: tabular-nums; }
+.mini button:hover { background: var(--sunk); }
+.mini button.out { color: var(--faint); cursor: default; }
+.mini button.wk { background: var(--sunk); border-radius: 0; }
+.mini button.today { background: var(--now); color: #fff; border-radius: 50%; }
+.mini button.cur:not(.today) { box-shadow: inset 0 0 0 1.5px var(--ink); border-radius: 50%; }
+.mini button i { position: absolute; left: 50%; bottom: 2px; width: 4px; height: 4px; border-radius: 50%; transform: translateX(-50%); background: var(--x); }
+.mini button.today i { background: #fff; }
+.prog { display: grid; gap: 10px; }
+.prog-row { display: flex; justify-content: space-between; font-size: 0.8125rem; color: var(--muted); }
+.prog-row b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.bar { height: 6px; background: var(--sunk); border-radius: 99px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--x); border-radius: 99px; transition: width .6s var(--ease); }
+.legend { display: grid; gap: 6px; font-size: 0.8125rem; color: var(--muted); }
+.legend span { display: flex; align-items: center; gap: 8px; }
+.dot { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.dot.x { background: var(--x); } .dot.c { background: var(--claude); } .dot.a { background: var(--admin); }
+.theme-card { font-size: 0.8125rem; color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; }
+.theme-card b { display: block; color: var(--ink); font-size: 0.75rem; letter-spacing: 0.06em; }
 
-/* 時間割 */
-.main { display: grid; gap: 20px; margin-top: 20px; }
-@media (min-width: 1000px) { .main { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: start; } .day { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; } }
-.tt { display: grid; grid-template-columns: 4rem repeat(7, minmax(72px, 1fr)); gap: 4px; min-width: 580px; margin-top: 12px; }
-/* スマホ：行＝曜日、列＝時間帯に入れ替える */
-.tt.tr { grid-template-columns: 3rem repeat(4, minmax(0, 1fr)); min-width: 0; }
-.tt.tr .band { text-align: center; padding: 0 0 2px; }
-.tt.tr .th { padding: 6px 0; }
-.tt.tr .slot { min-height: 52px; }
-.th { font-size: 0.8125rem; text-align: center; padding: 4px 0; border-radius: 6px; font-weight: 500; }
-.th small { display: block; font-family: var(--f-mono); font-size: 0.6875rem; color: var(--muted); font-weight: 500; }
-.th.today { background: var(--now); color: var(--surface); }
-.th.today small { color: var(--surface); }
-.th.sel:not(.today) { outline: 2px solid var(--now); outline-offset: -2px; }
-.th.out { opacity: 0.35; }
-.band { font-size: 0.75rem; color: var(--muted); padding: 6px 4px 0 0; line-height: 1.35; }
-.band b { display: block; color: var(--ink); font-size: 0.8125rem; }
-.slot { min-height: 64px; border-radius: 6px; background: color-mix(in srgb, var(--line) 35%, transparent); padding: 3px; display: flex; flex-direction: column; gap: 3px; }
-.slot.today { background: color-mix(in srgb, var(--now) 14%, transparent); }
-.slot.now { box-shadow: inset 0 0 0 2px var(--now); }
-.slot.out { background: transparent; }
-.blk { display: block; width: 100%; text-align: left; font: inherit; border: none; border-left: 4px solid; border-radius: 4px; padding: 4px 6px; cursor: pointer; line-height: 1.35; }
-.blk:hover { filter: brightness(0.97); }
-.blk.x { background: var(--x-soft); border-color: var(--x); color: var(--ink); }
-.blk.c { background: var(--claude-soft); border-color: var(--claude); color: var(--ink); }
-.blk.a { background: var(--admin-soft); border-color: var(--admin); color: var(--ink); }
-.blk.done { opacity: 0.55; }
-.blk .t1 { display: flex; gap: 4px; align-items: center; font-size: 0.6875rem; font-weight: 700; }
-.blk.x .t1 { color: var(--x); } .blk.c .t1 { color: var(--claude); } .blk.a .t1 { color: var(--admin); }
-.blk .t1 .ok { color: var(--done); margin-left: auto; }
-.blk .t2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.75rem; }
-.badge { font-size: 0.625rem; font-weight: 500; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px; }
-.now-tag { font-size: 0.625rem; color: var(--surface); background: var(--now); border-radius: 3px; padding: 0 4px; align-self: flex-start; }
+/* 中央：予定表 */
+.main { min-width: 0; background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+.bar-top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 16px 18px 12px; }
+.bar-top h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.375rem; letter-spacing: 0.01em; min-width: 0; }
+.bar-top h2 small { font-family: var(--f-body); font-weight: 400; font-size: 0.8125rem; color: var(--muted); margin-left: 6px; }
+.nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.icon { width: 34px; height: 34px; border-radius: 50%; border: none; background: none; cursor: pointer; display: grid; place-items: center; transition: background .2s var(--ease), transform .15s var(--ease); }
+.icon:hover { background: var(--sunk); }
+.icon:active { transform: scale(.92); }
+.icon:disabled { opacity: .3; cursor: default; background: none; }
+.icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pill { border: 1px solid var(--line); background: var(--surface); border-radius: 99px; padding: 5px 14px; font-size: 0.8125rem; cursor: pointer; transition: background .2s var(--ease); }
+.pill:hover { background: var(--sunk); }
+.seg { position: relative; display: inline-grid; grid-template-columns: repeat(3, 1fr); background: var(--sunk); border-radius: 99px; padding: 3px; }
+.seg button { position: relative; z-index: 1; border: none; background: none; padding: 5px 16px; font-size: 0.8125rem; cursor: pointer; border-radius: 99px; transition: color .25s var(--ease); color: var(--muted); }
+.seg button[aria-pressed="true"] { color: var(--ink); font-weight: 700; }
+.seg .ind { position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / 3); border-radius: 99px; background: var(--surface); box-shadow: 0 1px 3px rgb(0 0 0 / .12); transition: transform .35s var(--ease); }
+.mobile-prog { display: flex; gap: 14px; align-items: center; padding: 0 18px 12px; font-size: 0.75rem; color: var(--muted); }
+.mobile-prog .bar { flex: 1; }
+.mobile-prog b { font-family: var(--f-mono); color: var(--ink); font-weight: 500; }
+@media (min-width: 1100px) { .mobile-prog { display: none; } }
 
-/* その日の段取り */
-.day-head h2 { font-size: 1.375rem; }
-.day-head .tag { font-size: 0.75rem; color: var(--surface); background: var(--now); border-radius: 3px; padding: 1px 6px; }
-.theme { margin: 6px 0 0; font-size: 0.875rem; color: var(--muted); }
-.tl { list-style: none; margin: 10px 0 0; padding: 0; }
-.task { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
-.task.flash { animation: flash 1.2s ease-out; }
-@keyframes flash { from { background: color-mix(in srgb, var(--now) 22%, transparent); } to { background: transparent; } }
-.when { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
-.when b { display: block; font-family: var(--f-body); font-size: 0.9375rem; color: var(--ink); }
-.what { min-width: 0; }
-.what h3 { font-size: 1rem; font-weight: 700; line-height: 1.5; }
-.where { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.04em; border-radius: 3px; padding: 0 6px; margin-right: 6px; vertical-align: 2px; font-weight: 700; color: var(--surface); }
-.where.x { background: var(--x); } .where.c { background: var(--claude); } .where.a { background: var(--admin); }
-.meta { font-size: 0.8125rem; color: var(--muted); margin: 2px 0 0; }
+.cal { view-transition-name: cal; touch-action: pan-y; }
+
+/* 時間軸（日・週） */
+.strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; padding: 0 12px 10px; }
+.strip button { border: none; background: none; border-radius: 12px; padding: 6px 0 8px; cursor: pointer; display: grid; justify-items: center; gap: 2px; transition: background .2s var(--ease); }
+.strip button:hover { background: var(--sunk); }
+.strip .dw { font-size: 0.6875rem; color: var(--muted); }
+.strip .dn { font-family: var(--f-mono); font-size: 1rem; width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; font-variant-numeric: tabular-nums; transition: background .25s var(--ease), color .25s var(--ease); }
+.strip .on .dn { background: var(--ink); color: var(--surface); }
+.strip .today .dn { color: var(--now); font-weight: 500; }
+.strip .on.today .dn { background: var(--now); color: #fff; }
+.strip .out { opacity: .35; pointer-events: none; }
+.dots { display: flex; gap: 3px; height: 5px; }
+.dots i { width: 5px; height: 5px; border-radius: 50%; }
+.dots i.x { background: var(--x); } .dots i.c { background: var(--claude); } .dots i.a { background: var(--admin); }
+.dots i.ok { opacity: .35; }
+
+.tg-head { display: grid; grid-template-columns: 52px repeat(var(--cols), minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.tg-head button { border: none; background: none; padding: 4px 0 10px; cursor: pointer; display: grid; justify-items: center; gap: 2px; }
+.tg-head .dw { font-size: 0.6875rem; color: var(--muted); }
+.tg-head .dn { font-family: var(--f-mono); font-size: 1.0625rem; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; transition: background .25s var(--ease); }
+.tg-head button:hover .dn { background: var(--sunk); }
+.tg-head .today .dn { background: var(--now); color: #fff; }
+.tg-head .out { opacity: .35; pointer-events: none; }
+.tg-body { height: min(calc(100vh - 190px), 900px); min-height: 420px; overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth; position: relative; }
+.tg-grid { display: grid; grid-template-columns: 52px repeat(var(--cols), minmax(0, 1fr)); position: relative; height: calc(var(--hour) * var(--span)); }
+.hours { position: relative; }
+.hours span { position: absolute; right: 8px; transform: translateY(-50%); font-family: var(--f-mono); font-size: 0.6875rem; color: var(--faint); font-variant-numeric: tabular-nums; }
+.col { position: relative; border-left: 1px solid var(--line); background-image: linear-gradient(var(--line) 1px, transparent 1px); background-size: 100% var(--hour); }
+.col.today { background-color: color-mix(in srgb, var(--now) 4%, transparent); }
+.col.out { background-color: var(--sunk); }
+.ev { position: absolute; border: none; text-align: left; border-radius: 8px; padding: 4px 7px; cursor: pointer; overflow: hidden; line-height: 1.3; border-left: 3px solid; transition: transform .2s var(--ease), box-shadow .2s var(--ease), opacity .2s; animation: pop .45s var(--ease) both; animation-delay: calc(var(--i, 0) * 25ms); }
+.ev:hover { transform: translateY(-1px); box-shadow: var(--shadow); z-index: 3; }
+.ev.sel { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px currentColor; z-index: 4; }
+.ev.x { background: var(--x-soft); border-color: var(--x); color: var(--x); }
+.ev.c { background: var(--claude-soft); border-color: var(--claude); color: var(--claude); }
+.ev.a { background: var(--admin-soft); border-color: var(--admin); color: var(--admin); }
+.ev.ok { opacity: .55; }
+.ev .tm { display: flex; gap: 6px; align-items: center; font-family: var(--f-mono); font-size: 0.6875rem; }
+.ev .tm em { font-style: normal; font-family: var(--f-body); font-weight: 700; font-size: 0.625rem; border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; white-space: nowrap; }
+.ev .tm .ck { margin-left: auto; color: var(--done); font-weight: 700; }
+.ev .tt { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; color: var(--ink); font-size: 0.75rem; font-weight: 500; margin-top: 1px; }
+.narrow-week .ev { padding: 3px 4px; }
+.narrow-week .ev .tm em, .narrow-week .ev .tm span { display: none; }
+.nowline { position: absolute; left: -1px; right: 0; height: 2px; background: var(--now); z-index: 5; pointer-events: none; transition: top 1s linear; }
+.nowline::before { content: ""; position: absolute; left: -5px; top: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--now); }
+.nowlabel { position: absolute; right: 4px; transform: translateY(-50%); font-family: var(--f-mono); font-size: 0.6875rem; color: #fff; background: var(--now); border-radius: 4px; padding: 0 4px; z-index: 6; }
+@keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.98); } }
+
+/* 月 */
+.mo-dow { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); padding: 0 12px; font-size: 0.6875rem; color: var(--muted); text-align: center; }
+.mo { padding: 4px 12px 14px; display: grid; gap: 0; }
+.mo-wk { font-size: 0.6875rem; color: var(--muted); padding: 10px 4px 4px; display: flex; gap: 8px; align-items: baseline; }
+.mo-wk b { color: var(--claude); letter-spacing: .06em; flex: none; }
+.mo-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+.mo-cell { min-width: 0; min-height: 104px; border: none; border-left: 1px solid var(--line); background: none; text-align: left; padding: 6px 5px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; transition: background .2s var(--ease); animation: pop .4s var(--ease) both; animation-delay: calc(var(--i, 0) * 8ms); }
+.mo-cell:first-child { border-left: none; }
+.mo-cell:hover { background: var(--sunk); }
+.mo-cell.out { cursor: default; background: none; }
+.mo-cell.out .mn { color: var(--faint); }
+.mo-cell.past { opacity: .62; }
+.mn { font-family: var(--f-mono); font-size: 0.8125rem; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 50%; font-variant-numeric: tabular-nums; flex: none; }
+.mo-cell.today .mn { background: var(--now); color: #fff; }
+.mo-cell.on:not(.today) .mn { background: var(--ink); color: var(--surface); }
+.mp { display: flex; gap: 4px; align-items: center; font-size: 0.6875rem; line-height: 1.45; border-radius: 4px; padding: 0 4px; min-width: 0; max-width: 100%; white-space: nowrap; overflow: hidden; }
+.mp span { overflow: hidden; text-overflow: ellipsis; }
+.mp.x { background: var(--x-soft); } .mp.c { background: var(--claude-soft); } .mp.a { background: var(--admin-soft); }
+.mp.ok span { text-decoration: line-through; text-decoration-color: var(--faint); color: var(--muted); }
+.mo-cell .dots { display: none; }
+@media (max-width: 700px) {
+  .mo-cell { min-height: 60px; align-items: center; padding: 4px 2px; }
+  .mo-cell .mp { display: none; }
+  .mo-cell .dots { display: flex; flex-wrap: wrap; justify-content: center; height: auto; }
+}
+
+/* 右：予定の中身 */
+.panel { min-width: 0; background: var(--surface); border-radius: 16px; box-shadow: var(--shadow); padding: 20px 20px 16px; }
+@media (min-width: 1100px) { .panel { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 20px); max-height: calc(100vh - 40px); overflow-y: auto; } .grab, .close { display: none; } }
+@media (max-width: 1099px) {
+  .panel { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; max-height: 82vh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 8px 18px calc(env(safe-area-inset-bottom, 0px) + 20px); transform: translateY(105%); transition: transform .45s var(--ease); visibility: hidden; }
+  .panel.open { transform: none; visibility: visible; }
+  .scrim { position: fixed; inset: 0; z-index: 19; background: rgb(0 0 0 / .32); opacity: 0; pointer-events: none; transition: opacity .35s var(--ease); }
+  .scrim.open { opacity: 1; pointer-events: auto; }
+}
+@media (min-width: 1100px) { .scrim { display: none; } }
+.grab { width: 40px; height: 5px; border-radius: 99px; background: var(--line); margin: 4px auto 10px; }
+.close { float: right; }
+.p-date { font-size: 0.8125rem; color: var(--muted); }
+.p-title { font-size: 1.125rem; font-weight: 700; line-height: 1.5; margin-top: 4px; }
+.p-time { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; margin-top: 8px; font-size: 0.8125rem; color: var(--muted); }
+.p-time b { font-family: var(--f-mono); font-weight: 500; color: var(--ink); }
+.tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 700; border-radius: 99px; padding: 1px 10px; }
+.tag.x { background: var(--x-soft); color: var(--x); } .tag.c { background: var(--claude-soft); color: var(--claude); } .tag.a { background: var(--admin-soft); color: var(--admin); }
+.meta { font-size: 0.8125rem; color: var(--muted); margin: 10px 0 0; }
 .meta code { font-family: var(--f-mono); font-size: 0.75rem; }
-.steps { margin: 8px 0 0; padding-left: 1.3em; font-size: 0.875rem; }
-.steps li + li { margin-top: 2px; }
-.copy { margin-top: 10px; }
-.copy-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
-.copy pre { margin: 4px 0 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; font-family: var(--f-body); font-size: 0.875rem; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
-.opts { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; }
-.opts li { font-size: 0.875rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
-.check { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); cursor: pointer; }
-.check input { width: 16px; height: 16px; accent-color: var(--done); }
-.posted { color: var(--done); font-weight: 700; font-size: 0.8125rem; margin: 4px 0 0; }
-.empty { color: var(--muted); padding: 14px 0; border-top: 1px solid var(--line); }
-.foot { margin-top: 28px; font-size: 0.8125rem; color: var(--muted); }
-.foot code { font-family: var(--f-mono); font-size: 0.75rem; }
-@media (max-width: 520px) { .task { grid-template-columns: 1fr; gap: 4px; } .when b { display: inline; margin-right: 8px; } h1 { font-size: 1.5rem; } }
-@media (prefers-reduced-motion: reduce) { .task.flash { animation: none; } }
+.steps { margin: 14px 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 8px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 22px 1fr; gap: 8px; font-size: 0.875rem; }
+.steps li::before { content: counter(s); width: 22px; height: 22px; border-radius: 50%; background: var(--sunk); display: grid; place-items: center; font-family: var(--f-mono); font-size: 0.6875rem; color: var(--muted); }
+.copy { margin-top: 14px; }
+.copy-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--muted); letter-spacing: .04em; }
+.copy pre { margin: 6px 0 0; padding: 12px 14px; background: var(--sunk); border-radius: 10px; font-family: var(--f-body); font-size: 0.875rem; line-height: 1.75; white-space: pre-wrap; word-break: break-all; }
+.cbtn { border: none; background: var(--ink); color: var(--surface); border-radius: 99px; padding: 3px 12px; font-size: 0.75rem; cursor: pointer; transition: transform .15s var(--ease), background .2s; }
+.cbtn:active { transform: scale(.94); }
+.cbtn.ok { background: var(--done); }
+.opts { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.opts li { font-size: 0.875rem; padding: 6px 12px; border: 1px solid var(--line); border-radius: 99px; }
+.done-btn { margin-top: 16px; width: 100%; border: 1.5px solid var(--line); background: none; border-radius: 12px; padding: 10px; font-size: 0.875rem; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: background .25s var(--ease), border-color .25s var(--ease), color .25s; }
+.done-btn:hover { border-color: var(--done); }
+.done-btn[aria-pressed="true"] { background: var(--done); border-color: var(--done); color: #fff; }
+.posted { margin-top: 12px; color: var(--done); font-weight: 700; font-size: 0.8125rem; }
+.agenda { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 4px; }
+.agenda button { width: 100%; border: none; background: none; text-align: left; display: grid; grid-template-columns: 44px 3px minmax(0, 1fr); gap: 10px; align-items: center; padding: 8px 6px; border-radius: 10px; cursor: pointer; transition: background .2s var(--ease); }
+.agenda button:hover { background: var(--sunk); }
+.agenda .t { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); }
+.agenda .b { align-self: stretch; border-radius: 2px; }
+.agenda .b.x { background: var(--x); } .agenda .b.c { background: var(--claude); } .agenda .b.a { background: var(--admin); }
+.agenda .n { font-size: 0.875rem; font-weight: 500; }
+.agenda .n small { display: block; color: var(--muted); font-weight: 400; font-size: 0.75rem; }
+.agenda .ok .n { color: var(--muted); text-decoration: line-through; }
+.back { border: none; background: none; color: var(--muted); font-size: 0.8125rem; cursor: pointer; padding: 0; margin-bottom: 8px; }
+.back:hover { color: var(--ink); }
+.foot { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); text-align: center; margin: 0; }
+.foot code { font-family: var(--f-mono); }
+.fade { animation: fadeUp .35s var(--ease) both; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } }
+
+/* 画面の切り替え（対応ブラウザだけ） */
+::view-transition-old(cal), ::view-transition-new(cal) { animation-duration: .36s; animation-timing-function: var(--ease); }
+:root[data-dir="next"]::view-transition-old(cal) { animation-name: outL; }
+:root[data-dir="next"]::view-transition-new(cal) { animation-name: inR; }
+:root[data-dir="prev"]::view-transition-old(cal) { animation-name: outR; }
+:root[data-dir="prev"]::view-transition-new(cal) { animation-name: inL; }
+@keyframes outL { to { opacity: 0; transform: translateX(-40px); } }
+@keyframes inR { from { opacity: 0; transform: translateX(40px); } }
+@keyframes outR { to { opacity: 0; transform: translateX(40px); } }
+@keyframes inL { from { opacity: 0; transform: translateX(-40px); } }
+@media (prefers-reduced-motion: reduce) {
+  *, ::view-transition-old(cal), ::view-transition-new(cal) { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
 </style>
 
-<div class="wrap">
-  <header>
-    <div class="top">
-      <div>
-        <h1>ムートン運用カレンダー</h1>
-        <p class="flow"><b>X に投稿</b> → <b>「選び方」の記事</b> → <b>Amazon・楽天</b>　10月中に最初の1件を売る</p>
-      </div>
-      <div class="kpis" id="kpis"></div>
+<div class="app">
+  <aside class="side" aria-label="概要">
+    <div class="brand">
+      <h1>ムートン運用カレンダー</h1>
+      <p>X に投稿 → 「選び方」の記事 → Amazon・楽天。10月中に最初の1件を売る</p>
     </div>
-    <div class="legend" aria-label="色の意味（どこでやるか）">
-      <span><i class="sw x"></i>X（投稿する）</span>
-      <span><i class="sw c"></i>Claude（送る・渡す）</span>
-      <span><i class="sw a"></i>管理画面（数字を見る）</span>
-      <span>塗りつぶし＝投稿済み／点線の赤＝記録なし</span>
+    <div id="mini"></div>
+    <div class="prog" id="prog"></div>
+    <div class="theme-card" id="theme"></div>
+    <div class="legend">
+      <span><i class="dot x"></i>X で投稿する</span>
+      <span><i class="dot c"></i>Claude に送る・渡す</span>
+      <span><i class="dot a"></i>管理画面で数字を見る</span>
     </div>
-  </header>
+  </aside>
 
-  <section class="panel strip" aria-label="10/6〜11/5 の流れ">
-    <div class="panel-head"><h2>1か月の流れ</h2><span class="sub">四角を押すとその日へ</span></div>
-    <div class="scroll"><div class="months" id="months"></div></div>
-  </section>
-
-  <div class="main">
-    <section class="panel" aria-label="週の時間割">
-      <div class="panel-head">
-        <h2 id="week-title"></h2>
-        <div class="nav">
-          <button type="button" class="btn" id="wprev">← 前の週</button>
-          <button type="button" class="btn" id="wtoday">今週</button>
-          <button type="button" class="btn" id="wnext">次の週 →</button>
-        </div>
+  <main class="main">
+    <div class="bar-top">
+      <h2 id="title"></h2>
+      <div class="nav">
+        <button type="button" class="pill" id="today">今日</button>
+        <button type="button" class="icon" id="prev" aria-label="前へ"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button type="button" class="icon" id="next" aria-label="次へ"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
-      <p class="theme" id="week-theme"></p>
-      <div class="scroll"><div class="tt" id="tt"></div></div>
-    </section>
-    <section class="panel day" id="day" aria-live="polite"></section>
-  </div>
+      <div class="seg" role="group" aria-label="表示">
+        <span class="ind" id="ind"></span>
+        <button type="button" data-view="day">日</button>
+        <button type="button" data-view="week">週</button>
+        <button type="button" data-view="month">月</button>
+      </div>
+    </div>
+    <div class="mobile-prog" id="mprog"></div>
+    <div class="cal" id="cal"></div>
+  </main>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="panel" id="panel" aria-live="polite"></aside>
 
   <p class="foot" id="foot"></p>
 </div>
@@ -208,260 +295,351 @@ const WEEKS = [
 ];
 
 const SOURCES = "X のアナリティクス、GA4（集客 → トラフィック獲得の x / social、affiliate_click）、Amazon アソシエイト・楽天のレポート";
-// where: X / Claude / 管理画面
+// 決まった予定（時刻は0時からの分。where: X / Claude / 管理画面）
 const EVENTS = {
-  "2026-10-12": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "出てきた今週の3つを確認する"] }],
-  "2026-10-19": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
-  "2026-10-26": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
-  "2026-10-31": [{ when: "夜", where: "Claude", short: "10月の締め", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば Claude に日付を伝えて記録する"] }],
-  "2026-11-01": [{ when: "日中", where: "管理画面", short: "10月の数字を集める", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
-  "2026-11-02": [{ when: "朝", where: "Claude", short: "10月の振り返り", title: "10月の振り返り", steps: ["集めた数字を Claude に「10月の振り返り」と送って渡す", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
-  "2026-11-05": [{ when: "日中", where: "Claude", short: "11月の計画を決める", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
+  "2026-10-12": [{ start: 480, end: 540, where: "Claude", title: "週の振り返り", steps: [SOURCES + "のスクショを Claude に渡す", "「週の振り返り」と送る", "出てきた今週の3つを確認する"] }],
+  "2026-10-19": [{ start: 480, end: 540, where: "Claude", title: "週の振り返り", steps: [SOURCES + "のスクショを Claude に渡す", "「週の振り返り」と送る", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
+  "2026-10-26": [{ start: 480, end: 540, where: "Claude", title: "週の振り返り", steps: [SOURCES + "のスクショを Claude に渡す", "「週の振り返り」と送る", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
+  "2026-10-31": [{ start: 1320, end: 1350, where: "Claude", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば Claude に日付を伝えて記録する"] }],
+  "2026-11-01": [{ start: 720, end: 780, where: "管理画面", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認する", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
+  "2026-11-02": [{ start: 480, end: 540, where: "Claude", title: "10月の振り返り", steps: ["集めた数字を Claude に渡し、「10月の振り返り」と送る", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
+  "2026-11-05": [{ start: 600, end: 660, where: "Claude", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
 };
-// 週の振り返りの前の日曜に、管理画面で数字を集めておく
 for (const d of ["2026-10-11", "2026-10-18", "2026-10-25"]) {
-  EVENTS[d] = [{ when: "日中", where: "管理画面", short: "1週間の数字を撮る", title: "1週間の数字をスクショする", steps: [SOURCES + "を開く", "この1週間の分をスクショか CSV にして、明日の朝 Claude に渡せるようにしておく"] }];
+  EVENTS[d] = [{ start: 720, end: 780, where: "管理画面", title: "1週間の数字を撮る", steps: [SOURCES + "を開く", "この1週間の分をスクショか CSV にして、明日の朝 Claude に渡せるようにしておく"] }];
 }
 
-const BANDS = [
-  { key: "wake", label: "起きたら", time: "", from: 0, to: 7 },
-  { key: "朝", label: "朝", time: "7〜8時", from: 7, to: 9 },
-  { key: "日中", label: "日中", time: "", from: 9, to: 21 },
-  { key: "夜", label: "夜", time: "21〜22時", from: 21, to: 24 },
-];
+const START_H = 6, END_H = 23;
 const PLACE = { X: "x", Claude: "c", "管理画面": "a" };
 const DOW = ["日", "月", "火", "水", "木", "金", "土"];
-const FIRST_POST = DATA.slots[0]?.date;
-const LAST_POST = DATA.slots[DATA.slots.length - 1]?.date;
 const RANGE = { from: "2026-10-06", to: "2026-11-05" };
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const byDate = {};
 for (const s of DATA.slots) (byDate[s.date] ||= []).push(s);
 
-function iso(d) { return d.toISOString().slice(0, 10); }
-function parse(s) { return new Date(s + "T00:00:00Z"); }
-function addDays(s, n) { const d = parse(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); }
-function md(s) { const d = parse(s); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}（${DOW[d.getUTCDay()]}）`; }
-function mondayOf(s) { const dow = parse(s).getUTCDay(); return addDays(s, -((dow + 6) % 7)); }
-function nowJST() {
-  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
-  return { date: `${p.year}-${p.month}-${p.day}`, hour: Number(p.hour) };
-}
-function inRange(s) { return s >= RANGE.from && s <= RANGE.to; }
-function weekOf(s) { return WEEKS.find((w) => s >= w.from && s <= w.to); }
-function esc(t) { return String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
-function clamp(s) { return s < RANGE.from ? RANGE.from : s > RANGE.to ? RANGE.to : s; }
+const iso = (d) => d.toISOString().slice(0, 10);
+const parse = (s) => new Date(s + "T00:00:00Z");
+const addDays = (s, n) => { const d = parse(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); };
+const dnum = (s) => parse(s).getUTCDate();
+const mon = (s) => parse(s).getUTCMonth() + 1;
+const dow = (s) => DOW[parse(s).getUTCDay()];
+const md = (s) => `${mon(s)}月${dnum(s)}日（${dow(s)}）`;
+const mondayOf = (s) => addDays(s, -((parse(s).getUTCDay() + 6) % 7));
+const inRange = (s) => s >= RANGE.from && s <= RANGE.to;
+const clamp = (s) => (s < RANGE.from ? RANGE.from : s > RANGE.to ? RANGE.to : s);
+const weekOf = (s) => WEEKS.find((w) => s >= w.from && s <= w.to);
+const hm = (m) => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, "0")}`;
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 const store = {
-  get(k) { try { return localStorage.getItem(k) === "1"; } catch { return false; } },
-  set(k, v) { try { v ? localStorage.setItem(k, "1") : localStorage.removeItem(k); } catch {} },
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch {} },
 };
 
-const NOW = nowJST();
+function nowJST() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return { date: `${p.year}-${p.month}-${p.day}`, min: Number(p.hour) * 60 + Number(p.minute) };
+}
+let NOW = nowJST();
 const TODAY = NOW.date;
-const NOW_BAND = BANDS.find((b) => NOW.hour >= b.from && NOW.hour < b.to)?.key;
-let selected = clamp(TODAY);
-try { const h = location.hash.slice(1); if (/^d\d{4}-\d{2}-\d{2}$/.test(h) && inRange(h.slice(1))) selected = h.slice(1); } catch {}
-let weekStart = mondayOf(selected);
 
-function isPosted(s) { return s.done || store.get(`post-${s.date}-${s.slot}`); }
+const isPosted = (s) => s.done || store.get(`post-${s.date}-${s.slot}`) === "1";
 
-// その日の作業を、時間帯ごとのブロックにする
-function blocksFor(d) {
+// その日の予定を時刻つきで作る
+function eventsFor(d) {
+  if (!inRange(d)) return [];
   const out = [];
   const slots = byDate[d] || [];
-  if (slots.length) out.push({ band: "wake", place: "Claude", t1: "Claude", t2: "「今日の仕事」と送る", key: "wake" });
-  for (const p of byDate[addDays(d, -1)] || []) if (p.followup) out.push({ band: "朝", place: "X", t1: "X", badge: "答え合わせ", t2: "投票への返信（枠外）", key: "fu" });
-  for (const e of EVENTS[d] || []) out.push({ band: e.when === "朝" ? "wake" : e.when, place: e.where, t1: e.where, t2: e.short, key: "ev-" + (EVENTS[d].indexOf(e)) });
-  for (const s of slots) out.push({ band: s.slot, place: "X", t1: "X", badge: s.form === "本文リンク" ? "本文リンク" : s.form === "投票" ? "投票" : /引用/.test(s.formNote) ? "答え合わせ" : "リプ", t2: s.article, key: s.slot, done: isPosted(s) });
+  if (slots.length) out.push({ key: "wake", start: 390, end: 420, place: "Claude", title: "「今日の仕事」と送る", sub: "今日の2本を受け取る" });
+  for (const p of byDate[addDays(d, -1)] || []) if (p.followup) out.push({ key: "fu", start: 420, end: 450, place: "X", badge: "答え合わせ", title: "投票の答え合わせ", post: p, followup: true });
+  for (const s of slots) {
+    const [start, end] = s.slot === "朝" ? [420, 480] : [1260, 1320];
+    const badge = s.form === "投票" ? "投票" : /引用/.test(s.formNote) ? "答え合わせ" : s.form === "本文リンク" ? "本文リンク" : "リプ";
+    out.push({ key: s.slot, start, end, place: "X", badge, title: s.article, post: s, done: isPosted(s) });
+  }
+  (EVENTS[d] || []).forEach((e, i) => out.push({ key: "ev" + i, start: e.start, end: e.end, place: e.where, title: e.title, ev: e, done: store.get(`ev-${d}-${i}`) === "1" }));
+  out.sort((a, b) => a.start - b.start || b.end - a.end);
+  // 重なる予定は横に並べる
+  const lanes = [];
+  for (const e of out) {
+    let l = lanes.findIndex((end) => end <= e.start);
+    if (l < 0) { l = lanes.length; lanes.push(0); }
+    lanes[l] = e.end; e.lane = l;
+  }
+  for (const e of out) e.lanes = Math.max(...out.filter((o) => o.start < e.end && e.start < o.end).map((o) => o.lane)) + 1;
   return out;
 }
 
-function renderKpis() {
-  const done = DATA.slots.filter(isPosted).length;
-  const left = DATA.slots.filter((s) => !isPosted(s) && s.date >= TODAY).length;
-  const miss = DATA.slots.filter((s) => !isPosted(s) && s.date < TODAY).length;
-  const daysLeft = Math.max(0, Math.round((parse("2026-10-31") - parse(TODAY)) / 864e5));
-  document.getElementById("kpis").innerHTML =
-    `<div class="kpi"><span>投稿済み</span><b>${done}</b><small>/ ${DATA.slots.length}</small></div>` +
-    `<div class="kpi"><span>これから</span><b>${left}</b><small>本</small></div>` +
-    `<div class="kpi"><span>記録なし</span><b style="color:${miss ? "var(--warn)" : "inherit"}">${miss}</b><small>本</small></div>` +
-    `<div class="kpi"><span>10/31 まで</span><b>${daysLeft}</b><small>日</small></div>`;
+// 状態
+const wide = () => matchMedia("(min-width: 1100px)").matches;
+const narrow = () => matchMedia("(max-width: 700px)").matches;
+let view = store.get("view") || (narrow() ? "day" : "week");
+if (!["day", "week", "month"].includes(view)) view = "week";
+let cursor = clamp(TODAY);
+try { const h = location.hash.slice(1); if (/^d\d{4}-\d{2}-\d{2}$/.test(h) && inRange(h.slice(1))) cursor = h.slice(1); } catch {}
+let monthOf = mon(cursor);
+let selKey = null; // "日付|key"
+
+// ---------- 描画 ----------
+function render() {
+  renderTitle();
+  if (view === "month") renderMonth(); else renderTime();
+  renderSide();
+  renderPanel();
+  document.querySelectorAll(".seg button").forEach((b, i) => {
+    b.setAttribute("aria-pressed", b.dataset.view === view);
+    if (b.dataset.view === view) document.getElementById("ind").style.transform = `translateX(${i * 100}%)`;
+  });
+  try { history.replaceState(null, "", "#d" + cursor); } catch {}
 }
 
-function renderMonths() {
-  const days = [];
-  for (let d = RANGE.from; d <= RANGE.to; d = addDays(d, 1)) days.push(d);
-  const col = (d) => days.indexOf(d) + 2;
-  let h = `<span class="rl">週</span>`;
-  for (const w of WEEKS) {
-    const cur = TODAY >= w.from && TODAY <= w.to;
-    h += `<button type="button" class="phase ${cur ? "cur" : ""}" style="grid-column:${col(w.from)} / ${col(w.to) + 1}" data-date="${w.from < TODAY && TODAY <= w.to ? TODAY : w.from}" title="${esc(w.text)}">第${w.n}週　${esc(w.text)}</button>`;
-  }
-  h += `<span class="rl">日付</span>`;
-  for (const d of days) {
-    const dt = parse(d);
-    const label = dt.getUTCDate();
-    h += `<span title="${md(d)}" class="dnum ${dt.getUTCDay() === 1 || dt.getUTCDate() === 1 ? "mon" : ""} ${d === TODAY ? "today" : ""}">${label}<br>${DOW[dt.getUTCDay()]}</span>`;
-  }
-  for (const [slot, name] of [["朝", "X 朝"], ["夜", "X 夜"]]) {
-    h += `<span class="rl">${name}</span>`;
-    for (const d of days) {
-      const s = (byDate[d] || []).find((x) => x.slot === slot);
-      if (!s) { h += `<span class="sq none"></span>`; continue; }
-      const cls = isPosted(s) ? "done" : d < TODAY ? "miss" : "";
-      h += `<button type="button" class="sq ${cls} ${d === selected ? "sel" : ""}" data-date="${d}" data-key="${slot}" aria-label="${md(d)} ${slot} ${esc(s.id)} ${esc(s.article)}${isPosted(s) ? " 投稿済み" : ""}" title="${md(d)} ${slot}：${esc(s.article)}"></button>`;
-    }
-  }
-  h += `<span class="rl">数字</span>`;
-  for (const d of days) {
-    const e = (EVENTS[d] || [])[0];
-    h += e ? `<button type="button" class="sq ev ${d === selected ? "sel" : ""}" data-date="${d}" data-key="ev-0" aria-label="${md(d)} ${esc(e.title)}" title="${md(d)}：${esc(e.title)}"></button>` : `<span class="sq none"></span>`;
-  }
-  const el = document.getElementById("months");
-  el.innerHTML = h;
-  el.querySelectorAll("button[data-date]").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, b.dataset.key)));
+function renderTitle() {
+  const t = document.getElementById("title");
+  if (view === "month") t.innerHTML = `2026年${monthOf}月`;
+  else if (view === "week") { const m = mondayOf(cursor), e = addDays(m, 6); t.innerHTML = `${mon(m)}月${dnum(m)}日 – ${mon(e) !== mon(m) ? mon(e) + "月" : ""}${dnum(e)}日`; }
+  else t.innerHTML = `${mon(cursor)}月${dnum(cursor)}日<small>${dow(cursor)}曜日${cursor === TODAY ? "・今日" : ""}</small>`;
+  const [canPrev, canNext] = view === "month" ? [monthOf > 10, monthOf < 11] : view === "week" ? [mondayOf(cursor) > RANGE.from, addDays(mondayOf(cursor), 6) < RANGE.to] : [cursor > RANGE.from, cursor < RANGE.to];
+  document.getElementById("prev").disabled = !canPrev;
+  document.getElementById("next").disabled = !canNext;
 }
 
-function renderWeek() {
-  const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
-  const w = weekOf(addDays(weekStart, 3)) || weekOf(days.find(inRange) || RANGE.from);
-  document.getElementById("week-title").innerHTML = `${md(days[0]).replace(/（.）/, "")} 〜 ${md(days[6]).replace(/（.）/, "")}<span class="sub">時間割</span>`;
-  document.getElementById("week-theme").textContent = w ? `第${w.n}週：${w.text}` : "";
-  document.getElementById("wprev").disabled = days[0] <= RANGE.from;
-  document.getElementById("wnext").disabled = days[6] >= RANGE.to;
-  const narrow = matchMedia("(max-width: 640px)").matches;
-  const head = (d) => `<button type="button" class="th ${d === TODAY ? "today" : ""} ${d === selected ? "sel" : ""} ${inRange(d) ? "" : "out"} btn" style="border:none" data-date="${d}" ${inRange(d) ? "" : "disabled"}>${DOW[parse(d).getUTCDay()]}<small>${parse(d).getUTCMonth() + 1}/${parse(d).getUTCDate()}</small></button>`;
-  const cell = (d, b) => {
-    let h = "";
-    const isNow = d === TODAY && b.key === NOW_BAND;
-    h += `<div class="slot ${d === TODAY ? "today" : ""} ${isNow ? "now" : ""} ${inRange(d) ? "" : "out"}">`;
-    if (isNow) h += `<span class="now-tag">いま</span>`;
-    if (inRange(d)) for (const k of blocksFor(d).filter((x) => x.band === b.key)) {
-      h += `<button type="button" class="blk ${PLACE[k.place]} ${k.done ? "done" : ""}" data-date="${d}" data-key="${k.key}"><span class="t1">${esc(k.t1)}${k.badge ? `<span class="badge">${esc(k.badge)}</span>` : ""}${k.done ? `<span class="ok">✓</span>` : ""}</span><span class="t2">${esc(k.t2)}</span></button>`;
-    }
-    return h + `</div>`;
-  };
-  const band = (b) => `<div class="band"><b>${b.label}</b>${b.time}</div>`;
-  let h = `<span></span>`;
-  if (narrow) {
-    for (const b of BANDS) h += band(b);
-    for (const d of days) { h += head(d); for (const b of BANDS) h += cell(d, b); }
+const dotsHtml = (d) => `<span class="dots">${eventsFor(d).filter((e) => e.key !== "wake").map((e) => `<i class="${PLACE[e.place]} ${e.done ? "ok" : ""}"></i>`).join("")}</span>`;
+
+function renderTime() {
+  const days = view === "week" ? Array.from({ length: 7 }, (_, i) => addDays(mondayOf(cursor), i)) : [cursor];
+  const narrowWeek = view === "week" && narrow();
+  let h = "";
+  if (view === "day") {
+    h += `<div class="strip">${Array.from({ length: 7 }, (_, i) => addDays(mondayOf(cursor), i)).map((d) => `<button type="button" data-day="${d}" class="${d === cursor ? "on" : ""} ${d === TODAY ? "today" : ""} ${inRange(d) ? "" : "out"}" aria-label="${md(d)}"><span class="dw">${dow(d)}</span><span class="dn">${dnum(d)}</span>${dotsHtml(d)}</button>`).join("")}</div>`;
   } else {
-    for (const d of days) h += head(d);
-    for (const b of BANDS) { h += band(b); for (const d of days) h += cell(d, b); }
+    h += `<div class="tg-head" style="--cols:7"><span></span>${days.map((d) => `<button type="button" data-day="${d}" data-go="day" class="${d === TODAY ? "today" : ""} ${inRange(d) ? "" : "out"}" aria-label="${md(d)}を1日で見る"><span class="dw">${dow(d)}</span><span class="dn">${dnum(d)}</span></button>`).join("")}</div>`;
   }
-  const el = document.getElementById("tt");
-  el.classList.toggle("tr", narrow);
-  el.innerHTML = h;
-  el.querySelectorAll("[data-date]").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, b.dataset.key)));
+  h += `<div class="tg-body" id="scroller"><div class="tg-grid ${narrowWeek ? "narrow-week" : ""}" style="--cols:${days.length};--span:${END_H - START_H}"><div class="hours">`;
+  for (let hr = START_H + 1; hr < END_H; hr++) h += `<span style="top:calc(var(--hour) * ${hr - START_H})">${hr}:00</span>`;
+  h += `</div>`;
+  let i = 0;
+  for (const d of days) {
+    h += `<div class="col ${d === TODAY ? "today" : ""} ${inRange(d) ? "" : "out"}">`;
+    for (const e of eventsFor(d)) {
+      const top = (e.start - START_H * 60) / 60, ht = (e.end - e.start) / 60;
+      const w = 100 / e.lanes;
+      const sel = selKey === `${d}|${e.key}`;
+      h += `<button type="button" class="ev ${PLACE[e.place]} ${e.done ? "ok" : ""} ${sel ? "sel" : ""}" data-day="${d}" data-key="${e.key}" style="--i:${i++};top:calc(var(--hour) * ${top} + 1px);height:calc(var(--hour) * ${ht} - 3px);left:calc(${w * e.lane}% + 3px);width:calc(${w}% - 6px)" aria-label="${hm(e.start)} ${esc(e.place)} ${esc(e.title)}${e.done ? " 済み" : ""}"><span class="tm">${hm(e.start)}${e.badge ? `<em>${esc(e.badge)}</em>` : `<span>${esc(e.place)}</span>`}${e.done ? `<span class="ck">✓</span>` : ""}</span>${ht >= 0.75 || view === "day" ? `<span class="tt">${esc(e.title)}</span>` : ""}</button>`;
+    }
+    if (d === TODAY && NOW.min >= START_H * 60 && NOW.min < END_H * 60) {
+      const top = (NOW.min - START_H * 60) / 60;
+      h += `<div class="nowline" style="top:calc(var(--hour) * ${top})"></div>${view === "day" ? `<span class="nowlabel" style="top:calc(var(--hour) * ${top})">${hm(NOW.min)}</span>` : ""}`;
+    }
+    h += `</div>`;
+  }
+  h += `</div></div>`;
+  document.getElementById("cal").innerHTML = h;
+  // 今日は今の時刻、ほかの日は朝6時が見える位置へ
+  const sc = document.getElementById("scroller");
+  const firstMin = days.includes(TODAY) ? NOW.min - 90 : 0;
+  const hour = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--hour")) || 52;
+  sc.style.scrollBehavior = "auto";
+  sc.scrollTop = Math.max(0, ((firstMin - START_H * 60) / 60) * hour);
+  sc.style.scrollBehavior = "";
 }
 
+function renderMonth() {
+  const first = `2026-${String(monthOf).padStart(2, "0")}-01`;
+  let d = mondayOf(first);
+  let h = `<div class="mo-dow">${["月", "火", "水", "木", "金", "土", "日"].map((x) => `<span>${x}</span>`).join("")}</div><div class="mo">`;
+  let lastW = null, i = 0;
+  for (let row = 0; row < 6; row++) {
+    if (!inRange(d) && !inRange(addDays(d, 6)) && !(d < RANGE.from && addDays(d, 6) > RANGE.to)) {
+      d = addDays(d, 7);
+      if (mon(d) !== monthOf && d > first) break;
+      continue;
+    }
+    const w = weekOf(addDays(d, 3));
+    if (w && w !== lastW) { h += `<div class="mo-wk"><b>第${w.n}週</b><span>${esc(w.text)}</span></div>`; lastW = w; }
+    h += `<div class="mo-row">`;
+    for (let k = 0; k < 7; k++, d = addDays(d, 1)) {
+      const evs = eventsFor(d).filter((e) => e.key !== "wake");
+      const cls = [inRange(d) ? "" : "out", d < TODAY ? "past" : "", d === TODAY ? "today" : "", d === cursor ? "on" : ""].join(" ");
+      h += `<button type="button" class="mo-cell ${cls}" style="--i:${i++}" data-day="${d}" ${inRange(d) ? "" : "disabled"} aria-label="${md(d)} ${evs.map((e) => hm(e.start) + " " + e.title).join("、")}"><span class="mn">${dnum(d)}</span>`;
+      for (const e of evs.slice(0, 4)) h += `<span class="mp ${PLACE[e.place]} ${e.done ? "ok" : ""}" title="${hm(e.start)} ${esc(e.title)}"><span>${esc(e.badge === "投票" ? "投票：" + e.title : e.title)}</span></span>`;
+      h += `${dotsHtml(d)}</button>`;
+    }
+    h += `</div>`;
+    if (mon(d) !== monthOf) break;
+  }
+  h += `</div>`;
+  document.getElementById("cal").innerHTML = h;
+}
+
+function renderSide() {
+  const posted = DATA.slots.filter(isPosted).length;
+  const total = DATA.slots.length;
+  const daysLeft = Math.max(0, Math.round((parse("2026-10-31") - parse(TODAY)) / 864e5));
+  const pct = Math.round((posted / total) * 100);
+  document.getElementById("prog").innerHTML = `<div class="prog-row"><span>投稿</span><span><b>${posted}</b> / ${total}本</span></div><div class="bar"><span style="width:${pct}%"></span></div><div class="prog-row"><span>10/31 まで</span><span><b>${daysLeft}</b>日</span></div>`;
+  document.getElementById("mprog").innerHTML = `<span>投稿 <b>${posted}</b>/${total}</span><div class="bar"><span style="width:${pct}%"></span></div><span>10/31 まで <b>${daysLeft}</b>日</span>`;
+  const w = weekOf(cursor);
+  document.getElementById("theme").innerHTML = w ? `<b>第${w.n}週の目標</b>${esc(w.text)}` : "";
+  // 小さな月
+  const m = view === "month" ? monthOf : mon(cursor), first = `2026-${String(m).padStart(2, "0")}-01`;
+  let d = mondayOf(first), h = `<div class="mini-head"><span>2026年${m}月</span></div><div class="mini">${["月", "火", "水", "木", "金", "土", "日"].map((x) => `<span class="w">${x}</span>`).join("")}`;
+  const wk = mondayOf(cursor);
+  for (let k = 0; k < 42; k++, d = addDays(d, 1)) {
+    if (k % 7 === 0 && k > 0 && mon(d) !== m) break;
+    const has = (byDate[d] || []).length || EVENTS[d];
+    const inWk = view === "week" && d >= wk && d <= addDays(wk, 6);
+    h += `<button type="button" data-day="${d}" class="${mon(d) !== m || !inRange(d) ? "out" : ""} ${d === TODAY ? "today" : ""} ${d === cursor ? "cur" : ""} ${inWk ? "wk" : ""}" ${inRange(d) ? "" : "disabled"} aria-label="${md(d)}">${dnum(d)}${has && inRange(d) ? "<i></i>" : ""}</button>`;
+  }
+  document.getElementById("mini").innerHTML = h + `</div>`;
+}
+
+// ---------- 右の中身 ----------
+const copyTexts = {};
 function copyBlock(label, text, key) {
-  return `<div class="copy"><div class="copy-head"><span>${esc(label)}</span><button type="button" class="btn" data-copy="${key}">コピー</button></div><pre id="pre-${key}">${esc(text)}</pre></div>`;
+  copyTexts[key] = text;
+  return `<div class="copy"><div class="copy-head"><span>${esc(label)}</span><button type="button" class="cbtn" data-copy="${key}">コピー</button></div><pre id="pre-${key}">${esc(text)}</pre></div>`;
 }
-
 function stepsFor(s) {
   const quote = /引用/.test(s.formNote);
-  if (s.form === "投票") return ["X で「投票」を付けた投稿を作る", "下の本文を貼り、選択肢を入れる。期間は1日", "リンクは付けない", "投稿したら下の「投稿した」にチェック"];
+  if (s.form === "投票") return ["X で「投票」を付けた投稿を作る", "本文を貼り、選択肢を入れる。期間は1日", "リンクは付けない"];
   const first = quote ? "前の晩の投票を開き、「引用」で投稿を作る" : "X で新しい投稿を作る";
-  if (s.form === "本文リンク") return [first, "下の本文をそのまま貼る（最後のリンクは消さない）", "リプライはしない", "投稿したら下の「投稿した」にチェック"];
-  return [first, "下の本文を貼って投稿する（リンクは入れない）", "すぐ自分の投稿に返信して、リプライの1行を貼る", "投稿したら下の「投稿した」にチェック"];
+  if (s.form === "本文リンク") return [first, "本文をそのまま貼る（最後のリンクは消さない）", "リプライはしない"];
+  return [first, "本文を貼って投稿する（リンクは入れない）", "すぐ自分の投稿に返信して、リプライの1行を貼る"];
 }
 
-const copyTexts = {};
-
-function whereTag(place) { return `<span class="where ${PLACE[place]}">${esc(place)}</span>`; }
-
-function postTask(s) {
-  const k = `${s.date}-${s.slot}`;
-  copyTexts[k + "-b"] = s.body;
-  copyTexts[k + "-r"] = s.reply;
-  const time = s.slot === "朝" ? "7〜8時" : "21〜22時";
-  let html = `<li class="task" id="task-${s.slot}"><div class="when"><b>${s.slot}</b>${time}</div><div class="what">`;
-  html += `<h3>${whereTag("X")}${esc(s.article)}</h3>`;
-  html += `<p class="meta"><code>${esc(s.id)}</code>・${esc(s.kind)}・${esc(s.form)}${s.formNote ? `（${esc(s.formNote)}）` : ""}${s.angle ? `・${esc(s.angle)}` : ""}</p>`;
-  if (s.done) html += `<p class="posted">✓ 投稿済み（順番表に記録あり）</p>`;
-  html += `<ol class="steps">${stepsFor(s).map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
-  if (/^【PR】/.test(s.body)) html += `<p class="meta">【PR】を消さずに投稿。</p>`;
-  if (s.body) html += copyBlock("本文", s.body, k + "-b");
-  if (s.options.length) html += `<div class="copy"><div class="copy-head"><span>投票の選択肢（期間は1日）</span></div><ul class="opts">${s.options.map((o) => `<li>${esc(o)}</li>`).join("")}</ul></div>`;
-  if (s.reply && s.form === "リプリンク") html += copyBlock("リプライ（自分の投稿に返信）", s.reply, k + "-r");
-  if (!s.done) html += `<label class="check"><input type="checkbox" id="chk-${k}" data-key="post-${k}" ${store.get("post-" + k) ? "checked" : ""}> 投稿した（この端末にだけ記録）</label>`;
-  return html + `</div></li>`;
+function renderPanel() {
+  const p = document.getElementById("panel");
+  const [d, key] = selKey ? selKey.split("|") : [cursor, null];
+  const e = key ? eventsFor(d).find((x) => x.key === key) : null;
+  let h = `<div class="grab"></div><button type="button" class="icon close" id="close" aria-label="閉じる"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`;
+  if (!e) {
+    const evs = eventsFor(d);
+    const w = weekOf(d);
+    h += `<div class="fade"><div class="p-date">${w ? `第${w.n}週` : ""}${d === TODAY ? "・今日" : ""}</div><h3 class="p-title">${md(d)}の予定</h3>`;
+    h += evs.length ? `<ul class="agenda">${evs.map((x) => `<li><button type="button" class="${x.done ? "ok" : ""}" data-day="${d}" data-key="${x.key}"><span class="t">${hm(x.start)}</span><span class="b ${PLACE[x.place]}"></span><span class="n">${esc(x.title)}<small>${esc(x.place)}${x.badge ? "・" + esc(x.badge) : ""}${x.done ? "・済み" : ""}</small></span></button></li>`).join("")}</ul>` : `<p class="meta">この日は決まった予定がありません。</p>`;
+    h += `</div>`;
+  } else {
+    const s = e.post;
+    h += `<div class="fade"><button type="button" class="back" id="back">← ${mon(d)}/${dnum(d)} の予定一覧</button>`;
+    h += `<div class="p-date">${md(d)}</div><h3 class="p-title">${esc(e.title)}</h3>`;
+    h += `<div class="p-time"><span class="tag ${PLACE[e.place]}">${esc(e.place)}</span><b>${hm(e.start)} – ${hm(e.end)}</b>${e.badge ? `<span>${esc(e.badge)}</span>` : ""}</div>`;
+    if (e.key === "wake") {
+      h += `<ol class="steps"><li>Claude に「今日の仕事」と送る</li><li>昨日の2本を投稿したかを伝える</li><li>今日の2本（そのまま貼れる本文）を受け取る</li></ol>`;
+    } else if (e.followup) {
+      h += `<p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する（枠は使わない）</p>`;
+      h += copyBlock("答え合わせ", s.followup, `${d}-fu`);
+    } else if (s) {
+      const k = `${s.date}-${s.slot}`;
+      h += `<p class="meta"><code>${esc(s.id)}</code>・${esc(s.kind)}${s.angle ? `・${esc(s.angle)}` : ""}</p>`;
+      if (s.done) h += `<p class="posted">✓ 投稿済み（順番表に記録あり）</p>`;
+      h += `<ol class="steps">${stepsFor(s).map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
+      if (/^【PR】/.test(s.body)) h += `<p class="meta">【PR】を消さずに投稿する</p>`;
+      if (s.body) h += copyBlock("本文", s.body, k + "-b");
+      if (s.options.length) h += `<div class="copy"><div class="copy-head"><span>投票の選択肢（期間は1日）</span></div><ul class="opts">${s.options.map((o) => `<li>${esc(o)}</li>`).join("")}</ul></div>`;
+      if (s.reply && s.form === "リプリンク") h += copyBlock("リプライ（自分の投稿に返信）", s.reply, k + "-r");
+      if (!s.done) h += `<button type="button" class="done-btn" data-done="post-${k}" aria-pressed="${!!e.done}">${e.done ? "✓ 投稿した" : "投稿したらここを押す"}</button><p class="meta">この端末にだけ記録されます。Claude にも伝えると順番表に残ります。</p>`;
+    } else if (e.ev) {
+      const i = Number(e.key.slice(2));
+      h += `<ol class="steps">${e.ev.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
+      h += `<button type="button" class="done-btn" data-done="ev-${d}-${i}" aria-pressed="${!!e.done}">${e.done ? "✓ やった" : "やったらここを押す"}</button>`;
+    }
+    h += `</div>`;
+  }
+  p.innerHTML = h;
 }
 
-function followupTask(s) {
-  const k = `${s.date}-fu`;
-  copyTexts[k] = s.followup;
-  return `<li class="task" id="task-fu"><div class="when"><b>朝</b>7〜8時</div><div class="what"><h3>${whereTag("X")}投票の答え合わせ（枠は使わない）</h3><p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する</p>${copyBlock("答え合わせ", s.followup, k)}</div></li>`;
+// ---------- 操作 ----------
+function go(fn, dir) {
+  const run = () => { fn(); render(); };
+  if (document.startViewTransition && !reduced && dir) {
+    document.documentElement.dataset.dir = dir;
+    document.startViewTransition(run);
+  } else run();
+}
+function step(n) {
+  go(() => {
+    if (view === "month") { monthOf = Math.min(11, Math.max(10, monthOf + n)); cursor = clamp(`2026-${monthOf}-01`); }
+    else cursor = clamp(addDays(cursor, n * (view === "week" ? 7 : 1)));
+    selKey = null;
+  }, n > 0 ? "next" : "prev");
+}
+function openPanel(open) {
+  document.getElementById("panel").classList.toggle("open", open);
+  document.getElementById("scrim").classList.toggle("open", open);
+}
+function pick(d, key) {
+  const dir = d > cursor ? "next" : d < cursor ? "prev" : null;
+  const apply = () => { cursor = d; monthOf = mon(d); selKey = key ? `${d}|${key}` : null; };
+  if (d !== cursor && view === "day") go(apply, dir); else { apply(); render(); }
+  if (!wide()) openPanel(view !== "day" || !!key);
+  else if (key) document.getElementById("panel").scrollTop = 0;
 }
 
-function eventTask(e, d, i) {
-  const k = `ev-${d}-${i}`;
-  return `<li class="task" id="task-ev-${i}"><div class="when"><b>${esc(e.when)}</b></div><div class="what"><h3>${whereTag(e.where)}${esc(e.title)}</h3><ol class="steps">${e.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><label class="check"><input type="checkbox" id="chk-${k}" data-key="${k}" ${store.get(k) ? "checked" : ""}> やった（この端末にだけ記録）</label></div></li>`;
-}
+document.querySelector(".seg").addEventListener("click", (ev) => {
+  const b = ev.target.closest("button[data-view]");
+  if (!b || b.dataset.view === view) return;
+  const order = ["day", "week", "month"];
+  const dir = order.indexOf(b.dataset.view) > order.indexOf(view) ? "next" : "prev";
+  go(() => { view = b.dataset.view; monthOf = mon(cursor); selKey = null; store.set("view", view); }, dir);
+});
+document.getElementById("prev").addEventListener("click", () => step(-1));
+document.getElementById("next").addEventListener("click", () => step(1));
+document.getElementById("today").addEventListener("click", () => { const t = clamp(TODAY); go(() => { cursor = t; monthOf = mon(t); selKey = null; }, t > cursor ? "next" : t < cursor ? "prev" : null); });
+document.getElementById("scrim").addEventListener("click", () => openPanel(false));
 
-function renderDay() {
-  const d = selected;
-  const w = weekOf(d);
-  const slots = byDate[d] || [];
-  const ev = EVENTS[d] || [];
-  const evAt = (when) => ev.map((e, i) => [e, i]).filter(([e]) => (when === "朝" ? e.when === "朝" : e.when === when)).map(([e, i]) => eventTask(e, d, i)).join("");
-  let html = `<div class="panel-head day-head"><h2>${md(d)}</h2>${d === TODAY ? `<span class="tag">今日</span>` : ""}<div class="nav"><button type="button" class="btn" id="prev" ${d <= RANGE.from ? "disabled" : ""}>← 前の日</button><button type="button" class="btn" id="next" ${d >= RANGE.to ? "disabled" : ""}>次の日 →</button></div></div>`;
-  if (w) html += `<p class="theme">第${w.n}週：${esc(w.text)}</p>`;
-  html += `<ol class="tl">`;
-  if (slots.length) html += `<li class="task" id="task-wake"><div class="when"><b>起きたら</b></div><div class="what"><h3>${whereTag("Claude")}「今日の仕事」と送る</h3><p class="meta">前日の投稿が出たかの確認と、今日の2本をそのまま貼れる形で受け取る。昨日の分を投稿したかもここで伝える。</p></div></li>`;
-  html += evAt("朝");
-  for (const p of byDate[addDays(d, -1)] || []) if (p.followup) html += followupTask(p);
-  for (const s of slots.filter((s) => s.slot === "朝")) html += postTask(s);
-  html += evAt("日中");
-  for (const s of slots.filter((s) => s.slot === "夜")) html += postTask(s);
-  html += evAt("夜");
-  if (!slots.length && !ev.length) html += `<li class="empty">この日は決まった作業がありません。</li>`;
-  html += `</ol>`;
-  const el = document.getElementById("day");
-  el.innerHTML = html;
-  el.querySelector("#prev")?.addEventListener("click", () => select(addDays(d, -1)));
-  el.querySelector("#next")?.addEventListener("click", () => select(addDays(d, 1)));
-  el.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => copy(b)));
-  el.querySelectorAll("input[data-key]").forEach((c) => c.addEventListener("change", () => { store.set(c.dataset.key, c.checked); renderKpis(); renderMonths(); renderWeek(); }));
-}
+document.addEventListener("click", (ev) => {
+  const t = ev.target;
+  if (t.closest("#close")) return openPanel(false);
+  if (t.closest("#back")) { selKey = null; renderPanel(); document.querySelectorAll(".ev.sel").forEach((x) => x.classList.remove("sel")); return; }
+  const c = t.closest("[data-copy]");
+  if (c) return copy(c);
+  const dn = t.closest("[data-done]");
+  if (dn) { store.set(dn.dataset.done, dn.getAttribute("aria-pressed") !== "true" ? "1" : null); render(); return; }
+  const b = t.closest("[data-day]");
+  if (!b || b.disabled || !b.closest("#cal, #panel, #mini")) return;
+  if (b.dataset.go === "day") { const d = b.dataset.day; go(() => { view = "day"; cursor = d; monthOf = mon(d); selKey = null; store.set("view", view); }, "next"); return; }
+  pick(b.dataset.day, b.dataset.key || null);
+});
 
 function copy(btn) {
   const key = btn.dataset.copy;
-  const done = () => { btn.textContent = "コピーしました"; setTimeout(() => (btn.textContent = "コピー"), 1600); };
+  const ok = () => { btn.textContent = "コピーしました"; btn.classList.add("ok"); setTimeout(() => { btn.textContent = "コピー"; btn.classList.remove("ok"); }, 1600); };
   const fallback = () => {
-    const pre = document.getElementById("pre-" + key);
-    const r = document.createRange(); r.selectNodeContents(pre);
+    const r = document.createRange(); r.selectNodeContents(document.getElementById("pre-" + key));
     const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
-    btn.textContent = "選択しました。長押しでコピー";
+    btn.textContent = "選択しました";
   };
-  try { navigator.clipboard.writeText(copyTexts[key]).then(done, fallback); } catch { fallback(); }
+  try { navigator.clipboard.writeText(copyTexts[key]).then(ok, fallback); } catch { fallback(); }
 }
 
-function select(d, key) {
-  selected = clamp(d);
-  weekStart = mondayOf(selected);
-  try { history.replaceState(null, "", "#d" + selected); } catch {}
-  renderMonths();
-  renderWeek();
-  renderDay();
-  if (key !== undefined) {
-    const t = document.getElementById("task-" + key) || document.getElementById("day");
-    t.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-    t.classList.add("flash");
-  }
-}
+// 横にスワイプで前後へ
+(() => {
+  let x0 = null, y0 = 0;
+  const cal = document.getElementById("cal");
+  cal.addEventListener("touchstart", (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+  cal.addEventListener("touchend", (e) => {
+    if (x0 == null) return;
+    const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0;
+    x0 = null;
+    if (Math.abs(dx) > 60 && Math.abs(dy) < 50 && !document.getElementById(dx < 0 ? "next" : "prev").disabled) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+})();
 
-document.getElementById("wprev").addEventListener("click", () => { weekStart = addDays(weekStart, -7); renderWeek(); });
-document.getElementById("wnext").addEventListener("click", () => { weekStart = addDays(weekStart, 7); renderWeek(); });
-document.getElementById("wtoday").addEventListener("click", () => select(TODAY));
+// 今の時刻の線を動かす
+setInterval(() => {
+  const n = nowJST();
+  if (n.min === NOW.min) return;
+  NOW = n;
+  document.querySelectorAll(".nowline, .nowlabel").forEach((el) => {
+    el.style.top = `calc(var(--hour) * ${(n.min - START_H * 60) / 60})`;
+    if (el.classList.contains("nowlabel")) el.textContent = hm(n.min);
+  });
+}, 20000);
 
-try { matchMedia("(max-width: 640px)").addEventListener("change", renderWeek); } catch {}
-renderKpis();
-renderMonths();
-renderWeek();
-renderDay();
-document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。「✓」は順番表の記録か、この端末でのチェックです。投稿したら Claude にも伝えてください（順番表に記録されます）。`;
+let lastNarrow = narrow();
+addEventListener("resize", () => { const n = narrow(); if (n !== lastNarrow) { lastNarrow = n; render(); } if (wide()) openPanel(false); });
+
+render();
+document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。時刻は目安です。`;
 </script>
