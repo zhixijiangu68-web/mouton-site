@@ -182,3 +182,6 @@ document.addEventListener('click',e=>{
  // Show only between the intro and the products; hide again once the reader has passed them.
  addEventListener('scroll',()=>{const top=target.getBoundingClientRect().top;past=scrollY>innerHeight*.9&&top>0;sync();},{passive:true});
 })();
+
+// GA4: count quiz reveals per article.
+document.querySelectorAll('details.quiz').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&typeof window.gtag==='function')window.gtag('event','quiz_open',{article:location.pathname});},{once:true}));
