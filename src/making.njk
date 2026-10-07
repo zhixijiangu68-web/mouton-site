@@ -20,6 +20,7 @@ description: "ムートンが作っているもの。観たアニメを記録す
     <div class="mk-grid">
       {%- for p in projects %}{% if not p.placeholder %}
       <article class="mk-card" id="{{ p.slug }}">
+        {%- if p.image %}<a class="mk-thumb" href="making-{{ p.slug }}.html" tabindex="-1" aria-hidden="true"><img src="{{ p.image }}" alt="" loading="lazy" width="390" height="844"></a>{% endif %}
         <div class="mk-top"><span>{{ p.label }} · {{ p.kind }}</span><span class="mk-state">{{ p.status }}</span></div>
         <h3>{{ p.name }}</h3>
         <p class="mk-lead">{{ p.lead }}</p>
