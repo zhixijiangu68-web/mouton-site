@@ -131,6 +131,10 @@ article a[href^="#ref-"] { text-decoration:none; font-size:.85em; white-space:no
 body.article-page article a.copy-link { color:#1b1c19; }
 body.article-page article a.copy-link:hover { color:#f8f5ee; }
 .cover[data-nav="light"] .cover-back { color:#1b1c19; text-shadow:none; }
+/* Link to the same article in the other language, opposite the back link. */
+.cover-lang { position:absolute; z-index:2; right:var(--gutter,24px); top:calc(var(--nav-h,72px) + 12px); display:inline-flex; align-items:center; min-height:44px; padding:0 4px; color:#fff; font-size:.875rem; letter-spacing:.06em; text-underline-offset:4px; text-shadow:0 1px 16px rgba(5,10,25,.3); }
+.cover-lang:focus-visible { outline:2px solid #fff; outline-offset:4px; }
+.cover[data-nav="light"] .cover-lang { color:#1b1c19; text-shadow:none; }
 .cover[data-nav="light"]::before { background:linear-gradient(180deg,rgba(248,245,238,.4),rgba(248,245,238,0) 40%); }
 
 /* Table of contents beside the article on wide screens. */

@@ -1,0 +1,57 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: en/index.html
+title: "Mouton — Notes on philosophy, the body, food and work"
+description: "The English edition of Mouton, a personal archive. Essays on philosophy and how to live, the body, food and science, and work, checked against research and data."
+---
+{% include "partials/nav-en.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% if (['images/hero.jpg'] | firstImage) %} style="--img:url('../images/hero.jpg')"{% endif %} id="top"></div>
+<main class="doc topic" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">English edition</p>
+  <h1 class="doc-title">Mouton</h1>
+  <p>A personal archive. I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, the body, food, and work, checking papers and data along the way.</p>
+  <p>These essays were first written in Japanese. Product recommendations in the original articles point to Japanese shops, so the English edition describes what to look for without shop links. <a href="../index.html" hreflang="ja" lang="ja">日本語版はこちら</a></p>
+  <section id="journal" aria-labelledby="journal-heading">
+    <h2 id="journal-heading" class="eyebrow">Journal — {{ collections.articlesEn.length }} {{ "article" if collections.articlesEn.length == 1 else "articles" }}</h2>
+    {%- for t in topics %}
+    {%- set list = collections.articlesEn | inTopic(t.key) %}
+    <section id="{{ t.key }}" aria-labelledby="topic-{{ t.key }}">
+      <h2 class="doc-title" id="topic-{{ t.key }}">{{ t.en }}</h2>
+      <div class="topic-list">
+        {%- for a in list %}
+        <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+          <span class="topic-date">{{ a.page.date | dotDate }}</span>
+          <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.science.title }}</span>
+          <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.science.text }}</span>
+          <span class="topic-time">{{ a.data.readMinutes }} min read</span>
+        </a>
+        {%- else %}
+        <p>Translations coming soon.</p>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endfor %}
+    {%- set others = [] %}
+    {%- for a in collections.articlesEn %}{% if not a.data.topic %}{% set others = (others.push(a), others) %}{% endif %}{% endfor %}
+    {%- if others.length %}
+    <section id="more" aria-labelledby="topic-more">
+      <h2 class="doc-title" id="topic-more">Books &amp; guides</h2>
+      <div class="topic-list">
+        {%- for a in others %}
+        <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+          <span class="topic-date">{{ a.page.date | dotDate }}</span>
+          <span class="topic-title">{{ a.data.guide.title if a.data.guide else a.data.headline }}</span>
+          <span class="topic-excerpt">{{ a.data.guide.text if a.data.guide else a.data.description }}</span>
+          <span class="topic-time">{{ a.data.readMinutes }} min read</span>
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links-en.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

@@ -2,6 +2,7 @@
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>
   <a href="contact.html">お問い合わせ</a>
+  <a href="en/{{ (page.fileSlug + '.html') if (isArticle and page.fileSlug in enSlugs) else 'index.html' }}" hreflang="en" lang="en">English</a>
   {%- if site.author.instagram %}
   <a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }} <span aria-hidden="true">↗</span></a>
   {%- endif %}

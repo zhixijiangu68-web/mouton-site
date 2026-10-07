@@ -1,0 +1,13 @@
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">Mouton</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="Main navigation">
+    <ul class="site-links" id="site-links">
+      <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
+      {%- for t in topics %}
+      <li><a href="index.html#{{ t.key }}">{{ t.en }}<span class="site-links-en">Articles</span></a></li>
+      {%- endfor %}
+      <li><a href="../{{ (page.fileSlug + '.html') if isArticle else 'index.html' }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
+    </ul>
+  </nav>
+</div>

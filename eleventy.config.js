@@ -1,8 +1,15 @@
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { loadDefaultJapaneseParser } from 'budoux';
 import site from './src/_data/site.js';
 
 const budoux = loadDefaultJapaneseParser();
+
+// Articles that have an English version (src/en/articles/<slug>.html).
+const enDir = 'src/en/articles';
+const enSlugs = existsSync(enDir)
+  ? readdirSync(enDir).filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, ''))
+  : [];
+const isEn = page => (page?.url || '').startsWith('/en/');
 
 // Mark phrase boundaries with <wbr> so headings wrap between phrases in every
 // browser (CSS word-break: auto-phrase is Chrome-only).
@@ -32,6 +39,7 @@ const sameAs = site => [
 ].filter(Boolean);
 
 export default function (eleventyConfig) {
+  eleventyConfig.addGlobalData('enSlugs', enSlugs);
   const pad = n => String(n).padStart(2, '0');
   const ymd = d => [d.getUTCFullYear(), pad(d.getUTCMonth() + 1), pad(d.getUTCDate())];
 
@@ -113,7 +121,8 @@ export default function (eleventyConfig) {
   // for shops with an affiliate ID set; without any, the card is a plain note.
   //   {% productCard "名前", "ひとこと", { asin: "B0...", amazon: "検索語", rakuten: "検索語" } %}
   eleventyConfig.addShortcode('productCard', function (name, note = '', shops = {}) {
-    const { amazonTag, rakutenId } = site.affiliate;
+    // English pages carry no affiliate links (the shops are Japanese).
+    const { amazonTag, rakutenId } = isEn(this.page) ? {} : site.affiliate;
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     const buttons = [];
     if (amazonTag && (shops.asin || shops.amazon)) {
@@ -134,26 +143,26 @@ export default function (eleventyConfig) {
   });
 
   // Tap-to-reveal quiz near the top of a guide: {% quiz "問題", "答え", "ひとこと解説" %}
-  eleventyConfig.addShortcode('quiz', (question, answer, why = '') => {
+  eleventyConfig.addShortcode('quiz', function (question, answer, why = '') {
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
     return `<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
-      + `<span class="quiz-tap">答えを見る</span></summary>`
+      + `<span class="quiz-tap">${isEn(this.page) ? 'Show answer' : '答えを見る'}</span></summary>`
       + `<div class="quiz-a"><p class="quiz-answer">${esc(answer)}</p>${why ? `<p class="quiz-why">${esc(why)}</p>` : ''}</div></details>`;
   });
 
-  eleventyConfig.addShortcode('articleLd', (headline, description, date, updated, url, site) => {
+  eleventyConfig.addShortcode('articleLd', (headline, description, date, updated, url, site, lang = 'ja') => {
     const iso = d => ymd(new Date(d)).join('-');
     const data = {
       '@context': 'https://schema.org',
       '@type': 'Article',
       headline,
       description,
-      inLanguage: 'ja',
+      inLanguage: lang,
       datePublished: iso(date),
       dateModified: iso(updated || date),
       author: {
         '@type': 'Person',
-        name: site.author.name,
+        name: lang === 'en' ? 'Mouton' : site.author.name,
         sameAs: sameAs(site),
         ...(site.url ? { url: new URL('operator.html', site.url.replace(/\/?$/, '/')).href } : {}),
       },
@@ -164,6 +173,11 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addTransform('phrase-breaks', function (html) {
     if (!(this.page.outputPath || '').endsWith('.html')) return html;
+    // English pages: link to the Japanese article while its translation does not exist yet.
+    if (isEn(this.page)) {
+      return html.replace(/\shref="([a-z0-9-]+)\.html(#[^"]*)?"/g,
+        (m, slug, hash = '') => (slug === 'index' || enSlugs.includes(slug) ? m : ` href="../${slug}.html${hash}"`));
+    }
     return html
       .replace(/<(h[1-3])(\s[^>]*)?>([\s\S]*?)<\/\1>/g, (m, tag, attrs = '', inner) => `<${tag}${attrs}>${phraseBreaks(inner)}</${tag}>`)
       .replace(/<(div|span|a)(\s[^>]*class="(?:[^"]*\s)?(?:journal-title|topic-title|reading-card)(?:\s[^"]*)?"[^>]*)>([^<]*)<\/\1>/g,
@@ -198,9 +212,9 @@ export default function (eleventyConfig) {
     }).replace(/</g, '\\u003c');
   });
 
-  eleventyConfig.addCollection('articles', api =>
-    api.getFilteredByGlob('src/articles/*.html').sort((a, b) =>
-      b.date - a.date || (a.data.journal?.order ?? 999) - (b.data.journal?.order ?? 999)));
+  const newestFirst = (a, b) => b.date - a.date || (a.data.journal?.order ?? 999) - (b.data.journal?.order ?? 999);
+  eleventyConfig.addCollection('articles', api => api.getFilteredByGlob('src/articles/*.html').sort(newestFirst));
+  eleventyConfig.addCollection('articlesEn', api => api.getFilteredByGlob('src/en/articles/*.html').sort(newestFirst));
 
   return {
     dir: { input: 'src', output: '.', includes: '_includes', data: '_data' },

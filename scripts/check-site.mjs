@@ -2,8 +2,13 @@
 // broken internal links and anchors, duplicate ids, missing title or
 // description, and pages without exactly one <h1>.
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { dirname, join, normalize } from 'node:path';
 
-const pages = readdirSync('.').filter(f => f.endsWith('.html'));
+// Japanese pages at the root, the English edition in en/.
+const pages = [
+  ...readdirSync('.').filter(f => f.endsWith('.html')),
+  ...(existsSync('en') ? readdirSync('en').filter(f => f.endsWith('.html')).map(f => `en/${f}`) : []),
+];
 const problems = [];
 const report = (page, message) => problems.push(`${page}: ${message}`);
 
@@ -29,7 +34,9 @@ for (const page of pages) {
 
   for (const [, href] of html.matchAll(/\shref="([^"]+)"/g)) {
     if (/^(https?:|mailto:|data:|\/\/)/.test(href)) continue;
-    const [file, hash] = href.split('#');
+    const [rel, hash] = href.split('#');
+    // Links are relative to the page's own folder.
+    const file = rel && normalize(join(dirname(page), rel)).replace(/\/$/, '/index.html');
     if (file) {
       if (!existsSync(file)) { report(page, `broken link "${href}"`); continue; }
       if (hash && file.endsWith('.html') && file !== page) {

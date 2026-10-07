@@ -1,6 +1,7 @@
 'use strict';
+const isEn=document.documentElement.lang==='en';
 const shareUrl=()=>{const url=new URL(window.location.href);url.hash='';url.search='';return url.href;};
-const shareTitle=(document.querySelector('meta[property="og:title"]')?.content||document.title).replace(/\s*—\s*ムートン$/,'');
+const shareTitle=(document.querySelector('meta[property="og:title"]')?.content||document.title).replace(/\s*—\s*(ムートン|Mouton)$/,'');
 document.querySelectorAll('.article-share').forEach(group=>{
  // Post to X, and on phones offer the system share sheet.
  const post=document.createElement('a');
@@ -8,13 +9,13 @@ document.querySelectorAll('.article-share').forEach(group=>{
  post.href='https://x.com/intent/post?'+new URLSearchParams({text:shareTitle,url:shareUrl(),via:'kodoku__alone'});
  post.target='_blank';
  post.rel='noopener noreferrer';
- post.textContent='Xでポスト';
+ post.textContent=isEn?'Post on X':'Xでポスト';
  group.querySelector('.copy-link').after(post);
  if(navigator.share&&matchMedia('(pointer: coarse)').matches){
   const native=document.createElement('button');
   native.type='button';
   native.className='copy-link share-native';
-  native.textContent='共有';
+  native.textContent=isEn?'Share':'共有';
   native.addEventListener('click',()=>navigator.share({title:shareTitle,url:shareUrl()}).catch(()=>{}));
   post.after(native);
  }
@@ -32,9 +33,9 @@ document.querySelectorAll('.article-share').forEach(group=>{
   try {
    if(!navigator.clipboard||!navigator.clipboard.writeText)throw new Error('Clipboard unavailable');
    await navigator.clipboard.writeText(url.href);
-   status.textContent='リンクをコピーしました';
+   status.textContent=isEn?'Link copied':'リンクをコピーしました';
   } catch {
-   status.textContent='自動コピーができませんでした。下のリンクをコピーしてください。';
+   status.textContent=isEn?'Could not copy automatically. Please copy the link below.':'自動コピーができませんでした。下のリンクをコピーしてください。';
    input.value=url.href;
    fallback.hidden=false;
    input.focus();
@@ -72,7 +73,7 @@ document.querySelectorAll('.article-share').forEach(group=>{
  const button=document.createElement('button');
  button.type='button';
  button.className='to-top';
- button.setAttribute('aria-label','ページの先頭へ戻る');
+ button.setAttribute('aria-label',isEn?'Back to top':'ページの先頭へ戻る');
  button.textContent='↑';
  button.tabIndex=-1;
  document.body.appendChild(button);
@@ -101,10 +102,10 @@ document.querySelectorAll('.article-share').forEach(group=>{
  if(!toc||!('IntersectionObserver' in window))return;
  const side=document.createElement('aside');
  side.className='toc-side';
- side.setAttribute('aria-label','目次（サイド）');
+ side.setAttribute('aria-label',isEn?'Contents (side)':'目次（サイド）');
  const label=document.createElement('p');
  label.className='toc-side-label';
- label.textContent='目次';
+ label.textContent=isEn?'Contents':'目次';
  const list=toc.querySelector('ol').cloneNode(true);
  side.append(label,list);
  document.body.append(side);
@@ -133,7 +134,7 @@ document.querySelectorAll('.article-share').forEach(group=>{
 (()=>{
  const wraps=[...document.querySelectorAll('.table-wrap')];
  const update=()=>wraps.forEach((w,i)=>{
-  if(w.scrollWidth>w.clientWidth+1){w.tabIndex=0;w.setAttribute('role','region');w.setAttribute('aria-label','表'+(i+1)+'（横にスクロールできます）');}
+  if(w.scrollWidth>w.clientWidth+1){w.tabIndex=0;w.setAttribute('role','region');w.setAttribute('aria-label',isEn?'Table '+(i+1)+' (scrolls sideways)':'表'+(i+1)+'（横にスクロールできます）');}
   else{w.removeAttribute('tabindex');w.removeAttribute('role');w.removeAttribute('aria-label');}
  });
  update();
