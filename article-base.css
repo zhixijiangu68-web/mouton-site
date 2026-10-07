@@ -14,3 +14,6 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .product-rakuten{background:#a3121a}
 .product-btn:hover{opacity:.88}
 .product-btn:focus-visible{outline:2px solid #1442c4;outline-offset:3px}
+.jump-products{position:fixed;left:16px;max-width:calc(100% - 96px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;transform:translateY(24px);opacity:0;pointer-events:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 22px;border-radius:999px;background:#1b1c19;color:#fff!important;font-size:.875rem;letter-spacing:.04em;text-decoration:none;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:opacity .3s ease,transform .3s ease}
+.jump-products.is-on{opacity:1;transform:none;pointer-events:auto}
+@media(prefers-reduced-motion:reduce){.jump-products{transition:none}}
