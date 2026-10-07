@@ -11,7 +11,7 @@ heading: 運営者情報
   <div><dt>運営者</dt><dd>{{ site.author.name }}</dd></div>
   <div><dt>所在地</dt><dd>日本</dd></div>
   <div><dt>連絡先</dt><dd><a href="contact.html">お問い合わせ</a>をご覧ください</dd></div>
-  <div><dt>SNS</dt><dd><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }}</a>{% if site.author.instagram %}<br><a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }}</a>{% endif %}</dd></div>
+  <div><dt>SNS</dt><dd><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }}</a>{% if site.author.instagram %}<br><a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }}</a>{% endif %}{% if site.author.note %}<br><a href="https://note.com/{{ site.author.note }}" target="_blank" rel="noopener noreferrer">note / {{ site.author.note }}</a>{% endif %}</dd></div>
 </dl>
 
 <h2>このサイトについて</h2>
