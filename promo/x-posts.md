@@ -1331,6 +1331,36 @@ https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&ut
 https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=body
 ```
 
+## ○×クイズのページ（quiz.html）
+
+10/7 に作ったページ。記事の事実から作った○×問題を10問ランダムに出し、結果を X でシェアできる。まちがえた問題の記事へ進める。順番表にはまだ入れていない。
+シェア画像は「○×クイズ10問。あなたは何問当てられる？」のカード。
+
+#### QZ-1 3問だけ見せて、続きはページで（本文リンク）
+```
+○×クイズ。いくつ分かる？
+
+1. 昼寝は長いほど回復する
+2. ジーンズを15か月洗わなくても、細菌の数は洗った後とほとんど変わらなかった
+3. 制汗剤とデオドラントは同じもの
+
+答えと残りの問題はこちら。全部、記事に書いた研究から作った。
+
+https://moutonarchive.com/quiz.html?utm_source=x&utm_medium=social&utm_campaign=quiz&utm_content=body
+```
+（答え：1 ×、2 ○、3 ×。どれも nap・denim-leather・deodorant-guide の本文にある）
+
+#### QZ-2 何問当てられるか（本文リンク）
+```
+自分のサイトの記事から、○×クイズを131問作った。
+
+日焼け止め、睡眠、コーヒー、口臭、転職、哲学。ランダムに10問出る。
+
+僕の記事を読んでいなくても、半分は当たるはず。
+
+https://moutonarchive.com/quiz.html?utm_source=x&utm_medium=social&utm_campaign=quiz&utm_content=body
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
