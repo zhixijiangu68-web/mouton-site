@@ -18,6 +18,10 @@ const sets = [
   [join(root, 'src', 'en', 'articles'), join(root, 'en'), join(root, 'images', 'og', 'en'), 'Mouton'],
 ];
 
+// Japanese articles without their own {% quiz %} use the first question from the quiz bank.
+const bank = JSON.parse(readFileSync(join(root, 'src', '_data', 'quizzes.json'), 'utf8'));
+const bankQuiz = slug => bank.find(q => q.slug === slug)?.q;
+
 const labels = { philosophy: 'Philosophy', body: 'Body', food: 'Food & Science', books: 'Bookshelf', work: 'Work' };
 
 const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
@@ -35,11 +39,12 @@ for (const file of readdirSync(srcDir).filter(f => f.endsWith('.html'))) {
   // The built page carries the phrase breaks (<wbr>) for the headline.
   const built = readFileSync(join(builtDir, file), 'utf8');
   const h1 = built.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? headline;
-  const quiz = src.match(/\{% quiz "((?:[^"\\]|\\.)*)"/)?.[1]?.replace(/\\"/g, '"');
+  const quiz = src.match(/\{% quiz "((?:[^"\\]|\\.)*)"/)?.[1]?.replace(/\\"/g, '"')
+    ?? (brand === 'ムートン' ? bankQuiz(file.replace(/\.html$/, '')) : undefined);
   const face = src.match(/^face: "(.*)"$/m)?.[1];
   const faceUrl = face ? pathToFileURL(join(root, face)).href : '';
   await page.evaluate(d => window.render(d), quiz
-    ? { title: quiz.replace(/&/g, '&amp;').replace(/</g, '&lt;'), label: labels[category] ?? 'Journal', quiz: true, face: faceUrl, brand }
+    ? { title: quiz.replace(/&/g, '&amp;').replace(/</g, '&lt;') + (/[？?]$/.test(quiz) ? '' : '<span style="display:block;margin-top:.35em;color:#1442c4">○か×か？</span>'), label: labels[category] ?? 'Journal', quiz: true, face: faceUrl, brand }
     : { title: h1, label: labels[category] ?? 'Journal', face: faceUrl, brand });
   if (faceUrl) await page.waitForFunction(() => document.getElementById('face').style.backgroundImage !== '');
   await page.evaluate(() => document.fonts.ready);
@@ -48,5 +53,10 @@ for (const file of readdirSync(srcDir).filter(f => f.endsWith('.html'))) {
   count++;
 }
 }
+// The ○× quiz page (quiz.html).
+await page.evaluate(d => window.render(d), { title: '○×クイズ10問。<br>あなたは何問当てられる？', label: 'Mouton', quiz: true, face: '', brand: 'ムートン' });
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: join(root, 'images', 'og', 'quiz.jpg'), type: 'jpeg', quality: 86 });
+count++;
 await browser.close();
 console.log(`\nwrote ${count} images to images/og/ and images/og/en/`);
