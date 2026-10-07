@@ -163,3 +163,21 @@ document.addEventListener('click',e=>{
  const name=card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
  window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,transport_type:'beacon'});
 });
+
+// Guides: a small bar that jumps to the products, so readers who arrive from X
+// don't have to scroll to the end. Shows after the intro, hides once the products are on screen.
+(()=>{
+ const cards=document.querySelectorAll('.product-card');
+ if(!cards.length||!('IntersectionObserver' in window))return;
+ const target=document.getElementById('section-mine')||cards[0];
+ const bar=document.createElement('a');
+ bar.className='jump-products';bar.href='#'+(target.id||(target.id='products'));
+ bar.innerHTML='この記事で紹介している商品を見る <span aria-hidden="true">↓</span>';
+ bar.addEventListener('click',()=>{if(typeof window.gtag==='function')window.gtag('event','jump_to_products',{article:location.pathname});});
+ document.body.appendChild(bar);
+ const seen=new Set();let past=false;
+ const sync=()=>bar.classList.toggle('is-on',past&&!seen.size);
+ const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));sync();});
+ [target,...cards].forEach(el=>io.observe(el));
+ addEventListener('scroll',()=>{past=scrollY>innerHeight*.9;sync();},{passive:true});
+})();
