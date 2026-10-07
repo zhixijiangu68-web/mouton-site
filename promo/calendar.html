@@ -4,7 +4,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@600&family=IBM+Plex+Mono:wght@500&display=swap">
 <style>
-/* Layout: 上に「選んだ日の段取り」、下に月曜始まりの月カレンダー。広い画面では左右に並べる */
+/* Layout: 上に1か月の帯（進み具合）、その下に「時間帯 × 曜日」の時間割。ブロックを押すと右（スマホは下）にその日の段取り。
+   色は「どこで」：X＝藍、Claude＝青緑、管理画面＝朱。 */
 :root {
   --bg: #f3f4f1;
   --surface: #ffffff;
@@ -12,94 +13,130 @@
   --muted: #646d73;
   --line: #d9ddd8;
   --accent: #2a6b70;
-  --accent-soft: #dcebea;
-  --morning: #a8670d;
-  --morning-soft: #f6ead6;
-  --night: #4a52a0;
-  --night-soft: #e3e5f5;
+  --x: #3f4aa0;
+  --x-soft: #e4e6f6;
+  --claude: #22706f;
+  --claude-soft: #d9ecea;
+  --admin: #a2463b;
+  --admin-soft: #f6e2de;
   --done: #3d7a3a;
-  --event: #a0453d;
-  --event-soft: #f5e1de;
+  --warn: #b3261e;
+  --now: #c7880f;
   --f-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
   --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
-    --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
-    --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+    --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e; --accent: #7cc2c6;
+    --x: #a7aef2; --x-soft: #2a2e4c; --claude: #7cc8c4; --claude-soft: #1f3a39; --admin: #ef9a8f; --admin-soft: #45292a;
+    --done: #86c77f; --warn: #ff8a80; --now: #f0b54a;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
-  --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
-  --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+  --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e; --accent: #7cc2c6;
+  --x: #a7aef2; --x-soft: #2a2e4c; --claude: #7cc8c4; --claude-soft: #1f3a39; --admin: #ef9a8f; --admin-soft: #45292a;
+  --done: #86c77f; --warn: #ff8a80; --now: #f0b54a;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
-.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
 h1, h2, h3 { text-wrap: balance; margin: 0; }
 h1 { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
-.lead { color: var(--muted); margin: 6px 0 0; }
-.flow { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; font-weight: 500; color: var(--ink); }
-.flow i { font-style: normal; color: var(--muted); }
-.stats { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 0.875rem; color: var(--muted); }
-.stats b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); }
+h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; }
+.sub { color: var(--muted); font-size: 0.8125rem; font-family: var(--f-body); font-weight: 400; margin-left: 8px; }
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 24px; }
+.flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0 0; font-size: 0.875rem; color: var(--muted); }
+.flow b { color: var(--ink); font-weight: 500; }
+.kpis { display: flex; flex-wrap: wrap; gap: 8px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 14px; min-width: 7.5rem; }
+.kpi span { display: block; font-size: 0.6875rem; color: var(--muted); letter-spacing: 0.04em; }
+.kpi b { font-family: var(--f-mono); font-weight: 500; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.kpi small { color: var(--muted); font-size: 0.75rem; margin-left: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 0.8125rem; color: var(--muted); }
 .legend span { display: inline-flex; gap: 6px; align-items: center; }
+.sw { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 2px solid; }
+.sw.x { background: var(--x-soft); border-color: var(--x); }
+.sw.c { background: var(--claude-soft); border-color: var(--claude); }
+.sw.a { background: var(--admin-soft); border-color: var(--admin); }
 
-.layout { display: grid; gap: 24px; margin-top: 22px; }
-@media (min-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; } .day { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; } }
-
-/* カレンダー */
-.month { min-width: 0; }
-.month h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; display: flex; align-items: baseline; gap: 10px; }
-.month h2 small { font-family: var(--f-body); font-size: 0.8125rem; color: var(--muted); font-weight: 400; }
-.dow, .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
-.dow { margin-top: 10px; font-size: 0.75rem; color: var(--muted); text-align: center; }
-.dow span:nth-child(6) { color: var(--night); } .dow span:nth-child(7) { color: var(--event); }
-.grid { margin-top: 4px; }
-.week-label { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); padding: 8px 2px 2px; letter-spacing: 0.04em; }
-.week-label b { color: var(--accent); font-weight: 700; }
-.cell { min-width: 0; min-height: 84px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px; display: flex; flex-direction: column; gap: 3px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
-.cell:hover { border-color: var(--accent); }
-.cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-.cell.out { background: transparent; border-style: dashed; cursor: default; opacity: 0.45; }
-.cell.past:not(.out) { opacity: 0.7; }
-.cell.today { border: 2px solid var(--accent); padding: 3px; }
-.cell.sel { background: var(--accent-soft); border-color: var(--accent); }
-.num { font-family: var(--f-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; gap: 2px; }
-.num em { font-style: normal; font-family: var(--f-body); font-size: 0.625rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 0 4px; }
-.chip { display: block; font-family: var(--f-mono); font-size: 0.6875rem; line-height: 1.5; border-radius: 3px; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.chip.m { background: var(--morning-soft); color: var(--morning); }
-.chip.n { background: var(--night-soft); color: var(--night); }
-.chip.ev { background: var(--event-soft); color: var(--event); font-family: var(--f-body); }
-.chip.ok::before { content: "✓ "; color: var(--done); }
-.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-@media (max-width: 520px) { .cell { min-height: 66px; padding: 3px 2px; } .chip { font-size: 0.5625rem; padding: 0 2px; } }
-
-/* 選んだ日 */
-.day { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px 8px; }
-.day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-.day-head h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.375rem; }
-.day-head .tag { font-size: 0.75rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 1px 6px; }
-.theme { margin: 6px 0 0; font-size: 0.875rem; color: var(--muted); }
-.nav { display: flex; gap: 8px; margin-left: auto; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; min-width: 0; }
+.panel-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
 .btn { font: inherit; font-size: 0.8125rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
 .btn:hover { border-color: var(--accent); }
-.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 .btn:disabled { opacity: 0.4; cursor: default; }
-.tl { list-style: none; margin: 14px 0 0; padding: 0; }
-.task { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.btn[aria-pressed="true"] { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.nav { display: flex; gap: 6px; margin-left: auto; }
+
+/* 1か月の帯 */
+.strip { margin-top: 20px; }
+.scroll { overflow-x: auto; }
+.months { display: grid; grid-template-columns: 3.2rem repeat(31, minmax(18px, 1fr)); gap: 3px 2px; min-width: 640px; margin-top: 12px; align-items: center; }
+.rl { font-size: 0.6875rem; color: var(--muted); white-space: nowrap; }
+.phase { height: 26px; border-radius: 4px; background: var(--claude-soft); color: var(--claude); font-size: 0.6875rem; font-weight: 700; display: flex; align-items: center; padding: 0 8px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; border: 1px solid transparent; cursor: pointer; }
+.phase.cur { border-color: var(--claude); }
+.dnum { font-family: var(--f-mono); font-size: 0.625rem; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.dnum.mon { color: var(--ink); }
+.dnum.today { color: var(--surface); background: var(--now); border-radius: 3px; }
+.sq { height: 18px; border-radius: 3px; border: 1.5px solid var(--x); background: transparent; padding: 0; cursor: pointer; }
+.sq.done { background: var(--x); }
+.sq.miss { border-color: var(--warn); border-style: dashed; }
+.sq.none { border: none; cursor: default; }
+.sq.ev { border-color: var(--admin); background: var(--admin-soft); border-radius: 50%; height: 14px; width: 14px; justify-self: center; }
+.sq.sel { outline: 2px solid var(--now); outline-offset: 1px; }
+.col-today { box-shadow: inset 0 0 0 999px color-mix(in srgb, var(--now) 10%, transparent); }
+
+/* 時間割 */
+.main { display: grid; gap: 20px; margin-top: 20px; }
+@media (min-width: 1000px) { .main { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: start; } .day { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; } }
+.tt { display: grid; grid-template-columns: 4rem repeat(7, minmax(72px, 1fr)); gap: 4px; min-width: 580px; margin-top: 12px; }
+/* スマホ：行＝曜日、列＝時間帯に入れ替える */
+.tt.tr { grid-template-columns: 3rem repeat(4, minmax(0, 1fr)); min-width: 0; }
+.tt.tr .band { text-align: center; padding: 0 0 2px; }
+.tt.tr .th { padding: 6px 0; }
+.tt.tr .slot { min-height: 52px; }
+.th { font-size: 0.8125rem; text-align: center; padding: 4px 0; border-radius: 6px; font-weight: 500; }
+.th small { display: block; font-family: var(--f-mono); font-size: 0.6875rem; color: var(--muted); font-weight: 500; }
+.th.today { background: var(--now); color: var(--surface); }
+.th.today small { color: var(--surface); }
+.th.sel:not(.today) { outline: 2px solid var(--now); outline-offset: -2px; }
+.th.out { opacity: 0.35; }
+.band { font-size: 0.75rem; color: var(--muted); padding: 6px 4px 0 0; line-height: 1.35; }
+.band b { display: block; color: var(--ink); font-size: 0.8125rem; }
+.slot { min-height: 64px; border-radius: 6px; background: color-mix(in srgb, var(--line) 35%, transparent); padding: 3px; display: flex; flex-direction: column; gap: 3px; }
+.slot.today { background: color-mix(in srgb, var(--now) 14%, transparent); }
+.slot.now { box-shadow: inset 0 0 0 2px var(--now); }
+.slot.out { background: transparent; }
+.blk { display: block; width: 100%; text-align: left; font: inherit; border: none; border-left: 4px solid; border-radius: 4px; padding: 4px 6px; cursor: pointer; line-height: 1.35; }
+.blk:hover { filter: brightness(0.97); }
+.blk.x { background: var(--x-soft); border-color: var(--x); color: var(--ink); }
+.blk.c { background: var(--claude-soft); border-color: var(--claude); color: var(--ink); }
+.blk.a { background: var(--admin-soft); border-color: var(--admin); color: var(--ink); }
+.blk.done { opacity: 0.55; }
+.blk .t1 { display: flex; gap: 4px; align-items: center; font-size: 0.6875rem; font-weight: 700; }
+.blk.x .t1 { color: var(--x); } .blk.c .t1 { color: var(--claude); } .blk.a .t1 { color: var(--admin); }
+.blk .t1 .ok { color: var(--done); margin-left: auto; }
+.blk .t2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.75rem; }
+.badge { font-size: 0.625rem; font-weight: 500; border: 1px solid currentColor; border-radius: 3px; padding: 0 3px; }
+.now-tag { font-size: 0.625rem; color: var(--surface); background: var(--now); border-radius: 3px; padding: 0 4px; align-self: flex-start; }
+
+/* その日の段取り */
+.day-head h2 { font-size: 1.375rem; }
+.day-head .tag { font-size: 0.75rem; color: var(--surface); background: var(--now); border-radius: 3px; padding: 1px 6px; }
+.theme { margin: 6px 0 0; font-size: 0.875rem; color: var(--muted); }
+.tl { list-style: none; margin: 10px 0 0; padding: 0; }
+.task { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
+.task.flash { animation: flash 1.2s ease-out; }
+@keyframes flash { from { background: color-mix(in srgb, var(--now) 22%, transparent); } to { background: transparent; } }
 .when { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
 .when b { display: block; font-family: var(--f-body); font-size: 0.9375rem; color: var(--ink); }
-.task.m .when b { color: var(--morning); } .task.n .when b { color: var(--night); } .task.ev .when b { color: var(--event); }
 .what { min-width: 0; }
 .what h3 { font-size: 1rem; font-weight: 700; line-height: 1.5; }
-.where { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.04em; border: 1px solid currentColor; border-radius: 3px; padding: 0 5px; margin-right: 6px; vertical-align: 2px; color: var(--accent); font-weight: 500; }
+.where { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.04em; border-radius: 3px; padding: 0 6px; margin-right: 6px; vertical-align: 2px; font-weight: 700; color: var(--surface); }
+.where.x { background: var(--x); } .where.c { background: var(--claude); } .where.a { background: var(--admin); }
 .meta { font-size: 0.8125rem; color: var(--muted); margin: 2px 0 0; }
 .meta code { font-family: var(--f-mono); font-size: 0.75rem; }
 .steps { margin: 8px 0 0; padding-left: 1.3em; font-size: 0.875rem; }
@@ -111,33 +148,50 @@ h1 { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; line-h
 .opts li { font-size: 0.875rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
 .check { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); cursor: pointer; }
 .check input { width: 16px; height: 16px; accent-color: var(--done); }
-.posted { color: var(--done); font-weight: 700; font-size: 0.8125rem; }
+.posted { color: var(--done); font-weight: 700; font-size: 0.8125rem; margin: 4px 0 0; }
 .empty { color: var(--muted); padding: 14px 0; border-top: 1px solid var(--line); }
 .foot { margin-top: 28px; font-size: 0.8125rem; color: var(--muted); }
 .foot code { font-family: var(--f-mono); font-size: 0.75rem; }
-@media (max-width: 520px) { .task { grid-template-columns: 1fr; gap: 4px; } .when b { display: inline; margin-right: 8px; } }
-@media (prefers-reduced-motion: no-preference) { .cell, .btn { transition: border-color .15s, background-color .15s; } }
+@media (max-width: 520px) { .task { grid-template-columns: 1fr; gap: 4px; } .when b { display: inline; margin-right: 8px; } h1 { font-size: 1.5rem; } }
+@media (prefers-reduced-motion: reduce) { .task.flash { animation: none; } }
 </style>
 
 <div class="wrap">
   <header>
-    <h1>ムートン運用カレンダー</h1>
-    <p class="lead">10月中に最初の1件を売る。毎日、いつ・どこで・何をするかを1日ずつ並べた表です。</p>
-    <p class="flow" aria-label="お金が生まれる流れ">X に投稿 <i>→</i> 「選び方」の記事 <i>→</i> Amazon・楽天</p>
-    <div class="stats" id="stats"></div>
-    <div class="legend">
-      <span><i class="sw" style="background:var(--morning-soft);border:1px solid var(--morning)"></i>朝 7〜8時の投稿</span>
-      <span><i class="sw" style="background:var(--night-soft);border:1px solid var(--night)"></i>夜 21〜22時の投稿</span>
-      <span><i class="sw" style="background:var(--event-soft);border:1px solid var(--event)"></i>数字を見る日・締め</span>
-      <span>✓ 投稿済み（順番表）</span>
+    <div class="top">
+      <div>
+        <h1>ムートン運用カレンダー</h1>
+        <p class="flow"><b>X に投稿</b> → <b>「選び方」の記事</b> → <b>Amazon・楽天</b>　10月中に最初の1件を売る</p>
+      </div>
+      <div class="kpis" id="kpis"></div>
+    </div>
+    <div class="legend" aria-label="色の意味（どこでやるか）">
+      <span><i class="sw x"></i>X（投稿する）</span>
+      <span><i class="sw c"></i>Claude（送る・渡す）</span>
+      <span><i class="sw a"></i>管理画面（数字を見る）</span>
+      <span>塗りつぶし＝投稿済み／点線の赤＝記録なし</span>
     </div>
   </header>
 
-  <div class="layout">
-    <section class="day" id="day" aria-live="polite"></section>
-    <section class="month" aria-label="カレンダー">
-      <div id="months"></div>
+  <section class="panel strip" aria-label="10/6〜11/5 の流れ">
+    <div class="panel-head"><h2>1か月の流れ</h2><span class="sub">四角を押すとその日へ</span></div>
+    <div class="scroll"><div class="months" id="months"></div></div>
+  </section>
+
+  <div class="main">
+    <section class="panel" aria-label="週の時間割">
+      <div class="panel-head">
+        <h2 id="week-title"></h2>
+        <div class="nav">
+          <button type="button" class="btn" id="wprev">← 前の週</button>
+          <button type="button" class="btn" id="wtoday">今週</button>
+          <button type="button" class="btn" id="wnext">次の週 →</button>
+        </div>
+      </div>
+      <p class="theme" id="week-theme"></p>
+      <div class="scroll"><div class="tt" id="tt"></div></div>
     </section>
+    <section class="panel day" id="day" aria-live="polite"></section>
   </div>
 
   <p class="foot" id="foot"></p>
@@ -154,16 +208,28 @@ const WEEKS = [
 ];
 
 const SOURCES = "X のアナリティクス、GA4（集客 → トラフィック獲得の x / social、affiliate_click）、Amazon アソシエイト・楽天のレポート";
+// where: X / Claude / 管理画面
 const EVENTS = {
-  "2026-10-12": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "出てきた今週の3つを確認する"] }],
-  "2026-10-19": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
-  "2026-10-26": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
-  "2026-10-31": [{ when: "夜", where: "—", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば日付とメモを残しておく"] }],
-  "2026-11-01": [{ when: "日中", where: "管理画面", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
-  "2026-11-02": [{ when: "朝", where: "Claude", title: "10月の振り返り", steps: ["集めた数字を Claude に「10月の振り返り」と送って渡す", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
-  "2026-11-05": [{ when: "日中", where: "Claude", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
+  "2026-10-12": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "出てきた今週の3つを確認する"] }],
+  "2026-10-19": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
+  "2026-10-26": [{ when: "朝", where: "Claude", short: "週の振り返り", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
+  "2026-10-31": [{ when: "夜", where: "Claude", short: "10月の締め", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば Claude に日付を伝えて記録する"] }],
+  "2026-11-01": [{ when: "日中", where: "管理画面", short: "10月の数字を集める", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
+  "2026-11-02": [{ when: "朝", where: "Claude", short: "10月の振り返り", title: "10月の振り返り", steps: ["集めた数字を Claude に「10月の振り返り」と送って渡す", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
+  "2026-11-05": [{ when: "日中", where: "Claude", short: "11月の計画を決める", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
 };
+// 週の振り返りの前の日曜に、管理画面で数字を集めておく
+for (const d of ["2026-10-11", "2026-10-18", "2026-10-25"]) {
+  EVENTS[d] = [{ when: "日中", where: "管理画面", short: "1週間の数字を撮る", title: "1週間の数字をスクショする", steps: [SOURCES + "を開く", "この1週間の分をスクショか CSV にして、明日の朝 Claude に渡せるようにしておく"] }];
+}
 
+const BANDS = [
+  { key: "wake", label: "起きたら", time: "", from: 0, to: 7 },
+  { key: "朝", label: "朝", time: "7〜8時", from: 7, to: 9 },
+  { key: "日中", label: "日中", time: "", from: 9, to: 21 },
+  { key: "夜", label: "夜", time: "21〜22時", from: 21, to: 24 },
+];
+const PLACE = { X: "x", Claude: "c", "管理画面": "a" };
 const DOW = ["日", "月", "火", "水", "木", "金", "土"];
 const FIRST_POST = DATA.slots[0]?.date;
 const LAST_POST = DATA.slots[DATA.slots.length - 1]?.date;
@@ -176,56 +242,119 @@ function iso(d) { return d.toISOString().slice(0, 10); }
 function parse(s) { return new Date(s + "T00:00:00Z"); }
 function addDays(s, n) { const d = parse(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); }
 function md(s) { const d = parse(s); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}（${DOW[d.getUTCDay()]}）`; }
-function todayJST() { return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo" }).format(new Date()); }
+function mondayOf(s) { const dow = parse(s).getUTCDay(); return addDays(s, -((dow + 6) % 7)); }
+function nowJST() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", hourCycle: "h23" }).formatToParts(new Date()).map((x) => [x.type, x.value]));
+  return { date: `${p.year}-${p.month}-${p.day}`, hour: Number(p.hour) };
+}
 function inRange(s) { return s >= RANGE.from && s <= RANGE.to; }
 function weekOf(s) { return WEEKS.find((w) => s >= w.from && s <= w.to); }
 function esc(t) { return String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+function clamp(s) { return s < RANGE.from ? RANGE.from : s > RANGE.to ? RANGE.to : s; }
 
 const store = {
   get(k) { try { return localStorage.getItem(k) === "1"; } catch { return false; } },
   set(k, v) { try { v ? localStorage.setItem(k, "1") : localStorage.removeItem(k); } catch {} },
 };
 
-const TODAY = todayJST();
-let selected = inRange(TODAY) ? TODAY : (TODAY < RANGE.from ? RANGE.from : RANGE.to);
+const NOW = nowJST();
+const TODAY = NOW.date;
+const NOW_BAND = BANDS.find((b) => NOW.hour >= b.from && NOW.hour < b.to)?.key;
+let selected = clamp(TODAY);
 try { const h = location.hash.slice(1); if (/^d\d{4}-\d{2}-\d{2}$/.test(h) && inRange(h.slice(1))) selected = h.slice(1); } catch {}
+let weekStart = mondayOf(selected);
 
-function stats() {
-  const done = DATA.slots.filter((s) => s.done).length;
-  const left = DATA.slots.filter((s) => !s.done && s.date >= TODAY).length;
-  const guide = DATA.slots.filter((s) => s.kind === "選び方").length;
-  document.getElementById("stats").innerHTML =
-    `<span>今日 <b>${md(TODAY)}</b></span>` +
-    `<span>投稿済み <b>${done}</b> / ${DATA.slots.length}枠</span>` +
-    `<span>これから <b>${left}</b>枠</span>` +
-    `<span>選び方の記事 <b>${guide}</b>枠</span>`;
+function isPosted(s) { return s.done || store.get(`post-${s.date}-${s.slot}`); }
+
+// その日の作業を、時間帯ごとのブロックにする
+function blocksFor(d) {
+  const out = [];
+  const slots = byDate[d] || [];
+  if (slots.length) out.push({ band: "wake", place: "Claude", t1: "Claude", t2: "「今日の仕事」と送る", key: "wake" });
+  for (const p of byDate[addDays(d, -1)] || []) if (p.followup) out.push({ band: "朝", place: "X", t1: "X", badge: "答え合わせ", t2: "投票への返信（枠外）", key: "fu" });
+  for (const e of EVENTS[d] || []) out.push({ band: e.when === "朝" ? "wake" : e.when, place: e.where, t1: e.where, t2: e.short, key: "ev-" + (EVENTS[d].indexOf(e)) });
+  for (const s of slots) out.push({ band: s.slot, place: "X", t1: "X", badge: s.form === "本文リンク" ? "本文リンク" : s.form === "投票" ? "投票" : /引用/.test(s.formNote) ? "答え合わせ" : "リプ", t2: s.article, key: s.slot, done: isPosted(s) });
+  return out;
+}
+
+function renderKpis() {
+  const done = DATA.slots.filter(isPosted).length;
+  const left = DATA.slots.filter((s) => !isPosted(s) && s.date >= TODAY).length;
+  const miss = DATA.slots.filter((s) => !isPosted(s) && s.date < TODAY).length;
+  const daysLeft = Math.max(0, Math.round((parse("2026-10-31") - parse(TODAY)) / 864e5));
+  document.getElementById("kpis").innerHTML =
+    `<div class="kpi"><span>投稿済み</span><b>${done}</b><small>/ ${DATA.slots.length}</small></div>` +
+    `<div class="kpi"><span>これから</span><b>${left}</b><small>本</small></div>` +
+    `<div class="kpi"><span>記録なし</span><b style="color:${miss ? "var(--warn)" : "inherit"}">${miss}</b><small>本</small></div>` +
+    `<div class="kpi"><span>10/31 まで</span><b>${daysLeft}</b><small>日</small></div>`;
 }
 
 function renderMonths() {
-  // 10/5（月）〜11/8（日）の5週
-  let html = `<h2>2026年10月 <small>〜 11/5 まで</small></h2><div class="dow">${["月","火","水","木","金","土","日"].map((d) => `<span>${d}</span>`).join("")}</div><div class="grid">`;
-  let lastWeek = null;
-  for (let d = "2026-10-05"; d <= "2026-11-08"; d = addDays(d, 1)) {
-    const dt = parse(d);
-    if (dt.getUTCDay() === 1) {
-      const w = weekOf(addDays(d, 3)); // 行の真ん中（木曜）が入る週
-      if (w && w !== lastWeek) { html += `<div class="week-label"><b>第${w.n}週</b> ${esc(w.text)}</div>`; lastWeek = w; }
-    }
-    const slots = byDate[d] || [];
-    const ev = EVENTS[d] || [];
-    const cls = ["cell", inRange(d) ? "" : "out", d < TODAY ? "past" : "", d === TODAY ? "today" : "", d === selected ? "sel" : ""].join(" ");
-    let inner = `<span class="num"><span>${dt.getUTCDate() === 1 ? `${dt.getUTCMonth() + 1}/` : ""}${dt.getUTCDate()}</span>${d === TODAY ? "<em>今日</em>" : ""}</span>`;
-    for (const s of slots) inner += `<span class="chip ${s.slot === "朝" ? "m" : "n"} ${s.done ? "ok" : ""}">${esc(s.id)}</span>`;
-    for (const e of ev) inner += `<span class="chip ev">${esc(e.title.replace(/（.*）/, ""))}</span>`;
-    const label = `${md(d)} ${slots.map((s) => `${s.slot} ${s.id} ${s.article}`).join("、")}${ev.length ? "、" + ev.map((e) => e.title).join("、") : ""}`;
-    html += inRange(d)
-      ? `<button type="button" class="${cls}" data-date="${d}" aria-label="${esc(label)}" aria-pressed="${d === selected}">${inner}</button>`
-      : `<div class="${cls}" aria-hidden="true">${inner}</div>`;
+  const days = [];
+  for (let d = RANGE.from; d <= RANGE.to; d = addDays(d, 1)) days.push(d);
+  const col = (d) => days.indexOf(d) + 2;
+  let h = `<span class="rl">週</span>`;
+  for (const w of WEEKS) {
+    const cur = TODAY >= w.from && TODAY <= w.to;
+    h += `<button type="button" class="phase ${cur ? "cur" : ""}" style="grid-column:${col(w.from)} / ${col(w.to) + 1}" data-date="${w.from < TODAY && TODAY <= w.to ? TODAY : w.from}" title="${esc(w.text)}">第${w.n}週　${esc(w.text)}</button>`;
   }
-  html += "</div>";
+  h += `<span class="rl">日付</span>`;
+  for (const d of days) {
+    const dt = parse(d);
+    const label = dt.getUTCDate();
+    h += `<span title="${md(d)}" class="dnum ${dt.getUTCDay() === 1 || dt.getUTCDate() === 1 ? "mon" : ""} ${d === TODAY ? "today" : ""}">${label}<br>${DOW[dt.getUTCDay()]}</span>`;
+  }
+  for (const [slot, name] of [["朝", "X 朝"], ["夜", "X 夜"]]) {
+    h += `<span class="rl">${name}</span>`;
+    for (const d of days) {
+      const s = (byDate[d] || []).find((x) => x.slot === slot);
+      if (!s) { h += `<span class="sq none"></span>`; continue; }
+      const cls = isPosted(s) ? "done" : d < TODAY ? "miss" : "";
+      h += `<button type="button" class="sq ${cls} ${d === selected ? "sel" : ""}" data-date="${d}" data-key="${slot}" aria-label="${md(d)} ${slot} ${esc(s.id)} ${esc(s.article)}${isPosted(s) ? " 投稿済み" : ""}" title="${md(d)} ${slot}：${esc(s.article)}"></button>`;
+    }
+  }
+  h += `<span class="rl">数字</span>`;
+  for (const d of days) {
+    const e = (EVENTS[d] || [])[0];
+    h += e ? `<button type="button" class="sq ev ${d === selected ? "sel" : ""}" data-date="${d}" data-key="ev-0" aria-label="${md(d)} ${esc(e.title)}" title="${md(d)}：${esc(e.title)}"></button>` : `<span class="sq none"></span>`;
+  }
   const el = document.getElementById("months");
-  el.innerHTML = html;
-  el.querySelectorAll("button.cell").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, true)));
+  el.innerHTML = h;
+  el.querySelectorAll("button[data-date]").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, b.dataset.key)));
+}
+
+function renderWeek() {
+  const days = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i));
+  const w = weekOf(addDays(weekStart, 3)) || weekOf(days.find(inRange) || RANGE.from);
+  document.getElementById("week-title").innerHTML = `${md(days[0]).replace(/（.）/, "")} 〜 ${md(days[6]).replace(/（.）/, "")}<span class="sub">時間割</span>`;
+  document.getElementById("week-theme").textContent = w ? `第${w.n}週：${w.text}` : "";
+  document.getElementById("wprev").disabled = days[0] <= RANGE.from;
+  document.getElementById("wnext").disabled = days[6] >= RANGE.to;
+  const narrow = matchMedia("(max-width: 640px)").matches;
+  const head = (d) => `<button type="button" class="th ${d === TODAY ? "today" : ""} ${d === selected ? "sel" : ""} ${inRange(d) ? "" : "out"} btn" style="border:none" data-date="${d}" ${inRange(d) ? "" : "disabled"}>${DOW[parse(d).getUTCDay()]}<small>${parse(d).getUTCMonth() + 1}/${parse(d).getUTCDate()}</small></button>`;
+  const cell = (d, b) => {
+    let h = "";
+    const isNow = d === TODAY && b.key === NOW_BAND;
+    h += `<div class="slot ${d === TODAY ? "today" : ""} ${isNow ? "now" : ""} ${inRange(d) ? "" : "out"}">`;
+    if (isNow) h += `<span class="now-tag">いま</span>`;
+    if (inRange(d)) for (const k of blocksFor(d).filter((x) => x.band === b.key)) {
+      h += `<button type="button" class="blk ${PLACE[k.place]} ${k.done ? "done" : ""}" data-date="${d}" data-key="${k.key}"><span class="t1">${esc(k.t1)}${k.badge ? `<span class="badge">${esc(k.badge)}</span>` : ""}${k.done ? `<span class="ok">✓</span>` : ""}</span><span class="t2">${esc(k.t2)}</span></button>`;
+    }
+    return h + `</div>`;
+  };
+  const band = (b) => `<div class="band"><b>${b.label}</b>${b.time}</div>`;
+  let h = `<span></span>`;
+  if (narrow) {
+    for (const b of BANDS) h += band(b);
+    for (const d of days) { h += head(d); for (const b of BANDS) h += cell(d, b); }
+  } else {
+    for (const d of days) h += head(d);
+    for (const b of BANDS) { h += band(b); for (const d of days) h += cell(d, b); }
+  }
+  const el = document.getElementById("tt");
+  el.classList.toggle("tr", narrow);
+  el.innerHTML = h;
+  el.querySelectorAll("[data-date]").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, b.dataset.key)));
 }
 
 function copyBlock(label, text, key) {
@@ -242,18 +371,19 @@ function stepsFor(s) {
 
 const copyTexts = {};
 
+function whereTag(place) { return `<span class="where ${PLACE[place]}">${esc(place)}</span>`; }
+
 function postTask(s) {
   const k = `${s.date}-${s.slot}`;
   copyTexts[k + "-b"] = s.body;
   copyTexts[k + "-r"] = s.reply;
   const time = s.slot === "朝" ? "7〜8時" : "21〜22時";
-  const pr = /^【PR】/.test(s.body) ? "【PR】を消さずに投稿。" : "";
-  let html = `<li class="task ${s.slot === "朝" ? "m" : "n"}"><div class="when"><b>${s.slot}</b>${time}</div><div class="what">`;
-  html += `<h3><span class="where">X</span>${esc(s.article)}</h3>`;
+  let html = `<li class="task" id="task-${s.slot}"><div class="when"><b>${s.slot}</b>${time}</div><div class="what">`;
+  html += `<h3>${whereTag("X")}${esc(s.article)}</h3>`;
   html += `<p class="meta"><code>${esc(s.id)}</code>・${esc(s.kind)}・${esc(s.form)}${s.formNote ? `（${esc(s.formNote)}）` : ""}${s.angle ? `・${esc(s.angle)}` : ""}</p>`;
   if (s.done) html += `<p class="posted">✓ 投稿済み（順番表に記録あり）</p>`;
   html += `<ol class="steps">${stepsFor(s).map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
-  if (pr) html += `<p class="meta">${pr}</p>`;
+  if (/^【PR】/.test(s.body)) html += `<p class="meta">【PR】を消さずに投稿。</p>`;
   if (s.body) html += copyBlock("本文", s.body, k + "-b");
   if (s.options.length) html += `<div class="copy"><div class="copy-head"><span>投票の選択肢（期間は1日）</span></div><ul class="opts">${s.options.map((o) => `<li>${esc(o)}</li>`).join("")}</ul></div>`;
   if (s.reply && s.form === "リプリンク") html += copyBlock("リプライ（自分の投稿に返信）", s.reply, k + "-r");
@@ -264,38 +394,38 @@ function postTask(s) {
 function followupTask(s) {
   const k = `${s.date}-fu`;
   copyTexts[k] = s.followup;
-  return `<li class="task m"><div class="when"><b>朝</b>7〜8時</div><div class="what"><h3><span class="where">X</span>投票の答え合わせ（枠は使わない）</h3><p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する</p>${copyBlock("答え合わせ", s.followup, k)}</div></li>`;
+  return `<li class="task" id="task-fu"><div class="when"><b>朝</b>7〜8時</div><div class="what"><h3>${whereTag("X")}投票の答え合わせ（枠は使わない）</h3><p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する</p>${copyBlock("答え合わせ", s.followup, k)}</div></li>`;
 }
 
 function eventTask(e, d, i) {
   const k = `ev-${d}-${i}`;
-  return `<li class="task ev"><div class="when"><b>${esc(e.when)}</b>${e.where === "—" ? "" : esc(e.where)}</div><div class="what"><h3>${e.where !== "—" ? `<span class="where">${esc(e.where)}</span>` : ""}${esc(e.title)}</h3><ol class="steps">${e.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><label class="check"><input type="checkbox" id="chk-${k}" data-key="${k}" ${store.get(k) ? "checked" : ""}> やった（この端末にだけ記録）</label></div></li>`;
+  return `<li class="task" id="task-ev-${i}"><div class="when"><b>${esc(e.when)}</b></div><div class="what"><h3>${whereTag(e.where)}${esc(e.title)}</h3><ol class="steps">${e.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><label class="check"><input type="checkbox" id="chk-${k}" data-key="${k}" ${store.get(k) ? "checked" : ""}> やった（この端末にだけ記録）</label></div></li>`;
 }
 
 function renderDay() {
   const d = selected;
   const w = weekOf(d);
   const slots = byDate[d] || [];
-  const prev = byDate[addDays(d, -1)] || [];
-  let html = `<div class="day-head"><h2>${md(d)}</h2>${d === TODAY ? `<span class="tag">今日</span>` : ""}<div class="nav"><button type="button" class="btn" id="prev" ${d <= RANGE.from ? "disabled" : ""}>← 前の日</button><button type="button" class="btn" id="next" ${d >= RANGE.to ? "disabled" : ""}>次の日 →</button></div></div>`;
+  const ev = EVENTS[d] || [];
+  const evAt = (when) => ev.map((e, i) => [e, i]).filter(([e]) => (when === "朝" ? e.when === "朝" : e.when === when)).map(([e, i]) => eventTask(e, d, i)).join("");
+  let html = `<div class="panel-head day-head"><h2>${md(d)}</h2>${d === TODAY ? `<span class="tag">今日</span>` : ""}<div class="nav"><button type="button" class="btn" id="prev" ${d <= RANGE.from ? "disabled" : ""}>← 前の日</button><button type="button" class="btn" id="next" ${d >= RANGE.to ? "disabled" : ""}>次の日 →</button></div></div>`;
   if (w) html += `<p class="theme">第${w.n}週：${esc(w.text)}</p>`;
   html += `<ol class="tl">`;
-  if (slots.length && d >= FIRST_POST) {
-    html += `<li class="task"><div class="when"><b>起きたら</b></div><div class="what"><h3><span class="where">Claude</span>「今日の仕事」と送る</h3><p class="meta">前日の投稿が出たかの確認と、今日の2本をそのまま貼れる形で受け取る。昨日の分を投稿したかもここで伝える。</p></div></li>`;
-  }
-  for (const e of (EVENTS[d] || []).filter((e) => e.when !== "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
-  for (const p of prev) if (p.followup) html += followupTask(p);
+  if (slots.length) html += `<li class="task" id="task-wake"><div class="when"><b>起きたら</b></div><div class="what"><h3>${whereTag("Claude")}「今日の仕事」と送る</h3><p class="meta">前日の投稿が出たかの確認と、今日の2本をそのまま貼れる形で受け取る。昨日の分を投稿したかもここで伝える。</p></div></li>`;
+  html += evAt("朝");
+  for (const p of byDate[addDays(d, -1)] || []) if (p.followup) html += followupTask(p);
   for (const s of slots.filter((s) => s.slot === "朝")) html += postTask(s);
+  html += evAt("日中");
   for (const s of slots.filter((s) => s.slot === "夜")) html += postTask(s);
-  for (const e of (EVENTS[d] || []).filter((e) => e.when === "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
-  if (!slots.length && !(EVENTS[d] || []).length) html += `<li class="empty">この日は決まった作業がありません。数字を見る日に向けて、投稿のメモ（インプレッション・リンクのクリック数）を残しておくと振り返りが楽になります。</li>`;
+  html += evAt("夜");
+  if (!slots.length && !ev.length) html += `<li class="empty">この日は決まった作業がありません。</li>`;
   html += `</ol>`;
   const el = document.getElementById("day");
   el.innerHTML = html;
   el.querySelector("#prev")?.addEventListener("click", () => select(addDays(d, -1)));
   el.querySelector("#next")?.addEventListener("click", () => select(addDays(d, 1)));
   el.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => copy(b)));
-  el.querySelectorAll("input[data-key]").forEach((c) => c.addEventListener("change", () => store.set(c.dataset.key, c.checked)));
+  el.querySelectorAll("input[data-key]").forEach((c) => c.addEventListener("change", () => { store.set(c.dataset.key, c.checked); renderKpis(); renderMonths(); renderWeek(); }));
 }
 
 function copy(btn) {
@@ -310,16 +440,28 @@ function copy(btn) {
   try { navigator.clipboard.writeText(copyTexts[key]).then(done, fallback); } catch { fallback(); }
 }
 
-function select(d, scroll) {
-  selected = d;
-  try { history.replaceState(null, "", "#d" + d); } catch {}
+function select(d, key) {
+  selected = clamp(d);
+  weekStart = mondayOf(selected);
+  try { history.replaceState(null, "", "#d" + selected); } catch {}
   renderMonths();
+  renderWeek();
   renderDay();
-  if (scroll && window.matchMedia("(max-width: 959px)").matches) document.getElementById("day").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (key !== undefined) {
+    const t = document.getElementById("task-" + key) || document.getElementById("day");
+    t.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+    t.classList.add("flash");
+  }
 }
 
-stats();
+document.getElementById("wprev").addEventListener("click", () => { weekStart = addDays(weekStart, -7); renderWeek(); });
+document.getElementById("wnext").addEventListener("click", () => { weekStart = addDays(weekStart, 7); renderWeek(); });
+document.getElementById("wtoday").addEventListener("click", () => select(TODAY));
+
+try { matchMedia("(max-width: 640px)").addEventListener("change", renderWeek); } catch {}
+renderKpis();
 renderMonths();
+renderWeek();
 renderDay();
-document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。「✓ 投稿済み」は順番表の記録で、チェックボックスはこの端末だけのメモです。投稿したら Claude にも伝えてください。`;
+document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。「✓」は順番表の記録か、この端末でのチェックです。投稿したら Claude にも伝えてください（順番表に記録されます）。`;
 </script>
