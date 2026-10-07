@@ -185,3 +185,6 @@ document.addEventListener('click',e=>{
 
 // GA4: count quiz reveals per article.
 document.querySelectorAll('details.quiz').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&typeof window.gtag==='function')window.gtag('event','quiz_open',{article:location.pathname});},{once:true}));
+
+// Before/after slider (making-*.html): the range input moves the divider.
+document.querySelectorAll('.mk-cmp').forEach(c=>{const r=c.querySelector('.mk-cmp-range');if(r)r.addEventListener('input',()=>c.style.setProperty('--pos',r.value+'%'));});

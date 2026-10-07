@@ -27,6 +27,7 @@
     "done": ["9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた", "記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした", "独自ドメイン moutonarchive.com に移り、アクセス解析を入れた", "AI の社員チーム（記事・編集・X・保守）が毎日動く形にした"],
     "next": "10月中に、記事から最初の1件が売れるところまで持っていく。",
     "image": "images/making/site.jpg", "video": "images/making/site.mp4", "caption": "このサイトのトップと、選び方の記事をスクロールしたところ", "audio": "",
+    "compare": { "title": "最初のトップと、今のトップ", "before": { "label": "10月はじめ", "desktop": "images/making/site-ui-v1-desktop.jpg", "phone": "images/making/site-ui-v1-phone.jpg" }, "after": { "label": "今", "desktop": "images/making/site-ui-v3-desktop.jpg", "phone": "images/making/site-ui-v3-phone.jpg" }, "note": "落ち着いた灰色の一枚の画面から、空の写真で始まり、スクロールで場面が切り替わるトップへ。「選び方」への入口を一番上に置いた。" },
     "url": "making-site.html"
   },
   {

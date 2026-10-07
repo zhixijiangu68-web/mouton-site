@@ -42,6 +42,25 @@
   <div class="mk-audio"><p class="mk-eyebrow">SOUND</p><audio src="{{ project.audio }}" controls preload="none"></audio></div>
   {%- endif %}
 
+  {%- if project.compare %}{% set c = project.compare %}
+  <section class="mk-section" aria-labelledby="mk-compare">
+    <p class="mk-eyebrow">BEFORE / AFTER</p>
+    <h2 id="mk-compare">{{ c.title }}</h2>
+    <div class="mk-cmp" style="--pos:50%">
+      <img src="{{ c.after.desktop }}" alt="{{ c.after.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
+      <img class="mk-cmp-before" src="{{ c.before.desktop }}" alt="{{ c.before.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
+      <span class="mk-cmp-tag mk-cmp-tag-b">{{ c.before.label }}</span><span class="mk-cmp-tag mk-cmp-tag-a">{{ c.after.label }}</span>
+      <input class="mk-cmp-range" type="range" min="0" max="100" value="50" aria-label="{{ c.before.label }}と{{ c.after.label }}を見比べる">
+    </div>
+    <p class="mk-cmp-hint">つまみを左右に動かして見比べる</p>
+    <div class="mk-cmp-phones">
+      <figure><img src="{{ c.before.phone }}" alt="{{ c.before.label }}のトップ（スマホ）" width="390" height="844" loading="lazy"><figcaption>{{ c.before.label }}</figcaption></figure>
+      <figure><img src="{{ c.after.phone }}" alt="{{ c.after.label }}のトップ（スマホ）" width="390" height="844" loading="lazy"><figcaption>{{ c.after.label }}</figcaption></figure>
+    </div>
+    {%- if c.note %}<p>{{ c.note }}</p>{% endif %}
+  </section>
+  {%- endif %}
+
   <section class="mk-section" aria-labelledby="mk-now">
     <p class="mk-eyebrow">01 / 今の状態</p>
     <h2 id="mk-now">ここまでと、次の一歩。</h2>
