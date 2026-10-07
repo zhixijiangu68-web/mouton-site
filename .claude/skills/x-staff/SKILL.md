@@ -34,5 +34,8 @@ description: X（@kodoku__alone）の運用を、ムートンの記事から回�
 | `promo/x-research/<YYYY-MM-DD>.md` | その日のリサーチ | ① |
 | `promo/x-analysis/<YYYY-Www>.md` | 週ごとの数字と判定、改善案 | ③ |
 | `promo/x-replies.md` | 届いたリプライ・引用と、返信の下書き | ⑤ |
+| `promo/calendar.html` | いつ・どこで・何をするかのカレンダー（`x-posts.md` から `npm run calendar` で作る生成物。直接編集しない） | 順番表や投稿文を直した担当 |
+
+順番表や投稿文を直したら `npm run calendar` でカレンダーを作り直し、一緒にコミットする。
 
 サイトの記事（`src/`）やリポジトリ直下の HTML はこのチームでは触らない。変更はブランチ `claude/x-staff` にコミットし、main 向けの PR を作る（マージは指揮役）。

@@ -1,0 +1,325 @@
+<title>ムートン運用カレンダー</title>
+<!-- 生成物: scripts/calendar/make.mjs が promo/x-posts.md から作る。直接編集しない -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 上に「選んだ日の段取り」、下に月曜始まりの月カレンダー。広い画面では左右に並べる */
+:root {
+  --bg: #f3f4f1;
+  --surface: #ffffff;
+  --ink: #1d2226;
+  --muted: #646d73;
+  --line: #d9ddd8;
+  --accent: #2a6b70;
+  --accent-soft: #dcebea;
+  --morning: #a8670d;
+  --morning-soft: #f6ead6;
+  --night: #4a52a0;
+  --night-soft: #e3e5f5;
+  --done: #3d7a3a;
+  --event: #a0453d;
+  --event-soft: #f5e1de;
+  --f-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
+    --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
+    --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
+  --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
+  --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
+.lead { color: var(--muted); margin: 6px 0 0; }
+.flow { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; font-weight: 500; color: var(--ink); }
+.flow i { font-style: normal; color: var(--muted); }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 0.875rem; color: var(--muted); }
+.stats b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+
+.layout { display: grid; gap: 24px; margin-top: 22px; }
+@media (min-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; } .day { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; } }
+
+/* カレンダー */
+.month { min-width: 0; }
+.month h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; display: flex; align-items: baseline; gap: 10px; }
+.month h2 small { font-family: var(--f-body); font-size: 0.8125rem; color: var(--muted); font-weight: 400; }
+.dow, .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.dow { margin-top: 10px; font-size: 0.75rem; color: var(--muted); text-align: center; }
+.dow span:nth-child(6) { color: var(--night); } .dow span:nth-child(7) { color: var(--event); }
+.grid { margin-top: 4px; }
+.week-label { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); padding: 8px 2px 2px; letter-spacing: 0.04em; }
+.week-label b { color: var(--accent); font-weight: 700; }
+.cell { min-width: 0; min-height: 84px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px; display: flex; flex-direction: column; gap: 3px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.cell:hover { border-color: var(--accent); }
+.cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cell.out { background: transparent; border-style: dashed; cursor: default; opacity: 0.45; }
+.cell.past:not(.out) { opacity: 0.7; }
+.cell.today { border: 2px solid var(--accent); padding: 3px; }
+.cell.sel { background: var(--accent-soft); border-color: var(--accent); }
+.num { font-family: var(--f-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; gap: 2px; }
+.num em { font-style: normal; font-family: var(--f-body); font-size: 0.625rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 0 4px; }
+.chip { display: block; font-family: var(--f-mono); font-size: 0.6875rem; line-height: 1.5; border-radius: 3px; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip.m { background: var(--morning-soft); color: var(--morning); }
+.chip.n { background: var(--night-soft); color: var(--night); }
+.chip.ev { background: var(--event-soft); color: var(--event); font-family: var(--f-body); }
+.chip.ok::before { content: "✓ "; color: var(--done); }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+@media (max-width: 520px) { .cell { min-height: 66px; padding: 3px 2px; } .chip { font-size: 0.5625rem; padding: 0 2px; } }
+
+/* 選んだ日 */
+.day { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px 8px; }
+.day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.day-head h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.375rem; }
+.day-head .tag { font-size: 0.75rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 1px 6px; }
+.theme { margin: 6px 0 0; font-size: 0.875rem; color: var(--muted); }
+.nav { display: flex; gap: 8px; margin-left: auto; }
+.btn { font: inherit; font-size: 0.8125rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.tl { list-style: none; margin: 14px 0 0; padding: 0; }
+.task { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.when { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
+.when b { display: block; font-family: var(--f-body); font-size: 0.9375rem; color: var(--ink); }
+.task.m .when b { color: var(--morning); } .task.n .when b { color: var(--night); } .task.ev .when b { color: var(--event); }
+.what { min-width: 0; }
+.what h3 { font-size: 1rem; font-weight: 700; line-height: 1.5; }
+.where { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.04em; border: 1px solid currentColor; border-radius: 3px; padding: 0 5px; margin-right: 6px; vertical-align: 2px; color: var(--accent); font-weight: 500; }
+.meta { font-size: 0.8125rem; color: var(--muted); margin: 2px 0 0; }
+.meta code { font-family: var(--f-mono); font-size: 0.75rem; }
+.steps { margin: 8px 0 0; padding-left: 1.3em; font-size: 0.875rem; }
+.steps li + li { margin-top: 2px; }
+.copy { margin-top: 10px; }
+.copy-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+.copy pre { margin: 4px 0 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; font-family: var(--f-body); font-size: 0.875rem; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
+.opts { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.opts li { font-size: 0.875rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+.check { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); cursor: pointer; }
+.check input { width: 16px; height: 16px; accent-color: var(--done); }
+.posted { color: var(--done); font-weight: 700; font-size: 0.8125rem; }
+.empty { color: var(--muted); padding: 14px 0; border-top: 1px solid var(--line); }
+.foot { margin-top: 28px; font-size: 0.8125rem; color: var(--muted); }
+.foot code { font-family: var(--f-mono); font-size: 0.75rem; }
+@media (max-width: 520px) { .task { grid-template-columns: 1fr; gap: 4px; } .when b { display: inline; margin-right: 8px; } }
+@media (prefers-reduced-motion: no-preference) { .cell, .btn { transition: border-color .15s, background-color .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>ムートン運用カレンダー</h1>
+    <p class="lead">10月中に最初の1件を売る。毎日、いつ・どこで・何をするかを1日ずつ並べた表です。</p>
+    <p class="flow" aria-label="お金が生まれる流れ">X に投稿 <i>→</i> 「選び方」の記事 <i>→</i> Amazon・楽天</p>
+    <div class="stats" id="stats"></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--morning-soft);border:1px solid var(--morning)"></i>朝 7〜8時の投稿</span>
+      <span><i class="sw" style="background:var(--night-soft);border:1px solid var(--night)"></i>夜 21〜22時の投稿</span>
+      <span><i class="sw" style="background:var(--event-soft);border:1px solid var(--event)"></i>数字を見る日・締め</span>
+      <span>✓ 投稿済み（順番表）</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="day" id="day" aria-live="polite"></section>
+    <section class="month" aria-label="カレンダー">
+      <div id="months"></div>
+    </section>
+  </div>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+const DATA = {"generated":"2026-10-07","slots":[{"date":"2026-10-07","slot":"朝","id":"OL-1","kind":"選び方","article":"オリーブオイルの選び方","done":true,"memo":"本文リンク（旧型）","form":"本文リンク","formNote":"","angle":"","body":"「エキストラバージン」と書いてあるオリーブオイル。\n\n実は日本の規格（JAS）には、エキストラバージンという区分がない。\n\nじゃあ店で何を見ればいいのか。容器、日付、表示、量。研究をもとに5つに絞った。\n\nhttps://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"olive-oil-guide"},{"date":"2026-10-07","slot":"夜","id":"R3","kind":"読み物","article":"コーヒーは、本当に体に悪いのか","done":true,"memo":"本文リンク（旧型）","form":"本文リンク","formNote":"","angle":"","body":"コーヒーは体に悪い？いい？\n\n200本以上のメタ解析をまとめた研究では、リスクが最も低かったのは1日3〜4杯あたり。\n\nただし見落としやすいのが睡眠。寝る6時間前のカフェインでも、眠りが短くなった実験がある。\n\nhttps://moutonarchive.com/coffee.html?utm_source=x&utm_medium=social&utm_campaign=coffee&utm_content=body","reply":"","followup":"","options":[],"slug":"coffee"},{"date":"2026-10-08","slot":"朝","id":"PT-5","kind":"選び方","article":"プロテインの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：上限1.6g","body":"プロテイン、たくさん飲むほど筋肉は増える？\n\n49の試験をまとめた研究では、1日のたんぱく質が体重1kgあたり約1.6gを超えると、それ以上とっても筋肉はほとんど増えなかった。\n\n体重60kgなら、1日約100gが一つの上限の目安。まず食事でどれだけ取れているかから。","reply":"「プロテインの選び方」の記事はこちら → https://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=reply","followup":"","options":[],"slug":"protein-guide"},{"date":"2026-10-08","slot":"夜","id":"CF-V1","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：コレステロールが上がりやすい淹れ方","body":"クイズ。\n\nコーヒー豆には、LDLコレステロールを上げる油の成分が含まれている。研究で、コレステロールが上がる傾向が大きかった淹れ方はどれ？\n\n答えは明日の朝に。","reply":"","followup":"","options":["紙のフィルター（ドリップ）","鍋で煮出す","どちらも同じ"],"slug":""},{"date":"2026-10-09","slot":"朝","id":"CF-A1","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（CF-V1）","body":"昨日のクイズの答え。\n\n「鍋で煮出す」。試験をまとめた研究では、上がる傾向はフィルターを通さないコーヒーで大きく、紙のフィルターで淹れたものではほとんど見られなかった。\n\n紙のフィルターが、油の成分を受け止めると考えられている。","reply":"「コーヒーの選び方と淹れ方」の記事はこちら → https://moutonarchive.com/coffee-guide.html?utm_source=x&utm_medium=social&utm_campaign=coffee-guide&utm_content=reply","followup":"","options":[],"slug":"coffee-guide"},{"date":"2026-10-09","slot":"夜","id":"TR-3","kind":"選び方","article":"家庭用ミニトランポリンの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"○×：耐荷重は体重ぴったりでいい？（新記事の告知）","body":"ミニトランポリンの耐荷重、自分の体重ぴったりで大丈夫？\n\n答えは、ぎりぎりは避ける。跳んで着地するとき、マットには体重以上の力がかかるから。家族で使うなら、いちばん重い人に合わせる。\n\n「家庭用ミニトランポリンの選び方」を新しく書いた。\n\nhttps://moutonarchive.com/mini-trampoline-guide.html?utm_source=x&utm_medium=social&utm_campaign=mini-trampoline-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"mini-trampoline-guide"},{"date":"2026-10-10","slot":"朝","id":"FI-1","kind":"読み物","article":"第一印象は0.1秒で決まる。そして、寝不足は顔に出る","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"○×：顔の印象は0.1秒で決まる？","body":"○×クイズ。\n\n人は、知らない人の顔を0.1秒見ただけで「信頼できそうか」を判断している。\n\n答えは○。0.1秒だけ顔を見せた実験でも、時間をかけて見たときの判断とよく一致していた。時間を延ばして変わったのは、おもに判断への自信だった。","reply":"「第一印象は0.1秒で決まる。そして、寝不足は顔に出る」の記事はこちら → https://moutonarchive.com/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=first-impression-sleep&utm_content=reply","followup":"","options":[],"slug":"first-impression-sleep"},{"date":"2026-10-10","slot":"夜","id":"OL-V1","kind":"選び方","article":"オリーブオイルの選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：酸化をいちばん抑えた容器","body":"クイズ。\n\nオリーブオイルを光の下で10か月保存した研究。酸化をいちばん抑え、抗酸化成分をよく残した容器は？\n\n答えは明日の朝に。","reply":"","followup":"","options":["緑色の瓶","UVカットの瓶","光を通さない紙パック"],"slug":""},{"date":"2026-10-11","slot":"朝","id":"OL-A1","kind":"選び方","article":"オリーブオイルの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（OL-V1）","body":"昨日のクイズの答え。\n\n「光を通さない紙パック」。緑色の瓶やUVカットの瓶より、酸化を抑えた。\n\n店では、缶、色の濃い瓶、箱入りを。照明の当たる棚の前列にある透明な瓶は、選ぶ前から不利かもしれない。","reply":"「オリーブオイルの選び方」の記事はこちら → https://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=reply","followup":"","options":[],"slug":"olive-oil-guide"},{"date":"2026-10-11","slot":"夜","id":"ES-5","kind":"選び方","article":"耳栓とアイマスクの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"クイズ：WHO の夜の騒音の目安（新記事の告知）","body":"夜の車の音。WHO（欧州）が睡眠を守るために勧める目安は、何デシベル未満？\n\n答えは、平均45デシベル未満（夜間の道路交通騒音）。窓を閉めても届くなら、耳栓という手がある。選ぶのは遮音の強さより、耳に合うか。\n\n「耳栓とアイマスクの選び方」を新しく書いた。\n\nhttps://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"earplug-eyemask-guide"},{"date":"2026-10-12","slot":"朝","id":"CH-5","kind":"選び方","article":"ダークチョコの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"○×：ダークチョコは全部チョコレート？","body":"「ダークチョコ」と書いてあれば、全部チョコレート？\n\n答えは、パッケージの裏にある。「名称」の欄が「チョコレート」「準チョコレート」「チョコレート菓子」などに分かれている。\n\nカカオが目当てなら、まず名称が「チョコレート」のものを。\n\nhttps://moutonarchive.com/dark-chocolate-guide.html?utm_source=x&utm_medium=social&utm_campaign=dark-chocolate-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"dark-chocolate-guide"},{"date":"2026-10-12","slot":"夜","id":"R6-2","kind":"読み物","article":"昼寝は、何分がいいのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"比較：昼寝は何分がいい？","body":"昼寝、何分がいちばん良かった？\n\n0・5・10・20・30分を比べた実験では、10分の昼寝で起きた直後から眠気が減り、作業の成績も良くなった。30分だと、起きた直後はかえって悪くなった。\n\n答えは10分。短く切り上げる。","reply":"「昼寝は、何分がいいのか」の記事はこちら → https://moutonarchive.com/nap.html?utm_source=x&utm_medium=social&utm_campaign=nap&utm_content=reply","followup":"","options":[],"slug":"nap"},{"date":"2026-10-13","slot":"朝","id":"CF-5","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"意外な数字：死亡リスクが最も低かった杯数","body":"コーヒー、死亡リスクが最も低かったのは「1日何杯」の人？\n\nノルウェーで50万人あまりを平均20年追った研究では、フィルターで淹れたコーヒーを1日1〜4杯飲む人だった。\n\n観察研究なので、淹れ方だけが原因とは言えない。\n\nhttps://moutonarchive.com/coffee-guide.html?utm_source=x&utm_medium=social&utm_campaign=coffee-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"coffee-guide"},{"date":"2026-10-13","slot":"夜","id":"OR-V1","kind":"選び方","article":"口臭ケアの道具の選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：舌の汚れ、何で落とす？","body":"クイズ。\n\n口臭のある大人を対象にした試験のレビュー。舌の汚れを落とすとき、口臭の原因物質をわずかに多く減らしたのはどっち？\n\n答えは明日の朝に。","reply":"","followup":"","options":["歯ブラシ","舌専用のクリーナー","差はなかった"],"slug":""},{"date":"2026-10-14","slot":"朝","id":"OR-A1","kind":"選び方","article":"口臭ケアの道具の選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（OR-V1）","body":"昨日のクイズの答え。\n\n「舌専用のクリーナー」。歯ブラシより、口臭の原因になる揮発性硫黄化合物をわずかに多く減らした（2つの試験、合わせて40人と少ない）。\n\n使い方は、奥に軽く当てて手前に引く。起床時の1回で十分。\n\nhttps://moutonarchive.com/oral-care-guide.html?utm_source=x&utm_medium=social&utm_campaign=oral-care-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"oral-care-guide"},{"date":"2026-10-14","slot":"夜","id":"FI-2","kind":"読み物","article":"第一印象は0.1秒で決まる。そして、寝不足は顔に出る","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：31時間眠らなかった顔","body":"31時間眠らないと、顔は他人にどう見える？\n\n18〜31歳の23人を、ふつうに眠った翌日と31時間眠らなかったあとに撮影し、何も知らない65人に評価してもらった実験では、寝不足の顔は健康そうに見えにくく、魅力的に見えにくく、疲れて見えた。","reply":"「第一印象は0.1秒で決まる。そして、寝不足は顔に出る」の記事はこちら → https://moutonarchive.com/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=first-impression-sleep&utm_content=reply","followup":"","options":[],"slug":"first-impression-sleep"},{"date":"2026-10-15","slot":"朝","id":"DE-5","kind":"選び方","article":"制汗剤とデオドラントの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"常識を確かめる：アルミニウムは危ない？","body":"「制汗剤のアルミニウムは危ない」は本当か。\n\n欧州の科学委員会（SCCS）は、決められた濃度までなら安全に使えると結論づけた。乳がんとの関係を調べたレビューは、結果が一致せず結論を出せなかった。\n\n「危険」と言える根拠はない。でも評価は完全には一致していない。\n\nhttps://moutonarchive.com/deodorant-guide.html?utm_source=x&utm_medium=social&utm_campaign=deodorant-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"deodorant-guide"},{"date":"2026-10-15","slot":"夜","id":"BH-5","kind":"選び方","article":"習慣を変えたいときに読む本","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"○×：習慣は21日で身につく？","body":"「習慣は21日で身につく」。○か×か。\n\n研究では、習慣が自動化するまでの期間は18日から254日まで幅があった。人と行動によって大きく違う。\n\n答えは×。「21日」は目安にしないほうがいい。","reply":"「習慣を変えたいときに読む本」の記事はこちら → https://moutonarchive.com/books-habits.html?utm_source=x&utm_medium=social&utm_campaign=books-habits&utm_content=reply","followup":"","options":[],"slug":"books-habits"},{"date":"2026-10-16","slot":"朝","id":"OL-5","kind":"選び方","article":"オリーブオイルの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"常識を確かめる：大容量はお得？","body":"オリーブオイル、大容量のほうがお得？\n\n開けたあとは、空気に触れるたびに酸化が進む。割安でも、使い切るまでに時間がかかれば、そのぶん劣化した油を使うことになる。\n\nまずは250〜500mLくらいから試して、自分の使う速さを知る。\n\nhttps://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"olive-oil-guide"},{"date":"2026-10-16","slot":"夜","id":"PT-V1","kind":"選び方","article":"プロテインの選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：プロテインで増える筋肉の差","body":"クイズ。\n\n6週間以上の筋トレに、たんぱく質の補給を足した49の試験。補給した人の除脂肪量（筋肉など）は、しなかった人より平均どれくらい多く増えた？\n\n答えは明日の朝に。","reply":"","followup":"","options":["約0.3kg","約1kg","約3kg"],"slug":""},{"date":"2026-10-17","slot":"朝","id":"PT-A1","kind":"選び方","article":"プロテインの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（PT-V1）","body":"昨日のクイズの答え。\n\n約0.3kg。補給したほうが筋力も除脂肪量も増えたが、差は大きくなかった。最大挙上重量の差は約2.5kg。\n\nプロテインは筋トレの代わりではなく、少し後押しするもの。\n\nhttps://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"protein-guide"},{"date":"2026-10-17","slot":"夜","id":"FI-V1","kind":"読み物","article":"第一印象は0.1秒で決まる。そして、寝不足は顔に出る","done":false,"memo":"投票（翌朝、投票へのリプライで答え合わせ FI-A1）","form":"投票","formNote":"","angle":"投票：寝不足の顔と「一緒に過ごしたい」","body":"クイズ。\n\n2晩続けて睡眠を4時間に減らした実験。寝不足のときの顔を見た人たちは、その人と「一緒に過ごしたい」と思いやすくなった？\n\n答えは明日の朝、このポストへの返信で。","reply":"","followup":"答え：「思いにくくなった」。\n\n2晩4時間睡眠のときの顔は、十分に眠ったときより魅力的・健康そうに見えにくく、眠そうに見えていた（写真を見て評価した、数十人規模の実験）。\n\n大事な人に会う前の晩は、まず眠る。\n\nhttps://moutonarchive.com/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=first-impression-sleep&utm_content=reply","options":["思いやすくなった","思いにくくなった","変わらなかった"],"slug":""},{"date":"2026-10-18","slot":"朝","id":"TR-5","kind":"選び方","article":"家庭用ミニトランポリンの選び方","done":false,"memo":"本文リンク","form":"本文リンク","formNote":"","angle":"比較：ゴム式とバネ式、音が出にくいのは？","body":"集合住宅でミニトランポリン。ゴム式とバネ式、音が出にくいのは？\n\n答えはゴム（バンジー）式。金属のバネがきしむ音が出ない。下には防振・防音のマットを敷く。\n\nそれでも振動はゼロにならないので、使う時間帯には気を配る。\n\nhttps://moutonarchive.com/mini-trampoline-guide.html?utm_source=x&utm_medium=social&utm_campaign=mini-trampoline-guide&utm_content=body","reply":"","followup":"","options":[],"slug":"mini-trampoline-guide"},{"date":"2026-10-18","slot":"夜","id":"R1-2","kind":"読み物","article":"日曜の夜が憂うつなのは、なぜか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"日曜の夜に：ブルーマンデーは大きくなかった","body":"いま、日曜の夜がつらい人へ。\n\n約34万人の気分を曜日ごとに調べた研究では、「ブルーマンデー」は思われているほど大きくなかった。\n\nつらさの中心は、月曜そのものではなく、月曜を待つ時間なのかもしれない。","reply":"「日曜の夜が憂うつなのは、なぜか」の記事はこちら → https://moutonarchive.com/sunday-blues.html?utm_source=x&utm_medium=social&utm_campaign=sunday-blues&utm_content=reply","followup":"","options":[],"slug":"sunday-blues"},{"date":"2026-10-19","slot":"朝","id":"OR-5","kind":"選び方","article":"口臭ケアの道具の選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"比較：フロスか歯間ブラシか","body":"フロスと歯間ブラシ、歯ぐきの炎症の研究で良い結果だったのは？\n\n35の研究（大人3,929人）をまとめたコクランレビューでは、歯間ブラシ。ただし確かさは低い。\n\nすき間が狭いならフロス、すき間があるなら合うサイズの歯間ブラシ。","reply":"「口臭ケアの道具の選び方」の記事はこちら → https://moutonarchive.com/oral-care-guide.html?utm_source=x&utm_medium=social&utm_campaign=oral-care-guide&utm_content=reply","followup":"","options":[],"slug":"oral-care-guide"},{"date":"2026-10-19","slot":"夜","id":"R14-2","kind":"読み物","article":"転職で、年収は上がるのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：転職で賃金が増えた人","body":"転職して賃金が増えた人は、何割？\n\n2024年に転職した人のうち、増えた人は40.5%、減った人は29.4%（厚生労働省の雇用動向調査）。\n\n上がる人は増えている。でも全員ではない。","reply":"「転職で、年収は上がるのか」の記事はこちら → https://moutonarchive.com/salary-change.html?utm_source=x&utm_medium=social&utm_campaign=salary-change&utm_content=reply","followup":"","options":[],"slug":"salary-change"},{"date":"2026-10-20","slot":"朝","id":"CF-6","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：甘い缶コーヒー","body":"「コーヒーは体に悪くないらしい」。それ、甘い缶コーヒーにも当てはまる？\n\n当てはまらない。コーヒーの研究の結果は、砂糖がたっぷり入った飲料にはそのまま当てはまらない。\n\n毎日飲むなら、原材料の最初に砂糖が来ていないかを見る。","reply":"「コーヒーの選び方と淹れ方」の記事はこちら → https://moutonarchive.com/coffee-guide.html?utm_source=x&utm_medium=social&utm_campaign=coffee-guide&utm_content=reply","followup":"","options":[],"slug":"coffee-guide"},{"date":"2026-10-20","slot":"夜","id":"CH-V1","kind":"選び方","article":"ダークチョコの選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：カカオ分に含まれるのは？","body":"クイズ。\n\nダークチョコの「カカオ分〇%」。この数字に含まれているのはどれ？\n\n答えは明日の朝に。","reply":"","followup":"","options":["カカオマス","ココアパウダー","ココアバター（脂肪）","ぜんぶ"],"slug":""},{"date":"2026-10-21","slot":"朝","id":"CH-A1","kind":"選び方","article":"ダークチョコの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（CH-V1）","body":"昨日のクイズの答え。\n\n「ぜんぶ」。カカオ分は、カカオマス、ココアパウダー、ココアバターなど、カカオ由来の原料の合計。脂肪も入っている。\n\nだから研究で注目される成分（フラバノール）の量は、数字だけでは決まらなかった。","reply":"「ダークチョコの選び方」の記事はこちら → https://moutonarchive.com/dark-chocolate-guide.html?utm_source=x&utm_medium=social&utm_campaign=dark-chocolate-guide&utm_content=reply","followup":"","options":[],"slug":"dark-chocolate-guide"},{"date":"2026-10-21","slot":"夜","id":"R9-2","kind":"読み物","article":"ブルーライトカットの眼鏡は、目の疲れに効くのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"○×：ブルーライトカット眼鏡で目の疲れは減る？","body":"ブルーライトカットの眼鏡で、目の疲れは減る？\n\nランダム化比較試験をまとめたコクランレビューの結論は、短期的な利点はおそらくない。\n\nそれより試したいのは、もっと地味な「休憩」。","reply":"「ブルーライトカットの眼鏡は、目の疲れに効くのか」の記事はこちら → https://moutonarchive.com/blue-light.html?utm_source=x&utm_medium=social&utm_campaign=blue-light&utm_content=reply","followup":"","options":[],"slug":"blue-light"},{"date":"2026-10-22","slot":"朝","id":"PT-6","kind":"選び方","article":"プロテインの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：推奨量65g・50g","body":"大人のたんぱく質、1日の推奨量はどのくらい？\n\n食事摂取基準（2025年版）では、18〜64歳で男性65g、女性50g。\n\n肉、魚、卵、大豆製品、乳製品をふだん食べていれば、食事で満たせることが多い。プロテインは足りない分だけ。","reply":"「プロテインの選び方」の記事はこちら → https://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=reply","followup":"","options":[],"slug":"protein-guide"},{"date":"2026-10-22","slot":"夜","id":"R10-2","kind":"読み物","article":"オリーブ油は、本当に体にいいのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：量より置き換え","body":"オリーブオイル、たくさんとるほど体にいい？\n\n米国の観察研究で注目されたのは、量より「置き換え」。マーガリン、バター、マヨネーズなど1日5gをオリーブオイルに置き換えると、心血管疾患のリスクが5〜7%低かった。","reply":"「オリーブ油は、本当に体にいいのか」の記事はこちら → https://moutonarchive.com/olive-oil.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil&utm_content=reply","followup":"","options":[],"slug":"olive-oil"},{"date":"2026-10-23","slot":"朝","id":"OL-6","kind":"選び方","article":"オリーブオイルの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"クイズ：賞味期限はいつから？","body":"オリーブオイルの賞味期限。いつから数えた日付か知ってる？\n\n多くは、びん詰めした日が基準。オリーブを搾った時期は分からない。\n\n鮮度を知りたいなら、収穫日や搾油日が書いてあるものを。","reply":"「オリーブオイルの選び方」の記事はこちら → https://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=reply","followup":"","options":[],"slug":"olive-oil-guide"},{"date":"2026-10-23","slot":"夜","id":"DE-V1","kind":"選び方","article":"制汗剤とデオドラントの選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：汗を抑えるのはどっち？","body":"クイズ。\n\n制汗剤とデオドラント。汗そのものを抑えるのが、おもな役割なのはどっち？\n\n答えは明日の朝に。","reply":"","followup":"","options":["制汗剤","デオドラント","どちらも同じ"],"slug":""},{"date":"2026-10-24","slot":"朝","id":"DE-A1","kind":"選び方","article":"制汗剤とデオドラントの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（DE-V1）","body":"昨日のクイズの答え。\n\n「制汗剤」。デオドラントは、おもに菌の増えすぎや匂いを抑えるためのもの。実際には、両方の成分が入った製品も多い。\n\nどっちかは、パッケージの「有効成分」で分かる。","reply":"「制汗剤とデオドラントの選び方」の記事はこちら → https://moutonarchive.com/deodorant-guide.html?utm_source=x&utm_medium=social&utm_campaign=deodorant-guide&utm_content=reply","followup":"","options":[],"slug":"deodorant-guide"},{"date":"2026-10-24","slot":"夜","id":"R7-2","kind":"読み物","article":"SNSを見る時間は、減らしたほうがいいのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"クイズ：SNS を1日30分にしたら","body":"SNSを1日30分に制限したら、3週間でどうなった？\n\n孤独感と落ち込みが減った、という実験がある。Facebookを4週間止めた実験では、幸福感がわずかに上がった。\n\nやめなくていい。でも、見る時間は自分で決めたい。","reply":"「SNSを見る時間は、減らしたほうがいいのか」の記事はこちら → https://moutonarchive.com/social-media-time.html?utm_source=x&utm_medium=social&utm_campaign=social-media-time&utm_content=reply","followup":"","options":[],"slug":"social-media-time"},{"date":"2026-10-25","slot":"朝","id":"BC-5","kind":"選び方","article":"転職を考えはじめたときに読む本","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：逃げる理由だけだと","body":"【PR】転職したい理由が「今の会社が嫌だ」だけだと、次の会社でも同じことが起きやすい。\n\n『世界一やさしい「やりたいこと」の見つけ方』は、好きなこと・得意なこと・大事なことを分けて書き出す本。\n\n逃げる理由の先の「向かう理由」を探すのに使える。","reply":"「転職を考えはじめたときに読む本」の記事はこちら → https://moutonarchive.com/books-career.html?utm_source=x&utm_medium=social&utm_campaign=books-career&utm_content=reply","followup":"","options":[],"slug":"books-career"},{"date":"2026-10-25","slot":"夜","id":"BH-6","kind":"選び方","article":"習慣を変えたいときに読む本","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"○×：意志力は使うと減る？","body":"【PR】「意志力は使うと減る」。○か×か。\n\n『スタンフォードの自分を変える教室』でも紹介されたこの研究は、23の研究室での大規模な追試で、効果がほとんど確認されなかった。\n\n答えは「言い切れない」。そこは割り引いて読みたい。","reply":"「習慣を変えたいときに読む本」の記事はこちら → https://moutonarchive.com/books-habits.html?utm_source=x&utm_medium=social&utm_campaign=books-habits&utm_content=reply","followup":"","options":[],"slug":"books-habits"},{"date":"2026-10-26","slot":"朝","id":"OR-6","kind":"選び方","article":"口臭ケアの道具の選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：洗口液で発生源は消えない","body":"洗口液で、口臭の発生源は消える？\n\n消えない。洗口液は、においを一時的に抑えるのには役立つが、舌の汚れや歯周病という発生源を取り除くものではない。\n\n舌の清掃と歯間の清掃が先。洗口液は補助。","reply":"「口臭ケアの道具の選び方」の記事はこちら → https://moutonarchive.com/oral-care-guide.html?utm_source=x&utm_medium=social&utm_campaign=oral-care-guide&utm_content=reply","followup":"","options":[],"slug":"oral-care-guide"},{"date":"2026-10-26","slot":"夜","id":"R13-2","kind":"読み物","article":"匂いケアは「脇と足の裏」から","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：自分の匂いは分からない","body":"自分の体臭は、自分では分かりにくい。\n\n人の嗅覚には、同じ匂いを嗅ぎ続けると感じにくくなる「順応」がある。\n\nそれに脇の匂いは、汗そのものではなく、皮膚の菌が分解してできる。","reply":"「匂いケアは「脇と足の裏」から」の記事はこちら → https://moutonarchive.com/odor-care.html?utm_source=x&utm_medium=social&utm_campaign=odor-care&utm_content=reply","followup":"","options":[],"slug":"odor-care"},{"date":"2026-10-27","slot":"朝","id":"CH-6","kind":"選び方","article":"ダークチョコの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：アルカリ処理で35mg→4mg","body":"ココアの良い成分、加工でどれだけ変わる？\n\nココアパウダーの研究では、アルカリ処理をしていないものが平均で1gあたり約35mg。強く処理したものは約4mgだった。\n\n選ぶなら砂糖なしの「純ココア」。処理の有無も見たい。","reply":"「ダークチョコの選び方」の記事はこちら → https://moutonarchive.com/dark-chocolate-guide.html?utm_source=x&utm_medium=social&utm_campaign=dark-chocolate-guide&utm_content=reply","followup":"","options":[],"slug":"dark-chocolate-guide"},{"date":"2026-10-27","slot":"夜","id":"ES-V1","kind":"選び方","article":"耳栓とアイマスクの選び方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：照明をつけて眠った晩の心拍数","body":"クイズ。\n\n健康な若い成人が、暗い部屋と、天井の照明をつけた部屋で1晩ずつ眠った実験。照明をつけた晩、睡眠中の心拍数は？\n\n答えは明日の朝に。","reply":"","followup":"","options":["高かった","低かった","変わらなかった"],"slug":""},{"date":"2026-10-28","slot":"朝","id":"ES-A1","kind":"選び方","article":"耳栓とアイマスクの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（ES-V1）","body":"昨日のクイズの答え。\n\n「高かった」。翌朝のインスリン抵抗性も上がっていた。人数の少ない短期間の実験だけど、眠るときは部屋を暗くしたほうがいい、という考え方を支える結果。\n\n部屋を暗くできないなら、目を押さない立体型のアイマスク。","reply":"「耳栓とアイマスクの選び方」の記事はこちら → https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide&utm_content=reply","followup":"","options":[],"slug":"earplug-eyemask-guide"},{"date":"2026-10-28","slot":"夜","id":"R11-2","kind":"読み物","article":"ダークチョコは、本当に体にいいのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"意外な数字：血圧は1.76mmHg","body":"ダークチョコで、血圧はどれくらい下がる？\n\n35試験をまとめたコクランレビューでは、平均1.76mmHg。血圧が正常な人ではほとんど変わらず、高血圧の人で約4mmHg。\n\n食べるなら、ほかのお菓子の代わりに少量。","reply":"「ダークチョコは、本当に体にいいのか」の記事はこちら → https://moutonarchive.com/dark-chocolate.html?utm_source=x&utm_medium=social&utm_campaign=dark-chocolate&utm_content=reply","followup":"","options":[],"slug":"dark-chocolate"},{"date":"2026-10-29","slot":"朝","id":"PT-7","kind":"選び方","article":"プロテインの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"比較：ホエイとソイ","body":"ホエイとソイ、筋肉が増えやすいのは？\n\n筋トレと組み合わせた9つの研究のメタ解析では、筋力や除脂肪量の増え方に差は見られなかった。\n\n牛乳でお腹がゆるくなりやすいならソイ。あとは味と価格で選んでいい。","reply":"「プロテインの選び方」の記事はこちら → https://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=reply","followup":"","options":[],"slug":"protein-guide"},{"date":"2026-10-29","slot":"夜","id":"R5-2","kind":"読み物","article":"人と比べるのを、やめることはできるのか","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"常識の否定：比べるのをやめなくていい","body":"「人と比べるな」と言われても、比べてしまう。\n\n比べるのは、ものさしがないから。それは人が自分を知るしくみなのかもしれない。\n\nやめるんじゃなくて、比べる相手を選び直す。","reply":"「人と比べるのを、やめることはできるのか」の記事はこちら → https://moutonarchive.com/comparison.html?utm_source=x&utm_medium=social&utm_campaign=comparison&utm_content=reply","followup":"","options":[],"slug":"comparison"},{"date":"2026-10-30","slot":"朝","id":"OR-7","kind":"選び方","article":"口臭ケアの道具の選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"クイズ：舌ブラシは1日何回？","body":"舌ブラシ、1日何回がいい？\n\n厚生労働省のe-ヘルスネットで紹介されている方法では、起床時の1回で十分。それ以上は粘膜を傷つけるおそれがある。\n\n奥に軽く当てて、手前に引く。力を入れすぎない。","reply":"「口臭ケアの道具の選び方」の記事はこちら → https://moutonarchive.com/oral-care-guide.html?utm_source=x&utm_medium=social&utm_campaign=oral-care-guide&utm_content=reply","followup":"","options":[],"slug":"oral-care-guide"},{"date":"2026-10-30","slot":"夜","id":"CF-V2","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"投票","form":"投票","formNote":"","angle":"投票：カフェインレスは何%以上除去？","body":"クイズ。\n\n日本の「カフェインレスコーヒー」。業界の基準では、カフェインを何%以上取り除いたもの？\n\n答えは明日の朝に。","reply":"","followup":"","options":["50%","90%","99.9%"],"slug":""},{"date":"2026-10-31","slot":"朝","id":"CF-A2","kind":"選び方","article":"コーヒーの選び方と淹れ方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"前の晩の投票を引用して投稿","angle":"答え合わせ（CF-V2）","body":"昨日のクイズの答え。\n\n90%以上。だからカフェインはゼロではなく、たくさん飲めばそのぶんとることになる。\n\n夜に飲むなら、商品ページで除去率を確かめたい。","reply":"「コーヒーの選び方と淹れ方」の記事はこちら → https://moutonarchive.com/coffee-guide.html?utm_source=x&utm_medium=social&utm_campaign=coffee-guide&utm_content=reply","followup":"","options":[],"slug":"coffee-guide"},{"date":"2026-10-31","slot":"夜","id":"DE-6","kind":"選び方","article":"制汗剤とデオドラントの選び方","done":false,"memo":"リプリンク","form":"リプリンク","formNote":"","angle":"問いかけ：汗の量で困ったら","body":"わきの汗、市販品で我慢し続けてない？\n\n汗の量が日常生活に困るほど多いなら、皮膚科で相談する選択肢がある。日本皮膚科学会の診療ガイドラインでも、わきの多汗症の治療では塩化アルミニウムの外用が第一選択として勧められている。","reply":"「制汗剤とデオドラントの選び方」の記事はこちら → https://moutonarchive.com/deodorant-guide.html?utm_source=x&utm_medium=social&utm_campaign=deodorant-guide&utm_content=reply","followup":"","options":[],"slug":"deodorant-guide"}]};
+
+const WEEKS = [
+  { from: "2026-10-06", to: "2026-10-12", n: 1, text: "計る準備と X の開始。選び方9本の点検" },
+  { from: "2026-10-13", to: "2026-10-19", n: 2, text: "クリックが集まる記事を1本選んで磨く。読み物から選び方へのリンクを足す" },
+  { from: "2026-10-20", to: "2026-10-26", n: 3, text: "伸びた投稿の型で X の案を足す。必要なら選び方の記事を1本追加" },
+  { from: "2026-10-27", to: "2026-11-05", n: 4, text: "10/31 で締め。売れた・売れなかった理由を数字で出し、11月の計画を作る" },
+];
+
+const SOURCES = "X のアナリティクス、GA4（集客 → トラフィック獲得の x / social、affiliate_click）、Amazon アソシエイト・楽天のレポート";
+const EVENTS = {
+  "2026-10-12": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "出てきた今週の3つを確認する"] }],
+  "2026-10-19": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
+  "2026-10-26": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
+  "2026-10-31": [{ when: "夜", where: "—", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば日付とメモを残しておく"] }],
+  "2026-11-01": [{ when: "日中", where: "管理画面", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
+  "2026-11-02": [{ when: "朝", where: "Claude", title: "10月の振り返り", steps: ["集めた数字を Claude に「10月の振り返り」と送って渡す", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
+  "2026-11-05": [{ when: "日中", where: "Claude", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
+};
+
+const DOW = ["日", "月", "火", "水", "木", "金", "土"];
+const FIRST_POST = DATA.slots[0]?.date;
+const LAST_POST = DATA.slots[DATA.slots.length - 1]?.date;
+const RANGE = { from: "2026-10-06", to: "2026-11-05" };
+
+const byDate = {};
+for (const s of DATA.slots) (byDate[s.date] ||= []).push(s);
+
+function iso(d) { return d.toISOString().slice(0, 10); }
+function parse(s) { return new Date(s + "T00:00:00Z"); }
+function addDays(s, n) { const d = parse(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); }
+function md(s) { const d = parse(s); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}（${DOW[d.getUTCDay()]}）`; }
+function todayJST() { return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo" }).format(new Date()); }
+function inRange(s) { return s >= RANGE.from && s <= RANGE.to; }
+function weekOf(s) { return WEEKS.find((w) => s >= w.from && s <= w.to); }
+function esc(t) { return String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+const store = {
+  get(k) { try { return localStorage.getItem(k) === "1"; } catch { return false; } },
+  set(k, v) { try { v ? localStorage.setItem(k, "1") : localStorage.removeItem(k); } catch {} },
+};
+
+const TODAY = todayJST();
+let selected = inRange(TODAY) ? TODAY : (TODAY < RANGE.from ? RANGE.from : RANGE.to);
+try { const h = location.hash.slice(1); if (/^d\d{4}-\d{2}-\d{2}$/.test(h) && inRange(h.slice(1))) selected = h.slice(1); } catch {}
+
+function stats() {
+  const done = DATA.slots.filter((s) => s.done).length;
+  const left = DATA.slots.filter((s) => !s.done && s.date >= TODAY).length;
+  const guide = DATA.slots.filter((s) => s.kind === "選び方").length;
+  document.getElementById("stats").innerHTML =
+    `<span>今日 <b>${md(TODAY)}</b></span>` +
+    `<span>投稿済み <b>${done}</b> / ${DATA.slots.length}枠</span>` +
+    `<span>これから <b>${left}</b>枠</span>` +
+    `<span>選び方の記事 <b>${guide}</b>枠</span>`;
+}
+
+function renderMonths() {
+  // 10/5（月）〜11/8（日）の5週
+  let html = `<h2>2026年10月 <small>〜 11/5 まで</small></h2><div class="dow">${["月","火","水","木","金","土","日"].map((d) => `<span>${d}</span>`).join("")}</div><div class="grid">`;
+  let lastWeek = null;
+  for (let d = "2026-10-05"; d <= "2026-11-08"; d = addDays(d, 1)) {
+    const dt = parse(d);
+    if (dt.getUTCDay() === 1) {
+      const w = weekOf(addDays(d, 3)); // 行の真ん中（木曜）が入る週
+      if (w && w !== lastWeek) { html += `<div class="week-label"><b>第${w.n}週</b> ${esc(w.text)}</div>`; lastWeek = w; }
+    }
+    const slots = byDate[d] || [];
+    const ev = EVENTS[d] || [];
+    const cls = ["cell", inRange(d) ? "" : "out", d < TODAY ? "past" : "", d === TODAY ? "today" : "", d === selected ? "sel" : ""].join(" ");
+    let inner = `<span class="num"><span>${dt.getUTCDate() === 1 ? `${dt.getUTCMonth() + 1}/` : ""}${dt.getUTCDate()}</span>${d === TODAY ? "<em>今日</em>" : ""}</span>`;
+    for (const s of slots) inner += `<span class="chip ${s.slot === "朝" ? "m" : "n"} ${s.done ? "ok" : ""}">${esc(s.id)}</span>`;
+    for (const e of ev) inner += `<span class="chip ev">${esc(e.title.replace(/（.*）/, ""))}</span>`;
+    const label = `${md(d)} ${slots.map((s) => `${s.slot} ${s.id} ${s.article}`).join("、")}${ev.length ? "、" + ev.map((e) => e.title).join("、") : ""}`;
+    html += inRange(d)
+      ? `<button type="button" class="${cls}" data-date="${d}" aria-label="${esc(label)}" aria-pressed="${d === selected}">${inner}</button>`
+      : `<div class="${cls}" aria-hidden="true">${inner}</div>`;
+  }
+  html += "</div>";
+  const el = document.getElementById("months");
+  el.innerHTML = html;
+  el.querySelectorAll("button.cell").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, true)));
+}
+
+function copyBlock(label, text, key) {
+  return `<div class="copy"><div class="copy-head"><span>${esc(label)}</span><button type="button" class="btn" data-copy="${key}">コピー</button></div><pre id="pre-${key}">${esc(text)}</pre></div>`;
+}
+
+function stepsFor(s) {
+  const quote = /引用/.test(s.formNote);
+  if (s.form === "投票") return ["X で「投票」を付けた投稿を作る", "下の本文を貼り、選択肢を入れる。期間は1日", "リンクは付けない", "投稿したら下の「投稿した」にチェック"];
+  const first = quote ? "前の晩の投票を開き、「引用」で投稿を作る" : "X で新しい投稿を作る";
+  if (s.form === "本文リンク") return [first, "下の本文をそのまま貼る（最後のリンクは消さない）", "リプライはしない", "投稿したら下の「投稿した」にチェック"];
+  return [first, "下の本文を貼って投稿する（リンクは入れない）", "すぐ自分の投稿に返信して、リプライの1行を貼る", "投稿したら下の「投稿した」にチェック"];
+}
+
+const copyTexts = {};
+
+function postTask(s) {
+  const k = `${s.date}-${s.slot}`;
+  copyTexts[k + "-b"] = s.body;
+  copyTexts[k + "-r"] = s.reply;
+  const time = s.slot === "朝" ? "7〜8時" : "21〜22時";
+  const pr = /^【PR】/.test(s.body) ? "【PR】を消さずに投稿。" : "";
+  let html = `<li class="task ${s.slot === "朝" ? "m" : "n"}"><div class="when"><b>${s.slot}</b>${time}</div><div class="what">`;
+  html += `<h3><span class="where">X</span>${esc(s.article)}</h3>`;
+  html += `<p class="meta"><code>${esc(s.id)}</code>・${esc(s.kind)}・${esc(s.form)}${s.formNote ? `（${esc(s.formNote)}）` : ""}${s.angle ? `・${esc(s.angle)}` : ""}</p>`;
+  if (s.done) html += `<p class="posted">✓ 投稿済み（順番表に記録あり）</p>`;
+  html += `<ol class="steps">${stepsFor(s).map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
+  if (pr) html += `<p class="meta">${pr}</p>`;
+  if (s.body) html += copyBlock("本文", s.body, k + "-b");
+  if (s.options.length) html += `<div class="copy"><div class="copy-head"><span>投票の選択肢（期間は1日）</span></div><ul class="opts">${s.options.map((o) => `<li>${esc(o)}</li>`).join("")}</ul></div>`;
+  if (s.reply && s.form === "リプリンク") html += copyBlock("リプライ（自分の投稿に返信）", s.reply, k + "-r");
+  if (!s.done) html += `<label class="check"><input type="checkbox" id="chk-${k}" data-key="post-${k}" ${store.get("post-" + k) ? "checked" : ""}> 投稿した（この端末にだけ記録）</label>`;
+  return html + `</div></li>`;
+}
+
+function followupTask(s) {
+  const k = `${s.date}-fu`;
+  copyTexts[k] = s.followup;
+  return `<li class="task m"><div class="when"><b>朝</b>7〜8時</div><div class="what"><h3><span class="where">X</span>投票の答え合わせ（枠は使わない）</h3><p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する</p>${copyBlock("答え合わせ", s.followup, k)}</div></li>`;
+}
+
+function eventTask(e, d, i) {
+  const k = `ev-${d}-${i}`;
+  return `<li class="task ev"><div class="when"><b>${esc(e.when)}</b>${e.where === "—" ? "" : esc(e.where)}</div><div class="what"><h3>${e.where !== "—" ? `<span class="where">${esc(e.where)}</span>` : ""}${esc(e.title)}</h3><ol class="steps">${e.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><label class="check"><input type="checkbox" id="chk-${k}" data-key="${k}" ${store.get(k) ? "checked" : ""}> やった（この端末にだけ記録）</label></div></li>`;
+}
+
+function renderDay() {
+  const d = selected;
+  const w = weekOf(d);
+  const slots = byDate[d] || [];
+  const prev = byDate[addDays(d, -1)] || [];
+  let html = `<div class="day-head"><h2>${md(d)}</h2>${d === TODAY ? `<span class="tag">今日</span>` : ""}<div class="nav"><button type="button" class="btn" id="prev" ${d <= RANGE.from ? "disabled" : ""}>← 前の日</button><button type="button" class="btn" id="next" ${d >= RANGE.to ? "disabled" : ""}>次の日 →</button></div></div>`;
+  if (w) html += `<p class="theme">第${w.n}週：${esc(w.text)}</p>`;
+  html += `<ol class="tl">`;
+  if (slots.length && d >= FIRST_POST) {
+    html += `<li class="task"><div class="when"><b>起きたら</b></div><div class="what"><h3><span class="where">Claude</span>「今日の仕事」と送る</h3><p class="meta">前日の投稿が出たかの確認と、今日の2本をそのまま貼れる形で受け取る。昨日の分を投稿したかもここで伝える。</p></div></li>`;
+  }
+  for (const e of (EVENTS[d] || []).filter((e) => e.when !== "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
+  for (const p of prev) if (p.followup) html += followupTask(p);
+  for (const s of slots.filter((s) => s.slot === "朝")) html += postTask(s);
+  for (const s of slots.filter((s) => s.slot === "夜")) html += postTask(s);
+  for (const e of (EVENTS[d] || []).filter((e) => e.when === "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
+  if (!slots.length && !(EVENTS[d] || []).length) html += `<li class="empty">この日は決まった作業がありません。数字を見る日に向けて、投稿のメモ（インプレッション・リンクのクリック数）を残しておくと振り返りが楽になります。</li>`;
+  html += `</ol>`;
+  const el = document.getElementById("day");
+  el.innerHTML = html;
+  el.querySelector("#prev")?.addEventListener("click", () => select(addDays(d, -1)));
+  el.querySelector("#next")?.addEventListener("click", () => select(addDays(d, 1)));
+  el.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => copy(b)));
+  el.querySelectorAll("input[data-key]").forEach((c) => c.addEventListener("change", () => store.set(c.dataset.key, c.checked)));
+}
+
+function copy(btn) {
+  const key = btn.dataset.copy;
+  const done = () => { btn.textContent = "コピーしました"; setTimeout(() => (btn.textContent = "コピー"), 1600); };
+  const fallback = () => {
+    const pre = document.getElementById("pre-" + key);
+    const r = document.createRange(); r.selectNodeContents(pre);
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    btn.textContent = "選択しました。長押しでコピー";
+  };
+  try { navigator.clipboard.writeText(copyTexts[key]).then(done, fallback); } catch { fallback(); }
+}
+
+function select(d, scroll) {
+  selected = d;
+  try { history.replaceState(null, "", "#d" + d); } catch {}
+  renderMonths();
+  renderDay();
+  if (scroll && window.matchMedia("(max-width: 959px)").matches) document.getElementById("day").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+stats();
+renderMonths();
+renderDay();
+document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。「✓ 投稿済み」は順番表の記録で、チェックボックスはこの端末だけのメモです。投稿したら Claude にも伝えてください。`;
+</script>

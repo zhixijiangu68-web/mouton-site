@@ -28,6 +28,8 @@ description: X（@kodoku__alone）とムートンのサイトで、10月の初�
 3. その週の計画（status.md の「今週」）にある記事・サイトの仕事を1つ進める
 4. 終わったら status.md を更新してコミットする
 
+毎日・毎週の予定（何時に・どこで・何をするか）は `promo/calendar.html` で見られる。`promo/x-posts.md` から `npm run calendar` で作る生成物なので、直接は編集しない
+
 ## 守ること
 
 - サイトのページは `src/` を直して `npm run build` → `npm test`。生成物も一緒にコミットする（CLAUDE.md）

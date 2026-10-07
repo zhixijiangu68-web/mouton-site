@@ -1,0 +1,325 @@
+<title>ムートン運用カレンダー</title>
+<!-- 生成物: scripts/calendar/make.mjs が promo/x-posts.md から作る。直接編集しない -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Shippori+Mincho:wght@600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 上に「選んだ日の段取り」、下に月曜始まりの月カレンダー。広い画面では左右に並べる */
+:root {
+  --bg: #f3f4f1;
+  --surface: #ffffff;
+  --ink: #1d2226;
+  --muted: #646d73;
+  --line: #d9ddd8;
+  --accent: #2a6b70;
+  --accent-soft: #dcebea;
+  --morning: #a8670d;
+  --morning-soft: #f6ead6;
+  --night: #4a52a0;
+  --night-soft: #e3e5f5;
+  --done: #3d7a3a;
+  --event: #a0453d;
+  --event-soft: #f5e1de;
+  --f-display: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --f-body: "Zen Kaku Gothic New", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
+    --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
+    --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15191b; --surface: #1e2427; --ink: #e6e9e7; --muted: #9aa3a8; --line: #323a3e;
+  --accent: #7cc2c6; --accent-soft: #23393b; --morning: #e0a650; --morning-soft: #3a2e1c;
+  --night: #a3aaf0; --night-soft: #2a2d48; --done: #86c77f; --event: #ec9187; --event-soft: #432826;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15px; line-height: 1.7; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-family: var(--f-display); font-size: 1.75rem; font-weight: 600; line-height: 1.3; }
+.lead { color: var(--muted); margin: 6px 0 0; }
+.flow { display: inline-flex; flex-wrap: wrap; gap: 6px; align-items: center; font-weight: 500; color: var(--ink); }
+.flow i { font-style: normal; color: var(--muted); }
+.stats { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 0.875rem; color: var(--muted); }
+.stats b { color: var(--ink); font-family: var(--f-mono); font-weight: 500; font-variant-numeric: tabular-nums; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+
+.layout { display: grid; gap: 24px; margin-top: 22px; }
+@media (min-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); align-items: start; } .day { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100vh - 24px); overflow-y: auto; } }
+
+/* カレンダー */
+.month { min-width: 0; }
+.month h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.25rem; display: flex; align-items: baseline; gap: 10px; }
+.month h2 small { font-family: var(--f-body); font-size: 0.8125rem; color: var(--muted); font-weight: 400; }
+.dow, .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.dow { margin-top: 10px; font-size: 0.75rem; color: var(--muted); text-align: center; }
+.dow span:nth-child(6) { color: var(--night); } .dow span:nth-child(7) { color: var(--event); }
+.grid { margin-top: 4px; }
+.week-label { grid-column: 1 / -1; font-size: 0.75rem; color: var(--muted); padding: 8px 2px 2px; letter-spacing: 0.04em; }
+.week-label b { color: var(--accent); font-weight: 700; }
+.cell { min-width: 0; min-height: 84px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 4px; display: flex; flex-direction: column; gap: 3px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+.cell:hover { border-color: var(--accent); }
+.cell:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.cell.out { background: transparent; border-style: dashed; cursor: default; opacity: 0.45; }
+.cell.past:not(.out) { opacity: 0.7; }
+.cell.today { border: 2px solid var(--accent); padding: 3px; }
+.cell.sel { background: var(--accent-soft); border-color: var(--accent); }
+.num { font-family: var(--f-mono); font-size: 0.8125rem; font-variant-numeric: tabular-nums; display: flex; justify-content: space-between; gap: 2px; }
+.num em { font-style: normal; font-family: var(--f-body); font-size: 0.625rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 0 4px; }
+.chip { display: block; font-family: var(--f-mono); font-size: 0.6875rem; line-height: 1.5; border-radius: 3px; padding: 0 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chip.m { background: var(--morning-soft); color: var(--morning); }
+.chip.n { background: var(--night-soft); color: var(--night); }
+.chip.ev { background: var(--event-soft); color: var(--event); font-family: var(--f-body); }
+.chip.ok::before { content: "✓ "; color: var(--done); }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+@media (max-width: 520px) { .cell { min-height: 66px; padding: 3px 2px; } .chip { font-size: 0.5625rem; padding: 0 2px; } }
+
+/* 選んだ日 */
+.day { min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px 8px; }
+.day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+.day-head h2 { font-family: var(--f-display); font-weight: 600; font-size: 1.375rem; }
+.day-head .tag { font-size: 0.75rem; color: var(--surface); background: var(--accent); border-radius: 3px; padding: 1px 6px; }
+.theme { margin: 6px 0 0; font-size: 0.875rem; color: var(--muted); }
+.nav { display: flex; gap: 8px; margin-left: auto; }
+.btn { font: inherit; font-size: 0.8125rem; border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.btn:disabled { opacity: 0.4; cursor: default; }
+.tl { list-style: none; margin: 14px 0 0; padding: 0; }
+.task { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: 12px; padding: 14px 0; border-top: 1px solid var(--line); }
+.when { font-family: var(--f-mono); font-size: 0.8125rem; color: var(--muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
+.when b { display: block; font-family: var(--f-body); font-size: 0.9375rem; color: var(--ink); }
+.task.m .when b { color: var(--morning); } .task.n .when b { color: var(--night); } .task.ev .when b { color: var(--event); }
+.what { min-width: 0; }
+.what h3 { font-size: 1rem; font-weight: 700; line-height: 1.5; }
+.where { display: inline-block; font-size: 0.6875rem; letter-spacing: 0.04em; border: 1px solid currentColor; border-radius: 3px; padding: 0 5px; margin-right: 6px; vertical-align: 2px; color: var(--accent); font-weight: 500; }
+.meta { font-size: 0.8125rem; color: var(--muted); margin: 2px 0 0; }
+.meta code { font-family: var(--f-mono); font-size: 0.75rem; }
+.steps { margin: 8px 0 0; padding-left: 1.3em; font-size: 0.875rem; }
+.steps li + li { margin-top: 2px; }
+.copy { margin-top: 10px; }
+.copy-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--muted); letter-spacing: 0.04em; }
+.copy pre { margin: 4px 0 0; padding: 10px 12px; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; font-family: var(--f-body); font-size: 0.875rem; line-height: 1.7; white-space: pre-wrap; word-break: break-all; }
+.opts { margin: 6px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.opts li { font-size: 0.875rem; padding: 4px 10px; border: 1px solid var(--line); border-radius: 999px; }
+.check { display: inline-flex; gap: 6px; align-items: center; margin-top: 10px; font-size: 0.8125rem; color: var(--muted); cursor: pointer; }
+.check input { width: 16px; height: 16px; accent-color: var(--done); }
+.posted { color: var(--done); font-weight: 700; font-size: 0.8125rem; }
+.empty { color: var(--muted); padding: 14px 0; border-top: 1px solid var(--line); }
+.foot { margin-top: 28px; font-size: 0.8125rem; color: var(--muted); }
+.foot code { font-family: var(--f-mono); font-size: 0.75rem; }
+@media (max-width: 520px) { .task { grid-template-columns: 1fr; gap: 4px; } .when b { display: inline; margin-right: 8px; } }
+@media (prefers-reduced-motion: no-preference) { .cell, .btn { transition: border-color .15s, background-color .15s; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>ムートン運用カレンダー</h1>
+    <p class="lead">10月中に最初の1件を売る。毎日、いつ・どこで・何をするかを1日ずつ並べた表です。</p>
+    <p class="flow" aria-label="お金が生まれる流れ">X に投稿 <i>→</i> 「選び方」の記事 <i>→</i> Amazon・楽天</p>
+    <div class="stats" id="stats"></div>
+    <div class="legend">
+      <span><i class="sw" style="background:var(--morning-soft);border:1px solid var(--morning)"></i>朝 7〜8時の投稿</span>
+      <span><i class="sw" style="background:var(--night-soft);border:1px solid var(--night)"></i>夜 21〜22時の投稿</span>
+      <span><i class="sw" style="background:var(--event-soft);border:1px solid var(--event)"></i>数字を見る日・締め</span>
+      <span>✓ 投稿済み（順番表）</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section class="day" id="day" aria-live="polite"></section>
+    <section class="month" aria-label="カレンダー">
+      <div id="months"></div>
+    </section>
+  </div>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+const DATA = /*DATA*/null;
+
+const WEEKS = [
+  { from: "2026-10-06", to: "2026-10-12", n: 1, text: "計る準備と X の開始。選び方9本の点検" },
+  { from: "2026-10-13", to: "2026-10-19", n: 2, text: "クリックが集まる記事を1本選んで磨く。読み物から選び方へのリンクを足す" },
+  { from: "2026-10-20", to: "2026-10-26", n: 3, text: "伸びた投稿の型で X の案を足す。必要なら選び方の記事を1本追加" },
+  { from: "2026-10-27", to: "2026-11-05", n: 4, text: "10/31 で締め。売れた・売れなかった理由を数字で出し、11月の計画を作る" },
+];
+
+const SOURCES = "X のアナリティクス、GA4（集客 → トラフィック獲得の x / social、affiliate_click）、Amazon アソシエイト・楽天のレポート";
+const EVENTS = {
+  "2026-10-12": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "出てきた今週の3つを確認する"] }],
+  "2026-10-19": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "どの記事にクリックが集まったかを見て、磨く記事を決める"] }],
+  "2026-10-26": [{ when: "朝", where: "Claude", title: "先週の数字を渡す（週の振り返り）", steps: [SOURCES + "のスクショか CSV を用意する", "Claude に「週の振り返り」と送って渡す", "伸びた投稿の型を確認し、最終週の案を承認する"] }],
+  "2026-10-31": [{ when: "夜", where: "—", title: "10月の締め", steps: ["夜の投稿で10月の順番表はおしまい", "売れた日があれば日付とメモを残しておく"] }],
+  "2026-11-01": [{ when: "日中", where: "管理画面", title: "10月の数字を集める", steps: ["Amazon アソシエイト・楽天のレポートで、10月の注文（売れた商品・日付）を確認", "GA4 と X のアナリティクスで10月分をスクショか CSV にする"] }],
+  "2026-11-02": [{ when: "朝", where: "Claude", title: "10月の振り返り", steps: ["集めた数字を Claude に「10月の振り返り」と送って渡す", "どの記事から売れたか、売れなかった理由を数字で出してもらう"] }],
+  "2026-11-05": [{ when: "日中", where: "Claude", title: "11月の計画を決める", steps: ["Claude がまとめた11月の計画を読む", "OK なら承認する（承認が必要）"] }],
+};
+
+const DOW = ["日", "月", "火", "水", "木", "金", "土"];
+const FIRST_POST = DATA.slots[0]?.date;
+const LAST_POST = DATA.slots[DATA.slots.length - 1]?.date;
+const RANGE = { from: "2026-10-06", to: "2026-11-05" };
+
+const byDate = {};
+for (const s of DATA.slots) (byDate[s.date] ||= []).push(s);
+
+function iso(d) { return d.toISOString().slice(0, 10); }
+function parse(s) { return new Date(s + "T00:00:00Z"); }
+function addDays(s, n) { const d = parse(s); d.setUTCDate(d.getUTCDate() + n); return iso(d); }
+function md(s) { const d = parse(s); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}（${DOW[d.getUTCDay()]}）`; }
+function todayJST() { return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo" }).format(new Date()); }
+function inRange(s) { return s >= RANGE.from && s <= RANGE.to; }
+function weekOf(s) { return WEEKS.find((w) => s >= w.from && s <= w.to); }
+function esc(t) { return String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]); }
+
+const store = {
+  get(k) { try { return localStorage.getItem(k) === "1"; } catch { return false; } },
+  set(k, v) { try { v ? localStorage.setItem(k, "1") : localStorage.removeItem(k); } catch {} },
+};
+
+const TODAY = todayJST();
+let selected = inRange(TODAY) ? TODAY : (TODAY < RANGE.from ? RANGE.from : RANGE.to);
+try { const h = location.hash.slice(1); if (/^d\d{4}-\d{2}-\d{2}$/.test(h) && inRange(h.slice(1))) selected = h.slice(1); } catch {}
+
+function stats() {
+  const done = DATA.slots.filter((s) => s.done).length;
+  const left = DATA.slots.filter((s) => !s.done && s.date >= TODAY).length;
+  const guide = DATA.slots.filter((s) => s.kind === "選び方").length;
+  document.getElementById("stats").innerHTML =
+    `<span>今日 <b>${md(TODAY)}</b></span>` +
+    `<span>投稿済み <b>${done}</b> / ${DATA.slots.length}枠</span>` +
+    `<span>これから <b>${left}</b>枠</span>` +
+    `<span>選び方の記事 <b>${guide}</b>枠</span>`;
+}
+
+function renderMonths() {
+  // 10/5（月）〜11/8（日）の5週
+  let html = `<h2>2026年10月 <small>〜 11/5 まで</small></h2><div class="dow">${["月","火","水","木","金","土","日"].map((d) => `<span>${d}</span>`).join("")}</div><div class="grid">`;
+  let lastWeek = null;
+  for (let d = "2026-10-05"; d <= "2026-11-08"; d = addDays(d, 1)) {
+    const dt = parse(d);
+    if (dt.getUTCDay() === 1) {
+      const w = weekOf(addDays(d, 3)); // 行の真ん中（木曜）が入る週
+      if (w && w !== lastWeek) { html += `<div class="week-label"><b>第${w.n}週</b> ${esc(w.text)}</div>`; lastWeek = w; }
+    }
+    const slots = byDate[d] || [];
+    const ev = EVENTS[d] || [];
+    const cls = ["cell", inRange(d) ? "" : "out", d < TODAY ? "past" : "", d === TODAY ? "today" : "", d === selected ? "sel" : ""].join(" ");
+    let inner = `<span class="num"><span>${dt.getUTCDate() === 1 ? `${dt.getUTCMonth() + 1}/` : ""}${dt.getUTCDate()}</span>${d === TODAY ? "<em>今日</em>" : ""}</span>`;
+    for (const s of slots) inner += `<span class="chip ${s.slot === "朝" ? "m" : "n"} ${s.done ? "ok" : ""}">${esc(s.id)}</span>`;
+    for (const e of ev) inner += `<span class="chip ev">${esc(e.title.replace(/（.*）/, ""))}</span>`;
+    const label = `${md(d)} ${slots.map((s) => `${s.slot} ${s.id} ${s.article}`).join("、")}${ev.length ? "、" + ev.map((e) => e.title).join("、") : ""}`;
+    html += inRange(d)
+      ? `<button type="button" class="${cls}" data-date="${d}" aria-label="${esc(label)}" aria-pressed="${d === selected}">${inner}</button>`
+      : `<div class="${cls}" aria-hidden="true">${inner}</div>`;
+  }
+  html += "</div>";
+  const el = document.getElementById("months");
+  el.innerHTML = html;
+  el.querySelectorAll("button.cell").forEach((b) => b.addEventListener("click", () => select(b.dataset.date, true)));
+}
+
+function copyBlock(label, text, key) {
+  return `<div class="copy"><div class="copy-head"><span>${esc(label)}</span><button type="button" class="btn" data-copy="${key}">コピー</button></div><pre id="pre-${key}">${esc(text)}</pre></div>`;
+}
+
+function stepsFor(s) {
+  const quote = /引用/.test(s.formNote);
+  if (s.form === "投票") return ["X で「投票」を付けた投稿を作る", "下の本文を貼り、選択肢を入れる。期間は1日", "リンクは付けない", "投稿したら下の「投稿した」にチェック"];
+  const first = quote ? "前の晩の投票を開き、「引用」で投稿を作る" : "X で新しい投稿を作る";
+  if (s.form === "本文リンク") return [first, "下の本文をそのまま貼る（最後のリンクは消さない）", "リプライはしない", "投稿したら下の「投稿した」にチェック"];
+  return [first, "下の本文を貼って投稿する（リンクは入れない）", "すぐ自分の投稿に返信して、リプライの1行を貼る", "投稿したら下の「投稿した」にチェック"];
+}
+
+const copyTexts = {};
+
+function postTask(s) {
+  const k = `${s.date}-${s.slot}`;
+  copyTexts[k + "-b"] = s.body;
+  copyTexts[k + "-r"] = s.reply;
+  const time = s.slot === "朝" ? "7〜8時" : "21〜22時";
+  const pr = /^【PR】/.test(s.body) ? "【PR】を消さずに投稿。" : "";
+  let html = `<li class="task ${s.slot === "朝" ? "m" : "n"}"><div class="when"><b>${s.slot}</b>${time}</div><div class="what">`;
+  html += `<h3><span class="where">X</span>${esc(s.article)}</h3>`;
+  html += `<p class="meta"><code>${esc(s.id)}</code>・${esc(s.kind)}・${esc(s.form)}${s.formNote ? `（${esc(s.formNote)}）` : ""}${s.angle ? `・${esc(s.angle)}` : ""}</p>`;
+  if (s.done) html += `<p class="posted">✓ 投稿済み（順番表に記録あり）</p>`;
+  html += `<ol class="steps">${stepsFor(s).map((t) => `<li>${esc(t)}</li>`).join("")}</ol>`;
+  if (pr) html += `<p class="meta">${pr}</p>`;
+  if (s.body) html += copyBlock("本文", s.body, k + "-b");
+  if (s.options.length) html += `<div class="copy"><div class="copy-head"><span>投票の選択肢（期間は1日）</span></div><ul class="opts">${s.options.map((o) => `<li>${esc(o)}</li>`).join("")}</ul></div>`;
+  if (s.reply && s.form === "リプリンク") html += copyBlock("リプライ（自分の投稿に返信）", s.reply, k + "-r");
+  if (!s.done) html += `<label class="check"><input type="checkbox" id="chk-${k}" data-key="post-${k}" ${store.get("post-" + k) ? "checked" : ""}> 投稿した（この端末にだけ記録）</label>`;
+  return html + `</div></li>`;
+}
+
+function followupTask(s) {
+  const k = `${s.date}-fu`;
+  copyTexts[k] = s.followup;
+  return `<li class="task m"><div class="when"><b>朝</b>7〜8時</div><div class="what"><h3><span class="where">X</span>投票の答え合わせ（枠は使わない）</h3><p class="meta">前の晩の投票 <code>${esc(s.id)}</code> へのリプライとして投稿する</p>${copyBlock("答え合わせ", s.followup, k)}</div></li>`;
+}
+
+function eventTask(e, d, i) {
+  const k = `ev-${d}-${i}`;
+  return `<li class="task ev"><div class="when"><b>${esc(e.when)}</b>${e.where === "—" ? "" : esc(e.where)}</div><div class="what"><h3>${e.where !== "—" ? `<span class="where">${esc(e.where)}</span>` : ""}${esc(e.title)}</h3><ol class="steps">${e.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol><label class="check"><input type="checkbox" id="chk-${k}" data-key="${k}" ${store.get(k) ? "checked" : ""}> やった（この端末にだけ記録）</label></div></li>`;
+}
+
+function renderDay() {
+  const d = selected;
+  const w = weekOf(d);
+  const slots = byDate[d] || [];
+  const prev = byDate[addDays(d, -1)] || [];
+  let html = `<div class="day-head"><h2>${md(d)}</h2>${d === TODAY ? `<span class="tag">今日</span>` : ""}<div class="nav"><button type="button" class="btn" id="prev" ${d <= RANGE.from ? "disabled" : ""}>← 前の日</button><button type="button" class="btn" id="next" ${d >= RANGE.to ? "disabled" : ""}>次の日 →</button></div></div>`;
+  if (w) html += `<p class="theme">第${w.n}週：${esc(w.text)}</p>`;
+  html += `<ol class="tl">`;
+  if (slots.length && d >= FIRST_POST) {
+    html += `<li class="task"><div class="when"><b>起きたら</b></div><div class="what"><h3><span class="where">Claude</span>「今日の仕事」と送る</h3><p class="meta">前日の投稿が出たかの確認と、今日の2本をそのまま貼れる形で受け取る。昨日の分を投稿したかもここで伝える。</p></div></li>`;
+  }
+  for (const e of (EVENTS[d] || []).filter((e) => e.when !== "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
+  for (const p of prev) if (p.followup) html += followupTask(p);
+  for (const s of slots.filter((s) => s.slot === "朝")) html += postTask(s);
+  for (const s of slots.filter((s) => s.slot === "夜")) html += postTask(s);
+  for (const e of (EVENTS[d] || []).filter((e) => e.when === "夜")) html += eventTask(e, d, (EVENTS[d] || []).indexOf(e));
+  if (!slots.length && !(EVENTS[d] || []).length) html += `<li class="empty">この日は決まった作業がありません。数字を見る日に向けて、投稿のメモ（インプレッション・リンクのクリック数）を残しておくと振り返りが楽になります。</li>`;
+  html += `</ol>`;
+  const el = document.getElementById("day");
+  el.innerHTML = html;
+  el.querySelector("#prev")?.addEventListener("click", () => select(addDays(d, -1)));
+  el.querySelector("#next")?.addEventListener("click", () => select(addDays(d, 1)));
+  el.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", () => copy(b)));
+  el.querySelectorAll("input[data-key]").forEach((c) => c.addEventListener("change", () => store.set(c.dataset.key, c.checked)));
+}
+
+function copy(btn) {
+  const key = btn.dataset.copy;
+  const done = () => { btn.textContent = "コピーしました"; setTimeout(() => (btn.textContent = "コピー"), 1600); };
+  const fallback = () => {
+    const pre = document.getElementById("pre-" + key);
+    const r = document.createRange(); r.selectNodeContents(pre);
+    const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    btn.textContent = "選択しました。長押しでコピー";
+  };
+  try { navigator.clipboard.writeText(copyTexts[key]).then(done, fallback); } catch { fallback(); }
+}
+
+function select(d, scroll) {
+  selected = d;
+  try { history.replaceState(null, "", "#d" + d); } catch {}
+  renderMonths();
+  renderDay();
+  if (scroll && window.matchMedia("(max-width: 959px)").matches) document.getElementById("day").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+stats();
+renderMonths();
+renderDay();
+document.getElementById("foot").innerHTML = `投稿文と順番表は <code>promo/x-posts.md</code> から作っています（${esc(DATA.generated)} 時点）。「✓ 投稿済み」は順番表の記録で、チェックボックスはこの端末だけのメモです。投稿したら Claude にも伝えてください。`;
+</script>
