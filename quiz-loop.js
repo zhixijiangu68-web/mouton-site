@@ -17,6 +17,13 @@
  const track=(name,params)=>{if(typeof window.gtag==='function')window.gtag('event',name,params);};
  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  let bank=null;
+ // Days in a row with at least one answer, counting today or yesterday as the latest.
+ const dayStreak=()=>{
+  const days=new Set(store.get('days',[]));
+  const d=new Date();if(!days.has(d.toLocaleDateString('sv')))d.setDate(d.getDate()-1);
+  let n=0;while(days.has(d.toLocaleDateString('sv'))){n++;d.setDate(d.getDate()-1);}
+  return n;
+ };
  const load=()=>bank||(bank=fetch(root+'quizzes.json').then(r=>r.json()));
 
  // Pick a question: unanswered first, preferred articles first, never the current article.
@@ -50,6 +57,7 @@
     el.innerHTML=
      `<div class="qloop-top"><span class="qloop-label">${run?`Q${count} / ${run}`:'QUIZ'}</span>`
      +(streak>1?`<span class="qloop-streak">${streak}問連続正解</span>`:'')
+     +(dayStreak()>1?`<span class="qloop-streak">${dayStreak()}日連続</span>`:'')
      +`<span class="qloop-count">${run?`正解 ${score}`:`解いた問題 ${done} / ${total}`}</span></div>`
      +`<p class="qloop-q">${esc(q.q)}</p>`
      +`<div class="qloop-choices" role="group" aria-label="答えを選ぶ"><button type="button" class="qloop-choice" data-v="1" aria-label="○（正しい）">○</button><button type="button" class="qloop-choice" data-v="0" aria-label="×（まちがい）">×</button></div>`
@@ -66,6 +74,8 @@
     el.closest('.scene-hero')?.classList.add('is-quizzing');
     if(right){score++;streak++;}else{streak=0;wrong.push(q);}
     const answered=store.get('answered',{});answered[q.id]=right?1:0;store.set('answered',answered);
+    const today=new Date().toLocaleDateString('sv');
+    const days=store.get('days',[]);if(days[days.length-1]!==today){days.push(today);store.set('days',days.slice(-60));}
     const best=store.get('bestStreak',0);
     const newBest=right&&streak>best&&streak>1;
     if(newBest)store.set('bestStreak',streak);

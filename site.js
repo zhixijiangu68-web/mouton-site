@@ -224,6 +224,11 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
   document.querySelectorAll('.journal-link,.topic-item,.reading-card,.guide-card').forEach(a=>{
    if(read[slugOf(a.getAttribute('href'))])a.classList.add('is-read');
   });
+  // NEW: the five newest articles in a list, if published in the last 7 days and not read yet.
+  const week=Date.now()-7*864e5,when=a=>new Date(a.dataset.date.replace(/\./g,'-')).getTime();
+  [...document.querySelectorAll('.journal-link[data-date],.topic-item[data-date]')]
+   .sort((a,b)=>when(b)-when(a)).slice(0,5)
+   .forEach(a=>{if(when(a)>week&&!a.classList.contains('is-read'))a.classList.add('is-new');});
   const prog=document.querySelector('.read-progress');
   const n=Object.keys(read).length;
   if(prog&&n){
