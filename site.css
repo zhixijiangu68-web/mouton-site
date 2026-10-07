@@ -261,3 +261,22 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 
 /* Contrast (Issue #30): the per-article .pull-label used opacity .55 (3.8:1); raise it to pass 4.5:1. */
 .pull .pull-label{opacity:.75}
+/* guides.html */
+.guide-policy{margin:28px 0 8px;padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.45)}
+.doc .guide-policy-head{margin:0 0 8px;font-size:.8125rem;letter-spacing:.06em;color:#53584f}
+.guide-policy ul{margin:0;padding-left:1.2em}
+.doc .guide-policy li{font-size:.9375rem;line-height:1.9;margin:0 0 4px}
+.guide-jump{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 8px}
+.guide-jump a{display:inline-flex;align-items:center;min-height:40px;padding:6px 16px;border:1px solid var(--line);border-radius:999px;font-size:.875rem;color:var(--ink);text-decoration:none;background:rgba(255,255,255,.5)}
+.guide-group{scroll-margin-top:96px}
+.doc .guide-group-title{margin:40px 0 0;font-size:1.25rem}
+.guide-group .topic-list{margin-top:16px}
+.guide-new{font-style:normal;font-size:.6875rem;letter-spacing:.08em;padding:2px 7px;margin-left:4px;border-radius:999px;background:#1b1c19;color:#fff}
+/* Non-guide articles: one related guide, just before "次に読む" */
+.guide-callout{margin:40px 0 8px}
+.guide-callout-eyebrow{margin:0 0 8px;font-size:.75rem;letter-spacing:.1em;color:#53584f}
+.guide-callout-link{display:grid;gap:6px;padding:22px 24px;border:1px solid rgba(27,28,25,.2);border-radius:10px;background:rgba(255,255,255,.6);color:#1b1c19;text-decoration:none}
+.guide-callout-link:hover .guide-callout-title{text-decoration:underline;text-underline-offset:4px}
+.guide-callout-title{font-family:"Noto Serif JP",serif;font-size:1.125rem;line-height:1.7}
+.guide-callout-text{font-size:.875rem;line-height:1.8;color:#444740}
+.guide-callout-more{font-size:.8125rem;color:#303c35;margin-top:4px}
