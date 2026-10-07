@@ -359,3 +359,24 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .guide-card.is-read h3::after,html[lang="en"] .topic-item.is-read .topic-title::after,html[lang="en"] .reading-card.is-read .reading-card-title::after{content:"Read"}
 .series-index{margin:0;padding:0;list-style:none}
 .series-count{margin-left:8px;font-family:Inter,sans-serif;font-size:.75rem;letter-spacing:.06em;opacity:.6}
+.start-paths{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0 8px}
+.start-path{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.65);color:var(--ink);text-decoration:none;transition:border-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+.start-path:hover{border-color:var(--blue);transform:translateY(-3px)}
+.start-path:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.start-path-title{font-family:var(--serif);font-size:1.0625rem;line-height:1.6}
+.start-path-text{font-size:.875rem;line-height:1.8;opacity:.75}
+.start-path-more{margin-top:auto;padding-top:6px;font-size:.8125rem;color:var(--blue)}
+.start-page .guide-group-title{margin-top:56px}
+/* Footer site map */
+.footer-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 32px;width:min(1040px,100%);margin:0 auto 28px;padding:0 0 28px;border-bottom:1px solid currentColor;border-bottom-color:rgba(127,127,127,.25);text-align:left}
+.footer-map-h{margin:0 0 10px;font-family:Inter,sans-serif;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;opacity:.65}
+.footer-map ul{margin:0;padding:0;list-style:none}
+.footer-map li{margin:0}
+.footer-map a{display:inline-flex;align-items:center;min-height:36px;color:inherit;font-family:"Noto Serif JP",serif;font-size:.875rem;line-height:1.6;text-decoration:none}
+.footer-map a:hover{text-decoration:underline;text-underline-offset:4px}
+.footer-map a:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+@media(max-width:760px){.footer-map{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 18px}}
+.site-footer .footer-map{margin-top:64px}
+.doc .start-path,.doc .start-path-title,.doc .start-path-text{color:var(--ink);text-decoration:none}
+.doc .start-path-more{color:var(--blue)}
+.site-footer .footer-map{width:100%;margin-left:0;margin-right:0}

@@ -10,6 +10,7 @@ bodyClass: site doc-page
   {{ content | safe }}
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-map.njk" %}
   {% include "partials/footer-links-en.njk" if lang == "en" else "partials/footer-links.njk" %}
   <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
 </footer>

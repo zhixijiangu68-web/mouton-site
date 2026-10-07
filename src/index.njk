@@ -23,7 +23,7 @@ preloadHero: true
         {%- for a in collections.articles %}{% if loop.first %}
         <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
         {%- endif %}{% endfor %}
-        <p class="hero-links reveal-2"><a href="#guides">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
+        <p class="hero-links reveal-2"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="#guides">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
       <a class="scroll-cue" href="#think">Scroll</a>
     </div>
@@ -252,6 +252,7 @@ preloadHero: true
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   <p class="quote">千里の道も、一歩から。</p>
   <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
+  {% include "partials/footer-map.njk" %}
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
