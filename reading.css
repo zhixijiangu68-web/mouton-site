@@ -163,3 +163,21 @@ body.article-page :is(figcaption, figcaption a, .axis-label, .timeline-no) { col
 body.article-page .book-buy { background:#1b1c19 !important; color:#f8f5ee !important; }
 body.article-page .book-buy:hover { background:#1442c4 !important; }
 .table-wrap:focus-visible{outline:2px solid #1442c4;outline-offset:4px}
+/* Article end: one more quiz, and a question on each "next to read" card */
+.quiz-more { display:none; margin:56px 0 0; }
+.js .quiz-more { display:block; }
+.quiz-more-title { margin:0 0 14px !important; font-family:"Noto Serif JP",serif; font-size:1.25rem !important; line-height:1.6 !important; }
+.quiz-more-title span { margin-left:8px; font-family:Inter,sans-serif; font-size:.75rem; letter-spacing:.12em; opacity:.55; }
+.reading-card.has-q { flex-direction:column; align-items:flex-start; justify-content:center; gap:8px; }
+.reading-card-q { display:block; font-size:.875rem; line-height:1.8; color:#5a5d55; }
+.reading-card-q b { font-family:Inter,sans-serif; font-weight:500; color:#1442c4; margin-right:2px; }
+.reading-card.is-read .reading-card-title::after { content:"読んだ"; margin-left:8px; padding:1px 8px; border-radius:999px; font-family:Inter,sans-serif; font-size:.6875rem; letter-spacing:.06em; vertical-align:2px; background:rgba(27,28,25,.07); color:#5a5d55; }
+.reading-card-q em { margin-left:6px; font-style:normal; font-family:Inter,sans-serif; font-size:.75rem; color:#1442c4; white-space:nowrap; }
+/* "Read" mark at the end of an article (site.js) */
+.read-mark { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; min-height:1px; margin:40px 0 0 !important; font-family:"Noto Serif JP",serif; font-size:1rem !important; opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+.read-mark.is-on { opacity:1; transform:none; }
+.read-mark-check { display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#1f7a4d; color:#fff; font-size:.9375rem; }
+.read-mark.is-on .read-mark-check { animation:qloopPop .5s ease .1s both; }
+.read-mark-count { font-family:Inter,sans-serif; font-size:.8125rem; color:#5a5d55; }
+.read-mark-count b { font-weight:500; color:#1b1c19; }
+@media (prefers-reduced-motion: reduce){ .read-mark{ transition:none; } .read-mark.is-on .read-mark-check{ animation:none; } }

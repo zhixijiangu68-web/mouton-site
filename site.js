@@ -185,3 +185,43 @@ document.addEventListener('click',e=>{
 
 // GA4: count quiz reveals per article.
 document.querySelectorAll('details.quiz').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&typeof window.gtag==='function')window.gtag('event','quiz_open',{article:location.pathname});},{once:true}));
+
+// Reading history, kept only in this browser (localStorage): an article counts as read
+// once its ending scrolls into view. Lists then mark what has been read.
+(()=>{
+ if(document.documentElement.lang!=='ja')return;
+ const get=()=>{try{return JSON.parse(localStorage.getItem('mouton.read')||'{}');}catch{return {};}};
+ const slugOf=href=>{const m=/([a-z0-9-]+)\.html(?:[?#].*)?$/.exec(href||'');return m?m[1]:'';};
+ const read=get();
+ const mark=()=>{
+  document.querySelectorAll('.journal-link,.topic-item,.reading-card,.guide-card').forEach(a=>{
+   if(read[slugOf(a.getAttribute('href'))])a.classList.add('is-read');
+  });
+  const prog=document.querySelector('.read-progress');
+  const n=Object.keys(read).length;
+  if(prog&&n){
+   const total=+prog.dataset.total||n;
+   prog.hidden=false;
+   prog.querySelector('i').style.width=Math.min(100,n/total*100).toFixed(1)+'%';
+   prog.querySelector('.read-progress-text').textContent=`読んだ記事 ${Math.min(n,total)} / ${total}`;
+  }
+ };
+ mark();
+ const end=document.querySelector('.read-mark');
+ if(!end||!('IntersectionObserver' in window))return;
+ const slug=slugOf(location.pathname)||'';
+ if(!slug)return;
+ const io=new IntersectionObserver(es=>{
+  if(!es.some(e=>e.isIntersecting))return;
+  io.disconnect();
+  const first=!read[slug];
+  read[slug]=Date.now();
+  try{localStorage.setItem('mouton.read',JSON.stringify(read));}catch{}
+  const total=+end.dataset.total||0;
+  const n=Object.keys(read).length;
+  end.innerHTML=`<span class="read-mark-check" aria-hidden="true">✓</span>読了<span class="read-mark-count">ムートンで読んだ記事 <b>${Math.min(n,total)}</b> / ${total}</span>`;
+  end.classList.add('is-on');
+  if(first&&typeof window.gtag==='function')window.gtag('event','article_read',{article:slug,count:n});
+ },{rootMargin:'0px 0px -15% 0px'});
+ io.observe(end);
+})();

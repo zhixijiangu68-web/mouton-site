@@ -52,6 +52,17 @@ export default function (eleventyConfig) {
     const notice = '<p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>';
     return html.replace(/(<p class="reading-time">[\s\S]*?<\/p>)/, `$1${notice}`);
   });
+  // Quiz bank (src/_data/quizzes.json) → quizzes.json for quiz-loop.js, with each article's title.
+  eleventyConfig.addFilter('quizJson', (items, quizzes = []) => {
+    const titles = Object.fromEntries(items.map(a => [a.page.fileSlug, a.data.journal ? a.data.journal.title : a.data.headline]));
+    const n = {};
+    return JSON.stringify(quizzes.filter(q => titles[q.slug]).map(q => {
+      n[q.slug] = (n[q.slug] || 0) + 1;
+      return { id: `${q.slug}-${n[q.slug]}`, slug: q.slug, title: titles[q.slug], q: q.q, a: q.a, head: q.head, why: q.why };
+    }));
+  });
+  // First quiz question for an article, used as a teaser on "next to read" cards.
+  eleventyConfig.addFilter('quizFor', (quizzes = [], slug) => (quizzes.find(q => q.slug === slug) || {}).q || '');
   eleventyConfig.addFilter('guideCards', items =>
     items.filter(a => a.data.guide).sort((a, b) => a.data.guide.order - b.data.guide.order));
   eleventyConfig.addFilter('scienceCards', items =>

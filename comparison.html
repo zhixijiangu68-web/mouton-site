@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -50,6 +50,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"人と比べるのを、やめることはできるのか","description":"「人と比べるな」と言われても、比べてしまう。比べることは、人が自分を知るしくみそのものかもしれない。社会的比較の研究とSNSの研究から、やめるのではなく、何とどう比べるかを考える。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/comparison.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"人と比べるのを、やめることはできるのか","item":"https://moutonarchive.com/comparison.html"}]}</script>
@@ -147,7 +148,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </section>
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-
+<p class="read-mark" data-total="61" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="comparison" data-prefer="social-media-time,disliked-priority,influence"></div></section>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -162,7 +165,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="social-media-time.html">SNSを<wbr>見る<wbr>時間は、<wbr>減らした<wbr>ほうが<wbr>いいのか</a><a class="reading-card" href="disliked-priority.html">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</a><a class="reading-card" href="influence.html">人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="social-media-time.html" data-slug="social-media-time"><span class="reading-card-title">SNSを見る時間は、減らしたほうがいいのか</span><span class="reading-card-q"><b>Q.</b> SNSを各10分までに制限した大学生は、3週間後に孤独感と抑うつが下がっていた。<em>○か×か？</em></span></a><a class="reading-card has-q" href="disliked-priority.html" data-slug="disliked-priority"><span class="reading-card-title">嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ</span><span class="reading-card-q"><b>Q.</b> 本気で打ち込む人が嫌われても動けるのは、嫌われることが気にならなくなったからではない。<em>○か×か？</em></span></a><a class="reading-card" href="influence.html" data-slug="influence"><span class="reading-card-title">人は、あらゆるものに影響されて生きている</span></a></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article>

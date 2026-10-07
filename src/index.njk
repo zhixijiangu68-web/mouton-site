@@ -19,6 +19,7 @@ preloadHero: true
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
         <p class="lede reveal-2">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
+        <button class="hero-quiz reveal-2" type="button" data-qloop-open><span class="hero-quiz-mark" aria-hidden="true">○×</span>1問だけ、解いてみる</button>
         {%- for a in collections.articles %}{% if loop.first %}
         <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
         {%- endif %}{% endfor %}
@@ -114,6 +115,7 @@ preloadHero: true
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
       <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
+      <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
       <div class="journal-list">
         {%- for a in collections.articles %}{% if a.data.journal %}
         <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">

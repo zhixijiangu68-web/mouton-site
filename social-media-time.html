@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -50,6 +50,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SNSを見る時間は、減らしたほうがいいのか","description":"気づくとSNSを開いている。見る時間を減らすと、気分は変わるのか。SNSの時間を制限した実験と、Facebookを4週間やめてもらった大規模な実験から、やめるのではなく、減らすという選択を考える。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/social-media-time.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"SNSを見る時間は、減らしたほうがいいのか","item":"https://moutonarchive.com/social-media-time.html"}]}</script>
@@ -140,7 +141,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </section>
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-
+<p class="read-mark" data-total="61" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="social-media-time" data-prefer="comparison,doing-nothing"></div></section>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -155,7 +158,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="comparison.html">人と<wbr>比べるのを、<wbr>やめる<wbr>ことは<wbr>できるのか</a><a class="reading-card" href="doing-nothing.html">何もしない<wbr>時間は、<wbr>本当に<wbr>無駄なのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="comparison.html" data-slug="comparison"><span class="reading-card-title">人と比べるのを、やめることはできるのか</span><span class="reading-card-q"><b>Q.</b> 人がつい他人と比べてしまうのは、はっきりした基準がないときだ、という理論がある。<em>○か×か？</em></span></a><a class="reading-card has-q" href="doing-nothing.html" data-slug="doing-nothing"><span class="reading-card-title">何もしない時間は、本当に無駄なのか</span><span class="reading-card-q"><b>Q.</b> 物語を覚えた直後に10分休んだ高齢者は、7日後の記憶成績も高かった。<em>○か×か？</em></span></a></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article>
