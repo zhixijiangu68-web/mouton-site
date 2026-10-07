@@ -246,7 +246,7 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
   try{localStorage.setItem('mouton.read',JSON.stringify(read));}catch{}
   const total=+end.dataset.total||0;
   const n=Object.keys(read).length;
-  end.innerHTML=`<span class="read-mark-check" aria-hidden="true">✓</span>読了<span class="read-mark-count">ムートンで読んだ記事 <b>${Math.min(n,total)}</b> / ${total}</span>`;
+  end.innerHTML=`<span class="read-mark-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>読了<span class="read-mark-count">ムートンで読んだ記事 <b>${Math.min(n,total)}</b> / ${total}</span>`;
   end.classList.add('is-on');
   if(first&&typeof window.gtag==='function')window.gtag('event','article_read',{article:slug,count:n});
  },{rootMargin:'0px 0px -15% 0px'});

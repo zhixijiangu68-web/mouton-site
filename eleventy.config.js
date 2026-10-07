@@ -173,13 +173,14 @@ export default function (eleventyConfig) {
     return quizHtml(question, answer, why, isEn(this.page));
   });
   // Articles without their own quiz open with the first question from the quiz bank,
-  // placed after the introduction (before the contents box, or after the lead / deck).
+  // placed after the lead paragraph (or before the contents box, or after the deck).
   eleventyConfig.addFilter('openQuiz', (html, q) => {
     if (!q || !q.q || html.includes('class="quiz"')) return html;
     const box = quizHtml(q.q, q.head, q.why, false);
-    if (html.includes('<details class="reading-toc">')) return html.replace('<details class="reading-toc">', `${box}<details class="reading-toc">`);
+    // Right after the first intro paragraph, before the article starts giving answers.
     const lead = /(<p class="lead">[\s\S]*?<\/p>)/;
     if (lead.test(html)) return html.replace(lead, `$1${box}`);
+    if (html.includes('<details class="reading-toc">')) return html.replace('<details class="reading-toc">', `${box}<details class="reading-toc">`);
     const deck = /(<div class="hero-line"><\/div>\s*(?:<article>)?)/;
     if (deck.test(html)) return html.replace(deck, `$1${box}`);
     return html;
