@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<script>document.documentElement.classList.add('js')</script>
+<title>DIARY — 制作 — ムートン</title>
+<meta name="description" content="DIARY（APP / 日記）の制作の記録。日記を書くと、振り返り・今日の気づき・自分への問いが返ってくる日記アプリの試作（AI JOURNAL）。日記はブラウザの中に保存して、過去の日を開き直せる。">
+<link rel="canonical" href="https://moutonarchive.com/making-diary.html">
+<meta property="og:title" content="DIARY — 制作 — ムートン">
+<meta property="og:description" content="DIARY（APP / 日記）の制作の記録。日記を書くと、振り返り・今日の気づき・自分への問いが返ってくる日記アプリの試作（AI JOURNAL）。日記はブラウザの中に保存して、過去の日を開き直せる。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/making-diary.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
+      <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
+      <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-hero" data-nav="dark"></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <a class="mk-back" href="making.html"><span aria-hidden="true">←</span> 制作の一覧へ</a>
+  <header class="mk-head">
+    <p class="mk-eyebrow">PROJECT 002 / APP / 日記</p>
+    <h1 class="doc-title">DIARY</h1>
+    <p class="mk-lead">一日を、AIと一緒に振り返る。</p>
+    <p>日記を書くと、振り返り・今日の気づき・自分への問いが返ってくる日記アプリの試作（AI JOURNAL）。日記はブラウザの中に保存して、過去の日を開き直せる。</p>
+    <p><span class="mk-state">試作中</span></p>
+  </header>
+
+  <section class="mk-section" aria-labelledby="mk-now">
+    <p class="mk-eyebrow">01 / 今の状態</p>
+    <h2 id="mk-now">ここまでと、<wbr>次の<wbr>一歩。</h2>
+    <div class="mk-card">
+      <dl>
+        <dt>ここまで</dt><dd><ul><li>バージョン0.1：日記を書く、振り返り・気づき・問いを表示する、過去の日記を開く</li><li>振り返りをもう一段深める流れと、見た目を整えた</li></ul></dd>
+        <dt>次にやること</dt><dd>いまの振り返りはブラウザ内の簡単な仕組み。安全なサーバーを経由して AI につなぎ、本文に合わせた振り返りを返せるようにする。</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ<wbr>日の<wbr>こと。</h2>
+    <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-01">2026.10.01</time>
+        <div><h3>日記アプリの<wbr>試作を<wbr>作った。</h3><p>日記を書くと、振り返り・気づき・問いが返ってくる。その日のうちに、振り返りを深める流れも足した。</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-others">
+    <p class="mk-eyebrow">03 / ほかの制作</p>
+    <h2 id="mk-others">ほかに<wbr>作っている<wbr>もの。</h2>
+    <p class="mk-others">
+      <a class="mk-more" href="making-kioku.html">KIOKU <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-site.html">MOUTON <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making.html">制作の一覧 <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

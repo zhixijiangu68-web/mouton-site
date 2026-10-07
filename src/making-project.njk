@@ -1,0 +1,64 @@
+---js
+{
+  layout: "base.njk",
+  bodyClass: "site doc-page",
+  // One page per project in _data/projects.json (the "NEXT" placeholder has none).
+  pagination: { data: "projects", size: 1, alias: "project", before: items => items.filter(p => !p.placeholder) },
+  permalink: data => `making-${data.project.slug}.html`,
+  eleventyComputed: {
+    title: data => `${data.project.name} — 制作 — ムートン`,
+    description: data => `${data.project.name}（${data.project.kind}）の制作の記録。${data.project.about}`,
+  },
+}
+---
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <a class="mk-back" href="making.html"><span aria-hidden="true">←</span> 制作の一覧へ</a>
+  <header class="mk-head">
+    <p class="mk-eyebrow">{{ project.label }} / {{ project.kind }}</p>
+    <h1 class="doc-title">{{ project.name }}</h1>
+    <p class="mk-lead">{{ project.lead }}</p>
+    <p>{{ project.about }}</p>
+    <p><span class="mk-state">{{ project.status }}</span></p>
+  </header>
+
+  <section class="mk-section" aria-labelledby="mk-now">
+    <p class="mk-eyebrow">01 / 今の状態</p>
+    <h2 id="mk-now">ここまでと、次の一歩。</h2>
+    <div class="mk-card">
+      <dl>
+        <dt>ここまで</dt><dd><ul>{% for d in project.done %}<li>{{ d }}</li>{% endfor %}</ul></dd>
+        <dt>次にやること</dt><dd>{{ project.next }}</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ日のこと。</h2>
+    <ol class="mk-log" reversed>
+      {%- for e in makingLog %}{% if e.project == project.slug %}
+      <li>
+        <time datetime="{{ e.date }}">{{ e.date | dotDate }}</time>
+        <div><h3>{{ e.title }}</h3><p>{{ e.text }}</p></div>
+      </li>
+      {%- endif %}{% endfor %}
+    </ol>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-others">
+    <p class="mk-eyebrow">03 / ほかの制作</p>
+    <h2 id="mk-others">ほかに作っているもの。</h2>
+    <p class="mk-others">
+      {%- for p in projects %}{% if not p.placeholder and p.slug != project.slug %}
+      <a class="mk-more" href="making-{{ p.slug }}.html">{{ p.name }} <span aria-hidden="true">→</span></a>
+      {%- endif %}{% endfor %}
+      <a class="mk-more" href="making.html">制作の一覧 <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
