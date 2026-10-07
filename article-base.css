@@ -17,3 +17,16 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .jump-products{position:fixed;left:16px;max-width:calc(100% - 96px);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:90;transform:translateY(24px);opacity:0;pointer-events:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 22px;border-radius:999px;background:#1b1c19;color:#fff!important;font-size:.875rem;letter-spacing:.04em;text-decoration:none;white-space:nowrap;box-shadow:0 10px 30px rgba(0,0,0,.22);transition:opacity .3s ease,transform .3s ease}
 .jump-products.is-on{opacity:1;transform:none;pointer-events:auto}
 @media(prefers-reduced-motion:reduce){.jump-products{transition:none}}
+/* Quiz (tap to reveal) */
+.quiz{margin:28px 0 32px;border:1px solid rgba(27,28,25,.18);border-radius:12px;background:rgba(255,255,255,.65);overflow:hidden}
+.quiz summary{list-style:none;cursor:pointer;display:grid;gap:10px;padding:22px 24px}
+.quiz summary::-webkit-details-marker{display:none}
+.quiz-label{justify-self:start;font-family:Inter,sans-serif;font-size:.6875rem;letter-spacing:.18em;padding:3px 10px;border-radius:999px;background:#1b1c19;color:#fff}
+.quiz-q{font-family:"Noto Serif JP",serif;font-size:1.0625rem;line-height:1.8;color:#1b1c19}
+.quiz-tap{justify-self:start;display:inline-flex;align-items:center;min-height:40px;padding:6px 18px;border-radius:999px;border:1px solid #1b1c19;font-size:.875rem;color:#1b1c19}
+.quiz[open] .quiz-tap{display:none}
+.quiz-a{padding:0 24px 22px;animation:quizIn .35s ease}
+.quiz .quiz-answer{margin:0 0 8px;font-family:"Noto Serif JP",serif;font-size:1.0625rem;font-weight:600;color:#1b1c19}
+.quiz .quiz-why{margin:0;font-size:.9375rem;line-height:1.9;color:#444740}
+@keyframes quizIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.quiz-a{animation:none}}

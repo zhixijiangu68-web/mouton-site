@@ -133,6 +133,14 @@ export default function (eleventyConfig) {
       + `</aside>`;
   });
 
+  // Tap-to-reveal quiz near the top of a guide: {% quiz "問題", "答え", "ひとこと解説" %}
+  eleventyConfig.addShortcode('quiz', (question, answer, why = '') => {
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    return `<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
+      + `<span class="quiz-tap">答えを見る</span></summary>`
+      + `<div class="quiz-a"><p class="quiz-answer">${esc(answer)}</p>${why ? `<p class="quiz-why">${esc(why)}</p>` : ''}</div></details>`;
+  });
+
   eleventyConfig.addShortcode('articleLd', (headline, description, date, updated, url, site) => {
     const iso = d => ymd(new Date(d)).join('-');
     const data = {
