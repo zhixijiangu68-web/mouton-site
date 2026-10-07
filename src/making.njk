@@ -1,0 +1,87 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: making.html
+title: "制作 — ムートン"
+description: "ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
+styles: |
+  /* MAKING: project status cards + dated log. Data lives in _data/projects.json and _data/makingLog.json. */
+  .making { display:grid; grid-template-columns:minmax(0,1fr); }
+  .making > * { min-width:0; }
+  .making .mk-eyebrow { font-family:Inter,sans-serif; font-size:.75rem; line-height:1.8; letter-spacing:.1em; color:#53584f; margin:0 0 10px; }
+  .making h2,.making h3 { font-family:"Noto Serif JP",serif; font-weight:400; color:var(--ink); }
+  .making h2 { font-size:clamp(1.25rem,2.5vw,1.6rem); line-height:1.8; margin:0 0 20px; }
+  .making h3 { font-size:1.25rem; line-height:1.7; margin:12px 0 8px; }
+  .making p,.making li,.making dd { font-size:1rem; line-height:1.95; color:#444740; overflow-wrap:anywhere; }
+  .making p { margin:0 0 16px; }
+  .mk-head { padding:0 0 28px; border-bottom:1px solid var(--line); }
+  .mk-section { padding:32px 0; border-top:1px solid var(--line); }
+  .mk-section:first-of-type { border-top:0; }
+  .mk-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  .mk-card { min-width:0; padding:24px; border:1px solid var(--line); border-radius:8px; background:rgba(255,255,255,.42); scroll-margin-top:96px; }
+  .mk-top { display:flex; flex-wrap:wrap; gap:8px 12px; justify-content:space-between; align-items:center; font-size:.6875rem; line-height:1.7; color:#53584f; }
+  .mk-state { padding:3px 9px; border-radius:99px; background:#e5eae1; color:#344b3d; }
+  .making .mk-lead { font-family:"Noto Serif JP",serif; color:#252724; }
+  .mk-card dl { margin:0; padding-top:14px; border-top:1px solid var(--line); }
+  .mk-card dt { font-size:.75rem; color:#53584f; margin:0 0 4px; }
+  .mk-card dd { margin:0 0 12px; }
+  .mk-card ul { margin:0; padding-left:1.2em; }
+  .mk-log { list-style:none; margin:0; padding:0; }
+  .mk-log li { display:grid; grid-template-columns:7.5em minmax(0,1fr); gap:4px 16px; padding:18px 0; border-top:1px solid var(--line); }
+  .mk-log li:first-child { border-top:0; }
+  .mk-log time { font-family:Inter,sans-serif; font-size:.8125rem; color:#53584f; padding-top:4px; }
+  .making .mk-log h3 { margin:0 0 4px; font-size:1.0625rem; }
+  .making .mk-log p { margin:0; }
+  .mk-tag { font-size:.6875rem; color:#53584f; letter-spacing:.06em; }
+  @media(max-width:760px) {
+   .mk-grid { grid-template-columns:minmax(0,1fr); gap:16px; }
+   .mk-card { padding:20px 18px; }
+   .mk-section { padding:26px 0; }
+   .mk-log li { grid-template-columns:minmax(0,1fr); }
+  }
+---
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <header class="mk-head">
+    <p class="mk-eyebrow">PROJECTS / MAKING</p>
+    <h1 class="doc-title">作っているもの。</h1>
+    <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
+  </header>
+
+  <section class="mk-section" aria-labelledby="mk-projects">
+    <p class="mk-eyebrow">01 / いま作っているもの</p>
+    <h2 id="mk-projects">それぞれの、今の状態。</h2>
+    <div class="mk-grid">
+      {%- for p in projects %}{% if not p.placeholder %}
+      <article class="mk-card" id="{{ p.slug }}">
+        <div class="mk-top"><span>{{ p.label }} · {{ p.kind }}</span><span class="mk-state">{{ p.status }}</span></div>
+        <h3>{{ p.name }}</h3>
+        <p class="mk-lead">{{ p.lead }}</p>
+        <p>{{ p.about }}</p>
+        <dl>
+          <dt>ここまで</dt><dd><ul>{% for d in p.done %}<li>{{ d }}</li>{% endfor %}</ul></dd>
+          <dt>次にやること</dt><dd>{{ p.next }}</dd>
+        </dl>
+      </article>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ日のこと。</h2>
+    <ol class="mk-log" reversed>
+      {%- for e in makingLog %}
+      <li>
+        <time datetime="{{ e.date }}">{{ e.date | dotDate }}</time>
+        <div><span class="mk-tag">{% for p in projects %}{% if p.slug == e.project %}{{ p.name }}{% endif %}{% endfor %}</span><h3>{{ e.title }}</h3><p>{{ e.text }}</p></div>
+      </li>
+      {%- endfor %}
+    </ol>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
