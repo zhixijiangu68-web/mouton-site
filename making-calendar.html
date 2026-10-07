@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <script>document.documentElement.classList.add('js')</script>
-<title>MOUTON — 制作 — ムートン</title>
-<meta name="description" content="MOUTON（WEB / このサイト）の制作の記録。このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。">
-<link rel="canonical" href="https://moutonarchive.com/making-site.html">
-<meta property="og:title" content="MOUTON — 制作 — ムートン">
-<meta property="og:description" content="MOUTON（WEB / このサイト）の制作の記録。このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。">
+<title>CALENDAR — 制作 — ムートン</title>
+<meta name="description" content="CALENDAR（WEB / 運用カレンダー）の制作の記録。X の投稿とサイトの運用を、いつ・どこで・何をするかで見えるようにするカレンダー。X の投稿の順番表から自動で作り、日・週・月で切り替えて見られる。予定を開くと、手順と、そのまま貼れる投稿文が出る。自分の運用のための道具で、いまはベータ版。">
+<link rel="canonical" href="https://moutonarchive.com/making-calendar.html">
+<meta property="og:title" content="CALENDAR — 制作 — ムートン">
+<meta property="og:description" content="CALENDAR（WEB / 運用カレンダー）の制作の記録。X の投稿とサイトの運用を、いつ・どこで・何をするかで見えるようにするカレンダー。X の投稿の順番表から自動で作り、日・週・月で切り替えて見られる。予定を開くと、手順と、そのまま貼れる投稿文が出る。自分の運用のための道具で、いまはベータ版。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
-<meta property="og:url" content="https://moutonarchive.com/making-site.html">
+<meta property="og:url" content="https://moutonarchive.com/making-calendar.html">
 <meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
@@ -51,20 +51,17 @@
 <main class="doc topic making" data-nav="light" data-nav-solid="light">
   <a class="mk-back" href="making.html"><span aria-hidden="true">←</span> 制作の一覧へ</a>
   <header class="mk-head">
-    <p class="mk-eyebrow">PROJECT 003 / WEB / このサイト</p>
-    <h1 class="doc-title">MOUTON</h1>
-    <p class="mk-lead">書いたものと作ったものを、1か所に。</p>
-    <p>このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。</p>
-    <p><span class="mk-state">毎日更新</span></p>
+    <p class="mk-eyebrow">PROJECT 004 / WEB / 運用カレンダー</p>
+    <h1 class="doc-title">CALENDAR</h1>
+    <p class="mk-lead">やることを、時間の上に並べる。</p>
+    <p>X の投稿とサイトの運用を、いつ・どこで・何をするかで見えるようにするカレンダー。X の投稿の順番表から自動で作り、日・週・月で切り替えて見られる。予定を開くと、手順と、そのまま貼れる投稿文が出る。自分の運用のための道具で、いまはベータ版。</p>
+    <p><span class="mk-state">ベータ版</span></p>
   </header>
   <figure class="mk-media">
-    <div class="mk-phone" style="background-image:url(images/making/site.jpg)">
-      <video poster="images/making/site.jpg" muted loop playsinline autoplay preload="metadata" aria-label="このサイトのトップと、選び方の記事をスクロールしたところ">
-        <source src="images/making/site.webm" type="video/webm">
-        <source src="images/making/site.mp4" type="video/mp4">
-      </video>
+    <div class="mk-phone" style="background-image:url(images/making/calendar.jpg)">
+      <img src="images/making/calendar.jpg" alt="10月8日の朝。6:50 の赤い線の下に、7:00 の投稿の手順と本文が開いている" loading="lazy" width="390" height="844">
     </div>
-    <figcaption>このサイトのトップと、選び方の記事をスクロールしたところ</figcaption>
+    <figcaption>10月8日の朝。6:50 の赤い線の下に、7:00 の投稿の手順と本文が開いている</figcaption>
   </figure>
 
   <section class="mk-section" aria-labelledby="mk-now">
@@ -72,8 +69,8 @@
     <h2 id="mk-now">ここまでと、<wbr>次の<wbr>一歩。</h2>
     <div class="mk-card">
       <dl>
-        <dt>ここまで</dt><dd><ul><li>9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた</li><li>記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした</li><li>独自ドメイン moutonarchive.com に移り、アクセス解析を入れた</li><li>AI の社員チーム（記事・編集・X・保守）が毎日動く形にした</li></ul></dd>
-        <dt>次にやること</dt><dd>10月中に、記事から最初の1件が売れるところまで持っていく。</dd>
+        <dt>ここまで</dt><dd><ul><li>X の順番表と投稿文から、カレンダーを自動で作る仕組みを作った</li><li>時刻つきの予定リスト（日）・時間の表（週）・月のカレンダーを切り替えられるようにした</li><li>予定を開くと手順と投稿文が出て、コピーと「済み」の記録ができるようにした</li><li>動きを軽くして、文字を大きくした（ベータ版）</li></ul></dd>
+        <dt>次にやること</dt><dd>10月の運用で毎日使い、使いにくい所を直していく。</dd>
       </dl>
     </div>
   </section>
@@ -84,19 +81,7 @@
     <ol class="mk-log" reversed>
       <li>
         <time datetime="2026-10-07">2026.10.07</time>
-        <div><h3>選び方の<wbr>記事が<wbr>11本に<wbr>なった。</h3><p>ミニトランポリンと、耳栓・アイマスクの選び方を足した。読み物から選び方へのリンクも5本につないだ。</p></div>
-      </li>
-      <li>
-        <time datetime="2026-10-06">2026.10.06</time>
-        <div><h3>サイトに<wbr>住所が<wbr>できた。</h3><p>独自ドメイン moutonarchive.com に移った。アクセス解析と Search Console も入れて、読まれ方が見えるようにした。</p></div>
-      </li>
-      <li>
-        <time datetime="2026-10-05">2026.10.05</time>
-        <div><h3>記事を<wbr>テンプレートから<wbr>作る<wbr>形にした。</h3><p>1本ずつ手で書いていたページを、テンプレートから自動で作る仕組みに移した。AI の社員に仕事を頼み始めた。</p></div>
-      </li>
-      <li>
-        <time datetime="2026-09-30">2026.09.30</time>
-        <div><h3>自分の<wbr>Webサイトを<wbr>作り<wbr>始めた。</h3><p>自分の基地のような場所を、ようやく形にし始めた。</p></div>
+        <div><h3>運用カレンダーの<wbr>ベータ版を<wbr>作った。</h3><p>X の投稿とサイトの運用を、いつ・どこで・何をするかで見えるようにした。日・週・月で切り替えられて、予定を開くとそのまま貼れる投稿文が出る。</p></div>
       </li>
     </ol>
   </section>
@@ -107,7 +92,7 @@
     <p class="mk-others">
       <a class="mk-more" href="making-kioku.html">KIOKU <span aria-hidden="true">→</span></a>
       <a class="mk-more" href="making-diary.html">DIARY <span aria-hidden="true">→</span></a>
-      <a class="mk-more" href="making-calendar.html">CALENDAR <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-site.html">MOUTON <span aria-hidden="true">→</span></a>
       <a class="mk-more" href="making.html">制作の一覧 <span aria-hidden="true">→</span></a>
     </p>
   </section>
