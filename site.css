@@ -87,7 +87,7 @@ body.menu-locked{overflow:hidden}
 /* ---------- Site information: footer links, notes, author ---------- */
 .footer-links{display:flex;flex-wrap:wrap;gap:4px 22px}
 .footer-links a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-underline-offset:4px;font-size:.8125rem;letter-spacing:.06em}
-.footer-note{flex-basis:100%;margin:8px 0 0;font-size:.75rem;line-height:1.8;opacity:.8}
+.footer-note{flex-basis:100%;margin:8px 0 0;font-size:.75rem;line-height:1.8}
 .mini-footer{display:flex;flex-direction:column;align-items:center;gap:8px;padding:48px 20px calc(48px + env(safe-area-inset-bottom,0px));text-align:center;color:#5b5d56;font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .mini-footer .footer-links{justify-content:center}
 .mini-footer-copy{margin:0;font-size:.75rem;letter-spacing:.16em}
@@ -258,3 +258,6 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .mk-audio audio { width:100%; max-width:420px; }
 @media(max-width:760px){ .mk-thumb { margin:-20px -18px 16px; } }
 @media(prefers-reduced-motion:reduce){ .mk-phone video { display:none; } .mk-phone { background:center/cover no-repeat; } }
+
+/* Contrast (Issue #30): the per-article .pull-label used opacity .55 (3.8:1); raise it to pass 4.5:1. */
+.pull .pull-label{opacity:.75}
