@@ -118,6 +118,7 @@ preloadHero: true
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
       <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
+      <p class="site-stats"><span><b>{{ collections.articles.length }}</b>本の記事</span><span><a href="series.html"><b>{{ series.length }}</b>つの連載</a></span><span><a href="guides.html"><b>{{ (collections.articles | guideCards).length }}</b>本の選び方</a></span><span><a href="quiz.html"><b>{{ quizzes.length }}</b>問の○×クイズ</a></span></p>
       <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
       <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
       <div class="journal-list">
