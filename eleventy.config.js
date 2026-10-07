@@ -175,8 +175,8 @@ export default function (eleventyConfig) {
     if (!(this.page.outputPath || '').endsWith('.html')) return html;
     // English pages: link to the Japanese article while its translation does not exist yet.
     if (isEn(this.page)) {
-      return html.replace(/(<main[\s\S]*<\/main>)/, main => main.replace(/\shref="([a-z0-9-]+)\.html(#[^"]*)?"/g,
-        (m, slug, hash = '') => (slug === 'index' || enSlugs.includes(slug) ? m : ` href="../${slug}.html${hash}"`)));
+      return html.replace(/\shref="([a-z0-9-]+)\.html(#[^"]*)?"/g,
+        (m, slug, hash = '') => (slug === 'index' || enSlugs.includes(slug) ? m : ` href="../${slug}.html${hash}"`));
     }
     return html
       .replace(/<(h[1-3])(\s[^>]*)?>([\s\S]*?)<\/\1>/g, (m, tag, attrs = '', inner) => `<${tag}${attrs}>${phraseBreaks(inner)}</${tag}>`)
