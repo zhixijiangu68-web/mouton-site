@@ -9,7 +9,8 @@ export default {
     name: 'ムートン',
     x: 'kodoku__alone',
     // Instagram のユーザー名（@ なし）。フッター・運営者情報・links.html に出る。
-    instagram: 'art.gagaga',
+    // 休止中（2026-10-06〜）は空。再開するときは 'art.gagaga' に戻す。
+    instagram: '',
     bio: '興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。',
   },
   // Google Search Console の「HTML タグ」で確認するときの content の値。空なら出さない。
@@ -19,7 +20,7 @@ export default {
   // AmazonアソシエイトのトラッキングID（例: 'mouton-22'）。
   // 入れると Amazon リンクにタグ・rel="sponsored"・「PR」表示が付き、広告の表記も出る。
   // 楽天アフィリエイトID（例: '1a2b3c4d.5e6f7a8b.1a2b3c4d.5e6f7a8b'）。入れると商品カードに楽天のボタンが出る。
-  affiliate: { amazonTag: 'yuiga2003-22', rakutenId: '' },
+  affiliate: { amazonTag: 'yuiga2003-22', rakutenId: '5844aa3f.402b05a0.5844aa40.481ea3b1' },
   // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。入れると全ページに AdSense のコードと ads.txt が出る。adsenseSlot も入れると記事の末尾に広告枠を出す。
   ads: { adsenseClient: 'ca-pub-2111458982949833', adsenseSlot: '' },
   // メールマガジンの登録フォームの送信先。空なら登録欄を出さない。
