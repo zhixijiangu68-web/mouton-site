@@ -116,6 +116,18 @@ export default function (eleventyConfig) {
   });
   // Articles in the order of the given slugs (unknown slugs are skipped).
   // 連載: the series an article belongs to, and a "連載｜<title> n/m" line under its reading time.
+  // Visible breadcrumbs at the top of an article: ホーム › テーマ › 記事.
+  eleventyConfig.addFilter('crumbs', (html, t, title, en = false, kind = '') => {
+    const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const parts = [`<a href="index.html">${en ? 'Home' : 'ホーム'}</a>`];
+    if (kind === 'guide') parts.push(`<a href="guides.html">${en ? 'Guides' : '選び方'}</a>`);
+    else if (t) parts.push(`<a href="${en ? `index.html#${t.key}` : `topic-${t.key}.html`}">${en ? t.en : t.label}</a>`);
+    else if (kind === 'books') parts.push(`<a href="index.html#${en ? 'more' : 'books'}">${en ? 'Books' : '本棚'}</a>`);
+    parts.push(`<span aria-current="page">${esc(title)}</span>`);
+    const nav = `<nav class="crumbs" aria-label="${en ? 'Breadcrumb' : 'パンくずリスト'}"><ol>${parts.map(x => `<li>${x}</li>`).join('')}</ol></nav>`;
+    for (const re of [/(<article class="article">)/, /(<main[^>]*>)/]) if (re.test(html)) return html.replace(re, `$1${nav}`);
+    return html;
+  });
   eleventyConfig.addFilter('seriesOf', (series = [], slug) => series.find(s => s.slugs.includes(slug)) || null);
   eleventyConfig.addFilter('seriesNav', (items, slug) => {
     const i = items.findIndex(a => a.page.fileSlug === slug);

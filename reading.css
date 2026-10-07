@@ -210,3 +210,11 @@ html[lang="en"] .series-list .is-current .series-name::after { content:"You are 
 .series-nav .series-next { grid-column:2; text-align:right; }
 .series-nav a:hover { border-color:#1442c4; }
 @media (max-width:600px) { .series-nav { grid-template-columns:1fr; } .series-nav .series-next { grid-column:auto; } }
+/* Breadcrumbs */
+.crumbs { margin:0 0 18px; }
+.crumbs ol { display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; margin:0; padding:0; list-style:none; font-family:Inter,"Noto Serif JP",sans-serif; font-size:.75rem; line-height:1.8; color:#6b6e66; }
+.crumbs li { min-width:0; }
+.crumbs li + li::before { content:"›"; margin:0 8px; color:#a3a69e; }
+.crumbs a { color:#53574f !important; text-decoration:none !important; }
+.crumbs a:hover { color:#1442c4 !important; text-decoration:underline !important; text-underline-offset:3px; }
+.crumbs [aria-current] { display:inline-block; max-width:22em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:bottom; }
