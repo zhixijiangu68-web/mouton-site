@@ -248,3 +248,13 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .mk-card > .mk-more { margin-top:auto; }
 .mk-back { display:inline-flex; align-items:center; gap:8px; min-height:44px; font-size:.875rem; color:#303c35; }
 .mk-others { display:flex; flex-wrap:wrap; gap:8px 20px; }
+.mk-media { margin:32px 0 8px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.mk-phone { width:min(300px,78vw); aspect-ratio:390/844; border-radius:28px; overflow:hidden; background:#0b0b0c; border:6px solid #1c1d1b; box-shadow:0 24px 60px rgba(25,31,28,.22); }
+.mk-phone video,.mk-phone img { display:block; width:100%; height:100%; object-fit:cover; }
+.mk-media figcaption { font-size:.8125rem; line-height:1.8; color:#53584f; text-align:center; max-width:32em; }
+.mk-thumb { display:block; margin:-24px -24px 18px; height:200px; overflow:hidden; border-radius:8px 8px 0 0; background:#0b0b0c; }
+.mk-thumb img { display:block; width:100%; height:100%; object-fit:cover; object-position:top; }
+.mk-audio { margin:8px 0 0; }
+.mk-audio audio { width:100%; max-width:420px; }
+@media(max-width:760px){ .mk-thumb { margin:-20px -18px 16px; } }
+@media(prefers-reduced-motion:reduce){ .mk-phone video { display:none; } .mk-phone { background:center/cover no-repeat; } }

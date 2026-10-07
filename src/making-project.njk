@@ -23,6 +23,25 @@
     <p><span class="mk-state">{{ project.status }}</span></p>
   </header>
 
+  {%- if project.video or project.image %}
+  <figure class="mk-media">
+    <div class="mk-phone"{% if project.image %} style="background-image:url({{ project.image }})"{% endif %}>
+      {%- if project.video %}
+      <video{% if project.image %} poster="{{ project.image }}"{% endif %} muted loop playsinline autoplay preload="metadata" aria-label="{{ project.caption }}">
+        <source src="{{ project.video | replace('.mp4', '.webm') }}" type="video/webm">
+        <source src="{{ project.video }}" type="video/mp4">
+      </video>
+      {%- else %}
+      <img src="{{ project.image }}" alt="{{ project.caption }}" loading="lazy" width="390" height="844">
+      {%- endif %}
+    </div>
+    <figcaption>{{ project.caption }}</figcaption>
+  </figure>
+  {%- endif %}
+  {%- if project.audio %}
+  <div class="mk-audio"><p class="mk-eyebrow">SOUND</p><audio src="{{ project.audio }}" controls preload="none"></audio></div>
+  {%- endif %}
+
   <section class="mk-section" aria-labelledby="mk-now">
     <p class="mk-eyebrow">01 / 今の状態</p>
     <h2 id="mk-now">ここまでと、次の一歩。</h2>
