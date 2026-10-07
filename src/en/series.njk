@@ -1,0 +1,41 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: en/series.html
+jaPage: series.html
+title: "Series — Mouton"
+description: "Articles that read best in order, grouped as series: changing jobs, looking clean, asking the philosophers, sleep, health claims, and how people change."
+---
+{% include "partials/nav-en.njk" %}
+<div class="doc-cover ph-think" data-nav="dark"{% if (['images/cover-philosophy.jpg'] | firstImage) %} style="--img:url('../images/cover-philosophy.jpg')"{% endif %}></div>
+<main class="doc topic series-page" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Series</p>
+  <h1 class="doc-title">Series</h1>
+  <p>Some topics take more than one article. Each series is ordered so you can read it from top to bottom, in the order the questions tend to come up.</p>
+  <nav class="guide-jump" aria-label="Series">
+    {%- for s in series %}<a href="#{{ s.key }}">{{ s.en }}</a>{% endfor %}
+  </nav>
+  {%- for s in series %}
+  {%- set items = collections.articlesEn | bySlugs(s.slugs) %}
+  {%- if items.length %}
+  <section class="guide-group series-group" id="{{ s.key }}" aria-labelledby="h-{{ s.key }}">
+    <h2 class="guide-group-title" id="h-{{ s.key }}">{{ s.en }} <span class="series-count">{{ items.length }} parts</span></h2>
+    <p>{{ s.enIntro }}</p>
+    <ol class="topic-list series-index">
+      {%- for a in items %}
+      <li><a class="topic-item" href="{{ a.page.fileSlug }}.html">
+        <span class="topic-date">Part {{ loop.index }}</span>
+        <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+        <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+        <span class="topic-time">{{ a.data.readMinutes }} min read</span>
+      </a></li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endif %}
+  {%- endfor %}
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links-en.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

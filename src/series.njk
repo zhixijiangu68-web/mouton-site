@@ -1,0 +1,43 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: series.html
+enPage: en/series.html
+title: "連載の一覧 — ムートン"
+description: "続けて読むと分かりやすい記事を、連載としてまとめています。転職を考える、清潔感を確かめる、哲学者に聞く、眠りを確かめる、健康法を確かめる、自分を変える仕組みの6つです。"
+---
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-think" data-nav="dark"{% bgImage "images/cover-philosophy.jpg" %}></div>
+<main class="doc topic series-page" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Series</p>
+  <h1 class="doc-title">連載</h1>
+  <p>一つのテーマを、何本かの記事に分けて書いています。上から順に読むと、迷う順番や考える順番に沿って進めるように並べています。</p>
+  <nav class="guide-jump" aria-label="連載">
+    {%- for s in series %}<a href="#{{ s.key }}">{{ s.title }}</a>{% endfor %}
+  </nav>
+  {%- for s in series %}
+  {%- set items = collections.articles | bySlugs(s.slugs) %}
+  <section class="guide-group series-group" id="{{ s.key }}" aria-labelledby="h-{{ s.key }}">
+    <h2 class="guide-group-title" id="h-{{ s.key }}">{{ s.title }} <span class="series-count">全{{ items.length }}回</span></h2>
+    <p>{{ s.intro }}</p>
+    <ol class="topic-list series-index">
+      {%- for a in items %}
+      <li><a class="topic-item" href="{{ a.page.fileSlug }}.html" data-date="{{ a.page.date | dotDate }}">
+        <span class="topic-date">第{{ loop.index }}回</span>
+        <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+        <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+        <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+      </a></li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endfor %}
+  <nav class="topic-others" aria-label="ほかのテーマ">
+    {%- for o in topics %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endfor %}
+    <a href="index.html#journal">すべての記事</a>
+  </nav>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

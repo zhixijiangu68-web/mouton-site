@@ -115,6 +115,18 @@ export default function (eleventyConfig) {
     return picks;
   });
   // Articles in the order of the given slugs (unknown slugs are skipped).
+  // 連載: the series an article belongs to, and a "連載｜<title> n/m" line under its reading time.
+  eleventyConfig.addFilter('seriesOf', (series = [], slug) => series.find(s => s.slugs.includes(slug)) || null);
+  eleventyConfig.addFilter('seriesNav', (items, slug) => {
+    const i = items.findIndex(a => a.page.fileSlug === slug);
+    return { cur: i + 1, prev: i > 0 ? items[i - 1] : null, next: i >= 0 && i < items.length - 1 ? items[i + 1] : null };
+  });
+  eleventyConfig.addFilter('seriesTag', (html, s, slug, en = false) => {
+    if (!s) return html;
+    const n = s.slugs.indexOf(slug) + 1;
+    const tag = `<p class="series-tag"><a href="#series"><span>${en ? 'Series' : '連載'}</span>${en ? s.en : s.title}<em>${n} / ${s.slugs.length}</em></a></p>`;
+    return html.replace(/(<p class="reading-time">[\s\S]*?<\/p>)/, `$1${tag}`);
+  });
   eleventyConfig.addFilter('bySlugs', (items, slugs = []) => {
     const bySlug = new Map(items.map(a => [a.page.fileSlug, a]));
     return slugs.map(slug => bySlug.get(slug)).filter(Boolean);

@@ -8,7 +8,8 @@ bodyClass: article-page
 {%- if lang == 'en' %}<a class="cover-lang" href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語</a>
 {%- elif page.fileSlug in enSlugs %}<a class="cover-lang" href="en/{{ page.fileSlug }}.html" hreflang="en" lang="en">English</a>{% endif %}</nav></div>
 {%- set qbank = quizzesEn if lang == 'en' else quizzes %}
-{{ content | midQuiz(qbank, page.fileSlug, lang == 'en') | openQuiz(qbank | quizObj(page.fileSlug), lang == 'en') | prNotice(lang != 'en' and (category == 'books' or affiliate) and (site.affiliate.amazonTag or site.affiliate.rakutenId)) | safe }}
+{%- set mySeries = series | seriesOf(page.fileSlug) %}
+{{ content | seriesTag(mySeries, page.fileSlug, lang == 'en') | midQuiz(qbank, page.fileSlug, lang == 'en') | openQuiz(qbank | quizObj(page.fileSlug), lang == 'en') | prNotice(lang != 'en' and (category == 'books' or affiliate) and (site.affiliate.amazonTag or site.affiliate.rakutenId)) | safe }}
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-links-en.njk" if lang == "en" else "partials/footer-links.njk" %}
   <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
