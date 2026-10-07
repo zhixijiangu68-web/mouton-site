@@ -87,7 +87,7 @@
     const share=`https://x.com/intent/post?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
     const msg=score===run?'全問正解。':score>=run*.7?'かなり詳しい。':score>=run*.4?'半分くらい。意外な答えがあったはず。':'意外な答えが多かったはず。';
     track('quiz_finish',{score,run});
-    el.innerHTML=`<p class="qloop-label">RESULT</p><p class="qloop-score"><b>${score}</b> / ${run}</p><p class="qloop-msg">${msg}</p>`
+    el.innerHTML=`<span class="qloop-label">RESULT</span><p class="qloop-score"><b>${score}</b> / ${run}</p><p class="qloop-msg">${msg}</p>`
      +`<div class="qloop-actions"><button type="button" class="qloop-next qloop-again">もう一度 <span aria-hidden="true">→</span></button><a class="qloop-read" href="${share}" target="_blank" rel="noopener noreferrer">結果を X でシェア <span aria-hidden="true">↗</span></a></div>`
      +(wrong.length?`<div class="qloop-review"><p>まちがえた問題の答えは、ここに書いてある。</p><ul>${[...new Map(wrong.map(q=>[q.slug,q])).values()].map(q=>`<li><a href="${root}${q.slug}.html">${esc(q.title)} <span aria-hidden="true">→</span></a></li>`).join('')}</ul></div>`:'');
     el.querySelector('.qloop-again').addEventListener('click',()=>{score=0;count=0;streak=0;wrong.length=0;show();});

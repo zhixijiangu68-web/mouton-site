@@ -329,3 +329,5 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .qloop-close{width:44px;height:44px;border:0;background:none;font-size:1.5rem;cursor:pointer;color:#1b1c19}
 .qloop-sheet .qloop{margin:10px 12px calc(14px + env(safe-area-inset-bottom));box-shadow:none}
 .journal-item.is-read .journal-title::after,.guide-card.is-read h3::after,.topic-item.is-read .topic-title::after{content:"読んだ";display:inline-block;margin-left:10px;padding:1px 9px;border-radius:999px;font-family:Inter,sans-serif;font-size:.6875rem;font-weight:400;letter-spacing:.06em;vertical-align:4px;background:rgba(27,28,25,.07);color:#5a5d55}
+.quiz-page .qloop{margin:30px 0 26px}
+.quiz-page-note{font-size:.8125rem!important;opacity:.65}
