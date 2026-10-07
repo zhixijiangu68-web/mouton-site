@@ -12,7 +12,9 @@ description: "The English edition of Mouton, a personal archive. Essays on philo
   <h1 class="doc-title">Mouton</h1>
   <p>A personal archive. I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, the body, food, and work, checking papers and data along the way.</p>
   <p>These essays were first written in Japanese. Product recommendations in the original articles point to Japanese shops, so the English edition describes what to look for without shop links. <a href="../index.html" hreflang="ja" lang="ja">日本語版はこちら</a></p>
-  <p><a class="btn btn-dark" href="guides.html">Buying guides <span aria-hidden="true">→</span></a></p>
+  <p><a class="btn btn-dark" href="guides.html">Buying guides <span aria-hidden="true">→</span></a> <a class="btn btn-dark" href="quiz.html">10-question quiz <span aria-hidden="true">→</span></a></p>
+  <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">Try one <span>True or false</span></p>
+  <div class="qloop" data-qloop></div></section>
   <section id="journal" aria-labelledby="journal-heading">
     <h2 id="journal-heading" class="eyebrow">Journal — {{ collections.articlesEn.length }} {{ "article" if collections.articlesEn.length == 1 else "articles" }}</h2>
     {%- for t in topics %}

@@ -174,9 +174,9 @@ export default function (eleventyConfig) {
   });
   // Articles without their own quiz open with the first question from the quiz bank,
   // placed after the lead paragraph (or before the contents box, or after the deck).
-  eleventyConfig.addFilter('openQuiz', (html, q) => {
+  eleventyConfig.addFilter('openQuiz', (html, q, en = false) => {
     if (!q || !q.q || html.includes('class="quiz"')) return html;
-    const box = quizHtml(q.q, q.head, q.why, false);
+    const box = quizHtml(q.q, q.head, q.why, en);
     // Right after the first intro paragraph, before the article starts giving answers.
     const lead = /(<p class="lead">[\s\S]*?<\/p>)/;
     if (lead.test(html)) return html.replace(lead, `$1${box}`);
@@ -187,14 +187,14 @@ export default function (eleventyConfig) {
   });
   // One more question in the middle of a long article: placed just before the section (h2)
   // that holds its answer (`h2` in the quiz bank), so it never gives itself away.
-  eleventyConfig.addFilter('midQuiz', (html, quizzes = [], slug) => {
+  eleventyConfig.addFilter('midQuiz', (html, quizzes = [], slug, en = false) => {
     const mine = quizzes.filter(q => q.slug === slug);
     const total = (html.match(/<h2[\s>]/g) || []).length;
     const cands = mine.slice(1).filter(q => q.h2 >= 2 && q.h2 < total - 1);
     if (!cands.length) return html;
     const q = cands.reduce((a, b) => (Math.abs(b.h2 - total / 2) < Math.abs(a.h2 - total / 2) ? b : a));
     let n = 0;
-    return html.replace(/<h2[\s>]/g, m => (++n === q.h2 ? quizHtml(q.q, q.head, q.why, false).replace('<details class="quiz"', '<details class="quiz quiz-mid"') + m : m));
+    return html.replace(/<h2[\s>]/g, m => (++n === q.h2 ? quizHtml(q.q, q.head, q.why, en).replace('<details class="quiz"', '<details class="quiz quiz-mid"') + m : m));
   });
   eleventyConfig.addFilter('quizObj', (quizzes = [], slug) => quizzes.find(q => q.slug === slug));
 

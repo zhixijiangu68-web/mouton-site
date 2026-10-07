@@ -1,3 +1,8 @@
+<p class="read-mark" data-total="{{ collections.articlesEn.length }}" aria-live="polite"></p>
+{%- if quizzesEn.length %}
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">One more <span>True or false</span></p>
+<div class="qloop" data-qloop data-exclude="{{ page.fileSlug }}" data-prefer="{{ (related or []) | join(',') }}"></div></section>
+{%- endif %}
 {%- if health %}
 <aside class="article-note" aria-label="Note">
   <p class="article-note-title">About this article</p>

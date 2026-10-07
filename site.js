@@ -216,8 +216,9 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
 // Reading history, kept only in this browser (localStorage): an article counts as read
 // once its ending scrolls into view. Lists then mark what has been read.
 (()=>{
- if(document.documentElement.lang!=='ja')return;
- const get=()=>{try{return JSON.parse(localStorage.getItem('mouton.read')||'{}');}catch{return {};}};
+ const en=document.documentElement.lang==='en';
+ const key=en?'mouton.readEn':'mouton.read';
+ const get=()=>{try{return JSON.parse(localStorage.getItem(key)||'{}');}catch{return {};}};
  const slugOf=href=>{const m=/([a-z0-9-]+)\.html(?:[?#].*)?$/.exec(href||'');return m?m[1]:'';};
  const read=get();
  const mark=()=>{
@@ -235,7 +236,7 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
    const total=+prog.dataset.total||n;
    prog.hidden=false;
    prog.querySelector('i').style.width=Math.min(100,n/total*100).toFixed(1)+'%';
-   prog.querySelector('.read-progress-text').textContent=`読んだ記事 ${Math.min(n,total)} / ${total}`;
+   prog.querySelector('.read-progress-text').textContent=`${en?'Read':'読んだ記事'} ${Math.min(n,total)} / ${total}`;
   }
  };
  mark();
@@ -248,10 +249,10 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
   io.disconnect();
   const first=!read[slug];
   read[slug]=Date.now();
-  try{localStorage.setItem('mouton.read',JSON.stringify(read));}catch{}
+  try{localStorage.setItem(key,JSON.stringify(read));}catch{}
   const total=+end.dataset.total||0;
   const n=Object.keys(read).length;
-  end.innerHTML=`<span class="read-mark-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>読了<span class="read-mark-count">ムートンで読んだ記事 <b>${Math.min(n,total)}</b> / ${total}</span>`;
+  end.innerHTML=`<span class="read-mark-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${en?'Finished':'読了'}<span class="read-mark-count">${en?'Articles read on Mouton':'ムートンで読んだ記事'} <b>${Math.min(n,total)}</b> / ${total}</span>`;
   end.classList.add('is-on');
   if(first&&typeof window.gtag==='function')window.gtag('event','article_read',{article:slug,count:n});
  },{rootMargin:'0px 0px -15% 0px'});

@@ -76,9 +76,7 @@
 <link rel="stylesheet" href="{{ root }}{{ css }}">
 {%- endfor %}
 <script src="{{ root }}site.js" defer></script>
-{%- if lang != "en" %}
 <script src="{{ root }}quiz-loop.js" defer></script>
-{%- endif %}
 {%- if isArticle %}
 <script src="{{ root }}article-share.js" defer></script>
 <script type="application/ld+json">{% articleLd headline, description, page.date, updated, pageUrl, site, lang or 'ja' %}</script>
