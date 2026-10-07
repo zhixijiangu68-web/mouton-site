@@ -22,6 +22,7 @@ preloadHero: true
         {%- for a in collections.articles %}{% if loop.first %}
         <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
         {%- endif %}{% endfor %}
+        <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
       <a class="scroll-cue" href="#think">Scroll</a>
     </div>
