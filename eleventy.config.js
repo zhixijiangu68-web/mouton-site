@@ -153,13 +153,31 @@ export default function (eleventyConfig) {
       + `</aside>`;
   });
 
-  // Tap-to-reveal quiz near the top of a guide: {% quiz "問題", "答え", "ひとこと解説" %}
-  eleventyConfig.addShortcode('quiz', function (question, answer, why = '') {
+  // Tap-to-reveal quiz: {% quiz "問題", "答え", "ひとこと解説" %}. When the answer starts with ○/× (or True/False),
+  // data-a lets site.js turn it into ○× buttons, so the reader guesses before seeing the answer.
+  const quizHtml = (question, answer, why, en) => {
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-    return `<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
-      + `<span class="quiz-tap">${isEn(this.page) ? 'Show answer' : '答えを見る'}</span></summary>`
+    const a = /^(○|true)/i.test(answer) ? '1' : /^(×|false)/i.test(answer) ? '0' : '';
+    return `<details class="quiz"${a ? ` data-a="${a}"` : ''}><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
+      + `<span class="quiz-tap">${en ? 'Show answer' : '答えを見る'}</span></summary>`
       + `<div class="quiz-a"><p class="quiz-answer">${esc(answer)}</p>${why ? `<p class="quiz-why">${esc(why)}</p>` : ''}</div></details>`;
+  };
+  eleventyConfig.addShortcode('quiz', function (question, answer, why = '') {
+    return quizHtml(question, answer, why, isEn(this.page));
   });
+  // Articles without their own quiz open with the first question from the quiz bank,
+  // placed after the introduction (before the contents box, or after the lead / deck).
+  eleventyConfig.addFilter('openQuiz', (html, q) => {
+    if (!q || !q.q || html.includes('class="quiz"')) return html;
+    const box = quizHtml(q.q, q.head, q.why, false);
+    if (html.includes('<details class="reading-toc">')) return html.replace('<details class="reading-toc">', `${box}<details class="reading-toc">`);
+    const lead = /(<p class="lead">[\s\S]*?<\/p>)/;
+    if (lead.test(html)) return html.replace(lead, `$1${box}`);
+    const deck = /(<div class="hero-line"><\/div>\s*(?:<article>)?)/;
+    if (deck.test(html)) return html.replace(deck, `$1${box}`);
+    return html;
+  });
+  eleventyConfig.addFilter('quizObj', (quizzes = [], slug) => quizzes.find(q => q.slug === slug));
 
   eleventyConfig.addShortcode('articleLd', (headline, description, date, updated, url, site, lang = 'ja') => {
     const iso = d => ymd(new Date(d)).join('-');

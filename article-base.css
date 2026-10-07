@@ -30,3 +30,8 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .quiz .quiz-why{margin:0;font-size:.9375rem;line-height:1.9;color:#444740}
 @keyframes quizIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.quiz-a{animation:none}}
+/* ○× buttons on quizzes (site.js) */
+.quiz[data-a] summary{cursor:default}
+.quiz-ox{--qa:#1442c4;--qr:#1f7a4d;--qw:#b4432f;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
+.quiz .qloop-verdict{margin:0 0 4px;font:600 1.125rem/1.5 "Noto Serif JP",serif}
+.quiz .qloop-verdict.is-right{color:#1f7a4d}.quiz .qloop-verdict.is-wrong{color:#b4432f}

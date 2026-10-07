@@ -186,6 +186,33 @@ document.addEventListener('click',e=>{
 // GA4: count quiz reveals per article.
 document.querySelectorAll('details.quiz').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&typeof window.gtag==='function')window.gtag('event','quiz_open',{article:location.pathname});},{once:true}));
 
+// Quizzes whose answer is ○ or ×: guess with two buttons first, then see the answer.
+document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
+ const en=document.documentElement.lang==='en';
+ const tap=d.querySelector('.quiz-tap');
+ if(!tap)return;
+ const row=document.createElement('span');
+ row.className='quiz-ox';row.setAttribute('role','group');row.setAttribute('aria-label',en?'Your answer':'答えを選ぶ');
+ row.innerHTML=`<button type="button" class="qloop-choice" data-v="1" aria-label="${en?'True':'○（正しい）'}">○</button><button type="button" class="qloop-choice" data-v="0" aria-label="${en?'False':'×（まちがい）'}">×</button>`;
+ tap.replaceWith(row);
+ const verdict=document.createElement('p');verdict.className='qloop-verdict';
+ d.querySelector('.quiz-a').prepend(verdict);
+ row.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  e.preventDefault();
+  if(d.dataset.done)return;d.dataset.done='1';
+  const right=b.dataset.v===d.dataset.a;
+  row.querySelectorAll('button').forEach(x=>{x.disabled=true;if(x.dataset.v===d.dataset.a)x.classList.add('is-answer');});
+  b.classList.add(right?'is-right':'is-wrong');
+  verdict.classList.add(right?'is-right':'is-wrong');
+  verdict.textContent=right?(en?'Correct':'正解'):(en?'Not quite':'ざんねん');
+  d.open=true;
+  if(typeof window.gtag==='function')window.gtag('event','quiz_answer',{correct:right,article:location.pathname.replace(/^.*\//,'').replace('.html',''),where:'article-top'});
+ });
+ // The summary itself no longer toggles; the buttons do.
+ d.querySelector('summary').addEventListener('click',e=>{if(!d.dataset.done)e.preventDefault();});
+});
+
 // Reading history, kept only in this browser (localStorage): an article counts as read
 // once its ending scrolls into view. Lists then mark what has been read.
 (()=>{
