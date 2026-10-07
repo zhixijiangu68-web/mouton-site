@@ -46,3 +46,10 @@
 
 - `npm test` が通ること（リンク切れ・ID の重複・title や description の書き忘れ・h1 の数を調べる）
 - スマホ幅（390px）でも崩れないよう、既存のクラスを使い、独自の固定幅を増やさない
+
+## note
+
+- note 用の記事は `/note <テーマ>` で、5 人のサブエージェント（`.claude/agents/note-*.md`）が リサーチ → 記事作成 → タイトル → 品質チェック → SNS集客 の順に作る。詳しくは `note/README.md`
+- 成果物は `note/<slug>/` に置く。サイトの記事とは別物なので、サイトには載せない。サイトへのリンクには `?utm_source=note&utm_medium=referral&utm_campaign=<slug>` を付ける
+- 文章のルールはサイトと同じ。note の記事から広告のある記事へリンクするときは、冒頭に「広告を含みます」の1行を入れる
+- AI は note や SNS に投稿しない。note のユーザー名は `src/_data/site.js` の `author.note`

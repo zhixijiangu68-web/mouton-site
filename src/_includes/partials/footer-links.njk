@@ -5,6 +5,9 @@
   {%- if site.author.instagram %}
   <a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }} <span aria-hidden="true">↗</span></a>
   {%- endif %}
+  {%- if site.author.note %}
+  <a href="https://note.com/{{ site.author.note }}" target="_blank" rel="noopener noreferrer">note <span aria-hidden="true">↗</span></a>
+  {%- endif %}
   <a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }} <span aria-hidden="true">↗</span></a>
 </nav>
 {%- if site.affiliate.amazonTag or site.affiliate.rakutenId %}

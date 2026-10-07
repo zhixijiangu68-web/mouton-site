@@ -28,6 +28,7 @@ function phraseBreaks(inner) {
 const sameAs = site => [
   site.author.x && `https://x.com/${site.author.x}`,
   site.author.instagram && `https://www.instagram.com/${site.author.instagram}/`,
+  site.author.note && `https://note.com/${site.author.note}`,
 ].filter(Boolean);
 
 export default function (eleventyConfig) {
