@@ -179,5 +179,6 @@ document.addEventListener('click',e=>{
  const sync=()=>bar.classList.toggle('is-on',past&&!seen.size);
  const io=new IntersectionObserver(es=>{es.forEach(e=>e.isIntersecting?seen.add(e.target):seen.delete(e.target));sync();});
  [target,...cards].forEach(el=>io.observe(el));
- addEventListener('scroll',()=>{past=scrollY>innerHeight*.9;sync();},{passive:true});
+ // Show only between the intro and the products; hide again once the reader has passed them.
+ addEventListener('scroll',()=>{const top=target.getBoundingClientRect().top;past=scrollY>innerHeight*.9&&top>0;sync();},{passive:true});
 })();

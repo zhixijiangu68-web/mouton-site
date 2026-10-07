@@ -12,17 +12,34 @@ description: "買う前に、何を見ればいいのか。食べ物、身体の
   <h1 class="doc-title">選び方</h1>
   <p>買う前に、何を見ればいいのか。記事で調べた研究や公的な情報をもとに、選ぶときの目安をまとめています。特定の銘柄をすすめるより、自分で選べるようになることを大事にしています。</p>
   {%- set list = collections.articles | guideCards %}
-  <p class="topic-count">{{ list.length }}本の記事</p>
-  <div class="topic-list">
-    {%- for a in list %}
-    <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
-      <span class="topic-date">{{ a.data.guide.tag }}</span>
-      <span class="topic-title">{{ a.data.guide.title }}</span>
-      <span class="topic-excerpt">{{ a.data.guide.text }}</span>
-      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
-    </a>
-    {%- endfor %}
+  {%- set newest = [] %}{% for a in (list | sort(true, false, 'data.guide.order')) | head(2) %}{% set newest = (newest.push(a.page.fileSlug), newest) %}{% endfor %}
+  <div class="guide-policy">
+    <p class="guide-policy-head">この「選び方」の書き方</p>
+    <ul>
+      <li>研究や公的機関の情報をもとに書き、記事の最後に出典を載せています。</li>
+      <li>「効く」「治る」とは言い切りません。分かっていることと、分かっていないことを分けて書きます。</li>
+      <li>記事の商品リンクには広告（アフィリエイト）を含みます。リンクには「PR」と表示しています。</li>
+    </ul>
   </div>
+  <p class="topic-count">{{ list.length }}本の記事</p>
+  <nav class="guide-jump" aria-label="ジャンル">
+    {%- for g in guideGroups %}<a href="#g-{{ g.key }}">{{ g.label }}</a>{% endfor %}
+  </nav>
+  {%- for g in guideGroups %}
+  <section class="guide-group" aria-labelledby="g-{{ g.key }}">
+    <h2 class="guide-group-title" id="g-{{ g.key }}">{{ g.label }}</h2>
+    <div class="topic-list">
+      {%- for a in list %}{% if a.data.guide.tag in g.tags %}
+      <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+        <span class="topic-date">{{ a.data.guide.tag }}{% if a.page.fileSlug in newest %} <em class="guide-new">NEW</em>{% endif %}</span>
+        <span class="topic-title">{{ a.data.guide.title }}</span>
+        <span class="topic-excerpt">{{ a.data.guide.text }}</span>
+        <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+      </a>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endfor %}
   <nav class="topic-others" aria-label="ほかのテーマ">
     {%- for o in topics %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endfor %}
     <a href="index.html#journal">すべての記事</a>
