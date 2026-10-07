@@ -172,7 +172,7 @@ document.addEventListener('click',e=>{
  const target=document.getElementById('section-mine')||cards[0];
  const bar=document.createElement('a');
  bar.className='jump-products';bar.href='#'+(target.id||(target.id='products'));
- bar.innerHTML='この記事で紹介している商品を見る <span aria-hidden="true">↓</span>';
+ bar.innerHTML=(document.documentElement.lang==='en'?'See the products in this article':'この記事で紹介している商品を見る')+' <span aria-hidden="true">↓</span>';
  bar.addEventListener('click',()=>{if(typeof window.gtag==='function')window.gtag('event','jump_to_products',{article:location.pathname});});
  document.body.appendChild(bar);
  const seen=new Set();let past=false;

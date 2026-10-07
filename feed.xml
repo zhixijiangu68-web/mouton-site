@@ -7,6 +7,13 @@
   <description>ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。</description>
   <language>ja</language>
   <item>
+    <title>毎日同じことの繰り返しでも、幸せでいられるのか。カミュの『シーシュポスの神話』</title>
+    <link>https://moutonarchive.com/camus-sisyphus.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/camus-sisyphus.html</guid>
+    <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
+    <description>起きて、働いて、眠る。その繰り返しに意味はあるのか。岩を運び続ける罰を受けたシーシュポスを「幸せだと想像しなければならない」と書いたカミュの考えから、繰り返しの毎日を考える。</description>
+  </item>
+  <item>
     <title>耳栓とアイマスクの選び方。音と光を減らして眠るために</title>
     <link>https://moutonarchive.com/earplug-eyemask-guide.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/earplug-eyemask-guide.html</guid>
@@ -19,6 +26,20 @@
     <guid isPermaLink="true">https://moutonarchive.com/first-impression-sleep.html</guid>
     <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
     <description>人は顔を0.1秒見ただけで、魅力や信頼できそうかを判断していた。そして、寝不足の顔は、他人から魅力的でなく、疲れて見えていた。第一印象と睡眠の研究を、実験の中身まで確かめる。</description>
+  </item>
+  <item>
+    <title>人間は、自由の刑に処されている。サルトルの実存主義</title>
+    <link>https://moutonarchive.com/sartre.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/sartre.html</guid>
+    <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
+    <description>自由は、うれしいものなのか、重いものなのか。「実存は本質に先立つ」「人間は自由の刑に処されている」と語った、サルトルの1945年の講演から、自分で選ぶことの重さを考える。</description>
+  </item>
+  <item>
+    <title>変えられないことで、悩みすぎていないか。ストア派の整理のしかた</title>
+    <link>https://moutonarchive.com/stoicism.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/stoicism.html</guid>
+    <pubDate>Wed, 07 Oct 2026 00:00:00 +0000</pubDate>
+    <description>悩みの多くは、自分では変えられないことに向いているのかもしれない。エピクテトス、マルクス・アウレリウス、セネカの言葉と、それを受け継いだ現代の心理療法から、ストア派の考え方を整理する。</description>
   </item>
   <item>
     <title>ブルーライトカットの眼鏡は、目の疲れに効くのか</title>
@@ -124,27 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/coffee-guide.html</guid>
     <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
     <description>同じコーヒーでも、淹れ方でコレステロールへの影響が変わる。ペーパーフィルターの役割、デカフェのカフェイン量、甘い飲料の見分け方から、体のことを考えたコーヒーの選び方と淹れ方を整理する。</description>
-  </item>
-  <item>
-    <title>コーヒーは、本当に体に悪いのか</title>
-    <link>https://moutonarchive.com/coffee.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/coffee.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>「体に悪い」と「体にいい」、どちらもよく聞くコーヒー。メタ解析をまとめた研究と公的機関のカフェインの目安、睡眠の実験から、1日何杯まで・何時までなら言えるのかを整理する。</description>
-  </item>
-  <item>
-    <title>ダークチョコの選び方。カカオ分の数字だけで選ばない</title>
-    <link>https://moutonarchive.com/dark-chocolate-guide.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/dark-chocolate-guide.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>カカオ分が高いほど良いのか。表示のルール、カカオの加工とフラバノール、重金属の検査の研究から、ダークチョコとココアを店で選ぶときに、パッケージのどこを見ればいいかを整理する。</description>
-  </item>
-  <item>
-    <title>オリーブオイルの選び方。ラベルのどこを見ればいいのか</title>
-    <link>https://moutonarchive.com/olive-oil-guide.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/olive-oil-guide.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>「エキストラバージン」と書いてあれば安心なのか。国際規格と日本のJAS規格の違い、光による劣化の研究から、店頭でラベルのどこを見て選べばいいかを5つに整理する。</description>
   </item>
 </channel>
 </rss>

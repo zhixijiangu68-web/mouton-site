@@ -78,6 +78,18 @@ styles: |
 見出し（h1〜h3）と記事一覧のタイトルは、生成するときに [BudouX](https://github.com/google/budoux) で文節に区切られ、単語の途中で改行しないようになります。
 Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", "book-buy" %}` と書くと、アフィリエイトの設定に合わせてタグと「PR」表示が自動で付きます。
 
+## 英語版
+
+`src/en/` が英語版で、`en/` に書き出されます（例: `en/nietzsche.html`）。
+
+- 記事は `src/en/articles/<日本語の記事と同じファイル名>.html`。front matter の書き方は日本語の記事と同じで、`back` は省略できます（英語のトップに戻る）
+- 末尾の include は `{% include "partials/article-end-en.njk" %}` と `{% include "partials/reading-next-en.njk" %}`
+- 読了時間は英単語の数から計算します（1分230語）
+- 日本語と英語の両方がある記事には、`hreflang` と、ナビの言語の切り替えが自動で付きます
+- 英語版ではアフィリエイトのボタン・PR 表示を出しません（日本のお店のため）
+- 英語の記事から、まだ訳していない記事へのリンクは、自動で日本語版（`../<ファイル名>.html`）に向きます
+- 英語のトップ（`src/en/index.njk`）は、テーマごとに記事を自動で並べます
+
 ## 収益化の設定
 
 `src/_data/site.js` に値を入れて `npm run build` すると、全ページにまとめて反映されます。
