@@ -4,8 +4,11 @@ permalink: 404.html
 title: "ページが見つかりません — ムートン"
 description: "お探しのページは見つかりませんでした。"
 noindex: true
+# 404 is served for any missing path (e.g. /en/x.html), so resolve links from the site root.
+baseHref: /
 eyebrow: 404 / Not found
 heading: このページは見つかりませんでした。
 ---
 <p>移動したか、URLが少し違っているのかもしれません。記事の一覧から探してみてください。</p>
 <div class="contact-list"><a class="btn btn-dark" href="index.html#journal">記事一覧へ <span aria-hidden="true">→</span></a><a class="btn btn-outline" href="index.html">トップへ戻る</a></div>
+<p lang="en">This page could not be found. It may have moved, or the URL may be slightly different. <a href="en/index.html" hreflang="en">Go to the English edition →</a></p>

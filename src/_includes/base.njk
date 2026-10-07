@@ -4,6 +4,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+{%- if baseHref %}
+<base href="{{ baseHref }}">
+{%- endif %}
 <script>document.documentElement.classList.add('js')</script>
 <title>{{ title }}</title>
 {%- set pageUrl = page.url | absoluteUrl(site.url) %}
