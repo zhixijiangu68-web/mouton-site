@@ -1270,6 +1270,35 @@ SNSを1日30分に制限したら、3週間でどうなった？
 「耳栓とアイマスクの選び方」の記事はこちら → https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide&utm_content=reply
 ```
 
+### SS 日焼け止めの選び方（sunscreen-guide）
+
+10/7 に加わった記事。順番表にはまだ入れていない（入れる枠はオーナーと X担当で決める）。
+
+#### SS-1 ○×：SPF50を塗ればSPF50？
+```
+○×クイズ。
+
+SPF50の日焼け止めを塗れば、SPF50の効果がある。
+
+答えは×。SPFは肌1cm²に2mg塗って測った数字。海辺で人に自分で塗ってもらった研究では、実際の量は平均で約0.5mg、4分の1ほどだった。
+```
+リプライ（自分の投稿に返信）：
+```
+「日焼け止めの選び方」の記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
+
+#### SS-2 意外な数字：毎日塗ると老化の進みが24%少なかった（新記事の告知）
+型：**本文リンク**
+```
+日焼け止めを毎日塗った人は、4年半で肌の老化の進みが24%少なかった。
+
+903人を「毎日塗る」と「好きなときに塗る」に分けた試験の結果。大事なのは強さより、毎日ちゃんとした量を塗ること。
+
+「日焼け止めの選び方」を新しく書いた。
+
+https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=body
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
