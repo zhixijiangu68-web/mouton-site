@@ -1530,6 +1530,291 @@ SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線�
 「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
 ```
 
+## オーナーの言葉から（2026-10-08〜）
+
+オーナーが送ってくれた考えを、哲学投稿のフォーム（5つの条件）に合わせて書き直したもの。実在の人の名前や私生活には触れない。メンターの言葉はメンターの言葉として紹介する。型は**リプリンク**。**順番表にはまだ入れていない**。
+
+### OW-1 結婚（freedom）
+型：**リプリンク**
+```
+結婚しても、翼は生えない。
+
+変わるのは、書類と呼び名だけだ。
+自分という人間は、1ミリも変わらない。
+
+だから結婚に、救いを求めないほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-2 結婚（freedom）
+型：**リプリンク**
+```
+「結婚」は、ただの言葉だ。
+
+その言葉の中に、幸せが入っているわけじゃない。
+入っているのは、二人が毎日選んだことだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-3 結婚（freedom）
+型：**リプリンク**
+```
+100回結婚しても、100回離婚しても、
+自分は自分のままだ。
+
+形を変えても、中身は変わらない。
+変えられるのは、どう生きるかだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-4 結婚（freedom）
+型：**リプリンク**
+```
+結婚は、ゴールじゃない。
+
+一人でも生きられる二人が、
+それでも一緒にいると、毎日決め直すことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-5 結婚（freedom）
+型：**リプリンク**
+```
+離婚は、失敗じゃない。
+
+続けないと決めた。それも、一つの選択だ。
+選んだ人だけが、次へ進める。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-6 人間関係（stoicism）
+型：**リプリンク**
+```
+謝罪を待っているあいだ、人生は止まっている。
+
+相手が謝るかどうかは、相手が決める。
+自分が次へ進むかどうかは、自分が決める。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-7 人間関係（stoicism）
+型：**リプリンク**
+```
+感謝を求めた瞬間、親切は取引になる。
+
+見返りを待たずにやったことだけが、
+自分の中に、ちゃんと残る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-8 人間関係（stoicism）
+型：**リプリンク**
+```
+「〇〇してくれない」と言うたびに、
+自分の機嫌の鍵を、他人に渡している。
+
+鍵は、自分で持っていたほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-9 人間関係（stoicism）
+型：**リプリンク**
+```
+人の言葉に振り回されるのは、
+その言葉に、自分で意味をつけているからだ。
+
+出来事は選べない。
+どう受け取るかは、選べる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-10 人間関係（boundaries）
+型：**リプリンク**
+```
+ひどいことを言う人を、変える必要はない。
+
+離れればいい。
+
+相手の心は相手のもの。
+自分の距離は、自分で決められる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### OW-11 人間関係（boundaries）
+型：**リプリンク**
+```
+プラスの関係だけを選ぶなら、
+自分も、誰かにとってのプラスでいる必要がある。
+
+奪う人のまわりには、奪う人が集まる。
+与える人のまわりに、与える人が残る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### OW-12 人間関係（disliked-priority）
+型：**リプリンク**
+```
+幸せかどうかを、他人に決めさせない。
+
+自分で決められるのは、自分の反応だけだ。
+でも、そこから先の人生は、全部変わっていく。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/disliked-priority.html?utm_source=x&utm_medium=social&utm_campaign=disliked-priority&utm_content=reply
+```
+
+### OW-13 メンターの言葉（system-goal）
+型：**リプリンク**
+```
+「楽な道を行くほど、人生は厳しくなる。
+厳しい道を行くほど、人生は楽になる」
+
+メンターの言葉で、ずっと大切にしている。
+
+全部に当てはまるわけじゃない。
+でも、迷ったときの方向は、だいたいこれで決まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### OW-14 メンターの言葉（system-goal）
+型：**リプリンク**
+```
+今日の楽は、明日の自分への借金だ。
+
+今日のきつさは、明日の自分への貯金だ。
+
+どちらを積むかは、毎日の小さな選択で決まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### OW-15 メンターの言葉（goggins）
+型：**リプリンク**
+```
+厳しい道を選ぶのは、我慢が好きだからじゃない。
+
+あとで楽になる道を、知っているからだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### OW-16 成長（self-image）
+型：**リプリンク**
+```
+会いたい人には、追いかけても会えない。
+
+自分が、会う理由のある人間になったとき、
+ある日、向こうから道がつながる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-17 成長（self-image）
+型：**リプリンク**
+```
+「突然、会えた」は、突然じゃない。
+
+見えないところで積み上げた時間が、
+ある日、一本の線になっただけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-18 成長（self-image）
+型：**リプリンク**
+```
+人脈を広げようとするより、
+自分の中身を広げたほうが早い。
+
+人は、中身のある人のところに集まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-19 期待（stoicism）
+型：**リプリンク**
+```
+機嫌が悪くなるのは、相手のせいじゃない。
+
+相手に期待した、自分の分だけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-20 期待（stoicism）
+型：**リプリンク**
+```
+期待しないのは、冷たさじゃない。
+
+相手を、思いどおりにしようとしないことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-21 期待（stoicism）
+型：**リプリンク**
+```
+周りに期待しないと、機嫌がよくなる。
+
+してもらったことが、
+全部、うれしい誤算になるから。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
 ## 哲学投稿のフォームと、厳選30本の順番（2026-10-08）
 
 PH-1〜120 を、次の5つの条件で見直した。5つ全部を満たしたものだけを残し、上から順に1日1本（昼）出す。残りの90本は予備（フォームに合わせて直してから使う）。
