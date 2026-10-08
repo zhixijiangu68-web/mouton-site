@@ -1530,6 +1530,50 @@ SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線�
 「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
 ```
 
+## ナルシシズムとメンタルタフネス（2026-10-08）
+
+2024年のメタ分析（Liang ほか、Frontiers in Psychology）。ダークトライアドのうちナルシシズムだけがメンタルタフネスと中くらいの強さで相関（r = 0.33）。記事 narcissism-art.html の「逆境に強い、という明るい側面」。相関であり、ナルシシズムが心を強くするとまでは言えない点は、投稿でも言い切らない。型は**リプリンク**。**順番表にはまだ入れていない**。
+
+### NM-1
+型：**リプリンク**
+```
+ダークな性格の中で、
+ナルシシズムだけは「心の強さ」と結びついていた。
+
+1万2千人あまりの研究をまとめた分析で、
+人を操る傾向や、共感の乏しさは、ほとんど関係がなかった。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### NM-2
+型：**リプリンク**
+```
+「自分ならできる」という、少し大きすぎる自己像。
+
+それは、うまくいかない日に
+折れないための支えにもなる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### NM-3
+型：**リプリンク**
+```
+自分を信じすぎる人は、逆境に強い。
+
+でも、その自信を他人を鏡にして保とうとした瞬間、
+強さは、まわりを燃やす炎に変わる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
 ## サルトル100本（2026-10-08）
 
 すべて「人間は、自由の刑に処されている。サルトルの実存主義」（sartre.html）の内容から書いた（10/8 に記事へ『存在と無』の自己欺瞞・まなざし、『出口なし』、『嘔吐』、ノーベル賞の辞退を足した）。哲学投稿のフォームに沿って書いている。
