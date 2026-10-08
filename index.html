@@ -36,6 +36,12 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
 </head>
 <body class="site">
+<script>try{if(!sessionStorage.getItem('mouton-intro-v1')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash){document.documentElement.classList.add('intro');sessionStorage.setItem('mouton-intro-v1','1');}}catch{}</script>
+<div class="intro-veil" aria-hidden="true">
+  <p class="intro-word"><span style="--i:0">M</span><span style="--i:1">O</span><span style="--i:2">U</span><span style="--i:3">T</span><span style="--i:4">O</span><span style="--i:5">N</span></p>
+  <p class="intro-sub">A personal archive — since 2026</p>
+  <span class="intro-bar"></span>
+</div>
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
@@ -60,7 +66,9 @@
     <div class="scene-pin">
       <div class="scene-media ph-hero is-placeholder"></div>
       <div class="scene-shade"></div>
-      <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
+      <div class="hero-light" aria-hidden="true"></div>
+      <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
+      <div class="scene-copy hero-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
         <p class="lede reveal-2">考えた<wbr>こと。<wbr>作った<wbr>もの。<wbr>変わっていく<wbr>自分。<br>その<wbr>途中を、<wbr>静かに<wbr>残していく。</p>
@@ -68,6 +76,39 @@
         <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
       <a class="scroll-cue" href="#think">Scroll</a>
+      <div class="hero-ticker" aria-label="最近の記事">
+        <span class="hero-ticker-label">Now reading</span>
+        <div class="hero-ticker-track">
+          <ul class="hero-ticker-list">
+            <li><a href="camus-sisyphus.html">毎日同じことの繰り返しでも、幸せでいられるのか</a></li>
+            <li><a href="earplug-eyemask-guide.html">耳栓とアイマスクの選び方</a></li>
+            <li><a href="first-impression-sleep.html">第一印象は0.1秒で決まる。そして、寝不足は顔に出る</a></li>
+            <li><a href="sartre.html">人間は、自由の刑に処されている</a></li>
+            <li><a href="stoicism.html">変えられないことで、悩みすぎていないか</a></li>
+            <li><a href="blue-light.html">ブルーライトカットの眼鏡は、目の疲れに効くのか</a></li>
+            <li><a href="books-career.html">転職を考えはじめたときに読む本</a></li>
+            <li><a href="books-habits.html">習慣を変えたいときに読む本</a></li>
+            <li><a href="books-philosophy.html">生き方を考えたいときに読む本</a></li>
+            <li><a href="chronotype.html">朝型と夜型は、変えられるのか</a></li>
+            <li><a href="comparison.html">人と比べるのを、やめることはできるのか</a></li>
+            <li><a href="denim-leather.html">デニムとレザーは、なぜ古くなるほど良くなるのか</a></li>
+          </ul>
+          <ul class="hero-ticker-list" aria-hidden="true">
+            <li><a href="camus-sisyphus.html" tabindex="-1">毎日同じことの繰り返しでも、幸せでいられるのか</a></li>
+            <li><a href="earplug-eyemask-guide.html" tabindex="-1">耳栓とアイマスクの選び方</a></li>
+            <li><a href="first-impression-sleep.html" tabindex="-1">第一印象は0.1秒で決まる。そして、寝不足は顔に出る</a></li>
+            <li><a href="sartre.html" tabindex="-1">人間は、自由の刑に処されている</a></li>
+            <li><a href="stoicism.html" tabindex="-1">変えられないことで、悩みすぎていないか</a></li>
+            <li><a href="blue-light.html" tabindex="-1">ブルーライトカットの眼鏡は、目の疲れに効くのか</a></li>
+            <li><a href="books-career.html" tabindex="-1">転職を考えはじめたときに読む本</a></li>
+            <li><a href="books-habits.html" tabindex="-1">習慣を変えたいときに読む本</a></li>
+            <li><a href="books-philosophy.html" tabindex="-1">生き方を考えたいときに読む本</a></li>
+            <li><a href="chronotype.html" tabindex="-1">朝型と夜型は、変えられるのか</a></li>
+            <li><a href="comparison.html" tabindex="-1">人と比べるのを、やめることはできるのか</a></li>
+            <li><a href="denim-leather.html" tabindex="-1">デニムとレザーは、なぜ古くなるほど良くなるのか</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -544,6 +585,7 @@
 </div>
 </footer>
 
+<script src="home.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
