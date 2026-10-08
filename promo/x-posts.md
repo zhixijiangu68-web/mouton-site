@@ -1530,6 +1530,307 @@ SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線�
 「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
 ```
 
+## 哲学（思想強め）20本（2026-10-08）
+
+日本語アカウント向け。1行目で常識をひっくり返し、ムートンの考えを言い切る型。どれもサイトの哲学・生き方の記事の主張と、記事で確かめた事実だけで書いている（他人や特定の人を批判しない、あおらない）。型は**リプリンク**（本文にリンクなし、リプライに記事のリンク）。**順番表にはまだ入れていない**。
+
+### PH-1 哲学（freedom）｜愛されたい、は他人に基準を預けること。
+型：**リプリンク**
+```
+「愛されたい」は、自分の人生の基準を他人に預けることだ。
+
+愛されているかどうかは、相手が決める。
+自由は、基準を自分の中に置ける。
+
+僕は、愛されることより、自分で決められることを選ぶ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-2 哲学（nietzsche）｜生きる意味は用意されていない
+型：**リプリンク**
+```
+生きる意味は、どこにも用意されていない。
+
+それで絶望する人と、だから自由だと思う人がいる。
+
+同じ事実の、どちら側に立つか。
+選べるのは、そこだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
+### PH-3 哲学（camus-sisyphus）｜繰り返しは罰じゃない
+型：**リプリンク**
+```
+毎日同じことの繰り返しが、つらい。
+
+カミュは、永遠に岩を山頂へ運ぶ罰を受けた男を「幸せだと想像しなければならない」と書いた。
+
+岩が頂上に残ることが目的なんじゃない。
+押し上げているその時間が、人生そのものだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/camus-sisyphus.html?utm_source=x&utm_medium=social&utm_campaign=camus-sisyphus&utm_content=reply
+```
+
+### PH-4 哲学（sartre）｜「仕方なかった」は半分うそ
+型：**リプリンク**
+```
+「仕方なかった」は、半分うそだ。
+
+選ばなかったことも、ひとつの選択だから。
+
+サルトルは、人間は自由の刑に処されていると言った。
+逃げ場がないのは、苦しい。でも、自分の人生の作者が自分だということでもある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PH-5 哲学（stoicism）｜決められないものに心を使いすぎ
+型：**リプリンク**
+```
+他人の評価は、自分では決められない。
+
+なのに僕らは、決められないものに毎日いちばん心を使っている。
+
+ストア派は2000年前から言っている。
+変えられるものと、変えられないものを分けろ、と。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-6 哲学（disliked-priority）｜嫌われてもいい、ではない
+型：**リプリンク**
+```
+「嫌われてもいい」と思える人なんて、ほとんどいない。
+
+目的がある人は、他人の目が消えたわけじゃない。
+優先順位が下がっただけだ。
+
+嫌われるのが怖いまま、それでもやる。それで十分だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/disliked-priority.html?utm_source=x&utm_medium=social&utm_campaign=disliked-priority&utm_content=reply
+```
+
+### PH-7 哲学（comparison）｜比べるのをやめろ、は無理
+型：**リプリンク**
+```
+「人と比べるのをやめろ」は、無理な注文だ。
+
+はっきりした基準がないとき、人は他人と比べて自分の位置を確かめる。そういう性質だから。
+
+やめようとするより、自分の物差しを1本持つほうが早い。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/comparison.html?utm_source=x&utm_medium=social&utm_campaign=comparison&utm_content=reply
+```
+
+### PH-8 哲学（identity）｜宣言では人は変わらない
+型：**リプリンク**
+```
+「今日から変わる」と宣言しても、人は変わらない。
+
+人が変わるのは、10ページ読んだ、20分歩いた。そういう小さな証拠が積み上がったときだ。
+
+なりたい自分は、宣言じゃなく、証拠でつくる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/identity.html?utm_source=x&utm_medium=social&utm_campaign=identity&utm_content=reply
+```
+
+### PH-9 哲学（narcissism-art）｜自分を作品にしていい。他人を鏡にするな
+型：**リプリンク**
+```
+自分を作品にするのはいい。
+外見も、語り口も、意図して彫ればいい。
+
+でも、他人を鏡にするな。
+
+観客を燃やして輝く彫刻は、美しい。でも、残らない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### PH-10 哲学（boundaries）｜境界線は冷たさじゃない
+型：**リプリンク**
+```
+誰にでも好かれようとする人は、少しずつ安っぽくなる。
+
+断れない優しさは、いつか消耗に変わる。
+
+境界線を引くのは、冷たさじゃない。
+自分を守れない人は、誰かを長く大切にすることもできない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### PH-11 哲学（fear）｜怖さの正体は不快感
+型：**リプリンク**
+```
+怖いのは、危険だからとは限らない。
+
+たいていは、ただの「不快感」だ。
+
+人前で話す。断る。新しい場所へ行く。
+命の危険はないのに、体はちゃんと緊張する。
+
+不快感と危険を見分けるだけで、できることは一気に増える。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear.html?utm_source=x&utm_medium=social&utm_campaign=fear&utm_content=reply
+```
+
+### PH-12 哲学（fear-of-change）｜やらなかった後悔のほうが長く残る
+型：**リプリンク**
+```
+短い目で見ると、人は「やったこと」を後悔する。
+
+でも長い目で振り返ると、「やらなかったこと」の後悔のほうが多く、長く残っていた。そういう研究がある。
+
+安全な選択にも、コストはある。
+遅れて届くだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear-of-change.html?utm_source=x&utm_medium=social&utm_campaign=fear-of-change&utm_content=reply
+```
+
+### PH-13 哲学（doing-nothing）｜何もしない時間は怠けじゃない
+型：**リプリンク**
+```
+何もしない時間を、怠けだと思っていた。
+
+話を覚えたあと、10分ぼんやり休んだ人のほうが、7日後もよく覚えていたという実験がある。
+
+休むことに、罪悪感はいらない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/doing-nothing.html?utm_source=x&utm_medium=social&utm_campaign=doing-nothing&utm_content=reply
+```
+
+### PH-14 哲学（system-goal）｜動けないのは意志のせいじゃない
+型：**リプリンク**
+```
+目標を立てても動けないのは、意志が弱いからじゃない。
+
+ゴールだけあって、システムがないからだ。
+
+決めるべきは「何を達成するか」より「毎日、何をするか」。
+結果は選べない。今日の行動は選べる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### PH-15 哲学（self-image）｜「どうせ続かない」が試す回数を減らす
+型：**リプリンク**
+```
+「どうせ自分は続かない」。
+
+この思い込みが怖いのは、失敗を生むからじゃない。
+試す回数を減らすからだ。
+
+1年、3年、10年。積み重なるほど、その差は大きくなる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### PH-16 哲学（job-change-happiness）｜場所を変えても自分は変わらない
+型：**リプリンク**
+```
+転職すれば幸せになれる、は半分だけ正しい。
+
+仕事の満足度は、転職した直後に上がり、その後の1年で下がっていく。研究者はこれを「ハネムーン・ハングオーバー」と呼んだ。
+
+場所を変えるだけでは、自分は変わらない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-change-happiness.html?utm_source=x&utm_medium=social&utm_campaign=job-change-happiness&utm_content=reply
+```
+
+### PH-17 哲学（goggins）｜好きだからやる、は続かない
+型：**リプリンク**
+```
+「走るのは嫌いだ」と言いながら、ゴギンズはウルトラマラソンを走った。
+
+好きだからやる。それは、気分が乗らない日に折れる。
+
+決めたからやる。それは、折れない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### PH-18 哲学（stoicism）｜心を乱すのは出来事ではなく判断
+型：**リプリンク**
+```
+人の心を乱すのは、出来事そのものじゃない。
+
+その出来事についての、自分の判断だ。
+
+2000年前、エピクテトスはそう書いた。
+出来事は変えられなくても、判断は自分次第だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-19 哲学（freedom）｜自由は持ち物じゃない
+型：**リプリンク**
+```
+お金を持っていても、他人の評価に縛られている人は、自由じゃない。
+
+お金がなくても、自分の時間を自分で決められる人はいる。
+
+自由は、何を持っているかじゃない。
+人生の基準を、どこに置いているかだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-20 哲学（nietzsche）｜「神は死んだ」の本当の意味
+型：**リプリンク**
+```
+「神は死んだ」は、「神はいない」という意味じゃない。
+
+生きる理由を、自分の外から借りられなくなった。そういう宣言だ。
+
+だから、自分でつくるしかない。
+重いけど、それが僕らの自由だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
