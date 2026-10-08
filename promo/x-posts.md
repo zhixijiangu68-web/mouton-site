@@ -1530,6 +1530,1322 @@ SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線�
 「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
 ```
 
+## サルトル100本（2026-10-08）
+
+すべて「人間は、自由の刑に処されている。サルトルの実存主義」（sartre.html）の内容から書いた（10/8 に記事へ『存在と無』の自己欺瞞・まなざし、『出口なし』、『嘔吐』、ノーベル賞の辞退を足した）。哲学投稿のフォームに沿って書いている。
+
+- **1つの記事に100本**なので、「同じ記事は3日あける」ルールの例外として、**連載（シリーズ）として毎日1本**出す案。リンクは5本に1本（PS-1, 6, 11, …）だけリプライに置き、残りはリンクなし（同じリンクが毎日続くと宣伝に見えるため）
+- 流れ：PS-1〜20 実存と自由の刑／21〜30 自己欺瞞／31〜38 まなざし／39〜43 『出口なし』／44〜48 『嘔吐』／49〜53 ノーベル賞／54〜100 選ぶこと・責任・自分をつくること
+- **順番表にはまだ入れていない**（昼の哲学の枠と入れ替えるか、別の枠にするかはオーナーが決める）
+
+### PS-1
+型：**リプリンク**
+```
+人間には、最初から決められた目的がない。
+
+それは不安だ。
+でも、何にでもなれるということでもある。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-2
+型：リンクなし
+```
+ペーパーナイフは、生まれる前から「紙を切る」ために決まっている。
+
+人間は違う。
+何のために生きるかは、生まれたあとで、自分で決める。
+```
+
+### PS-3
+型：リンクなし
+```
+「自分はこういう人間だ」は、生まれつきじゃない。
+
+選んできたことの、積み重ねだ。
+だから、今日から書き換えられる。
+```
+
+### PS-4
+型：リンクなし
+```
+実存は、本質に先立つ。
+
+先に生きて、
+あとから、自分が何者かが決まっていく。
+```
+
+### PS-5
+型：リンクなし
+```
+「あなたは何者ですか」と聞かれて、
+答えに詰まるのは当たり前だ。
+
+まだ、つくっている途中なんだから。
+```
+
+### PS-6
+型：**リプリンク**
+```
+自由は、ほしいものだと思っていた。
+
+サルトルは、それを「刑」と呼んだ。
+選ばずにいることが、できないからだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-7
+型：リンクなし
+```
+何もしないで迷っている時間も、
+「何もしない」という選択をしている。
+
+人は、選ばずにはいられない。
+```
+
+### PS-8
+型：リンクなし
+```
+誰かが正解を決めてくれたら、楽だろう。
+
+でも、そんな人はどこにもいない。
+だから、自分で決めた答えを、正解にしていくしかない。
+```
+
+### PS-9
+型：リンクなし
+```
+自由とは、好きにしていいということじゃない。
+
+選んだ結果を、
+誰のせいにもできないということだ。
+```
+
+### PS-10
+型：リンクなし
+```
+言い訳に使える「本質」がないから、
+人は、自分の選択から逃げられない。
+
+それが「自由の刑」の意味だ。
+```
+
+### PS-11
+型：**リプリンク**
+```
+「君は自由だ。選べ。つまり、つくり出せ」
+
+迷って相談に来た教え子に、サルトルはそう答えた。
+
+突き放しているようで、いちばん誠実な答えだと思う。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-12
+型：リンクなし
+```
+どんな道徳の教えも、
+あなたの人生の二択に、前もって答えてはくれない。
+
+最後に決めるのは、いつも自分だ。
+```
+
+### PS-13
+型：リンクなし
+```
+誰に相談するかを選んだ時点で、
+人は、どんな答えがほしいかを、半分選んでいる。
+```
+
+### PS-14
+型：リンクなし
+```
+相談しても、答えはもらえない。
+
+もらえるのは、
+自分がもう選んでいたことに、気づくきっかけだけだ。
+```
+
+### PS-15
+型：リンクなし
+```
+迷っているときほど、
+「誰か決めて」と思う。
+
+でも、決めてもらった人生の失敗は、
+自分で選んだ失敗より、ずっと重い。
+```
+
+### PS-16
+型：**リプリンク**
+```
+今日の選択が、明日の「自分」になる。
+
+大きな決断より、
+毎日の小さな選択のほうが、人をつくっている。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-17
+型：リンクなし
+```
+選んだものが、自分になる。
+
+だから、何を選ぶかは、
+どんな人間になるかを選ぶことだ。
+```
+
+### PS-18
+型：リンクなし
+```
+人は、投げ出されるように生まれてくる。
+
+設計図もないまま。
+だから、自分で描くしかない。
+```
+
+### PS-19
+型：リンクなし
+```
+目的のない人生は、むなしい。
+
+でも、目的が最初から決められた人生は、
+もっと窮屈だと思う。
+```
+
+### PS-20
+型：リンクなし
+```
+「自分には向いていない」と決める前に、
+一度、疑ってみたい。
+
+それは本当に生まれつきか。
+選んでこなかっただけか。
+```
+
+### PS-21
+型：**リプリンク**
+```
+カフェのギャルソンは、
+少しきびきびしすぎていた。
+
+サルトルはそこに、「ギャルソンという役」を
+演じ切ろうとする人の姿を見た。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-22
+型：リンクなし
+```
+「自分はこういう性格だから」。
+
+そう言うとき、人は少しだけ、
+自分を物のように扱っている。
+```
+
+### PS-23
+型：リンクなし
+```
+自分に嘘をつくことを、
+サルトルは「自己欺瞞」と呼んだ。
+
+いちばん見抜きにくい嘘は、
+自分についている嘘だ。
+```
+
+### PS-24
+型：リンクなし
+```
+「この立場だから、仕方ない」。
+
+肩書きや役割は、着ている服だ。
+脱げないと思い込んだとき、自由は消える。
+```
+
+### PS-25
+型：リンクなし
+```
+役割を演じるのは、悪いことじゃない。
+
+ただ、役割が自分のすべてだと思った瞬間、
+ほかの生き方が見えなくなる。
+```
+
+### PS-26
+型：**リプリンク**
+```
+「本当の自分は、こんなはずじゃない」。
+
+でも、本当の自分は、どこかに隠れているものじゃない。
+今日の行動のほうだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-27
+型：リンクなし
+```
+会社員である前に、
+親である前に、
+肩書きである前に、
+
+人は、まだ何にでもなれる人間だ。
+```
+
+### PS-28
+型：リンクなし
+```
+「仕方なかった」と言いたくなるとき、
+本当は、選んだ自分を見たくないだけかもしれない。
+```
+
+### PS-29
+型：リンクなし
+```
+人は、自分の自由が怖くて、
+自分を「決まった物」にしたがる。
+
+楽だからだ。でも、それは生きているとは言えない。
+```
+
+### PS-30
+型：リンクなし
+```
+自己欺瞞は、嘘をつくことじゃない。
+
+自分が自由だということから、
+目をそらし続けることだ。
+```
+
+### PS-31
+型：**リプリンク**
+```
+鍵穴から中をのぞいている男。
+
+廊下で足音がして、誰かに見られたと気づいた瞬間、
+恥ずかしさに襲われる。
+
+サルトルが描いた、「まなざし」の場面だ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-32
+型：リンクなし
+```
+見られた瞬間、
+人は、他人の目の中で「物」になる。
+
+だから人の目が、こんなにも気になる。
+```
+
+### PS-33
+型：リンクなし
+```
+他人の目は、止められない。
+
+でも、他人の目に映った自分を、
+本当の自分だと思わなくていい。
+```
+
+### PS-34
+型：リンクなし
+```
+人の評価に振り回されるのは、
+他人のまなざしで、自分を決めようとしているからだ。
+```
+
+### PS-35
+型：リンクなし
+```
+恥ずかしさは、
+自分が他人の目に映ったと気づいたときに生まれる。
+
+裏を返せば、それだけ他人とつながっている証拠でもある。
+```
+
+### PS-36
+型：**リプリンク**
+```
+SNSは、まなざしの装置だ。
+
+見て、見られて、
+いつの間にか、見られる自分を生きてしまう。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-37
+型：リンクなし
+```
+「どう見られているか」ばかり気にすると、
+自分は、他人の作品になる。
+
+自分の人生の作者は、自分でいたい。
+```
+
+### PS-38
+型：リンクなし
+```
+見られることは、悪いことじゃない。
+
+見られることで、
+自分では気づけない自分を知ることもある。
+
+問題は、その目に全部を預けることだけだ。
+```
+
+### PS-39
+型：リンクなし
+```
+「地獄とは他人のことだ」。
+
+これは、「他人は嫌なもの」という意味じゃない。
+
+他人のまなざしと評価から、
+永遠に逃げられないこと。それが地獄だ。
+```
+
+### PS-40
+型：リンクなし
+```
+『出口なし』の地獄には、
+拷問の道具も、責める役人もいない。
+
+いるのは、互いだけだ。
+```
+
+### PS-41
+型：**リプリンク**
+```
+他人の目だけで自分を決めようとすると、
+どこにいても、そこは地獄になる。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-42
+型：リンクなし
+```
+地獄は、遠くにあるものじゃない。
+
+他人の評価から逃げられないと感じる、
+いつもの教室や職場にもある。
+```
+
+### PS-43
+型：リンクなし
+```
+『出口なし』の3人は、
+部屋の扉が開いても、出ていかなかった。
+
+出口がないのは、部屋じゃない。
+自分の中だ。
+```
+
+### PS-44
+型：リンクなし
+```
+他人がいなければ、楽になる。
+
+そう思うけど、
+他人がいなければ、自分が何者かも分からない。
+```
+
+### PS-45
+型：リンクなし
+```
+公園のマロニエの木の根を見つめていて、
+吐き気のような感覚に襲われる。
+
+サルトルの小説『嘔吐』の有名な場面だ。
+```
+
+### PS-46
+型：**リプリンク**
+```
+木の根は、何のためでもなく、ただそこにある。
+
+存在するものには、もともと理由がない。
+人間も、たぶん同じだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-47
+型：リンクなし
+```
+生きることに、理由はない。
+
+理由がないから、
+自分で理由をつくれる。
+```
+
+### PS-48
+型：リンクなし
+```
+意味がないと気づいたときの、
+あの吐き気のような感覚。
+
+それは、何でも自分で決めていいと
+気づいたときの、めまいでもある。
+```
+
+### PS-49
+型：リンクなし
+```
+世界は、こちらの問いに答えてくれない。
+
+答えを待つのをやめたとき、
+人は、ようやく自分で歩き出す。
+```
+
+### PS-50
+型：リンクなし
+```
+1964年、サルトルはノーベル文学賞を断った。
+
+作家は、自分が「制度」に変えられることを拒むべきだ。
+それが理由だった。
+```
+
+### PS-51
+型：**リプリンク**
+```
+どれだけ立派な肩書きでも、
+それで自分を決められたくない。
+
+ノーベル賞を断ったサルトルの理由は、そこにあった。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-52
+型：リンクなし
+```
+肩書きは、もらった瞬間から、
+自分を縛るものにもなる。
+
+何を受け取らないかも、生き方だ。
+```
+
+### PS-53
+型：リンクなし
+```
+賞も、肩書きも、評価も、
+ないよりあったほうがいい。
+
+でも、それが自分のすべてになったとき、
+人は「物」になる。
+```
+
+### PS-54
+型：リンクなし
+```
+断る勇気は、
+受け取る勇気より、ずっと珍しい。
+```
+
+### PS-55
+型：リンクなし
+```
+人は、まず存在する。
+
+そして、自分で自分をつくる。
+それ以外の何者でもない。
+```
+
+### PS-56
+型：**リプリンク**
+```
+才能がない、と嘆く前に。
+
+人は、もともと何者でもない。
+だから、才能も、つくっていくものかもしれない。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-57
+型：リンクなし
+```
+「どうせ自分なんて」は、
+自分を、決まった物にしてしまう言葉だ。
+
+人は、物じゃない。
+```
+
+### PS-58
+型：リンクなし
+```
+過去は変えられない。
+
+でも、過去に何の意味を持たせるかは、
+これからの選択で変えられる。
+```
+
+### PS-59
+型：リンクなし
+```
+生まれた場所も、家も、時代も、選べなかった。
+
+でも、そこから何をするかは、
+いつも自分で選べる。
+```
+
+### PS-60
+型：リンクなし
+```
+選べなかったことと、選べることを分ける。
+
+選べることのほうに、
+自分の時間を使いたい。
+```
+
+### PS-61
+型：**リプリンク**
+```
+「やりたいけど、できない」の多くは、
+「やりたいけど、やらないと選んでいる」だ。
+
+認めると、少し楽になる。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-62
+型：リンクなし
+```
+責任を負うのは、重い。
+
+でも、責任のない人生は、
+自分のものじゃない人生だ。
+```
+
+### PS-63
+型：リンクなし
+```
+自由に生きたいなら、
+自由の重さも、一緒に引き受けるしかない。
+```
+
+### PS-64
+型：リンクなし
+```
+誰のせいにもできない。
+
+それは苦しい。
+でも、自分の人生の手綱を、自分が握っているということだ。
+```
+
+### PS-65
+型：リンクなし
+```
+迷っているのは、自由だからだ。
+
+迷えない人生のほうが、
+ずっと不自由だと思う。
+```
+
+### PS-66
+型：**リプリンク**
+```
+正解のない問いに、
+正解を探し続けて、動けなくなる。
+
+正解は、探すものじゃない。
+選んだあとで、つくるものだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-67
+型：リンクなし
+```
+選んだ道が正しかったかは、
+選んだ瞬間には分からない。
+
+選んだあとの生き方で、決まっていく。
+```
+
+### PS-68
+型：リンクなし
+```
+後悔しない選択なんて、ない。
+
+あるのは、
+後悔しても引き受けられる選択だけだ。
+```
+
+### PS-69
+型：リンクなし
+```
+人生の決断に、保証書はつかない。
+
+保証がほしいと思うほど、
+人は選べなくなる。
+```
+
+### PS-70
+型：リンクなし
+```
+「みんながそうしているから」は、
+自分で選んでいないことの、言い換えだ。
+```
+
+### PS-71
+型：**リプリンク**
+```
+周りに合わせるのが悪いんじゃない。
+
+合わせると、自分で選んだならいい。
+流されたなら、それは自分の人生じゃない。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-72
+型：リンクなし
+```
+人は、他人の期待に応えるために
+生まれてきたわけじゃない。
+
+期待に応えるかどうかも、自分で選んでいい。
+```
+
+### PS-73
+型：リンクなし
+```
+親の期待、会社の期待、世間の期待。
+
+期待は、外から押しつけられる「本質」だ。
+受け取るかどうかは、自分が決める。
+```
+
+### PS-74
+型：リンクなし
+```
+「こうあるべき」は、
+誰かがつくった設計図だ。
+
+人間には、もともと設計図はない。
+```
+
+### PS-75
+型：リンクなし
+```
+自分を探す旅に出ても、
+自分は見つからない。
+
+自分は、見つけるものじゃない。
+つくるものだから。
+```
+
+### PS-76
+型：**リプリンク**
+```
+人間は、自分がしてきたことの総体以外の、何ものでもない。
+
+サルトルはそう言った。
+言い訳も、可能性も、数には入らない。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-77
+型：リンクなし
+```
+「自分らしさ」は、生まれつきの性格じゃない。
+
+何を選び続けてきたか、
+その跡のことだ。
+```
+
+### PS-78
+型：リンクなし
+```
+人を見るなら、言葉より行動を見る。
+
+サルトルなら、たぶんそう言う。
+人は、行動の積み重ねそのものだから。
+```
+
+### PS-79
+型：リンクなし
+```
+「いつかやる」と言っているうちは、
+まだ何者でもない。
+
+人は、やったことで決まる。
+```
+
+### PS-80
+型：リンクなし
+```
+夢を語る人より、
+今日、一歩を選んだ人のほうが、
+夢に近い。
+```
+
+### PS-81
+型：**リプリンク**
+```
+自由は、何かから逃げることじゃない。
+
+何かを選び、
+その結果を引き受けることだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-82
+型：リンクなし
+```
+本当に自由な人は、
+何でもできる人じゃない。
+
+自分が選んだことに、責任を持てる人だ。
+```
+
+### PS-83
+型：リンクなし
+```
+一人で決めるのは、怖い。
+
+でも、一人で決めたことだけが、
+本当に自分のものになる。
+```
+
+### PS-84
+型：リンクなし
+```
+自分の人生の作者は、自分だ。
+
+うまく書けない日もある。
+それでも、ペンを他人に渡さない。
+```
+
+### PS-85
+型：リンクなし
+```
+誰かのせいにした瞬間、
+自分は、自分の人生の脇役になる。
+```
+
+### PS-86
+型：**リプリンク**
+```
+不安は、自由の裏側だ。
+
+不安がまったくない人生は、
+たぶん、何も選んでいない人生だ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-87
+型：リンクなし
+```
+何にでもなれる、は希望で、
+何者でもない、は不安だ。
+
+その二つは、同じことを言っている。
+```
+
+### PS-88
+型：リンクなし
+```
+サルトルを読むと、楽にはならない。
+
+でも、自分の人生から
+逃げられなくなる。それがいい。
+```
+
+### PS-89
+型：リンクなし
+```
+「実存主義」と聞くと難しそうだ。
+
+一言で言えば、
+「自分の人生は、自分で選んでつくれ」ということだ。
+```
+
+### PS-90
+型：リンクなし
+```
+サルトルは、人間を「自由の刑」に処されていると言った。
+
+刑だから、逃げられない。
+でも、刑だから、誰にも奪えない。
+```
+
+### PS-91
+型：**リプリンク**
+```
+今日、何を選ぶか。
+
+その小さな選択が、
+「自分とは何者か」への答えになっていく。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-92
+型：リンクなし
+```
+人間は、選んだものの総和だ。
+
+まだ選んでいない明日の分だけ、
+自分は変わる余地がある。
+```
+
+### PS-93
+型：リンクなし
+```
+世界に意味がないなら、
+自分が意味をつくる側に回ればいい。
+```
+
+### PS-94
+型：リンクなし
+```
+投げ出されたように生まれた。
+
+それでも、
+どこへ歩くかは、自分の足が決める。
+```
+
+### PS-95
+型：リンクなし
+```
+「誰かに決めてほしい」と思ったら、思い出す。
+
+決めてくれる人を選んでいる時点で、
+もう自分で選んでいる。
+```
+
+### PS-96
+型：**リプリンク**
+```
+他人の目に映る自分。
+自分で選んできた自分。
+
+信じるなら、後のほうだ。
+```
+リプライ（自分の投稿に返信）：
+```
+サルトルについて、もう少し詳しく書きました → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PS-97
+型：リンクなし
+```
+サルトルは、生き方を誰にも保証しなかった。
+
+ただ、選べと言った。
+その厳しさが、いちばんやさしいと思う。
+```
+
+### PS-98
+型：リンクなし
+```
+人は、自分の選択から逃げられない。
+
+だったら、
+誇れる選択をしたほうがいい。
+```
+
+### PS-99
+型：リンクなし
+```
+明日の自分は、まだ決まっていない。
+
+今日の選択が、それを決める。
+だから、今日はいつも、始まりの日だ。
+```
+
+### PS-100
+型：リンクなし
+```
+自由の刑に処された僕らにできるのは、
+その刑を、生きる喜びに変えることだけだ。
+```
+
+## オーナーの言葉から（2026-10-08〜）
+
+オーナーが送ってくれた考えを、哲学投稿のフォーム（5つの条件）に合わせて書き直したもの。実在の人の名前や私生活には触れない。メンターの言葉はメンターの言葉として紹介する。型は**リプリンク**。**順番表にはまだ入れていない**。
+
+### OW-1 結婚（freedom）
+型：**リプリンク**
+```
+結婚しても、翼は生えない。
+
+変わるのは、書類と呼び名だけだ。
+自分という人間は、1ミリも変わらない。
+
+だから結婚に、救いを求めないほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-2 結婚（freedom）
+型：**リプリンク**
+```
+「結婚」は、ただの言葉だ。
+
+その言葉の中に、幸せが入っているわけじゃない。
+入っているのは、二人が毎日選んだことだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-3 結婚（freedom）
+型：**リプリンク**
+```
+100回結婚しても、100回離婚しても、
+自分は自分のままだ。
+
+形を変えても、中身は変わらない。
+変えられるのは、どう生きるかだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-4 結婚（freedom）
+型：**リプリンク**
+```
+結婚は、ゴールじゃない。
+
+一人でも生きられる二人が、
+それでも一緒にいると、毎日決め直すことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-5 結婚（freedom）
+型：**リプリンク**
+```
+離婚は、失敗じゃない。
+
+続けないと決めた。それも、一つの選択だ。
+選んだ人だけが、次へ進める。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### OW-6 人間関係（stoicism）
+型：**リプリンク**
+```
+謝罪を待っているあいだ、人生は止まっている。
+
+相手が謝るかどうかは、相手が決める。
+自分が次へ進むかどうかは、自分が決める。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-7 人間関係（stoicism）
+型：**リプリンク**
+```
+感謝を求めた瞬間、親切は取引になる。
+
+見返りを待たずにやったことだけが、
+自分の中に、ちゃんと残る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-8 人間関係（stoicism）
+型：**リプリンク**
+```
+「〇〇してくれない」と言うたびに、
+自分の機嫌の鍵を、他人に渡している。
+
+鍵は、自分で持っていたほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-9 人間関係（stoicism）
+型：**リプリンク**
+```
+人の言葉に振り回されるのは、
+その言葉に、自分で意味をつけているからだ。
+
+出来事は選べない。
+どう受け取るかは、選べる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-10 人間関係（boundaries）
+型：**リプリンク**
+```
+ひどいことを言う人を、変える必要はない。
+
+離れればいい。
+
+相手の心は相手のもの。
+自分の距離は、自分で決められる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### OW-11 人間関係（boundaries）
+型：**リプリンク**
+```
+プラスの関係だけを選ぶなら、
+自分も、誰かにとってのプラスでいる必要がある。
+
+奪う人のまわりには、奪う人が集まる。
+与える人のまわりに、与える人が残る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### OW-12 人間関係（disliked-priority）
+型：**リプリンク**
+```
+幸せかどうかを、他人に決めさせない。
+
+自分で決められるのは、自分の反応だけだ。
+でも、そこから先の人生は、全部変わっていく。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/disliked-priority.html?utm_source=x&utm_medium=social&utm_campaign=disliked-priority&utm_content=reply
+```
+
+### OW-13 メンターの言葉（system-goal）
+型：**リプリンク**
+```
+「楽な道を行くほど、人生は厳しくなる。
+厳しい道を行くほど、人生は楽になる」
+
+メンターの言葉で、ずっと大切にしている。
+
+全部に当てはまるわけじゃない。
+でも、迷ったときの方向は、だいたいこれで決まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### OW-14 メンターの言葉（system-goal）
+型：**リプリンク**
+```
+今日の楽は、明日の自分への借金だ。
+
+今日のきつさは、明日の自分への貯金だ。
+
+どちらを積むかは、毎日の小さな選択で決まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### OW-15 メンターの言葉（goggins）
+型：**リプリンク**
+```
+厳しい道を選ぶのは、我慢が好きだからじゃない。
+
+あとで楽になる道を、知っているからだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### OW-16 成長（self-image）
+型：**リプリンク**
+```
+会いたい人には、追いかけても会えない。
+
+自分が、会う理由のある人間になったとき、
+ある日、向こうから道がつながる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-17 成長（self-image）
+型：**リプリンク**
+```
+「突然、会えた」は、突然じゃない。
+
+見えないところで積み上げた時間が、
+ある日、一本の線になっただけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-18 成長（self-image）
+型：**リプリンク**
+```
+人脈を広げようとするより、
+自分の中身を広げたほうが早い。
+
+人は、中身のある人のところに集まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### OW-19 期待（stoicism）
+型：**リプリンク**
+```
+機嫌が悪くなるのは、相手のせいじゃない。
+
+相手に期待した、自分の分だけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-20 期待（stoicism）
+型：**リプリンク**
+```
+期待しないのは、冷たさじゃない。
+
+相手を、思いどおりにしようとしないことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### OW-21 期待（stoicism）
+型：**リプリンク**
+```
+周りに期待しないと、機嫌がよくなる。
+
+してもらったことが、
+全部、うれしい誤算になるから。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+## 哲学投稿のフォームと、厳選30本の順番（2026-10-08）
+
+PH-1〜120 を、次の5つの条件で見直した。5つ全部を満たしたものだけを残し、上から順に1日1本（昼）出す。残りの90本は予備（フォームに合わせて直してから使う）。
+
+**フォーム（5つの条件）**
+
+1. **1行目だけで止まる**：1行目が1文で完結し、常識をひっくり返している。読点で終わって2行目に続く書き出しは不合格
+2. **読む人の場面が浮かぶ**：断れない、日曜の夜、貯金できない、など具体がある。抽象だけは不合格
+3. **ひっくり返しは1回**：「〜じゃない。〜だ」で、1本に1メッセージ
+4. **ムートンの柱に沿う**：外見・お金・生き方（自分で決めて行動する）のどれか
+5. **続きが記事にある**：リプライのリンク先で答えが深まる
+
+**測り方**：2週間（14本）出したら、インプレッション・プロフィールへのアクセス・リンクのクリック・フォロー増を1本ずつ比べ、上位の型（常識の否定／意志のせいじゃない／〜は半分うそ、など）に寄せて予備を書き直す。
+
+| 順 | 番号 | 記事 | 1行目 |
+|---|---|---|---|
+| 1 | PH-4 | sartre | 「仕方なかった」は、半分うそだ。 |
+| 2 | PH-81 | cleanliness | 清潔感は、雰囲気じゃない。 |
+| 3 | PH-14 | system-goal | 目標を立てても動けないのは、意志が弱いからじゃない。 |
+| 4 | PH-1 | freedom | 「愛されたい」は、自分の人生の基準を他人に預けることだ。 |
+| 5 | PH-79 | saving-default | 貯金できないのは、意志が弱いからじゃない。 |
+| 6 | PH-11 | fear | 怖いのは、危険だからとは限らない。 |
+| 7 | PH-8 | identity | 「今日から変わる」と宣言しても、人は変わらない。 |
+| 8 | PH-82 | cleanliness | 「外見なんて関係ない」と言う人ほど、外見で判断されている。 |
+| 9 | PH-7 | comparison | 「人と比べるのをやめろ」は、無理な注文だ。 |
+| 10 | PH-2 | nietzsche | 生きる意味は、どこにも用意されていない。 |
+| 11 | PH-66 | habit-context | 習慣は、意志で続くものじゃない。 |
+| 12 | PH-19 | freedom | お金を持っていても、他人の評価に縛られている人は、自由じゃない。 |
+| 13 | PH-5 | stoicism | 他人の評価は、自分では決められない。 |
+| 14 | PH-83 | first-impression-sleep | 寝不足は、どれだけ服を整えても顔に出る。 |
+| 15 | PH-15 | self-image | 「どうせ自分は続かない」。 |
+| 16 | PH-10 | boundaries | 誰にでも好かれようとする人は、少しずつ安っぽくなる。 |
+| 17 | PH-50 | fear | 怖いことと、危ないことは違う。 |
+| 18 | PH-16 | job-change-happiness | 転職すれば幸せになれる、は半分だけ正しい。 |
+| 19 | PH-6 | disliked-priority | 「嫌われてもいい」と思える人なんて、ほとんどいない。 |
+| 20 | PH-68 | habit-days-decisions | 「習慣は21日で身につく」。 |
+| 21 | PH-18 | stoicism | 人の心を乱すのは、出来事そのものじゃない。 |
+| 22 | PH-21 | freedom | 自由は、派手なものじゃない。 |
+| 23 | PH-17 | goggins | 「走るのは嫌いだ」と言いながら、ゴギンズはウルトラマラソンを走った。 |
+| 24 | PH-69 | if-then-plans | 「頑張る」と決めても、人は動かない。 |
+| 25 | PH-23 | freedom | 基準を外に置くと、人は揺れ続ける。 |
+| 26 | PH-3 | camus-sisyphus | 毎日同じことの繰り返しが、つらい。 |
+| 27 | PH-72 | quit-or-escape | 「辞めたい」は、逃げなのか。 |
+| 28 | PH-38 | disliked-priority | 嫌われるのが怖いのは、弱さじゃない。 |
+| 29 | PH-97 | system-goal | やる気がある日にやるのは、誰でもできる。 |
+| 30 | PH-20 | nietzsche | 「神は死んだ」は、「神はいない」という意味じゃない。 |
+
 ## 哲学（思想強め）20本（2026-10-08）
 
 日本語アカウント向け。1行目で常識をひっくり返し、ムートンの考えを言い切る型。どれもサイトの哲学・生き方の記事の主張と、記事で確かめた事実だけで書いている（他人や特定の人を批判しない、あおらない）。型は**リプリンク**（本文にリンクなし、リプライに記事のリンク）。**順番表にはまだ入れていない**。
@@ -1831,6 +3147,1474 @@ SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線�
 続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
 ```
 
+## 哲学（思想強め）追加100本（2026-10-08）
+
+PH-1〜20 と同じ型。抽象度を高めにした言い切り型で、どれもサイトの記事の考えに沿って書き、数字を使うものは記事で確かめた数字だけにしている。型は**リプリンク**（本文にリンクなし、リプライに記事のリンク）。**順番表にはまだ入れていない**。同じ記事の投稿は3日以上あける。
+
+### PH-21 哲学（freedom）｜自由は静かなもの
+型：**リプリンク**
+```
+自由は、派手なものじゃない。
+
+誰にも説明しなくていい時間。
+断っても、関係が壊れない相手。
+今日の予定を、自分で決められること。
+
+自由は、そういう静かなものでできている。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-22 哲学（freedom）｜依存ではなく選択
+型：**リプリンク**
+```
+一人でも生きられる。
+それでも、一緒にいる。
+
+縛られているから一緒にいるより、
+そのほうがずっと深い関係だと思う。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-23 哲学（freedom）｜基準を外に置くと揺れる
+型：**リプリンク**
+```
+基準を外に置くと、人は揺れ続ける。
+
+褒められれば上がり、
+無視されれば下がる。
+
+基準を内に置いた人だけが、
+静かに前に進める。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-24 哲学（freedom）｜好きでも離れたいとき
+型：**リプリンク**
+```
+好きなのに、一人になりたい日がある。
+
+それは愛が冷めたんじゃない。
+自分に戻る時間が必要なだけだ。
+
+近づくことと、離れること。
+両方できて、関係は長く続く。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-25 哲学（nietzsche）｜意味は与えられない
+型：**リプリンク**
+```
+「何のために生きるのか」と聞かれて、
+すぐ答えられる人はいない。
+
+答えは、どこかに書いてあるものじゃない。
+生きながら、少しずつ書いていくものだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
+### PH-26 哲学（nietzsche）｜苦しみに意味をつける
+型：**リプリンク**
+```
+苦しいことそのものより、
+意味がないと感じることのほうが、人を折る。
+
+だから人は、苦しみに意味をつける。
+それは逃げじゃない。生きる技術だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
+### PH-27 哲学（nietzsche）｜借り物の答え
+型：**リプリンク**
+```
+借りてきた「生きる理由」は、
+雨の日に効かない。
+
+自分で見つけた理由だけが、
+調子の悪い日にも、自分を立たせてくれる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
+### PH-28 哲学（camus-sisyphus）｜降りない
+型：**リプリンク**
+```
+意味がないと気づいたあとで、
+どう生きるか。
+
+ごまかさずに見る。
+そのうえで、降りない。
+
+それが、僕の思う強さだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/camus-sisyphus.html?utm_source=x&utm_medium=social&utm_campaign=camus-sisyphus&utm_content=reply
+```
+
+### PH-29 哲学（camus-sisyphus）｜今日の岩
+型：**リプリンク**
+```
+明日の朝も、岩を押し上げる。
+
+頂上で止まらないことは、もう知っている。
+それでも手をかけるのは、自分だ。
+
+その選択だけは、誰にも奪えない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/camus-sisyphus.html?utm_source=x&utm_medium=social&utm_campaign=camus-sisyphus&utm_content=reply
+```
+
+### PH-30 哲学（camus-sisyphus）｜毎日ゼロから
+型：**リプリンク**
+```
+筋トレも、文章も、仕事も、
+積み上げたはずが、次の日にはゼロから始まる。
+
+それでいい。
+毎日始められることが、生きている証拠だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/camus-sisyphus.html?utm_source=x&utm_medium=social&utm_campaign=camus-sisyphus&utm_content=reply
+```
+
+### PH-31 哲学（sartre）｜人は先に存在する
+型：**リプリンク**
+```
+人は、何者かとして生まれてこない。
+
+先に存在して、
+あとから、自分が何者かをつくる。
+
+だから、まだ決まっていない。
+いつからでも、つくり直せる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PH-32 哲学（sartre）｜言い訳の構造
+型：**リプリンク**
+```
+「本当はやりたいけど、事情があって」。
+
+その事情のほとんどは、
+選ばない理由として、自分で選んだものだ。
+
+認めると苦しい。
+でも、認めたところからしか動けない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PH-33 哲学（sartre）｜責任は重いが自分のもの
+型：**リプリンク**
+```
+自分で選ぶと、失敗も自分のものになる。
+
+それが怖くて、人は選択を他人に預ける。
+
+でも、他人に預けた人生の失敗は、
+もっと重い。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PH-34 哲学（stoicism）｜自分次第のこと
+型：**リプリンク**
+```
+自分次第なのは、判断と、何を求めるかと、何を避けるか。
+
+それ以外は、だいたい自分次第じゃない。
+
+悩みの半分は、この線を引くだけで軽くなる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-35 哲学（stoicism）｜評価は相手の仕事
+型：**リプリンク**
+```
+どう評価されるかは、相手の仕事だ。
+
+自分の仕事は、
+評価されてもされなくても、
+同じ質でやり切ること。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-36 哲学（stoicism）｜起きる前に想定する
+型：**リプリンク**
+```
+嫌なことは、起きてから慌てるより、
+起きる前に一度、想像しておく。
+
+最悪を想定した人は、
+最悪の日にも、少しだけ落ち着いていられる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-37 哲学（stoicism）｜失ったのではなく返した
+型：**リプリンク**
+```
+何かを失ったとき、
+「奪われた」と思うと苦しい。
+
+「返した」と思うと、少し楽になる。
+
+もともと、ずっと自分のものだったものなんて、
+ほとんどない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-38 哲学（disliked-priority）｜気にするのは自然
+型：**リプリンク**
+```
+嫌われるのが怖いのは、弱さじゃない。
+
+人は、群れの中で生き延びてきた動物だから。
+
+怖いまま、自分の目的を優先する。
+強さは、その順番のつけ方にある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/disliked-priority.html?utm_source=x&utm_medium=social&utm_campaign=disliked-priority&utm_content=reply
+```
+
+### PH-39 哲学（disliked-priority）｜全員に好かれるコスト
+型：**リプリンク**
+```
+全員に好かれようとすると、
+自分の意見が、どんどん薄くなる。
+
+薄い意見は、誰も傷つけない。
+でも、誰の心にも残らない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/disliked-priority.html?utm_source=x&utm_medium=social&utm_campaign=disliked-priority&utm_content=reply
+```
+
+### PH-40 哲学（comparison）｜比べる相手を選ぶ
+型：**リプリンク**
+```
+比べるのは止められない。
+
+でも、誰と比べるかは選べる。
+
+昨日の自分と比べる日。
+少し先を行く人と比べる日。
+使い分ければ、比較は燃料になる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/comparison.html?utm_source=x&utm_medium=social&utm_campaign=comparison&utm_content=reply
+```
+
+### PH-41 哲学（comparison）｜見えているのは一部
+型：**リプリンク**
+```
+他人の人生は、
+いちばんいい場面だけが、こっちに見えている。
+
+自分の人生は、
+いちばん悪い場面まで、全部見えている。
+
+その比較は、最初から公平じゃない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/comparison.html?utm_source=x&utm_medium=social&utm_campaign=comparison&utm_content=reply
+```
+
+### PH-42 哲学（identity）｜どんな人間として動くか
+型：**リプリンク**
+```
+「何を達成したいか」より、
+「どんな人間として動きたいか」。
+
+目標は達成したら終わる。
+人としてのあり方は、毎日続く。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/identity.html?utm_source=x&utm_medium=social&utm_campaign=identity&utm_content=reply
+```
+
+### PH-43 哲学（identity）｜一回の行動は一票
+型：**リプリンク**
+```
+一回の行動は、
+「自分はこういう人間だ」への一票だ。
+
+一票では何も変わらない。
+でも、票を積み上げた人だけが、別人になる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/identity.html?utm_source=x&utm_medium=social&utm_campaign=identity&utm_content=reply
+```
+
+### PH-44 哲学（self-image）｜先に行動を変える
+型：**リプリンク**
+```
+自信がついたら動こう、と思っていると、
+いつまでも動けない。
+
+順番は逆だ。
+先に動く。小さく成功する。
+自信は、そのあとからついてくる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### PH-45 哲学（self-image）｜過去の解釈
+型：**リプリンク**
+```
+「自分は続かない人間だ」。
+
+それは事実じゃない。
+過去の何回かの経験から作った、ひとつの解釈だ。
+
+解釈なら、書き換えられる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### PH-46 哲学（system-goal）｜結果は遅れてくる
+型：**リプリンク**
+```
+努力の結果は、いつも遅れて届く。
+
+だから、途中で「意味がない」と思ってしまう。
+
+今日やったことが見えるのは、
+たぶん、ずっと先だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### PH-47 哲学（system-goal）｜ゴールは方向、システムは足
+型：**リプリンク**
+```
+ゴールは、方向を教えてくれる。
+でも、運んではくれない。
+
+運んでくれるのは、
+毎日同じ時間にやる、退屈な仕組みだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### PH-48 哲学（fear）｜怖いはまだ慣れていない
+型：**リプリンク**
+```
+「怖い」を、
+「まだ慣れていない」と言い換えてみる。
+
+慣れていないだけなら、
+慣れればいい。それだけの話だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear.html?utm_source=x&utm_medium=social&utm_campaign=fear&utm_content=reply
+```
+
+### PH-49 哲学（fear）｜緊張は準備
+型：**リプリンク**
+```
+緊張して、心臓が速くなる。
+
+それは、失敗のサインじゃない。
+体が、本番の準備をしている音だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear.html?utm_source=x&utm_medium=social&utm_campaign=fear&utm_content=reply
+```
+
+### PH-50 哲学（fear）｜本当のリスクは別
+型：**リプリンク**
+```
+怖いことと、危ないことは違う。
+
+人前で話すのは、怖い。
+生活費を全部つぎ込むのは、危ない。
+
+怖いことには近づけばいい。
+危ないことからは、ちゃんと離れればいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear.html?utm_source=x&utm_medium=social&utm_campaign=fear&utm_content=reply
+```
+
+### PH-51 哲学（fear-of-change）｜損は大きく見える
+型：**リプリンク**
+```
+同じ額でも、
+得るうれしさより、失う痛みのほうが大きく感じる。
+
+だから人は、変化を怖がる。
+
+それを知っているだけで、
+怖さを少し割り引いて見られる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear-of-change.html?utm_source=x&utm_medium=social&utm_campaign=fear-of-change&utm_content=reply
+```
+
+### PH-52 哲学（fear-of-change）｜情報が怖さを減らす
+型：**リプリンク**
+```
+怖さを小さくするのは、決断じゃない。
+
+情報だ。
+
+何がどれくらい変わるのか。
+最悪の場合、どうなるのか。
+見えてくるほど、怖さは輪郭を持つ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear-of-change.html?utm_source=x&utm_medium=social&utm_campaign=fear-of-change&utm_content=reply
+```
+
+### PH-53 哲学（doing-nothing）｜空白は無駄じゃない
+型：**リプリンク**
+```
+予定を詰めるほど、
+自分が何を考えているのか分からなくなる。
+
+空白は、無駄じゃない。
+考えが、自分のところに戻ってくる場所だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/doing-nothing.html?utm_source=x&utm_medium=social&utm_campaign=doing-nothing&utm_content=reply
+```
+
+### PH-54 哲学（doing-nothing）｜スマホを置く10分
+型：**リプリンク**
+```
+休憩のたびにスマホを見ていると、
+頭は一度も休んでいない。
+
+何も入れない10分を、
+一日のどこかに置いてみる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/doing-nothing.html?utm_source=x&utm_medium=social&utm_campaign=doing-nothing&utm_content=reply
+```
+
+### PH-55 哲学（boundaries）｜断ることは誠実さ
+型：**リプリンク**
+```
+できないことを、できないと言う。
+
+それは冷たさじゃない。
+相手に、本当のことを渡す誠実さだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### PH-56 哲学（boundaries）｜安売りしない
+型：**リプリンク**
+```
+誰にでも同じ笑顔を配る人は、
+いつか、その笑顔の価値を下げてしまう。
+
+優しさにも、配る相手を選ぶ自由がある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### PH-57 哲学（narcissism-art）｜作家の目を持つ
+型：**リプリンク**
+```
+自分を作品にするなら、
+作家の目も持っておきたい。
+
+作品への批評を、
+自分への攻撃と聞き違えないために。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### PH-58 哲学（narcissism-art）｜傷を物語にする
+型：**リプリンク**
+```
+失敗を、物語に変えるのはいい。
+
+でも、失敗をなかったことにするのは、
+物語じゃない。ただの嘘だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### PH-59 哲学（refined-taste）｜目が肥える代償
+型：**リプリンク**
+```
+いいものを知るほど、
+満足できるものが減っていく。
+
+目が肥えるのは、豊かさであり、
+少しの不自由でもある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/refined-taste.html?utm_source=x&utm_medium=social&utm_campaign=refined-taste&utm_content=reply
+```
+
+### PH-60 哲学（refined-taste）｜好きの数を守る
+型：**リプリンク**
+```
+本物を知ることと、
+楽しめるものを減らすことは、別にしておきたい。
+
+詳しくなっても、
+安いものを笑える自分でいたい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/refined-taste.html?utm_source=x&utm_medium=social&utm_campaign=refined-taste&utm_content=reply
+```
+
+### PH-61 哲学（influence）｜影響されない人はいない
+型：**リプリンク**
+```
+「自分は流されない」と思っている人ほど、
+流されていることに気づかない。
+
+影響されない人はいない。
+何に影響されるかを、選べるだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/influence.html?utm_source=x&utm_medium=social&utm_campaign=influence&utm_content=reply
+```
+
+### PH-62 哲学（influence）｜環境を選ぶ
+型：**リプリンク**
+```
+意志で自分を変えるのは、難しい。
+
+環境を変えるのは、それよりずっと簡単だ。
+
+誰といるか。何を見るか。
+人は、それでほとんど決まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/influence.html?utm_source=x&utm_medium=social&utm_campaign=influence&utm_content=reply
+```
+
+### PH-63 哲学（hill）｜願うより決める
+型：**リプリンク**
+```
+強く願えば叶う、という話じゃない。
+
+何がほしいか、はっきり決める。
+期限を決める。
+計画を立てて、動き出す。
+
+叶うかどうかは、そこから先の話だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/hill.html?utm_source=x&utm_medium=social&utm_campaign=hill&utm_content=reply
+```
+
+### PH-64 哲学（goggins）｜無理の線を引き直す
+型：**リプリンク**
+```
+「もう無理だ」と思ったところから、
+もう少しだけ続けてみる。
+
+その先で見た景色が、
+次の自分の「無理」の線を、少し遠くに引き直す。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### PH-65 哲学（goggins）｜楽な道の後悔
+型：**リプリンク**
+```
+楽な道を選んだ日の夜は、
+少しだけ、自分にがっかりする。
+
+きつい道を選んだ日の夜は、
+疲れているのに、少しだけ誇らしい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### PH-66 哲学（habit-context）｜意志より文脈
+型：**リプリンク**
+```
+習慣は、意志で続くものじゃない。
+
+同じ場所、同じ時間、同じきっかけ。
+その文脈に、行動が結びついて続く。
+
+続かないのは、意志のせいじゃない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/habit-context.html?utm_source=x&utm_medium=social&utm_campaign=habit-context&utm_content=reply
+```
+
+### PH-67 哲学（habit-context）｜引っ越しは習慣を変える好機
+型：**リプリンク**
+```
+引っ越し、転職、新しい季節。
+
+環境が変わると、古い習慣は崩れる。
+
+それは危機でもあり、
+新しい習慣を始める、いちばんの好機でもある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/habit-context.html?utm_source=x&utm_medium=social&utm_campaign=habit-context&utm_content=reply
+```
+
+### PH-68 哲学（habit-days-decisions）｜21日は目安にならない
+型：**リプリンク**
+```
+「習慣は21日で身につく」。
+
+研究では、自動的にできるようになるまで、
+18日から254日まで、人と行動によって大きく違った。
+
+21日でできなくても、あなたが悪いわけじゃない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/habit-days-decisions.html?utm_source=x&utm_medium=social&utm_campaign=habit-days-decisions&utm_content=reply
+```
+
+### PH-69 哲学（if-then-plans）｜もし〜なら
+型：**リプリンク**
+```
+「頑張る」と決めても、人は動かない。
+
+「朝、コーヒーを淹れたら、本を1ページ開く」。
+
+いつ、どこで、何をするか。
+そこまで決めて、ようやく行動は始まる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/if-then-plans.html?utm_source=x&utm_medium=social&utm_campaign=if-then-plans&utm_content=reply
+```
+
+### PH-70 哲学（music-life）｜役に立たないものの豊かさ
+型：**リプリンク**
+```
+音楽で頭がよくなる、
+という証拠は弱い。
+
+それでも、人は音楽を聴く。
+
+役に立たなくても、
+人生を豊かにするものはある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/music-life.html?utm_source=x&utm_medium=social&utm_campaign=music-life&utm_content=reply
+```
+
+### PH-71 哲学（social-media-time）｜見る側より関わる側
+型：**リプリンク**
+```
+SNSがつらくなるのは、
+ただ眺めているときが多い。
+
+見るだけの時間を減らして、
+誰かと関わる時間に変えてみる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/social-media-time.html?utm_source=x&utm_medium=social&utm_campaign=social-media-time&utm_content=reply
+```
+
+### PH-72 哲学（quit-or-escape）｜逃げは悪じゃない
+型：**リプリンク**
+```
+「辞めたい」は、逃げなのか。
+
+逃げることが悪いんじゃない。
+何から逃げて、どこへ向かうのか。
+それが決まっていないことが、問題なだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/quit-or-escape.html?utm_source=x&utm_medium=social&utm_campaign=quit-or-escape&utm_content=reply
+```
+
+### PH-73 哲学（quit-or-escape）｜壊れる前に離れる
+型：**リプリンク**
+```
+壊れてから離れるより、
+壊れる前に離れるほうが、ずっと賢い。
+
+我慢できることと、
+我慢すべきことは、違う。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/quit-or-escape.html?utm_source=x&utm_medium=social&utm_campaign=quit-or-escape&utm_content=reply
+```
+
+### PH-74 哲学（job-fit）｜仕事か場所か
+型：**リプリンク**
+```
+「この仕事、向いていない」。
+
+それは、仕事そのものが合わないのか。
+今いる場所と人が合わないのか。
+
+答えによって、
+やるべきことはまったく変わる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-fit.html?utm_source=x&utm_medium=social&utm_campaign=job-fit&utm_content=reply
+```
+
+### PH-75 哲学（job-fit）｜向いているは後からわかる
+型：**リプリンク**
+```
+向いている仕事は、
+最初から見つかるものじゃない。
+
+続けてみて、
+「これなら苦じゃない」と気づくものだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-fit.html?utm_source=x&utm_medium=social&utm_campaign=job-fit&utm_content=reply
+```
+
+### PH-76 哲学（sunday-blues）｜日曜の夜
+型：**リプリンク**
+```
+日曜の夜に憂うつになるのは、
+月曜が嫌いだからとは限らない。
+
+自由な時間が、終わっていくのが惜しいだけだ。
+
+それだけ、週末がちゃんと自分のものだった証拠でもある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sunday-blues.html?utm_source=x&utm_medium=social&utm_campaign=sunday-blues&utm_content=reply
+```
+
+### PH-77 哲学（job-change-start）｜求人より先に自分
+型：**リプリンク**
+```
+転職は、求人を見ることから始めない。
+
+なぜ辞めたいのか。
+譲れないことは何か。
+
+それが決まっていないと、
+どの求人にも心が揺れてしまう。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-change-start.html?utm_source=x&utm_medium=social&utm_campaign=job-change-start&utm_content=reply
+```
+
+### PH-78 哲学（salary-change）｜お金だけで選ばない
+型：**リプリンク**
+```
+年収だけで仕事を選ぶと、
+上がった分の使い道を、疲れを取るために使うことになる。
+
+お金は大事だ。
+でも、それだけで選ぶと、高くつく。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/salary-change.html?utm_source=x&utm_medium=social&utm_campaign=salary-change&utm_content=reply
+```
+
+### PH-79 哲学（saving-default）｜意志より仕組み
+型：**リプリンク**
+```
+貯金できないのは、意志が弱いからじゃない。
+
+何もしなければ貯まらない仕組みの中にいるだけだ。
+
+何もしなくても貯まる仕組みに、
+一度だけ変えればいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/saving-default.html?utm_source=x&utm_medium=social&utm_campaign=saving-default&utm_content=reply
+```
+
+### PH-80 哲学（saving-default）｜未来の自分に払わせない
+型：**リプリンク**
+```
+今の自分は、
+いつも未来の自分に、ツケを回したがる。
+
+だから、決めるのは今の自分じゃなく、
+仕組みに任せたほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/saving-default.html?utm_source=x&utm_medium=social&utm_campaign=saving-default&utm_content=reply
+```
+
+### PH-81 哲学（cleanliness）｜清潔感は分解できる
+型：**リプリンク**
+```
+清潔感は、雰囲気じゃない。
+
+肌、睡眠、ひげ、歯、服のサイズ、匂い。
+
+分解すれば、
+一つずつ整えられるものになる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
+```
+
+### PH-82 哲学（cleanliness）｜外見は内面の入口
+型：**リプリンク**
+```
+「外見なんて関係ない」と言う人ほど、外見で判断されている。
+
+外見は、中身の代わりにはならない。
+でも、中身を見てもらうための入口にはなる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
+```
+
+### PH-83 哲学（first-impression-sleep）｜寝不足は顔に出る
+型：**リプリンク**
+```
+寝不足は、どれだけ服を整えても顔に出る。
+
+いちばん安くて、いちばん効く身だしなみは、
+ちゃんと眠ることかもしれない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=first-impression-sleep&utm_content=reply
+```
+
+### PH-84 哲学（stamina）｜体力は動く理由
+型：**リプリンク**
+```
+体力がないと、
+やりたいことより先に、疲れが来る。
+
+体を鍛えるのは、見た目のためだけじゃない。
+やりたいことを、最後までやるためだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stamina.html?utm_source=x&utm_medium=social&utm_campaign=stamina&utm_content=reply
+```
+
+### PH-85 哲学（trampoline）｜大人は跳ばない
+型：**リプリンク**
+```
+子どもは、理由もなく跳ぶ。
+
+大人は、理由がないと動かない。
+
+ときどき、意味のないことをする。
+それが、体と心をほぐす。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/trampoline.html?utm_source=x&utm_medium=social&utm_campaign=trampoline&utm_content=reply
+```
+
+### PH-86 哲学（squat-knee）｜しゃがめる体
+型：**リプリンク**
+```
+しゃがんで、立ち上がる。
+
+当たり前の動きが、
+いつまでできるかで、人生の自由は変わる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/squat-knee.html?utm_source=x&utm_medium=social&utm_campaign=squat-knee&utm_content=reply
+```
+
+### PH-87 哲学（denim-leather）｜古くなるほど良くなる
+型：**リプリンク**
+```
+新品が、いちばんきれいなわけじゃない。
+
+使い込んだデニムや革のように、
+時間が刻まれて、自分のものになっていく。
+
+人も、たぶん同じだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/denim-leather.html?utm_source=x&utm_medium=social&utm_campaign=denim-leather&utm_content=reply
+```
+
+### PH-88 哲学（nietzsche）｜強さは選ぶ力
+型：**リプリンク**
+```
+強い人とは、
+傷つかない人のことじゃない。
+
+傷ついたあとで、
+もう一度、自分で選び直せる人のことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nietzsche.html?utm_source=x&utm_medium=social&utm_campaign=nietzsche&utm_content=reply
+```
+
+### PH-89 哲学（freedom）｜時間は自由の通貨
+型：**リプリンク**
+```
+お金で買えないものの中に、
+いちばん大事な自由がある。
+
+それは、自分の時間を、
+自分で決めることだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
+### PH-90 哲学（stoicism）｜反応する前に一呼吸
+型：**リプリンク**
+```
+腹が立ったら、すぐ返さない。
+
+出来事と反応のあいだに、
+一呼吸ぶんの隙間をつくる。
+
+その隙間に、自分の判断が入る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-91 哲学（stoicism）｜今日を最後の日として
+型：**リプリンク**
+```
+今日が最後の日だとしたら、
+このことで怒るだろうか。
+
+ほとんどの怒りは、
+その問いの前で、静かになる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
+```
+
+### PH-92 哲学（camus-sisyphus）｜幸福は条件じゃない
+型：**リプリンク**
+```
+幸せになるには、条件がそろわないといけない。
+そう思っていると、ずっと幸せになれない。
+
+条件がそろわないまま、
+それでも幸せでいる。それが、いちばん強い。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/camus-sisyphus.html?utm_source=x&utm_medium=social&utm_campaign=camus-sisyphus&utm_content=reply
+```
+
+### PH-93 哲学（sartre）｜見られている自分
+型：**リプリンク**
+```
+人の目を気にしすぎると、
+自分が「見られる物」になってしまう。
+
+見られることは止められない。
+でも、どう生きるかを決めるのは、自分だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/sartre.html?utm_source=x&utm_medium=social&utm_campaign=sartre&utm_content=reply
+```
+
+### PH-94 哲学（comparison）｜物差しを持つ
+型：**リプリンク**
+```
+他人の物差しで測ると、
+いつまでも足りない。
+
+自分の物差しで測ると、
+昨日より少し進んだことが、ちゃんと見える。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/comparison.html?utm_source=x&utm_medium=social&utm_campaign=comparison&utm_content=reply
+```
+
+### PH-95 哲学（identity）｜名乗るより続ける
+型：**リプリンク**
+```
+「作家です」と名乗る人より、
+毎日書いている人のほうが、作家だ。
+
+肩書きは、あとからついてくる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/identity.html?utm_source=x&utm_medium=social&utm_campaign=identity&utm_content=reply
+```
+
+### PH-96 哲学（self-image）｜試す回数
+型：**リプリンク**
+```
+成功する人は、
+失敗しない人じゃない。
+
+失敗しても、
+もう一回試す人だ。
+
+差は、才能より、試した回数にある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/self-image.html?utm_source=x&utm_medium=social&utm_campaign=self-image&utm_content=reply
+```
+
+### PH-97 哲学（system-goal）｜モチベーションは当てにしない
+型：**リプリンク**
+```
+やる気がある日にやるのは、誰でもできる。
+
+やる気がない日にも、
+淡々とやれる仕組みを持っている人が、
+最後に残る。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/system-goal.html?utm_source=x&utm_medium=social&utm_campaign=system-goal&utm_content=reply
+```
+
+### PH-98 哲学（fear）｜小さく動く
+型：**リプリンク**
+```
+怖いなら、大きく動かなくていい。
+
+小さく動く。
+少し失敗する。
+それでも大丈夫だったと知る。
+
+自信は、その繰り返しでしか育たない。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/fear.html?utm_source=x&utm_medium=social&utm_campaign=fear&utm_content=reply
+```
+
+### PH-99 哲学（doing-nothing）｜休む勇気
+型：**リプリンク**
+```
+休むのにも、勇気がいる。
+
+止まったら置いていかれる。
+そう思う人ほど、
+一度止まって、方向を確かめたほうがいい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/doing-nothing.html?utm_source=x&utm_medium=social&utm_campaign=doing-nothing&utm_content=reply
+```
+
+### PH-100 哲学（boundaries）｜線を引くと関係が深まる
+型：**リプリンク**
+```
+線を引くと、人が離れていく。
+そう思っていた。
+
+実際は逆だった。
+線を引いたあとに残った人とは、
+前より深く付き合えるようになった。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/boundaries.html?utm_source=x&utm_medium=social&utm_campaign=boundaries&utm_content=reply
+```
+
+### PH-101 哲学（narcissism-art）｜見せ方は技術
+型：**リプリンク**
+```
+見せ方にこだわるのは、
+中身がない人のすることじゃない。
+
+中身を、
+ちゃんと届けたい人のすることだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/narcissism-art.html?utm_source=x&utm_medium=social&utm_campaign=narcissism-art&utm_content=reply
+```
+
+### PH-102 哲学（influence）｜付き合う人で変わる
+型：**リプリンク**
+```
+どれだけ本を読んでも、
+毎日会う人の口ぐせのほうが、
+自分に染みこんでいる。
+
+だから、誰と過ごすかを選ぶ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/influence.html?utm_source=x&utm_medium=social&utm_campaign=influence&utm_content=reply
+```
+
+### PH-103 哲学（hill）｜書いて読む
+型：**リプリンク**
+```
+頭の中の目標は、
+すぐに忘れる。
+
+紙に書く。
+毎日、声に出して読む。
+
+古い方法だけど、
+忘れないためには、それがいちばん確かだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/hill.html?utm_source=x&utm_medium=social&utm_campaign=hill&utm_content=reply
+```
+
+### PH-104 哲学（goggins）｜決めたからやる
+型：**リプリンク**
+```
+好きなことだけをやって生きる。
+それは理想だ。
+
+でも、本当に人を変えるのは、
+嫌いだけど、やると決めたことのほうだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/goggins.html?utm_source=x&utm_medium=social&utm_campaign=goggins&utm_content=reply
+```
+
+### PH-105 哲学（habit-context）｜やめたいなら文脈を消す
+型：**リプリンク**
+```
+やめたい習慣は、
+意志で止めるより、きっかけを消すほうが早い。
+
+スマホを寝室に置かない。
+お菓子を家に置かない。
+
+戦わない人が、いちばん強い。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/habit-context.html?utm_source=x&utm_medium=social&utm_campaign=habit-context&utm_content=reply
+```
+
+### PH-106 哲学（if-then-plans）｜つまずいたときのルール
+型：**リプリンク**
+```
+続けるコツは、
+完璧にやることじゃない。
+
+「できなかった日は、次の日に1分だけやる」。
+
+つまずいたときのルールを、
+先に決めておくことだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/if-then-plans.html?utm_source=x&utm_medium=social&utm_campaign=if-then-plans&utm_content=reply
+```
+
+### PH-107 哲学（music-life）｜一緒に音を出す
+型：**リプリンク**
+```
+一緒に歌う。一緒に手を叩く。
+
+音を合わせるだけで、
+知らない人との距離が、少し縮まる。
+
+言葉より先に、
+人をつなぐものがある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/music-life.html?utm_source=x&utm_medium=social&utm_campaign=music-life&utm_content=reply
+```
+
+### PH-108 哲学（social-media-time）｜比べる装置
+型：**リプリンク**
+```
+SNSは、
+他人のいちばんいい瞬間を、
+自分のふつうの毎日と並べる装置だ。
+
+疲れたら、閉じればいい。
+世界は、画面の外にもある。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/social-media-time.html?utm_source=x&utm_medium=social&utm_campaign=social-media-time&utm_content=reply
+```
+
+### PH-109 哲学（refined-taste）｜知識は楽しむために
+型：**リプリンク**
+```
+詳しくなるのは、
+人を見下すためじゃない。
+
+同じものを、
+前より深く楽しむためだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/refined-taste.html?utm_source=x&utm_medium=social&utm_campaign=refined-taste&utm_content=reply
+```
+
+### PH-110 哲学（quit-or-escape）｜向かう理由
+型：**リプリンク**
+```
+「今の場所が嫌だ」だけで動くと、
+次の場所でも、同じ嫌なことに出会う。
+
+逃げる理由の先に、
+向かう理由を一つ持っておく。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/quit-or-escape.html?utm_source=x&utm_medium=social&utm_campaign=quit-or-escape&utm_content=reply
+```
+
+### PH-111 哲学（job-change-happiness）｜どこでも自分はついてくる
+型：**リプリンク**
+```
+どこへ行っても、
+自分だけは、ついてくる。
+
+場所を変える前に、
+自分の何を変えたいのかを考えたい。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-change-happiness.html?utm_source=x&utm_medium=social&utm_campaign=job-change-happiness&utm_content=reply
+```
+
+### PH-112 哲学（job-agent）｜無料の理由を知る
+型：**リプリンク**
+```
+無料のサービスには、
+必ず、お金を払っている誰かがいる。
+
+その仕組みを知ってから使えば、
+振り回されずにすむ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/job-agent.html?utm_source=x&utm_medium=social&utm_campaign=job-agent&utm_content=reply
+```
+
+### PH-113 哲学（slot-addiction）｜あと1回の正体
+型：**リプリンク**
+```
+「あと1回」が止まらないのは、
+意志が弱いからじゃない。
+
+いつ当たるか分からない仕組みが、
+人をいちばん夢中にさせるからだ。
+
+仕組みを知れば、距離をとれる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/slot-addiction.html?utm_source=x&utm_medium=social&utm_campaign=slot-addiction&utm_content=reply
+```
+
+### PH-114 哲学（d2-receptor）｜欲しいと好きは違う
+型：**リプリンク**
+```
+欲しいと思うことと、
+好きだと思うことは、別のものだ。
+
+欲しくてたまらないのに、
+手に入れても、うれしくない。
+
+そのずれに気づくと、選び方が変わる。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/d2-receptor.html?utm_source=x&utm_medium=social&utm_campaign=d2-receptor&utm_content=reply
+```
+
+### PH-115 哲学（amygdala）｜怖さは脳の仕事
+型：**リプリンク**
+```
+怖いと感じるのは、
+脳がちゃんと働いている証拠だ。
+
+怖さを消そうとしなくていい。
+怖さの言うことを、全部は聞かなくていいだけだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/amygdala.html?utm_source=x&utm_medium=social&utm_campaign=amygdala&utm_content=reply
+```
+
+### PH-116 哲学（oxytocin）｜触れることのちから
+型：**リプリンク**
+```
+言葉で伝えられないことも、
+手を握るだけで伝わることがある。
+
+人は、思っているより、
+触れ合うことで支えられている。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/oxytocin.html?utm_source=x&utm_medium=social&utm_campaign=oxytocin&utm_content=reply
+```
+
+### PH-117 哲学（nap）｜休み方も技術
+型：**リプリンク**
+```
+疲れたら、少しだけ眠る。
+
+長く寝ればいいわけじゃない。
+休み方にも、ちょうどいい長さがある。
+
+休むのも、技術だ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/nap.html?utm_source=x&utm_medium=social&utm_campaign=nap&utm_content=reply
+```
+
+### PH-118 哲学（chronotype）｜朝型も夜型も
+型：**リプリンク**
+```
+朝型が正しくて、
+夜型がだらしない。
+
+そんなことはない。
+自分のリズムを知って、
+それに合わせて一日を組むほうが、ずっと賢い。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/chronotype.html?utm_source=x&utm_medium=social&utm_campaign=chronotype&utm_content=reply
+```
+
+### PH-119 哲学（weekend-sleep）｜寝だめで戻らないもの
+型：**リプリンク**
+```
+週末の寝だめで、取り返せるものもある。
+
+でも、研究では、
+寝だめでは戻らないものもあった。
+
+いちばん確かなのは、
+毎日、同じくらい眠ることだ。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/weekend-sleep.html?utm_source=x&utm_medium=social&utm_campaign=weekend-sleep&utm_content=reply
+```
+
+### PH-120 哲学（freedom）｜自由と孤独
+型：**リプリンク**
+```
+自由になるほど、
+少しずつ孤独にもなる。
+
+その孤独に耐えられる人だけが、
+本当の意味で、自由を使える。
+```
+リプライ（自分の投稿に返信）：
+```
+続きはこちら → https://moutonarchive.com/freedom.html?utm_source=x&utm_medium=social&utm_campaign=freedom&utm_content=reply
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。
@@ -2093,6 +4877,37 @@ Facebookを4週間止めた実験では、幸福感がわずかに上がった�
 | 10/30（金） | 夜 | CF-V2 | 選び方 | コーヒーの選び方と淹れ方 |  | 投票 |
 | 10/31（土） | 朝 | CF-A2 | 選び方 | コーヒーの選び方と淹れ方 |  | リプリンク |
 | 10/31（土） | 夜 | DE-6 | 選び方 | 制汗剤とデオドラントの選び方 |  | リプリンク |
+
+### 昼の枠（哲学、10/9〜10/31）
+
+- 昼は 12〜13時ごろが目安。「哲学投稿のフォームと、厳選30本の順番」の上から順に出す（10/31 までで23本。残り7本は11月へ）
+- 朝・夜の枠（選び方・読み物）はそのまま。昼の哲学はフォローを増やす役、朝・夜の選び方は売上につなげる役
+
+| 日付 | 枠 | 案 | 種類 | 記事 | 投稿 | メモ |
+|---|---|---|---|---|---|---|
+| 10/9（金） | 昼 | PH-4 | 哲学 | sartre |  | リプリンク |
+| 10/10（土） | 昼 | PH-81 | 哲学 | cleanliness |  | リプリンク |
+| 10/11（日） | 昼 | PH-14 | 哲学 | system-goal |  | リプリンク |
+| 10/12（月） | 昼 | PH-1 | 哲学 | freedom |  | リプリンク |
+| 10/13（火） | 昼 | PH-79 | 哲学 | saving-default |  | リプリンク |
+| 10/14（水） | 昼 | PH-11 | 哲学 | fear |  | リプリンク |
+| 10/15（木） | 昼 | PH-8 | 哲学 | identity |  | リプリンク |
+| 10/16（金） | 昼 | PH-82 | 哲学 | cleanliness |  | リプリンク |
+| 10/17（土） | 昼 | PH-7 | 哲学 | comparison |  | リプリンク |
+| 10/18（日） | 昼 | PH-2 | 哲学 | nietzsche |  | リプリンク |
+| 10/19（月） | 昼 | PH-66 | 哲学 | habit-context |  | リプリンク |
+| 10/20（火） | 昼 | PH-19 | 哲学 | freedom |  | リプリンク |
+| 10/21（水） | 昼 | PH-5 | 哲学 | stoicism |  | リプリンク |
+| 10/22（木） | 昼 | PH-83 | 哲学 | first-impression-sleep |  | リプリンク |
+| 10/23（金） | 昼 | PH-15 | 哲学 | self-image |  | リプリンク |
+| 10/24（土） | 昼 | PH-10 | 哲学 | boundaries |  | リプリンク |
+| 10/25（日） | 昼 | PH-50 | 哲学 | fear |  | リプリンク |
+| 10/26（月） | 昼 | PH-16 | 哲学 | job-change-happiness |  | リプリンク |
+| 10/27（火） | 昼 | PH-6 | 哲学 | disliked-priority |  | リプリンク |
+| 10/28（水） | 昼 | PH-68 | 哲学 | habit-days-decisions |  | リプリンク |
+| 10/29（木） | 昼 | PH-18 | 哲学 | stoicism |  | リプリンク |
+| 10/30（金） | 昼 | PH-21 | 哲学 | freedom |  | リプリンク |
+| 10/31（土） | 昼 | PH-17 | 哲学 | goggins |  | リプリンク |
 
 ## 測り方（10月末に見る）
 
