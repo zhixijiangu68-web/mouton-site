@@ -48,6 +48,6 @@ export default [
     en: 'How people change',
     intro: 'なりたい自分、セルフイメージ、目標と仕組み、恐怖。変わりたいときに、意志の前に知っておきたいこと。',
     enIntro: 'Who you want to be, self-image, goals and systems, fear. What to understand before relying on willpower.',
-    slugs: ['identity', 'self-image', 'system-goal', 'habit-context', 'fear', 'book-habits-brain', 'books-habits'],
+    slugs: ['identity', 'self-image', 'system-goal', 'habit-context', 'habit-days-decisions', 'if-then-plans', 'fear', 'book-habits-brain', 'books-habits'],
   },
 ];
