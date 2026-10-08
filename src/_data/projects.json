@@ -24,10 +24,13 @@
     "text": "このサイト。記事と制作の記録を置く、自分の基地。",
     "lead": "書いたものと作ったものを、1か所に。",
     "about": "このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。",
-    "done": ["9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた", "記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした", "独自ドメイン moutonarchive.com に移り、アクセス解析を入れた", "AI の社員チーム（記事・編集・X・保守）が毎日動く形にした"],
+    "done": ["9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた", "記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした", "独自ドメイン moutonarchive.com に移り、アクセス解析を入れた", "AI の社員チーム（記事・編集・X・保守）が毎日動く形にした", "トップに、オープニング・動く見出し・記事の流れる帯を足した"],
     "next": "10月中に、記事から最初の1件が売れるところまで持っていく。",
     "image": "images/making/site.jpg", "video": "images/making/site.mp4", "caption": "このサイトのトップと、選び方の記事をスクロールしたところ", "audio": "",
-    "compare": { "title": "最初のトップと、今のトップ", "before": { "label": "10月はじめ", "desktop": "images/making/site-ui-v1-desktop.jpg", "phone": "images/making/site-ui-v1-phone.jpg" }, "after": { "label": "今", "desktop": "images/making/site-ui-v3-desktop.jpg", "phone": "images/making/site-ui-v3-phone.jpg" }, "note": "落ち着いた灰色の一枚の画面から、空の写真で始まり、スクロールで場面が切り替わるトップへ。「選び方」への入口を一番上に置いた。" },
+    "compare": [
+      { "title": "静かなトップと、動き出したトップ", "before": { "label": "10月8日まで", "desktop": "images/making/site-ui-v4-desktop.jpg", "phone": "images/making/site-ui-v4-phone.jpg" }, "after": { "label": "今", "desktop": "images/making/site-ui-v5-desktop.jpg", "phone": "images/making/site-ui-v5-phone.jpg" }, "note": "初めて開いた人のワクワク感が足りなかった。最初の訪問だけ MOUTON の幕が上がり、見出しは1文字ずつ浮かんで、スクロールすると散っていく。下の帯には新しい記事が流れる。静止画では見えない動きは、トップで確かめてほしい。" },
+      { "title": "最初のトップと、空のトップ", "before": { "label": "10月はじめ", "desktop": "images/making/site-ui-v1-desktop.jpg", "phone": "images/making/site-ui-v1-phone.jpg" }, "after": { "label": "10月7日", "desktop": "images/making/site-ui-v3-desktop.jpg", "phone": "images/making/site-ui-v3-phone.jpg" }, "note": "落ち着いた灰色の一枚の画面から、空の写真で始まり、スクロールで場面が切り替わるトップへ。「選び方」への入口を一番上に置いた。" }
+    ],
     "url": "making-site.html"
   },
   {
