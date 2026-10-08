@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { loadDefaultJapaneseParser } from 'budoux';
 import site from './src/_data/site.js';
 
@@ -242,6 +242,33 @@ export default function (eleventyConfig) {
       ...(url ? { mainEntityOfPage: url } : {}),
     };
     return JSON.stringify(data).replace(/</g, '\\u003c');
+  });
+
+  // Guides with product cards: a short list of the products near the top (before the table of
+  // contents), so readers arriving from X see them without scrolling through the whole article.
+  // Each card gets an id the list links to ("理由を読む").
+  // Only "選び方" articles (front matter `guide`) get the list; research articles stay as they are.
+  const isGuide = page => {
+    const src = page.inputPath || '';
+    return src.includes('/articles/') && /^guide:/m.test(readFileSync(src, 'utf8'));
+  };
+  eleventyConfig.addTransform('product-summary', function (html) {
+    if (!(this.page.outputPath || '').endsWith('.html') || isEn(this.page) || !isGuide(this.page)) return html;
+    if (!html.includes('<details class="reading-toc"') || !html.includes('<aside class="product-card"')) return html;
+    const items = [];
+    html = html.replace(/<aside class="product-card" aria-label="([^"]*)">([\s\S]*?)<\/aside>/g, (m, name, inner) => {
+      const id = `product-${items.length + 1}`;
+      const btns = (inner.match(/<p class="product-btns">([\s\S]*?)<\/p>/) || [])[1] || '';
+      items.push({ id, name, btns: btns.replace(/class="product-btn /g, 'data-placement="summary" class="product-btn ') });
+      return `<aside class="product-card" id="${id}" aria-label="${name}">${inner}</aside>`;
+    });
+    if (!items.some(i => i.btns)) return html;
+    const list = `<aside class="product-summary" aria-labelledby="product-summary-title"><p class="product-summary-title" id="product-summary-title">この記事で紹介している商品 <span class="pr-label">PR</span></p><ol>`
+      + items.map(i => `<li data-product="${i.name}"><span class="product-summary-name">${i.name}</span>`
+        + `<span class="product-summary-btns">${i.btns}<a class="product-summary-why" href="#${i.id}">選んだ理由 <span aria-hidden="true">↓</span></a></span></li>`).join('')
+      + `</ol></aside>`;
+    const toc = html.indexOf('<details class="reading-toc"');
+    return html.slice(0, toc) + list + html.slice(toc);
   });
 
   eleventyConfig.addTransform('phrase-breaks', function (html) {

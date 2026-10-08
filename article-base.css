@@ -35,3 +35,15 @@ body{font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif}
 .quiz-ox{--qa:#1442c4;--qr:#1f7a4d;--qw:#b4432f;display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
 .quiz .qloop-verdict{margin:0 0 4px;font:600 1.125rem/1.5 "Noto Serif JP",serif}
 .quiz .qloop-verdict.is-right{color:#1f7a4d}.quiz .qloop-verdict.is-wrong{color:#b4432f}
+/* Product list near the top of guides (built by the product-summary transform). */
+.product-summary{margin:28px 0;padding:20px 22px;border:1px solid rgba(27,28,25,.18);border-radius:10px;background:rgba(255,255,255,.7)}
+.product-summary-title{margin:0 0 10px!important;font-family:Inter,"Hiragino Kaku Gothic ProN",sans-serif;font-size:.8125rem!important;letter-spacing:.06em;color:#53584f}
+.product-summary ol{margin:0;padding:0;list-style:none;counter-reset:ps}
+.product-summary li{counter-increment:ps;padding:14px 0;border-top:1px solid rgba(27,28,25,.1)}
+.product-summary li:first-child{border-top:0;padding-top:4px}
+.product-summary-name{display:block;font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.7}
+.product-summary-name::before{content:counter(ps) ". ";color:#53584f}
+.product-summary-btns{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:10px}
+.product-summary .product-btn{min-height:40px;padding:6px 16px;font-size:.8125rem}
+.product-summary-why{display:inline-flex;align-items:center;min-height:40px;padding:0 4px;font-size:.8125rem;color:#303c35!important;text-underline-offset:4px}
+.product-card:target{outline:2px solid #1442c4;outline-offset:4px}
