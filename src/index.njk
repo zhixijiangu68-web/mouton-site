@@ -17,8 +17,8 @@ preloadHero: true
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
-        <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
-        <p class="lede reveal-2 hero-lede">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
+        <h1 class="display reveal"><span class="nowrap">その常識、</span><br><span class="nowrap">10秒で</span><span class="nowrap">ひっくり返す。</span></h1>
+        <p class="lede reveal-2 hero-lede">外見・お金・生き方。<br>研究で確かめた○×クイズに、答えてから読む。</p>
         <div class="qloop hero-qloop reveal-2" data-qloop data-compact></div>
         {%- for a in collections.articles %}{% if loop.first %}
         <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>

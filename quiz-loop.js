@@ -16,13 +16,13 @@
  const T=en?{
   choose:'Your answer',o:'True',x:'False',inRow:n=>`${n} in a row`,days:n=>`${n} days in a row`,solved:(d,t)=>`Answered ${d} / ${t}`,score:n=>`Correct ${n}`,
   right:'Correct',wrongV:'Not quite',best:' · personal best',next:'Next question',result:'See result',read:t=>`Read "${t}"`,why:'Why? Read the article',
-  again:'Try again',share:'Share your score on X',review:'The answers to the ones you missed are here.',fail:'Could not load the quiz.',title:'True or false',close:'Close',
+  again:'Try again',combo:n=>`${n} in a row!`,recent:(r,t)=>`Last ${t}: ${r} right`,share:'Share your score on X',review:'The answers to the ones you missed are here.',fail:'Could not load the quiz.',title:'True or false',close:'Close',
   shareText:(s,r)=>`I got ${s} out of ${r} on Mouton's true-or-false quiz.`,shareUrl:'https://moutonarchive.com/en/quiz.html',
   msg:(s,r)=>s===r?'A perfect score.':s>=r*.7?'You know your stuff.':s>=r*.4?'About half. Some answers probably surprised you.':'A lot of surprising answers, probably.',
  }:{
   choose:'答えを選ぶ',o:'○（正しい）',x:'×（まちがい）',inRow:n=>`${n}問連続正解`,days:n=>`${n}日連続`,solved:(d,t)=>`解いた問題 ${d} / ${t}`,score:n=>`正解 ${n}`,
   right:'正解',wrongV:'ざんねん',best:'・自己ベスト',next:'次の問題',result:'結果を見る',read:t=>`「${t}」を読む`,why:'理由を記事で読む',
-  again:'もう一度',share:'結果を X でシェア',review:'まちがえた問題の答えは、ここに書いてある。',fail:'クイズを読み込めませんでした。',title:'○×クイズ',close:'閉じる',
+  again:'もう一度',combo:n=>`${n}連続正解！`,recent:(r,t)=>`直近${t}問で${r}問正解`,share:'結果を X でシェア',review:'まちがえた問題の答えは、ここに書いてある。',fail:'クイズを読み込めませんでした。',title:'○×クイズ',close:'閉じる',
   shareText:(s,r)=>`ムートンの○×クイズ、${r}問中${s}問正解でした。`,shareUrl:'https://moutonarchive.com/quiz.html',
   msg:(s,r)=>s===r?'全問正解。':s>=r*.7?'かなり詳しい。':s>=r*.4?'半分くらい。意外な答えがあったはず。':'意外な答えが多かったはず。',
  };
@@ -70,6 +70,9 @@
   const seen=new Set();
   let score=0,count=0,streak=0;
   const wrong=[];
+  // The last 10 answers in this loop, shown as dots (green = right, red = wrong).
+  const hist=[];
+  const dots=()=>hist.length?`<span class="qloop-dots" aria-label="${T.recent(hist.filter(Boolean).length,hist.length)}">${hist.map(r=>`<i class="${r?'r':'w'}"></i>`).join('')}</span>`:'';
   el.innerHTML='<p class="qloop-loading">…</p>';
   load().then(list=>{
    const total=list.length;
@@ -84,7 +87,7 @@
      `<div class="qloop-top"><span class="qloop-label">${run?`Q${count} / ${run}`:'QUIZ'}</span>`
      +(streak>1?`<span class="qloop-streak">${T.inRow(streak)}</span>`:'')
      +(dayStreak()>1?`<span class="qloop-streak">${T.days(dayStreak())}</span>`:'')
-     +`<span class="qloop-count">${run?T.score(score):T.solved(done,total)}</span></div>`
+     +`<span class="qloop-count">${run?T.score(score):T.solved(done,total)}</span>${dots()}</div>`
      +`<p class="qloop-q">${esc(q.q)}</p>`
      +`<div class="qloop-choices" role="group" aria-label="${T.choose}"><button type="button" class="qloop-choice" data-v="1" aria-label="${T.o}">○</button><button type="button" class="qloop-choice" data-v="0" aria-label="${T.x}">×</button></div>`
      +`<div class="qloop-result" aria-live="polite"></div>`;
@@ -101,6 +104,19 @@
     // A short buzz on phones that support it (not on reduced motion).
     if(!reduce&&navigator.vibrate)try{navigator.vibrate(right?12:[8,50,8]);}catch{}
     if(right){score++;streak++;}else{streak=0;wrong.push(q);}
+    hist.push(right);if(hist.length>10)hist.shift();
+    // A big stamp over the card, and a burst at 3, 5, 10 in a row.
+    el.classList.add('qloop-host');
+    const stamp=document.createElement('span');
+    stamp.className=`qloop-stamp ${right?'is-right':'is-wrong'}`;stamp.setAttribute('aria-hidden','true');
+    stamp.textContent=right?'○':'×';
+    el.appendChild(stamp);setTimeout(()=>stamp.remove(),reduce?0:900);
+    el.classList.toggle('is-hot',streak>=3);
+    if(!reduce&&right&&[3,5,10,20].includes(streak)){
+     const burst=document.createElement('span');burst.className='qloop-burst';burst.setAttribute('aria-hidden','true');
+     burst.innerHTML=Array.from({length:14},(_,i)=>`<i style="--a:${i*360/14}deg;--d:${60+Math.random()*50}px"></i>`).join('')+`<b>${T.combo(streak)}</b>`;
+     el.appendChild(burst);setTimeout(()=>burst.remove(),1300);
+    }
     const answered=store.get(K('answered'),{});answered[q.id]=right?1:0;store.set(K('answered'),answered);
     const today=new Date().toLocaleDateString('sv');
     const days=store.get('days',[]);if(days[days.length-1]!==today){days.push(today);store.set('days',days.slice(-60));}
