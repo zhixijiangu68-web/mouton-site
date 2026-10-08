@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>何もしない時間は、本当に無駄なのか — ムートン</title>
-<meta name="description" content="ぼーっとする時間は、本当に無駄なのか。記憶の定着、創造性、未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。">
+<meta name="description" content="ぼーっとする時間は、本当に無駄なのか。学習直後の10分の休息と記憶、低負荷の作業と創造性、マインドワンダリングと未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。">
 <link rel="canonical" href="https://moutonarchive.com/doing-nothing.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/doing-nothing.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/doing-nothing.html">
 <meta property="og:title" content="何もしない時間は、本当に無駄なのか — ムートン">
-<meta property="og:description" content="ぼーっとする時間は、本当に無駄なのか。記憶の定着、創造性、未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。">
+<meta property="og:description" content="ぼーっとする時間は、本当に無駄なのか。学習直後の10分の休息と記憶、低負荷の作業と創造性、マインドワンダリングと未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -49,8 +51,9 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"何もしない時間は、本当に無駄なのか","description":"ぼーっとする時間は、本当に無駄なのか。記憶の定着、創造性、未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/doing-nothing.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"何もしない時間は、本当に無駄なのか","description":"ぼーっとする時間は、本当に無駄なのか。学習直後の10分の休息と記憶、低負荷の作業と創造性、マインドワンダリングと未来の計画、デフォルトネットワークの研究から、何もしない時間の意味を考える。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/doing-nothing.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"何もしない時間は、本当に無駄なのか","item":"https://moutonarchive.com/doing-nothing.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -64,6 +67,8 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -75,13 +80,13 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/doing-nothing.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">何もしない時間は、本当に無駄なのか</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / MIND / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>何もしない<wbr>時間は、<br>本当に<wbr>無駄なのか</h1>
 <p class="reading-time">約10分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 学んだ直後の「10分」が、記憶に残った</a></li><li><a href="#section-2">2. アイデアは、考え続けたときだけ生まれるわけではない</a></li><li><a href="#section-3">3. ぼーっとしているとき、人は未来を考えている</a></li><li><a href="#section-4">4. 「休んでいる脳」は、停止していない</a></li><li><a href="#section-5">5. では、スマホを眺めるのも「休息」なのか</a></li><li><a href="#section-6">6. 何もしない時間にも、代償はある</a></li><li><a href="#section-7">7. 「20分」という数字に、魔法はない</a></li><li><a href="#section-8">結論：休むことも、思考の一部である</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
 <p class="deck">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。研究から「休むこと」の意味を考える。</p><div class="hero-line"></div><article>
 
-<p class="lead">何もしていないと、少し不安になる。</p>
+<p class="lead">何もしていないと、少し不安になる。</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">物語を覚えた直後に10分休んだ高齢者は、7日後の記憶成績も高かった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。7日後まで差が出た。</p><p class="quiz-why">Dewarらの実験では、10分の覚醒休息をとった条件で、直後だけでなく7日後の記憶成績も高くなった。勉強時間を増やしたわけではない。</p></div></details>
 
 <p>電車を待つ数分。仕事が一区切りついた時間。勉強を終えた直後。気づけばスマホを手に取り、空白を埋めている。</p>
 
@@ -182,7 +187,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>こうした<strong>文脈</strong>が大切です。</p>
 
-<h2 id="section-7">7. <wbr>「20分」と<wbr>いう<wbr>数字に、<wbr>魔法は<wbr>ない</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">「20分ぼーっとするのが最適」と、研究で示されている。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。20分に根拠はない。</p><p class="quiz-why">記事で確認した代表的な研究はDewarらが10分、Bairdらが12分。どちらも「20分が最適」と示したものではない。</p></div></details><h2 id="section-7">7. <wbr>「20分」と<wbr>いう<wbr>数字に、<wbr>魔法は<wbr>ない</h2>
 
 <p>よく「20分ぼーっとするといい」といった数字を見かけます。</p>
 
@@ -232,6 +237,10 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
 
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="doing-nothing" data-prefer="system-goal,disliked-priority,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+
 
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
@@ -245,12 +254,42 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="system-goal.html">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</a><a class="reading-card" href="disliked-priority.html">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="system-goal.html" data-slug="system-goal"><span class="reading-card-title">システムのないゴールは、動かない</span><span class="reading-card-q"><b>Q.</b> 研究では、習慣が自動化するまでの期間は18〜254日と大きな個人差があった。<em>○か×か？</em></span></a><a class="reading-card has-q" href="disliked-priority.html" data-slug="disliked-priority"><span class="reading-card-title">嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ</span><span class="reading-card-q"><b>Q.</b> 本気で打ち込む人が嫌われても動けるのは、嫌われることが気にならなくなったからではない。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

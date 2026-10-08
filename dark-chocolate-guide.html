@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>ダークチョコの選び方。カカオ分の数字だけで選ばない — ムートン</title>
 <meta name="description" content="カカオ分が高いほど良いのか。表示のルール、カカオの加工とフラバノール、重金属の検査の研究から、ダークチョコとココアを店で選ぶときに、パッケージのどこを見ればいいかを整理する。">
@@ -43,6 +45,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ダークチョコの選び方。カカオ分の数字だけで選ばない","description":"カカオ分が高いほど良いのか。表示のルール、カカオの加工とフラバノール、重金属の検査の研究から、ダークチョコとココアを店で選ぶときに、パッケージのどこを見ればいいかを整理する。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/dark-chocolate-guide.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"食事・化学","item":"https://moutonarchive.com/topic-food.html"},{"@type":"ListItem","position":3,"name":"ダークチョコの選び方。カカオ分の数字だけで選ばない","item":"https://moutonarchive.com/dark-chocolate-guide.html"}]}</script>
@@ -58,6 +61,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -69,11 +74,11 @@
 </div>
 
 <div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a><a class="cover-lang" href="en/dark-chocolate-guide.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="guides.html">選び方</a></li><li><span aria-current="page">ダークチョコの選び方。カカオ分の数字だけで選ばない</span></li></ol></nav>
 <div class="meta">2026.10.06 / FOOD &amp; SCIENCE</div><h1>ダークチョコの<wbr>選び方。<wbr>カカオ分の<wbr>数字だけで<wbr>選ばない</h1><p class="reading-time">約5分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead">「ダークチョコは、本当に体にいいのか」では、研究で効果が調べられていたのは、チョコそのものより<strong>カカオフラバノール</strong>という成分だった。</p>
-<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">カカオ86%のチョコは、70%のチョコより、カカオの良い成分が必ず多い。○か×か？</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。必ずではない。</p><p class="quiz-why">「カカオ分」にはカカオの脂肪（ココアバター）も含まれる。研究では、成分の量は脂肪を除いたカカオの固形分とよく一致していた。</p></div></details>
+<details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">カカオ86%のチョコは、70%のチョコより、カカオの良い成分が必ず多い。○か×か？</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。必ずではない。</p><p class="quiz-why">「カカオ分」にはカカオの脂肪（ココアバター）も含まれる。研究では、成分の量は脂肪を除いたカカオの固形分とよく一致していた。</p></div></details>
 <p>では、店でダークチョコを選ぶとき、カカオ分70%、86%、95%と数字が高いものを選べばいいのか。調べてみると、<strong>数字だけでは分からないことがいくつかある</strong>。</p>
 <details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">まず「チョコレート」と書いてあるかを見る</a></li><li><a href="#section-2">カカオ分の数字には、脂肪も含まれている</a></li><li><a href="#section-3">加工によって、フラバノールは減る</a></li><li><a href="#section-4">重金属は、製品によって差がある</a></li><li><a href="#section-5">選ぶときの目安</a></li><li><a href="#section-6">参考文献</a></li></ol></nav></details>
 
@@ -90,7 +95,7 @@
 <p>ココアパウダーを調べた研究では、酸味を抑えて色を濃くする「アルカリ処理」をしたココアほど、フラバノールが少なかった。処理をしていないココアの平均は1gあたり約35mgだったのに対し、強く処理したものは約4mgだった <a href="#ref-3">[3]</a>。</p>
 <p>ココアを選ぶときは、砂糖や乳製品の入った「調整ココア」ではなく、ココアパウダーだけの<strong>「純ココア」</strong>を選ぶ。そのうえで、商品説明にアルカリ処理の有無が書いてあれば確かめたい。</p>
 
-<h2 id="section-4">重金属は、<wbr>製品に<wbr>よって<wbr>差が<wbr>ある</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">アメリカの調査では、オーガニックのカカオ製品ほど鉛やカドミウムが少なかった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。少ないわけではなかった。</p><p class="quiz-why">72のカカオ製品を調べた研究で、オーガニックだからといって少ないわけではなかった。日本の製品にそのまま当てはまるとは限らない。</p></div></details><h2 id="section-4">重金属は、<wbr>製品に<wbr>よって<wbr>差が<wbr>ある</h2>
 <p>アメリカで2014〜2022年に72のカカオ製品を調べた研究では、鉛やカドミウムが、カリフォルニア州の基準をもとにした1日の上限を超える製品が一定の割合であった。オーガニック製品だからといって、少ないわけではなかった <a href="#ref-4">[4]</a>。同様の結果は、消費者団体の検査でも報告されている <a href="#ref-5">[5]</a>。</p>
 <p>ただし、これはアメリカで売られている製品の検査で、日本の店頭の製品にそのまま当てはまるとは限らない。現実的な対策は、<strong>毎日たくさん食べないこと</strong>と、<strong>同じ製品ばかりに偏らないこと</strong>だ。</p>
 
@@ -109,6 +114,10 @@
 <p id="ref-4">4. Hands JM, Anderson ML, Cooperman T, Balsky JE, Frame LA. (2024). A multi-year heavy metal analysis of 72 dark chocolate and cocoa products in the USA. <em>Frontiers in Nutrition</em>, 11. doi:10.3389/fnut.2024.1366231</p>
 <p id="ref-5">5. Consumer Reports (2022). Heavy metals in dark chocolate（28製品の検査報告。査読論文ではない）.</p>
 </div>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="dark-chocolate-guide" data-prefer="dark-chocolate,olive-oil-guide,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <p class="article-pr">このページには広告（アフィリエイトリンク）が含まれます。リンクから商品が購入されると、当サイトに紹介料が支払われることがあります。</p>
 
 
@@ -124,12 +133,42 @@
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="dark-chocolate.html">ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</a><a class="reading-card" href="olive-oil-guide.html">オリーブオイルの<wbr>選び方。<wbr>ラベルの<wbr>どこを<wbr>見ればいいのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="dark-chocolate.html" data-slug="dark-chocolate"><span class="reading-card-title">ダークチョコは、本当に体にいいのか</span><span class="reading-card-q"><b>Q.</b> 最大規模のCOSMOS試験で、カカオ抽出物は心血管イベント全体を有意に減らした。<em>○か×か？</em></span></a><a class="reading-card has-q" href="olive-oil-guide.html" data-slug="olive-oil-guide"><span class="reading-card-title">オリーブオイルの選び方。ラベルのどこを見ればいいのか</span><span class="reading-card-q"><b>Q.</b> 日本のJAS規格には「エキストラバージン」という等級がある。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
 
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

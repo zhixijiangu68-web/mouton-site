@@ -1,0 +1,23 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: en/quiz.html
+jaPage: quiz.html
+title: "10 True-or-False Questions. How Many Can You Get? — Mouton"
+description: "Sunscreen, sleep, coffee, bad breath, changing jobs, philosophy. Ten random true-or-false questions built from the research and facts in Mouton's articles. You see the answer and the reason right away, and can read more in the article."
+---
+{% include "partials/nav-en.njk" %}
+<div class="doc-cover ph-body" data-nav="dark"{% if (['images/cover-body.jpg'] | firstImage) %} style="--img:url('../images/cover-body.jpg')"{% endif %}></div>
+<main class="doc quiz-page" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Quiz</p>
+  <h1 class="doc-title">10 true-or-false questions</h1>
+  <p>Ten random questions built from the research and facts in my articles. Out of {{ quizzesEn.length }} questions, the ones you haven't answered yet come first, so you get different questions each time.</p>
+  <div class="qloop" data-qloop data-run="10"></div>
+  <noscript><p>Please turn on JavaScript to take the quiz.</p></noscript>
+  <p class="quiz-page-note">Every question comes from the text of an article. Many studies have limits in who they studied and for how long, so read the article and its references for the details.</p>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-map.njk" %}
+  {% include "partials/footer-links-en.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

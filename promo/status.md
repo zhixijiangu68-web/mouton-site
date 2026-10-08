@@ -7,6 +7,7 @@
 - 体制を切り替えた：Instagram リール担当28人を解散し、X とサイトの体制に。X は x-staff（5人、`.claude/skills/x-staff/`）、全体とサイトは mouton-team（4人、`.claude/skills/mouton-team/`）
 - X：順番表（`x-posts.md`）は 10/7 朝から開始。投稿0本
 - 売上：0件
+- 10/7：選び方が2本増えて13本に（`sunscreen-guide` 日焼け止め＝外見、`books-money` お金の本＝お金）。X の案は `x-posts.md` の SS・BM（順番表には未登録）
 
 ## 今週（10/6〜10/12）の3つ
 

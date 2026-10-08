@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>When Did Grown-Ups Stop Jumping? — Mouton</title>
 <meta name="description" content="Looking into trampolines, I started to see what &quot;stamina&quot; really is. Research on mini-trampolines and heart and lung fitness, balance, and metabolism.">
@@ -38,6 +40,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="../site.css">
 <script src="../site.js" defer></script>
+<script src="../quiz-loop.js" defer></script>
 <script src="../article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"When did grown-ups stop jumping?","description":"Looking into trampolines, I started to see what \"stamina\" really is. Research on mini-trampolines and heart and lung fitness, balance, and metabolism.","inLanguage":"en","datePublished":"2026-09-30","dateModified":"2026-09-30","author":{"@type":"Person","name":"Mouton","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/en/trampoline.html"}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -51,6 +54,9 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
   <nav aria-label="Main navigation">
     <ul class="site-links" id="site-links">
       <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
+      <li><a href="../quiz.html">Quiz<span class="site-links-en">True or false</span></a></li>
+      <li><a href="../series.html">Series<span class="site-links-en">Read in order</span></a></li>
+      <li><a href="../guides.html">Guides<span class="site-links-en">Before you buy</span></a></li>
       <li><a href="index.html#philosophy">Philosophy<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#body">Body<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#work">Work<span class="site-links-en">Articles</span></a></li>
@@ -61,10 +67,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="cover ph-body is-placeholder" data-nav="light"><nav aria-label="Back"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> Back to all articles</a><a class="cover-lang" href="../trampoline.html" hreflang="ja" lang="ja">日本語</a></nav></div>
-<main data-nav="light" data-nav-solid="light"><article>
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li><a href="index.html#body">Body</a></li><li><span aria-current="page">When did grown-ups stop jumping?</span></li></ol></nav><article>
         <div class="meta">2026.09.30　/　BODY</div>
         <h1>When did grown-ups<br>stop jumping?</h1><p class="reading-time">7 min read</p><div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>Press and hold to copy the link<input class="copy-url" type="text" readonly aria-label="Link to this article"></label></div></div><details class="reading-toc"><summary>Contents</summary><nav aria-label="Contents of this article"><ol><li><a href="#section-1">1. Jumping works your heart and lungs</a></li><li><a href="#section-2">2. Every jump, your body loses balance a little</a></li><li><a href="#section-3">3. It's a bit different from walking</a></li><li><a href="#section-4">4. Metabolism moves too</a></li><li><a href="#section-5">5. Jumping turned out to be a whole-body exercise</a></li><li><a href="#section-6">6. That said, it's no cure-all</a></li><li><a href="#section-7">7. So how much should you jump?</a></li><li><a href="#section-8">What is "stamina"?</a></li><li><a href="#section-9">When did grown-ups stop jumping?</a></li><li><a href="#section-10">References</a></li></ol></nav></details>
-        <p class="lead">Looking into trampolines, I started to see what "stamina" really is.</p>
+        <p class="lead">Looking into trampolines, I started to see what "stamina" really is.</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">In a 14-week mini-trampoline study, older adults' ability to recover their balance improved by about 35%.</span><span class="quiz-tap">Show answer</span></summary><div class="quiz-a"><p class="quiz-answer">True. After losing balance forward.</p><p class="quiz-why">Strength in the ankle-extending muscles rose about 10%. But these were older adults; it's not yet known if healthy working-age people would see the same.</p></div></details>
         <p>As kids, we jumped all the time. Over puddles, off stairs, bouncing in place for no reason at all.</p>
         <p>But as adults, we stop jumping, strangely completely. We walk. Sit. Stand. Run now and then. At the gym, we lift heavy things.</p>
         <p>But <strong>jumping has quietly disappeared from our lives.</strong></p>
@@ -96,7 +102,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p><strong>Jump → land → sink → recover your posture → jump again.</strong></p>
         <p>Calves. Thighs. Glutes. Core. And heart and lungs. On top of that, holding your posture on an unstable surface.</p>
         <p>So rather than filing trampoline exercise under aerobic exercise, strength training, or balance training, it makes more sense to think of it as <strong>exercise that uses several body functions at once.</strong></p>
-        <h2 id="section-6">6. That said, it's no cure-all</h2>
+        <details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">Research has confirmed that trampolining clearly raises bone density.</span><span class="quiz-tap">Show answer</span></summary><div class="quiz-a"><p class="quiz-answer">False. No clear difference was found.</p><p class="quiz-why">In a study of 40 women with osteopenia, strength and balance improved, but there was no clear group difference in spine or femoral neck bone density.</p></div></details><h2 id="section-6">6. That said, it's no cure-all</h2>
         <p>In a 12-week study of 40 women with osteopenia, strength, balance and other measures improved, but no clear difference between groups was found in the bone density of the lumbar spine or femoral neck.</p>
         <p>So at present, we can't say that <strong>"jumping greatly increases bone density."</strong></p>
         <p>Claims like "it gets your lymph flowing," "it detoxes you," or "it dramatically boosts immunity" also can't be said to have clinical evidence established to the same level as the heart, lung, and balance findings covered here.</p>
@@ -134,6 +140,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p><small>Note: this article introduces research on exercise and health and is not intended for medical diagnosis or treatment.</small></p>
 <div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>Press and hold to copy the link<input class="copy-url" type="text" readonly aria-label="Link to this article"></label></div></div>
 
+
+<p class="read-mark" data-total="60" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">One more <span>True or false</span></p>
+<div class="qloop" data-qloop data-exclude="trampoline" data-prefer="mini-trampoline-guide,stamina,blood-glucose"></div></section>
 <aside class="article-note" aria-label="Note">
   <p class="article-note-title">About this article</p>
   <p>This article is general information based on published research and public health sources. It is not a substitute for diagnosis or treatment by a doctor. If you are worried about your health, or have a condition or take medication, please talk to a medical professional.</p>
@@ -144,22 +154,50 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
     <p class="author-label">Written by</p>
     <p class="author-name" id="author-box-name">Mouton</p>
     <p class="author-bio">I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, and about the body and food, checking papers and data along the way. This is the English edition of a Japanese site.</p>
-    <p class="author-links"><a href="../trampoline.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-links"><a href="../operator.html">About the operator</a><a href="../trampoline.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
     <p class="author-dates">Published 2026.09.30</p>
   </div>
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card" href="mini-trampoline-guide.html">How to choose a mini trampoline for home</a><a class="reading-card" href="stamina.html">I cut back on strength training, and somehow got more stamina</a><a class="reading-card" href="blood-glucose.html">Why does blood sugar matter so much for health?</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card has-q" href="mini-trampoline-guide.html"><span class="reading-card-title">How to choose a mini trampoline for home</span><span class="reading-card-q"><b>Q.</b> A mini trampoline&#39;s weight limit is enough if it matches your body weight exactly.<em>True or false?</em></span></a><a class="reading-card" href="stamina.html"><span class="reading-card-title">I cut back on strength training, and somehow got more stamina</span></a><a class="reading-card has-q" href="blood-glucose.html"><span class="reading-card-title">Why does blood sugar matter so much for health?</span><span class="reading-card-q"><b>Q.</b> A study found walking 10 minutes after each meal curbed post-meal blood sugar better than walking 30 minutes at once.<em>True or false?</em></span></a></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">Back to all articles</a><a class="reading-return" href="index.html#body">All Body articles</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="Site map">
+  <div class="footer-map-col">
+    <p class="footer-map-h">Topics</p>
+    <ul><li><a href="index.html#philosophy">Philosophy</a></li><li><a href="index.html#body">Body</a></li><li><a href="index.html#work">Work</a></li><li><a href="index.html#food">Food &amp; Science</a></li>
+      <li><a href="index.html#journal">All articles</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Series</p>
+    <ul><li><a href="../series.html#job">Thinking about changing jobs</a></li><li><a href="../series.html#clean">Looking clean, checked</a></li><li><a href="../series.html#thinkers">Asking the philosophers</a></li><li><a href="../series.html#sleep">Sleep, checked</a></li><li><a href="../series.html#food-check">Is that health claim true?</a></li><li><a href="../series.html#habits">How people change</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Guides</p>
+    <ul><li><a href="olive-oil-guide.html">How to choose olive oil: what to look at on the label</a></li><li><a href="dark-chocolate-guide.html">How to choose dark chocolate: don&#39;t go by the cacao percentage alone</a></li><li><a href="coffee-guide.html">How to choose and brew coffee: paper filters and decaf</a></li><li><a href="protein-guide.html">How to choose protein powder: how much you need, and whey or soy</a></li><li><a href="oral-care-guide.html">How to choose tools for bad breath</a></li><li><a href="deodorant-guide.html">How to choose an antiperspirant or deodorant</a></li>
+      <li><a href="../guides.html">All guides</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">About</p>
+    <ul>
+      <li><a href="../quiz.html">True-or-false quiz</a></li>
+      <li><a href="../operator.html">About the operator</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="Site information">
-  <a href="../operator.html">About the operator (Japanese)</a>
-  <a href="../privacy.html">Privacy policy (Japanese)</a>
-  <a href="../contact.html">Contact (Japanese)</a>
+  <a href="../operator.html">About the operator</a>
+  <a href="../privacy.html">Privacy policy</a>
+  <a href="../contact.html">Contact</a>
   <a href="../index.html" hreflang="ja" lang="ja">日本語版</a>
   <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
 </nav>

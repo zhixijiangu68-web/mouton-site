@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>身体の記事 — ムートン</title>
 <meta name="description" content="体力、血糖値、匂い、口臭。なんとなくの感覚を、研究とデータでもう一度確かめ直しています。">
@@ -26,6 +28,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
@@ -39,6 +42,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -54,99 +59,203 @@
   <p class="eyebrow">Body</p>
   <h1 class="doc-title">身体</h1>
   <p>体力、血糖値、匂い、口臭。なんとなくの感覚を、研究とデータでもう一度確かめ直しています。</p>
-  <p class="topic-count">15本の記事</p>
+  <p class="topic-count">32本の記事</p>
   <div class="topic-list">
-    <a class="topic-item" data-rise href="earplug-eyemask-guide.html">
+    <a class="topic-item" data-rise href="amygdala.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">扁桃体とは<wbr>何か</span>
+      <span class="topic-excerpt">壊れた人は怖がらなかった。寝不足で約60%強く反応し、言葉にすると下がった。研究から整理する。</span>
+      <span class="topic-time">約6分</span>
+    </a>
+    <a class="topic-item" data-rise href="cleanliness.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">清潔感を<wbr>分解する</span>
+      <span class="topic-excerpt">肌の色ムラ、寝不足、ひげ、歯、服のサイズ、匂い。抽象的な清潔感を要素に分けて、研究で確かめる。</span>
+      <span class="topic-time">約9分</span>
+    </a>
+    <a class="topic-item" data-rise href="d2-receptor.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">ドーパミンを<wbr>「受け取る<wbr>側」の<wbr>話。<wbr>D2受容体</span>
+      <span class="topic-excerpt">順位が上がったサルで増え、一晩の徹夜で減った。ドーパミンを受け取るD2受容体を、研究から整理する。</span>
+      <span class="topic-time">約8分</span>
+    </a>
+    <a class="topic-item" data-rise href="dhea.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">DHEAは<wbr>「若返りホルモン」なのか</span>
+      <span class="topic-excerpt">20代前後がピーク。2年間補った試験では若返りと呼べる変化はなかった。研究と日本での扱いを整理する。</span>
+      <span class="topic-time">約5分</span>
+    </a>
+    <a class="topic-item" data-rise href="dht-5a-reductase.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">5α-リダクターゼと<wbr>DHT</span>
+      <span class="topic-excerpt">DHTはAGAの原因。でも筋肉には必須ではなかった。薄毛の遺伝子、薬の効果と副作用まで整理する。</span>
+      <span class="topic-time">約7分</span>
+    </a>
+    <a class="topic-item" data-rise href="egcg-soy-dht.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">EGCGと<wbr>大豆は、<wbr>DHTを<wbr>下げるのか</span>
+      <span class="topic-excerpt">試験管では止めたが、細胞では効かなかった。人の研究を分けて確かめる。</span>
+      <span class="topic-time">約7分</span>
+    </a>
+    <a class="topic-item" data-rise href="hypothyroid-anxiety.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">甲状腺機能低下症で、<wbr>不安は<wbr>「約4倍」か</span>
+      <span class="topic-excerpt">2015年の研究の、幅の広い数字だった。治療中の研究や19の研究のまとめも含めて整理する。</span>
+      <span class="topic-time">約7分</span>
+    </a>
+    <a class="topic-item" data-rise href="mao.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">MAO酵素とは<wbr>何か</span>
+      <span class="topic-excerpt">セロトニンやドーパミンを片づける酵素。薬、チーズ、遺伝子と環境、たばこの影響まで、研究から整理する。</span>
+      <span class="topic-time">約8分</span>
+    </a>
+    <a class="topic-item" data-rise href="meditation-headache.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">瞑想で<wbr>頭痛は<wbr>治るのか</span>
+      <span class="topic-excerpt">片頭痛の日数は、講座と差がなかった。でも生活への支障は減った。研究を分けて整理する。</span>
+      <span class="topic-time">約6分</span>
+    </a>
+    <a class="topic-item" data-rise href="oxytocin.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">オキシトシンは、<wbr>どうすれば<wbr>出るのか</span>
+      <span class="topic-excerpt">ハグ、犬、マッサージ。スプレーで信頼が高まる話は再現されなかった。研究を確かめる。</span>
+      <span class="topic-time">約7分</span>
+    </a>
+    <a class="topic-item" data-rise href="prefrontal-inflammation.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">「前頭前野の<wbr>炎症」とは<wbr>何か</span>
+      <span class="topic-excerpt">正式な病名ではない。炎症で気分が落ち、脳の働きが変わった研究から、分かっていることを整理する。</span>
+      <span class="topic-time">約6分</span>
+    </a>
+    <a class="topic-item" data-rise href="slot-addiction.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">スロットが<wbr>やめられないのは、<wbr>なぜか</span>
+      <span class="topic-excerpt">いつ当たるか分からない、惜しいハズレ、勝ちに見せかけた負け。やめにくさの正体を研究から整理する。</span>
+      <span class="topic-time">約6分</span>
+    </a>
+    <a class="topic-item" data-rise href="squat-dhea.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">スクワットで、<wbr>DHEAは<wbr>増えるのか</span>
+      <span class="topic-excerpt">上がるのは運動の直後と、筋肉の中。スクワットとDHEAの関係を研究から整理する。</span>
+      <span class="topic-time">約7分</span>
+    </a>
+    <a class="topic-item" data-rise href="squat-knee.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">スクワットは<wbr>膝に<wbr>悪いのか</span>
+      <span class="topic-excerpt">深くしゃがむのは危ない？膝はつま先より前に出すな？研究で確かめる。</span>
+      <span class="topic-time">約5分</span>
+    </a>
+    <a class="topic-item" data-rise href="testosterone.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">テストステロンを、<wbr>研究だけで<wbr>整理する</span>
+      <span class="topic-excerpt">5時間睡眠1週間で10〜15%低下。測り方、睡眠、体重、筋トレ、サプリ、補充療法まで、研究だけで整理する。</span>
+      <span class="topic-time">約11分</span>
+    </a>
+    <a class="topic-item" data-rise href="tyrosine-androgen.html" data-date="2026.10.08">
+      <span class="topic-date">2026.10.08</span>
+      <span class="topic-title">チロシンと<wbr>アンドロゲン</span>
+      <span class="topic-excerpt">ドーパミンの材料と男性ホルモンは、通り道が別。チロシンのサプリで分かっていることを研究から整理する。</span>
+      <span class="topic-time">約6分</span>
+    </a>
+    <a class="topic-item" data-rise href="earplug-eyemask-guide.html" data-date="2026.10.07">
       <span class="topic-date">2026.10.07</span>
       <span class="topic-title">耳栓と<wbr>アイマスクの<wbr>選び方</span>
       <span class="topic-excerpt">寝室の音と光をどう減らすか。耳栓の素材とアイマスクの形から選ぶ。</span>
       <span class="topic-time">約5分</span>
     </a>
-    <a class="topic-item" data-rise href="first-impression-sleep.html">
+    <a class="topic-item" data-rise href="first-impression-sleep.html" data-date="2026.10.07">
       <span class="topic-date">2026.10.07</span>
       <span class="topic-title">第一印象は<wbr>0.1秒で<wbr>決まる。<wbr>そして、<wbr>寝不足は<wbr>顔に<wbr>出る</span>
       <span class="topic-excerpt">顔を見て判断するのに、0.1秒あれば足りていた。寝不足の顔は、他人の目にどう映るのか。</span>
       <span class="topic-time">約5分</span>
     </a>
-    <a class="topic-item" data-rise href="blue-light.html">
+    <a class="topic-item" data-rise href="sunscreen-guide.html" data-date="2026.10.07">
+      <span class="topic-date">2026.10.07</span>
+      <span class="topic-title">日焼け止めの<wbr>選び方</span>
+      <span class="topic-excerpt">SPF50でも、量が足りなければ表示どおりには守れない。研究と環境省の目安から、選び方と塗り方を整理する。</span>
+      <span class="topic-time">約4分</span>
+    </a>
+    <a class="topic-item" data-rise href="blue-light.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">ブルーライトカットの<wbr>眼鏡は、<wbr>目の<wbr>疲れに<wbr>効くのか</span>
       <span class="topic-excerpt">系統的レビューと眼科の学会の見解から、画面を見る目の疲れへの対策を整理する。</span>
       <span class="topic-time">約4分</span>
     </a>
-    <a class="topic-item" data-rise href="chronotype.html">
+    <a class="topic-item" data-rise href="chronotype.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">朝型と<wbr>夜型は、<wbr>変えられるのか</span>
       <span class="topic-excerpt">遺伝、年齢、そして光。朝型・夜型はどこまで決まっていて、どこから動かせるのか。</span>
       <span class="topic-time">約4分</span>
     </a>
-    <a class="topic-item" data-rise href="deodorant-guide.html">
+    <a class="topic-item" data-rise href="deodorant-guide.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">制汗剤と<wbr>デオドラントの<wbr>選び方</span>
       <span class="topic-excerpt">汗を抑えたいのか、匂いを抑えたいのか。有効成分の見方と、アルミニウムの安全性の評価から整理する。</span>
       <span class="topic-time">約4分</span>
     </a>
-    <a class="topic-item" data-rise href="mini-trampoline-guide.html">
+    <a class="topic-item" data-rise href="mini-trampoline-guide.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">家庭用ミニトランポリンの<wbr>選び方</span>
       <span class="topic-excerpt">置き場所と直径、耐荷重、ゴムかバネか、手すりの有無。買う前に決めておくことを整理する。</span>
       <span class="topic-time">約6分</span>
     </a>
-    <a class="topic-item" data-rise href="nap.html">
+    <a class="topic-item" data-rise href="nap.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">昼寝は、<wbr>何分が<wbr>いいのか</span>
       <span class="topic-excerpt">長さを変えて比べた実験と、カフェインを組み合わせた実験から、昼寝のとり方を整理する。</span>
       <span class="topic-time">約3分</span>
     </a>
-    <a class="topic-item" data-rise href="oral-care-guide.html">
+    <a class="topic-item" data-rise href="oral-care-guide.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">口臭ケアの<wbr>道具の<wbr>選び方</span>
       <span class="topic-excerpt">舌ブラシ、歯間ブラシ、洗口液。系統的レビューと公的な情報から、選び方と使い方を整理する。</span>
       <span class="topic-time">約4分</span>
     </a>
-    <a class="topic-item" data-rise href="weekend-sleep.html">
+    <a class="topic-item" data-rise href="weekend-sleep.html" data-date="2026.10.06">
       <span class="topic-date">2026.10.06</span>
       <span class="topic-title">休日の<wbr>「寝だめ」で、<wbr>睡眠不足は<wbr>取り返せるのか</span>
       <span class="topic-excerpt">寿命の研究と代謝の実験は、違う答えを出していた。二つを並べて、どこまで言えるかを確かめる。</span>
       <span class="topic-time">約5分</span>
     </a>
-    <a class="topic-item" data-rise href="halitosis.html">
+    <a class="topic-item" data-rise href="halitosis.html" data-date="2026.10.05">
       <span class="topic-date">2026.10.05</span>
       <span class="topic-title">口臭の<wbr>多くは<wbr>「胃」ではなく、<wbr>口の<wbr>中から<wbr>生まれる</span>
       <span class="topic-excerpt">2,000人の口臭外来データから、舌苔・歯周病・唾液と、研究で根拠のある対策を考える。</span>
       <span class="topic-time">約13分</span>
     </a>
-    <a class="topic-item" data-rise href="odor-care.html">
+    <a class="topic-item" data-rise href="odor-care.html" data-date="2026.10.05">
       <span class="topic-date">2026.10.05</span>
       <span class="topic-title">匂い<wbr>ケアは<wbr>「脇と<wbr>足の<wbr>裏」から。<wbr>原因が<wbr>違えば、<wbr>対策も<wbr>違う</span>
       <span class="topic-excerpt">脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。</span>
       <span class="topic-time">約8分</span>
     </a>
-    <a class="topic-item" data-rise href="smell.html">
+    <a class="topic-item" data-rise href="smell.html" data-date="2026.10.05">
       <span class="topic-date">2026.10.05</span>
       <span class="topic-title">匂いは、<wbr>人の<wbr>印象を<wbr>どこまで<wbr>決めているのか</span>
       <span class="topic-excerpt">「なんとなく感じがいい」は、匂いにも左右される。好感度、感情、魅力、フェロモン、記憶を研究から考える。</span>
       <span class="topic-time">約8分</span>
     </a>
-    <a class="topic-item" data-rise href="blood-glucose.html">
+    <a class="topic-item" data-rise href="blood-glucose.html" data-date="2026.10.01">
       <span class="topic-date">2026.10.01</span>
       <span class="topic-title">血糖値は、<wbr>なぜ<wbr>これほど<wbr>健康に<wbr>重要なのか</span>
       <span class="topic-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</span>
       <span class="topic-time">約6分</span>
     </a>
-    <a class="topic-item" data-rise href="trampoline.html">
+    <a class="topic-item" data-rise href="trampoline.html" data-date="2026.09.30">
       <span class="topic-date">2026.09.30</span>
       <span class="topic-title">大人は、<wbr>いつから<wbr>跳ばなくなったのか。</span>
       <span class="topic-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</span>
       <span class="topic-time">約8分</span>
     </a>
-    <a class="topic-item" data-rise href="stamina.html">
+    <a class="topic-item" data-rise href="stamina.html" data-date="2026.09.30">
       <span class="topic-date">2026.09.30</span>
       <span class="topic-title">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</span>
       <span class="topic-excerpt">強さではなく、日常に残る「余力」から体力を考える。</span>
       <span class="topic-time">約3分</span>
     </a>
   </div>
+  <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">このテーマから、1問 <span>○×クイズ</span></p>
+  <div class="qloop" data-qloop data-prefer="amygdala,cleanliness,d2-receptor,dhea,dht-5a-reductase,egcg-soy-dht,hypothyroid-anxiety,mao,meditation-headache,oxytocin,prefrontal-inflammation,slot-addiction,squat-dhea,squat-knee,testosterone,tyrosine-androgen,earplug-eyemask-guide,first-impression-sleep,sunscreen-guide,blue-light,chronotype,deodorant-guide,mini-trampoline-guide,nap,oral-care-guide,weekend-sleep,halitosis,odor-care,smell,blood-glucose,trampoline,stamina,"></div></section>
   <nav class="topic-others" aria-label="ほかのテーマ"><a href="topic-philosophy.html">哲学・生き方</a><a href="topic-work.html">仕事・働き方</a><a href="topic-food.html">食事・化学</a>
     <a href="index.html#journal">すべての記事</a>
   </nav>
@@ -154,6 +263,35 @@
 
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

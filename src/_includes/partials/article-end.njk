@@ -1,3 +1,9 @@
+{% include "partials/series-box.njk" %}
+<p class="read-mark" data-total="{{ collections.articles.length }}" aria-live="polite"></p>
+{%- if quizzes.length %}
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="{{ page.fileSlug }}" data-prefer="{{ (related or []) | join(',') }}{% for g in collections.articles | guideCards %},{{ g.page.fileSlug }}{% endfor %}"></div></section>
+{%- endif %}
 {%- if health %}
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>

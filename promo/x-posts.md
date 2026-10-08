@@ -1270,6 +1270,266 @@ SNSを1日30分に制限したら、3週間でどうなった？
 「耳栓とアイマスクの選び方」の記事はこちら → https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide&utm_content=reply
 ```
 
+### SS 日焼け止めの選び方（sunscreen-guide）
+
+10/7 に加わった記事。順番表にはまだ入れていない（入れる枠はオーナーと X担当で決める）。
+
+#### SS-1 ○×：SPF50を塗ればSPF50？
+```
+○×クイズ。
+
+SPF50の日焼け止めを塗れば、SPF50の効果がある。
+
+答えは×。SPFは肌1cm²に2mg塗って測った数字。海辺で人に自分で塗ってもらった研究では、実際の量は平均で約0.5mg、4分の1ほどだった。
+```
+リプライ（自分の投稿に返信）：
+```
+「日焼け止めの選び方」の記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
+
+#### SS-2 意外な数字：毎日塗ると老化の進みが24%少なかった（新記事の告知）
+型：**本文リンク**
+```
+日焼け止めを毎日塗った人は、4年半で肌の老化の進みが24%少なかった。
+
+903人を「毎日塗る」と「好きなときに塗る」に分けた試験の結果。大事なのは強さより、毎日ちゃんとした量を塗ること。
+
+「日焼け止めの選び方」を新しく書いた。
+
+https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=body
+```
+
+### BM お金について最初に読む本（books-money）
+
+10/7 に加わった記事。順番表にはまだ入れていない（入れる枠はオーナーと X担当で決める）。
+
+#### BM-1 ○×：アマチュアのテニスは「ミス」で決まる
+```
+クイズ。
+
+アマチュアのテニスの試合で、勝ち負けを決めているのは「いいショット」か「ミス」か。
+
+答えはミス。プロはいいショットで点を取るが、アマチュアは相手のミスで点が入ることのほうが多い。投資の本『敗者のゲーム』の題名は、この話から来ている。
+```
+リプライ（自分の投稿に返信）：
+```
+「お金について最初に読む本」の記事はこちら → https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=reply
+```
+
+#### BM-2 【PR】考える順番別の4冊（新記事の告知）
+型：**本文リンク**
+```
+【PR】お金の本は、考える順番で選ぶ。
+
+1. 全体像：お金の大学
+2. 増やし方：敗者のゲーム
+3. 心理：サイコロジー・オブ・マネー
+4. 使い方：DIE WITH ZERO
+
+全部読まなくていい。いま迷っている順番の1冊から。
+
+https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=body
+```
+
+## ○×クイズのページ（quiz.html）
+
+10/7 に作ったページ。記事の事実から作った○×問題を10問ランダムに出し、結果を X でシェアできる。まちがえた問題の記事へ進める。順番表にはまだ入れていない。
+シェア画像は「○×クイズ10問。あなたは何問当てられる？」のカード。
+
+#### QZ-1 3問だけ見せて、続きはページで（本文リンク）
+```
+○×クイズ。いくつ分かる？
+
+1. 昼寝は長いほど回復する
+2. ジーンズを15か月洗わなくても、細菌の数は洗った後とほとんど変わらなかった
+3. 制汗剤とデオドラントは同じもの
+
+答えと残りの問題はこちら。全部、記事に書いた研究から作った。
+
+https://moutonarchive.com/quiz.html?utm_source=x&utm_medium=social&utm_campaign=quiz&utm_content=body
+```
+（答え：1 ×、2 ○、3 ×。どれも nap・denim-leather・deodorant-guide の本文にある）
+
+#### QZ-2 何問当てられるか（本文リンク）
+```
+自分のサイトの記事から、○×クイズを131問作った。
+
+日焼け止め、睡眠、コーヒー、口臭、転職、哲学。ランダムに10問出る。
+
+僕の記事を読んでいなくても、半分は当たるはず。
+
+https://moutonarchive.com/quiz.html?utm_source=x&utm_medium=social&utm_campaign=quiz&utm_content=body
+```
+
+## 追加のクイズ案（2026-10-08）
+
+選び方の記事のクイズを優先して作った10本。**順番表にはまだ入れていない**（入れる枠はオーナーの承認後に X担当が決める）。どれも型は**リプリンク**で、答えは本文の最後に書いている。数字と事実は元の記事の本文と照合済み。本を名指しする3本（BM-3・BH-7・BC-6）は先頭に【PR】を付けている。
+
+### SS-3 日焼け止めの選び方（sunscreen-guide）｜○×：SPFが大きければUV-Aも防げる？
+型：**リプリンク**
+```
+○×クイズ。
+
+SPFの数字が大きい日焼け止めなら、肌の奥まで届く紫外線（UV-A）もしっかり防げる。
+
+答えは×。SPFはおもにUV-B（赤くなる日焼け）を防ぐ力。UV-AはPAの「+」の数で見る。
+
+見た目の老化が気になるなら、PAの表示も確かめたい。
+```
+リプライ（自分の投稿に返信）：
+```
+「日焼け止めの選び方」の記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
+
+### CH-7 ダークチョコの選び方（dark-chocolate-guide）｜○×：オーガニックほど重金属は少ない？
+型：**リプリンク**
+```
+○×クイズ。
+
+オーガニックのダークチョコほど、鉛やカドミウムは少ない。
+
+答えは×。アメリカで72のカカオ製品を調べた研究では、オーガニックだからといって少ないわけではなかった。
+
+日本の製品にそのまま当てはまるとは限らないけど、「オーガニックなら安心」とは言い切れない。
+```
+リプライ（自分の投稿に返信）：
+```
+「ダークチョコの選び方」の記事はこちら → https://moutonarchive.com/dark-chocolate-guide.html?utm_source=x&utm_medium=social&utm_campaign=dark-chocolate-guide&utm_content=reply
+```
+
+### ES-6 耳栓とアイマスクの選び方（earplug-eyemask-guide）｜クイズ：アイマスクで光が入りやすい場所
+型：**リプリンク**
+```
+クイズ。
+
+アイマスクをしていても、光がいちばん入りやすいのはどこ？
+
+答えは、鼻の横。
+
+選ぶときは、鼻の部分に布が足してあるか、ベルトの長さを調整できるかを見る。暗くして眠るなら、すき間から。
+```
+リプライ（自分の投稿に返信）：
+```
+「耳栓とアイマスクの選び方」の記事はこちら → https://moutonarchive.com/earplug-eyemask-guide.html?utm_source=x&utm_medium=social&utm_campaign=earplug-eyemask-guide&utm_content=reply
+```
+
+### BM-3 お金について最初に読む本（books-money）｜○×：お金は知識の量で決まる？
+型：**リプリンク**
+```
+【PR】○×クイズ。
+
+お金でうまくいくかどうかは、知識の量で決まる。
+
+『サイコロジー・オブ・マネー』の答えは×。決めるのは知識の量より、ふるまい方。
+
+お金の本を、考える順番別に4冊まとめた。この本は3番目、「お金と心の関係」の1冊。
+```
+リプライ（自分の投稿に返信）：
+```
+「お金について最初に読む本」の記事はこちら → https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=reply
+```
+
+### BH-7 習慣を変えたいときに読む本（books-habits）｜○×：グリットは成果と強く関係していた？
+型：**リプリンク**
+```
+【PR】○×クイズ。
+
+「やり抜く力（グリット）」は、成果と強く関係していた。
+
+答えは×。88の研究をまとめた分析では、関係は中程度より弱く、性格の「誠実性」とかなり重なっていた。
+
+『やり抜く力 GRIT』は、成功の決め手ではなく、続ける工夫の一つとして読みたい。
+```
+リプライ（自分の投稿に返信）：
+```
+「習慣を変えたいときに読む本」の記事はこちら → https://moutonarchive.com/books-habits.html?utm_source=x&utm_medium=social&utm_campaign=books-habits&utm_content=reply
+```
+
+### BC-6 転職を考えはじめたときに読む本（books-career）｜○×：LIFE SHIFTは人生を3段階で考える本？
+型：**リプリンク**
+```
+【PR】○×クイズ。
+
+『LIFE SHIFT』は、人生を「教育→仕事→引退」の3段階で考えようという本だ。
+
+答えは×。むしろ、3段階で考えない、という本。
+
+そう見ると、目の前の転職も、何十年かの中の一つの移動になる。
+```
+リプライ（自分の投稿に返信）：
+```
+「転職を考えはじめたときに読む本」の記事はこちら → https://moutonarchive.com/books-career.html?utm_source=x&utm_medium=social&utm_campaign=books-career&utm_content=reply
+```
+
+### SV-1 お金が貯まらないのは、意志が弱いからではない（saving-default）｜○×：「最初から加入」でも加入率は変わらない？
+型：**リプリンク**
+```
+○×クイズ。
+
+積立制度を「最初から加入。やめたい人だけ手続き」に変えても、加入率はほとんど変わらない。
+
+答えは×。アメリカの大企業で、37%から86%に上がった。
+
+制度の中身は同じ。変えたのは「何もしなかったときの扱い」だけ。
+```
+リプライ（自分の投稿に返信）：
+```
+「お金が貯まらないのは、意志が弱いからではない」の記事はこちら → https://moutonarchive.com/saving-default.html?utm_source=x&utm_medium=social&utm_campaign=saving-default&utm_content=reply
+```
+
+### SV-2 お金が貯まらないのは、意志が弱いからではない（saving-default）｜意外な数字：積立の割合3.5%→13.6%
+型：**リプリンク**
+```
+クイズ。
+
+今の手取りは減らさず、「次の昇給分の一部を積立に回す」と先に約束する。
+
+この仕組みで、積立の割合はどう変わった？
+
+答えは、平均3.5%から13.6%。
+
+貯められないのは、意志が弱いからとは限らない。仕組みの問題かもしれない。
+```
+リプライ（自分の投稿に返信）：
+```
+「お金が貯まらないのは、意志が弱いからではない」の記事はこちら → https://moutonarchive.com/saving-default.html?utm_source=x&utm_medium=social&utm_campaign=saving-default&utm_content=reply
+```
+
+### CL-1 清潔感を分解する（cleanliness）｜クイズ：女性がいちばん魅力的と評価したひげ
+型：**リプリンク**
+```
+クイズ。
+
+男性のひげで、女性がいちばん魅力的と評価したのは？
+
+・ひげなし
+・5日分の無精ひげ
+・10日分の無精ひげ
+・あごひげ
+
+答えは10日分。いちばん低かったのは5日分。伸びかけの短いひげは、得をしにくかった。
+```
+リプライ（自分の投稿に返信）：
+```
+「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
+```
+
+### CL-2 清潔感を分解する（cleanliness）｜○×：同じに見えるスーツなら印象は変わらない？
+型：**リプリンク**
+```
+○×クイズ。
+
+ほとんど同じに見えるスーツなら、5秒見ただけでは印象は変わらない。
+
+答えは×。顔の写らない写真でも、体に合わせて仕立てたスーツのほうが、自信がありそう、成功していそう、収入が高そうと評価された。
+
+清潔感は、サイズから。
+```
+リプライ（自分の投稿に返信）：
+```
+「清潔感を分解する」の記事はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
+```
+
 ## 読み物（読者を増やす記事）
 
 選び方の記事へつながる記事（R10〜R14）も足しています。

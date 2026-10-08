@@ -186,5 +186,128 @@ document.addEventListener('click',e=>{
 // GA4: count quiz reveals per article.
 document.querySelectorAll('details.quiz').forEach(d=>d.addEventListener('toggle',()=>{if(d.open&&typeof window.gtag==='function')window.gtag('event','quiz_open',{article:location.pathname});},{once:true}));
 
+// Quizzes whose answer is ○ or ×: guess with two buttons first, then see the answer.
+document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
+ const en=document.documentElement.lang==='en';
+ const tap=d.querySelector('.quiz-tap');
+ if(!tap)return;
+ const row=document.createElement('span');
+ row.className='quiz-ox';row.setAttribute('role','group');row.setAttribute('aria-label',en?'Your answer':'答えを選ぶ');
+ row.innerHTML=`<button type="button" class="qloop-choice" data-v="1" aria-label="${en?'True':'○（正しい）'}">○</button><button type="button" class="qloop-choice" data-v="0" aria-label="${en?'False':'×（まちがい）'}">×</button>`;
+ tap.replaceWith(row);
+ const verdict=document.createElement('p');verdict.className='qloop-verdict';
+ d.querySelector('.quiz-a').prepend(verdict);
+ row.addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  e.preventDefault();
+  if(d.dataset.done)return;d.dataset.done='1';
+  const right=b.dataset.v===d.dataset.a;
+  row.querySelectorAll('button').forEach(x=>{x.disabled=true;if(x.dataset.v===d.dataset.a)x.classList.add('is-answer');});
+  b.classList.add(right?'is-right':'is-wrong');
+  verdict.classList.add(right?'is-right':'is-wrong');
+  verdict.textContent=right?(en?'Correct':'正解'):(en?'Not quite':'ざんねん');
+  d.open=true;
+  if(typeof window.gtag==='function')window.gtag('event','quiz_answer',{correct:right,article:location.pathname.replace(/^.*\//,'').replace('.html',''),where:'article-top'});
+ });
+ // The summary itself no longer toggles; the buttons do.
+ d.querySelector('summary').addEventListener('click',e=>{if(!d.dataset.done)e.preventDefault();});
+});
+
+// Reading history, kept only in this browser (localStorage): an article counts as read
+// once its ending scrolls into view. Lists then mark what has been read.
+(()=>{
+ const en=document.documentElement.lang==='en';
+ const key=en?'mouton.readEn':'mouton.read';
+ const get=()=>{try{return JSON.parse(localStorage.getItem(key)||'{}');}catch{return {};}};
+ const slugOf=href=>{const m=/([a-z0-9-]+)\.html(?:[?#].*)?$/.exec(href||'');return m?m[1]:'';};
+ const read=get();
+ const mark=()=>{
+  document.querySelectorAll('.journal-link,.topic-item,.reading-card,.guide-card').forEach(a=>{
+   if(read[slugOf(a.getAttribute('href'))])a.classList.add('is-read');
+  });
+  // NEW: the five newest articles in a list, if published in the last 7 days and not read yet.
+  const week=Date.now()-7*864e5,when=a=>new Date(a.dataset.date.replace(/\./g,'-')).getTime();
+  [...document.querySelectorAll('.journal-link[data-date],.topic-item[data-date]')]
+   .sort((a,b)=>when(b)-when(a)).slice(0,5)
+   .forEach(a=>{if(when(a)>week&&!a.classList.contains('is-read'))a.classList.add('is-new');});
+  const prog=document.querySelector('.read-progress');
+  const n=Object.keys(read).length;
+  if(prog&&n){
+   const total=+prog.dataset.total||n;
+   prog.hidden=false;
+   prog.querySelector('i').style.width=Math.min(100,n/total*100).toFixed(1)+'%';
+   prog.querySelector('.read-progress-text').textContent=`${en?'Read':'読んだ記事'} ${Math.min(n,total)} / ${total}`;
+  }
+ };
+ mark();
+ const end=document.querySelector('.read-mark');
+ if(!end||!('IntersectionObserver' in window))return;
+ const slug=slugOf(location.pathname)||'';
+ if(!slug)return;
+ const io=new IntersectionObserver(es=>{
+  if(!es.some(e=>e.isIntersecting))return;
+  io.disconnect();
+  const first=!read[slug];
+  read[slug]=Date.now();
+  try{localStorage.setItem(key,JSON.stringify(read));}catch{}
+  const total=+end.dataset.total||0;
+  const n=Object.keys(read).length;
+  end.innerHTML=`<span class="read-mark-check" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M3 8.5l3.2 3L13 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${en?'Finished':'読了'}<span class="read-mark-count">${en?'Articles read on Mouton':'ムートンで読んだ記事'} <b>${Math.min(n,total)}</b> / ${total}</span>`;
+  end.classList.add('is-on');
+  if(first&&typeof window.gtag==='function')window.gtag('event','article_read',{article:slug,count:n});
+ },{rootMargin:'0px 0px -15% 0px'});
+ io.observe(end);
+})();
+
+// "Pick one for me": a short shuffle, then one article (unread ones first).
+(()=>{
+ const boxes=[...document.querySelectorAll('[data-lucky]')];
+ if(!boxes.length)return;
+ const root=document.documentElement.dataset.root||'';
+ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ let data=null;
+ const SLUG=/^[a-z0-9-]+$/;
+ const get=()=>fetch(root+'picks.json',{credentials:'same-origin'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+ // A failed request is retried once and never cached; bad entries are dropped.
+ const load=()=>data||(data=get().catch(()=>new Promise(ok=>setTimeout(ok,800)).then(get))
+  .then(list=>(Array.isArray(list)?list:[]).filter(a=>a&&SLUG.test(a.s)&&typeof a.t==='string'))
+  .catch(e=>{data=null;throw e;}));
+ const here=(/([a-z0-9-]+)\.html$/.exec(location.pathname)||[])[1];
+ boxes.forEach(box=>{
+  const btn=box.querySelector('.lucky-btn'),out=box.querySelector('.lucky-out');
+  let busy=false;
+  btn.addEventListener('click',()=>{
+   if(busy)return;busy=true;
+   load().then(list=>{
+    let read={};try{read=JSON.parse(localStorage.getItem('mouton.read')||'{}');}catch{}
+    const pool=list.filter(a=>a.s!==here);
+    const unread=pool.filter(a=>!read[a.s]);
+    const from=unread.length?unread:pool;
+    const pick=from[Math.floor(Math.random()*from.length)];
+    if(!pick){busy=false;return;}
+    const land=()=>{
+     out.innerHTML=`<a class="lucky-card" href="${root}${pick.s}.html"><span class="lucky-title">${esc(pick.t)}</span>`
+      +(pick.q?`<span class="lucky-q"><b>Q.</b> ${esc(pick.q)}<em>○か×か？</em></span>`:'')
+      +`<span class="lucky-meta">${Number.isFinite(+pick.m)&&+pick.m>0?`約${+pick.m}分 ・ `:''}読む <span aria-hidden="true">→</span></span></a>`;
+     out.classList.add('is-landed');
+     btn.innerHTML='もう一回 <span aria-hidden="true">↻</span>';
+     busy=false;
+     if(typeof window.gtag==='function')window.gtag('event','lucky_pick',{article:pick.s,where:location.pathname});
+    };
+    out.classList.remove('is-landed');
+    if(reduce){land();return;}
+    // Titles flick past and slow down before landing.
+    let i=0;const steps=11;
+    const tick=()=>{
+     const a=pool[Math.floor(Math.random()*pool.length)];
+     out.innerHTML=`<span class="lucky-card is-spinning"><span class="lucky-title">${esc(a.t)}</span></span>`;
+     if(++i<steps)setTimeout(tick,40+i*i*4);else setTimeout(land,120);
+    };
+    tick();
+   }).catch(()=>{busy=false;});
+  });
+ });
+})();
 // Before/after slider (making-*.html): the range input moves the divider.
 document.querySelectorAll('.mk-cmp').forEach(c=>{const r=c.querySelector('.mk-cmp-range');if(r)r.addEventListener('input',()=>c.style.setProperty('--pos',r.value+'%'));});

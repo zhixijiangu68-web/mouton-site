@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>SNSを見る時間は、減らしたほうがいいのか — ムートン</title>
 <meta name="description" content="気づくとSNSを開いている。見る時間を減らすと、気分は変わるのか。SNSの時間を制限した実験と、Facebookを4週間やめてもらった大規模な実験から、やめるのではなく、減らすという選択を考える。">
@@ -50,6 +52,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SNSを見る時間は、減らしたほうがいいのか","description":"気づくとSNSを開いている。見る時間を減らすと、気分は変わるのか。SNSの時間を制限した実験と、Facebookを4週間やめてもらった大規模な実験から、やめるのではなく、減らすという選択を考える。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/social-media-time.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"SNSを見る時間は、減らしたほうがいいのか","item":"https://moutonarchive.com/social-media-time.html"}]}</script>
@@ -65,6 +68,8 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -76,7 +81,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/social-media-time.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">SNSを見る時間は、減らしたほうがいいのか</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / MIND</div>
 <div class="meta">2026.10.06</div>
 <h1>SNSを<wbr>見る<wbr>時間は、<wbr>減らした<wbr>ほうが<wbr>いいのか</h1>
@@ -86,7 +91,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <div class="hero-line"></div>
 
 <article>
-<p class="lead"><strong>電車を待つ数分、寝る前の数分。気づくと、指がSNSを開いている。</strong></p>
+<p class="lead"><strong>電車を待つ数分、寝る前の数分。気づくと、指がSNSを開いている。</strong></p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">SNSを各10分までに制限した大学生は、3週間後に孤独感と抑うつが下がっていた。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。下がっていた。</p><p class="quiz-why">143人の実験。ただし大学生だけが対象で期間も3週間と短く、誰にでも同じ変化が起きるとは言い切れない。</p></div></details>
 
 <p>見終わったあとに残るのは、少しの疲れと、少しの焦りだ。<a href="comparison.html">「人と比べるのを、やめることはできるのか」</a>では、SNSは「上ばかりが見える場所」だと書いた。</p>
 
@@ -100,7 +105,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <p>ただし、これは大学生だけを対象にした実験で、期間も3週間と短い。誰にでも同じ変化が起きるとは言い切れない。</p>
 
-<h2 id="section-2">やめた<wbr>人は、<wbr>少しだけ幸せに<wbr>なっていた</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">Facebookを4週間止めた人は、ニュースの知識が増えていた。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。少し減っていた。</p><p class="quiz-why">止めた人は幸福感がわずかに高くなった一方、ニュースの知識は少し減った。SNSは悪いことだけをしているわけではない。</p></div></details><h2 id="section-2">やめた<wbr>人は、<wbr>少しだけ幸せに<wbr>なっていた</h2>
 
 <p>もっと大きな実験もある。アメリカで、Facebookを使っている人たちに、お金を払って<strong>4週間アカウントを止めてもらった</strong>実験だ <a href="#ref-2">[2]</a>。</p>
 
@@ -142,6 +147,10 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
 
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="social-media-time" data-prefer="comparison,doing-nothing,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+
 
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
@@ -155,13 +164,43 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="comparison.html">人と<wbr>比べるのを、<wbr>やめる<wbr>ことは<wbr>できるのか</a><a class="reading-card" href="doing-nothing.html">何もしない<wbr>時間は、<wbr>本当に<wbr>無駄なのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="comparison.html" data-slug="comparison"><span class="reading-card-title">人と比べるのを、やめることはできるのか</span><span class="reading-card-q"><b>Q.</b> 人がつい他人と比べてしまうのは、はっきりした基準がないときだ、という理論がある。<em>○か×か？</em></span></a><a class="reading-card has-q" href="doing-nothing.html" data-slug="doing-nothing"><span class="reading-card-title">何もしない時間は、本当に無駄なのか</span><span class="reading-card-q"><b>Q.</b> 物語を覚えた直後に10分休んだ高齢者は、7日後の記憶成績も高かった。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article>
 </main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

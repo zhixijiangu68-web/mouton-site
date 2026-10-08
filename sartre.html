@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>人間は、自由の刑に処されている。サルトルの実存主義 — ムートン</title>
 <meta name="description" content="自由は、うれしいものなのか、重いものなのか。「実存は本質に先立つ」「人間は自由の刑に処されている」と語った、サルトルの1945年の講演から、自分で選ぶことの重さを考える。">
@@ -50,6 +52,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"人間は、自由の刑に処されている。サルトルの実存主義","description":"自由は、うれしいものなのか、重いものなのか。「実存は本質に先立つ」「人間は自由の刑に処されている」と語った、サルトルの1945年の講演から、自分で選ぶことの重さを考える。","inLanguage":"ja","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/sartre.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"人間は、自由の刑に処されている。サルトルの実存主義","item":"https://moutonarchive.com/sartre.html"}]}</script>
@@ -65,6 +68,8 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -76,17 +81,17 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/sartre.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">人間は、自由の刑に処されている</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / PHILOSOPHY</div>
 <div class="meta">2026.10.07</div>
 <h1>人間は、<wbr>自由の<wbr>刑に<wbr>処されている。<wbr>サルトルの<wbr>実存主義</h1>
-<p class="reading-time">約4分で読めます（目安）</p>
+<p class="reading-time">約4分で読めます（目安）</p><p class="series-tag"><a href="#series"><span>連載</span>哲学者に聞く<em>4 / 5</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="deck">自由は、ほしいものだと思っていた。でもサルトルは、自由を「刑」と呼んだ。選ばずにいることは、できないからだ。</p>
 <div class="hero-line"></div>
 
 <article>
-<p class="lead"><strong>転職するか、残るか。誰と生きるか。何をして生きるか。誰かが正解を決めてくれたら、どれだけ楽だろうと思うことがある。</strong></p>
+<p class="lead"><strong>転職するか、残るか。誰と生きるか。何をして生きるか。誰かが正解を決めてくれたら、どれだけ楽だろうと思うことがある。</strong></p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">相談に来た教え子に、サルトルは「どちらを選ぶべきか」をはっきり示した。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。「君は自由だ。選べ」と答えた。</p><p class="quiz-why">兄の仇を討つか、母のそばに残るか。サルトルは答えを出さず、「君は自由だ。選べ。つまり、つくり出せ」と答えた。</p></div></details>
 
 <p>1945年10月29日、パリ。哲学者ジャン＝ポール・サルトルは「実存主義はヒューマニズムである」という講演をした。翌年に本として出たこの講演は、実存主義を世界に広めた一冊になった <a href="#ref-1">[1]</a>。</p>
 
@@ -113,7 +118,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <p>「自分はこういう人間だ」は、最初から決まっているものではない。<a href="identity.html">「あなたはどんな人間になりたいですか？」</a>で、行動の前に「どんな人間として生きたいか」を決めると書いたのは、たぶんこのことに近い。</p>
 
-<h2 id="section-3">なぜ、<wbr>自由が<wbr>「刑」なのか</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">サルトルの言う「自由の刑」とは、迷って何もしなければ責任を負わずに済む、という意味だ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。何もしないのも選択。</p><p class="quiz-why">選ばないことはできず、迷って何もしないことも一つの選択になる。言い訳に使える「本質」がないから選択から逃げられない。</p></div></details><h2 id="section-3">なぜ、<wbr>自由が<wbr>「刑」なのか</h2>
 
 <p>ここまで聞くと、明るい話に聞こえる。何にでもなれるのだから。</p>
 
@@ -157,6 +162,24 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>4 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#thinkers">哲学者に聞く</a></p>
+  <p class="series-intro">ストア派、ニーチェ、カミュ、サルトル。2000年分の哲学者に、いまの悩みを持っていって聞いてみる連載です。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="stoicism.html">変えられないことで、悩みすぎていないか</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="nietzsche.html">神は死んだ。それでも、なぜ生きるのか。</a></li>
+    <li><span class="series-n">3</span><a class="series-name" href="camus-sisyphus.html">毎日同じことの繰り返しでも、幸せでいられるのか</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">4</span><span class="series-name">人間は、自由の刑に処されている</span></li>
+    <li><span class="series-n">5</span><a class="series-name" href="books-philosophy.html">生き方を考えたいときに読む本</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="camus-sisyphus.html"><span>← 前の回</span>毎日同じことの繰り返しでも、幸せでいられるのか</a><a class="series-next" href="books-philosophy.html"><span>次の回 →</span>生き方を考えたいときに読む本</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="sartre" data-prefer="freedom,identity,nietzsche,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -171,13 +194,43 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="freedom.html">愛ではなく、<wbr>自由を<wbr>求める</a><a class="reading-card" href="identity.html">あなたは<wbr>どんな<wbr>人間に<wbr>なりたいですか？</a><a class="reading-card" href="nietzsche.html">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="freedom.html" data-slug="freedom"><span class="reading-card-title">愛ではなく、自由を求める</span><span class="reading-card-q"><b>Q.</b> ショーペンハウアーは、人生を苦痛と退屈の間を揺れ動く振り子になぞらえた。<em>○か×か？</em></span></a><a class="reading-card has-q" href="identity.html" data-slug="identity"><span class="reading-card-title">あなたはどんな人間になりたいですか？</span><span class="reading-card-q"><b>Q.</b> 「今日から私はこういう人間だ」と宣言すれば、人は変わる。<em>○か×か？</em></span></a><a class="reading-card has-q" href="nietzsche.html" data-slug="nietzsche"><span class="reading-card-title">神は死んだ。それでも、なぜ生きるのか。</span><span class="reading-card-q"><b>Q.</b> ニーチェの「神は死んだ」は、単に「神なんて存在しない」という意味だ。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article>
 </main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

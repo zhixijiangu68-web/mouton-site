@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>オリーブオイルの選び方。ラベルのどこを見ればいいのか — ムートン</title>
 <meta name="description" content="「エキストラバージン」と書いてあれば安心なのか。国際規格と日本のJAS規格の違い、光による劣化の研究から、店頭でラベルのどこを見て選べばいいかを5つに整理する。">
@@ -43,6 +45,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"オリーブオイルの選び方。ラベルのどこを見ればいいのか","description":"「エキストラバージン」と書いてあれば安心なのか。国際規格と日本のJAS規格の違い、光による劣化の研究から、店頭でラベルのどこを見て選べばいいかを5つに整理する。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/olive-oil-guide.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"食事・化学","item":"https://moutonarchive.com/topic-food.html"},{"@type":"ListItem","position":3,"name":"オリーブオイルの選び方。ラベルのどこを見ればいいのか","item":"https://moutonarchive.com/olive-oil-guide.html"}]}</script>
@@ -58,6 +61,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -69,11 +74,11 @@
 </div>
 
 <div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a><a class="cover-lang" href="en/olive-oil-guide.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="guides.html">選び方</a></li><li><span aria-current="page">オリーブオイルの選び方。ラベルのどこを見ればいいのか</span></li></ol></nav>
 <div class="meta">2026.10.06 / FOOD &amp; SCIENCE</div><h1>オリーブオイルの<wbr>選び方。<wbr>ラベルの<wbr>どこを<wbr>見ればいいのか</h1><p class="reading-time">約5分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead">「オリーブ油は、本当に身体にいいのか」を調べたとき、研究で使われていたのはエキストラバージンオリーブオイル（EVOO）だった。</p>
-<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">「エキストラバージン」は、国が決めたオリーブオイルの上の等級である。○か×か？</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。日本の規格（JAS）には、エキストラバージンという区分そのものがない。</p><p class="quiz-why">店頭の表示は、売り手がつけたもの。だからこの記事では、表示より確かめやすい「容器・日付・量」を見る。</p></div></details>
+<details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">「エキストラバージン」は、国が決めたオリーブオイルの上の等級である。○か×か？</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。日本の規格（JAS）には、エキストラバージンという区分そのものがない。</p><p class="quiz-why">店頭の表示は、売り手がつけたもの。だからこの記事では、表示より確かめやすい「容器・日付・量」を見る。</p></div></details>
 <p>では、店でEVOOを買うとき、何を見ればいいのか。棚には「エキストラバージン」と書かれた瓶が何十本も並んでいて、値段も数百円から数千円まで幅がある。</p>
 <p>調べてみると、ラベルの<strong>「エキストラバージン」という言葉だけでは、思っているほど多くのことは分からない</strong>。この記事では、規格と保存の研究から、選ぶときの目安を5つに絞る。</p>
 <details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">「エキストラバージン」は、国によって意味が違う</a></li><li><a href="#section-2">目安1：光を通さない容器を選ぶ</a></li><li><a href="#section-3">目安2：収穫日・製造日が新しいものを選ぶ</a></li><li><a href="#section-4">目安3：品質の根拠が書いてあるものを選ぶ</a></li><li><a href="#section-5">目安4：使い切れる量を選ぶ</a></li><li><a href="#section-6">目安5：値段より、使い方で選ぶ</a></li><li><a href="#section-7">家での保存</a></li><li><a href="#section-8">まとめ</a></li><li><a href="#section-9">参考文献</a></li></ol></nav></details>
@@ -84,7 +89,7 @@
 <p>つまり日本の店頭では、「エキストラバージン」の表示は国の規格で決まった等級ではなく、売り手の表示だ。国際規格を満たしている商品も多いはずだが、表示だけでは確かめられない。</p>
 <section class="pull" aria-label="この記事のポイント"><p class="pull-label">POINT</p><p>「エキストラバージン」は、選ぶ理由の一つにはなる。でも、それだけで品質の保証にはならない。</p></section>
 
-<h2 id="section-2">目安1：光を<wbr>通さない<wbr>容器を<wbr>選ぶ</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">光の下で10か月保存した比較で、緑のガラス瓶は紙パックより成分をよく残した。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。紙パックのほうが残した。</p><p class="quiz-why">光を通さない多層の紙パック容器のほうが、緑色やUVカットのガラス瓶より酸化を抑え、抗酸化成分をよく残した。</p></div></details><h2 id="section-2">目安1：光を<wbr>通さない<wbr>容器を<wbr>選ぶ</h2>
 <p>EVOOは光に弱い。イタリアの研究では、EVOOを光の当たる場所と暗い場所で保存して比べたところ、光の下では酸化が早く進み、フェノール類（ポリフェノールの仲間）が大きく減った <a href="#ref-3">[3]</a>。</p>
 <p>容器の違いを比べた研究もある。光の下で10か月保存したとき、緑色のガラス瓶やUVカットのガラス瓶よりも、光を通さない多層の紙パック容器のほうが、酸化を抑え、抗酸化成分をよく残した <a href="#ref-4">[4]</a>。</p>
 <p>店頭では、<strong>缶、色の濃い瓶、箱入り</strong>のものを選ぶ。透明な瓶で、照明の当たる棚の前列に並んでいたものは避けたい。</p>
@@ -124,6 +129,10 @@
 <p id="ref-3">3. Blasi F, Ceccarini MR, Bistarelli S, et al. (2025). Impact of Extra-Virgin Olive Oil Storage Conditions on Phenolic Content and Wound-Healing Properties. <em>Foods</em>, 14(12), 2104. doi:10.3390/foods14122104</p>
 <p id="ref-4">4. Esposto S, Taticchi A, Servili M, et al. (2021). Overall quality evolution of extra virgin olive oil exposed to light for 10 months in different containers. <em>Food Chemistry.</em> doi:10.1016/j.foodchem.2021.129297</p>
 </div>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="olive-oil-guide" data-prefer="olive-oil,dark-chocolate,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <p class="article-pr">このページには広告（アフィリエイトリンク）が含まれます。リンクから商品が購入されると、当サイトに紹介料が支払われることがあります。</p>
 
 
@@ -139,12 +148,42 @@
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="olive-oil.html">オリーブ油は、<wbr>本当に<wbr>身体に<wbr>いいのか</a><a class="reading-card" href="dark-chocolate.html">ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="olive-oil.html" data-slug="olive-oil"><span class="reading-card-title">オリーブ油は、本当に身体にいいのか</span><span class="reading-card-q"><b>Q.</b> オリーブ油を「ほかの植物油全体」と比べると、心血管リスクに有意な差はなかった。<em>○か×か？</em></span></a><a class="reading-card has-q" href="dark-chocolate.html" data-slug="dark-chocolate"><span class="reading-card-title">ダークチョコは、本当に体にいいのか</span><span class="reading-card-q"><b>Q.</b> 最大規模のCOSMOS試験で、カカオ抽出物は心血管イベント全体を有意に減らした。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
 
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>匂いは、人の印象をどこまで決めているのか — ムートン</title>
-<meta name="description" content="匂いは、人の好感度や感情、魅力、記憶にどこまで影響するのか。心理学・化学の研究から、フェロモンや相性の俗説も含めて整理する。">
+<meta name="description" content="匂いは、意識の外で人の好き嫌いや印象を変えている。感情や性格の手がかり、魅力との関係、フェロモンや遺伝子の相性という俗説、加齢臭の正体、記憶との結びつきを、心理学と化学の研究から整理する。">
 <link rel="canonical" href="https://moutonarchive.com/smell.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/smell.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/smell.html">
 <meta property="og:title" content="匂いは、人の印象をどこまで決めているのか — ムートン">
-<meta property="og:description" content="匂いは、人の好感度や感情、魅力、記憶にどこまで影響するのか。心理学・化学の研究から、フェロモンや相性の俗説も含めて整理する。">
+<meta property="og:description" content="匂いは、意識の外で人の好き嫌いや印象を変えている。感情や性格の手がかり、魅力との関係、フェロモンや遺伝子の相性という俗説、加齢臭の正体、記憶との結びつきを、心理学と化学の研究から整理する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -47,8 +49,9 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"匂いは、人の印象をどこまで決めているのか","description":"匂いは、人の好感度や感情、魅力、記憶にどこまで影響するのか。心理学・化学の研究から、フェロモンや相性の俗説も含めて整理する。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/smell.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"匂いは、人の印象をどこまで決めているのか","description":"匂いは、意識の外で人の好き嫌いや印象を変えている。感情や性格の手がかり、魅力との関係、フェロモンや遺伝子の相性という俗説、加齢臭の正体、記憶との結びつきを、心理学と化学の研究から整理する。","inLanguage":"ja","datePublished":"2026-10-05","dateModified":"2026-10-05","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/smell.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"身体","item":"https://moutonarchive.com/topic-body.html"},{"@type":"ListItem","position":3,"name":"匂いは、人の印象をどこまで決めているのか","item":"https://moutonarchive.com/smell.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -62,6 +65,8 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -73,13 +78,13 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </div>
 
 <div class="cover ph-body is-placeholder" data-nav="light"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/smell.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-body.html">身体</a></li><li><span aria-current="page">匂いは、人の印象をどこまで決めているのか</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / BODY / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>匂いは、<wbr>人の<wbr>印象を<wbr>どこまで<wbr>決めているのか</h1>
-<p class="reading-time">約8分で読めます（目安）</p>
+<p class="reading-time">約8分で読めます（目安）</p><p class="series-tag"><a href="#series"><span>連載</span>清潔感を、確かめる<em>3 / 8</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 匂いは、意識の外で好き嫌いを変える</a></li><li><a href="#section-2">2. 匂いは「感情」と「性格」の手がかりになる</a></li><li><a href="#section-3">3. 匂いと魅力：好みは確かに存在する</a></li><li><a href="#section-4">4. 「フェロモン」と「相性の匂い」は、どこまで本当か</a></li><li><a href="#section-5">5. 加齢臭は、実在する：日本発の研究</a></li><li><a href="#section-6">6. 匂いは、記憶に残りやすい</a></li><li><a href="#section-7">結論：匂いは「消す」ものではなく「設計する」もの</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
 <p class="deck">顔、服装、話し方だけではない。私たちは、意識しないまま「匂い」を使って人の印象を判断している。</p><div class="hero-line"></div><article>
 
-<p class="lead">初対面の人と会ったとき、あなたは何を見て「この人、感じがいいな」と判断しているでしょうか。</p>
+<p class="lead">初対面の人と会ったとき、あなたは何を見て「この人、感じがいいな」と判断しているでしょうか。</p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">ヒトでも、異性を惹きつけるフェロモンがすでに確認されている。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。現時点で確認されていない。</p><p class="quiz-why">研究者からは、ヒトで確立されたフェロモンは現時点で確認されていない、という有力な指摘がある。</p></div></details>
 
 <p>多くの人は、顔、服装、話し方を挙げると思います。ところが、研究を追っていくと、もう一つ見落とされがちな手がかりが浮かび上がります。<strong>匂い</strong>です。しかも、私たちはそれを意識しないまま使っています。</p>
 
@@ -103,7 +108,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <p>性格についても報告があります。体臭をもとに他者の性格を評価させた研究では、一部の特性について、評価が匂い提供者本人の自己評価による性格得点とある程度一致しました。<sup><a href="#ref-3">[3]</a></sup> ただし、これは「一部の特性で、ある程度」という水準です。匂いで性格が分かる、とまでは言えません。</p>
 
-<h2 id="section-3">3. 匂いと<wbr>魅力：好みは<wbr>確かに<wbr>存在する</h2>
+<details class="quiz quiz-mid" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">男性の匂いを操作した実験で、女性の魅力評価は写真では差が出ず、動画で差が出た。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。本人の振る舞いが変わった。</p><p class="quiz-why">香りの操作が本人の自信を変え、動画での魅力評価に差が出た。匂いは本人の振る舞いを通して印象を変える可能性がある。</p></div></details><h2 id="section-3">3. 匂いと<wbr>魅力：好みは<wbr>確かに<wbr>存在する</h2>
 
 <p>匂いの好みが、魅力判断に関わることを示す研究もあります。</p>
 
@@ -177,6 +182,27 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>3 / 8</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#clean">清潔感を、確かめる</a></p>
+  <p class="series-intro">第一印象、匂い、口臭、日焼け。見た目の清潔感を、研究と公的な情報から一つずつ確かめています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="cleanliness.html">清潔感を分解する</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="first-impression-sleep.html">第一印象は0.1秒で決まる。そして、寝不足は顔に出る</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">3</span><span class="series-name">匂いは、人の印象をどこまで決めているのか</span></li>
+    <li><span class="series-n">4</span><a class="series-name" href="odor-care.html">匂いケアは「脇と足の裏」から。原因が違えば、対策も違う</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+    <li><span class="series-n">6</span><a class="series-name" href="halitosis.html">口臭の多くは「胃」ではなく、口の中から生まれる</a></li>
+    <li><span class="series-n">7</span><a class="series-name" href="oral-care-guide.html">口臭ケアの道具の選び方</a></li>
+    <li><span class="series-n">8</span><a class="series-name" href="sunscreen-guide.html">日焼け止めの選び方</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="first-impression-sleep.html"><span>← 前の回</span>第一印象は0.1秒で決まる。そして、寝不足は顔に出る</a><a class="series-next" href="odor-care.html"><span>次の回 →</span>匂いケアは「脇と足の裏」から。原因が違えば、対策も違う</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="smell" data-prefer="deodorant-guide,influence,refined-taste,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -195,12 +221,42 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 </aside>
 
 <aside class="guide-callout" aria-label="関連する選び方"><p class="guide-callout-eyebrow">買う前に</p><a class="guide-callout-link" href="deodorant-guide.html"><span class="guide-callout-title">制汗剤とデオドラントの選び方</span><span class="guide-callout-text">汗を抑えるのか、匂いを抑えるのか。有効成分の見方と、安全性の評価から選ぶ。</span><span class="guide-callout-more">選び方を読む <span aria-hidden="true">→</span></span></a></aside>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="influence.html">人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</a><a class="reading-card" href="refined-taste.html">目が<wbr>肥えると、<wbr>満足できなくなる</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="influence.html" data-slug="influence"><span class="reading-card-title">人は、あらゆるものに影響されて生きている</span></a><a class="reading-card" href="refined-taste.html" data-slug="refined-taste"><span class="reading-card-title">目が肥えると、満足できなくなる</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-body.html">「身体」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

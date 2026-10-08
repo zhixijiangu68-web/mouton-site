@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>人と比べるのを、やめることはできるのか — ムートン</title>
 <meta name="description" content="「人と比べるな」と言われても、比べてしまう。比べることは、人が自分を知るしくみそのものかもしれない。社会的比較の研究とSNSの研究から、やめるのではなく、何とどう比べるかを考える。">
@@ -50,6 +52,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"人と比べるのを、やめることはできるのか","description":"「人と比べるな」と言われても、比べてしまう。比べることは、人が自分を知るしくみそのものかもしれない。社会的比較の研究とSNSの研究から、やめるのではなく、何とどう比べるかを考える。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/comparison.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"人と比べるのを、やめることはできるのか","item":"https://moutonarchive.com/comparison.html"}]}</script>
@@ -65,6 +68,8 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -76,7 +81,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/comparison.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">人と比べるのを、やめることはできるのか</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / MIND</div>
 <div class="meta">2026.10.06</div>
 <h1>人と<wbr>比べるのを、<wbr>やめる<wbr>ことは<wbr>できるのか</h1>
@@ -86,7 +91,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <div class="hero-line"></div>
 
 <article>
-<p class="lead"><strong>「人と比べるな」とよく言われる。でも僕は、気づくと比べている。</strong></p>
+<p class="lead"><strong>「人と比べるな」とよく言われる。でも僕は、気づくと比べている。</strong></p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">人がつい他人と比べてしまうのは、はっきりした基準がないときだ、という理論がある。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。1954年の社会的比較理論。</p><p class="quiz-why">フェスティンガーは、基準がないとき人は他人と比べて自分の位置を確かめようとすると考えた。比べるのは意志が弱いからではないのかもしれない。</p></div></details>
 
 <p>SNSを開けば、同い年の誰かが起業していて、誰かが旅をしていて、誰かが毎朝走っている。閉じたあと、少しだけ自分が小さくなった気がする。</p>
 
@@ -105,7 +110,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <p>比べることをやめられないなら、<br>何と、どう比べればいいのか。</p>
 </section>
 
-<h2 id="section-2">SNSは、<wbr>上ばかりが<wbr>見える<wbr>場所</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">研究のレビューでは、SNSは使い方に関係なく幸福感を下げるとされている。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。使い方で違う。</p><p class="quiz-why">眺めるだけの「受け身の使い方」は幸福感の低さと関係しやすい一方、人とやりとりする使い方は幸福感を高めることもある。</p></div></details><h2 id="section-2">SNSは、<wbr>上ばかりが<wbr>見える<wbr>場所</h2>
 
 <p>比べること自体が自然だとしても、比べる相手によって、気分は変わる。自分より上の人と比べることを「上方比較」という。</p>
 
@@ -149,6 +154,10 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
 
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="comparison" data-prefer="social-media-time,disliked-priority,influence,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+
 
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
@@ -162,13 +171,43 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="social-media-time.html">SNSを<wbr>見る<wbr>時間は、<wbr>減らした<wbr>ほうが<wbr>いいのか</a><a class="reading-card" href="disliked-priority.html">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</a><a class="reading-card" href="influence.html">人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="social-media-time.html" data-slug="social-media-time"><span class="reading-card-title">SNSを見る時間は、減らしたほうがいいのか</span><span class="reading-card-q"><b>Q.</b> SNSを各10分までに制限した大学生は、3週間後に孤独感と抑うつが下がっていた。<em>○か×か？</em></span></a><a class="reading-card has-q" href="disliked-priority.html" data-slug="disliked-priority"><span class="reading-card-title">嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ</span><span class="reading-card-q"><b>Q.</b> 本気で打ち込む人が嫌われても動けるのは、嫌われることが気にならなくなったからではない。<em>○か×か？</em></span></a><a class="reading-card" href="influence.html" data-slug="influence"><span class="reading-card-title">人は、あらゆるものに影響されて生きている</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article>
 </main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

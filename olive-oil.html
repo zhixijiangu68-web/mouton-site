@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>オリーブ油は、本当に身体にいいのか — ムートン</title>
-<meta name="description" content="EVOO、心血管疾患、酸化LDL、血糖、加熱。人間を対象にしたRCTとメタ解析から、どこまで言えるのかを整理する。">
+<meta name="description" content="オリーブ油は本当に体にいいのか。地中海食の大規模な試験と米国の追跡研究から、心血管疾患との関係、バターなどからの置き換え、エキストラバージンと精製油の差、加熱してよいかまでを整理する。">
 <link rel="canonical" href="https://moutonarchive.com/olive-oil.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/olive-oil.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/olive-oil.html">
 <meta property="og:title" content="オリーブ油は、本当に身体にいいのか — ムートン">
-<meta property="og:description" content="EVOO、心血管疾患、酸化LDL、血糖、加熱。人間を対象にしたRCTとメタ解析から、どこまで言えるのかを整理する。">
+<meta property="og:description" content="オリーブ油は本当に体にいいのか。地中海食の大規模な試験と米国の追跡研究から、心血管疾患との関係、バターなどからの置き換え、エキストラバージンと精製油の差、加熱してよいかまでを整理する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -41,8 +43,9 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"オリーブ油は、本当に身体にいいのか","description":"EVOO、心血管疾患、酸化LDL、血糖、加熱。人間を対象にしたRCTとメタ解析から、どこまで言えるのかを整理する。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/olive-oil.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"オリーブ油は、本当に身体にいいのか","description":"オリーブ油は本当に体にいいのか。地中海食の大規模な試験と米国の追跡研究から、心血管疾患との関係、バターなどからの置き換え、エキストラバージンと精製油の差、加熱してよいかまでを整理する。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/olive-oil.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"食事・化学","item":"https://moutonarchive.com/topic-food.html"},{"@type":"ListItem","position":3,"name":"オリーブ油は、本当に身体にいいのか","item":"https://moutonarchive.com/olive-oil.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -56,6 +59,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -67,10 +72,10 @@
 </div>
 
 <div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a><a class="cover-lang" href="en/olive-oil.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
-<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>オリーブ油は、<wbr>本当に<wbr>体に<wbr>いいのか</h1><p class="reading-time">約9分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-food.html">食事・化学</a></li><li><span aria-current="page">オリーブ油は、本当に身体にいいのか</span></li></ol></nav>
+<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>オリーブ油は、<wbr>本当に<wbr>体に<wbr>いいのか</h1><p class="reading-time">約9分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p><p class="series-tag"><a href="#series"><span>連載</span>その健康法、本当？<em>3 / 5</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-<p class="lead">オリーブ油は「地中海食の主役」「健康にいい油」と言われることが多い。</p>
+<p class="lead">オリーブ油は「地中海食の主役」「健康にいい油」と言われることが多い。</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">オリーブ油を「ほかの植物油全体」と比べると、心血管リスクに有意な差はなかった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。有意な関連はなかった。</p><p class="quiz-why">強みはほかの植物油より優れることより、バターやマーガリンなどの代わりに使えることにある、と記事は整理する。</p></div></details>
 <p>では、人間を対象にした研究では、どこまで確認されているのか。</p>
 <p>結論から言うと、最も根拠が強いのは<strong>心血管疾患の予防</strong>だ。ただし、その根拠を読むときには、次の3つを区別する必要がある。</p>
 <ul><li>「地中海食＋オリーブ油」というダイエット全体の効果</li><li>「オリーブ油を多く摂る人」を追跡した観察研究</li><li>「バターやマーガリンをオリーブ油に置き換えた」場合の効果</li></ul>
@@ -97,7 +102,7 @@
 <p>米国のコホート研究では、EVOOか通常のオリーブ油かを区別して解析できなかった <a href="#ref-2">[2]</a>。PREDIMEDの参加者データを観察研究として分析した報告では、EVOOの摂取量が最も多い群で、心血管疾患リスクが39％低かったとされている <a href="#ref-5">[5]</a>。ただし、これも試験の割り付けではなく、参加者の摂取量にもとづく観察的な解析だ。</p>
 <p>したがって現時点では、<strong>「EVOOのほうが有利な可能性はあるが、精製オリーブ油との差を断定するには根拠が足りない」</strong>と整理するのが正確だ。</p>
 <p>買うときにラベルのどこを見るかは、<a href="olive-oil-guide.html">オリーブオイルの選び方</a>に書いた。</p>
-<h2 id="section-6">加熱しても<wbr>大丈夫か</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">10種類の油を加熱した実験で、EVOOは有害とされる化合物の生成が多い部類だった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。最も少ない部類だった。</p><p class="quiz-why">180℃で長時間でも、EVOOは極性化合物の生成が最も少ない部類。ただし油だけを加熱した実験室研究で、限界もある。</p></div></details><h2 id="section-6">加熱しても<wbr>大丈夫か</h2>
 <p>「オリーブ油は発煙点が低いので、加熱に向かない」という説明もよく聞く。</p>
 <p>2018年に、10種類の食用油を加熱して比較した実験室研究が報告された。EVOOは、高温（180℃で長時間）でも、有害とされる極性化合物の生成が最も少ない部類で、キャノーラ油などの精製された種子油は、生成量が多かった <a href="#ref-6">[6]</a>。発煙点の高さと、加熱時の安定性は、必ずしも一致しなかった。</p>
 <p>ただし、この研究には限界がある。</p>
@@ -124,6 +129,24 @@
 <p id="ref-5">5. Guasch-Ferré M, et al. (2014). Olive oil intake and risk of cardiovascular disease and mortality in the PREDIMED Study. <em>BMC Medicine.</em></p>
 <p id="ref-6">6. de Alzaa F, et al. (2018). Evaluation of chemical and physical changes in different commercial oils during heating. <em>Acta Scientific Nutritional Health</em>, 2(6), 2–11.</p>
 </div>
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>3 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#food-check">その健康法、本当？</a></p>
+  <p class="series-intro">コーヒー、ダークチョコ、オリーブ油、ブルーベリー、血糖値。「体にいい」「体に悪い」を、論文から確かめ直しています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="coffee.html">コーヒーは、本当に体に悪いのか</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="dark-chocolate.html">ダークチョコは、本当に体にいいのか</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">3</span><span class="series-name">オリーブ油は、本当に身体にいいのか</span></li>
+    <li><span class="series-n">4</span><a class="series-name" href="blueberry.html">ブルーベリーは、本当にそんなにすごいのか</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="blood-glucose.html">血糖値は、なぜこれほど健康に重要なのか</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="dark-chocolate.html"><span>← 前の回</span>ダークチョコは、本当に体にいいのか</a><a class="series-next" href="blueberry.html"><span>次の回 →</span>ブルーベリーは、本当にそんなにすごいのか</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="olive-oil" data-prefer="olive-oil-guide,blueberry,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -143,12 +166,42 @@
 </aside>
 
 <aside class="guide-callout" aria-label="関連する選び方"><p class="guide-callout-eyebrow">買う前に</p><a class="guide-callout-link" href="olive-oil-guide.html"><span class="guide-callout-title">オリーブオイルの選び方</span><span class="guide-callout-text">「エキストラバージン」の表示だけでは分からないこと。容器、日付、表示、量の見方。</span><span class="guide-callout-more">選び方を読む <span aria-hidden="true">→</span></span></a></aside>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="blueberry.html">ブルーベリーは、<wbr>本当に<wbr>そんなに<wbr>すごいのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="blueberry.html" data-slug="blueberry"><span class="reading-card-title">ブルーベリーは、本当にそんなにすごいのか</span><span class="reading-card-q"><b>Q.</b> ブルーベリーの研究で最も一貫して示されているのは「脳にいい」という作用だ。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
 
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

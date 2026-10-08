@@ -18,11 +18,12 @@ preloadHero: true
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
-        <p class="lede reveal-2">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
+        <p class="lede reveal-2 hero-lede">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
+        <div class="qloop hero-qloop reveal-2" data-qloop data-compact></div>
         {%- for a in collections.articles %}{% if loop.first %}
         <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
         {%- endif %}{% endfor %}
-        <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
+        <p class="hero-links reveal-2"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="#guides">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
       <a class="scroll-cue" href="#think">Scroll</a>
     </div>
@@ -37,6 +38,7 @@ preloadHero: true
         <h2 class="scene-title reveal">考える。</h2>
         <p class="scene-latin reveal">Meaning is not given; <em>it is left behind.</em></p>
         <p class="scene-text reveal-2">神は死んだ。それでも、なぜ生きるのか。自由、恐怖、セルフイメージ。答えを急がず、問いのまま残していく。</p>
+        <a class="scene-q reveal-2" href="camus-sisyphus.html"><b>Q.</b> {{ quizzes | quizFor("camus-sisyphus") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#journal" data-filter-link="philosophy">哲学・生き方の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">01</div>
@@ -52,6 +54,7 @@ preloadHero: true
         <h2 class="scene-title reveal">身体で、<br>確かめる。</h2>
         <p class="scene-latin reveal">Measured, <em>not imagined.</em></p>
         <p class="scene-text reveal-2">体力、血糖値、匂い、口臭。なんとなくの感覚を、研究とデータでもう一度確かめ直す。</p>
+        <a class="scene-q reveal-2" href="first-impression-sleep.html"><b>Q.</b> {{ quizzes | quizFor("first-impression-sleep") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-dark reveal-2" href="#journal" data-filter-link="body">身体の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true" style="right:auto;left:var(--gutter)">02</div>
@@ -66,6 +69,7 @@ preloadHero: true
         <p class="eyebrow reveal">03 — Food &amp; Science</p>
         <h2 class="scene-title reveal">食べることを、<em>evidence</em>で。</h2>
         <p class="scene-text reveal-2" style="margin-inline:auto">ダークチョコ、オリーブ油、ブルーベリー。健康についての言葉を、論文とデータから確かめる。</p>
+        <a class="scene-q reveal-2" href="coffee.html"><b>Q.</b> {{ quizzes | quizFor("coffee") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#foodscience">食事・化学を読む <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">03</div>
@@ -114,9 +118,12 @@ preloadHero: true
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
       <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
+      <p class="site-stats"><span><b>{{ collections.articles.length }}</b>本の記事</span><span><a href="series.html"><b>{{ series.length }}</b>つの連載</a></span><span><a href="guides.html"><b>{{ (collections.articles | guideCards).length }}</b>本の選び方</a></span><span><a href="quiz.html"><b>{{ quizzes.length }}</b>問の○×クイズ</a></span></p>
+      <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
+      <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
       <div class="journal-list">
         {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">
+        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
@@ -246,6 +253,7 @@ preloadHero: true
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   <p class="quote">千里の道も、一歩から。</p>
   <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
+  {% include "partials/footer-map.njk" %}
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 

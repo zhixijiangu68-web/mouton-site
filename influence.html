@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>人は、あらゆるものに影響されて生きている — ムートン</title>
-<meta name="description" content="人は五感を通して世界から影響を受け続ける。影響を否定せず、向かう場所を決め、自分なりのチューニングを持つことについて。">
+<meta name="description" content="人は、見るもの、聞くもの、食べるもの、会う人から、少しずつ影響を受けて変わっていく。影響されない人間を目指すのではなく、向かう場所を決め、ずれたら何度でも戻る「チューニング」を持つ。">
 <link rel="canonical" href="https://moutonarchive.com/influence.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/influence.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/influence.html">
 <meta property="og:title" content="人は、あらゆるものに影響されて生きている — ムートン">
-<meta property="og:description" content="人は五感を通して世界から影響を受け続ける。影響を否定せず、向かう場所を決め、自分なりのチューニングを持つことについて。">
+<meta property="og:description" content="人は、見るもの、聞くもの、食べるもの、会う人から、少しずつ影響を受けて変わっていく。影響されない人間を目指すのではなく、向かう場所を決め、ずれたら何度でも戻る「チューニング」を持つ。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -41,8 +43,9 @@ article{max-width:760px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"人は、あらゆるものに影響されて生きている","description":"人は五感を通して世界から影響を受け続ける。影響を否定せず、向かう場所を決め、自分なりのチューニングを持つことについて。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/influence.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"人は、あらゆるものに影響されて生きている","description":"人は、見るもの、聞くもの、食べるもの、会う人から、少しずつ影響を受けて変わっていく。影響されない人間を目指すのではなく、向かう場所を決め、ずれたら何度でも戻る「チューニング」を持つ。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/influence.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"人は、あらゆるものに影響されて生きている","item":"https://moutonarchive.com/influence.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -56,6 +59,8 @@ article{max-width:760px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -67,7 +72,7 @@ article{max-width:760px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/influence.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">人は、あらゆるものに影響されて生きている</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / PHILOSOPHY</div><div class="meta">2026.10.04</div><h1>人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</h1>
 <p class="reading-time">約4分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 <p class="deck">影響を受けない人間になるのではなく、影響を受ける自分を前提に、どこへ向かうのかを決めておく。</p><div class="hero-line"></div><article>
@@ -101,6 +106,10 @@ article{max-width:760px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
 
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="influence" data-prefer="system-goal,refined-taste,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+
 
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
@@ -114,12 +123,42 @@ article{max-width:760px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="system-goal.html">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</a><a class="reading-card" href="refined-taste.html">目が<wbr>肥えると、<wbr>満足できなくなる</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="system-goal.html" data-slug="system-goal"><span class="reading-card-title">システムのないゴールは、動かない</span><span class="reading-card-q"><b>Q.</b> 研究では、習慣が自動化するまでの期間は18〜254日と大きな個人差があった。<em>○か×か？</em></span></a><a class="reading-card" href="refined-taste.html" data-slug="refined-taste"><span class="reading-card-title">目が肥えると、満足できなくなる</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

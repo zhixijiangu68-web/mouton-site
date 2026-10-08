@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>第一印象は0.1秒で決まる。そして、寝不足は顔に出る — ムートン</title>
 <meta name="description" content="人は顔を0.1秒見ただけで、魅力や信頼できそうかを判断していた。そして、寝不足の顔は、他人から魅力的でなく、疲れて見えていた。第一印象と睡眠の研究を、実験の中身まで確かめる。">
@@ -43,6 +45,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"第一印象は0.1秒で決まる。そして、寝不足は顔に出る","description":"人は顔を0.1秒見ただけで、魅力や信頼できそうかを判断していた。そして、寝不足の顔は、他人から魅力的でなく、疲れて見えていた。第一印象と睡眠の研究を、実験の中身まで確かめる。","inLanguage":"ja","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/first-impression-sleep.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"身体","item":"https://moutonarchive.com/topic-body.html"},{"@type":"ListItem","position":3,"name":"第一印象は0.1秒で決まる。そして、寝不足は顔に出る","item":"https://moutonarchive.com/first-impression-sleep.html"}]}</script>
@@ -58,6 +61,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -69,8 +74,8 @@
 </div>
 
 <div class="cover ph-body is-placeholder" data-nav="light"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/first-impression-sleep.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
-<div class="meta">2026.10.07 / BODY / FIRST IMPRESSIONS</div><h1>第一印象は<wbr>0.1秒で<wbr>決まる。<wbr>そして、<wbr>寝不足は<wbr>顔に<wbr>出る</h1><p class="reading-time">約5分で読めます（目安）</p>
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-body.html">身体</a></li><li><span aria-current="page">第一印象は0.1秒で決まる。そして、寝不足は顔に出る</span></li></ol></nav>
+<div class="meta">2026.10.07 / BODY / FIRST IMPRESSIONS</div><h1>第一印象は<wbr>0.1秒で<wbr>決まる。<wbr>そして、<wbr>寝不足は<wbr>顔に<wbr>出る</h1><p class="reading-time">約5分で読めます（目安）</p><p class="series-tag"><a href="#series"><span>連載</span>清潔感を、確かめる<em>2 / 8</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead">初対面の人に会うとき、何を着ていくか、何を話すかは考えます。でも、相手があなたの印象を決めるのは、たぶん、話し始めるより前です。</p>
 <details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">人は、知らない人の顔を何秒見れば「信頼できそうか」を判断できる？　A.約0.1秒　B.約3秒　C.約30秒</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">A. 約0.1秒。</p><p class="quiz-why">0.1秒だけ顔を見せた実験でも、時間をかけて見たときの判断とよく一致していました。時間が長くなっても、判断そのものはあまり変わらず、自信が増えただけでした。</p></div></details>
@@ -99,7 +104,7 @@
 </ul>
 <p>寝不足の顔は、悲しそうにも見えていました。どれも、相手が0.1秒で読み取る「顔」の情報です。</p>
 
-<h2 id="section-4">2晩の<wbr>寝不足でも、<wbr>人に<wbr>避けられやすくなった</h2>
+<details class="quiz quiz-mid" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">2晩続けて4時間睡眠にしただけでも、「一緒に過ごしたい」と思われにくくなった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。徹夜でなくても出た。</p><p class="quiz-why">2晩4時間睡眠の実験で、寝不足の顔は魅力的・健康そうに見えにくく、評価した人は一緒に過ごしたいと思いにくくなった。写真での評価で、参加人数は数十人。</p></div></details><h2 id="section-4">2晩の<wbr>寝不足でも、<wbr>人に<wbr>避けられやすくなった</h2>
 <p>徹夜ほど極端でなくても、影響は出ていました。2晩続けて睡眠を4時間に減らした実験では、十分に眠ったときと比べて、寝不足のときの顔は<strong>魅力的に見えにくく、健康そうに見えにくく、眠そうに見えて</strong>いました <a href="#ref-4">[4]</a>。</p>
 <p>さらに、評価した人たちは、寝不足のときの顔の人と<strong>「一緒に過ごしたい」と思いにくく</strong>なっていました。</p>
 <div class="pull"><p class="pull-label">POINT</p><p>服や髪を整える前に、まず眠る。それがいちばん安く、いちばん顔に効いて見える準備なのかもしれない。</p></div>
@@ -123,6 +128,27 @@
 <p id="ref-3">3. Sundelin T, Lekander M, Kecklund G, Van Someren EJW, Olsson A, Axelsson J. (2013). Cues of fatigue: effects of sleep deprivation on facial appearance. <em>Sleep</em>, 36(9), 1355–1360. doi:10.5665/sleep.2964</p>
 <p id="ref-4">4. Sundelin T, Lekander M, Sorjonen K, Axelsson J. (2017). Negative effects of restricted sleep on facial appearance and social appeal. <em>Royal Society Open Science</em>, 4(5), 160918. doi:10.1098/rsos.160918</p>
 </div>
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>2 / 8</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#clean">清潔感を、確かめる</a></p>
+  <p class="series-intro">第一印象、匂い、口臭、日焼け。見た目の清潔感を、研究と公的な情報から一つずつ確かめています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="cleanliness.html">清潔感を分解する</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">2</span><span class="series-name">第一印象は0.1秒で決まる。そして、寝不足は顔に出る</span></li>
+    <li><span class="series-n">3</span><a class="series-name" href="smell.html">匂いは、人の印象をどこまで決めているのか</a></li>
+    <li><span class="series-n">4</span><a class="series-name" href="odor-care.html">匂いケアは「脇と足の裏」から。原因が違えば、対策も違う</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+    <li><span class="series-n">6</span><a class="series-name" href="halitosis.html">口臭の多くは「胃」ではなく、口の中から生まれる</a></li>
+    <li><span class="series-n">7</span><a class="series-name" href="oral-care-guide.html">口臭ケアの道具の選び方</a></li>
+    <li><span class="series-n">8</span><a class="series-name" href="sunscreen-guide.html">日焼け止めの選び方</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="cleanliness.html"><span>← 前の回</span>清潔感を分解する</a><a class="series-next" href="smell.html"><span>次の回 →</span>匂いは、人の印象をどこまで決めているのか</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="first-impression-sleep" data-prefer="earplug-eyemask-guide,weekend-sleep,nap,chronotype,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -141,12 +167,42 @@
 </aside>
 
 <aside class="guide-callout" aria-label="関連する選び方"><p class="guide-callout-eyebrow">買う前に</p><a class="guide-callout-link" href="earplug-eyemask-guide.html"><span class="guide-callout-title">耳栓とアイマスクの選び方</span><span class="guide-callout-text">音と光は睡眠に関わる。耳栓の素材、アイマスクの形、使うときの注意から選ぶ。</span><span class="guide-callout-more">選び方を読む <span aria-hidden="true">→</span></span></a></aside>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="weekend-sleep.html">休日の<wbr>「寝だめ」で、<wbr>睡眠不足は<wbr>取り返せるのか</a><a class="reading-card" href="nap.html">昼寝は、<wbr>何分が<wbr>いいのか</a><a class="reading-card" href="chronotype.html">朝型と<wbr>夜型は、<wbr>変えられるのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="weekend-sleep.html" data-slug="weekend-sleep"><span class="reading-card-title">休日の「寝だめ」で、睡眠不足は取り返せるのか</span><span class="reading-card-q"><b>Q.</b> 週末に好きなだけ寝れば、睡眠不足によるインスリン感受性の低下は防げた。<em>○か×か？</em></span></a><a class="reading-card has-q" href="nap.html" data-slug="nap"><span class="reading-card-title">昼寝は、何分がいいのか</span><span class="reading-card-q"><b>Q.</b> 昼寝は長いほど回復する。30分寝たほうが、10分より起きた直後の調子がいい。<em>○か×か？</em></span></a><a class="reading-card has-q" href="chronotype.html" data-slug="chronotype"><span class="reading-card-title">朝型と夜型は、変えられるのか</span><span class="reading-card-q"><b>Q.</b> 朝型の遺伝子が最も多い人と少ない人でも、眠る時刻の差は平均で約25分だった。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-body.html">「身体」の記事をすべて見る</a></p></nav>
 
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

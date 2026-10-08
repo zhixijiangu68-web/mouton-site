@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>ムートン — Personal Archive</title>
 <meta name="description" content="ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。">
@@ -30,6 +32,7 @@
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="home.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。","inLanguage":"ja","url":"https://moutonarchive.com/"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone"]}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -44,6 +47,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -63,9 +68,10 @@
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
-        <p class="lede reveal-2">考えた<wbr>こと。<wbr>作った<wbr>もの。<wbr>変わっていく<wbr>自分。<br>その<wbr>途中を、<wbr>静かに<wbr>残していく。</p>
-        <a class="hero-latest reveal-2" href="camus-sisyphus.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">毎日同じことの繰り返しでも、幸せでいられるのか</span><span aria-hidden="true">→</span></a>
-        <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
+        <p class="lede reveal-2 hero-lede">考えた<wbr>こと。<wbr>作った<wbr>もの。<wbr>変わっていく<wbr>自分。<br>その<wbr>途中を、<wbr>静かに<wbr>残していく。</p>
+        <div class="qloop hero-qloop reveal-2" data-qloop data-compact></div>
+        <a class="hero-latest reveal-2" href="amygdala.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">扁桃体とは何か</span><span aria-hidden="true">→</span></a>
+        <p class="hero-links reveal-2"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="#guides">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
       <a class="scroll-cue" href="#think">Scroll</a>
     </div>
@@ -80,6 +86,7 @@
         <h2 class="scene-title reveal">考える。</h2>
         <p class="scene-latin reveal">Meaning is not given; <em>it is left behind.</em></p>
         <p class="scene-text reveal-2">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。<wbr>自由、<wbr>恐怖、<wbr>セルフイメージ。<wbr>答えを<wbr>急がず、<wbr>問いの<wbr>まま<wbr>残していく。</p>
+        <a class="scene-q reveal-2" href="camus-sisyphus.html"><b>Q.</b> カミュの「不条理」とは、世界そのものが不条理だという意味だ。<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#journal" data-filter-link="philosophy">哲学・生き方の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">01</div>
@@ -95,6 +102,7 @@
         <h2 class="scene-title reveal">身体で、<br>確かめる。</h2>
         <p class="scene-latin reveal">Measured, <em>not imagined.</em></p>
         <p class="scene-text reveal-2">体力、<wbr>血糖値、<wbr>匂い、<wbr>口臭。<wbr>なんとなくの<wbr>感覚を、<wbr>研究と<wbr>データでもう<wbr>一度<wbr>確かめ直す。</p>
+        <a class="scene-q reveal-2" href="first-impression-sleep.html"><b>Q.</b> 知らない人の顔を0.1秒見ただけの印象は、じっくり見たときの判断とよく一致した。<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-dark reveal-2" href="#journal" data-filter-link="body">身体の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true" style="right:auto;left:var(--gutter)">02</div>
@@ -109,6 +117,7 @@
         <p class="eyebrow reveal">03 — Food &amp; Science</p>
         <h2 class="scene-title reveal">食べる<wbr>ことを、<em>evidence</em>で。</h2>
         <p class="scene-text reveal-2" style="margin-inline:auto">ダークチョコ、<wbr>オリーブ油、<wbr>ブルーベリー。<wbr>健康に<wbr>ついての<wbr>言葉を、<wbr>論文と<wbr>データから<wbr>確かめる。</p>
+        <a class="scene-q reveal-2" href="coffee.html"><b>Q.</b> 寝る6時間前にカフェイン400mgをとっても、睡眠が1時間以上短くなった実験がある。<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#foodscience">食事・化学を読む <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">03</div>
@@ -160,243 +169,366 @@
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
       <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span><a href="topic-philosophy.html">哲学・生き方 <span aria-hidden="true">→</span></a><a href="topic-body.html">身体 <span aria-hidden="true">→</span></a><a href="topic-work.html">仕事・働き方 <span aria-hidden="true">→</span></a><a href="topic-food.html">食事・化学 <span aria-hidden="true">→</span></a></nav>
+      <p class="site-stats"><span><b>84</b>本の記事</span><span><a href="series.html"><b>6</b>つの連載</a></span><span><a href="guides.html"><b>13</b>本の選び方</a></span><span><a href="quiz.html"><b>182</b>問の○×クイズ</a></span></p>
+      <p class="read-progress" data-total="84" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
+      <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
       <div class="journal-list">
-        <a class="journal-item clickable journal-link" data-rise href="camus-sisyphus.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="amygdala.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">扁桃体とは<wbr>何か</div><div class="journal-excerpt">壊れた人は怖がらなかった。寝不足で約60%強く反応し、言葉にすると下がった。研究から整理する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="cleanliness.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">清潔感を<wbr>分解する</div><div class="journal-excerpt">肌の色ムラ、寝不足、ひげ、歯、服のサイズ、匂い。抽象的な清潔感を要素に分けて、研究で確かめる。</div><span class="journal-read-time">約9分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="d2-receptor.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">ドーパミンを<wbr>「受け取る<wbr>側」の<wbr>話。<wbr>D2受容体</div><div class="journal-excerpt">順位が上がったサルで増え、一晩の徹夜で減った。ドーパミンを受け取るD2受容体を、研究から整理する。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="dhea.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">DHEAは<wbr>「若返りホルモン」なのか</div><div class="journal-excerpt">20代前後がピーク。2年間補った試験では若返りと呼べる変化はなかった。研究と日本での扱いを整理する。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="dht-5a-reductase.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">5α-リダクターゼと<wbr>DHT</div><div class="journal-excerpt">DHTはAGAの原因。でも筋肉には必須ではなかった。薄毛の遺伝子、薬の効果と副作用まで整理する。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="egcg-soy-dht.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">EGCGと<wbr>大豆は、<wbr>DHTを<wbr>下げるのか</div><div class="journal-excerpt">試験管では止めたが、細胞では効かなかった。人の研究を分けて確かめる。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="habit-context.html" data-category="philosophy" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">習慣は<wbr>「文脈」に<wbr>結びつく</div><div class="journal-excerpt">映画館では湿気たポップコーンでも食べ続けた。環境が変わると習慣が崩れる理由と、つくり方・やめ方。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="habit-days-decisions.html" data-category="philosophy" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">習慣に<wbr>なるまで<wbr>何日かかるのか</div><div class="journal-excerpt">平均66日、18〜254日。「21日」と「1日3万5千回の選択」の根拠を確かめる。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="hypothyroid-anxiety.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">甲状腺機能低下症で、<wbr>不安は<wbr>「約4倍」か</div><div class="journal-excerpt">2015年の研究の、幅の広い数字だった。治療中の研究や19の研究のまとめも含めて整理する。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="if-then-plans.html" data-category="philosophy" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">if-thenルールは<wbr>効くのか</div><div class="journal-excerpt">94の研究で効果。日付と時刻まで書くと接種率が上がった。効く条件と場面別の例。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="mao.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">MAO酵素とは<wbr>何か</div><div class="journal-excerpt">セロトニンやドーパミンを片づける酵素。薬、チーズ、遺伝子と環境、たばこの影響まで、研究から整理する。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="meditation-headache.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">瞑想で<wbr>頭痛は<wbr>治るのか</div><div class="journal-excerpt">片頭痛の日数は、講座と差がなかった。でも生活への支障は減った。研究を分けて整理する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="narcissism-art.html" data-category="philosophy" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">ナルシシストは、<wbr>自分を<wbr>作品に<wbr>する</div><div class="journal-excerpt">素材と作家が同じ人。初対面で好かれ、7回会うと嫌われる。その技術の、盗める部分と捨てる部分。</div><span class="journal-read-time">約8分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="oxytocin.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">オキシトシンは、<wbr>どうすれば<wbr>出るのか</div><div class="journal-excerpt">ハグ、犬、マッサージ。スプレーで信頼が高まる話は再現されなかった。研究を確かめる。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="prefrontal-inflammation.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">「前頭前野の<wbr>炎症」とは<wbr>何か</div><div class="journal-excerpt">正式な病名ではない。炎症で気分が落ち、脳の働きが変わった研究から、分かっていることを整理する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="slot-addiction.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">スロットが<wbr>やめられないのは、<wbr>なぜか</div><div class="journal-excerpt">いつ当たるか分からない、惜しいハズレ、勝ちに見せかけた負け。やめにくさの正体を研究から整理する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="squat-dhea.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">スクワットで、<wbr>DHEAは<wbr>増えるのか</div><div class="journal-excerpt">上がるのは運動の直後と、筋肉の中。スクワットとDHEAの関係を研究から整理する。</div><span class="journal-read-time">約7分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="squat-knee.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">スクワットは<wbr>膝に<wbr>悪いのか</div><div class="journal-excerpt">深くしゃがむのは危ない？膝はつま先より前に出すな？研究で確かめる。</div><span class="journal-read-time">約5分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="testosterone.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">テストステロンを、<wbr>研究だけで<wbr>整理する</div><div class="journal-excerpt">5時間睡眠1週間で10〜15%低下。測り方、睡眠、体重、筋トレ、サプリ、補充療法まで、研究だけで整理する。</div><span class="journal-read-time">約11分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="tyrosine-androgen.html" data-category="body" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">チロシンと<wbr>アンドロゲン</div><div class="journal-excerpt">ドーパミンの材料と男性ホルモンは、通り道が別。チロシンのサプリで分かっていることを研究から整理する。</div><span class="journal-read-time">約6分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="ueda-reina.html" data-category="work" data-date="2026.10.08">
+          <div class="journal-date">2026.10.08</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">上田麗奈。<wbr>声の<wbr>奥に<wbr>いる<wbr>「その<wbr>人」を<wbr>探して</div><div class="journal-excerpt">18人の声を演じ分けた新人が、「自信ではなく勇気」と言うようになるまで。役作りと音楽の仕事をたどる。</div><span class="journal-read-time">約13分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="books-money.html" data-category="work" data-date="2026.10.07">
+          <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">お金に<wbr>ついて<wbr>最初に<wbr>読む本</div><div class="journal-excerpt">全体像、増やし方、心理、使い方。お金について考える順番別に、最初に読みたい4冊。</div><span class="journal-read-time">約3分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="camus-sisyphus.html" data-category="philosophy" data-date="2026.10.07">
           <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">毎日<wbr>同じ<wbr>ことの<wbr>繰り返しでも、<wbr>幸せで<wbr>いられるのか</div><div class="journal-excerpt">岩を押し上げ続ける男を、カミュは「幸せだと想像しなければならない」と書いた。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="earplug-eyemask-guide.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="earplug-eyemask-guide.html" data-category="body" data-date="2026.10.07">
           <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">耳栓と<wbr>アイマスクの<wbr>選び方</div><div class="journal-excerpt">寝室の音と光をどう減らすか。耳栓の素材とアイマスクの形から選ぶ。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="first-impression-sleep.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="first-impression-sleep.html" data-category="body" data-date="2026.10.07">
           <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">第一印象は<wbr>0.1秒で<wbr>決まる。<wbr>そして、<wbr>寝不足は<wbr>顔に<wbr>出る</div><div class="journal-excerpt">顔を見て判断するのに、0.1秒あれば足りていた。寝不足の顔は、他人の目にどう映るのか。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="sartre.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="sartre.html" data-category="philosophy" data-date="2026.10.07">
           <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">人間は、<wbr>自由の<wbr>刑に<wbr>処されている</div><div class="journal-excerpt">ペーパーナイフには目的がある。人間には、ない。サルトルの講演から、選ぶことの重さを考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="stoicism.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="saving-default.html" data-category="work" data-date="2026.10.07">
+          <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">お金が<wbr>貯まらないのは、<wbr>意志が<wbr>弱いからではない</div><div class="journal-excerpt">「最初から加入」にしただけで、積立に入る人は37%から86%に。意志に頼らず貯まる仕組みを考える。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="stoicism.html" data-category="philosophy" data-date="2026.10.07">
           <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">変えられない<wbr>ことで、<wbr>悩みすぎていないか</div><div class="journal-excerpt">自分に変えられることと、変えられないこと。2000年前のストア派が最初に引いた線から考える。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="blue-light.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="sunscreen-guide.html" data-category="body" data-date="2026.10.07">
+          <div class="journal-date">2026.10.07</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">日焼け止めの<wbr>選び方</div><div class="journal-excerpt">SPF50でも、量が足りなければ表示どおりには守れない。研究と環境省の目安から、選び方と塗り方を整理する。</div><span class="journal-read-time">約4分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        <a class="journal-item clickable journal-link" data-rise href="blue-light.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">ブルーライトカットの<wbr>眼鏡は、<wbr>目の<wbr>疲れに<wbr>効くのか</div><div class="journal-excerpt">系統的レビューと眼科の学会の見解から、画面を見る目の疲れへの対策を整理する。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="books-career.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="books-career.html" data-category="work" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職を<wbr>考えはじめた<wbr>ときに<wbr>読む本</div><div class="journal-excerpt">やりたいこと、会社の見極め、年収、長い人生。迷いの段階別に4冊。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="books-habits.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="books-habits.html" data-category="philosophy" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">習慣を<wbr>変えたい<wbr>ときに<wbr>読む本</div><div class="journal-excerpt">研究から選んだ6冊を、その後の研究で分かった注意点と一緒に。悩み別の選び方つき。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="books-philosophy.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="books-philosophy.html" data-category="philosophy" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">生き方を<wbr>考えたい<wbr>ときに<wbr>読む本</div><div class="journal-excerpt">意味、自由、他人の評価。哲学・生き方の記事の問いを、もっと深く考えたいときの4冊。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="chronotype.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="chronotype.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">朝型と<wbr>夜型は、<wbr>変えられるのか</div><div class="journal-excerpt">遺伝、年齢、そして光。朝型・夜型はどこまで決まっていて、どこから動かせるのか。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="comparison.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="comparison.html" data-category="philosophy" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">人と<wbr>比べるのを、<wbr>やめる<wbr>ことは<wbr>できるのか</div><div class="journal-excerpt">比較は消せない。でも、比べる相手と使い方は選べる。社会的比較とSNSの研究から考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="denim-leather.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="denim-leather.html" data-category="philosophy" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">デニムと<wbr>レザーは、<wbr>なぜ<wbr>古くなる<wbr>ほど<wbr>良くなるのか</div><div class="journal-excerpt">着るほど自分の形になる素材。染色の仕組み、素材の試験、ライフサイクル評価から考える。</div><span class="journal-read-time">約9分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="deodorant-guide.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="deodorant-guide.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">制汗剤と<wbr>デオドラントの<wbr>選び方</div><div class="journal-excerpt">汗を抑えたいのか、匂いを抑えたいのか。有効成分の見方と、アルミニウムの安全性の評価から整理する。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="mini-trampoline-guide.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="mini-trampoline-guide.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">家庭用ミニトランポリンの<wbr>選び方</div><div class="journal-excerpt">置き場所と直径、耐荷重、ゴムかバネか、手すりの有無。買う前に決めておくことを整理する。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="nap.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="nap.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">昼寝は、<wbr>何分が<wbr>いいのか</div><div class="journal-excerpt">長さを変えて比べた実験と、カフェインを組み合わせた実験から、昼寝のとり方を整理する。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="oral-care-guide.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="oral-care-guide.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">口臭ケアの<wbr>道具の<wbr>選び方</div><div class="journal-excerpt">舌ブラシ、歯間ブラシ、洗口液。系統的レビューと公的な情報から、選び方と使い方を整理する。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="social-media-time.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="social-media-time.html" data-category="philosophy" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">SNSを<wbr>見る<wbr>時間は、<wbr>減らした<wbr>ほうが<wbr>いいのか</div><div class="journal-excerpt">SNSの時間を制限した実験と、Facebookを4週間やめた実験から、減らすという選択を考える。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="weekend-sleep.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="weekend-sleep.html" data-category="body" data-date="2026.10.06">
           <div class="journal-date">2026.10.06</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">休日の<wbr>「寝だめ」で、<wbr>睡眠不足は<wbr>取り返せるのか</div><div class="journal-excerpt">寿命の研究と代謝の実験は、違う答えを出していた。二つを並べて、どこまで言えるかを確かめる。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="halitosis.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="halitosis.html" data-category="body" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">口臭の<wbr>多くは<wbr>「胃」ではなく、<wbr>口の<wbr>中から<wbr>生まれる</div><div class="journal-excerpt">2,000人の口臭外来データから、舌苔・歯周病・唾液と、研究で根拠のある対策を考える。</div><span class="journal-read-time">約13分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="sunday-blues.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="sunday-blues.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">日曜の<wbr>夜が<wbr>憂う<wbr>つなのは、<wbr>なぜか</div><div class="journal-excerpt">週末に満たされていたものと、仕事から離れる時間の研究から考える。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="fear-of-change.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="fear-of-change.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職が<wbr>怖くて、<wbr>踏み出せない<wbr>とき</div><div class="journal-excerpt">損失回避と後悔の研究から、転職の怖さとの付き合い方を考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="odor-care.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="odor-care.html" data-category="body" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">匂い<wbr>ケアは<wbr>「脇と<wbr>足の<wbr>裏」から。<wbr>原因が<wbr>違えば、<wbr>対策も<wbr>違う</div><div class="journal-excerpt">脇は遺伝的な個人差、足は靴内の湿度や微生物。体臭の仕組みを研究から整理する。</div><span class="journal-read-time">約8分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="job-change-start.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="job-change-start.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職は、<wbr>何から<wbr>始めればいいのか</div><div class="journal-excerpt">理由と軸、棚卸し、市場を知る、応募、条件確認、退職。6つの順番で整理する。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="music-life.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="music-life.html" data-category="philosophy" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">音楽は<wbr>人生を<wbr>豊かに<wbr>するのか。<wbr>頭は<wbr>良くならなくても、<wbr>残る<wbr>もの</div><div class="journal-excerpt">IQでは測れない音楽の価値。快感、感情、人とのつながり、健康関連QOLを研究から考える。</div><span class="journal-read-time">約12分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="doing-nothing.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="doing-nothing.html" data-category="philosophy" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">何もしない<wbr>時間は、<wbr>本当に<wbr>無駄なのか</div><div class="journal-excerpt">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。</div><span class="journal-read-time">約10分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="multiple-agents.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="multiple-agents.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職エージェントは、<wbr>何社<wbr>使えば<wbr>いいのか</div><div class="journal-excerpt">2〜3社を併用する理由、組み合わせ方、併用のルールと断り方。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="disliked-priority.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="disliked-priority.html" data-category="philosophy" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">嫌われる<wbr>ことを<wbr>「気にしなくなる」のではない。<wbr>優先順位が<wbr>下がるだけだ</div><div class="journal-excerpt">他人の目が消えるのではない。自分が向かう目的の方が重要になり、評価の順位が下がる。</div><span class="journal-read-time">約7分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="quit-cant-say.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="quit-cant-say.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">会社を<wbr>「辞める」と<wbr>言い出せない<wbr>ときに、<wbr>知って<wbr>おく<wbr>こと</div><div class="journal-excerpt">民法627条の2週間ルール、引き止め、退職代行の3つの種類を整理する。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="job-fit.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="job-fit.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">「この<wbr>仕事、<wbr>向いていない」は、<wbr>どこまで<wbr>本当か</div><div class="journal-excerpt">仕事との相性か、職場との相性か。適合の研究とジョブ・クラフティングから考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="smell.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="smell.html" data-category="body" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">匂いは、<wbr>人の<wbr>印象を<wbr>どこまで<wbr>決めているのか</div><div class="journal-excerpt">「なんとなく感じがいい」は、匂いにも左右される。好感度、感情、魅力、フェロモン、記憶を研究から考える。</div><span class="journal-read-time">約8分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="salary-change.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="salary-change.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職で、<wbr>年収は<wbr>上がるのか</div><div class="journal-excerpt">転職で賃金が増えた人は40.5%、減った人は29.4%。その差を分けるものを考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="quit-or-escape.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="quit-or-escape.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">「仕事を<wbr>辞めたい」は、<wbr>逃げなのか</div><div class="journal-excerpt">仕事の要求と資源、バーンアウトの研究から、辞めるべきか変えるべきかを分解する。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="job-change-happiness.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="job-change-happiness.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職すれば、<wbr>幸せに<wbr>なれるのか</div><div class="journal-excerpt">転職直後の満足度は上がり、その後下がる。ハネムーンと二日酔いの研究から考える。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="job-agent.html" data-category="work">
+        <a class="journal-item clickable journal-link" data-rise href="job-agent.html" data-category="work" data-date="2026.10.05">
           <div class="journal-date">2026.10.05</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">転職エージェントは、<wbr>なぜ<wbr>無料なのか</div><div class="journal-excerpt">報酬の仕組みから生まれる癖を知り、使われる側ではなく使う側になる。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="influence.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="influence.html" data-category="philosophy" data-date="2026.10.04">
           <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">人は、<wbr>あらゆる<wbr>ものに<wbr>影響されて<wbr>生きている</div><div class="journal-excerpt">影響を否定せず、向かう場所を決め、自分なりのチューニングを持つ。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="refined-taste.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="refined-taste.html" data-category="philosophy" data-date="2026.10.04">
           <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">目が<wbr>肥えると、<wbr>満足できなくなる</div><div class="journal-excerpt">良いものを知るほど基準は上がる。芸術からポルノまで、刺激と満足度の関係を考える。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="system-goal.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="system-goal.html" data-category="philosophy" data-date="2026.10.04">
           <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">システムの<wbr>ない<wbr>ゴールは、<wbr>動かない</div><div class="journal-excerpt">ゴールを日常の行動まで分解し、習慣とルーティンとして設計する。</div><span class="journal-read-time">約7分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="boundaries.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="boundaries.html" data-category="philosophy" data-date="2026.10.04">
           <div class="journal-date">2026.10.04</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">誰に<wbr>でも<wbr>好かれようと<wbr>すると、<wbr>なぜ<wbr>安っぽくなるのか</div><div class="journal-excerpt">100人に薄く好かれるより、「これが自分だ」と言えるものを持って生きたい。</div><span class="journal-read-time">約2分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="goggins.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="goggins.html" data-category="philosophy" data-date="2026.10.03">
           <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">デイビッド・ゴギンズと<wbr>いう<wbr>変人を、<wbr>僕は<wbr>尊敬している</div><div class="journal-excerpt">普通ではない。だから、かっこいい。常識の外まで自分を追い込み続ける男の生き方。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="freedom.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="freedom.html" data-category="philosophy" data-date="2026.10.03">
           <div class="journal-date">2026.10.03</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">愛ではなく、<wbr>自由を<wbr>求める</div><div class="journal-excerpt">愛は外にあり、自由は自分の中にある。自分の人生の基準をどこに置くか。</div><span class="journal-read-time">約8分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="fear.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="fear.html" data-category="philosophy" data-date="2026.10.02">
           <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">恐怖の<wbr>正体は<wbr>「危険」ではなく<wbr>「不快感」かもしれない</div><div class="journal-excerpt">怖いと感じたとき、それは本当に危険なのか。ただ不快なだけなのか。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="identity.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="identity.html" data-category="philosophy" data-date="2026.10.02">
           <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">あなたは<wbr>どんな<wbr>人間に<wbr>なりたいですか？</div><div class="journal-excerpt">行動を変える前に、自分がどんな人間として生きたいのかを考える。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="self-image.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="self-image.html" data-category="philosophy" data-date="2026.10.02">
           <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">セルフイメージは、<wbr>長期の<wbr>行動を<wbr>変える</div><div class="journal-excerpt">自分をどう認識するかは、長期の試行回数と経験量に影響する。</div><span class="journal-read-time">約4分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="hill.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="hill.html" data-category="philosophy" data-date="2026.10.02">
           <div class="journal-date">2026.10.02</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">「思考は<wbr>現実化する」は、<wbr>本当なのか。</div><div class="journal-excerpt">願えば叶う、ではない。思考が行動を変えるという話として読む。</div><span class="journal-read-time">約5分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="blood-glucose.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="blood-glucose.html" data-category="body" data-date="2026.10.01">
           <div class="journal-date">2026.10.01</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">血糖値は、<wbr>なぜ<wbr>これほど<wbr>健康に<wbr>重要なのか</div><div class="journal-excerpt">血糖、血管、そして未来の健康。そのつながりを考える。</div><span class="journal-read-time">約6分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="trampoline.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="trampoline.html" data-category="body" data-date="2026.09.30">
           <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">大人は、<wbr>いつから<wbr>跳ばなくなったのか。</div><div class="journal-excerpt">トランポリンを調べたら、「体力」の正体が少し見えてきた。</div><span class="journal-read-time">約8分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="stamina.html" data-category="body">
+        <a class="journal-item clickable journal-link" data-rise href="stamina.html" data-category="body" data-date="2026.09.30">
           <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</div><div class="journal-excerpt">強さではなく、日常に残る「余力」から体力を考える。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        <a class="journal-item clickable journal-link" data-rise href="nietzsche.html" data-category="philosophy">
+        <a class="journal-item clickable journal-link" data-rise href="nietzsche.html" data-category="philosophy" data-date="2026.09.30">
           <div class="journal-date">2026.09.30</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">神は<wbr>死んだ。<wbr>それでも、<wbr>なぜ<wbr>生きるのか。</div><div class="journal-excerpt">意味が与えられない世界で、自分は何を残していくのか。</div><span class="journal-read-time">約3分</span></div>
           <div class="journal-arrow">→</div>
@@ -440,6 +572,7 @@
         <a class="science-card" data-rise href="coffee.html"><span class="science-tag">FOOD / CAFFEINE / SLEEP</span><h3>コーヒーは、<wbr>本当に<wbr>体に<wbr>悪いのか</h3><p>メタ解析のまとめ、カフェインの安全量、睡眠の実験から、何杯まで・何時までなら言えるのかを整理する。</p><span class="science-more">約5分で読む →</span></a>
         <a class="science-card" data-rise href="coffee-guide.html"><span class="science-tag">FOOD / COFFEE / HOW TO CHOOSE</span><h3>コーヒーの<wbr>選び方と<wbr>淹れ方</h3><p>淹れ方でコレステロールへの影響が変わる。ペーパーフィルター、デカフェ、甘い飲料の見分け方を整理する。</p><span class="science-more">約4分で読む →</span></a>
         <a class="science-card" data-rise href="protein-guide.html"><span class="science-tag">FOOD / PROTEIN / HOW TO CHOOSE</span><h3>プロテインの<wbr>選び方</h3><p>どれくらい必要か、ホエイとソイの違い、表示の見方。メタ解析と食事摂取基準から整理する。</p><span class="science-more">約4分で読む →</span></a>
+        <a class="science-card" data-rise href="paleo-diet.html"><span class="science-tag">FOOD / DIET / EVOLUTION</span><h3>パレオダイエットとは、<wbr>なんぞや</h3><p>原始人の食事に戻れば健康になるのか。考え方の出どころ、試験の結果、考古学の発見、注意点を整理する。</p><span class="science-more">約8分で読む →</span></a>
       </div>
     </div>
   </section>
@@ -533,6 +666,35 @@
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   <p class="quote">千里の道も、一歩から。</p>
   <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span><nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

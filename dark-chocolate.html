@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>ダークチョコは、本当に体にいいのか — ムートン</title>
-<meta name="description" content="カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。">
+<meta name="description" content="ダークチョコは本当に体にいいのか。カカオフラバノールと血管機能、血圧、心血管イベントを調べた試験とメタ解析、重金属の検査から、どこまで言えて、どこから言えないのかを整理する。">
 <link rel="canonical" href="https://moutonarchive.com/dark-chocolate.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/dark-chocolate.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/dark-chocolate.html">
 <meta property="og:title" content="ダークチョコは、本当に体にいいのか — ムートン">
-<meta property="og:description" content="カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。">
+<meta property="og:description" content="ダークチョコは本当に体にいいのか。カカオフラバノールと血管機能、血圧、心血管イベントを調べた試験とメタ解析、重金属の検査から、どこまで言えて、どこから言えないのかを整理する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -41,8 +43,9 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ダークチョコは、本当に体にいいのか","description":"カカオフラバノール、血管機能、血圧、心血管イベント、重金属。RCTとメタ解析から、どこまで言えるのかを整理する。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/dark-chocolate.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ダークチョコは、本当に体にいいのか","description":"ダークチョコは本当に体にいいのか。カカオフラバノールと血管機能、血圧、心血管イベントを調べた試験とメタ解析、重金属の検査から、どこまで言えて、どこから言えないのかを整理する。","inLanguage":"ja","datePublished":"2026-10-04","dateModified":"2026-10-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/dark-chocolate.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"食事・化学","item":"https://moutonarchive.com/topic-food.html"},{"@type":"ListItem","position":3,"name":"ダークチョコは、本当に体にいいのか","item":"https://moutonarchive.com/dark-chocolate.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -56,6 +59,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -67,10 +72,10 @@
 </div>
 
 <div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a><a class="cover-lang" href="en/dark-chocolate.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
-<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</h1><p class="reading-time">約8分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-food.html">食事・化学</a></li><li><span aria-current="page">ダークチョコは、本当に体にいいのか</span></li></ol></nav>
+<div class="meta">2026.10.04 / FOOD &amp; SCIENCE</div><h1>ダークチョコは、<wbr>本当に<wbr>体に<wbr>いいのか</h1><p class="reading-time">約8分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p><p class="series-tag"><a href="#series"><span>連載</span>その健康法、本当？<em>2 / 5</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-<p class="lead">ダークチョコレートは「健康にいいお菓子」と言われることが多い。ポリフェノールが豊富。血圧を下げる。心臓にいい。検索すれば、こうした言葉がいくらでも出てくる。</p>
+<p class="lead">ダークチョコレートは「健康にいいお菓子」と言われることが多い。ポリフェノールが豊富。血圧を下げる。心臓にいい。検索すれば、こうした言葉がいくらでも出てくる。</p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">最大規模のCOSMOS試験で、カカオ抽出物は心血管イベント全体を有意に減らした。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。主要評価項目は有意差なし。</p><p class="quiz-why">ハザード比0.90で有意差なし。心血管死の27％低下は副次評価項目の結果で、研究者らも「さらなる研究が必要」としている。</p></div></details>
 <p>では、人間を対象にした研究では、どこまで確認されているのか。</p>
 <p>結論から言うと、血管機能と血圧については、小さいが一貫した改善がランダム化比較試験（RCT）で示されている。一方で、心筋梗塞や脳卒中などの「実際のイベント」を減らすかどうかは、まだ決着していない。</p>
 <p>さらに、重金属と砂糖・カロリーという、見落としやすい注意点もある。</p>
@@ -94,7 +99,7 @@
 <p>主要評価項目で有意差が出なかったため、「カカオが心血管イベントを減らした」とは言えない。心血管死の27％低下は、副次評価項目の結果で、多数の比較の中の1つだ。試験の報告では、プロトコル通りに摂取した人の解析で、イベント減少の可能性が支持されたとされるが、研究者らも「さらなる研究が必要」と結論している <a href="#ref-3">[3]</a>。</p>
 <p>そしてもう1つ。COSMOSはチョコレートの試験ではない。研究者自身が、この試験の用量は、チョコレートから現実的に摂れる量ではないと述べている。</p>
 <p>仮に市販のダークチョコのフラバノール含有率を約0.5％とすると、500mgを摂るには約100gが必要になる計算だ。100gは600kcal前後になる。これは目安の試算で、製品差が非常に大きい。</p>
-<h2 id="section-5">注意点1：重金属</h2>
+<details class="quiz quiz-mid" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">米国の検査で、ダークチョコ28製品中23製品が約28gで州の1日上限を超える重金属を含んでいた。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。基準内は5製品だった。</p><p class="quiz-why">消費者団体の検査報告で、査読論文ではない。米国の製品とカリフォルニア州の基準での結果で、日本の製品の結果ではない。</p></div></details><h2 id="section-5">注意点1：重金属</h2>
 <p>米国の消費者団体コンシューマー・リポートは、市販のダークチョコ28製品を検査した。23製品では、1オンス（約28g）で、カリフォルニア州の1日最大許容量（鉛0.5µg、カドミウム4.1µg）を超えていた。基準内だったのは5製品だ <a href="#ref-4">[4]</a>。</p>
 <p>同じ報告では、カドミウムは、カカオ含有率が高い製品ほど多い傾向があり、オーガニックだからといって低いとは限らなかった <a href="#ref-4">[4]</a>。</p>
 <p>注意すべき点は3つある。</p><ul><li>これは査読論文ではなく、消費者団体の検査報告だ。</li><li>対象は米国で販売されている製品で、日本の製品の結果ではない。</li><li>基準はカリフォルニア州のもので、日本の基準とは異なる。</li></ul>
@@ -120,6 +125,24 @@
 <p id="ref-2">2. Ried K, Fakler P, Stocks NP. (2017). Effect of cocoa on blood pressure. <em>Cochrane Database of Systematic Reviews</em>, Issue 4, CD008893. doi:10.1002/14651858.CD008893.pub3</p>
 <p id="ref-3">3. Sesso HD, et al. (2022). Effect of cocoa flavanol supplementation for prevention of cardiovascular disease events: the COcoa Supplement and Multivitamin Outcomes Study (COSMOS) randomized clinical trial. <em>The American Journal of Clinical Nutrition</em>, 115(6), 1490–1500.</p>
 <p id="ref-4">4. Consumer Reports (2022). Heavy metals in dark chocolate（28製品の検査報告。査読論文ではない）</p></div>
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>2 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#food-check">その健康法、本当？</a></p>
+  <p class="series-intro">コーヒー、ダークチョコ、オリーブ油、ブルーベリー、血糖値。「体にいい」「体に悪い」を、論文から確かめ直しています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="coffee.html">コーヒーは、本当に体に悪いのか</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">2</span><span class="series-name">ダークチョコは、本当に体にいいのか</span></li>
+    <li><span class="series-n">3</span><a class="series-name" href="olive-oil.html">オリーブ油は、本当に身体にいいのか</a></li>
+    <li><span class="series-n">4</span><a class="series-name" href="blueberry.html">ブルーベリーは、本当にそんなにすごいのか</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="blood-glucose.html">血糖値は、なぜこれほど健康に重要なのか</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="coffee.html"><span>← 前の回</span>コーヒーは、本当に体に悪いのか</a><a class="series-next" href="olive-oil.html"><span>次の回 →</span>オリーブ油は、本当に身体にいいのか</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="dark-chocolate" data-prefer="dark-chocolate-guide,olive-oil,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -139,11 +162,41 @@
 </aside>
 
 <aside class="guide-callout" aria-label="関連する選び方"><p class="guide-callout-eyebrow">買う前に</p><a class="guide-callout-link" href="dark-chocolate-guide.html"><span class="guide-callout-title">ダークチョコの選び方</span><span class="guide-callout-text">カカオ分の数字だけで選ばない。表示のルール、加工、重金属から、見るところを整理する。</span><span class="guide-callout-more">選び方を読む <span aria-hidden="true">→</span></span></a></aside>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="olive-oil.html">オリーブ油は、<wbr>本当に<wbr>身体に<wbr>いいのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="olive-oil.html" data-slug="olive-oil"><span class="reading-card-title">オリーブ油は、本当に身体にいいのか</span><span class="reading-card-q"><b>Q.</b> オリーブ油を「ほかの植物油全体」と比べると、心血管リスクに有意な差はなかった。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

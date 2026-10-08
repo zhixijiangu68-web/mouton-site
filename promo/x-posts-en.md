@@ -2,7 +2,7 @@
 
 `tweet-stock.md` に集めたツイートを元に、ムートンの言葉で書き直した英語の投稿。原文の言い回しは借りず、考え方だけをもらって、サイトの記事のテーマにつなげている。
 
-- サイトの記事は日本語なので、リンクは付けていない
+- T1〜T5 の20本はリンクなし。2026-10-08 の「クイズ型の5本」は英語版の記事（`/en/`）へのリンクをリプライに置く
 - どれも280字以内（英語は1字＝1）
 - 「効く」「必ず」のような言い切りはしない
 
@@ -17,6 +17,83 @@
 | 3 | EN-14 | T4 | 原文の言葉遊びに頼らず、「正しい相手より、正しい自分」と自分の言葉にできている |
 | 4 | EN-7 | T2 | 原文のリストをなぞらず、「距離をとる」1つを深くしている。boundaries の記事と同じ考え |
 | 5 | EN-12 | T3 | 4行と短く、最後の一文で終わる。出典の確認がいらない |
+
+## クイズ型の5本（2026-10-08）
+
+英語版の記事ができたので、この5本は**記事へのリンク付き**（本文にはリンクを入れず、自分の投稿へのリプライに置く）。どれも main に公開済みの英語の記事で、数字は記事の本文と照合済み。英語版にはアフィリエイトがないので【PR】は不要。どのアカウントで出すかは未決（オーナーの承認待ち）。
+
+### EN-21 How long should a nap be?（en/nap）｜Quiz: 10- or 30-minute nap
+```
+Quick quiz: which nap leaves you sharper right after you wake up, 10 minutes or 30?
+
+10.
+
+In an experiment with 24 sleep-deprived young adults, 10 minutes worked best. After 30, people were groggier at first, not sharper.
+
+Longer isn't always more rest.
+```
+Reply (to your own post):
+```
+More here → https://moutonarchive.com/en/nap.html?utm_source=x&utm_medium=social&utm_campaign=en-nap&utm_content=reply
+```
+
+### EN-22 Most bad breath comes from the mouth, not the stomach（en/halitosis）｜True or false: bad breath starts in the stomach
+```
+True or false: most bad breath starts in the stomach.
+
+False.
+
+Reviews put 80-90% of it in the mouth. Among 2,000 patients at a bad-breath clinic, 76% had a cause in the mouth, mostly tongue coating and gum disease.
+
+Start with the mouth.
+```
+Reply (to your own post):
+```
+More here → https://moutonarchive.com/en/halitosis.html?utm_source=x&utm_medium=social&utm_campaign=en-halitosis&utm_content=reply
+```
+
+### EN-23 First impressions form in 0.1 seconds（en/first-impression-sleep）｜Surprising number: 0.1 seconds
+```
+How long does a stranger need to judge your face?
+
+About 0.1 seconds.
+
+In one study, impressions formed in a tenth of a second closely matched ones made with no time limit. Looking longer didn't change the judgments much. It just made people more sure of them.
+```
+Reply (to your own post):
+```
+More here → https://moutonarchive.com/en/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=en-first-impression-sleep&utm_content=reply
+```
+
+### EN-24 Is doing nothing really a waste of time?（en/doing-nothing）｜True or false: 10 minutes of nothing is wasted
+```
+True or false: 10 minutes of doing nothing is wasted time.
+
+False, at least for memory.
+
+Older adults who rested quietly for 10 minutes after hearing a story remembered it better, not just right after, but seven days later.
+
+No extra studying. Just a pause.
+```
+Reply (to your own post):
+```
+More here → https://moutonarchive.com/en/doing-nothing.html?utm_source=x&utm_medium=social&utm_campaign=en-doing-nothing&utm_content=reply
+```
+
+### EN-25 When fear keeps you from changing jobs（en/fear-of-change）｜Comparison: regretting what you did vs. didn't do
+```
+What do you regret more: what you did, or what you didn't?
+
+In the short run, what we did.
+
+But looking back over long spans, regrets about what we didn't do were more common and lasted longer (Gilovich & Medvec, 1995).
+
+The safe choice has a cost too. It just arrives later.
+```
+Reply (to your own post):
+```
+More here → https://moutonarchive.com/en/fear-of-change.html?utm_source=x&utm_medium=social&utm_campaign=en-fear-of-change&utm_content=reply
+```
 
 ## T1 早く立ち直る技術から
 

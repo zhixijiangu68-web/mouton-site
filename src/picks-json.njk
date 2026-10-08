@@ -1,0 +1,5 @@
+---
+permalink: picks.json
+eleventyExcludeFromCollections: true
+---
+{{ collections.articles | picksJson(quizzes) | safe }}

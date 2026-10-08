@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>Mouton — Notes on philosophy, the body, food and work</title>
 <meta name="description" content="The English edition of Mouton, a personal archive. Essays on philosophy and how to live, the body, food and science, and work, checked against research and data.">
@@ -27,6 +29,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="../site.css">
 <script src="../site.js" defer></script>
+<script src="../quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
@@ -38,6 +41,9 @@
   <nav aria-label="Main navigation">
     <ul class="site-links" id="site-links">
       <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
+      <li><a href="../quiz.html">Quiz<span class="site-links-en">True or false</span></a></li>
+      <li><a href="../series.html">Series<span class="site-links-en">Read in order</span></a></li>
+      <li><a href="../guides.html">Guides<span class="site-links-en">Before you buy</span></a></li>
       <li><a href="index.html#philosophy">Philosophy<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#body">Body<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#work">Work<span class="site-links-en">Articles</span></a></li>
@@ -53,8 +59,11 @@
   <h1 class="doc-title">Mouton</h1>
   <p>A personal archive. I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, the body, food, and work, checking papers and data along the way.</p>
   <p>These essays were first written in Japanese. Product recommendations in the original articles point to Japanese shops, so the English edition describes what to look for without shop links. <a href="../index.html" hreflang="ja" lang="ja">日本語版はこちら</a></p>
+  <p><a class="btn btn-dark" href="../guides.html">Buying guides <span aria-hidden="true">→</span></a> <a class="btn btn-dark" href="../quiz.html">10-question quiz <span aria-hidden="true">→</span></a></p>
+  <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">Try one <span>True or false</span></p>
+  <div class="qloop" data-qloop></div></section>
   <section id="journal" aria-labelledby="journal-heading">
-    <h2 id="journal-heading" class="eyebrow">Journal — 59 articles</h2>
+    <h2 id="journal-heading" class="eyebrow">Journal — 60 articles</h2>
     <section id="philosophy" aria-labelledby="topic-philosophy">
       <h2 class="doc-title" id="topic-philosophy">Philosophy</h2>
       <div class="topic-list">
@@ -205,6 +214,12 @@
           <span class="topic-date">2026.10.07</span>
           <span class="topic-title">First impressions form in 0.1 seconds. And sleep loss shows on your face</span>
           <span class="topic-excerpt">A tenth of a second was enough to judge a face. How does a sleep-deprived face look to others?</span>
+          <span class="topic-time">4 min read</span>
+        </a>
+        <a class="topic-item" data-rise href="sunscreen-guide.html">
+          <span class="topic-date">2026.10.07</span>
+          <span class="topic-title">How to choose a sunscreen</span>
+          <span class="topic-excerpt">Even SPF 50 falls short if you apply too little. What a trial and official guidelines say about choosing and applying it.</span>
           <span class="topic-time">4 min read</span>
         </a>
         <a class="topic-item" data-rise href="blue-light.html">
@@ -437,10 +452,38 @@
   </section>
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="Site map">
+  <div class="footer-map-col">
+    <p class="footer-map-h">Topics</p>
+    <ul><li><a href="index.html#philosophy">Philosophy</a></li><li><a href="index.html#body">Body</a></li><li><a href="index.html#work">Work</a></li><li><a href="index.html#food">Food &amp; Science</a></li>
+      <li><a href="index.html#journal">All articles</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Series</p>
+    <ul><li><a href="../series.html#job">Thinking about changing jobs</a></li><li><a href="../series.html#clean">Looking clean, checked</a></li><li><a href="../series.html#thinkers">Asking the philosophers</a></li><li><a href="../series.html#sleep">Sleep, checked</a></li><li><a href="../series.html#food-check">Is that health claim true?</a></li><li><a href="../series.html#habits">How people change</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Guides</p>
+    <ul><li><a href="olive-oil-guide.html">How to choose olive oil: what to look at on the label</a></li><li><a href="dark-chocolate-guide.html">How to choose dark chocolate: don&#39;t go by the cacao percentage alone</a></li><li><a href="coffee-guide.html">How to choose and brew coffee: paper filters and decaf</a></li><li><a href="protein-guide.html">How to choose protein powder: how much you need, and whey or soy</a></li><li><a href="oral-care-guide.html">How to choose tools for bad breath</a></li><li><a href="deodorant-guide.html">How to choose an antiperspirant or deodorant</a></li>
+      <li><a href="../guides.html">All guides</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">About</p>
+    <ul>
+      <li><a href="../quiz.html">True-or-false quiz</a></li>
+      <li><a href="../operator.html">About the operator</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="Site information">
-  <a href="../operator.html">About the operator (Japanese)</a>
-  <a href="../privacy.html">Privacy policy (Japanese)</a>
-  <a href="../contact.html">Contact (Japanese)</a>
+  <a href="../operator.html">About the operator</a>
+  <a href="../privacy.html">Privacy policy</a>
+  <a href="../contact.html">Contact</a>
   <a href="../index.html" hreflang="ja" lang="ja">日本語版</a>
   <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
 </nav>

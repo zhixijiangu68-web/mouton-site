@@ -1,0 +1,22 @@
+{%- set mySeries = series | seriesOf(page.fileSlug) %}
+{%- if mySeries %}
+{%- set en = lang == 'en' %}
+{%- set items = (collections.articlesEn if en else collections.articles) | bySlugs(mySeries.slugs) %}
+{%- set ns = items | seriesNav(page.fileSlug) %}
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">{{ 'Series' if en else '連載' }} <span>{{ ns.cur }} / {{ mySeries.slugs.length }}</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#{{ mySeries.key }}">{{ mySeries.en if en else mySeries.title }}</a></p>
+  <p class="series-intro">{{ mySeries.enIntro if en else mySeries.intro }}</p>
+  <ol class="series-list">
+    {%- for a in items %}
+    <li{% if a.page.fileSlug == page.fileSlug %} class="is-current" aria-current="page"{% endif %}><span class="series-n">{{ loop.index }}</span>{% if a.page.fileSlug == page.fileSlug %}<span class="series-name">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>{% else %}<a class="series-name" href="{{ a.page.fileSlug }}.html">{{ a.data.journal.title if a.data.journal else a.data.headline }}</a>{% endif %}</li>
+    {%- endfor %}
+  </ol>
+  {%- if ns.prev or ns.next %}
+  <p class="series-nav">
+    {%- if ns.prev %}<a class="series-prev" href="{{ ns.prev.page.fileSlug }}.html"><span>{{ '← Previous' if en else '← 前の回' }}</span>{{ ns.prev.data.journal.title if ns.prev.data.journal else ns.prev.data.headline }}</a>{% endif %}
+    {%- if ns.next %}<a class="series-next" href="{{ ns.next.page.fileSlug }}.html"><span>{{ 'Next →' if en else '次の回 →' }}</span>{{ ns.next.data.journal.title if ns.next.data.journal else ns.next.data.headline }}</a>{% endif %}
+  </p>
+  {%- endif %}
+</nav>
+{%- endif %}

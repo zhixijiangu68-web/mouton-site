@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>大人は、いつから跳ばなくなったのか。 — ムートン</title>
-<meta name="description" content="トランポリンを調べたら、「体力」の正体が少し見えてきた。">
+<meta name="description" content="大人になると、跳ぶという動きは生活から消える。ミニトランポリンの研究では、心肺機能、足首の筋力、崩れたバランスを立て直す力、糖の代謝に改善が報告された。分かっていることだけで、跳ぶ運動を評価する。">
 <link rel="canonical" href="https://moutonarchive.com/trampoline.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/trampoline.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/trampoline.html">
 <meta property="og:title" content="大人は、いつから跳ばなくなったのか。 — ムートン">
-<meta property="og:description" content="トランポリンを調べたら、「体力」の正体が少し見えてきた。">
+<meta property="og:description" content="大人になると、跳ぶという動きは生活から消える。ミニトランポリンの研究では、心肺機能、足首の筋力、崩れたバランスを立て直す力、糖の代謝に改善が報告された。分かっていることだけで、跳ぶ運動を評価する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -39,8 +41,9 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"大人は、いつから跳ばなくなったのか。","description":"トランポリンを調べたら、「体力」の正体が少し見えてきた。","inLanguage":"ja","datePublished":"2026-09-30","dateModified":"2026-09-30","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/trampoline.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"大人は、いつから跳ばなくなったのか。","description":"大人になると、跳ぶという動きは生活から消える。ミニトランポリンの研究では、心肺機能、足首の筋力、崩れたバランスを立て直す力、糖の代謝に改善が報告された。分かっていることだけで、跳ぶ運動を評価する。","inLanguage":"ja","datePublished":"2026-09-30","dateModified":"2026-09-30","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/trampoline.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"身体","item":"https://moutonarchive.com/topic-body.html"},{"@type":"ListItem","position":3,"name":"大人は、いつから跳ばなくなったのか。","item":"https://moutonarchive.com/trampoline.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -54,6 +57,8 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -65,10 +70,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="cover ph-body is-placeholder" data-nav="light"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/trampoline.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light"><article>
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-body.html">身体</a></li><li><span aria-current="page">大人は、いつから跳ばなくなったのか。</span></li></ol></nav><article>
         <div class="meta">2026.09.30　/　BODY</div>
         <h1>大人は、<wbr>いつから<br>跳ばなくなったのか。</h1><p class="reading-time">約8分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 跳ぶと、心肺が動く</a></li><li><a href="#section-2">2. 跳ぶたびに、身体は小さく崩れている</a></li><li><a href="#section-3">3. ウォーキングとは少し違う</a></li><li><a href="#section-4">4. 代謝も動く</a></li><li><a href="#section-5">5. 「跳ぶ」は意外と全身運動だった</a></li><li><a href="#section-6">6. だからといって、万能ではない</a></li><li><a href="#section-7">7. では、どのくらい跳べばいいのか</a></li><li><a href="#section-8">「体力」とは何だろう</a></li><li><a href="#section-9">大人は、いつから跳ばなくなったのか</a></li><li><a href="#section-10">参考文献</a></li></ol></nav></details>
-        <p class="lead">——トランポリンを調べたら、「体力」の正体が少し見えてきた。</p>
+        <p class="lead">——トランポリンを調べたら、「体力」の正体が少し見えてきた。</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">高齢者が14週間ミニトランポリンをした研究で、崩れた姿勢を立て直す能力が約35％改善した。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。前方に崩れたときの能力。</p><p class="quiz-why">足首を伸ばす筋力も約10％向上した。ただし対象は高齢者で、健康な現役世代に同じ効果が出るかはまだ分からない。</p></div></details>
         <p>子どもの頃は、よく跳んでいた。水たまりを飛び越えたり、階段からジャンプしたり、意味もなくその場で跳ねたり。</p>
         <p>でも大人になると、不思議なくらい跳ばなくなる。歩く。座る。立つ。たまに走る。ジムに行けば、重いものを持ち上げる。</p>
         <p>でも、<strong>「跳ぶ」という動きは、いつの間にか生活から消えている。</strong></p>
@@ -100,7 +105,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p><strong>跳ぶ → 着地する → 沈み込む → 姿勢を立て直す → また跳ぶ。</strong></p>
         <p>ふくらはぎ。太もも。お尻。体幹。そして心肺。さらに、不安定な足元で姿勢を維持する。</p>
         <p>だからトランポリンは、有酸素運動、筋力トレーニング、バランストレーニングのどれか一つに分類するより、<strong>複数の身体機能を同時に使う運動</strong>と考える方がしっくりくる。</p>
-        <h2 id="section-6">6. だからと<wbr>いって、<wbr>万能ではない</h2>
+        <details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">研究で、トランポリンは骨密度をはっきり上げることが確認された。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。明確な差はなかった。</p><p class="quiz-why">骨量減少症の女性40人の研究で、筋力やバランスは改善したが、腰椎や大腿骨頸部の骨密度に明確な群間差はなかった。</p></div></details><h2 id="section-6">6. だからと<wbr>いって、<wbr>万能ではない</h2>
         <p>骨量減少症の女性40人を対象とした12週間の研究では、筋力やバランスなどは改善したものの、腰椎や大腿骨頸部の骨密度について明確な群間差は確認されなかった。</p>
         <p>だから、<strong>「跳べば骨密度が大幅に上がる」</strong>とは現時点では言えない。</p>
         <p>また、「リンパが流れる」「デトックスできる」「免疫力が劇的に上がる」といった話も、今回紹介した心肺機能やバランス能力などと同じレベルで臨床的根拠が確立しているとは言いにくい。</p>
@@ -139,6 +144,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
       
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="trampoline" data-prefer="mini-trampoline-guide,stamina,blood-glucose,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -158,12 +167,42 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </aside>
 
 <aside class="guide-callout" aria-label="関連する選び方"><p class="guide-callout-eyebrow">買う前に</p><a class="guide-callout-link" href="mini-trampoline-guide.html"><span class="guide-callout-title">ミニトランポリンの選び方</span><span class="guide-callout-text">置き場所、耐荷重、ゴムかバネか、手すり。家で安全に続けるための選び方。</span><span class="guide-callout-more">選び方を読む <span aria-hidden="true">→</span></span></a></aside>
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="stamina.html">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</a><a class="reading-card" href="blood-glucose.html">血糖値は、<wbr>なぜ<wbr>これほど<wbr>健康に<wbr>重要なのか</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="stamina.html" data-slug="stamina"><span class="reading-card-title">筋トレを減らしたら、なぜか「体力」がついた</span></a><a class="reading-card has-q" href="blood-glucose.html" data-slug="blood-glucose"><span class="reading-card-title">血糖値は、なぜこれほど健康に重要なのか</span><span class="reading-card-q"><b>Q.</b> 1日30分まとめて歩くより、毎食後10分ずつ歩く方が食後血糖を抑えられた研究がある。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-body.html">「身体」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

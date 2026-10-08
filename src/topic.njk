@@ -20,7 +20,7 @@ eleventyComputed:
   <p class="topic-count">{{ list.length }}本の記事</p>
   <div class="topic-list">
     {%- for a in list %}
-    <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html">
+    <a class="topic-item" data-rise href="{{ a.page.fileSlug }}.html" data-date="{{ a.page.date | dotDate }}">
       <span class="topic-date">{{ a.page.date | dotDate }}</span>
       <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.science.title }}</span>
       <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.science.text }}</span>
@@ -28,6 +28,8 @@ eleventyComputed:
     </a>
     {%- endfor %}
   </div>
+  <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">このテーマから、1問 <span>○×クイズ</span></p>
+  <div class="qloop" data-qloop data-prefer="{% for a in list %}{{ a.page.fileSlug }},{% endfor %}"></div></section>
   <nav class="topic-others" aria-label="ほかのテーマ">
     {%- for o in topics %}{% if o.key != t.key %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endif %}{% endfor %}
     <a href="index.html#journal">すべての記事</a>
@@ -35,6 +37,7 @@ eleventyComputed:
   {% include "partials/newsletter.njk" %}
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-map.njk" %}
   {% include "partials/footer-links.njk" %}
   <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
 </footer>

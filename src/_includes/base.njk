@@ -1,9 +1,15 @@
 <!doctype html>
 {%- set root = root or "" %}
-<html lang="{{ lang or 'ja' }}">
+<html lang="{{ lang or 'ja' }}" data-root="{{ root }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+{#- GitHub Pages ではヘッダーを付けられないので meta で。広告と GA4 を止めない範囲に絞っている（スクリプトの読み込み元は制限しない）。<base> より前に置く。 #}
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'{% if site.newsletter.action %} {{ site.newsletter.action | origin }}{% endif %}; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+{%- if baseHref %}
+<base href="{{ baseHref }}">
+{%- endif %}
 <script>document.documentElement.classList.add('js')</script>
 <title>{{ title }}</title>
 {%- set pageUrl = page.url | absoluteUrl(site.url) %}
@@ -15,6 +21,12 @@
 {%- if isArticle and page.fileSlug in enSlugs %}
 <link rel="alternate" hreflang="ja" href="{{ (page.fileSlug + '.html') | absoluteUrl(site.url) }}">
 <link rel="alternate" hreflang="en" href="{{ ('en/' + page.fileSlug + '.html') | absoluteUrl(site.url) }}">
+{%- elif enPage %}
+<link rel="alternate" hreflang="ja" href="{{ page.url | absoluteUrl(site.url) }}">
+<link rel="alternate" hreflang="en" href="{{ enPage | absoluteUrl(site.url) }}">
+{%- elif jaPage %}
+<link rel="alternate" hreflang="ja" href="{{ jaPage | absoluteUrl(site.url) }}">
+<link rel="alternate" hreflang="en" href="{{ page.url | absoluteUrl(site.url) }}">
 {%- elif page.url == '/' or page.url == '/en/' %}
 <link rel="alternate" hreflang="ja" href="{{ '' | absoluteUrl(site.url) }}">
 <link rel="alternate" hreflang="en" href="{{ 'en/' | absoluteUrl(site.url) }}">
@@ -67,6 +79,7 @@
 <link rel="stylesheet" href="{{ root }}{{ css }}">
 {%- endfor %}
 <script src="{{ root }}site.js" defer></script>
+<script src="{{ root }}quiz-loop.js" defer></script>
 {%- if isArticle %}
 <script src="{{ root }}article-share.js" defer></script>
 <script type="application/ld+json">{% articleLd headline, description, page.date, updated, pageUrl, site, lang or 'ja' %}</script>

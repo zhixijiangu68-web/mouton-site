@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>God Is Dead. So Why Do We Keep Living? — Mouton</title>
 <meta name="description" content="In a world where no meaning is handed to us, what will I leave behind? Starting from Nietzsche&#39;s famous line.">
@@ -38,6 +40,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="../site.css">
 <script src="../site.js" defer></script>
+<script src="../quiz-loop.js" defer></script>
 <script src="../article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"God is dead. So why do we keep living?","description":"In a world where no meaning is handed to us, what will I leave behind? Starting from Nietzsche's famous line.","inLanguage":"en","datePublished":"2026-09-30","dateModified":"2026-09-30","author":{"@type":"Person","name":"Mouton","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/en/nietzsche.html"}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -51,6 +54,9 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
   <nav aria-label="Main navigation">
     <ul class="site-links" id="site-links">
       <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
+      <li><a href="../quiz.html">Quiz<span class="site-links-en">True or false</span></a></li>
+      <li><a href="../series.html">Series<span class="site-links-en">Read in order</span></a></li>
+      <li><a href="../guides.html">Guides<span class="site-links-en">Before you buy</span></a></li>
       <li><a href="index.html#philosophy">Philosophy<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#body">Body<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#work">Work<span class="site-links-en">Articles</span></a></li>
@@ -61,10 +67,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="Back"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> Back to all articles</a><a class="cover-lang" href="../nietzsche.html" hreflang="ja" lang="ja">日本語</a></nav></div>
-<main data-nav="light" data-nav-solid="light"><article>
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li><a href="index.html#philosophy">Philosophy</a></li><li><span aria-current="page">God is dead. So why do we keep living?</span></li></ol></nav><article>
         <div class="meta">2026.09.30　/　PHILOSOPHY</div>
-        <h1>God is dead.<br>So why do we keep living?</h1><p class="reading-time">2 min read</p><div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>Press and hold to copy the link<input class="copy-url" type="text" readonly aria-label="Link to this article"></label></div></div>
-        <p class="lead">"God is dead."</p>
+        <h1>God is dead.<br>So why do we keep living?</h1><p class="reading-time">2 min read</p><p class="series-tag"><a href="#series"><span>Series</span>Asking the philosophers<em>2 / 5</em></a></p><div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>Press and hold to copy the link<input class="copy-url" type="text" readonly aria-label="Link to this article"></label></div></div>
+        <p class="lead">"God is dead."</p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">Nietzsche's &quot;God is dead&quot; simply means &quot;there is no God.&quot;</span><span class="quiz-tap">Show answer</span></summary><div class="quiz-a"><p class="quiz-answer">False. It means more than that.</p><p class="quiz-why">It asks why we keep living once we can no longer believe in the bigger something that gave us reasons to live.</p></div></details>
         <p>It's one of the most famous lines Nietzsche ever wrote.</p>
         <p>But it doesn't simply say "there is no God." It puts a far more frightening question in front of us.</p>
         <p>For a long time, people had reasons to live. For God. For family. For the nation. For society. To live well. To be a good person.</p>
@@ -95,28 +101,74 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         </div>
 <div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>Press and hold to copy the link<input class="copy-url" type="text" readonly aria-label="Link to this article"></label></div></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">Series <span>2 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="../series.html#thinkers">Asking the philosophers</a></p>
+  <p class="series-intro">The Stoics, Nietzsche, Camus, Sartre. Taking today&#39;s worries to two thousand years of philosophers.</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="stoicism.html">Are you worrying too much about what you can&#39;t change?</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">2</span><span class="series-name">God is dead. So why do we keep living?</span></li>
+    <li><span class="series-n">3</span><a class="series-name" href="camus-sisyphus.html">Can you be happy when every day is the same?</a></li>
+    <li><span class="series-n">4</span><a class="series-name" href="sartre.html">Condemned to be free</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="books-philosophy.html">Books to read when you want to think about how to live</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="stoicism.html"><span>← Previous</span>Are you worrying too much about what you can&#39;t change?</a><a class="series-next" href="camus-sisyphus.html"><span>Next →</span>Can you be happy when every day is the same?</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="60" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">One more <span>True or false</span></p>
+<div class="qloop" data-qloop data-exclude="nietzsche" data-prefer="camus-sisyphus,sartre,books-philosophy"></div></section>
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
   <div>
     <p class="author-label">Written by</p>
     <p class="author-name" id="author-box-name">Mouton</p>
     <p class="author-bio">I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, and about the body and food, checking papers and data along the way. This is the English edition of a Japanese site.</p>
-    <p class="author-links"><a href="../nietzsche.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-links"><a href="../operator.html">About the operator</a><a href="../nietzsche.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
     <p class="author-dates">Published 2026.09.30</p>
   </div>
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card" href="books-philosophy.html">Books to read when you want to think about how to live</a><a class="reading-card" href="freedom.html">I want freedom, not love</a><a class="reading-card" href="identity.html">What kind of person do you want to be?</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card has-q" href="camus-sisyphus.html"><span class="reading-card-title">Can you be happy when every day is the same?</span><span class="reading-card-q"><b>Q.</b> Camus&#39;s &quot;absurd&quot; means the world itself is absurd.<em>True or false?</em></span></a><a class="reading-card has-q" href="sartre.html"><span class="reading-card-title">Condemned to be free</span><span class="reading-card-q"><b>Q.</b> When a student asked Sartre for advice, he told him clearly which option to choose.<em>True or false?</em></span></a><a class="reading-card has-q" href="books-philosophy.html"><span class="reading-card-title">Books to read when you want to think about how to live</span><span class="reading-card-q"><b>Q.</b> Both Nietzsche and Frankl held that people can find meaning in any situation.<em>True or false?</em></span></a></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">Back to all articles</a><a class="reading-return" href="index.html#philosophy">All Philosophy articles</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="Site map">
+  <div class="footer-map-col">
+    <p class="footer-map-h">Topics</p>
+    <ul><li><a href="index.html#philosophy">Philosophy</a></li><li><a href="index.html#body">Body</a></li><li><a href="index.html#work">Work</a></li><li><a href="index.html#food">Food &amp; Science</a></li>
+      <li><a href="index.html#journal">All articles</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Series</p>
+    <ul><li><a href="../series.html#job">Thinking about changing jobs</a></li><li><a href="../series.html#clean">Looking clean, checked</a></li><li><a href="../series.html#thinkers">Asking the philosophers</a></li><li><a href="../series.html#sleep">Sleep, checked</a></li><li><a href="../series.html#food-check">Is that health claim true?</a></li><li><a href="../series.html#habits">How people change</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Guides</p>
+    <ul><li><a href="olive-oil-guide.html">How to choose olive oil: what to look at on the label</a></li><li><a href="dark-chocolate-guide.html">How to choose dark chocolate: don&#39;t go by the cacao percentage alone</a></li><li><a href="coffee-guide.html">How to choose and brew coffee: paper filters and decaf</a></li><li><a href="protein-guide.html">How to choose protein powder: how much you need, and whey or soy</a></li><li><a href="oral-care-guide.html">How to choose tools for bad breath</a></li><li><a href="deodorant-guide.html">How to choose an antiperspirant or deodorant</a></li>
+      <li><a href="../guides.html">All guides</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">About</p>
+    <ul>
+      <li><a href="../quiz.html">True-or-false quiz</a></li>
+      <li><a href="../operator.html">About the operator</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="Site information">
-  <a href="../operator.html">About the operator (Japanese)</a>
-  <a href="../privacy.html">Privacy policy (Japanese)</a>
-  <a href="../contact.html">Contact (Japanese)</a>
+  <a href="../operator.html">About the operator</a>
+  <a href="../privacy.html">Privacy policy</a>
+  <a href="../contact.html">Contact</a>
   <a href="../index.html" hreflang="ja" lang="ja">日本語版</a>
   <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
 </nav>

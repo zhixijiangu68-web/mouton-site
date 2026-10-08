@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-root="../">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>Condemned to Be Free: Sartre&#39;s Existentialism — Mouton</title>
 <meta name="description" content="Is freedom a gift or a burden? From Sartre&#39;s 1945 lecture, &quot;existence precedes essence&quot; and &quot;man is condemned to be free,&quot; I think about the weight of choosing for yourself.">
@@ -49,6 +51,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="../site.css">
 <script src="../site.js" defer></script>
+<script src="../quiz-loop.js" defer></script>
 <script src="../article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Condemned to be free: Sartre's existentialism","description":"Is freedom a gift or a burden? From Sartre's 1945 lecture, \"existence precedes essence\" and \"man is condemned to be free,\" I think about the weight of choosing for yourself.","inLanguage":"en","datePublished":"2026-10-07","dateModified":"2026-10-07","author":{"@type":"Person","name":"Mouton","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/en/sartre.html"}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -62,6 +65,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
   <nav aria-label="Main navigation">
     <ul class="site-links" id="site-links">
       <li><a href="index.html#journal">Journal<span class="site-links-en">All articles</span></a></li>
+      <li><a href="../quiz.html">Quiz<span class="site-links-en">True or false</span></a></li>
+      <li><a href="../series.html">Series<span class="site-links-en">Read in order</span></a></li>
+      <li><a href="../guides.html">Guides<span class="site-links-en">Before you buy</span></a></li>
       <li><a href="index.html#philosophy">Philosophy<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#body">Body<span class="site-links-en">Articles</span></a></li>
       <li><a href="index.html#work">Work<span class="site-links-en">Articles</span></a></li>
@@ -72,17 +78,17 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="Back"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> Back to all articles</a><a class="cover-lang" href="../sartre.html" hreflang="ja" lang="ja">日本語</a></nav></div>
-<main data-nav="light" data-nav-solid="light">
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="index.html">Home</a></li><li><a href="index.html#philosophy">Philosophy</a></li><li><span aria-current="page">Condemned to be free</span></li></ol></nav>
 <div class="eyebrow">JOURNAL / PHILOSOPHY</div>
 <div class="meta">2026.10.07</div>
 <h1>Condemned to be free: Sartre's existentialism</h1>
-<p class="reading-time">3 min read</p>
+<p class="reading-time">3 min read</p><p class="series-tag"><a href="#series"><span>Series</span>Asking the philosophers<em>4 / 5</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="deck">I used to think freedom was something you want. Sartre called it a sentence. Because you can't not choose.</p>
 <div class="hero-line"></div>
 
 <article>
-<p class="lead"><strong>Change jobs or stay. Who to live with. What to do with my life. Sometimes I think it would be so much easier if someone just told me the right answer.</strong></p>
+<p class="lead"><strong>Change jobs or stay. Who to live with. What to do with my life. Sometimes I think it would be so much easier if someone just told me the right answer.</strong></p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">When a student asked Sartre for advice, he told him clearly which option to choose.</span><span class="quiz-tap">Show answer</span></summary><div class="quiz-a"><p class="quiz-answer">False. &quot;You are free. Choose.&quot;</p><p class="quiz-why">Avenge his brother, or stay with his mother? Sartre gave no answer: &quot;You are free, so choose. That is to say, invent.&quot;</p></div></details>
 
 <p>On October 29, 1945, in Paris, the philosopher Jean-Paul Sartre gave a lecture called "Existentialism Is a Humanism." Published as a book the following year, it became one of the texts that carried existentialism around the world <a href="#ref-1">[1]</a>.</p>
 
@@ -109,7 +115,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <p>"I'm this kind of person" is not fixed from the start. In <a href="identity.html">"What kind of person do you want to be?"</a> I wrote about deciding who you want to be before deciding what to do. I think that's close to this.</p>
 
-<h2 id="section-3">Why is freedom a "sentence"?</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">Sartre's &quot;condemned to be free&quot; means that if you hesitate and do nothing, you escape responsibility.</span><span class="quiz-tap">Show answer</span></summary><div class="quiz-a"><p class="quiz-answer">False. Doing nothing is also a choice.</p><p class="quiz-why">We can't not choose; hesitating and doing nothing is also a choice. With no &quot;essence&quot; to use as an excuse, there's no escaping our choices.</p></div></details><h2 id="section-3">Why is freedom a "sentence"?</h2>
 
 <p>So far it sounds hopeful. You can become anything.</p>
 
@@ -153,29 +159,75 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <div class="article-share"><button class="copy-link" type="button">Copy link</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">Series <span>4 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="../series.html#thinkers">Asking the philosophers</a></p>
+  <p class="series-intro">The Stoics, Nietzsche, Camus, Sartre. Taking today&#39;s worries to two thousand years of philosophers.</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="stoicism.html">Are you worrying too much about what you can&#39;t change?</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="nietzsche.html">God is dead. So why do we keep living?</a></li>
+    <li><span class="series-n">3</span><a class="series-name" href="camus-sisyphus.html">Can you be happy when every day is the same?</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">4</span><span class="series-name">Condemned to be free</span></li>
+    <li><span class="series-n">5</span><a class="series-name" href="books-philosophy.html">Books to read when you want to think about how to live</a></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="camus-sisyphus.html"><span>← Previous</span>Can you be happy when every day is the same?</a><a class="series-next" href="books-philosophy.html"><span>Next →</span>Books to read when you want to think about how to live</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="60" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">One more <span>True or false</span></p>
+<div class="qloop" data-qloop data-exclude="sartre" data-prefer="freedom,identity,nietzsche"></div></section>
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
   <div>
     <p class="author-label">Written by</p>
     <p class="author-name" id="author-box-name">Mouton</p>
     <p class="author-bio">I try things I'm curious about, make things, and keep a record of the process. I write about philosophy and how to live, and about the body and food, checking papers and data along the way. This is the English edition of a Japanese site.</p>
-    <p class="author-links"><a href="../sartre.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
+    <p class="author-links"><a href="../operator.html">About the operator</a><a href="../sartre.html" hreflang="ja" lang="ja">日本語で読む</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
     <p class="author-dates">Published 2026.10.07</p>
   </div>
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card" href="freedom.html">I want freedom, not love</a><a class="reading-card" href="identity.html">What kind of person do you want to be?</a><a class="reading-card" href="nietzsche.html">God is dead. So why do we keep living?</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">Read next</h2><div class="reading-next-grid"><a class="reading-card has-q" href="freedom.html"><span class="reading-card-title">I want freedom, not love</span><span class="reading-card-q"><b>Q.</b> Schopenhauer compared life to a pendulum swinging between pain and boredom.<em>True or false?</em></span></a><a class="reading-card has-q" href="identity.html"><span class="reading-card-title">What kind of person do you want to be?</span><span class="reading-card-q"><b>Q.</b> Declaring &quot;From today, I&#39;m this kind of person&quot; is enough to change you.<em>True or false?</em></span></a><a class="reading-card has-q" href="nietzsche.html"><span class="reading-card-title">God is dead. So why do we keep living?</span><span class="reading-card-q"><b>Q.</b> Nietzsche&#39;s &quot;God is dead&quot; simply means &quot;there is no God.&quot;<em>True or false?</em></span></a></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">Back to all articles</a><a class="reading-return" href="index.html#philosophy">All Philosophy articles</a></p></nav>
 
 </article>
 </main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="Site map">
+  <div class="footer-map-col">
+    <p class="footer-map-h">Topics</p>
+    <ul><li><a href="index.html#philosophy">Philosophy</a></li><li><a href="index.html#body">Body</a></li><li><a href="index.html#work">Work</a></li><li><a href="index.html#food">Food &amp; Science</a></li>
+      <li><a href="index.html#journal">All articles</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Series</p>
+    <ul><li><a href="../series.html#job">Thinking about changing jobs</a></li><li><a href="../series.html#clean">Looking clean, checked</a></li><li><a href="../series.html#thinkers">Asking the philosophers</a></li><li><a href="../series.html#sleep">Sleep, checked</a></li><li><a href="../series.html#food-check">Is that health claim true?</a></li><li><a href="../series.html#habits">How people change</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">Guides</p>
+    <ul><li><a href="olive-oil-guide.html">How to choose olive oil: what to look at on the label</a></li><li><a href="dark-chocolate-guide.html">How to choose dark chocolate: don&#39;t go by the cacao percentage alone</a></li><li><a href="coffee-guide.html">How to choose and brew coffee: paper filters and decaf</a></li><li><a href="protein-guide.html">How to choose protein powder: how much you need, and whey or soy</a></li><li><a href="oral-care-guide.html">How to choose tools for bad breath</a></li><li><a href="deodorant-guide.html">How to choose an antiperspirant or deodorant</a></li>
+      <li><a href="../guides.html">All guides</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">About</p>
+    <ul>
+      <li><a href="../quiz.html">True-or-false quiz</a></li>
+      <li><a href="../operator.html">About the operator</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="Site information">
-  <a href="../operator.html">About the operator (Japanese)</a>
-  <a href="../privacy.html">Privacy policy (Japanese)</a>
-  <a href="../contact.html">Contact (Japanese)</a>
+  <a href="../operator.html">About the operator</a>
+  <a href="../privacy.html">Privacy policy</a>
+  <a href="../contact.html">Contact</a>
   <a href="../index.html" hreflang="ja" lang="ja">日本語版</a>
   <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
 </nav>

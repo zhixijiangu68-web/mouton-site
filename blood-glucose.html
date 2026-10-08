@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>血糖値は、なぜこれほど健康に重要なのか — ムートン</title>
-<meta name="description" content="血糖、血管、そして未来の健康。そのつながりを考える。">
+<meta name="description" content="健康診断で見る血糖値は、目・腎臓・神経・心臓までつながっている。UKPDS や DCCT などの研究から、血糖と血管の関係、HbA1c の読み方、食後に10分歩くといった小さな習慣までを整理する。">
 <link rel="canonical" href="https://moutonarchive.com/blood-glucose.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/blood-glucose.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/blood-glucose.html">
 <meta property="og:title" content="血糖値は、なぜこれほど健康に重要なのか — ムートン">
-<meta property="og:description" content="血糖、血管、そして未来の健康。そのつながりを考える。">
+<meta property="og:description" content="健康診断で見る血糖値は、目・腎臓・神経・心臓までつながっている。UKPDS や DCCT などの研究から、血糖と血管の関係、HbA1c の読み方、食後に10分歩くといった小さな習慣までを整理する。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -49,8 +51,9 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"血糖値は、なぜこれほど健康に重要なのか","description":"血糖、血管、そして未来の健康。そのつながりを考える。","inLanguage":"ja","datePublished":"2026-10-01","dateModified":"2026-10-01","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/blood-glucose.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"血糖値は、なぜこれほど健康に重要なのか","description":"健康診断で見る血糖値は、目・腎臓・神経・心臓までつながっている。UKPDS や DCCT などの研究から、血糖と血管の関係、HbA1c の読み方、食後に10分歩くといった小さな習慣までを整理する。","inLanguage":"ja","datePublished":"2026-10-01","dateModified":"2026-10-01","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/blood-glucose.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"身体","item":"https://moutonarchive.com/topic-body.html"},{"@type":"ListItem","position":3,"name":"血糖値は、なぜこれほど健康に重要なのか","item":"https://moutonarchive.com/blood-glucose.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -64,6 +67,8 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -78,10 +83,10 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
 
 <div class="wrap" role="main" data-nav="light" data-nav-solid="light">
   
-  <article class="article">
+  <article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-body.html">身体</a></li><li><span aria-current="page">血糖値は、なぜこれほど健康に重要なのか</span></li></ol></nav>
     <div class="meta">2026.10.01 / BODY</div>
-    <h1>血糖値は、<wbr>なぜ<wbr>これほど<br>健康に<wbr>重要なのか</h1><p class="reading-time">約6分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
-    <p class="lead">健康診断で目にする「血糖値」。多くの人にとっては、「糖尿病になっていなければ大丈夫」くらいの数字かもしれない。</p>
+    <h1>血糖値は、<wbr>なぜ<wbr>これほど<br>健康に<wbr>重要なのか</h1><p class="reading-time">約6分で読めます（目安）</p><p class="series-tag"><a href="#series"><span>連載</span>その健康法、本当？<em>5 / 5</em></a></p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">そもそも血糖値とは何か</a></li><li><a href="#section-2">鍵は「血管」</a></li><li><a href="#section-3">とくに影響を受けやすい「細い血管」</a></li><li><a href="#section-4">血糖を改善すると、何が変わるのか</a></li><li><a href="#section-5">糖尿病と診断される前から、連続している</a></li><li><a href="#section-6">健診の数字をどう読むか：HbA1c</a></li><li><a href="#section-7">「血糖を上げない」ことが目的ではない</a></li><li><a href="#section-8">筋肉は、ブドウ糖の巨大な消費場所</a></li><li><a href="#section-9">食後10分歩く、という小さな行動</a></li><li><a href="#section-10">血糖値は「未来の健康」のための数字</a></li><li><a href="#section-11">血糖値は健康のすべてではない。でも、無視できない</a></li><li><a href="#section-12">参考文献・資料</a></li></ol></nav></details>
+    <p class="lead">健康診断で目にする「血糖値」。多くの人にとっては、「糖尿病になっていなければ大丈夫」くらいの数字かもしれない。</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">1日30分まとめて歩くより、毎食後10分ずつ歩く方が食後血糖を抑えられた研究がある。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。毎食後10分の方が有効だった。</p><p class="quiz-why">2型糖尿病の成人を対象にしたランダム化クロスオーバー試験の結果。誰にでも同じ変化が起きるとは限らない。</p></div></details>
     <p>しかし、血糖について調べていくと、この数字は想像以上に身体の多くの部分とつながっていることがわかる。</p>
     <p><strong>目。腎臓。神経。心臓。脳。そして、それらをつないでいる血管。</strong></p>
     <p>血糖値は、身体がエネルギーをどう扱い、血管をどんな環境に置いているかを示す重要な指標の一つだ。</p>
@@ -133,7 +138,7 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
     <p><strong>DECODE研究</strong>では、75g経口ブドウ糖負荷試験（OGTT）の2時間値が、空腹時血糖とは別の予後情報を持つことが示された。</p>
     <p>ただし、「少し血糖が上がったら危険」という意味ではない。大切なのは、一回一回の小さな変動を恐れることではなく、<strong>長期的に身体が血糖を適切に処理できているか</strong>を見ることだ。</p>
 
-    <h2 id="section-6">健診の<wbr>数字を<wbr>どう<wbr>読むか<wbr>：HbA1c</h2>
+    <details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">健診のHbA1cは、検査直前の食事の影響を強く受ける数字だ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。過去1〜2か月が中心。</p><p class="quiz-why">HbA1cは直前の食事ではなく、過去1〜2か月を中心とする数か月間の血糖状態を反映する。</p></div></details><h2 id="section-6">健診の<wbr>数字を<wbr>どう<wbr>読むか<wbr>：HbA1c</h2>
     <p>血糖値は食事、運動、睡眠、ストレスなどで変動する。そこで使われるのが<strong>HbA1c</strong>だ。直前の食事ではなく、過去1〜2か月を中心とする数か月間の血糖状態を反映する。</p>
     <div class="metrics">
       <div class="metric"><b>126 mg/dL以上</b><span>空腹時血糖：糖尿病型を示す基準の一つ</span></div>
@@ -180,6 +185,24 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
   
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>5 / 5</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#food-check">その健康法、本当？</a></p>
+  <p class="series-intro">コーヒー、ダークチョコ、オリーブ油、ブルーベリー、血糖値。「体にいい」「体に悪い」を、論文から確かめ直しています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="coffee.html">コーヒーは、本当に体に悪いのか</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="dark-chocolate.html">ダークチョコは、本当に体にいいのか</a></li>
+    <li><span class="series-n">3</span><a class="series-name" href="olive-oil.html">オリーブ油は、本当に身体にいいのか</a></li>
+    <li><span class="series-n">4</span><a class="series-name" href="blueberry.html">ブルーベリーは、本当にそんなにすごいのか</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">5</span><span class="series-name">血糖値は、なぜこれほど健康に重要なのか</span></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="blueberry.html"><span>← 前の回</span>ブルーベリーは、本当にそんなにすごいのか</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="blood-glucose" data-prefer="trampoline,stamina,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -198,13 +221,43 @@ p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.15;margin:0 0 2
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="trampoline.html">大人は、<wbr>いつから<wbr>跳ばなくなったのか。</a><a class="reading-card" href="stamina.html">筋トレを<wbr>減らしたら、<wbr>なぜか<wbr>「体力」が<wbr>ついた</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="trampoline.html" data-slug="trampoline"><span class="reading-card-title">大人は、いつから跳ばなくなったのか。</span><span class="reading-card-q"><b>Q.</b> 高齢者が14週間ミニトランポリンをした研究で、崩れた姿勢を立て直す能力が約35％改善した。<em>○か×か？</em></span></a><a class="reading-card" href="stamina.html" data-slug="stamina"><span class="reading-card-title">筋トレを減らしたら、なぜか「体力」がついた</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-body.html">「身体」の記事をすべて見る</a></p></nav>
 
 </article>
 </div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

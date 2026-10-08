@@ -1,16 +1,18 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>「思考は現実化する」は、本当なのか。 — ムートン</title>
-<meta name="description" content="願えば叶う、ではない。思考が行動を変えるという話として読む。">
+<meta name="description" content="ナポレオン・ヒル『思考は現実化する』は、願えば叶うという本ではなかった。欲しいものを具体的に決め、期限を切り、毎日読み返す。思考が選択を変え、行動を変えるという話として読み直す。">
 <link rel="canonical" href="https://moutonarchive.com/hill.html">
 <link rel="alternate" hreflang="ja" href="https://moutonarchive.com/hill.html">
 <link rel="alternate" hreflang="en" href="https://moutonarchive.com/en/hill.html">
 <meta property="og:title" content="「思考は現実化する」は、本当なのか。 — ムートン">
-<meta property="og:description" content="願えば叶う、ではない。思考が行動を変えるという話として読む。">
+<meta property="og:description" content="ナポレオン・ヒル『思考は現実化する』は、願えば叶うという本ではなかった。欲しいものを具体的に決め、期限を切り、毎日読み返す。思考が選択を変え、行動を変えるという話として読み直す。">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -39,8 +41,9 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"「思考は現実化する」は、本当なのか。","description":"願えば叶う、ではない。思考が行動を変えるという話として読む。","inLanguage":"ja","datePublished":"2026-10-02","dateModified":"2026-10-02","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/hill.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"「思考は現実化する」は、本当なのか。","description":"ナポレオン・ヒル『思考は現実化する』は、願えば叶うという本ではなかった。欲しいものを具体的に決め、期限を切り、毎日読み返す。思考が選択を変え、行動を変えるという話として読み直す。","inLanguage":"ja","datePublished":"2026-10-02","dateModified":"2026-10-02","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/hill.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"哲学・生き方","item":"https://moutonarchive.com/topic-philosophy.html"},{"@type":"ListItem","position":3,"name":"「思考は現実化する」は、本当なのか。","item":"https://moutonarchive.com/hill.html"}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -54,6 +57,8 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -65,10 +70,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </div>
 
 <div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/hill.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light"><article>
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">「思考は現実化する」は、本当なのか。</span></li></ol></nav><article>
         <div class="meta">2026.10.02　/　PHILOSOPHY</div>
         <h1>「思考は<wbr>現実化する」は、<br>本当なのか。</h1><p class="reading-time">約5分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">人間は、考えていないものを追いかけられない</a></li><li><a href="#section-2">ヒルが書いているのは、「願望を行動の形にする方法」</a></li><li><a href="#section-3">思考は、現実を直接変えない</a></li><li><a href="#section-4">現実化するのは、「繰り返された思考」かもしれない</a></li><li><a href="#section-5">ただし、すべてが思考で決まるわけではない</a></li><li><a href="#section-6">この本は、答えではなく問いを突きつけてくる</a></li><li><a href="#section-7">「思考は現実化する」とは、どういうことなのか</a></li></ol></nav></details>
-        <p class="lead">ナポレオン・ヒルの『思考は現実化する』。</p>
+        <p class="lead">ナポレオン・ヒルの『思考は現実化する』。</p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">ナポレオン・ヒルの『思考は現実化する』は、強く願えば叶うと説く本だ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。願望を行動に落とす本。</p><p class="quiz-why">書いてあるのは魔法ではなく、欲しいものを具体的に決め、期限を決め、計画を作って動き出すといった地味で現実的な手順だった。</p></div></details>
         <p>自己啓発の世界では、あまりにも有名な一冊だ。</p>
         <p>正直に言うと、タイトルだけなら僕も怪しいと思っていた。</p>
         <p>考えれば叶う。</p>
@@ -86,7 +91,7 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
         <p>世界が変わったわけではない。</p>
         <p class="question"><strong>見る側が変わったのだ。</strong></p>
 
-        <h2 id="section-2">ヒルが<wbr>書いているのは、<wbr>「願望を<wbr>行動の<wbr>形に<wbr>する<wbr>方法」</h2>
+        <details class="quiz quiz-mid" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">ヒルは手順の一つに、願望を紙に書いて毎日声に出して読み返すことを挙げている。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。期限や計画とあわせて。</p><p class="quiz-why">欲しいものを具体的に決める、期限を決める、計画を作って動き出す、紙に書く、毎日声に出して読み返す、といった手順を挙げている。</p></div></details><h2 id="section-2">ヒルが<wbr>書いているのは、<wbr>「願望を<wbr>行動の<wbr>形に<wbr>する<wbr>方法」</h2>
         <p>ヒルは、願望を現実に変える手順として、たとえばこんなことを挙げている。</p>
         <p>欲しいものを、曖昧にせず具体的に決める。</p>
         <p>それと引き換えに、何を差し出すかを決める。</p>
@@ -159,6 +164,10 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 
 
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="hill" data-prefer="self-image,goggins,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+
 
 <aside class="author-box" aria-labelledby="author-box-name">
   <div class="author-mark" aria-hidden="true">ム</div>
@@ -172,12 +181,42 @@ article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-siz
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="self-image.html">セルフイメージは、<wbr>長期の<wbr>行動を<wbr>変える</a><a class="reading-card" href="goggins.html">デイビッド・ゴギンズと<wbr>いう<wbr>変人を、<wbr>僕は<wbr>尊敬している</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="self-image.html" data-slug="self-image"><span class="reading-card-title">セルフイメージは、長期の行動を変える</span><span class="reading-card-q"><b>Q.</b> 「自分には無理だ」という思い込みの問題は、失敗を直接生むことだ。<em>○か×か？</em></span></a><a class="reading-card has-q" href="goggins.html" data-slug="goggins"><span class="reading-card-title">デイビッド・ゴギンズという変人を、僕は尊敬している</span><span class="reading-card-q"><b>Q.</b> 元Navy SEALのゴギンズは、17時間で懸垂を4,030回行った。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

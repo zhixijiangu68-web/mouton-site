@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>コーヒーの選び方と淹れ方。ペーパーフィルターとデカフェ — ムートン</title>
 <meta name="description" content="同じコーヒーでも、淹れ方でコレステロールへの影響が変わる。ペーパーフィルターの役割、デカフェのカフェイン量、甘い飲料の見分け方から、体のことを考えたコーヒーの選び方と淹れ方を整理する。">
@@ -43,6 +45,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"コーヒーの選び方と淹れ方。ペーパーフィルターとデカフェ","description":"同じコーヒーでも、淹れ方でコレステロールへの影響が変わる。ペーパーフィルターの役割、デカフェのカフェイン量、甘い飲料の見分け方から、体のことを考えたコーヒーの選び方と淹れ方を整理する。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/coffee-guide.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"食事・化学","item":"https://moutonarchive.com/topic-food.html"},{"@type":"ListItem","position":3,"name":"コーヒーの選び方と淹れ方。ペーパーフィルターとデカフェ","item":"https://moutonarchive.com/coffee-guide.html"}]}</script>
@@ -58,6 +61,8 @@
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -69,7 +74,7 @@
 </div>
 
 <div class="cover ph-food is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#foodscience"><span aria-hidden="true">←</span> 食事・化学へ戻る</a><a class="cover-lang" href="en/coffee-guide.html" hreflang="en" lang="en">English</a></nav></div>
-<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article">
+<div class="wrap" role="main" data-nav="light" data-nav-solid="light"><article class="article"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="guides.html">選び方</a></li><li><span aria-current="page">コーヒーの選び方と淹れ方。ペーパーフィルターとデカフェ</span></li></ol></nav>
 <div class="meta">2026.10.06 / FOOD &amp; SCIENCE</div><h1>コーヒーの<wbr>選び方と<wbr>淹れ方。<wbr>ペーパーフィルターと<wbr>デカフェ</h1><p class="reading-time">約4分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="lead"><a href="coffee.html">「コーヒーは、本当に体に悪いのか」</a>では、ふつうの量のコーヒーは、おおむね安全と考えられていることを整理した。</p>
@@ -87,7 +92,7 @@
 <p>これも観察研究なので、淹れ方だけが原因とは言い切れない。それでも、コレステロールの実験の結果と同じ方向を向いている。</p>
 <section class="pull" aria-label="この記事のポイント"><p class="pull-label">POINT</p><p>体のことを考えるなら、コーヒーは紙のフィルターで淹れる。</p></section>
 
-<h2 id="section-3">カフェインを<wbr>減らしたいなら、<wbr>デカフェ</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">日本の「カフェインレスコーヒー」は、カフェインがゼロのコーヒーだ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。90%以上取り除いたもの。</p><p class="quiz-why">日本では業界の基準で、カフェインを90%以上取り除いたものが「カフェインレスコーヒー」。たくさん飲めばそのぶんカフェインもとる。</p></div></details><h2 id="section-3">カフェインを<wbr>減らしたいなら、<wbr>デカフェ</h2>
 <p>夜に飲みたいときや、妊娠中・授乳中などでカフェインを控えたいときは、カフェインを取り除いた「デカフェ」「カフェインレス」のコーヒーがある。</p>
 <p>ただし、<strong>カフェインがゼロになるわけではない</strong>。どこまで取り除けば「カフェインレス」と書けるかは国によって違い、日本では、業界の基準で、カフェインを90%以上取り除いたものが「カフェインレスコーヒー」とされている <a href="#ref-3">[3]</a>。たくさん飲めば、そのぶんカフェインもとることになる。</p>
 
@@ -107,6 +112,10 @@
 <p id="ref-2">2. Tverdal A, Selmer R, Cohen JM, Thelle DS. (2020). Coffee consumption and mortality from cardiovascular diseases and total mortality: Does the brewing method matter? <em>European Journal of Preventive Cardiology</em>, 27(18), 1986–1993.</p>
 <p id="ref-3">3. 全日本コーヒー公正取引協議会. レギュラーコーヒー及びインスタントコーヒーの表示に関する公正競争規約.</p>
 </div>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="coffee-guide" data-prefer="coffee,dark-chocolate-guide,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -126,12 +135,42 @@
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="coffee.html">コーヒーは、<wbr>本当に<wbr>体に<wbr>悪いのか</a><a class="reading-card" href="dark-chocolate-guide.html">ダークチョコの<wbr>選び方。<wbr>カカオ分の<wbr>数字だけで<wbr>選ばない</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="coffee.html" data-slug="coffee"><span class="reading-card-title">コーヒーは、本当に体に悪いのか</span><span class="reading-card-q"><b>Q.</b> 寝る6時間前にカフェイン400mgをとっても、睡眠が1時間以上短くなった実験がある。<em>○か×か？</em></span></a><a class="reading-card has-q" href="dark-chocolate-guide.html" data-slug="dark-chocolate-guide"><span class="reading-card-title">ダークチョコの選び方。カカオ分の数字だけで選ばない</span><span class="reading-card-q"><b>Q.</b> ココアは、アルカリ処理をしてもフラバノールの量はほとんど変わらない。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#foodscience">食事・化学へ戻る</a><a class="reading-return" href="topic-food.html">「食事・化学」の記事をすべて見る</a></p></nav>
 
 </article></div>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>

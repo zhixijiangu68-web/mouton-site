@@ -163,3 +163,58 @@ body.article-page :is(figcaption, figcaption a, .axis-label, .timeline-no) { col
 body.article-page .book-buy { background:#1b1c19 !important; color:#f8f5ee !important; }
 body.article-page .book-buy:hover { background:#1442c4 !important; }
 .table-wrap:focus-visible{outline:2px solid #1442c4;outline-offset:4px}
+/* Article end: one more quiz, and a question on each "next to read" card */
+.quiz-more { display:none; margin:56px 0 0; }
+.js .quiz-more { display:block; }
+.quiz-more-title { margin:0 0 14px !important; font-family:"Noto Serif JP",serif; font-size:1.25rem !important; line-height:1.6 !important; }
+.quiz-more-title span { margin-left:8px; font-family:Inter,sans-serif; font-size:.75rem; letter-spacing:.12em; opacity:.55; }
+.reading-card.has-q { flex-direction:column; align-items:flex-start; justify-content:center; gap:8px; }
+.reading-card-q { display:block; font-size:.875rem; line-height:1.8; color:#5a5d55; }
+.reading-card-q b { font-family:Inter,sans-serif; font-weight:500; color:#1442c4; margin-right:2px; }
+.reading-card.is-read .reading-card-title::after { content:"読んだ"; margin-left:8px; padding:1px 8px; border-radius:999px; font-family:Inter,sans-serif; font-size:.6875rem; letter-spacing:.06em; vertical-align:2px; background:rgba(27,28,25,.07); color:#5a5d55; }
+.reading-card-q em { margin-left:6px; font-style:normal; font-family:Inter,sans-serif; font-size:.75rem; color:#1442c4; white-space:nowrap; }
+/* "Read" mark at the end of an article (site.js) */
+.read-mark { display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; min-height:1px; margin:40px 0 0 !important; font-family:"Noto Serif JP",serif; font-size:1rem !important; opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
+.read-mark.is-on { opacity:1; transform:none; }
+.read-mark-check { display:inline-grid; place-items:center; width:30px; height:30px; border-radius:50%; background:#1f7a4d; color:#fff; font-size:.9375rem; }
+.read-mark.is-on .read-mark-check { animation:qloopPop .5s ease .1s both; }
+.read-mark-count { font-family:Inter,sans-serif; font-size:.8125rem; color:#5a5d55; }
+.read-mark-count b { font-weight:500; color:#1b1c19; }
+@media (prefers-reduced-motion: reduce){ .read-mark{ transition:none; } .read-mark.is-on .read-mark-check{ animation:none; } }
+.reading-card-q { word-break:normal; line-break:strict; }
+/* 連載 (series) */
+.series-tag { margin:-8px 0 18px !important; }
+.series-tag a { display:inline-flex; flex-wrap:wrap; align-items:center; gap:4px 10px; min-height:36px; color:#303c35 !important; text-decoration:none !important; font-family:"Noto Serif JP",serif; font-size:.875rem !important; }
+.series-tag span { padding:2px 10px; border-radius:999px; background:#1b1c19; color:#fff; font-family:Inter,sans-serif; font-size:.6875rem; letter-spacing:.12em; }
+.series-tag em { font-style:normal; font-family:Inter,sans-serif; font-size:.75rem; opacity:.6; }
+.series-tag a:hover { text-decoration:underline !important; text-underline-offset:4px; }
+.series-box { margin:48px 0 0; padding:clamp(22px,4vw,32px); border:1px solid rgba(27,28,25,.14); border-radius:14px; background:#fff; }
+.series-label { margin:0 0 6px !important; font-family:Inter,sans-serif; font-size:.6875rem !important; letter-spacing:.18em; color:#5a5d55; }
+.series-label span { margin-left:6px; letter-spacing:.04em; }
+.series-title { margin:0 0 8px !important; font-family:"Noto Serif JP",serif; font-size:1.25rem !important; line-height:1.6 !important; }
+.series-title a { color:#1b1c19 !important; text-decoration:none !important; }
+.series-title a:hover { text-decoration:underline !important; text-underline-offset:4px; }
+.series-intro { margin:0 0 16px !important; font-size:.875rem !important; line-height:1.9 !important; color:#5a5d55; max-width:none !important; }
+.series-list { margin:0; padding:0; list-style:none; border-top:1px solid rgba(27,28,25,.1); }
+.series-list li { display:flex; gap:12px; align-items:baseline; padding:10px 0; border-bottom:1px solid rgba(27,28,25,.08); font-family:"Noto Serif JP",serif; font-size:.9375rem; line-height:1.7; }
+.series-n { flex:none; width:1.8em; font-family:Inter,sans-serif; font-size:.75rem; color:#8a8d85; text-align:right; }
+.series-list a.series-name { color:#1b1c19 !important; text-decoration:none !important; }
+.series-list a.series-name:hover { color:#1442c4 !important; text-decoration:underline !important; text-underline-offset:4px; }
+.series-list .is-current { font-weight:600; }
+.series-list .is-current .series-n { color:#1442c4; }
+.series-list .is-current .series-name::after { content:"いま読んでいる回"; margin-left:8px; padding:1px 8px; border-radius:999px; background:rgba(20,66,196,.08); color:#1442c4; font:400 .6875rem Inter,sans-serif; vertical-align:2px; }
+html[lang="en"] .series-list .is-current .series-name::after { content:"You are here"; }
+.series-nav { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:18px 0 0 !important; }
+.series-nav a { display:flex; flex-direction:column; gap:4px; padding:14px 16px; border:1px solid rgba(27,28,25,.14); border-radius:10px; color:#1b1c19 !important; text-decoration:none !important; font-family:"Noto Serif JP",serif; font-size:.875rem; line-height:1.7; }
+.series-nav a span { font-family:Inter,sans-serif; font-size:.75rem; color:#1442c4; }
+.series-nav .series-next { grid-column:2; text-align:right; }
+.series-nav a:hover { border-color:#1442c4; }
+@media (max-width:600px) { .series-nav { grid-template-columns:1fr; } .series-nav .series-next { grid-column:auto; } }
+/* Breadcrumbs */
+.crumbs { margin:0 0 18px; }
+.crumbs ol { display:flex; flex-wrap:wrap; align-items:center; gap:2px 0; margin:0; padding:0; list-style:none; font-family:Inter,"Noto Serif JP",sans-serif; font-size:.75rem; line-height:1.8; color:#6b6e66; }
+.crumbs li { min-width:0; }
+.crumbs li + li::before { content:"›"; margin:0 8px; color:#a3a69e; }
+.crumbs a { color:#53574f !important; text-decoration:none !important; }
+.crumbs a:hover { color:#1442c4 !important; text-decoration:underline !important; text-underline-offset:3px; }
+.crumbs [aria-current] { display:inline-block; max-width:22em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:bottom; }

@@ -1,8 +1,10 @@
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>転職を考えはじめたときに読む本。迷いの段階別に4冊 — ムートン</title>
 <meta name="description" content="やりたいことが分からない、会社をどう見極めるか、年収をどう考えるか、長い人生をどう組み立てるか。転職を考えはじめたときの迷いを段階に分け、それぞれで読みたい4冊を紹介する。">
@@ -49,6 +51,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"転職を考えはじめたときに読む本。迷いの段階別に4冊","description":"やりたいことが分からない、会社をどう見極めるか、年収をどう考えるか、長い人生をどう組み立てるか。転職を考えはじめたときの迷いを段階に分け、それぞれで読みたい4冊を紹介する。","inLanguage":"ja","datePublished":"2026-10-06","dateModified":"2026-10-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/kodoku__alone"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/books-career.html"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"仕事・働き方","item":"https://moutonarchive.com/topic-work.html"},{"@type":"ListItem","position":3,"name":"転職を考えはじめたときに読む本。迷いの段階別に4冊","item":"https://moutonarchive.com/books-career.html"}]}</script>
@@ -64,6 +67,8 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
     <ul class="site-links" id="site-links">
       <li><a href="now.html">いま<span class="site-links-en">Now</span></a></li>
       <li><a href="index.html#journal">記事<span class="site-links-en">Journal</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="series.html">連載<span class="site-links-en">Series</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="index.html#foodscience">食事・化学<span class="site-links-en">Food &amp; Science</span></a></li>
       <li><a href="index.html#books">本棚<span class="site-links-en">Bookshelf</span></a></li>
@@ -75,12 +80,12 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 </div>
 
 <div class="cover ph-work is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/books-career.html" hreflang="en" lang="en">English</a></nav></div>
-<main data-nav="light" data-nav-solid="light"><div class="eyebrow">JOURNAL / WORK / BOOKS</div><div class="meta">2026.10.06</div>
+<main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="guides.html">選び方</a></li><li><span aria-current="page">転職を考えはじめたときに読む本</span></li></ol></nav><div class="eyebrow">JOURNAL / WORK / BOOKS</div><div class="meta">2026.10.06</div>
 <h1>転職を<wbr>考えはじめた<wbr>ときに<wbr>読む本。<wbr>迷いの<wbr>段階別に<wbr>4冊</h1>
-<p class="reading-time">約3分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>
+<p class="reading-time">約3分で読めます（目安）</p><p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p><p class="series-tag"><a href="#series"><span>連載</span>転職を考える<em>11 / 11</em></a></p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 <p class="deck">転職の迷いは、ひとつではない。何をしたいのか、どこへ行くのか、お金はどうなるのか、この先の人生はどう組み立てるのか。迷っている段階に合った本を読む。</p><div class="hero-line"></div>
-<article>
+<article><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">転職の理由が「今の会社が嫌だ」だけだと、次の会社でも同じことが起きやすい。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。「向かう理由」も探したい。</p><p class="quiz-why">逃げる理由の先にある「向かう理由」を探すのに、『世界一やさしい「やりたいこと」の見つけ方』が使える。</p></div></details>
 <p>「転職は、何から始めればいいのか」では、転職を「理由と軸を決める」「棚卸し」「市場を知る」「応募」「条件確認」「退職」の6つの順番で整理した。</p>
 <p>本も同じで、いまどの段階で迷っているかによって、読むべき本が変わる。ここでは、段階ごとに1冊ずつ選んだ。どれも答えをくれる本というより、考える順番をくれる本だ。</p>
 
@@ -101,7 +106,7 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p class="caution">注意：これは一人の経験をもとにした本で、同じやり方で誰もが同じ結果になるわけではない。転職で賃金が増えた人・減った人の割合は、「転職で、年収は上がるのか」で公的な統計から整理している。両方を合わせて読むと、期待と現実の距離がつかみやすい。</p>
 <a class="book-buy" href="https://www.amazon.co.jp/dp/4594082726?tag=yuiga2003-22" rel="sponsored noopener">Amazonでこの本を見る <span aria-hidden="true">↗</span> <span class="pr-label">PR</span></a>
 
-<h2>4. 長い<wbr>人生を<wbr>どう<wbr>組み立てるか<wbr>考えたい<wbr>とき</h2>
+<details class="quiz quiz-mid" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">『LIFE SHIFT』は、人生を「教育、仕事、引退」の3段階で考えるよう勧める本だ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。3段階で考えない視点。</p><p class="quiz-why">「教育、仕事、引退」の3段階で人生を考えない、という視点が、目の前の転職を何十年かの中の一つの移動として見直すのに役立つ。</p></div></details><h2>4. 長い<wbr>人生を<wbr>どう<wbr>組み立てるか<wbr>考えたい<wbr>とき</h2>
 <p>『LIFE SHIFT 100年時代の人生戦略』（リンダ・グラットン、アンドリュー・スコット、池村千秋 訳、東洋経済新報社）は、寿命が延びる時代に、仕事、学び、お金、家族の組み立て方がどう変わるかを考える本。</p>
 <p>「教育、仕事、引退」の3段階で人生を考えない、という視点は、目の前の転職を、何十年かの中の一つの移動として見直すのに役立つ。</p>
 <a class="book-buy" href="https://www.amazon.co.jp/dp/4492533877?tag=yuiga2003-22" rel="sponsored noopener">Amazonでこの本を見る <span aria-hidden="true">↗</span> <span class="pr-label">PR</span></a>
@@ -111,6 +116,30 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 <p>読み終えたら、「なぜ転職したいのか」と「次の職場で大事にしたいこと」を、それぞれ3行ずつ書いてみる。書けたら、「転職は、何から始めればいいのか」の次の段階へ進めばいい。</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
+<nav class="series-box" id="series" aria-labelledby="series-box-title">
+  <p class="series-label">連載 <span>11 / 11</span></p>
+  <p class="series-title" id="series-box-title"><a href="series.html#job">転職を考える</a></p>
+  <p class="series-intro">日曜の夜の憂うつから、辞めるかどうか、何から始めるか、お金、言い出し方、その後まで。迷う順番に並べています。</p>
+  <ol class="series-list">
+    <li><span class="series-n">1</span><a class="series-name" href="sunday-blues.html">日曜の夜が憂うつなのは、なぜか</a></li>
+    <li><span class="series-n">2</span><a class="series-name" href="quit-or-escape.html">「仕事を辞めたい」は、逃げなのか</a></li>
+    <li><span class="series-n">3</span><a class="series-name" href="job-fit.html">「この仕事、向いていない」は、どこまで本当か</a></li>
+    <li><span class="series-n">4</span><a class="series-name" href="fear-of-change.html">転職が怖くて、踏み出せないとき</a></li>
+    <li><span class="series-n">5</span><a class="series-name" href="job-change-start.html">転職は、何から始めればいいのか</a></li>
+    <li><span class="series-n">6</span><a class="series-name" href="job-agent.html">転職エージェントは、なぜ無料なのか</a></li>
+    <li><span class="series-n">7</span><a class="series-name" href="multiple-agents.html">転職エージェントは、何社使えばいいのか</a></li>
+    <li><span class="series-n">8</span><a class="series-name" href="salary-change.html">転職で、年収は上がるのか</a></li>
+    <li><span class="series-n">9</span><a class="series-name" href="quit-cant-say.html">会社を「辞める」と言い出せないときに、知っておくこと</a></li>
+    <li><span class="series-n">10</span><a class="series-name" href="job-change-happiness.html">転職すれば、幸せになれるのか</a></li>
+    <li class="is-current" aria-current="page"><span class="series-n">11</span><span class="series-name">転職を考えはじめたときに読む本</span></li>
+  </ol>
+  <p class="series-nav"><a class="series-prev" href="job-change-happiness.html"><span>← 前の回</span>転職すれば、幸せになれるのか</a>
+  </p>
+</nav>
+
+<p class="read-mark" data-total="84" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="books-career" data-prefer="job-change-start,fear-of-change,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
 <p class="article-pr">このページには広告（アフィリエイトリンク）が含まれます。リンクから商品が購入されると、当サイトに紹介料が支払われることがあります。</p>
 
 
@@ -126,12 +155,42 @@ article{max-width:760px;margin:auto}p,li{font-family:"Noto Serif JP",serif;font-
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="job-change-start.html">転職は、<wbr>何から<wbr>始めればいいのか</a><a class="reading-card" href="fear-of-change.html">転職が<wbr>怖くて、<wbr>踏み出せない<wbr>とき</a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="job-change-start.html" data-slug="job-change-start"><span class="reading-card-title">転職は、何から始めればいいのか</span><span class="reading-card-q"><b>Q.</b> 今の職場に退職を伝えるのは、内定を承諾してからが基本だ。<em>○か×か？</em></span></a><a class="reading-card has-q" href="fear-of-change.html" data-slug="fear-of-change"><span class="reading-card-title">転職が怖くて、踏み出せないとき</span><span class="reading-card-q"><b>Q.</b> 人は同じ金額でも、失う痛みを得る喜びの2倍前後の重さで感じるとされる。<em>○か×か？</em></span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-work.html">「仕事・働き方」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
   <nav class="footer-links" aria-label="サイト情報">
   <a href="operator.html">運営者情報</a>
   <a href="privacy.html">プライバシーポリシー</a>
