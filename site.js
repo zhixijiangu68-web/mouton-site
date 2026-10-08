@@ -160,8 +160,10 @@ document.addEventListener('click',e=>{
  const a=e.target.closest&&e.target.closest('a[rel~="sponsored"]');
  if(!a||typeof window.gtag!=='function')return;
  const card=a.closest('.product-card');
- const name=card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
- window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,transport_type:'beacon'});
+ const name=a.closest('[data-product]')?.dataset.product||card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
+ // placement: the list near the top ("summary"), a product card ("card"), or a link in the text ("text").
+ const placement=a.dataset.placement||(card?'card':'text');
+ window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,placement,transport_type:'beacon'});
 });
 
 // Guides: a small bar that jumps to the products, so readers who arrive from X
