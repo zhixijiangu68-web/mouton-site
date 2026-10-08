@@ -24,7 +24,7 @@ jobs:
       pull-requests: write
       issues: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           # エージェントが git の認証情報を使えないようにする
           persist-credentials: false
