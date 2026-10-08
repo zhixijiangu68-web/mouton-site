@@ -42,10 +42,10 @@
   <div class="mk-audio"><p class="mk-eyebrow">SOUND</p><audio src="{{ project.audio }}" controls preload="none"></audio></div>
   {%- endif %}
 
-  {%- if project.compare %}{% set c = project.compare %}
-  <section class="mk-section" aria-labelledby="mk-compare">
+  {%- for c in project.compare or [] %}
+  <section class="mk-section" aria-labelledby="mk-compare-{{ loop.index }}">
     <p class="mk-eyebrow">BEFORE / AFTER</p>
-    <h2 id="mk-compare">{{ c.title }}</h2>
+    <h2 id="mk-compare-{{ loop.index }}">{{ c.title }}</h2>
     <div class="mk-cmp" style="--pos:50%">
       <img src="{{ c.after.desktop }}" alt="{{ c.after.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
       <img class="mk-cmp-before" src="{{ c.before.desktop }}" alt="{{ c.before.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
@@ -59,7 +59,7 @@
     </div>
     {%- if c.note %}<p>{{ c.note }}</p>{% endif %}
   </section>
-  {%- endif %}
+  {%- endfor %}
 
   <section class="mk-section" aria-labelledby="mk-now">
     <p class="mk-eyebrow">01 / 今の状態</p>

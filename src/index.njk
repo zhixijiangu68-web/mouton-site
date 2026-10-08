@@ -7,6 +7,12 @@ bodyClass: site
 extraCss: [home.css]
 preloadHero: true
 ---
+<script>try{if(!sessionStorage.getItem('mouton-intro-v1')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash){document.documentElement.classList.add('intro');sessionStorage.setItem('mouton-intro-v1','1');}}catch{}</script>
+<div class="intro-veil" aria-hidden="true">
+  <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
+  <p class="intro-sub">A personal archive — since 2026</p>
+  <span class="intro-bar"></span>
+</div>
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 
@@ -15,7 +21,9 @@ preloadHero: true
     <div class="scene-pin">
       <div class="scene-media ph-hero{{ '' if (["images/hero.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/hero.jpg" %}></div>
       <div class="scene-shade"></div>
-      <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
+      <div class="hero-light" aria-hidden="true"></div>
+      <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
+      <div class="scene-copy hero-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
         <p class="lede reveal-2">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
@@ -24,7 +32,18 @@ preloadHero: true
         {%- endif %}{% endfor %}
         <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
       </div>
-      <a class="scroll-cue" href="#think">Scroll</a>
+      <div class="hero-ticker" aria-label="最近の記事">
+        <span class="hero-ticker-label">Now reading</span>
+        <div class="hero-ticker-track">
+          {%- for copy in [0, 1] %}
+          <ul class="hero-ticker-list"{% if copy %} aria-hidden="true"{% endif %}>
+            {%- for a in collections.articles | head(12) %}
+            <li><a href="{{ a.page.fileSlug }}.html"{% if copy %} tabindex="-1"{% endif %}>{{ a.data.guide.title if a.data.guide else (a.data.journal.title if a.data.journal else a.data.headline) }}</a></li>
+            {%- endfor %}
+          </ul>
+          {%- endfor %}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -249,6 +268,7 @@ preloadHero: true
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
+<script src="home.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
