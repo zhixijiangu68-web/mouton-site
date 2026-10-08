@@ -2099,3 +2099,111 @@ Facebookを4週間止めた実験では、幸福感がわずかに上がった�
 - GA4：レポート → 集客 → トラフィック獲得で「セッションのソース / メディア」が `x / social` の行。「セッションのキャンペーン」で記事ごとに分かれる
 - X：各投稿のアナリティクスで「リンクのクリック数」をメモ欄へ
 - Amazon・楽天のレポートで売れた日と、その前後の投稿を照らし合わせる
+
+## バズ狙いの候補（2026-10-08・未承認）
+
+オーナーの依頼「面白くて、バズりそうなツイート」。人間臭い口調で、数字と事実は各記事で照合済み。順番表に入れるかはオーナーが決める。型はすべて**リプリンク**（本文にリンクなし、自分の投稿へのリプライで記事へ）。
+
+### BZ-1｜sunscreen-guide
+```
+「SPF50塗ってるから大丈夫」
+
+SPFは肌1cm²に2mg塗って測った数字。海辺で実際に塗ってもらったら、平均で約0.5mg。4分の1だった。
+
+僕らのSPF50、たぶん本気を出せていない。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
+
+### BZ-2｜olive-oil-guide
+```
+「エキストラバージン」って書いてあると、なんか偉そうに見える。
+
+でも日本の規格（JAS）には、その区分自体がない。
+
+つまりあれは、認定じゃなくて自己紹介。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=reply
+```
+
+### BZ-3｜oral-care-guide
+```
+口臭、ずっと胃のせいだと思ってた。
+
+原因の大半は口の中。舌と、歯ぐきと、唾液。
+
+胃、ごめん。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/oral-care-guide.html?utm_source=x&utm_medium=social&utm_campaign=oral-care-guide&utm_content=reply
+```
+
+### BZ-4｜protein-guide
+```
+プロテインを飲むと、筋肉がつく気がする。
+
+49の試験をまとめると、筋トレにプロテインを足して増えた筋肉は、平均約0.3kg。
+
+主役は筋トレ。プロテインは、応援団だった。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=reply
+```
+
+### BZ-5｜deodorant-guide
+```
+制汗剤とデオドラント、同じものだと思ってた人。
+
+制汗剤は「汗」を抑える。デオドラントは「匂い」を抑える。
+
+汗に悩んでるのに匂い用を買ってたら、そりゃ脇は濡れたまま。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/deodorant-guide.html?utm_source=x&utm_medium=social&utm_campaign=deodorant-guide&utm_content=reply
+```
+
+### BZ-6｜first-impression-sleep
+```
+第一印象は、0.1秒で決まるらしい。
+
+こっちが「はじめまして」って言い終わる前に、もう審査は終わってる。
+
+そして寝不足の顔は、知らない人が見ても疲れて見えた。前の晩に寝るのが、いちばん安い身だしなみ。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/first-impression-sleep.html?utm_source=x&utm_medium=social&utm_campaign=first-impression-sleep&utm_content=reply
+```
+
+### BZ-7｜coffee-guide
+```
+コーヒーで体への影響がいちばん変わるのは、豆の産地でも、焙煎でもなく、淹れ方。
+
+コレステロールを上げる油は、紙のフィルターでほとんど取れる。
+
+産地にこだわってた時間、紙に負けてた。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/coffee-guide.html?utm_source=x&utm_medium=social&utm_campaign=coffee-guide&utm_content=reply
+```
+
+### BZ-8｜sunscreen-guide
+```
+日焼け止めを4年半、毎日塗ったグループ。
+
+塗るかどうかを本人に任せたグループと比べて、肌の老化の進み方が24%少なかった。
+
+肌のためにできること、まず毎朝の1本から。
+```
+リプライ：
+```
+記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
