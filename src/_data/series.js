@@ -16,7 +16,7 @@ export default [
     en: 'Looking clean, checked',
     intro: '第一印象、匂い、口臭、日焼け。見た目の清潔感を、研究と公的な情報から一つずつ確かめています。',
     enIntro: 'First impressions, smell, bad breath, sun damage. Checking what makes someone look clean, one study at a time.',
-    slugs: ['first-impression-sleep', 'smell', 'odor-care', 'deodorant-guide', 'halitosis', 'oral-care-guide', 'sunscreen-guide'],
+    slugs: ['cleanliness', 'first-impression-sleep', 'smell', 'odor-care', 'deodorant-guide', 'halitosis', 'oral-care-guide', 'sunscreen-guide'],
   },
   {
     key: 'thinkers',

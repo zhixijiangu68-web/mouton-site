@@ -7,11 +7,32 @@
   <description>ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。</description>
   <language>ja</language>
   <item>
+    <title>扁桃体とは何か。恐怖をつくる脳の部位と、睡眠・言葉・ストレスの研究</title>
+    <link>https://moutonarchive.com/amygdala.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/amygdala.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>扁桃体が壊れた人は、ヘビにもお化け屋敷にも怖がらなかった。寝不足の扁桃体は約60%強く反応し、気持ちを言葉にすると反応が下がった。恐怖をつくる脳の部位について、研究を整理します。</description>
+  </item>
+  <item>
+    <title>清潔感とは、いったい何なのか。研究で分解すると見えてくるもの</title>
+    <link>https://moutonarchive.com/cleanliness.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/cleanliness.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>毎日お風呂に入っていても「清潔感がない」と言われることがあります。清潔感は清潔そのものではなく、相手が受け取るサインの集まりです。肌の色ムラ、寝不足の顔、匂い、口臭の研究から、清潔感を分解して整理します。</description>
+  </item>
+  <item>
     <title>ドーパミンを「受け取る側」の話。D2受容体は、環境で変わる</title>
     <link>https://moutonarchive.com/d2-receptor.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/d2-receptor.html</guid>
     <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
     <description>ドーパミンが働くには、受け取る受容体が要る。その一つD2受容体は、順位が上がったサルで増え、一晩の徹夜で減った。快感ではなく「欲しい」に関わる仕組みを、研究から整理します。</description>
+  </item>
+  <item>
+    <title>DHEAは「若返りホルモン」なのか。研究と日本での扱いを整理する</title>
+    <link>https://moutonarchive.com/dhea.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/dhea.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>DHEAは20代前後をピークに年齢とともに下がるホルモンで、「若返りホルモン」と呼ばれてきました。でも高齢者に2年間補った試験では、体力や生活の質の改善は見られませんでした。研究と、日本で医薬品扱いになっている理由を整理します。</description>
   </item>
   <item>
     <title>MAO酵素とは何か。ドーパミンやセロトニンを「片づける」仕組みと、チーズとたばこの話</title>
@@ -21,11 +42,25 @@
     <description>脳のセロトニンやドーパミンは、MAOという酵素が片づけています。この酵素をふさぐ薬はうつ病やパーキンソン病の治療に使われ、チーズと合わせると血圧が危険に上がることも。遺伝子と行動、たばこの影響まで研究から整理します。</description>
   </item>
   <item>
+    <title>スロットがやめられないのは、なぜか。脳と仕組みから見る依存のメカニズム</title>
+    <link>https://moutonarchive.com/slot-addiction.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/slot-addiction.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>いつ当たるか分からない、惜しいハズレ、勝ったように見える負け。スロットには、行動が続きやすい仕組みが重なっています。ドーパミン神経の研究と脳画像の実験、日本の全国調査から、やめにくさの正体を整理します。</description>
+  </item>
+  <item>
     <title>テストステロンを、研究だけで整理する。測り方、睡眠、体重、筋トレ、サプリ、補充療法まで</title>
     <link>https://moutonarchive.com/testosterone.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/testosterone.html</guid>
     <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
     <description>5時間睡眠を1週間続けた若い男性は、昼間のテストステロンが10〜15%下がった。測り方と基準値、年齢と世代による低下、睡眠、体重、筋トレ、父親になること、サプリ、補充療法の安全性までを、研究と診療指針から詳しく整理します。</description>
+  </item>
+  <item>
+    <title>チロシンとアンドロゲン。ドーパミンの材料と男性ホルモンは、どうつながっているのか</title>
+    <link>https://moutonarchive.com/tyrosine-androgen.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/tyrosine-androgen.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>チロシンはドーパミンの材料、アンドロゲンはコレステロールからできる男性ホルモン。通り道は別々です。チロシンのサプリで分かっていること、「テストステロンが上がる」という話の真偽まで、研究から整理します。</description>
   </item>
   <item>
     <title>パレオダイエットとは、なんぞや。「原始人の食事」を研究で確かめる</title>
@@ -110,41 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/books-habits.html</guid>
     <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
     <description>習慣、意志力、やり抜く力、マインドセット、快感の仕組み。自分を変えたいと思ったときに読みたい6冊を、その後の研究で分かった注意点と一緒に紹介する。悩み別の選び方つき。</description>
-  </item>
-  <item>
-    <title>生き方を考えたいときに読む本。哲学と心理学の古典4冊</title>
-    <link>https://moutonarchive.com/books-philosophy.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/books-philosophy.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>意味、自由、他人の評価、自分の価値。このサイトの哲学・生き方の記事で考えてきた問いを、本の中でもっと深く考えたいときに読みたい4冊を、記事との関係と一緒に紹介する。</description>
-  </item>
-  <item>
-    <title>朝型と夜型は、変えられるのか</title>
-    <link>https://moutonarchive.com/chronotype.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/chronotype.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>朝が弱いのは、生まれつきなのか。遺伝子の研究、年齢による変化、自然の光だけで1週間過ごした実験から、朝型・夜型はどこまで決まっていて、どこから動かせるのかを整理する。</description>
-  </item>
-  <item>
-    <title>人と比べるのを、やめることはできるのか</title>
-    <link>https://moutonarchive.com/comparison.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/comparison.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>「人と比べるな」と言われても、比べてしまう。比べることは、人が自分を知るしくみそのものかもしれない。社会的比較の研究とSNSの研究から、やめるのではなく、何とどう比べるかを考える。</description>
-  </item>
-  <item>
-    <title>デニムとレザーは、なぜ古くなるほど良くなるのか</title>
-    <link>https://moutonarchive.com/denim-leather.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/denim-leather.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>デニムとレザーは、着るほど自分の形に馴染んでいく。インディゴの染まり方、革と代替素材を比べた試験、ジーンズのライフサイクル評価、愛着と製品寿命の研究から、この二つの素材の良さを数字で考える。</description>
-  </item>
-  <item>
-    <title>制汗剤とデオドラントの選び方。成分表示のどこを見るか</title>
-    <link>https://moutonarchive.com/deodorant-guide.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/deodorant-guide.html</guid>
-    <pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-    <description>汗を抑えたいのか、匂いを抑えたいのか。制汗剤とデオドラントの違い、医薬部外品の有効成分の見方、アルミニウムの安全性についての評価から、自分に合う選び方を整理する。</description>
   </item>
 </channel>
 </rss>
