@@ -267,7 +267,12 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
  let data=null;
- const load=()=>data||(data=fetch(root+'picks.json').then(r=>r.json()));
+ const SLUG=/^[a-z0-9-]+$/;
+ const get=()=>fetch(root+'picks.json',{credentials:'same-origin'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+ // A failed request is retried once and never cached; bad entries are dropped.
+ const load=()=>data||(data=get().catch(()=>new Promise(ok=>setTimeout(ok,800)).then(get))
+  .then(list=>(Array.isArray(list)?list:[]).filter(a=>a&&SLUG.test(a.s)&&typeof a.t==='string'))
+  .catch(e=>{data=null;throw e;}));
  const here=(/([a-z0-9-]+)\.html$/.exec(location.pathname)||[])[1];
  boxes.forEach(box=>{
   const btn=box.querySelector('.lucky-btn'),out=box.querySelector('.lucky-out');
@@ -280,10 +285,11 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
     const unread=pool.filter(a=>!read[a.s]);
     const from=unread.length?unread:pool;
     const pick=from[Math.floor(Math.random()*from.length)];
+    if(!pick){busy=false;return;}
     const land=()=>{
      out.innerHTML=`<a class="lucky-card" href="${root}${pick.s}.html"><span class="lucky-title">${esc(pick.t)}</span>`
       +(pick.q?`<span class="lucky-q"><b>Q.</b> ${esc(pick.q)}<em>○か×か？</em></span>`:'')
-      +`<span class="lucky-meta">約${pick.m}分 ・ 読む <span aria-hidden="true">→</span></span></a>`;
+      +`<span class="lucky-meta">${Number.isFinite(+pick.m)&&+pick.m>0?`約${+pick.m}分 ・ `:''}読む <span aria-hidden="true">→</span></span></a>`;
      out.classList.add('is-landed');
      btn.innerHTML='もう一回 <span aria-hidden="true">↻</span>';
      busy=false;

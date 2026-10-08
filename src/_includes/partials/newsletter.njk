@@ -3,7 +3,7 @@
   <p class="newsletter-eyebrow">Newsletter</p>
   <h2 class="newsletter-title" id="newsletter-heading-{{ page.fileSlug or 'home' }}">{{ site.newsletter.title }}</h2>
   <p class="newsletter-text">{{ site.newsletter.text }}</p>
-  <form class="newsletter-form" action="{{ site.newsletter.action }}" method="post" target="_blank">
+  <form class="newsletter-form" action="{{ site.newsletter.action }}" method="post" target="_blank" rel="noopener noreferrer">
     <label class="newsletter-label" for="newsletter-email-{{ page.fileSlug or 'home' }}">メールアドレス</label>
     <input id="newsletter-email-{{ page.fileSlug or 'home' }}" type="email" name="{{ site.newsletter.emailField }}" required autocomplete="email" placeholder="you@example.com">
     {%- for name, value in site.newsletter.hidden %}

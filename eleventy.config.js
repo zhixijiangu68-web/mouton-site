@@ -144,6 +144,7 @@ export default function (eleventyConfig) {
     return slugs.map(slug => bySlug.get(slug)).filter(Boolean);
   });
   eleventyConfig.addFilter('head', (items, n) => items.slice(0, n));
+  eleventyConfig.addFilter('origin', u => { try { return new URL(u).origin; } catch { return ''; } });
   eleventyConfig.addFilter('rfc822', d => new Date(d).toUTCString().replace('GMT', '+0000'));
   eleventyConfig.addFilter('json', v => JSON.stringify(v).replace(/</g, '\\u003c'));
   eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(String(path).replace(/^\//, ''), base.replace(/\/?$/, '/')).href : ''));

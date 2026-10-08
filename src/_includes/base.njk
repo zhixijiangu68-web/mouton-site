@@ -4,6 +4,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+{#- GitHub Pages ではヘッダーを付けられないので meta で。広告と GA4 を止めない範囲に絞っている（スクリプトの読み込み元は制限しない）。<base> より前に置く。 #}
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'{% if site.newsletter.action %} {{ site.newsletter.action | origin }}{% endif %}; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 {%- if baseHref %}
 <base href="{{ baseHref }}">
 {%- endif %}

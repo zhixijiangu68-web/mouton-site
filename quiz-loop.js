@@ -42,7 +42,14 @@
   let n=0;while(days.has(d.toLocaleDateString('sv'))){n++;d.setDate(d.getDate()-1);}
   return n;
  };
- const load=()=>bank||(bank=fetch(base+'quizzes.json').then(r=>r.json()));
+ // Only well-formed questions are used, so a bad entry can't break the page or inject a link.
+ const SLUG=/^[a-z0-9-]+$/;
+ const valid=q=>q&&typeof q.q==='string'&&typeof q.a==='boolean'&&SLUG.test(q.slug)&&q.id!=null;
+ // One retry on a failed request; a failure is not cached, so the next open tries again.
+ const get=url=>fetch(url,{credentials:'same-origin'}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json();});
+ const load=()=>bank||(bank=get(base+'quizzes.json').catch(()=>new Promise(ok=>setTimeout(ok,800)).then(()=>get(base+'quizzes.json')))
+  .then(list=>{const ok=Array.isArray(list)?list.filter(valid):[];if(!ok.length)throw new Error('empty');return ok;})
+  .catch(e=>{bank=null;throw e;}));
 
  // Pick a question: unanswered first, preferred articles first, never the current article.
  function pick(list,{exclude=[],prefer=[],skip=new Set()}){
@@ -67,8 +74,10 @@
   load().then(list=>{
    const total=list.length;
    const show=()=>{
-    const q=pick(list,{exclude,prefer,skip:seen});
-    if(!q)return;
+    let q=pick(list,{exclude,prefer,skip:seen});
+    // Every question has been shown in this loop: start the round over.
+    if(!q){seen.clear();q=pick(list,{exclude,prefer,skip:seen});}
+    if(!q){el.innerHTML=`<p class="qloop-loading">${T.fail}</p>`;return;}
     seen.add(q.id);count++;
     const done=Object.keys(store.get(K('answered'),{})).length;
     el.innerHTML=
@@ -102,10 +111,10 @@
     const last=run&&count>=run;
     el.querySelector('.qloop-result').innerHTML=
      `<p class="qloop-verdict ${right?'is-right':'is-wrong'}">${right?T.right:T.wrongV}${right&&streak>1?`<span class="qloop-pop">${T.inRow(streak)}${newBest?T.best:''}</span>`:''}</p>`
-     +`<p class="qloop-head">${esc(q.head)}</p>${compact?'':`<p class="qloop-why">${esc(q.why)}</p>`}`
+     +`<p class="qloop-head">${esc(q.head||'')}</p>${compact||!q.why?'':`<p class="qloop-why">${esc(q.why)}</p>`}`
      +`<div class="qloop-actions">`
      +`<button type="button" class="qloop-next">${last?T.result:T.next} <span aria-hidden="true">→</span></button>`
-     +(compact?`<a class="qloop-read" href="${base}${q.slug}.html">${T.why} <span aria-hidden="true">→</span></a></div>`:`<a class="qloop-read" href="${base}${q.slug}.html">${esc(T.read(q.title))}</a></div>`);
+     +(compact?`<a class="qloop-read" href="${base}${q.slug}.html">${T.why} <span aria-hidden="true">→</span></a></div>`:`<a class="qloop-read" href="${base}${q.slug}.html">${esc(T.read(q.title||q.slug))}</a></div>`);
     const next=el.querySelector('.qloop-next');
     next.addEventListener('click',()=>{track('quiz_next',{where:run?'challenge':location.pathname});last?finish():show();});
     el.querySelector('.qloop-read').addEventListener('click',()=>track('quiz_read',{article:q.slug,where:run?'challenge':location.pathname}));
@@ -118,7 +127,7 @@
     track('quiz_finish',{score,run});
     el.innerHTML=`<span class="qloop-label">RESULT</span><p class="qloop-score"><b>${score}</b> / ${run}</p><p class="qloop-msg">${msg}</p>`
      +`<div class="qloop-actions"><button type="button" class="qloop-next qloop-again">${T.again} <span aria-hidden="true">→</span></button><a class="qloop-read" href="${share}" target="_blank" rel="noopener noreferrer">${T.share} <span aria-hidden="true">↗</span></a></div>`
-     +(wrong.length?`<div class="qloop-review"><p>${T.review}</p><ul>${[...new Map(wrong.map(q=>[q.slug,q])).values()].map(q=>`<li><a href="${base}${q.slug}.html">${esc(q.title)} <span aria-hidden="true">→</span></a></li>`).join('')}</ul></div>`:'');
+     +(wrong.length?`<div class="qloop-review"><p>${T.review}</p><ul>${[...new Map(wrong.map(q=>[q.slug,q])).values()].map(q=>`<li><a href="${base}${q.slug}.html">${esc(q.title||q.slug)} <span aria-hidden="true">→</span></a></li>`).join('')}</ul></div>`:'');
     el.querySelector('.qloop-again').addEventListener('click',()=>{score=0;count=0;streak=0;wrong.length=0;show();});
    };
    show();
