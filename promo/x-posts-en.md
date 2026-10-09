@@ -336,7 +336,7 @@ You don't hate your life.
 You hate the comparison between your behind-the-scenes
 and everyone else's highlight reel.
 
-Close the app and your life gets 20% better without changing anything.
+Close the app, and your life looks a little better without changing anything.
 ```
 
 ### ENP-6｜doing-nothing
@@ -363,4 +363,3 @@ Regret asks: "What if it would have gone right?"
 You only get to pick which one you'll be talking to at 40.
 ```
 
-- 注意：ENP-5 の「20% better」は数字ではなく言い回し。数字に見えて誤解されるなら「a little better」にする
