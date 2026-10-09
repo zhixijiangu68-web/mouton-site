@@ -2843,6 +2843,94 @@ SNSは、まなざしの装置だ。
 続きはこちら → https://moutonarchive.com/stoicism.html?utm_source=x&utm_medium=social&utm_campaign=stoicism&utm_content=reply
 ```
 
+## 動画クイズ（2026-10-09）
+
+`promo/x-videos/<記事>-<番号>.mp4`（縦1080×1920・8秒・音なし）を添付して投稿する。問題 → 3・2・1 → ○か×と答え、の流れ。本文は短く、答えは動画の中。型は**リプリンク**。**順番表にはまだ入れていない**（画像の投稿と入れ替えて、どちらが伸びるか比べる）。
+
+### VQ-1 動画クイズ（ego-depletion-depression）｜「意志力は使うと減る」は本当か
+動画：`promo/x-videos/ego-depletion-depression-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+1998年の有名な実験では、クッキーを我慢した人ほど、そのあと解けないパズルを長く粘った。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/ego-depletion-depression.html?utm_source=x&utm_medium=social&utm_campaign=ego-depletion-depression&utm_content=reply
+```
+
+### VQ-2 動画クイズ（sunscreen-guide）｜日焼け止めの選び方
+動画：`promo/x-videos/sunscreen-guide-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+海辺の研究で、人が実際に塗った日焼け止めはSPF測定時の4分の1ほどだった。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
+```
+
+### VQ-3 動画クイズ（protein-guide）｜プロテインの選び方
+動画：`promo/x-videos/protein-guide-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+筋トレ中のプロテイン補給で増えた筋肉（除脂肪量）の差は、平均で約0.3kgだった。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/protein-guide.html?utm_source=x&utm_medium=social&utm_campaign=protein-guide&utm_content=reply
+```
+
+### VQ-4 動画クイズ（squat-knee）｜スクワットは膝に悪いのか
+動画：`promo/x-videos/squat-knee-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+膝がつま先より前に出ないようにスクワットすると、体全体の負担は減る。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/squat-knee.html?utm_source=x&utm_medium=social&utm_campaign=squat-knee&utm_content=reply
+```
+
+### VQ-5 動画クイズ（cleanliness）｜清潔感を分解する
+動画：`promo/x-videos/cleanliness-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+男性のひげで、女性がいちばん魅力的と評価したのは、5日分の短い無精ひげだった。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/cleanliness.html?utm_source=x&utm_medium=social&utm_campaign=cleanliness&utm_content=reply
+```
+
+### VQ-6 動画クイズ（olive-oil-guide）｜オリーブオイルの選び方
+動画：`promo/x-videos/olive-oil-guide-1.mp4`　型：**リプリンク**
+```
+○か×か。
+
+日本のJAS規格には「エキストラバージン」という等級がある。
+
+3秒で考えてみて。答えは動画の最後に。
+```
+リプライ（自分の投稿に返信）：
+```
+理由はこちら → https://moutonarchive.com/olive-oil-guide.html?utm_source=x&utm_medium=social&utm_campaign=olive-oil-guide&utm_content=reply
+```
+
 ## 哲学投稿のフォームと、厳選30本の順番（2026-10-08）
 
 PH-1〜120 を、次の5つの条件で見直した。5つ全部を満たしたものだけを残し、上から順に1日1本（昼）出す。残りの90本は予備（フォームに合わせて直してから使う）。
