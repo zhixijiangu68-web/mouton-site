@@ -585,11 +585,11 @@ when it changes what you do tomorrow morning.
 
 ### ENP-33｜music-life
 ```
-The song that gives you chills
-is doing something to your brain's reward system.
+You don't need a reason to love a song.
 
-You didn't need a reason to love it.
-But there is one.
+But there is one anyway:
+when music gives people intense pleasure,
+the brain regions for reward and emotion light up.
 ```
 
 ### ENP-34｜boundaries
