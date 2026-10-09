@@ -279,3 +279,88 @@ Ask, "What does a normal Tuesday look like in that life?"
 
 The first question gives you a dream. The second one gives you a plan.
 ```
+
+## Philosophy, built to stop the scroll（2026-10-09・未承認）
+
+オーナーの依頼「英語で哲学でバズりそうなツイート」。1行目で止め、最後の1行で言い切る型。哲学者の名前を出す案は、英語版の記事に書いてあることだけを使った（引用符で言葉を借りるのは、記事に載っている有名な一文だけ）。どれも280字以内。リンクを付けるなら、リプライに英語版の記事（`/en/<記事>.html?utm_source=x&utm_medium=social&utm_campaign=<記事>&utm_content=reply`）。
+
+### ENP-1｜camus-sisyphus
+```
+Camus asked us to imagine Sisyphus happy.
+
+Not because the boulder got lighter.
+Because he stopped waiting for the day it would.
+
+Same job. Same commute. Same Tuesday.
+The repetition isn't the problem. Waiting for it to end is.
+```
+
+### ENP-2｜nietzsche
+```
+"God is dead" wasn't a celebration.
+
+It was a much harder question:
+if no one hands you a meaning anymore,
+what are you going to build with your one life?
+
+Most of us answer it by scrolling.
+```
+
+### ENP-3｜stoicism
+```
+Epictetus sorted life into two piles:
+what's up to us, and what isn't.
+
+Your effort: up to you.
+Your reputation: not up to you.
+
+Most anxiety is trying to do the second pile's job.
+```
+
+### ENP-4｜sartre
+```
+Sartre's most uncomfortable idea:
+you are condemned to be free.
+
+"I had no choice" is usually a choice.
+Not deciding is deciding.
+Staying is choosing to stay.
+
+Freedom isn't a gift. It's a weight you carry either way.
+```
+
+### ENP-5｜comparison
+```
+You don't hate your life.
+
+You hate the comparison between your behind-the-scenes
+and everyone else's highlight reel.
+
+Close the app and your life gets 20% better without changing anything.
+```
+
+### ENP-6｜doing-nothing
+```
+Rest is not the reward for finishing.
+
+You will never finish.
+```
+
+### ENP-7｜self-image
+```
+Most habits die on the same sentence:
+"That's just not who I am."
+
+Change the sentence first.
+The habit needs somewhere to live.
+```
+
+### ENP-8｜fear
+```
+Fear asks: "What if it goes wrong?"
+Regret asks: "What if it would have gone right?"
+
+You only get to pick which one you'll be talking to at 40.
+```
+
+- 注意：ENP-5 の「20% better」は数字ではなく言い回し。数字に見えて誤解されるなら「a little better」にする
