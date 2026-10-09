@@ -21,3 +21,21 @@
 | squat-knee-1.mp4 | 「膝をつま先より前に出すな」は正しい？ ○×クイズ #Shorts | 膝を止めると、負担はどこへ行く？ 研究は記事で。https://moutonarchive.com/squat-knee.html?utm_source=youtube&utm_medium=video&utm_campaign=squat-knee |
 | cleanliness-1.mp4 | いちばん好かれるひげの長さは？ ○×クイズ #Shorts | 5日分の無精ひげの評価は？ 清潔感の研究は記事で。https://moutonarchive.com/cleanliness.html?utm_source=youtube&utm_medium=video&utm_campaign=cleanliness |
 | olive-oil-guide-1.mp4 | 「エキストラバージン」、日本の規格にある？ ○×クイズ #Shorts | ラベルの言葉と規格の関係は？ 選び方は記事で。https://moutonarchive.com/olive-oil-guide.html?utm_source=youtube&utm_medium=video&utm_campaign=olive-oil-guide |
+
+## 哲学の二択（18秒）
+
+`promo/shorts/philosophy.json` の問いを、A・B の二択にした動画。「あなたならどっち？」→ 3・2・1 → 正解のカードが光る → 答えと一言。サルトルの教え子の話だけは、A・B どちらも消える（「どちらでもない」が答え）。
+
+- 作り方：`cd scripts/og && node x-video.mjs --philo <id>` → `promo/shorts/philo-<id>.mp4`
+- 問いを足すときは、記事に書いてある事実だけを使う（`slug` がその記事）。正解が A と B に偏らないようにする
+- おすすめの順番：sartre-student → narcissist-first → sisyphus → sartre-nobel → schopenhauer → marcus → epictetus（いちばん引きの強い「答えがない問い」から）
+
+| ファイル | タイトル | 説明 |
+|---|---|---|
+| philo-sartre-student.mp4 | 兄の仇か、母か。サルトルの答えは？ #Shorts #哲学 | 戦争中、教え子が相談に来た。サルトルが返した一言は記事で。https://moutonarchive.com/sartre.html?utm_source=youtube&utm_medium=video&utm_campaign=sartre |
+| philo-narcissist-first.mp4 | 初対面で好かれるのは、謙虚な人？ ナルシシスト？ #Shorts #心理学 | 7回会うと、評価はどうなった？ 研究は記事で。https://moutonarchive.com/narcissism-art.html?utm_source=youtube&utm_medium=video&utm_campaign=narcissism-art |
+| philo-sisyphus.mp4 | 永遠に岩を運ぶ男は、不幸か？ #Shorts #哲学 | カミュの『シーシュポスの神話』を記事で。https://moutonarchive.com/camus-sisyphus.html?utm_source=youtube&utm_medium=video&utm_campaign=camus-sisyphus |
+| philo-sartre-nobel.mp4 | ノーベル賞に選ばれたサルトルは、どうした？ #Shorts #哲学 | 理由と、サルトルの考えは記事で。https://moutonarchive.com/sartre.html?utm_source=youtube&utm_medium=video&utm_campaign=sartre |
+| philo-schopenhauer.mp4 | 人生は、何と何のあいだを揺れる振り子？ #Shorts #哲学 | ショーペンハウアーの振り子と、自由について記事で。https://moutonarchive.com/freedom.html?utm_source=youtube&utm_medium=video&utm_campaign=freedom |
+| philo-marcus.mp4 | 皇帝の『自省録』は、誰のために書かれた？ #Shorts #哲学 | ストア派の考え方を記事で。https://moutonarchive.com/stoicism.html?utm_source=youtube&utm_medium=video&utm_campaign=stoicism |
+| philo-epictetus.mp4 | あなたの評判は、自分次第？ #Shorts #哲学 | 元奴隷の哲学者エピクテトスの考えを記事で。https://moutonarchive.com/stoicism.html?utm_source=youtube&utm_medium=video&utm_campaign=stoicism |
