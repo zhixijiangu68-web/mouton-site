@@ -54,6 +54,7 @@
   const box=el=>{const r=el.getBoundingClientRect();return {top:r.top+y,bottom:r.bottom+y,height:r.height};};
   layout={
    vh:window.innerHeight,
+   narrow:window.matchMedia('(max-width: 860px)').matches,
    navProbe:nav?nav.offsetHeight/2:0,
    zones:zones.map(z=>({el:z,...box(z)})),
    targets:navLinks.map(a=>{const t=document.getElementById(a.hash.slice(1));return t?{a,...box(t)}:null;}).filter(Boolean),
@@ -88,10 +89,12 @@
    // (or as it scrolls away when nothing overlaps it).
    // Overlapping scenes spend their first stretch dissolving in over the previous one.
    const intro=s.overlap?vh*.7:0;
-   const pinned=-top-intro;
+   // On phones the copy comes in early in the dissolve and the previous
+   // scene's copy stays a little longer, so no screen passes with nothing to read.
+   const pinned=-top-(layout.narrow?intro*.3:intro);
    const tIn=s.hero?1:ease(clamp(pinned/(vh*.3)));
    const t2In=s.hero?1:ease(clamp((pinned-vh*.12)/(vh*.3)));
-   const leave=s.nextOverlap?clamp((2*vh-bottom)/(vh*.3)):clamp((1.25*vh-bottom)/(vh*.4));
+   const leave=s.nextOverlap?clamp(((layout.narrow?1.75:2)*vh-bottom)/(vh*.3)):clamp((1.25*vh-bottom)/(vh*.4));
    const tOut=1-ease(leave);
    el.style.setProperty('--t',Math.min(tIn,tOut).toFixed(3));
    el.style.setProperty('--t2',Math.min(t2In,tOut).toFixed(3));
