@@ -314,3 +314,14 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
 })();
 // Before/after slider (making-*.html): the range input moves the divider.
 document.querySelectorAll('.mk-cmp').forEach(c=>{const r=c.querySelector('.mk-cmp-range');if(r)r.addEventListener('input',()=>c.style.setProperty('--pos',r.value+'%'));});
+// Cover: Night (default) or Day, kept in this browser.
+document.querySelectorAll('[data-cover-toggle]').forEach(b=>{
+ const sync=()=>b.setAttribute('aria-pressed',String(document.documentElement.dataset.cover==='day'));
+ sync();
+ b.addEventListener('click',()=>{
+  const day=document.documentElement.dataset.cover!=='day';
+  if(day)document.documentElement.dataset.cover='day';else delete document.documentElement.dataset.cover;
+  try{localStorage.setItem('mouton.cover',day?'day':'night');}catch{}
+  sync();
+ });
+});
