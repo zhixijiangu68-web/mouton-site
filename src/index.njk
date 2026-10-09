@@ -5,31 +5,57 @@ title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
 extraCss: [home.css]
-preloadHero: true
 ---
+<script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 
 <main>
-  <section class="scene scene-hero" id="top" data-scene data-next-overlap data-nav="dark">
-    <div class="scene-pin">
-      <div class="scene-media ph-hero{{ '' if (["images/hero.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/hero.jpg" %}></div>
-      <div class="scene-shade"></div>
-      <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
-        <p class="eyebrow reveal">A personal archive for things yet to come</p>
-        <h1 class="display reveal"><span class="nowrap">その常識、</span><br><span class="nowrap">10秒で</span><span class="nowrap">ひっくり返す。</span></h1>
-        <p class="lede reveal-2 hero-lede">外見・お金・生き方。<br>研究で確かめた○×クイズに、答えてから読む。</p>
-        <div class="qloop hero-qloop reveal-2" data-qloop data-compact></div>
-        {%- for a in collections.articles %}{% if loop.first %}
-        <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
-        {%- endif %}{% endfor %}
-        <p class="hero-links reveal-2"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="#guides">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
+  {#- 表紙（Night）。Day に切り替えると空の写真になる（ボタンで切り替え、ブラウザに保存）。 #}
+  <section class="cover" id="top" data-nav="dark" data-nav-solid="dark">
+    <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
+    <div class="cover-inner">
+      <p class="cover-kicker">A late-night club for questions</p>
+      <h1 class="cover-title"><span class="nowrap">哲学と科学で、</span><br><span class="nowrap">日常の見え方を</span><span class="nowrap">変える。</span></h1>
+      <p class="cover-lede">外見・お金・生き方。研究で確かめてから書いた記事と、答えてから読む○×クイズ。</p>
+      <div class="cover-actions">
+        <a class="cover-btn is-primary" href="#reading">記事を読む</a>
+        <a class="cover-btn" href="#today-q">クイズを解く</a>
       </div>
-      <a class="scroll-cue" href="#think">Scroll</a>
+      <p class="cover-links"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="guides.html">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a></p>
+    </div>
+    <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
+  </section>
+
+  {#- いま読む3本：新しい順に、大きな1本と小さな2本。 #}
+  <section class="section cover-section" id="reading" data-nav="dark" data-nav-solid="dark" aria-labelledby="reading-heading">
+    <div class="section-inner">
+      <h2 class="cover-section-title" id="reading-heading">いま読む<em>Now reading</em></h2>
+      <div class="reading3">
+        {%- for a in collections.articles | head(3) %}
+        <a class="reading3-card{{ ' is-feature' if loop.first }}" href="{{ a.page.fileSlug }}.html">
+          <span class="reading3-meta">{{ {philosophy:'哲学・生き方', body:'身体', food:'食事・化学', books:'本', work:'仕事'}[a.data.category] or 'Journal' }}<span aria-hidden="true"> ・ </span>約{{ a.data.readMinutes }}分</span>
+          <span class="reading3-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+          <span class="reading3-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+          <span class="reading3-go">読む <span aria-hidden="true">→</span></span>
+        </a>
+        {%- endfor %}
+      </div>
+      <p class="cover-more"><a href="#journal">記事をすべて見る <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
-  <section class="scene overlap" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
+  {#- 今日の1問。答えると、その問題の記事へ進める。 #}
+  <section class="section cover-section" id="today-q" data-nav="dark" data-nav-solid="dark" aria-labelledby="today-heading">
+    <div class="section-inner today-inner">
+      <p class="today-kicker">今日の1問</p>
+      <h2 class="cover-section-title today-title" id="today-heading">その常識、<br>10秒でひっくり返す。</h2>
+      <div class="qloop today-qloop" data-qloop data-compact></div>
+      <p class="cover-more"><a href="quiz.html">10問チャレンジ <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="scene" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
     <div class="scene-pin">
       <div class="scene-media ph-think{{ '' if (["images/scene-think.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-think.jpg" %}></div>
       <div class="scene-shade"></div>
