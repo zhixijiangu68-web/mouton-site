@@ -1,6 +1,6 @@
 <!doctype html>
 {%- set root = root or "" %}
-<html lang="{{ lang or 'ja' }}" data-root="{{ root }}">
+<html lang="{{ lang or 'ja' }}" data-root="{{ root }}" data-version="original">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -50,6 +50,7 @@
 {%- endif %}
 <meta name="twitter:site" content="@{{ site.author.x }}">
 <meta name="theme-color" content="#f8f5ee">
+<script src="{{ root }}design-version.js"></script>
 {%- if site.searchConsole and page.url == "/" %}
 <meta name="google-site-verification" content="{{ site.searchConsole }}">
 {%- endif %}
@@ -78,6 +79,7 @@
 {%- for css in extraCss %}
 <link rel="stylesheet" href="{{ root }}{{ css }}">
 {%- endfor %}
+<link rel="stylesheet" href="{{ root }}design-version.css">
 <script src="{{ root }}site.js" defer></script>
 <script src="{{ root }}quiz-loop.js" defer></script>
 {%- if isArticle %}

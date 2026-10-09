@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" data-root="">
+<html lang="ja" data-root="" data-version="original">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -22,6 +22,7 @@
 <link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
 <meta name="theme-color" content="#f8f5ee">
+<script src="design-version.js"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
 <link rel="preload" as="image" href="images/placeholder/hero.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,6 +32,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="design-version.css">
 <script src="site.js" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。","inLanguage":"ja","url":"https://moutonarchive.com/"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone"]}]}</script>
@@ -42,6 +44,14 @@
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
+  <label class="version-picker">
+  <span class="version-picker-label" aria-hidden="true">VERSION</span>
+  <select data-version-picker aria-label="デザインのバージョン">
+    <option value="original">01 ORIGINAL</option>
+    <option value="club">02 CLUB</option>
+  </select>
+</label>
+
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
@@ -66,6 +76,7 @@
       <div class="scene-media ph-hero is-placeholder"></div>
       <div class="scene-shade"></div>
       <div class="scene-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
+        <div class="club-signature" aria-hidden="true"><span>MOUTON / VOL.02</span><span>AFTER HOURS, OPEN MINDS.</span></div>
         <p class="eyebrow reveal">A personal archive for things yet to come</p>
         <h1 class="display reveal"><span class="nowrap">その<wbr>常識、</span><br><span class="nowrap">10秒で</span><span class="nowrap">ひっくり返す。</span></h1>
         <p class="lede reveal-2 hero-lede">外見・お金・<wbr>生き方。<br>研究で<wbr>確かめた<wbr>○×クイズに、<wbr>答えてから<wbr>読む。</p>
