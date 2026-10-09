@@ -68,7 +68,7 @@
 .section-blue .eyebrow,.section-blue .copy{color:rgba(255,255,255,.82)}
 .foodscience-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .science-card{position:relative;display:flex;flex-direction:column;min-height:300px;padding:clamp(26px,3vw,40px);border:1px solid rgba(255,255,255,.28);border-radius:4px;background:rgba(255,255,255,.07);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;text-decoration:none;overflow:hidden;transition:background .4s,transform .6s cubic-bezier(.2,.7,.2,1)}
-.science-card:hover{background:rgba(255,255,255,.14);transform:translateY(-6px)}
+.science-card:hover{background:rgba(255,255,255,.14);transform:translateY(-2px)}
 .science-card:focus-visible{outline:2px solid #fff;outline-offset:4px}
 .science-tag{font-size:.75rem;letter-spacing:.14em;color:rgba(255,255,255,.75);margin-bottom:auto;padding-bottom:28px}
 .science-card h3{font-family:var(--serif);font-weight:300;font-size:clamp(1.375rem,2.2vw,1.875rem);line-height:1.55;margin:0 0 14px}
@@ -164,7 +164,7 @@
 /* ---------- Guides (front matter `guide`) ---------- */
 .guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
 .guide-card{display:flex;flex-direction:column;min-height:260px;padding:clamp(24px,3vw,36px);border:1px solid var(--line);border-radius:4px;background:rgba(255,255,255,.6);color:var(--ink);text-decoration:none;transition:border-color .4s,transform .6s cubic-bezier(.2,.7,.2,1)}
-.guide-card:hover{border-color:var(--blue);transform:translateY(-6px)}
+.guide-card:hover{border-color:var(--blue);transform:translateY(-2px)}
 .guide-card:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
 .guide-tag{font-size:.75rem;letter-spacing:.14em;color:#5b5d56;margin-bottom:auto;padding-bottom:24px}
 .guide-card h3{font-family:var(--serif);font-weight:300;font-size:clamp(1.25rem,2vw,1.625rem);line-height:1.6;margin:0 0 12px}
@@ -281,3 +281,10 @@
 .section{padding-top:clamp(56px,9vw,120px);padding-bottom:clamp(56px,9vw,120px)}
 .journal-tools{padding-bottom:14px}
 .journal-filter{min-height:40px;padding:6px 14px;font-family:var(--gothic)}
+
+/* English edition: the same night cover, a Latin title, and the paper page rising over it. */
+.cover-en{min-height:86vh;min-height:86svh;padding-bottom:clamp(120px,18vh,180px)}
+.cover-en .cover-title{font-family:var(--latin);font-weight:400;font-size:clamp(2.25rem,5.6vw,4.75rem);line-height:1.15;letter-spacing:0;max-width:16ch;margin:0 auto}
+[data-cover="day"] .cover-en{background-image:url(../images/placeholder/hero.jpg)}
+.cover-en .cover-mode{bottom:calc(clamp(80px,14vh,140px) + 18px)}
+.cover-btn{white-space:nowrap}

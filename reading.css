@@ -106,7 +106,7 @@ body.article-page h2 { font-weight:300; }
 body.article-page .meta, body.article-page .eyebrow { letter-spacing:.14em; color:#5b5d56; }
 body.article-page article a:not(.reading-card):not(.reading-return):not(.copy-link):not(.book-buy) { color:#1442c4; text-underline-offset:4px; }
 body.article-page .reading-card { background:#fff; border-color:rgba(27,28,25,.12); border-radius:2px; transition:border-color .3s, transform .5s cubic-bezier(.2,.7,.2,1); }
-body.article-page .reading-card:hover { background:#fff; border-color:#1442c4; transform:translateY(-3px); text-decoration:none; color:#1442c4; }
+body.article-page .reading-card:hover { background:#fff; border-color:#1442c4; transform:translateY(-2px); text-decoration:none; color:#1442c4; }
 body.article-page .copy-link { border-color:rgba(27,28,25,.3); color:#1b1c19; background:transparent; }
 body.article-page .copy-link:hover { background:#1b1c19; color:#f8f5ee; }
 body.article-page .reading-toc { background:#fff; border-color:rgba(27,28,25,.12); border-radius:2px; }

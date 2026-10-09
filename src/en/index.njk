@@ -1,12 +1,26 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+extraCss: [home.css]
 permalink: en/index.html
 title: "Mouton — Notes on philosophy, the body, food and work"
 description: "The English edition of Mouton, a personal archive. Essays on philosophy and how to live, the body, food and science, and work, checked against research and data."
 ---
 {% include "partials/nav-en.njk" %}
-<div class="doc-cover ph-hero" data-nav="dark"{% if (['images/hero.jpg'] | firstImage) %} style="--img:url('../images/hero.jpg')"{% endif %} id="top"></div>
+<script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
+<section class="cover cover-en" id="top" data-nav="dark" data-nav-solid="dark">
+  <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
+  <div class="cover-inner">
+    <p class="cover-kicker">A late-night club for questions</p>
+    <p class="cover-title" lang="en">Philosophy and science, for seeing everyday life differently.</p>
+    <p class="cover-lede">Appearance, money and how to live, checked against research. Answer a true-or-false question, then read.</p>
+    <div class="cover-actions">
+      <a class="cover-btn is-primary" href="#journal">Read the essays</a>
+      <a class="cover-btn" href="quiz.html">Take the quiz</a>
+    </div>
+  </div>
+  <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
+</section>
 <main class="doc topic" data-nav="light" data-nav-solid="light">
   <p class="eyebrow">English edition</p>
   <h1 class="doc-title">Mouton</h1>

@@ -135,7 +135,7 @@ body.menu-locked{overflow:hidden}
 
 /* Project cards that link out */
 .card-link{text-decoration:none;color:#fff;transition:background .35s,transform .5s cubic-bezier(.2,.7,.2,1)}
-.card-link:hover{background:rgba(20,66,196,.45);transform:translateY(-4px)}
+.card-link:hover{background:rgba(20,66,196,.45);transform:translateY(-2px)}
 .card-link:focus-visible{outline:2px solid #fff;outline-offset:4px}
 .card-more{margin-top:14px;font-family:var(--latin);font-size:1.0625rem}
 
@@ -193,12 +193,12 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
  .site-nav { view-transition-name: site-nav; }
 
  /* Lists and cards rise in as they scroll into view (see site.js). */
- .js [data-rise]:not(.risen) { opacity: 0; translate: 0 24px; }
- .js [data-rise].risen { transition: opacity .8s cubic-bezier(.2,.7,.2,1) calc(var(--rise-i, 0) * 70ms), translate .8s cubic-bezier(.2,.7,.2,1) calc(var(--rise-i, 0) * 70ms), background .4s, transform .6s cubic-bezier(.2,.7,.2,1); }
+ .js [data-rise]:not(.risen) { opacity: 0; translate: 0 10px; }
+ .js [data-rise].risen { transition: opacity .5s cubic-bezier(.2,.7,.2,1) calc(var(--rise-i, 0) * 60ms), translate .5s cubic-bezier(.2,.7,.2,1) calc(var(--rise-i, 0) * 60ms), background .4s, transform .6s cubic-bezier(.2,.7,.2,1); }
 
  /* The article cover drifts slightly as the page scrolls. */
  @supports (animation-timeline: scroll()) {
-  .cover, .doc-cover { animation: cover-drift linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
+  body.article-page .cover, .doc-cover { animation: cover-drift linear both; animation-timeline: scroll(root); animation-range: 0 80vh; }
   @keyframes cover-drift { from { background-position: center 50%; } to { background-position: center 70%; } }
  }
 }
@@ -362,7 +362,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .series-count{margin-left:8px;font-family:Inter,sans-serif;font-size:.75rem;letter-spacing:.06em;opacity:.6}
 .start-paths{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin:18px 0 8px}
 .start-path{display:flex;flex-direction:column;gap:6px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.65);color:var(--ink);text-decoration:none;transition:border-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
-.start-path:hover{border-color:var(--blue);transform:translateY(-3px)}
+.start-path:hover{border-color:var(--blue);transform:translateY(-2px)}
 .start-path:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 .start-path-title{font-family:var(--serif);font-size:1.0625rem;line-height:1.6}
 .start-path-text{font-size:.875rem;line-height:1.8;opacity:.75}
@@ -411,7 +411,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .qloop-burst b{position:absolute;left:50%;top:0;transform:translate(-50%,-50%);white-space:nowrap;font:600 1.5rem/1 "Noto Serif JP",serif;color:#b8791c;animation:qloopCombo 1.2s ease-out forwards}
 @keyframes qloopBurst{0%{transform:rotate(var(--a)) translateX(0) scale(1);opacity:1}100%{transform:rotate(var(--a)) translateX(var(--d)) scale(.3);opacity:0}}
 @keyframes qloopCombo{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}20%{opacity:1;transform:translate(-50%,-60%) scale(1.15)}70%{opacity:1;transform:translate(-50%,-80%) scale(1)}100%{opacity:0;transform:translate(-50%,-110%) scale(1)}}
-.qloop-next{animation:qloopNudge 1.6s ease-in-out 1.2s infinite}
+.qloop-next{animation:qloopNudge 1.6s ease-in-out 1.2s 3}
 @keyframes qloopNudge{0%,100%{transform:none}50%{transform:translateX(3px)}}
 @media (prefers-reduced-motion:reduce){.qloop-stamp,.qloop-burst,.qloop-next{animation:none}.qloop-stamp{display:none}}
 
