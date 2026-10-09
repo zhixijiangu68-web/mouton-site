@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>運営者のお気に入り — ムートン</title>
+<meta name="description" content="ムートンの運営者が、ふだん口にしている食品・成分・薬を、好きな順に S・A・B・C の4段階で並べたページ。効果や安全性の順位ではなく、個人の好みのリストです。">
+<link rel="canonical" href="https://moutonarchive.com/favorites.html">
+<meta property="og:title" content="運営者のお気に入り — ムートン">
+<meta property="og:description" content="ムートンの運営者が、ふだん口にしている食品・成分・薬を、好きな順に S・A・B・C の4段階で並べたページ。効果や安全性の順位ではなく、個人の好みのリストです。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/favorites.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+.fav-lead{font-family:"Noto Serif JP",serif}
+.fav-note{margin:20px 0 8px;padding:16px 18px;border-left:3px solid var(--gold);background:rgba(255,255,255,.55);font-size:.875rem!important;line-height:1.9!important}
+.fav-tiers{margin:32px 0 8px;display:grid;gap:14px}
+.fav-row{display:grid;grid-template-columns:84px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.45)}
+.fav-tier{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:14px 6px;color:#fff;text-align:center}
+.fav-tier b{font-family:var(--latin);font-size:2.25rem;font-weight:400;line-height:1}
+.fav-tier span{font-size:.6875rem;letter-spacing:.06em;opacity:.9}
+.fav-row[data-tier="S"] .fav-tier{background:linear-gradient(160deg,#b98a32,#8a6418)}
+.fav-row[data-tier="A"] .fav-tier{background:linear-gradient(160deg,#1442c4,#0b2f97)}
+.fav-row[data-tier="B"] .fav-tier{background:linear-gradient(160deg,#4f7a5a,#355a40)}
+.fav-row[data-tier="C"] .fav-tier{background:linear-gradient(160deg,#6b6e66,#4a4c46)}
+.fav-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;padding:12px}
+.fav-item{display:flex;flex-direction:column;gap:6px;padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.doc .fav-name{margin:0}
+.fav-name{font-family:"Noto Serif JP",serif;font-size:1.125rem;line-height:1.5}
+.fav-kind{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:999px;background:#eef0ea;color:#53584f;font-family:Inter,sans-serif;font-size:.6875rem;letter-spacing:.04em;vertical-align:middle}
+.doc .fav-what,.doc .fav-mine{margin:0;font-size:.875rem;line-height:1.8}
+.doc .fav-mine{color:#252724;font-family:"Noto Serif JP",serif}
+.doc .fav-link{display:inline-flex;align-items:center;min-height:40px;margin-top:auto;font-size:.8125rem;color:var(--blue)}
+@media(max-width:600px){.fav-row{grid-template-columns:64px minmax(0,1fr)}.fav-tier b{font-size:1.75rem}.fav-items{grid-template-columns:minmax(0,1fr);padding:10px}}
+
+</style>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="index.html#journal">読む<span class="site-links-en">Read</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-about" data-nav="dark"></div>
+<main class="doc topic" data-nav="light" data-nav-solid="light">
+  <h1 class="doc-title">運営者の<wbr>お気に入り</h1>
+  <p class="fav-lead">ふだん口にしている食品・成分・薬を、僕が好きな順に並べました。S がいちばん手放せないもの、C がときどき使うものです。</p>
+  <p class="fav-note">これは<strong>個人の好みの順位</strong>で、効果や安全性の順位ではありません。医薬品（百草丸・アスピリン）は添付文書を読み、用法・用量を守ってください。持病がある人、薬を飲んでいる人、妊娠中の人は、使う前に医師か薬剤師に相談してください。</p>
+  <div class="fav-tiers">
+    <section class="fav-row" data-tier="S" aria-label="Sランク（手放せない）">
+      <div class="fav-tier"><b>S</b><span>手放せない</span></div>
+      <div class="fav-items">
+        <div class="fav-item">
+          <p class="fav-name">百草丸<span class="fav-kind">医薬品</span></p>
+          <p class="fav-what">オウバク（キハダの樹皮）を中心にした生薬の胃腸薬。木曽御嶽山のふもとで受け継がれてきた。</p>
+        </div>
+        <div class="fav-item">
+          <p class="fav-name">EGCG<span class="fav-kind">成分</span></p>
+          <p class="fav-what">緑茶に多いカテキンの一種。</p><a class="fav-link" href="egcg-soy-dht.html">関連する記事を読む <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+    <section class="fav-row" data-tier="A" aria-label="Aランク（かなり好き）">
+      <div class="fav-tier"><b>A</b><span>かなり好き</span></div>
+      <div class="fav-items">
+        <div class="fav-item">
+          <p class="fav-name">コーヒー<span class="fav-kind">食品</span></p>
+          <p class="fav-what">淹れ方で、体への影響が変わる飲み物。</p><a class="fav-link" href="coffee-guide.html">関連する記事を読む <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+    <section class="fav-row" data-tier="B" aria-label="Bランク（好き）">
+      <div class="fav-tier"><b>B</b><span>好き</span></div>
+      <div class="fav-items">
+        <div class="fav-item">
+          <p class="fav-name">ブルーベリー<span class="fav-kind">食品</span></p>
+          <p class="fav-what">アントシアニンを多く含む果物。</p><a class="fav-link" href="blueberry.html">関連する記事を読む <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="fav-item">
+          <p class="fav-name">チロシン<span class="fav-kind">成分</span></p>
+          <p class="fav-what">アミノ酸の一種。ドーパミンの材料になる。</p><a class="fav-link" href="tyrosine-androgen.html">関連する記事を読む <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="fav-item">
+          <p class="fav-name">グルタミン<span class="fav-kind">成分</span></p>
+          <p class="fav-what">アミノ酸の一種。</p>
+        </div>
+      </div>
+    </section>
+    <section class="fav-row" data-tier="C" aria-label="Cランク（ときどき）">
+      <div class="fav-tier"><b>C</b><span>ときどき</span></div>
+      <div class="fav-items">
+        <div class="fav-item">
+          <p class="fav-name">アスピリン<span class="fav-kind">医薬品</span></p>
+          <p class="fav-what">解熱鎮痛薬。血を固まりにくくする働きもある。</p>
+        </div>
+        <div class="fav-item">
+          <p class="fav-name">クレアチン<span class="fav-kind">成分</span></p>
+          <p class="fav-what">筋肉でエネルギーを素早く作るのにかかわる物質。</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p class="doc-date">最終更新：2026.10.09</p>
+  <p class="reading-returns"><a href="operator.html">運営者情報へ</a><a href="index.html">トップへ戻る</a></p>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="index.html#journal">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="en/index.html" hreflang="en" lang="en">English</a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>
