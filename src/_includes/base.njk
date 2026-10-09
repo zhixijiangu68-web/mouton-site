@@ -18,7 +18,7 @@
 <meta name="robots" content="noindex">
 {%- elif site.url %}
 <link rel="canonical" href="{{ pageUrl }}">
-{%- if isArticle and page.fileSlug in enSlugs %}
+{%- if isArticle and page.fileSlug in enSlugs and not enOnly %}
 <link rel="alternate" hreflang="ja" href="{{ (page.fileSlug + '.html') | absoluteUrl(site.url) }}">
 <link rel="alternate" hreflang="en" href="{{ ('en/' + page.fileSlug + '.html') | absoluteUrl(site.url) }}">
 {%- elif enPage %}

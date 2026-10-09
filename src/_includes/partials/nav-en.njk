@@ -7,7 +7,7 @@
       <li><a href="quiz.html">Quiz<span class="site-links-en">True or false</span></a></li>
       <li><a href="series.html">Series<span class="site-links-en">Read in order</span></a></li>
       <li><a href="guides.html">Guides<span class="site-links-en">Before you buy</span></a></li>
-      <li><a href="../{{ jaPage or ((page.fileSlug + '.html') if isArticle else 'index.html') }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
+      <li><a href="../{{ jaPage or ((page.fileSlug + '.html') if (isArticle and not enOnly) else 'index.html') }}" hreflang="ja" lang="ja">日本語<span class="site-links-en">Japanese</span></a></li>
     </ul>
   </nav>
 </div>
