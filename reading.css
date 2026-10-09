@@ -239,3 +239,6 @@ body.article-page .reading-card{padding:clamp(20px,2.2vw,32px)}
 @media(max-width:760px){
  body.article-page article p,body.article-page article li{font-size:1.0625rem;line-height:1.95}
 }
+/* Pull quotes on a dark background (goggins, bailey-schildbach) keep their own light text:
+   the rule above would otherwise paint their paragraphs dark on dark. */
+body.article-page article .pull p{color:inherit}
