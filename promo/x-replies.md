@@ -141,3 +141,50 @@
 ```
 
 - 送った案：（オーナーが記入）
+
+## 2026-10-09 Morgan Housel の画像（"The highest form of wealth is the ability to wake up every morning and say, 'I can do whatever I want today.'"）
+
+- 届いた内容：上の言葉の画像（誰の投稿かは不明）
+- 読み取り：お金＝自由（時間を自分で決められること）という考え。共感して、一歩だけ先に進める
+- つなげる記事：`books-money`（お金の本の選び方。『サイコロジー・オブ・マネー』を紹介。Amazon のリンクあり）
+- 他人の投稿への最初の返信にはリンクを付けない。会話が続いたら、または自分の引用投稿なら、記事を案内する
+
+### 英語の案
+```
+And the sneaky part: you don't need to be rich to get a slice of it.
+Every bit of savings buys back one more morning that's yours.
+```
+```
+Funny how the richest feeling isn't buying something.
+It's not having to ask anyone for your Tuesday.
+```
+```
+"Whatever I want" usually turns out to be pretty simple. A long breakfast. A walk. No alarm.
+```
+
+### 日本語の案
+```
+お金で買えるいちばん高いものって、モノじゃなくて「明日の予定を自分で決められること」なんですよね
+```
+```
+貯金って、未来の自分の「朝」を少しずつ買い戻してる感覚に近い
+```
+```
+で、自由な朝が来ると、意外と「いつもの散歩」をしたりする
+```
+
+### 自分の引用投稿にするなら（日本語・リンクはリプライに）
+```
+「最高の富は、毎朝『今日は好きなことができる』と言えること」
+
+モーガン・ハウセル。お金でうまくいくかは、知識の量より、ふるまい方で決まる、という本の人。
+
+お金の目的を「増やす」から「自由な朝を増やす」に変えると、使い方が変わる。
+```
+リプライ：
+```
+お金の本を「考える順番」で選んだ記事 → https://moutonarchive.com/books-money.html?utm_source=x&utm_medium=social&utm_campaign=books-money&utm_content=reply
+```
+- 言葉の訳はムートンによる訳（引用元の画像の英文はハウセルの言葉として広く知られている）。本の名前を出すので、引用投稿にするなら【PR】を先頭に付けるか、本を名指しで推さない形にする（上の案は本の名前を出していないが、リプライ先の記事に Amazon のリンクがあるため、【PR】を付けて出す）
+
+- 送った案：（オーナーが記入）
