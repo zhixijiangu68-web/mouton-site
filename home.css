@@ -209,7 +209,7 @@
 /* ===== Night cover (2026-10-09) =====
    Deep navy cover with slow blue light; Day swaps in the sky photo.
    Brand and questions in Mincho, actions and explanations in Gothic. */
-:root{--night:#0b1020;--night-2:#111833;--glow:#4c72ff;--on-night:#f5f3ee;--on-night-2:#b5bcd0;--gothic:Inter,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",sans-serif}
+:root{--night:#0b1020;--night-2:#111833;--glow:#4c72ff;--on-night:#f5f3ee;--on-night-2:#b5bcd0}
 .cover{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:110px var(--gutter) 80px;background:var(--night);color:var(--on-night);overflow:hidden;isolation:isolate}
 .cover-art{position:absolute;inset:0;z-index:-1;overflow:hidden}
 .cover-light{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;will-change:transform}
@@ -276,3 +276,8 @@
 .js .cover-inner>*:nth-child(n+3){animation-delay:.12s}
 @keyframes coverIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.cover-light,.js .cover-inner>*{animation:none}.cover-btn,.reading3-card{transition:none}}
+
+/* ④ Spacing: sections PC 96–120px / phone 56–72px; cards 20–32px inside. */
+.section{padding-top:clamp(56px,9vw,120px);padding-bottom:clamp(56px,9vw,120px)}
+.journal-tools{padding-bottom:14px}
+.journal-filter{min-height:40px;padding:6px 14px;font-family:var(--gothic)}

@@ -218,3 +218,24 @@ html[lang="en"] .series-list .is-current .series-name::after { content:"You are 
 .crumbs a { color:#53574f !important; text-decoration:none !important; }
 .crumbs a:hover { color:#1442c4 !important; text-decoration:underline !important; text-underline-offset:3px; }
 .crumbs [aria-current] { display:inline-block; max-width:22em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:bottom; }
+
+/* ④ Article page rules (2026-10-09)
+   Solid paper and ink; body text 18px (17px on phones), line-height 1.95, measure 720px.
+   Headings, body, quiz and notes are told apart by face, size and color.
+   These come after each article's own styles, so they set the shared standard. */
+body.article-page{--paper:#f3efe6;--ink:#22251f;--muted:#5b5f57;background:#f3efe6 !important;color:#22251f}
+body.article-page > main,body.article-page > .wrap > .article{background:#f3efe6 !important}
+body.article-page article{max-width:720px}
+body.article-page .wrap > article{max-width:none}
+body.article-page .wrap > article > *:not(.reading-progress){max-width:720px;margin-left:auto;margin-right:auto}
+body.article-page article > p,body.article-page article > h2{max-width:720px}
+body.article-page article p,body.article-page article li{font-size:1.125rem;line-height:1.95;color:#22251f}
+body.article-page article h2{font-weight:400;font-size:clamp(1.5rem,2.4vw,1.875rem);line-height:1.55;margin-top:clamp(56px,7vw,88px);margin-bottom:22px}
+body.article-page .reading-time,body.article-page .meta,body.article-page .eyebrow,body.article-page .copy-link,body.article-page .reading-toc summary,body.article-page .crumbs,body.article-page .series-tag{font-family:var(--gothic)}
+body.article-page .reading-toc a{font-family:var(--gothic);font-size:.9375rem}
+/* Notes and references: smaller, Gothic, muted, so they read as asides. */
+body.article-page .sources p,body.article-page .refs p,body.article-page [id^="ref-"],body.article-page .note,body.article-page .pr-notice,body.article-page .health-note,body.article-page figcaption{font-family:var(--gothic) !important;font-size:.8125rem !important;line-height:1.8 !important;color:#5b5f57 !important}
+body.article-page .reading-card{padding:clamp(20px,2.2vw,32px)}
+@media(max-width:760px){
+ body.article-page article p,body.article-page article li{font-size:1.0625rem;line-height:1.95}
+}
