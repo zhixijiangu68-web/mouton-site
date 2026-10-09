@@ -41,7 +41,7 @@ body.site *,body.site *::before,body.site *::after{box-sizing:border-box}
 .menu-toggle{display:none;appearance:none;border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;min-height:44px;min-width:44px;padding:0 18px;font:inherit;font-family:var(--latin);font-style:italic;font-size:1.0625rem;cursor:pointer}
 .site-nav a:focus-visible,.menu-toggle:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
-@media(max-width:860px){
+@media(max-width:1180px){
  :root{--nav-h:64px}
  .menu-toggle{display:inline-flex;align-items:center;position:relative;z-index:2}
  .site-brand{position:relative;z-index:2}
