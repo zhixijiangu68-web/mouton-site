@@ -17,6 +17,16 @@
   .mark.o{color:#5ad19a}.mark.x{color:#ff7a6b}
   .head{margin-top:24px;font-size:56px;font-weight:600;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
   .go{margin-top:34px;font-size:38px;color:#b5bcd0}
+  /* Two-choice philosophy mode */
+  .choices{display:none;margin-top:44px;gap:24px}
+  .philo .choices{display:flex}.philo .ask{display:none}
+  .ch{flex:1;border:3px solid rgba(181,188,208,.45);border-radius:28px;padding:26px 26px 30px;font-size:46px;font-weight:600;line-height:1.4;word-break:keep-all;overflow-wrap:anywhere;transition:none}
+  .ch b{display:block;font:600 34px/1 Georgia,serif;color:#9fb3ff;margin-bottom:14px}
+  .ch.win{border-color:#5ad19a;background:rgba(90,209,154,.14)}
+  .ch.lose{opacity:.35;text-decoration:line-through;text-decoration-thickness:4px}
+  .pans{font-size:var(--afs,84px);font-weight:600;line-height:1.4;margin-top:40px;word-break:keep-all;overflow-wrap:anywhere}
+  .pnote{margin-top:36px;font-size:48px;line-height:1.6;color:#d6dbea;word-break:keep-all;overflow-wrap:anywhere}
+  .philo .mark,.philo .head{display:none}.pans,.pnote{display:none}.philo .pans,.philo .pnote{display:block}
   /* Bottom half: a Galton board that fills while you think. Drawn, not borrowed. */
   canvas{position:absolute;left:0;top:1000px;width:1080px;height:920px}
   .count{position:absolute;left:0;right:0;top:1180px;text-align:center;font:600 300px/1 Georgia,serif;color:#f5f3ee;text-shadow:0 0 40px rgba(11,16,32,.9)}
@@ -24,8 +34,8 @@
 </style></head>
 <body><i class="light l1"></i>
 <div class="top">
-  <div id="quiz"><span class="tag">○×QUIZ</span><div class="q" id="q"></div><div class="ask" id="ask">○か×か？</div></div>
-  <div class="ans" id="ans"><div class="mark" id="mark"></div><div class="head" id="head"></div><div class="go">続きはチャンネルのリンクから</div></div>
+  <div id="quiz"><span class="tag">○×QUIZ</span><div class="q" id="q"></div><div class="ask" id="ask">○か×か？</div><div class="choices"><div class="ch" id="c0"></div><div class="ch" id="c1"></div></div></div>
+  <div class="ans" id="ans"><div class="mark" id="mark"></div><div class="head" id="head"></div><span class="tag" id="atag">答え</span><div class="pans" id="pans"></div><div class="pnote" id="pnote"></div><div class="go">続きはチャンネルのリンクから</div></div>
 </div>
 <canvas id="c" width="1080" height="920"></canvas>
 <div class="count" id="count"></div>
@@ -63,21 +73,31 @@ function draw(){
   c.beginPath();c.arc(b.x,b.y,R,0,7);c.fill();}
  c.shadowBlur=0;
 }
-window.setup=d=>{D=d;seed=d.seed>>>0||1;const q=document.getElementById('q');q.innerHTML=d.qHtml;const n=d.q.length;q.style.setProperty('--fs',(n>60?58:n>34?64:72)+'px');
+// Timeline (seconds): countdown starts at C, answer at C+3, back to the question from E-0.5.
+let C=7,E=15,P=false;
+window.setup=d=>{D=d;seed=d.seed>>>0||1;
+ if(d.choices){P=true;C=9;E=18;document.body.classList.add('philo');document.querySelector('#quiz .tag').textContent=d.hook;
+  d.choices.forEach((h,i)=>{const el=document.getElementById('c'+i);el.innerHTML='<b>'+'AB'[i]+'</b>'+h;if(h.replace(/<[^>]+>/g,'').length>7)el.style.fontSize='40px';});
+  document.getElementById('pans').innerHTML=d.ansHtml;document.getElementById('pnote').innerHTML=d.noteHtml;
+  const L=d.ansHtml.replace(/<[^>]+>/g,'').length;document.getElementById('pans').style.setProperty('--afs',(L>12?72:84)+'px');
+  document.getElementById('atag').style.display='inline-block';}
+ else document.getElementById('atag').style.display='none';const q=document.getElementById('q');q.innerHTML=d.qHtml;const n=d.q.length;q.style.setProperty('--fs',(P?(n>50?54:58):n>60?58:n>34?64:72)+'px');
  const m=document.getElementById('mark');m.textContent=d.a?'○':'×';m.className='mark '+(d.a?'o':'x');document.getElementById('head').innerHTML=d.headHtml;};
 // Called once per frame, in order. t in seconds.
-// 0–0.5 fade in; 7–10 countdown; 10– answer; 14.5–15 back to the question so the loop joins up.
+// 0–0.5 fade in; C–C+3 countdown; C+3 answer; E-0.5–E back to the question so the loop joins up.
 window.frame=t=>{
  const ease=x=>x<0?0:x>1?1:1-Math.pow(1-x,3);
  while(next<=t){spawn();next+=.09;}
  const sub=8,dt=(t-last)/sub;for(let i=0;i<sub;i++)step(dt);last=t;draw();
- const inT=ease(t/.5),outT=ease((t-14.5)/.5);
- const quiz=document.getElementById('quiz'),a=document.getElementById('ans'),at=ease((t-10)/.35);
- quiz.style.cssText=`opacity:${t<10?inT:outT};transform:translateY(${(1-inT)*20}px)`;
- a.style.opacity=t<14.5?at:1-outT;
- document.getElementById('mark').style.transform=`scale(${t<10?0.4:0.4+0.6*at+(t<10.5?Math.sin((t-10)*12)*.06*(1-at):0)})`;
- document.getElementById('mark').style.transformOrigin='left center';
+ const A=C+3,S=P?A+1.2:A;  // in two-choice mode, show which card wins for 1.2s before the answer
+ const inT=ease(t/.5),outT=ease((t-(E-.5))/.5);
+ const quiz=document.getElementById('quiz'),a=document.getElementById('ans'),at=ease((t-S)/.35);
+ quiz.style.cssText=`opacity:${t<S?inT:t<E-.5?0:outT};transform:translateY(${(1-inT)*20}px)`;
+ a.style.opacity=t<E-.5?at:1-outT;
+ if(P){for(let i=0;i<2;i++){const el=document.getElementById('c'+i);el.className='ch'+(t>=A&&t<E-.5?(D.pick===i?' win':' lose'):'');}}
+ const m=document.getElementById('mark');m.style.transformOrigin='left center';
+ m.style.transform=`scale(${t<A?0.4:0.4+0.6*at+(t<A+.5?Math.sin((t-A)*12)*.06*(1-at):0)})`;
  const c=document.getElementById('count');
- if(t>=7&&t<10){const k=Math.floor(t-7),f=(t-7)%1;c.textContent=3-k;c.style.opacity=1-f*.6;c.style.transform=`scale(${1.25-f*.25})`;}else c.textContent='';
+ if(t>=C&&t<A){const k=Math.floor(t-C),f=(t-C)%1;c.textContent=3-k;c.style.opacity=1-f*.6;c.style.transform=`scale(${1.25-f*.25})`;}else c.textContent='';
 };
 </script></body></html>
