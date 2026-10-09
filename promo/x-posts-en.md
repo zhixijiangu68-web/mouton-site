@@ -363,3 +363,106 @@ Regret asks: "What if it would have gone right?"
 You only get to pick which one you'll be talking to at 40.
 ```
 
+
+### ENP-9｜fear-of-change
+```
+Your brain feels a loss about twice as strongly as an equal gain.
+
+That's why staying feels safe.
+Not because it is.
+Because the price of staying never shows up on one single day.
+```
+
+### ENP-10｜fear-of-change
+```
+In the short run, we regret what we did.
+In the long run, we regret what we didn't.
+
+Choose which kind of regret you can live with.
+```
+
+### ENP-11｜boundaries
+```
+The harder you try to be liked by everyone,
+the blurrier you become.
+
+People can't love an outline they can't see.
+```
+
+### ENP-12｜disliked-priority
+```
+Being disliked by some people
+isn't a sign you did something wrong.
+
+It's usually a sign you did something.
+```
+
+### ENP-13｜freedom
+```
+Love keeps part of your standard outside you.
+Freedom keeps it inside.
+
+The trick isn't choosing one.
+It's knowing which one you're living by right now.
+```
+
+### ENP-14｜identity
+```
+Don't ask "what should I do?"
+Ask "what would the person I'm becoming do?"
+
+The first question gives you a to-do list.
+The second gives you a direction.
+```
+
+### ENP-15｜system-goal
+```
+You can't control the result.
+You can control whether you showed up today.
+
+Track the second.
+The first is just what happens to people who do.
+```
+
+### ENP-16｜refined-taste
+```
+The more good things you know,
+the harder it gets to be satisfied.
+
+Taste is a gift and a tax.
+```
+
+### ENP-17｜sunday-blues
+```
+Sunday night doesn't hurt because the weekend is ending.
+
+It hurts because on Monday,
+someone else decides how you spend your time again.
+```
+
+### ENP-18｜goggins
+```
+4,030 pull-ups.
+
+Nobody does that with motivation.
+Motivation shows up for the first 30.
+The other 4,000 are just a decision, repeated.
+```
+
+### ENP-19｜influence
+```
+You are what you let in.
+
+Your feed, your playlist, the five people you text most.
+Nobody chose your mood today.
+It was assembled.
+```
+
+### ENP-20｜quit-or-escape
+```
+Wanting to quit isn't always laziness.
+
+Sometimes it's the most honest data you have.
+Ask what exactly is draining you
+before you decide whether to leave or change it.
+```
