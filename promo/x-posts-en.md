@@ -466,3 +466,186 @@ Sometimes it's the most honest data you have.
 Ask what exactly is draining you
 before you decide whether to leave or change it.
 ```
+
+### ENP-21｜sartre
+```
+Existence precedes essence.
+
+Translation: you weren't born with a job description.
+Every "that's just how I am" was written by you,
+which means it can be rewritten by you.
+```
+
+### ENP-22｜stoicism
+```
+Seneca didn't think life was short.
+
+He thought we made it short,
+spending it on worries we can't change
+and on appearances kept up for other people.
+```
+
+### ENP-23｜stoicism
+```
+Before you worry about something, ask one question:
+
+Is this up to me?
+
+If yes, act.
+If no, let it go.
+If you're still worrying, you skipped the question.
+```
+
+### ENP-24｜nietzsche
+```
+Nobody is coming to tell you what your life means.
+
+That sounds bleak until you notice
+it also means nobody gets to tell you it means nothing.
+```
+
+### ENP-25｜camus-sisyphus
+```
+Wake up. Work. Eat. Sleep. Repeat.
+
+Camus didn't call that meaningless and stop there.
+He called it absurd, and then asked:
+so what will you do with the boulder today?
+```
+
+### ENP-26｜doing-nothing
+```
+Zoning out isn't wasted time.
+
+It's when your brain files the day,
+connects ideas you didn't know were connected,
+and quietly plans tomorrow.
+
+Not every hour has to produce something you can see.
+```
+
+### ENP-27｜comparison
+```
+"Stop comparing yourself to others" is advice nobody can follow.
+
+Comparison is how humans figure out who they are.
+
+The real question isn't whether you compare.
+It's who you compare with, and what for.
+```
+
+### ENP-28｜social-media-time
+```
+In one large study, people were paid to quit Facebook for four weeks.
+
+What did they do with the time?
+More time with family and friends.
+
+Your feed isn't free.
+You pay in evenings.
+```
+
+### ENP-29｜self-image
+```
+You don't act first because you're confident.
+You become confident because you acted first.
+
+The order matters.
+Most people wait for the wrong one.
+```
+
+### ENP-30｜job-change-happiness
+```
+Job satisfaction jumps right after a job change.
+Then it falls.
+
+The honeymoon isn't proof you chose right.
+The hangover isn't proof you chose wrong.
+Judge it after both have passed.
+```
+
+### ENP-31｜job-fit
+```
+"I'm not suited for this job" can mean three different things:
+
+the work,
+the workplace,
+or you just haven't gotten used to it yet.
+
+Only one of them is fixed by quitting.
+```
+
+### ENP-32｜hill
+```
+"Think and grow rich" was never "wish and get rich."
+
+Thinking only counts
+when it changes what you do tomorrow morning.
+```
+
+### ENP-33｜music-life
+```
+The song that gives you chills
+is doing something to your brain's reward system.
+
+You didn't need a reason to love it.
+But there is one.
+```
+
+### ENP-34｜boundaries
+```
+Saying no to someone isn't rejecting them.
+
+It's telling them where you are,
+so they can find you.
+```
+
+### ENP-35｜freedom
+```
+Freedom isn't having no one to answer to.
+
+It's knowing whose standard you're living by,
+and choosing it on purpose.
+```
+
+### ENP-36｜identity
+```
+Ninety days from now, someone will wake up in your bed.
+
+Today, you decide who that person is.
+```
+
+### ENP-37｜fear
+```
+Courage isn't the absence of fear.
+
+It's noticing your hands are shaking
+and pressing send anyway.
+```
+
+### ENP-38｜disliked-priority
+```
+You need to belong. That's human.
+
+But "belong" and "be liked by everyone"
+are two different jobs,
+and only one of them has an end.
+```
+
+### ENP-39｜system-goal
+```
+Goals tell you where to go.
+Habits decide whether you get there.
+
+Write fewer goals.
+Design more Tuesdays.
+```
+
+### ENP-40｜refined-taste
+```
+The more stimulation you chase,
+the less any single thing satisfies you.
+
+Sometimes the upgrade isn't more.
+It's noticing what you already have.
+```
