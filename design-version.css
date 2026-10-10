@@ -31,8 +31,10 @@ html[data-version="club"] .version-picker{color:#d6fa90}
 html[data-version="club"] .version-picker select{border-color:rgba(214,250,144,.5);background:rgba(214,250,144,.055)}
 html[data-version="club"] .site-links a::after{background:#d6fa90}
 html[data-version="club"] .site-nav.menu-open{backdrop-filter:none;-webkit-backdrop-filter:none}
-html[data-version="club"] .mini-footer,
-html[data-version="club"] body.article-page .footer{color:#bdb4cc}
+html[data-version="club"] .mini-footer{color:#bdb4cc}
+/* Article margins and footers keep their paper background. */
+html[data-version="club"] body.article-page .mini-footer,
+html[data-version="club"] body.article-page .footer{color:#5b5d56}
 
 /* Home-page palette. Article and document interiors retain their paper palette. */
 html[data-version="club"] body.site:not(.article-page):not(.doc-page){--ink:#f3edf8;--muted:#b8aec6;--paper:#0d0d16;--cream:#191724;--line:rgba(205,185,236,.2);--blue:#c4acff;--blue-deep:#a782f8;--gold:#d6fa90}
@@ -78,6 +80,7 @@ html[data-version="club"] .section :is(.guide-card,.book-card,.science-card,.car
 html[data-version="club"] .section :is(.guide-card,.science-card,.card-link):hover{background:rgba(202,172,255,.09);border-color:#c4acff}
 html[data-version="club"] .section :is(.guide-tag,.site-stats,.read-progress){color:#b8aec6}
 html[data-version="club"] .section :is(.journal-snippet,.lucky-card){background:#1b1827;color:#eee7f5!important;border-color:rgba(205,185,236,.25)}
+html[data-version="club"] .section .journal-snippet mark{background:#d6fa90;color:#14141b}
 html[data-version="club"] .section :is(.lucky-q,.lucky-meta){color:#c5bbd0}
 html[data-version="club"] .section :is(.lucky-q b,.lucky-q em){color:#d6fa90}
 html[data-version="club"] .journal-search input{border-bottom-color:#6d617d;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' fill='none' stroke='%23b8aec6' stroke-width='1.4'%3E%3Ccircle cx='7.5' cy='7.5' r='5.5'/%3E%3Cpath d='M12 12l4.5 4.5'/%3E%3C/svg%3E")}
@@ -111,9 +114,9 @@ html[data-version="club"] .cover[data-nav="light"]::before{background:transparen
 html[data-version="club"] .cover :is(.cover-back,.cover-lang){color:#eee7f5;text-shadow:none}
 html[data-version="club"] :is(.doc,body.article-page > main,body.article-page > .wrap){color-scheme:light}
 html[data-version="club"] .doc{border-top:2px solid #ac89e9;box-shadow:0 -25px 90px rgba(0,0,0,.3)}
-html[data-version="club"] .toc-side-label,
-html[data-version="club"] .toc-side a{color:#bdb4cc}
-html[data-version="club"] .toc-side a[aria-current="true"]{color:#d6fa90;border-left-color:#d6fa90}
+html[data-version="club"] body.article-page .toc-side-label,
+html[data-version="club"] body.article-page .toc-side a{color:#5b5d56}
+html[data-version="club"] body.article-page .toc-side a[aria-current="true"]{color:#1442c4;border-left-color:#1442c4}
 
 @media(max-width:1180px){
  html[data-version="club"] .site-nav .site-links{background:radial-gradient(ellipse at 95% 5%,rgba(88,47,133,.5),transparent 55%),#0c0a15}

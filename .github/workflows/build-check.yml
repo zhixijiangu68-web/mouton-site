@@ -22,6 +22,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Design version behavior
+        run: npm run test:design
       - run: npx eleventy
       - name: Pages have no broken links or missing basics
         run: node scripts/check-site.mjs

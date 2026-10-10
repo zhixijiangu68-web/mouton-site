@@ -8,6 +8,7 @@
   try { stored = localStorage.getItem(key); } catch (_) { /* Storage is optional. */ }
   const requested = new URL(location.href).searchParams.get('version');
   let current = valid(requested) ? requested : valid(stored) ? stored : 'original';
+  let hasUnsavedSelection = false;
 
   function apply(value, save = false) {
     current = valid(value) ? value : 'original';
@@ -18,7 +19,12 @@
       picker.value = current;
     });
     if (save) {
-      try { localStorage.setItem(key, current); } catch (_) { /* Still switch this page. */ }
+      try {
+        localStorage.setItem(key, current);
+        hasUnsavedSelection = false;
+      } catch (_) {
+        hasUnsavedSelection = true;
+      }
     }
     document.dispatchEvent(new CustomEvent('mouton:versionchange', { detail: { version: current } }));
   }
@@ -48,11 +54,13 @@
   // A choice in another tab is reflected here without reloading or losing reading position.
   window.addEventListener('storage', event => {
     if (event.key !== key && event.key !== null) return;
+    hasUnsavedSelection = false;
     apply(event.newValue);
     reflectUrl();
   });
   window.addEventListener('pageshow', event => {
-    if (!event.persisted) return;
+    // Do not replace a choice that could not be saved with an older stored value.
+    if (!event.persisted || hasUnsavedSelection) return;
     try { apply(localStorage.getItem(key)); reflectUrl(); } catch (_) { /* Storage is optional. */ }
   });
 })();
