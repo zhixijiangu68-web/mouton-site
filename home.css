@@ -629,3 +629,26 @@ html[data-version="club"] .cover-choice-card--body .cover-choice-number{color:#3
  .cover-choice-card:hover,.cover-choice-card:focus-visible{transform:none}
  .cover-choice-card:hover .cover-choice-art,.cover-choice-card:focus-visible .cover-choice-art{transform:none}
 }
+
+
+/* Keep "今日は、何が気になる？" perfectly still.
+   The logo veil, surrounding content and illustrated card hover are unchanged. */
+html.js .cover-choice .cover-title--choice{
+  animation:none;
+  opacity:1;
+  transform:none;
+  translate:none;
+  rotate:none;
+  filter:none;
+  transition:none;
+}
+html.intro .cover-choice .cover-inner{
+  animation:choice-hero-fade 1.65s cubic-bezier(.22,.8,.22,1) 4.5s both;
+}
+@keyframes choice-hero-fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  html.intro .cover-choice .cover-inner{animation:none}
+}
