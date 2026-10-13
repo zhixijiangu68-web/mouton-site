@@ -19,20 +19,50 @@ extraCss: [home.css]
 
 <main>
   {#- 表紙（Night）。Day に切り替えると空の写真になる（ボタンで切り替え、ブラウザに保存）。 #}
-  <section class="cover" id="top" data-nav="dark" data-nav-solid="dark">
+  <section class="cover cover-choice" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
     <div class="hero-light" aria-hidden="true"></div>
     <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
     <div class="cover-inner">
       <div class="club-signature" aria-hidden="true"><span>MOUTON / VOL.02</span><span>AFTER HOURS, OPEN MINDS.</span></div>
-      <p class="cover-kicker">A late-night club for questions</p>
-      <h1 class="cover-title"><span class="nowrap">哲学と科学で、</span><br><span class="nowrap">日常の見え方を</span><span class="nowrap">変える。</span></h1>
-      <p class="cover-lede">外見・お金・生き方。研究で確かめてから書いた記事と、答えてから読む○×クイズ。</p>
-      <div class="cover-actions">
-        <a class="cover-btn is-primary" href="#reading">記事を読む</a>
-        <a class="cover-btn" href="#today-q">クイズを解く</a>
-      </div>
-      <p class="cover-links"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="guides.html">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a></p>
+      <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
+      <h1 class="cover-title cover-title--choice">今日は、何が気になる？</h1>
+      <p class="cover-lede cover-lede--choice">哲学と科学で、日常の見え方を変える。<br>見たいテーマを選んで、記事へ。</p>
+      <nav class="cover-choice-grid" aria-label="3つのテーマから読む">
+        <a class="cover-choice-card cover-choice-card--think" id="think" href="topic-philosophy.html">
+          <span class="cover-choice-art" aria-hidden="true"></span>
+          <span class="cover-choice-content">
+            <span class="cover-choice-number">01 / Philosophy</span>
+            <strong class="cover-choice-title">考える。</strong>
+            <span class="cover-choice-description">哲学・生き方・自分との向き合い方</span>
+            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+        <a class="cover-choice-card cover-choice-card--body" id="body" href="topic-body.html">
+          <span class="cover-choice-art" aria-hidden="true"></span>
+          <span class="cover-choice-content">
+            <span class="cover-choice-number">02 / Body</span>
+            <strong class="cover-choice-title">身体で、確かめる。</strong>
+            <span class="cover-choice-description">睡眠・体力・外見・身体のこと</span>
+            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+        <a class="cover-choice-card cover-choice-card--food" id="food" href="topic-food.html">
+          <span class="cover-choice-art" aria-hidden="true"></span>
+          <span class="cover-choice-content">
+            <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
+            <strong class="cover-choice-title">食べることを、科学で。</strong>
+            <span class="cover-choice-description">食べ物・栄養・成分のエビデンス</span>
+            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </nav>
+      <p class="cover-links cover-links--choice">
+        <a href="#journal">記事を探す <span aria-hidden="true">→</span></a>
+        <a href="#today-q">○×クイズ <span aria-hidden="true">→</span></a>
+        <a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a>
+        <a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a>
+      </p>
     </div>
     <div class="hero-ticker" aria-label="最近の記事">
       <span class="hero-ticker-label">Now reading</span>
@@ -54,7 +84,7 @@ extraCss: [home.css]
     <div class="home-tab-list" role="tablist" aria-label="トップページのコンテンツ">
       <button class="home-tab" type="button" role="tab" id="home-tab-reading" aria-controls="home-panel-reading" aria-selected="true" tabindex="0" data-home-tab="reading">おすすめ</button>
       <button class="home-tab" type="button" role="tab" id="home-tab-quiz" aria-controls="home-panel-quiz" aria-selected="false" tabindex="-1" data-home-tab="quiz">クイズ</button>
-      <button class="home-tab" type="button" role="tab" id="home-tab-topics" aria-controls="home-panel-topics" aria-selected="false" tabindex="-1" data-home-tab="topics">テーマ</button>
+      <button class="home-tab" type="button" role="tab" id="home-tab-topics" aria-controls="home-panel-topics" aria-selected="false" tabindex="-1" data-home-tab="topics">選び方</button>
       <button class="home-tab" type="button" role="tab" id="home-tab-journal" aria-controls="home-panel-journal" aria-selected="false" tabindex="-1" data-home-tab="journal">記事検索</button>
     </div>
     <div class="home-tab-panel" id="home-panel-reading" role="tabpanel" aria-labelledby="home-tab-reading" tabindex="0" data-home-panel="reading">
@@ -93,21 +123,7 @@ extraCss: [home.css]
 
     </div>
     <div class="home-tab-panel" id="home-panel-topics" role="tabpanel" aria-labelledby="home-tab-topics" tabindex="0" data-home-panel="topics">
-  {#- 分野別の入口は１画面以内に。かつての長いスクロールシーンは個別ページへ。 #}
-  <section class="section home-topics" aria-labelledby="home-topics-heading" data-nav="light" data-nav-solid="light">
-    <div class="section-inner">
-      <div class="home-compact-heading">
-        <div><p class="eyebrow">Explore by topic</p><h2 class="section-title" id="home-topics-heading">気になるテーマから読む。</h2></div>
-        <p class="copy">興味のあるところから、すぐに。</p>
-      </div>
-      <div class="home-topic-grid">
-        <a class="home-topic-card" id="think" href="topic-philosophy.html"><span class="home-topic-no">01 / THINK</span><strong>哲学・生き方</strong><span>意味、自由、考えること</span><em aria-hidden="true">↗</em></a>
-        <a class="home-topic-card" id="body" href="topic-body.html"><span class="home-topic-no">02 / BODY</span><strong>身体・健康</strong><span>睡眠、体力、清潔感</span><em aria-hidden="true">↗</em></a>
-        <a class="home-topic-card" id="food" href="topic-food.html"><span class="home-topic-no" id="foodscience">03 / FOOD &amp; SCIENCE</span><strong>食事・科学</strong><span>栄養、成分、エビデンス</span><em aria-hidden="true">↗</em></a>
-      </div>
-    </div>
-  </section>
-
+  {#- 3テーマのメイン導線は表紙に統合。ガイドと制作情報のみこのタブに残す。 #}
   <section class="section" id="guides" data-nav="light" data-nav-solid="light" aria-labelledby="guides-heading">
     <div class="section-inner">
       <div class="section-head" data-rise>
