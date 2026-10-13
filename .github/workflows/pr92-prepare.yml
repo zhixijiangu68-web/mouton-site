@@ -41,6 +41,8 @@ jobs:
               viewport:window.innerWidth
             }));
             console.log('layout',width,JSON.stringify(info));
+            const offenders=await page.evaluate(()=>[...document.querySelectorAll('*')].map(el=>({tag:el.tagName,cls:el.className?.baseVal??el.className,rect:el.getBoundingClientRect(),scroll:el.scrollWidth})).filter(x=>x.rect.right>window.innerWidth+1||x.rect.left < -1).sort((a,b)=>b.rect.right-a.rect.right).slice(0,20).map(x=>({tag:x.tag,cls:String(x.cls).slice(0,90),right:x.rect.right,left:x.rect.left,width:x.rect.width,scroll:x.scroll})));
+            console.log('overflow elements:',JSON.stringify(offenders));
             if(info.h1 !== 1 || info.questions !== 17 || info.scrollWidth > info.viewport+1) {
               throw new Error('Layout check failed at '+width+'px');
             }
