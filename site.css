@@ -307,6 +307,34 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 }
 @media(prefers-reduced-motion:reduce) { .mk-study-photo img { transition:none; } }
 
+/* MAKING accordion navigation: use native <details> for keyboard and touch control. */
+.making .mk-accordion { min-width:0; }
+.making .mk-accordion-summary { display:block;cursor:pointer;list-style:none;scroll-margin-top:calc(var(--nav-h) + 24px);padding:2px 0 10px; }
+.making .mk-accordion-summary::-webkit-details-marker { display:none; }
+.making .mk-accordion-summary::marker { content:""; }
+.making .mk-accordion-summary h2 { display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:3px 20px;align-items:center;margin:0;line-height:1.55; }
+.making .mk-accordion-kicker { grid-column:1;font:400 .75rem/1.8 Inter,sans-serif;letter-spacing:.12em;color:#53584f; }
+.making .mk-accordion-label { grid-column:1;min-width:0;font:400 clamp(1.23rem,2.8vw,1.85rem)/1.65 "Noto Serif JP",serif;color:var(--ink); }
+.making .mk-accordion-symbol { grid-column:2;grid-row:1 / span 2;position:relative;display:block;width:42px;height:42px;border:1px solid rgba(27,28,25,.38);border-radius:50%;justify-self:end;transition:background-color .2s,border-color .2s; }
+.making .mk-accordion-symbol::before,.making .mk-accordion-symbol::after { content:"";position:absolute;top:50%;left:50%;background:#222a25;transform:translate(-50%,-50%);transition:opacity .2s; }
+.making .mk-accordion-symbol::before { width:14px;height:1.5px; }
+.making .mk-accordion-symbol::after { height:14px;width:1.5px; }
+.making .mk-accordion[open] .mk-accordion-symbol::after { opacity:0; }
+.making .mk-accordion-summary:hover .mk-accordion-symbol { background:#e8e6de;border-color:#333; }
+.making .mk-accordion-summary:focus-visible { outline:2px solid #1442c4;outline-offset:5px;border-radius:4px; }
+.making .mk-accordion-panel { padding-top:clamp(15px,2vw,24px); }
+.making .mk-studies-intro { max-width:55ch;font-size:.9rem;line-height:1.95;margin:0 0 24px; }
+.making .mk-feature-header { align-items:start; }
+.making .mk-accordion[open] .mk-accordion-summary { margin-bottom:2px; }
+@media(max-width:600px) {
+ .making .mk-accordion-summary h2 { grid-template-columns:minmax(0,1fr) 42px;gap:4px 12px; }
+ .making .mk-accordion-symbol { width:40px;height:40px; }
+ .making .mk-accordion-panel { padding-top:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .making .mk-accordion-symbol,.making .mk-accordion-symbol::after { transition:none; }
+}
+
 /* Contrast (Issue #30): the per-article .pull-label used opacity .55 (3.8:1); raise it to pass 4.5:1. */
 .pull .pull-label{opacity:.75}
 /* guides.html */
