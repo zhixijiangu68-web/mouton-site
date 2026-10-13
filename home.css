@@ -290,20 +290,31 @@
 .cover-btn{white-space:nowrap}
 
 /* ---------- First impression: opening veil, kinetic hero, ticker (home.js) ---------- */
-/* Opening veil: deliberately show the logo, hold it, then reveal the homepage. CSS also dismisses if JS fails. */
+/* Opening veil: logo settles, then dissolves over a gently rising homepage (also exits without JS). */
 .intro-veil{display:none}
-html.intro .intro-veil{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;gap:18px;background:radial-gradient(ellipse 60% 50% at 50% 60%,#1442c4 0%,#0b2f97 45%,#050c2a 100%);color:#f8f5ee;animation:veil-lift 1.15s cubic-bezier(.76,0,.24,1) 4.6s forwards;cursor:pointer}
+html.intro .intro-veil{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;gap:18px;background:radial-gradient(ellipse 60% 50% at 50% 60%,#1442c4 0%,#0b2f97 45%,#050c2a 100%);color:#f8f5ee;animation:veil-dissolve 1.6s cubic-bezier(.4,0,.2,1) 4.5s forwards;will-change:opacity,transform;cursor:pointer}
 html.intro .intro-veil::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:var(--grain)}
 .intro-word{margin:0;display:flex;font-family:var(--latin);font-style:italic;font-weight:300;font-size:clamp(4.5rem,17vw,15rem);line-height:.9;letter-spacing:-.02em;overflow:hidden;padding:0 .08em .06em}
-.intro-word span{display:inline-block;transform:translateY(105%) rotate(8deg);animation:intro-letter 1s cubic-bezier(.2,.8,.2,1) calc(.14s + var(--i) * .12s) forwards}
+.intro-word span{display:inline-block;opacity:0;transform:translate3d(0,65%,0);animation:intro-letter 1.2s cubic-bezier(.22,1,.36,1) calc(.18s + var(--i) * .11s) both;backface-visibility:hidden;will-change:transform,opacity}
 .intro-sub{margin:0;font-family:var(--latin);font-style:italic;font-size:clamp(1rem,1.6vw,1.25rem);letter-spacing:.12em;opacity:0;animation:intro-fade .75s ease 1.3s forwards}
 .intro-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:linear-gradient(90deg,#d9b46a,#f8f5ee);transform:scaleX(0);transform-origin:left;animation:intro-bar 2.8s cubic-bezier(.6,0,.2,1) .35s forwards}
 html.intro.intro-done .intro-veil{display:none}
-@keyframes intro-letter{to{transform:none}}
+@keyframes intro-letter{from{opacity:0;transform:translate3d(0,65%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @keyframes intro-fade{to{opacity:.8}}
 @keyframes intro-bar{to{transform:scaleX(1)}}
-@keyframes veil-lift{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-html.intro .intro-veil{clip-path:inset(0 0 0 0)}
+@keyframes veil-dissolve{0%,12%{opacity:1;transform:translate3d(0,0,0) scale(1);visibility:visible}100%{opacity:0;transform:translate3d(0,-12px,0) scale(1.02);visibility:hidden}}
+html.intro .intro-veil{opacity:1;transform:translate3d(0,0,0)}
+/* The first frame stays stable until the intro font is ready. CSS still runs if home.js is blocked. */
+html.intro.intro-preparing .intro-veil,
+html.intro.intro-preparing .intro-word span,
+html.intro.intro-preparing .intro-sub,
+html.intro.intro-preparing .intro-bar,
+html.intro.intro-preparing .cover-inner,
+html.intro.intro-preparing .cover .cover-art,
+html.intro.intro-preparing .cover-title .char{animation-play-state:paused}
+html.intro.intro-fallback-font .intro-word,
+html.intro.intro-fallback-font .intro-sub{font-family:Georgia,"Times New Roman",serif}
+
 
 /* Hero: light that follows the pointer, a giant drifting wordmark, letters that rise in. */
 .cover{cursor:default}
@@ -313,7 +324,11 @@ html.intro .intro-veil{clip-path:inset(0 0 0 0)}
 .cover-inner .display{text-shadow:0 2px 40px rgba(5,10,40,.28)}
 .char{display:inline-block;white-space:pre}
 html.js .cover-title .char{opacity:0;transform:translateY(.55em) rotate(6deg);filter:blur(10px);animation:char-in 1.1s cubic-bezier(.2,.8,.2,1) calc(var(--start,.15s) + var(--c) * .045s) forwards}
-html.intro .cover-title .char{--start:4.75s}
+html.intro .cover-title .char{--start:4.65s}
+/* The underlying hero rises gently as the curtain fades, avoiding a hard visual cut. */
+html.intro .cover-inner{animation:home-arrive 1.65s cubic-bezier(.22,.8,.22,1) 4.5s both}
+@keyframes home-arrive{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+
 @keyframes char-in{to{opacity:1;transform:none;filter:none}}
 /* Leaving the hero, the letters scatter like something let go. */
 .cover-title .char{translate:calc(var(--dx,0) * var(--p,0) * 1em) calc(var(--dy,0) * var(--p,0) * 1em);rotate:calc(var(--dr,0) * var(--p,0) * 1deg)}
@@ -321,8 +336,8 @@ html.intro .cover-title .char{--start:4.75s}
 .cover-inner .eyebrow{animation-delay:.05s}.cover-inner .lede{animation-delay:.75s}.hero-latest{animation-delay:.95s}.hero-lang{animation-delay:1.1s}
 html.intro .cover-inner .eyebrow{animation-delay:1.6s}html.intro .cover-inner .lede{animation-delay:2.35s}html.intro .hero-latest{animation-delay:2.55s}html.intro .hero-lang{animation-delay:2.7s}
 @keyframes hero-up{from{opacity:0;translate:0 24px}}
-html.intro .cover .cover-art{animation:hero-zoom 2.5s cubic-bezier(.2,.8,.2,1) 4.45s both}
-@keyframes hero-zoom{from{scale:1.25;filter:saturate(1.6) blur(6px)}}
+html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.22,.8,.22,1) 4.35s both}
+@keyframes hero-zoom{from{scale:1.07;opacity:.82}to{scale:1;opacity:1}}
 .hero-latest-label{position:relative}
 .hero-latest-label::after{content:"";position:absolute;inset:-4px;border-radius:inherit;border:1px solid #fff;animation:pulse 2.4s ease-out 3s infinite;opacity:0}
 @keyframes pulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
@@ -528,4 +543,123 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
 @media(min-width:901px){
  .cover:not(.cover-en) .cover-kicker{max-width:calc(100% - 145px);text-align:left}
  .cover:not(.cover-en) .cover-mode{top:var(--nav-h,72px);right:var(--gutter);bottom:auto}
+}
+
+
+/* 2026-10-13 — Editorial landing: three illustrated ways into MOUTON.
+   Uses existing locally hosted image assets; the cinematic opening remains unchanged. */
+.cover-choice:not(.cover-en){
+  min-height:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding-top:clamp(92px,11svh,114px);
+  padding-bottom:clamp(112px,13svh,128px);
+}
+.cover-choice .cover-inner{width:min(1370px,100%);text-align:left}
+.cover-choice .cover-kicker{margin:0 0 12px;max-width:calc(100% - 145px);font-size:clamp(.75rem,1.2vw,.9375rem);letter-spacing:.085em;color:rgba(245,243,238,.83)}
+.cover-choice .cover-title--choice{max-width:100%;font-size:clamp(2.2rem,4.3vw,3.9rem);line-height:1.32;letter-spacing:.06em;text-wrap:pretty}
+.cover-choice .cover-lede--choice{max-width:unset;margin:12px 0 0;font-size:clamp(.875rem,1.22vw,1.0625rem);line-height:1.75;text-align:left}
+.cover-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.45vw,20px);margin-top:clamp(22px,3.3vh,30px)}
+.cover-choice-card{
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;align-items:end;min-width:0;min-height:clamp(260px,28vw,350px);
+  border:1px solid rgba(255,255,255,.22);border-radius:17px;
+  background:#0a2464;color:#fff;text-align:left;text-decoration:none;
+  box-shadow:0 15px 34px rgba(2,12,39,.16);
+  transition:transform .55s cubic-bezier(.22,.8,.2,1),box-shadow .55s ease,border-color .35s ease;
+}
+.cover-choice-art{
+  position:absolute;inset:0;z-index:-2;
+  background-position:center;background-size:cover;
+  transition:transform 1.1s cubic-bezier(.22,.8,.2,1);
+}
+.cover-choice-card:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent 14%,rgba(2,10,35,.12) 35%,rgba(2,10,35,.86) 100%)}
+.cover-choice-card--think{background:#0a2068}
+.cover-choice-card--think .cover-choice-art{background-image:linear-gradient(135deg,rgba(8,30,101,.10),rgba(7,23,64,.04)),url(images/home/philosophy-card.webp);background-position:center}
+.cover-choice-card--body{background:#f2e0c0;color:#251f16;border-color:rgba(80,49,18,.14)}
+.cover-choice-card--body .cover-choice-art{background-image:url(images/home/body-card.webp);background-position:center}
+.cover-choice-card--body:after{background:linear-gradient(180deg,rgba(255,250,238,.15),rgba(249,240,220,.32) 44%,rgba(250,245,235,.96) 100%)}
+.cover-choice-card--food{background:#113976}
+.cover-choice-card--food .cover-choice-art{background-image:linear-gradient(180deg,rgba(9,35,81,.03),rgba(8,20,46,.15)),url(images/home/food-science-card.webp);background-position:center}
+.cover-choice-content{display:flex;flex-direction:column;align-items:flex-start;gap:9px;width:100%;padding:clamp(20px,2.1vw,31px);position:relative;z-index:1}
+.cover-choice-number{font-family:var(--latin);font-weight:400;font-style:italic;font-size:clamp(.95rem,1.35vw,1.15rem);letter-spacing:.015em}
+.cover-choice-title{font-family:var(--serif);font-size:clamp(1.65rem,2.6vw,2.35rem);font-weight:400;line-height:1.34;letter-spacing:.025em}
+.cover-choice-description{font-family:var(--gothic);font-size:clamp(.775rem,.97vw,.95rem);font-weight:500;line-height:1.65}
+.cover-choice-action{display:inline-flex;align-items:center;gap:12px;margin-top:10px;padding-bottom:3px;border-bottom:1px solid currentColor;font-family:var(--gothic);font-size:clamp(.75rem,.95vw,.875rem);font-weight:600;letter-spacing:.045em}
+.cover-choice-action span{display:inline-block;transition:transform .4s cubic-bezier(.22,.8,.2,1)}
+.cover-choice-card:hover,.cover-choice-card:focus-visible{transform:translateY(-4px);border-color:rgba(255,255,255,.7);box-shadow:0 24px 45px rgba(2,12,39,.23)}
+.cover-choice-card:hover .cover-choice-art,.cover-choice-card:focus-visible .cover-choice-art{transform:scale(1.045)}
+.cover-choice-card:hover .cover-choice-action span,.cover-choice-card:focus-visible .cover-choice-action span{transform:translateX(4px)}
+.cover-choice-card:focus-visible{outline:3px solid #f6dfac;outline-offset:4px}
+.cover-choice .cover-links--choice{justify-content:flex-start;gap:9px 22px;margin:18px 0 0;font-size:.8125rem}
+.cover-choice .cover-links--choice a{color:rgba(245,243,238,.9)}
+[data-cover="day"] .cover-choice .cover-links--choice a{color:#fff}
+html[data-version="club"] .cover-choice-card--body{color:#251f16}
+html[data-version="club"] .cover-choice-card--body .cover-choice-title{color:#251f16}
+html[data-version="club"] .cover-choice-card--body .cover-choice-description{color:#332719}
+html[data-version="club"] .cover-choice-card--body .cover-choice-number{color:#332719}
+@media(max-width:900px){
+ .cover-choice:not(.cover-en){padding-top:90px;padding-bottom:114px}
+ .cover-choice-grid{gap:10px;margin-top:20px}
+ .cover-choice-card{min-height:235px;border-radius:13px}
+ .cover-choice-content{padding:18px;gap:8px}
+ .cover-choice-title{font-size:clamp(1.3rem,2.8vw,1.8rem)}
+ .cover-choice-description{font-size:.78rem}
+}
+@media(max-width:600px){
+ .cover-choice:not(.cover-en){padding-top:79px;padding-bottom:112px}
+ .cover-choice .cover-inner{width:100%}
+ .cover-choice .cover-kicker{margin-bottom:6px;font-size:.7rem}
+ .cover-choice .cover-title--choice{font-size:clamp(1.8rem,7vw,2.35rem);line-height:1.37;letter-spacing:.035em}
+ .cover-choice .cover-lede--choice{font-size:.8rem;line-height:1.6;margin-top:7px}
+ .cover-choice-grid{grid-template-columns:1fr;gap:8px;margin-top:17px}
+ .cover-choice-card{min-height:116px;border-radius:12px}
+ .cover-choice-content{padding:13px 17px;gap:3px}
+ .cover-choice-number{font-size:.82rem;line-height:1.25}
+ .cover-choice-title{font-size:clamp(1.25rem,5vw,1.55rem);line-height:1.25}
+ .cover-choice-description{font-size:.72rem;line-height:1.5}
+ .cover-choice-action{position:absolute;right:18px;bottom:15px;margin:0;gap:4px;font-size:.67rem;font-weight:600;white-space:nowrap}
+ .cover-choice-card--body:after{background:linear-gradient(90deg,rgba(251,244,229,.92),rgba(250,243,228,.76) 62%,rgba(250,243,228,.12))}
+ .cover-choice-card--think:after,.cover-choice-card--food:after{background:linear-gradient(90deg,rgba(5,15,52,.87),rgba(5,19,58,.6) 68%,rgba(5,19,58,.18))}
+ .cover-choice .cover-links--choice{margin:12px 0 0;gap:6px 14px;font-size:.72rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .cover-choice-card,.cover-choice-art,.cover-choice-action span{transition:none}
+ .cover-choice-card:hover,.cover-choice-card:focus-visible{transform:none}
+ .cover-choice-card:hover .cover-choice-art,.cover-choice-card:focus-visible .cover-choice-art{transform:none}
+}
+
+
+/* Keep "今日は、何が気になる？" perfectly still.
+   The logo veil, surrounding content and illustrated card hover are unchanged. */
+html.js .cover-choice .cover-title--choice{
+  animation:none;
+  opacity:1;
+  transform:none;
+  translate:none;
+  rotate:none;
+  filter:none;
+  transition:none;
+}
+html.intro .cover-choice .cover-inner{
+  animation:choice-hero-fade 1.65s cubic-bezier(.22,.8,.22,1) 4.5s both;
+}
+@keyframes choice-hero-fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+@media(prefers-reduced-motion:reduce){
+  html.intro .cover-choice .cover-inner{animation:none}
+}
+
+
+/* The new category artwork is text-free within each crop; the actual Japanese copy
+   stays as accessible HTML so it is readable, searchable and scales on phones. */
+.cover-choice-card--think .cover-choice-art,
+.cover-choice-card--body .cover-choice-art,
+.cover-choice-card--food .cover-choice-art{
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
 }
