@@ -217,8 +217,11 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
         await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
+        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true',
+          'a cover-only hash change must not unexpectedly switch tabs');
+        await page.reload({ waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true',
-          'cover topic anchor is not a tab link');
+          'a fresh visit to a cover-only anchor uses the default tab');
       });
     });
 
