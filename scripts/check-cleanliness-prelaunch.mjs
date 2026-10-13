@@ -2,6 +2,7 @@
 // Run after Eleventy builds the root-level HTML files.
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
+import { waitlistReady } from './waitlist-readiness.mjs';
 
 const read = path => readFileSync(path, 'utf8');
 for (const file of ['cleanliness-science.html','cleanliness-sample.html','cleanliness-sample.pdf','cleanliness-science.css','cleanliness-sample.css','cleanliness-science.js']) {
@@ -44,7 +45,24 @@ assert(lp.includes('id="plan"'), '30 day plan missing');
 assert(lp.includes('30日間の実践表'), '30 day worksheet missing');
 assert(home.includes('intro-veil') && home.includes('data-home-tabs'), 'homepage intro and tabs must be preserved');
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
-assert(!lp.includes('id="cleanliness-waitlist"'), 'form must remain disabled until provider is configured');
+assert.equal(site.prelaunch.ready, waitlistReady(site.prelaunch), 'prelaunch readiness must match validation');
+const privacy = read('privacy.html');
+if (site.prelaunch.ready) {
+  assert(lp.includes('id="cleanliness-waitlist"'), 'verified signup form must render');
+  assert(lp.includes('id="cs-waitlist-consent"'), 'explicit consent checkbox is required');
+  assert(lp.includes('type="checkbox"') && lp.includes('required'), 'consent must be mandatory');
+  assert(lp.includes('href="privacy.html"'), 'privacy policy link required');
+  assert(lp.includes('name="embed" value="1"'), 'Buttondown requires embed=1 in HTML forms');
+  assert(privacy.includes('有料PDFの先行案内'), 'privacy policy must disclose collection');
+} else {
+  assert(!lp.includes('id="cleanliness-waitlist"'), 'form must stay disabled before verification');
+  assert(lp.includes('先行案内の受付は準備中'), 'prelaunch pending message must remain visible');
+  assert(!privacy.includes('先行案内に登録されたメールアドレス'), 'disabled signup must not be described as active');
+}
+const lpSource = read('src/cleanliness-science.njk');
+assert(lpSource.includes('{% elif site.prelaunch and site.prelaunch.ready %}'), 'form must check readiness');
+const privacySource = read('src/privacy.njk');
+assert(privacySource.includes('site.prelaunch.ready'), 'privacy copy must use same readiness gate');
 assert(sample.includes('cleanliness-sample.pdf'), 'download link missing');
 const samplePdf = readFileSync('cleanliness-sample.pdf');
 assert.equal(samplePdf.subarray(0, 5).toString(), '%PDF-', 'sample download must be a real PDF');
