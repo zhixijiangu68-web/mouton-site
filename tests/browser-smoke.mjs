@@ -100,6 +100,30 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('start page: brand introduction reaches making on desktop and mobile', async () => {
+      for (const [label, options] of [
+        ['start-desktop', { viewport: { width: 1440, height: 900 } }],
+        ['start-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          await page.goto(origin + '/start.html', { waitUntil: 'domcontentloaded' });
+          const main = page.locator('main.start-page');
+          assert.equal(await main.getByText('作る。記録する。残していく。', { exact: true }).count(), 1);
+          assert.equal(await main.locator('a[href="editorial.html"]').count(), 1, 'editorial policy link remains');
+          const making = main.getByRole('link', { name: '作っているものを見る' });
+          assert.equal(await making.getAttribute('href'), 'making.html');
+          const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
+          await making.click();
+          await page.waitForURL('**/making.html');
+          for (const project of ['KIOKU', 'DIARY', 'MOUTON']) {
+            assert.equal(await page.locator('.mk-card h3').filter({ hasText: project }).count(), 1,
+              label + ': missing ' + project + ' project');
+          }
+        });
+      }
+    });
+
     await t.test('deep links and article navigation', async () => {
       await checkPage(browser, 'deep-link', { viewport: { width: 1024, height: 768 } }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
