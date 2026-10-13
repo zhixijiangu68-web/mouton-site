@@ -46,6 +46,18 @@ assert(home.includes('intro-veil') && home.includes('data-home-tabs'), 'homepage
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
 assert(!lp.includes('id="cleanliness-waitlist"'), 'form must remain disabled until provider is configured');
 assert(sample.includes('cleanliness-sample.pdf'), 'download link missing');
+const samplePdf = readFileSync('cleanliness-sample.pdf');
+assert.equal(samplePdf.subarray(0, 5).toString(), '%PDF-', 'sample download must be a real PDF');
+assert(samplePdf.byteLength > 1000, 'sample PDF is unexpectedly small');
+assert(sample.includes('「清潔感の科学」は完成しています。') || configured,
+  'free sample must reflect that the guide is completed');
+assert(!sample.includes('現在制作を検討している商品'), 'outdated product state on sample');
+assert(!sample.includes('有料版に収録予定'), 'completed guide cannot be described as planned');
+assert(!sample.includes('data-lp-event="begin_checkout"'), 'sample must not present an unapproved checkout');
+const lpTemplate = read('src/cleanliness-science.njk');
+const faq = lpTemplate.match(/<details><summary>どこで購入できますか？<\/summary><p>([\s\S]*?)<\/p><\/details>/)?.[1] || '';
+assert(faq.includes('{% if checkoutReady %}'), 'FAQ must use checkout readiness, not just URL presence');
+assert(faq.includes('{% if isStripe %}'), 'FAQ must reflect the configured checkout provider');
 assert(sample.includes('data-sample-print'), 'print/PDF feature missing');
 assert((sample.match(/class="cs-sample-page(?: |")/g) || []).length === 5, 'sample must have five pages');
 assert(article.includes('data-lp-entry'), 'existing cleanliness article should link to LP');

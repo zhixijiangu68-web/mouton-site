@@ -239,6 +239,84 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('cleanliness LP and sample: accurate state, PDF and one GA4 event per click', async () => {
+      for (const [label, options] of [
+        ['cleanliness-desktop', { viewport: { width: 1440, height: 900 } }],
+        ['cleanliness-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          // Observe gtag() calls via the site's own dataLayer without sending analytics over the network.
+          await page.route('**/www.googletagmanager.com/**', route => route.abort());
+          const events = () => page.evaluate(() => (window.dataLayer || [])
+            .filter(entry => entry[0] === 'event')
+            .map(entry => ({ name: entry[1], params: entry[2] })));
+          const blockTrackedNavigation = () => page.evaluate(() => {
+            document.addEventListener('click', event => {
+              if (event.target.closest('a[data-lp-event]')) event.preventDefault();
+            }, true);
+          });
+
+          await page.goto(origin + '/cleanliness-science.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('h1#cs-title').count(), 1);
+          assert.match(await page.locator('.cs-status').innerText(), /発売準備中/);
+          assert.match(await page.locator('.cs-offer-price').innerText(), /1,980/);
+          assert.equal(await page.locator('a[data-lp-event="begin_checkout"]').count(), 0, 'checkout must remain off');
+          assert.equal(await page.locator('#cleanliness-waitlist').count(), 0, 'email signup must remain off');
+          assert.equal(await page.locator('a[href="cleanliness-sample.html"]').count() >= 1, true);
+          const initial = await events();
+          const views = initial.filter(event => event.name === 'view_item');
+          assert.equal(views.length, 1, 'one product view event on LP load');
+          assert.equal(views[0].params.value, 1980);
+          assert.equal(views[0].params.product_id, 'cleanliness_001');
+          await blockTrackedNavigation();
+          await page.locator('a[data-lp-event="sample_click"][data-placement="hero"]').click();
+          await page.locator('a[data-lp-event="lp_cta_click"][data-placement="hero"]').click();
+          const lpEvents = await events();
+          assert.equal(lpEvents.filter(event => event.name === 'sample_click').length, 1, 'sample click counted once');
+          assert.equal(lpEvents.filter(event => event.name === 'lp_cta_click').length, 1, 'offer click counted once');
+          assert.equal(lpEvents.find(event => event.name === 'sample_click').params.placement, 'hero');
+          assert.equal(lpEvents.filter(event => ['purchase','begin_checkout','generate_lead'].includes(event.name)).length, 0,
+            'clicks must not create fake conversions');
+
+          await page.goto(origin + '/cleanliness-sample.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('.cs-sample-document > .cs-sample-page').count(), 5, 'five free Web sample pages');
+          assert.match(await page.locator('.cs-sample-after').innerText(), /完成しています/);
+          assert.equal(await page.locator('.cs-sample-after').innerText().then(text => text.includes('制作を検討')), false);
+          await blockTrackedNavigation();
+          await page.locator('a[data-lp-event="sample_pdf_click"]').click();
+          await page.evaluate(() => {
+            window.__printRequested = false;
+            window.print = () => { window.__printRequested = true; };
+          });
+          await page.locator('[data-sample-print]').click();
+          assert.equal(await page.evaluate(() => window.__printRequested), true, 'print dialog was invoked');
+          const sampleEvents = await events();
+          assert.equal(sampleEvents.filter(event => event.name === 'sample_pdf_click').length, 1);
+          assert.equal(sampleEvents.filter(event => event.name === 'sample_print_click').length, 1);
+          assert.equal(sampleEvents.filter(event => ['purchase','begin_checkout','generate_lead'].includes(event.name)).length, 0);
+          const pdf = await page.request.get(origin + '/cleanliness-sample.pdf');
+          assert.equal(pdf.status(), 200);
+          assert.equal((await pdf.body()).subarray(0, 5).toString(), '%PDF-', 'download must be PDF');
+          await page.goto(origin + '/cleanliness.html', { waitUntil: 'domcontentloaded' });
+          await page.evaluate(() => {
+            document.addEventListener('click', event => {
+              if (event.target.closest('a[data-lp-entry]')) event.preventDefault();
+            }, true);
+          });
+          await page.locator('a[data-lp-entry][data-placement="article_intro"]').click();
+          const entryEvents = await events();
+          const entry = entryEvents.filter(event => event.name === 'lp_entry_click');
+          assert.equal(entry.length, 1, 'article-to-LP click counted once');
+          assert.equal(entry[0].params.placement, 'article_intro');
+          assert.equal(entry[0].params.source_article, 'cleanliness');
+          assert.equal(entryEvents.filter(event => event.name === 'purchase').length, 0);
+          await page.goto(origin + '/cleanliness-sample.html', { waitUntil: 'domcontentloaded' });
+          const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.width <= sizes.viewport + 2, label + ': horizontal overflow');
+        });
+      }
+    });
+
     await t.test('deep links and article navigation', async () => {
       await checkPage(browser, 'deep-link', { viewport: { width: 1024, height: 768 } }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });

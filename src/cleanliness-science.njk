@@ -177,7 +177,7 @@ extraCss: [cleanliness-science.css]
       <details><summary>これを読めば、誰でも清潔感が改善しますか？</summary><p>改善を保証するものではありません。研究と公的情報を参考に、生活や状態に合わせた判断をするためのガイドです。</p></details>
       <details><summary>高額な美容商品は必要ですか？</summary><p>必ずしも必要ありません。無料でできること、少額でできること、必要に応じて専門家へ相談することを区別します。</p></details>
       <details><summary>美容初心者でも読めますか？</summary><p>専門知識がなくても読めるように書いています。各章の最後に「今日からの1つ」を置き、セルフチェックと実践表で、何をするかが決まるようにしています。</p></details>
-      <details><summary>どこで購入できますか？</summary><p>{% if site.product.cleanScience.checkoutUrl %}BOOTHで購入できます。決済とPDFのダウンロードはBOOTHで行います。{% else %}ガイドは完成しています。BOOTHの販売ページを準備中で、現在は購入できません。{% endif %}</p></details>
+      <details><summary>どこで購入できますか？</summary><p>{% if checkoutReady %}{% if isStripe %}Stripeで購入できます。決済とPDFの受け取り方法は販売ページでご確認ください。{% else %}BOOTHで購入できます。決済とPDFのダウンロードはBOOTHで行います。{% endif %}{% else %}ガイドは完成しています。{% if isStripe %}Stripe決済とPDF納品の準備中{% else %}BOOTHの販売ページを準備中{% endif %}で、現在は購入できません。{% endif %}</p></details>
       <details><summary>どんな形式ですか？</summary><p>PDF（A4・{{ site.product.cleanScience.pages }}ページ）です。スマホ・パソコンで読め、実践表は印刷しても使えます。</p></details>
       <div class="cs-references">
         <p class="cs-ref-title">研究と無料記事について</p>

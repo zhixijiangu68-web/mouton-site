@@ -1,7 +1,7 @@
 # MOUTON RESEARCH 001 — 清潔感の科学：発売前LP
 
 ## 目的
-PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。無料サンプルの閲覧 → LP → BOOTH での購入、の順に数字を確かめる。
+PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。記事・SNSからLPへ → 無料Web/PDFサンプルで内容を確認 → LPへ戻る → BOOTHで購入（販売開始後）、という各段階を区別して測定する。
 商品のPDFはこのリポジトリ（公開）には置かない。原稿と完成PDFはオーナーが手元と BOOTH で管理する。
 
 ## 販売を始める手順（オーナー）
@@ -12,7 +12,8 @@ PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。無�
 
 ## 公開されるURL
 - `/cleanliness-science.html`：商品LP（構成・FAQ・発売案内）
-- `/cleanliness-sample.html`：5ページの無料サンプル（Web版、印刷からPDF保存可）\n- `/cleanliness-sample.pdf`：A4・5ページのダウンロード版
+- `/cleanliness-sample.html`：5ページの無料サンプル（Web版、印刷からPDF保存可）
+- `/cleanliness-sample.pdf`：A4・5ページのダウンロード版
 - `/cleanliness.html`：既存記事からのLP導線
 - トップの「おすすめ」タブにも小さなリンクを追加（タブやイントロ演出自体は変更しない）
 
@@ -37,10 +38,13 @@ GA4にメールアドレスやその他の個人情報を送信しない。
 | Event | Where | Description |
 | --- | --- | --- |
 | `lp_entry_click` | `site.js` | LPへの入り口クリック。 `source_article` / `placement` を記録 |
+| `view_item` | `cleanliness-science.js` | LP読み込み時の価格付き商品閲覧。購入ではない |
 | `lp_cta_click` | `cleanliness-science.js` | LP内で発売案内へスクロールする意図 |
 | `sample_click` | `cleanliness-science.js` | 無料サンプルのページへのクリック（実読了ではない） |
-| `sample_pdf_click` | 同上 | PDFファイルのリンククリック（ダウンロード成功とは異なる） |\n| `sample_print_click` | 同上 | 印刷ダイアログ起動（実際のPDF保存成功ではない） |
+| `sample_pdf_click` | 同上 | PDFファイルのリンククリック（ダウンロード成功とは異なる） |
+| `sample_print_click` | 同上 | 印刷ダイアログ起動（実際のPDF保存成功ではない） |
 | `waitlist_submit` | 同上 | メールフォーム送信の試行のみ（登録確定とは異なる） |
+| `begin_checkout` | 同上 | 発売後、外部決済先の購入リンクをクリック。確定注文ではない |
 
 共通パラメータ：`product_id=cleanliness_001`、`placement`、`cta_target`。
 GA4のカスタムディメンションの登録は、GA4管理画面で別途必要。
@@ -72,3 +76,20 @@ GA4 DebugViewでは `page_view` とカスタムイベントの重複を確認す
 - 自動納品の実働、再送、返金時のアクセス管理、個人情報管理と販売規約を検証してから `fulfillmentReady: true` に変更する。これが未設定の場合Stripeの購入URLは有効にしない。
 - Stripeの本番アカウントを別途接続し、本番決済を開始する前に `checkoutUrl`、`legalUrl`、`checkoutProvider`、`fulfillmentReady` をレビューする。
 - 現行のBOOTH方式は従来どおり `checkoutProvider: 'booth'` とし、BOOTH側のダウンロード配布を利用する。
+
+
+## BD-04（2026-10-13）：LP・無料サンプル・計測回帰点検
+
+### 確認できたこと
+- 現行商品は**A4・32ページ・税込1,980円**。BOOTHでの発売準備中、購入URL未設定。無料Web版は5ページで、ダウンロード用のPDFは公開リポジトリに**実ファイルが存在**する。
+- 無料サンプル末尾の古い「制作検討中」「収録予定」を、完成済み・発売準備中と整合する表現に修正。
+- LPのFAQは、商品URLがあるだけで「購入できます」とせず、`checkoutReady`（Stripeの納品準備も含む）で判定するよう修正。販売サービスに応じて説明を切り替える。
+- 静的チェックではサンプルPDFの`%PDF-`ヘッダー、販売前のCTA非表示、サンプル枚数、FAQ条件を確認。
+- ChromiumのPC/390pxスマホ操作テストに、商品閲覧`view_item`の1回発火、Webサンプルへの`sample_click`、価格案内`lp_cta_click`、PDFリンク`sample_pdf_click`、印刷`sample_print_click`の発火回数を追加。計測テストはネット送信せず`dataLayer`で検証する。
+- `view_item`は商品の閲覧、`sample_pdf_click`はリンクのクリック、`sample_print_click`は印刷開始の意図。`purchase`や`generate_lead`を合成しない。
+
+### 管理画面・実機での未確認事項
+- **GA4 DebugViewでの実受信、実ユーザー数、広告ブロッカー影響、GA4カスタムディメンション登録**はブラウザの自動テストだけでは確認できない。GA4管理画面で`page_view`／`view_item`／`sample_click`等を実際に確認する必要がある。
+- **iPhone Safari実機**の印刷・PDF保存や表示、公開ドメインへのデプロイ反映は別途確認する。CIはChromiumを使う。
+- **登録完了**はメールサービス側、**購入完了・返金・売上**はBOOTH等の販売記録で判定する。準備中の今は件数を検証できない。
+- 有料32ページPDFは非公開資産。**公開リポジトリへ追加しない**。
