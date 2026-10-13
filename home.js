@@ -9,11 +9,11 @@
  const veil=document.querySelector('.intro-veil');
  if(veil&&root.classList.contains('intro')){
   const done=()=>root.classList.add('intro-done');
-  veil.addEventListener('animationend',e=>{if(e.animationName==='veil-lift')done();});
+  veil.addEventListener('animationend',e=>{if(e.animationName==='veil-dissolve')done();});
   veil.addEventListener('click',done);
   addEventListener('keydown',done,{once:true});
-  // CSS reveal completes in 5.75s; this is a safety fallback, not the normal exit.
-  setTimeout(done,7000);
+  // The 6.1s crossfade finishes on its own; timeout is only a safety fallback.
+  setTimeout(done,8000);
  }
 
  // Headline: split into letters that rise one after another. Screen readers get the whole line.
