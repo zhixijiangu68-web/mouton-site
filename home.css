@@ -576,12 +576,12 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
 }
 .cover-choice-card:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent 14%,rgba(2,10,35,.12) 35%,rgba(2,10,35,.86) 100%)}
 .cover-choice-card--think{background:#0a2068}
-.cover-choice-card--think .cover-choice-art{background-image:linear-gradient(135deg,rgba(8,30,101,.18),rgba(7,23,64,.05)),url(images/placeholder/think.jpg);background-position:center}
+.cover-choice-card--think .cover-choice-art{background-image:linear-gradient(135deg,rgba(8,30,101,.10),rgba(7,23,64,.04)),url(images/home/philosophy-card.webp);background-position:center}
 .cover-choice-card--body{background:#f2e0c0;color:#251f16;border-color:rgba(80,49,18,.14)}
-.cover-choice-card--body .cover-choice-art{background-image:url(images/placeholder/body.jpg);background-position:center}
+.cover-choice-card--body .cover-choice-art{background-image:url(images/home/body-card.webp);background-position:center}
 .cover-choice-card--body:after{background:linear-gradient(180deg,rgba(255,250,238,.15),rgba(249,240,220,.32) 44%,rgba(250,245,235,.96) 100%)}
 .cover-choice-card--food{background:#113976}
-.cover-choice-card--food .cover-choice-art{background-image:linear-gradient(180deg,rgba(9,35,81,.08),rgba(8,20,46,.3)),url(images/placeholder/food.jpg);background-position:center}
+.cover-choice-card--food .cover-choice-art{background-image:linear-gradient(180deg,rgba(9,35,81,.03),rgba(8,20,46,.15)),url(images/home/food-science-card.webp);background-position:center}
 .cover-choice-content{display:flex;flex-direction:column;align-items:flex-start;gap:9px;width:100%;padding:clamp(20px,2.1vw,31px);position:relative;z-index:1}
 .cover-choice-number{font-family:var(--latin);font-weight:400;font-style:italic;font-size:clamp(.95rem,1.35vw,1.15rem);letter-spacing:.015em}
 .cover-choice-title{font-family:var(--serif);font-size:clamp(1.65rem,2.6vw,2.35rem);font-weight:400;line-height:1.34;letter-spacing:.025em}
@@ -651,4 +651,15 @@ html.intro .cover-choice .cover-inner{
 }
 @media(prefers-reduced-motion:reduce){
   html.intro .cover-choice .cover-inner{animation:none}
+}
+
+
+/* The new category artwork is text-free within each crop; the actual Japanese copy
+   stays as accessible HTML so it is readable, searchable and scales on phones. */
+.cover-choice-card--think .cover-choice-art,
+.cover-choice-card--body .cover-choice-art,
+.cover-choice-card--food .cover-choice-art{
+  background-repeat:no-repeat;
+  background-size:cover;
+  background-position:center;
 }
