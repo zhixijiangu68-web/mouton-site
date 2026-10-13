@@ -201,6 +201,47 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
+    await t.test('making gallery: natural photo ratios, crisp display sizes and no mobile overflow', async () => {
+      for (const [label, options] of [
+        ['making-photos-desktop', { viewport: { width: 1440, height: 900 } }],
+        ['making-photos-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+        ['making-photos-small', { viewport: { width: 320, height: 700 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          await page.goto(origin + '/making.html#visual-studies', { waitUntil: 'domcontentloaded' });
+          const photos = page.locator('.mk-studies-grid .mk-study-photo img');
+          assert.equal(await photos.count(), 4, label + ': must have exactly four photographs');
+          const sizes = await photos.evaluateAll(async images => {
+            await Promise.all(images.map(image => image.decode()));
+            return images.map(image => {
+              const box = image.getBoundingClientRect();
+              const parent = image.closest('.mk-study-photo').getBoundingClientRect();
+              return {
+                src: image.getAttribute('src'),
+                naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight,
+                width: box.width, height: box.height,
+                containerWidth: parent.width, containerHeight: parent.height,
+              };
+            });
+          });
+          for (const image of sizes) {
+            assert.ok(image.naturalWidth > 0 && image.naturalHeight > 0,
+              label + ': image failed to load: ' + image.src);
+            assert.ok(image.width > 0 && image.height > 0, label + ': image is hidden');
+            assert.ok(Math.abs(image.width / image.height - image.naturalWidth / image.naturalHeight) < .012,
+              label + ': image distorted or cropped: ' + JSON.stringify(image));
+            assert.ok(Math.abs(image.containerHeight - image.height) < 2,
+              label + ': image frame clips original height: ' + JSON.stringify(image));
+            assert.ok(image.width <= image.naturalWidth / 1.85,
+              label + ': image enlarged too far for retina screens: ' + JSON.stringify(image));
+          }
+          assert.ok(sizes[1].width <= 250, label + ': 508px source should stay compact');
+          const pageSize = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(pageSize.page <= pageSize.viewport + 2, label + ': horizontal overflow');
+        });
+      }
+    });
+
     await t.test('tabs: keyboard selection and reload-safe anchors on desktop and mobile', async () => {
       const anchors = [
         ['reading', 'reading'], ['quiz', 'today-q'], ['topics', 'guides'], ['journal', 'journal'],
