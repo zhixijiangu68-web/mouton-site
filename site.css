@@ -264,6 +264,31 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 @media(max-width:760px){ .mk-thumb { margin:-20px -18px 16px; } }
 @media(prefers-reduced-motion:reduce){ .mk-phone video { display:none; } .mk-phone { background:center/cover no-repeat; } }
 
+/* Visual Studies: editorial image atlas in MAKING (four distinct panels). */
+.making .mk-studies { padding-top:clamp(40px,7vw,70px); padding-bottom:clamp(40px,7vw,70px); }
+.mk-studies-heading { display:grid;grid-template-columns:minmax(0,1fr) minmax(210px,.78fr);align-items:end;gap:24px;margin-bottom:26px; }
+.mk-studies-heading h2 { font-size:clamp(1.4rem,3vw,2.15rem);line-height:1.55;margin:0; }
+.making .mk-studies-heading > p { max-width:36ch; font-size:.9rem;line-height:1.9;margin:0; }
+.mk-studies-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.5vw,28px); }
+.mk-study { min-width:0;margin:0;background:#171719;color:#faf6ed;overflow:hidden; }
+.mk-study-photo { display:block;width:100%;aspect-ratio:3/4;background-color:#272527;background-image:url("images/making/visual-studies-20261014.webp");background-repeat:no-repeat;background-size:200% 200%; }
+.mk-study--one .mk-study-photo { background-position:left top; }
+.mk-study--two .mk-study-photo { background-position:right top; }
+.mk-study--three .mk-study-photo { background-position:left bottom; }
+.mk-study--four .mk-study-photo { background-position:right bottom; }
+.mk-study figcaption { display:flex;gap:12px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;padding:16px 18px 18px; }
+.mk-study figcaption span { font:400 .6875rem/1.6 Inter,sans-serif;letter-spacing:.13em;color:#bcb7b0; }
+.mk-study figcaption strong { font:400 .9375rem/1.5 var(--serif);color:#f8f5ee; }
+.making .mk-studies-note { margin:16px 0 0;color:#555a51;font:400 .6875rem/1.8 Inter,sans-serif;letter-spacing:.15em; }
+@media(max-width:600px) {
+ .mk-studies-heading { grid-template-columns:1fr;gap:10px; }
+ .mk-studies-grid { grid-template-columns:minmax(0,1fr);gap:18px; }
+ .mk-study figcaption { padding:14px 16px 16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .mk-study-photo { transition:none; }
+}
+
 /* Contrast (Issue #30): the per-article .pull-label used opacity .55 (3.8:1); raise it to pass 4.5:1. */
 .pull .pull-label{opacity:.75}
 /* guides.html */
