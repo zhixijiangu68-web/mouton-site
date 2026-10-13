@@ -348,7 +348,7 @@ MOUTONのページ表示 ── page_view ──> GA4
 | BD-02 | 制作カードの情報・状態の点検 | `projects.json`、`src/making.njk` | KIOKU、DIARY、MOUTONの状態・今後・リンクが正確 | FR-05 |
 | BD-03 | トップ4タブ・ナビの回帰点検 | `src/index.njk`、`home-tabs.js`など | 各タブ、アンカー、Menu、モバイル操作の退行がない | FR-01/02/17 |
 | BD-04 | 清潔感LP・サンプルの実測点検 | LP・サンプル・GA4 | 980円予定・未販売表示、サンプル導線、イベント重複なしを確認 | FR-07/08/11 |
-| BD-05 | 計測の運用手順を定義 | GA4 / Search Console / UTM | 取得済・未取得・データソースが区別できる | FR-12/14 |
+| BD-05 | 計測の運用手順を定義（[運用書](docs/analytics-operations.md)） | GA4 / Search Console / UTM | GitHub上の計測運用・UTM作成を整備。Google管理画面の接続・実測は別途確認 | FR-12/14 |
 | BD-06 | 先行案内サービス候補とデータ保護を設計 | 外部サービス・法務 | 実在する送信先と登録成功の検証方法が明らか | FR-09 |
 
 BD-01/02から小さなPRで進める。**このドキュメントの作成自体は、BD-01〜06を実装・検証したことではない**。
