@@ -1,6 +1,6 @@
 /* MOUTON ART SCENES — quiet editorial pauses across the archive */
 .mouton-scene{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:end;min-height:clamp(210px,28vw,340px);border-radius:10px;margin:clamp(22px,4vw,54px) auto;color:#f7f2e8;background:#071324}
-.mouton-scene__image{position:absolute;inset:0;z-index:-2;background-image:url('images/mouton-art-sprite.svg');background-repeat:no-repeat;background-size:200% 200%;transform:scale(1.015)}
+.mouton-scene__image{position:absolute;inset:0;z-index:-2;background-image:url('images/mouton-art-sprite.webp'),url('images/mouton-art-sprite.svg');background-repeat:no-repeat;background-size:200% 200%;transform:scale(1.015)}
 .mouton-scene__overlay{position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(2,6,17,.73),rgba(2,6,17,.19) 72%,transparent)}
 .mouton-scene__content{padding:clamp(25px,5vw,62px);max-width:680px}
 .mouton-scene__kicker{display:block;font:500 .7rem/1.5 Inter,system-ui,sans-serif;letter-spacing:.23em;text-transform:uppercase;margin:0 0 16px;color:rgba(255,241,209,.8)}
