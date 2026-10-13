@@ -100,6 +100,53 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('mobile journal: title stays readable at 320px and 390px in both editions', async () => {
+      for (const [label, width, version] of [
+        ['journal-320-original', 320, 'original'],
+        ['journal-390-original', 390, 'original'],
+        ['journal-390-club', 390, 'club'],
+      ]) {
+        await checkPage(browser, label, {
+          viewport: { width, height: 844 }, isMobile: true, hasTouch: true,
+        }, async page => {
+          await page.goto(origin + '/index.html?version=' + version + '#journal', { waitUntil: 'domcontentloaded' });
+          await page.locator('[data-home-tab="journal"]').click();
+          const entry = page.locator('#journal .journal-item:not(.is-hidden):not(.is-collapsed)').first();
+          assert.equal(await entry.count(), 1, label + ': journal entry missing');
+          const rects = await entry.evaluate(el => {
+            const rect = selector => el.querySelector(selector).getBoundingClientRect();
+            const outer = el.getBoundingClientRect();
+            const date = rect('.journal-date');
+            const body = rect('.journal-body');
+            const title = rect('.journal-title');
+            const arrow = rect('.journal-arrow');
+            return {
+              outerWidth: outer.width,
+              bodyWidth: body.width,
+              dateLeft: date.left,
+              dateBottom: date.bottom,
+              bodyLeft: body.left,
+              titleTop: title.top,
+              bodyRight: body.right,
+              arrowLeft: arrow.left,
+              documentWidth: document.documentElement.scrollWidth,
+              viewportWidth: innerWidth,
+            };
+          });
+          assert.ok(rects.bodyWidth >= rects.outerWidth * .67,
+            label + ': article text is squeezed into a narrow grid column: ' + JSON.stringify(rects));
+          assert.ok(Math.abs(rects.dateLeft - rects.bodyLeft) < 2,
+            label + ': date and article text should align');
+          assert.ok(rects.dateBottom <= rects.titleTop + 2,
+            label + ': date should appear above the title');
+          assert.ok(rects.arrowLeft >= rects.bodyRight - 2,
+            label + ': arrow should be to the right of the article text');
+          assert.ok(rects.documentWidth <= rects.viewportWidth + 2,
+            label + ': page overflows horizontally');
+        });
+      }
+    });
+
     await t.test('start page: brand introduction reaches making on desktop and mobile', async () => {
       for (const [label, options] of [
         ['start-desktop', { viewport: { width: 1440, height: 900 } }],
