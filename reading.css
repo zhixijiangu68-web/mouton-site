@@ -239,3 +239,7 @@ body.article-page .reading-card{padding:clamp(20px,2.2vw,32px)}
 @media(max-width:760px){
  body.article-page article p,body.article-page article li{font-size:1.0625rem;line-height:1.95}
 }
+
+/* Contrast and long-breadcrumb improvements for newly integrated articles. */
+body.article-page article .pull p{color:inherit}
+body.article-page .crumbs [aria-current]{max-width:min(22em,calc(100vw - 80px))}
