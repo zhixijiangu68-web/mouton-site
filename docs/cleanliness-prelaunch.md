@@ -17,8 +17,9 @@ PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。記�
 - `/cleanliness.html`：既存記事からのLP導線
 - トップの「おすすめ」タブにも小さなリンクを追加（タブやイントロ演出自体は変更しない）
 
-## メール登録の有効化（未設定）
-`src/_data/site.js` の `prelaunch` を設定する。**配信サービスの実在するエンドポイント以外は入力しない**。
+## メール登録の有効化（未設定・BD-06安全ゲート適用済み）
+**詳細設計とサービス比較：[先行案内メール設計（docs/waitlist-design.md）](waitlist-design.md)**。
+`src/_data/site.js` の `prelaunch` は `enabled: false` のまま。**送信先URLを設定しただけでは受付を開始できない**。本人による配信サービス確認と同意／解除／送信者表示／プライバシーの確認を経て、別Issue・PRで公開する。
 - `waitlistAction`：メール配信サービスのフォームPOST先URL（HTTPS）。
 - `waitlistEmailField`：配信先サービスが受け付けるメールフィールド名（通常は email）。
 - `waitlistService`：プライバシーポリシーに掲載するサービス名称。
