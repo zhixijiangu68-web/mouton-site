@@ -1,0 +1,18 @@
+# Copy to wrangler.toml, insert the real D1 ID and verify the sender domain.
+name = "mouton-clean-science-delivery"
+main = "src/index.js"
+compatibility_date = "2026-10-13"
+workers_dev = true
+[vars]
+PUBLIC_BASE_URL = "https://REPLACE_SUBDOMAIN.workers.dev"
+FROM_EMAIL = "MOUTON <downloads@REPLACE_DOMAIN>"
+PDF_OBJECT_KEY = "clean-science-v2.pdf"
+STRIPE_PRICE_ID = "price_REPLACE"
+STRIPE_PAYMENT_LINK_ID = "plink_REPLACE"
+[[d1_databases]]
+binding = "ORDERS"
+database_name = "mouton-orders"
+database_id = "REPLACE_D1_ID"
+[[r2_buckets]]
+binding = "PRIVATE_PDFS"
+bucket_name = "mouton-paid-pdfs"

@@ -1,0 +1,22 @@
+name: Secure PDF delivery tests
+on:
+  pull_request:
+    paths:
+      - "fulfillment-worker/**"
+      - ".github/workflows/secure-delivery-test.yml"
+  push:
+    branches: [main]
+    paths:
+      - "fulfillment-worker/**"
+      - ".github/workflows/secure-delivery-test.yml"
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm --prefix fulfillment-worker test
