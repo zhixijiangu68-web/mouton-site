@@ -15,15 +15,27 @@ const js = read('cleanliness-science.js');
 // Price and sale state come from src/_data/site.js.
 const { default: site } = await import('../src/_data/site.js');
 const product = site.product.cleanScience;
-const live = Boolean(product.checkoutUrl);
-if (live) {
+const provider = product.checkoutProvider || 'booth';
+assert(['booth','stripe'].includes(provider), 'checkoutProvider must be booth or stripe');
+assert(product.priceJPY === 1980, 'price must match current 1980 JPY guide');
+const configured = Boolean(product.checkoutUrl);
+if (configured) {
   assert(/^https:\/\//.test(product.checkoutUrl), 'checkoutUrl must be https');
   assert(/^https:\/\//.test(product.legalUrl || ''), 'legalUrl (特定商取引法に基づく表示) is required before selling');
+  const checkout = new URL(product.checkoutUrl);
+  if (provider === 'stripe') {
+    assert(product.fulfillmentReady === true, 'Stripe checkout requires verified PDF fulfillment before going live');
+    assert(checkout.hostname === 'buy.stripe.com', 'Stripe checkoutUrl must be a verified buy.stripe.com payment link');
+    assert(!checkout.pathname.startsWith('/test_'), 'Stripe test Payment Links must never be published as a live checkout');
+  } else {
+    assert(checkout.hostname === 'booth.pm' || checkout.hostname.endsWith('.booth.pm'), 'BOOTH checkoutUrl must be a BOOTH URL');
+  }
   assert(lp.includes('data-lp-event="begin_checkout"'), 'checkout button missing');
 } else {
-  assert(lp.includes('BOOTHでの発売準備中'), 'pre-sale status required');
+  assert(lp.includes(provider === 'stripe' ? 'Stripeでの発売準備中' : 'BOOTHでの発売準備中'), 'pre-sale status required');
   assert(!lp.includes('data-lp-event="begin_checkout"'), 'checkout link must be disabled until configured');
 }
+assert(!lp.includes('buy.stripe.com/test_'), 'sandbox Payment Link must never appear in the public LP');
 assert(lp.includes(`${product.priceText}円`), 'price not displayed');
 assert(lp.includes('cleanliness-sample.html'), 'sample CTA missing');
 assert(lp.includes('id="notify"'), 'interest section missing');

@@ -41,11 +41,11 @@ export default {
     waitlistEmailField: 'email',
     waitlistService: '',
   },
-  // 「清潔感の科学」（PDF・BOOTH で販売）。
+  // 「清潔感の科学」販売先。現行は BOOTH。Stripe を利用する場合は checkoutProvider:'stripe' に切り替える。
   // checkoutUrl：BOOTH の商品ページ（https://〜.booth.pm/items/〜）。空なら購入ボタンを出さず「発売準備中」と表示。
   // legalUrl：特定商取引法に基づく表示のページ。checkoutUrl を入れるときは必須（npm test で確かめる）。
   product: {
-    cleanScience: { priceJPY: 1980, priceText: '1,980', pages: 32, checkoutUrl: '', legalUrl: '' },
+    cleanScience: { priceJPY: 1980, priceText: '1,980', pages: 32, checkoutProvider: 'booth', checkoutUrl: '', legalUrl: '', fulfillmentReady: false },
   },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },

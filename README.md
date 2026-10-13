@@ -139,3 +139,5 @@ Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", 
 - src/_data/site.js の product.cleanScience に checkoutUrl（BOOTH の商品ページ）と legalUrl（特定商取引法に基づく表示）を入れると、購入ボタンが出る。legalUrl が空のまま checkoutUrl を入れると npm test が失敗する。
 - GA4で view_item と begin_checkout を計測（価格は site.js から）。purchase は送らない（売上の正は BOOTH の注文記録）。
 - 手順は docs/cleanliness-prelaunch.md の「販売を始める手順」。
+
+Stripeテスト決済と、安全なPDF納品を含む本番切り替えの条件は [`docs/cleanliness-prelaunch.md`](docs/cleanliness-prelaunch.md) を参照。Stripeサンドボックスは本番購入と無関係です。
