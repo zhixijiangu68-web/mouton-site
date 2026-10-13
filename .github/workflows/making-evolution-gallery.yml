@@ -1,0 +1,111 @@
+name: Build MOUTON Making evolution gallery
+on:
+  push:
+    branches: [feature/mouton-making-evolution-20261013]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: feature/mouton-making-evolution-20261013
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Rebuild the site
+        run: |
+          npm ci
+          npm run build
+      - name: Capture the latest actual MOUTON homepage
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright';
+          import {resolve} from 'node:path';
+          const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+          const current='file://'+resolve('index.html');
+          for(const v of [{name:'desktop',width:1280,height:800},{name:'phone',width:390,height:844}]){
+            const page=await browser.newPage({viewport:{width:v.width,height:v.height},deviceScaleFactor:1,reducedMotion:'reduce'});
+            const errors=[];page.on('pageerror',e=>errors.push(e.message));
+            await page.goto(current,{waitUntil:'load'});
+            await page.evaluate(()=>document.fonts.ready);
+            const state=await page.evaluate(()=>({
+              title:document.querySelector('.cover-title--choice')?.textContent?.trim(),
+              cards:document.querySelectorAll('.cover-choice-card').length,
+              noIntro:!document.documentElement.classList.contains('intro'),
+              scrollWidth:document.documentElement.scrollWidth,
+              viewport:innerWidth,
+              art:[...document.querySelectorAll('.cover-choice-art')].map(el=>getComputedStyle(el).backgroundImage)
+            }));
+            console.log('CAPTURE',v.name,JSON.stringify(state));
+            if(state.title!=='今日は、何が気になる？'||state.cards!==3||!state.noIntro||state.scrollWidth>state.viewport+1||state.art.some(x=>!x.includes('images/home/')))throw Error('Current screenshot is not latest MOUTON');
+            if(errors.length)throw Error('Homepage console errors: '+errors.join(';'));
+            await page.screenshot({path:resolve('images/making/site-ui-20261013-'+v.name+'.jpg'),type:'jpeg',quality:79,fullPage:false,animations:'disabled'});
+            await page.close();
+          }
+          await browser.close();
+          JS
+      - name: Build and link checks against generated screenshots
+        run: |
+          npm run build
+          npm test
+          test -s images/making/site-ui-20261013-desktop.jpg
+          test -s images/making/site-ui-20261013-phone.jpg
+      - name: Verify evolution pages and their content in Chromium
+        run: |
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright';
+          import {resolve} from 'node:path';
+          const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+          for(const width of [390,1280]){
+            const page=await b.newPage({viewport:{width,height:844},reducedMotion:'reduce'});
+            const errors=[];page.on('pageerror',e=>errors.push(e.message));
+            await page.goto('file://'+resolve('making.html'),{waitUntil:'load'});
+            const overview=await page.evaluate(()=>({
+              title:document.querySelector('#mk-feature-heading')?.textContent.trim(),
+              photo:document.querySelector('.mk-feature-preview img')?.getAttribute('src'),
+              href:document.querySelector('.mk-feature .mk-more')?.getAttribute('href'),
+              scrollWidth:document.documentElement.scrollWidth,
+              viewport:innerWidth
+            }));
+            console.log('OVERVIEW',width,JSON.stringify(overview));
+            if(overview.title!=='長いトップから、選べるトップへ。'||overview.photo!=='images/making/site-ui-20261013-desktop.jpg'||!overview.href?.startsWith('making-site.html')||overview.scrollWidth>width+1)throw Error('Making overview regression');
+            await page.locator('.mk-feature .mk-more').click();
+            if(!page.url().includes('making-site.html'))throw Error('Evolution link does not open MOUTON detail');
+            const detail=await page.evaluate(()=>({
+              stages:document.querySelectorAll('.mk-evolution-step').length,
+              latest:document.querySelector('#site-compare img')?.getAttribute('src'),
+              dates:[...document.querySelectorAll('.mk-evolution-step time')].map(x=>x.getAttribute('datetime')),
+              refs:[...document.querySelectorAll('.mk-evolution-refs a')].map(x=>x.textContent.trim()),
+              comparisons:document.querySelectorAll('.mk-cmp').length,
+              scrollWidth:document.documentElement.scrollWidth,
+              viewport:innerWidth
+            }));
+            console.log('DETAIL',width,JSON.stringify(detail));
+            if(detail.stages!==6||detail.latest!=='images/making/site-ui-20261013-desktop.jpg'||detail.comparisons!==3||detail.scrollWidth>width+1)throw Error('MOUTON detail missing evolution');
+            if(!detail.dates.includes('2026-09-30')||!detail.dates.includes('2026-10-13')||!detail.refs.includes('PR #113 ↗'))throw Error('Important stages and sources missing');
+            const slider=page.locator('#site-compare .mk-cmp-range');
+            await slider.fill('70');
+            if(await page.locator('#site-compare .mk-cmp').evaluate(el=>el.style.getPropertyValue('--pos'))!=='70%')throw Error('Before/after slider broken');
+            if(errors.length)throw Error('JS errors: '+errors.join(';'));
+            await page.close();
+          }
+          await b.close();
+          JS
+      - name: Remove temporary workflow and commit new screenshots
+        run: |
+          rm -f .github/workflows/making-evolution-gallery.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Add current desktop and phone screenshots and validated Making evolution history"
+            git push origin HEAD:feature/mouton-making-evolution-20261013
+          fi
+          test -z "$(git status --porcelain)"
