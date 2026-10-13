@@ -297,6 +297,20 @@ test('MOUTON browser smoke', async t => {
           const pdf = await page.request.get(origin + '/cleanliness-sample.pdf');
           assert.equal(pdf.status(), 200);
           assert.equal((await pdf.body()).subarray(0, 5).toString(), '%PDF-', 'download must be PDF');
+          await page.goto(origin + '/cleanliness.html', { waitUntil: 'domcontentloaded' });
+          await page.evaluate(() => {
+            document.addEventListener('click', event => {
+              if (event.target.closest('a[data-lp-entry]')) event.preventDefault();
+            }, true);
+          });
+          await page.locator('a[data-lp-entry][data-placement="article_intro"]').click();
+          const entryEvents = await events();
+          const entry = entryEvents.filter(event => event.name === 'lp_entry_click');
+          assert.equal(entry.length, 1, 'article-to-LP click counted once');
+          assert.equal(entry[0].params.placement, 'article_intro');
+          assert.equal(entry[0].params.source_article, 'cleanliness');
+          assert.equal(entryEvents.filter(event => event.name === 'purchase').length, 0);
+          await page.goto(origin + '/cleanliness-sample.html', { waitUntil: 'domcontentloaded' });
           const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
           assert.ok(sizes.width <= sizes.viewport + 2, label + ': horizontal overflow');
         });
