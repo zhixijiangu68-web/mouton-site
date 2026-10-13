@@ -4,7 +4,7 @@ permalink: index.html
 title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
-extraCss: [home.css, ocean-cover.css]
+extraCss: [home.css, ocean-cover.css, mouton-art-scenes.css]
 ---
 <script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
@@ -159,6 +159,15 @@ extraCss: [home.css, ocean-cover.css]
 
     </div>
     <div class="home-tab-panel" id="home-panel-journal" role="tabpanel" aria-labelledby="home-tab-journal" tabindex="0" data-home-panel="journal">
+  {# MOUTON art — one quiet pause before the searchable journal. #}
+  <figure class="mouton-scene mouton-scene--moon" aria-label="月、植物、星をモチーフにした夜のアート">
+    <div class="mouton-scene__image" aria-hidden="true"></div><div class="mouton-scene__overlay" aria-hidden="true"></div>
+    <figcaption class="mouton-scene__content">
+      <span class="mouton-scene__kicker">ARCHIVE / JOURNAL</span>
+      <p class="mouton-scene__line">記憶は、ときどき物語になる。</p>
+      <p class="mouton-scene__caption">その日の思考を、言葉として残す。</p>
+    </figcaption>
+  </figure>
   <section class="section" id="journal" data-nav="light" data-nav-solid="light" aria-labelledby="journal-heading">
     <div class="section-inner">
       <div class="section-head" data-rise>
