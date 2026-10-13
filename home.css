@@ -484,3 +484,34 @@ html[data-version="club"] .home-tab-panel #guides,
 html[data-version="club"] .home-tab-panel #journal{background:#0d0d16;color:#f3edf8}
 html[data-version="club"] .home-tab-panel .home-topic-card{background:#191724;color:#f3edf8;border-color:rgba(205,185,236,.25)}
 html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
+
+
+/* The tab bar must be discoverable without scrolling past a full-screen cover. */
+/* The opening veil and kinetic MOUTON title are intentionally unchanged. */
+.home-tabs{position:relative;z-index:4;margin-top:-62px}
+.home-tab-list{border:1px solid rgba(181,188,208,.27);border-radius:14px 14px 0 0;min-height:64px}
+.cover:not(.cover-en){min-height:min(600px,70svh);padding-top:clamp(78px,9svh,110px);padding-bottom:clamp(110px,13svh,128px)}
+.cover .cover-kicker{margin-bottom:12px}
+.cover .cover-lede{margin-top:16px;line-height:1.7}
+.cover .cover-actions{margin-top:22px}
+.cover .cover-links{margin-top:16px}
+.cover .hero-ticker{bottom:64px}
+.cover .cover-mode{bottom:calc(126px + env(safe-area-inset-bottom,0px))}
+@media(max-width:760px){
+ .cover:not(.cover-en){min-height:min(570px,72svh);padding-top:clamp(78px,10svh,96px);padding-bottom:110px}
+ .cover .cover-kicker{font-size:.875rem;margin-bottom:10px}
+ .cover .cover-title{font-size:clamp(2rem,8vw,2.5rem);line-height:1.27}
+ .cover .cover-lede{font-size:.875rem;line-height:1.65;margin-top:12px}
+ .cover .cover-actions{margin-top:17px;gap:8px}
+ .cover .cover-btn{min-height:44px;min-width:126px;padding:0 17px;font-size:.8125rem}
+ .cover .cover-links{margin-top:12px;gap:8px 14px;font-size:.75rem}
+ .cover .hero-ticker{bottom:64px}
+ .cover .cover-mode{bottom:calc(124px + env(safe-area-inset-bottom,0px))}
+ .home-tabs{margin-top:-62px}
+ .home-tab-list{min-height:60px;padding-block:7px;border-radius:12px 12px 0 0}
+}
+@media(max-width:360px){
+ .cover .cover-title{font-size:1.9rem}
+ .cover .cover-links{gap:6px 10px;font-size:.6875rem}
+ .cover .cover-btn{min-width:112px;padding:0 12px}
+}
