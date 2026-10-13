@@ -5,20 +5,46 @@
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
  const finePointer=matchMedia('(hover: hover) and (pointer: fine)').matches;
 
- // Opening veil: lifts on its own (CSS); a click or key skips it.
+ // Prepare the first frame once the intro font is ready: no late font swap mid-animation.
  const veil=document.querySelector('.intro-veil');
  if(veil&&root.classList.contains('intro')){
   const done=()=>root.classList.add('intro-done');
-  veil.addEventListener('animationend',e=>{if(e.animationName==='veil-lift')done();});
+  veil.addEventListener('animationend',e=>{if(e.animationName==='veil-dissolve')done();});
   veil.addEventListener('click',done);
   addEventListener('keydown',done,{once:true});
-  // CSS reveal completes in 5.75s; this is a safety fallback, not the normal exit.
-  setTimeout(done,7000);
+  let started=false;
+  const begin=()=>{
+   if(started)return;
+   started=true;
+   // If the webfont is not ready, lock a single fallback face for this animation.
+   // Prevents the logo jumping when the network delivers the font late.
+   const faces=[...document.fonts];
+   const ready=faces.some(f=>f.family.replace(/["']/g,'').toLowerCase()==='cormorant garamond'&&f.style==='italic'&&f.status==='loaded');
+   if(!ready)root.classList.add('intro-fallback-font');
+   root.classList.remove('intro-preparing');
+   // CSS exits automatically at 6.1s after release; this only covers failures.
+   setTimeout(done,8000);
+  };
+  const fontLink=[...document.querySelectorAll('link[rel="stylesheet"]')].find(el=>el.href.includes('fonts.googleapis.com'));
+  (async()=>{
+   try{
+    if(fontLink&&fontLink.media==='print'){
+     await new Promise(resolve=>{
+      fontLink.addEventListener('load',resolve,{once:true});
+      fontLink.addEventListener('error',resolve,{once:true});
+     });
+    }
+    await document.fonts.load('italic 300 120px "Cormorant Garamond"');
+   }catch{}
+   begin();
+  })();
+  // Font downloads must never prevent the visitor from entering the site.
+  setTimeout(begin,900);
  }
 
- // Headline: split into letters that rise one after another. Screen readers get the whole line.
+ // The three-theme landing headline stays still; keep kinetic letters on older covers only.
  const h1=document.querySelector('.cover .cover-title');
- if(h1){
+ if(h1&&!h1.classList.contains('cover-title--choice')){
   h1.setAttribute('aria-label',h1.textContent.trim());
   let c=0;
   const walk=node=>{
