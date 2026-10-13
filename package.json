@@ -6,7 +6,7 @@
     "build": "eleventy",
     "start": "eleventy --serve",
     "check": "eleventy && git status --porcelain && test -z \"$(git status --porcelain)\"",
-    "test": "npm run test:design && eleventy && node scripts/check-site.mjs",
+    "test": "npm run test:design && eleventy && node scripts/check-site.mjs && node scripts/check-cleanliness-prelaunch.mjs",
     "x:today": "node scripts/x-today.mjs",
     "test:design": "node --test tests/design-version.test.mjs"
   },
