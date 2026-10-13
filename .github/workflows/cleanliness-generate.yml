@@ -1,0 +1,29 @@
+name: Generate cleanliness prelaunch pages
+on:
+  push:
+    branches:
+      - feature/cleanliness-science-prelaunch
+permissions:
+  contents: write
+jobs:
+  sync-generated-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - name: Commit generated HTML into feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- index.html cleanliness.html cleanliness-science.html cleanliness-sample.html
+          if ! git diff --cached --quiet; then
+            git commit -m "build: generate cleanliness prelaunch HTML"
+            git push origin HEAD:feature/cleanliness-science-prelaunch
+          fi
