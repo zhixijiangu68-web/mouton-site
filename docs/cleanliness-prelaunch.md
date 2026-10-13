@@ -17,16 +17,19 @@ PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。記�
 - `/cleanliness.html`：既存記事からのLP導線
 - トップの「おすすめ」タブにも小さなリンクを追加（タブやイントロ演出自体は変更しない）
 
-## メール登録の有効化（未設定）
-`src/_data/site.js` の `prelaunch` を設定する。**配信サービスの実在するエンドポイント以外は入力しない**。
+## メール登録の有効化（未設定・BD-06安全ゲート適用済み）
+**詳細設計とサービス比較：[先行案内メール設計（docs/waitlist-design.md）](waitlist-design.md)**。
+`src/_data/site.js` の `prelaunch` は `enabled: false` のまま。**送信先URLを設定しただけでは受付を開始できない**。本人による配信サービス確認と同意／解除／送信者表示／プライバシーの確認を経て、別Issue・PRで公開する。
 - `waitlistAction`：メール配信サービスのフォームPOST先URL（HTTPS）。
 - `waitlistEmailField`：配信先サービスが受け付けるメールフィールド名（通常は email）。
 - `waitlistService`：プライバシーポリシーに掲載するサービス名称。
+- `provider: 'buttondown'` と実在するButtondown埋め込みフォーム送信先を初期候補とする。別サービスを使う場合はフォームと検証コードを別途実装する。
+- `enabled: true` にする前に `doubleOptInVerified`、`unsubscribeVerified`、`privacyReviewed`、`senderDetailsVerified` の4項目を**実際に確認してから** `true` にする。不備があればビルドを失敗させる。
 
 フォーム送信にはサービス側の契約・本人確認・配信停止方法の設定が必要。
 未設定の場合、フォームを非表示にし「先行案内の受付は準備中」と示す。
 `base.njk` の CSP form-action には `waitlistAction` の origin を自動追加する。
-サービスに特有の hidden input や double opt-in が必要な場合はフォームを修正してから公開する。
+ButtondownのHTML POSTに合わせた `embed=1` は実装済み。その他のサービス固有の hidden input・ダブルオプトイン・同意履歴は **本番のサービス画面で確認**する。
 
 **重要：フォーム送信イベントは登録完了ではない。** `generate_lead` は現時点では送信しない。
 配信サービス側でダブルオプトインを含む登録完了を確認できる場合のみ、適切な成功イベントの実装を追加する。

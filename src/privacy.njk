@@ -17,7 +17,7 @@ heading: プライバシーポリシー
 <p>メールマガジンに登録いただいたメールアドレスは、記事の更新などのお知らせを送るためだけに利用します。登録の受け付けと配信には{{ site.newsletter.service or '外部の配信サービス' }}を利用しており、メールアドレスはそのサービスで管理されます。配信はいつでも解除できます。</p>
 {%- endif %}
 
-{%- if site.prelaunch and site.prelaunch.waitlistAction %}
+{%- if site.prelaunch and site.prelaunch.ready %}
 <h2>有料PDFの先行案内</h2>
 <p>「清潔感の科学」の先行案内に登録されたメールアドレスは、本商品の発売・販売開始に関する連絡のみに利用します。登録には{{ site.prelaunch.waitlistService or '外部のメール配信サービス' }}を利用し、登録先サービスで管理されます。購入予約や支払いは発生せず、案内は停止できます。</p>
 {%- endif %}
