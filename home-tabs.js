@@ -8,7 +8,8 @@
   const panels=[...home.querySelectorAll('[data-home-panel]')];
   if(tabs.length!==4||panels.length!==4)return;
   const valid=new Set(tabs.map(t=>t.dataset.homeTab));
-  const defaultAnchors={reading:'reading',quiz:'today-q',topics:'think',journal:'journal'};
+  // Each tab points to an anchor inside its own panel; #think remains the cover's topic card.
+  const defaultAnchors={reading:'reading',quiz:'today-q',topics:'guides',journal:'journal'};
   const tabForHash=()=>{
     const hash=decodeURIComponent(location.hash.slice(1));
     if(!hash)return null;
