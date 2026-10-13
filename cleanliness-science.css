@@ -139,3 +139,6 @@
 .cs-offer-pending{font-size:12px!important;line-height:1.9!important;border-left:3px solid #ab9877;padding:12px;background:#f4f0e8}
 .cs-offer-card .cs-button{width:100%}
 @media(max-width:700px){.cs-plan-grid,.cs-offer-card{grid-template-columns:1fr}.cs-offer-card{padding:24px;gap:18px}.cs-plan-grid>div{padding:21px}}
+
+/* Free PDF link on the dark sample section. */
+.cs-pdf-link a{color:#e9ebe4;text-underline-offset:4px}

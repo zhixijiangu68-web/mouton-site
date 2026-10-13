@@ -12,14 +12,24 @@ const sample = read('cleanliness-sample.html');
 const article = read('cleanliness.html');
 const home = read('index.html');
 const js = read('cleanliness-science.js');
-assert(lp.includes('制作検討中・現在は販売していません'), 'prelaunch disclaimer required');
-assert(lp.includes('4,980円'), 'planned price not displayed');
+// Price and sale state come from src/_data/site.js.
+const { default: site } = await import('../src/_data/site.js');
+const product = site.product.cleanScience;
+const live = Boolean(product.checkoutUrl);
+if (live) {
+  assert(/^https:\/\//.test(product.checkoutUrl), 'checkoutUrl must be https');
+  assert(/^https:\/\//.test(product.legalUrl || ''), 'legalUrl (特定商取引法に基づく表示) is required before selling');
+  assert(lp.includes('data-lp-event="begin_checkout"'), 'checkout button missing');
+} else {
+  assert(lp.includes('BOOTHでの発売準備中'), 'pre-sale status required');
+  assert(!lp.includes('data-lp-event="begin_checkout"'), 'checkout link must be disabled until configured');
+}
+assert(lp.includes(`${product.priceText}円`), 'price not displayed');
 assert(lp.includes('cleanliness-sample.html'), 'sample CTA missing');
 assert(lp.includes('id="notify"'), 'interest section missing');
 assert(lp.includes('id="offer"'), 'pricing section missing');
 assert(lp.includes('id="plan"'), '30 day plan missing');
 assert(lp.includes('30日間の実践表'), '30 day worksheet missing');
-assert(!lp.includes('data-lp-event="begin_checkout"'), 'checkout link must be disabled until configured');
 assert(home.includes('intro-veil') && home.includes('data-home-tabs'), 'homepage intro and tabs must be preserved');
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
 assert(!lp.includes('id="cleanliness-waitlist"'), 'form must remain disabled until provider is configured');
