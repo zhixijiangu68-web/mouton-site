@@ -62,3 +62,13 @@ npm test
 iPhoneのSafariで、LPとサンプルの表示・ナビ・リンク・フォーム未設定表示を確認。
 サンプルの「印刷・PDFとして保存」はiOS共有・プリント操作へ接続する。ブラウザや環境でPDFの保存操作は異なる。
 GA4 DebugViewでは `page_view` とカスタムイベントの重複を確認する。
+
+## Stripe テスト環境と本番切り替え（2026-10-13）
+
+- Stripeに接続済みのアカウントは「ムートンサンドボックス」（**テスト専用**）。1,980円のテスト商品とテストPayment Linkを作成済み。本番の支払いはまだ受け付けない。
+- 決済検証：`https://buy.stripe.com/test_5kQ14m37v3U3bQ02vc43S00`。**テストカードのみ**。テスト決済は実際のPDF納品と無関係。
+- `src/_data/site.js` の `checkoutProvider` は既定で `booth`。Stripeに切り替えるときに限り `stripe` に変更し、同じ商品価格のStripe本番Payment Linkを設定する。`checkoutUrl` に `test_` のテストリンクを入れることは禁止（CIで失敗）。
+- Stripeは自動的にPDFを配布しない。決済完了のリダイレクトURLだけで納品を許可してはならない。`checkout.session.completed` / 非同期決済確定イベントをサーバー側で署名検証し、非公開ストレージの期限付きダウンロードURL等で納品する。または実決済連動の信頼できる外部デジタル配布サービスを設定し、実購入に相当するE2E試験を完了する。
+- 自動納品の実働、再送、返金時のアクセス管理、個人情報管理と販売規約を検証してから `fulfillmentReady: true` に変更する。これが未設定の場合Stripeの購入URLは有効にしない。
+- Stripeの本番アカウントを別途接続し、本番決済を開始する前に `checkoutUrl`、`legalUrl`、`checkoutProvider`、`fulfillmentReady` をレビューする。
+- 現行のBOOTH方式は従来どおり `checkoutProvider: 'booth'` とし、BOOTH側のダウンロード配布を利用する。

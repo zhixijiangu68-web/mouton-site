@@ -7,13 +7,16 @@ bodyClass: "site cs-page"
 extraCss: [cleanliness-science.css]
 ---
 <a class="skip" href="#cs-main">本文へスキップ</a>
+{% set cs = site.product.cleanScience %}
+{% set isStripe = cs.checkoutProvider == 'stripe' %}
+{% set checkoutReady = cs.checkoutUrl and (not isStripe or cs.fulfillmentReady) %}
 {% include "partials/nav.njk" %}
 <main id="cs-main">
   <section class="cs-hero" data-nav="dark" data-nav-solid="dark" aria-labelledby="cs-title">
     <div class="cs-shell cs-hero-grid">
       <div class="cs-hero-copy">
         <p class="cs-kicker">MOUTON RESEARCH <span>001 / FIRST EDITION</span></p>
-        <p class="cs-status"><span aria-hidden="true">◦</span> {% if site.product.cleanScience.checkoutUrl %}BOOTHで販売中{% else %}完成・BOOTHでの発売準備中{% endif %}</p>
+        <p class="cs-status"><span aria-hidden="true">◦</span> {% if checkoutReady %}{% if isStripe %}Stripeで販売中{% else %}BOOTHで販売中{% endif %}{% else %}完成・{% if isStripe %}Stripe{% else %}BOOTH{% endif %}での発売準備中{% endif %}</p>
         <h1 id="cs-title">清潔感の<span class="cs-em">科学。</span></h1>
         <p class="cs-lead">何から整えればいいか、<br>研究と予算から考える。</p>
         <p class="cs-intro">肌、髪、ヒゲ、歯、匂い、服装。「清潔感が大切」と言われても、何を優先すべきかは意外と分からない。感覚だけに頼らず、自分に必要な手入れを考えるための実践ガイドです。</p>
@@ -21,7 +24,7 @@ extraCss: [cleanliness-science.css]
           <a class="cs-button cs-button-primary" href="cleanliness-sample.html" data-lp-event="sample_click" data-placement="hero" data-cta-target="sample">無料サンプルを読む <span aria-hidden="true">↗</span></a>
           <a class="cs-button cs-button-ghost" href="#offer" data-lp-event="lp_cta_click" data-placement="hero" data-cta-target="offer">販売内容・価格について <span aria-hidden="true">↓</span></a>
         </div>
-        <p class="cs-spec">PDF・A4 {{ site.product.cleanScience.pages }}ページ / {{ site.product.cleanScience.priceText }}円（税込）{% if not site.product.cleanScience.checkoutUrl %} / 発売準備中{% endif %}</p>
+        <p class="cs-spec">PDF・A4 {{ site.product.cleanScience.pages }}ページ / {{ site.product.cleanScience.priceText }}円（税込）{% if not checkoutReady %} / 発売準備中{% endif %}</p>
       </div>
       <div class="cs-cover-wrap">
         <div class="cs-book" role="img" aria-label="清潔感の科学：暗い青の抽象的な円と日本語の文字を使った表紙デザイン">
@@ -125,13 +128,13 @@ extraCss: [cleanliness-science.css]
       <h2 id="cs-offer">知識を、実践のための一冊に。</h2>
       <p>研究の読み方と、優先順位・予算・継続のための実践シートを一冊にまとめました。</p>
       <div class="cs-offer-card" data-product-price="{{ site.product.cleanScience.priceJPY }}">
-        <div><p class="cs-offer-label">{% if site.product.cleanScience.checkoutUrl %}販売価格{% else %}販売価格（発売準備中）{% endif %}</p><p class="cs-offer-price">¥{{ site.product.cleanScience.priceText }} <small>税込</small></p><p class="cs-note">PDF（A4・{{ site.product.cleanScience.pages }}ページ）。決済とダウンロードは BOOTH で行います。</p></div>
+        <div><p class="cs-offer-label">{% if checkoutReady %}販売価格{% else %}販売価格（発売準備中）{% endif %}</p><p class="cs-offer-price">¥{{ site.product.cleanScience.priceText }} <small>税込</small></p><p class="cs-note">PDF（A4・{{ cs.pages }}ページ）。{% if isStripe %}決済はStripeの安全な決済ページ、購入後のPDF配布は別途設定済みの納品システムで行います。{% else %}決済とダウンロードはBOOTHで行います。{% endif %}</p></div>
         <div><ul><li>6つのサインの研究と、その限界</li><li>7領域のセルフチェック（14点）</li><li>優先順位と予算別プラン</li><li>30日間の実践表と振り返りシート</li><li>毎日のルーティン表と買い物リスト</li><li>参考文献38件</li></ul>
-        {% if site.product.cleanScience.checkoutUrl %}
-          <a class="cs-button cs-button-dark" href="{{ site.product.cleanScience.checkoutUrl }}" target="_blank" rel="noopener noreferrer" data-lp-event="begin_checkout" data-placement="offer" data-cta-target="checkout">BOOTHで購入する ↗</a>
-          <p class="cs-note">BOOTHの販売ページで、商品内容・お支払い方法・ダウンロード方法・返品の条件をご確認ください。<a href="{{ site.product.cleanScience.legalUrl }}" target="_blank" rel="noopener noreferrer">特定商取引法に基づく表示</a></p>
+        {% if checkoutReady %}
+          <a class="cs-button cs-button-dark" href="{{ cs.checkoutUrl }}" target="_blank" rel="noopener noreferrer" data-lp-event="begin_checkout" data-placement="offer" data-cta-target="checkout">{% if isStripe %}Stripeで購入する{% else %}BOOTHで購入する{% endif %} ↗</a>
+          <p class="cs-note">販売ページで、商品内容・お支払い方法・納品方法・返品の条件をご確認ください。<a href="{{ site.product.cleanScience.legalUrl }}" target="_blank" rel="noopener noreferrer">特定商取引法に基づく表示</a></p>
         {% else %}
-          <p class="cs-offer-pending" role="status">ガイドは完成し、BOOTHでの販売ページを準備しています。現在は購入・予約・決済は受け付けていません。</p>
+          <p class="cs-offer-pending" role="status">ガイドは完成しています。{% if isStripe %}Stripe決済と安全なPDF納品の設定を準備しています。{% else %}BOOTHでの販売ページを準備しています。{% endif %}現在は購入・予約・決済は受け付けていません。</p>
           <a href="#notify" class="cs-button cs-button-dark" data-lp-event="lp_cta_click" data-placement="offer" data-cta-target="waitlist">発売案内について ↓</a>
         {% endif %}
         </div>
@@ -143,9 +146,9 @@ extraCss: [cleanliness-science.css]
   <section class="cs-section cs-section-ivory" id="notify" data-nav="light" data-nav-solid="light" aria-labelledby="cs-notify">
     <div class="cs-shell cs-narrow cs-notify">
       <p class="cs-overline">07 — NOTICE</p>
-      <h2 id="cs-notify">{% if site.product.cleanScience.checkoutUrl %}BOOTHで販売中です。{% else %}発売したら、<br>お知らせします。{% endif %}</h2>
-      <p>{% if site.product.cleanScience.checkoutUrl %}商品内容と販売条件をご確認のうえ、お申し込みください。{% else %}価格は{{ site.product.cleanScience.priceText }}円（税込）。BOOTHの販売ページができしだい、このページから購入できるようにします。先行案内への登録は購入予約ではなく、支払いも購入義務もありません。{% endif %}</p>
-      {% if site.product.cleanScience.checkoutUrl %}
+      <h2 id="cs-notify">{% if checkoutReady %}{% if isStripe %}Stripeで販売中です。{% else %}BOOTHで販売中です。{% endif %}{% else %}発売したら、<br>お知らせします。{% endif %}</h2>
+      <p>{% if checkoutReady %}商品内容と販売条件をご確認のうえ、お申し込みください。{% else %}価格は{{ cs.priceText }}円（税込）。{% if isStripe %}決済と安全な納品の準備が整いしだい{% else %}BOOTHの販売ページができしだい{% endif %}、このページから購入できるようにします。先行案内への登録は購入予約ではなく、支払いも購入義務もありません。{% endif %}</p>
+      {% if checkoutReady %}
       <a href="#offer" class="cs-button cs-button-dark">販売内容を確認する ↑</a>
       {% elif site.prelaunch and site.prelaunch.waitlistAction %}
       <form class="cs-waitlist-form" method="post" action="{{ site.prelaunch.waitlistAction }}" target="_blank" rel="noopener noreferrer" id="cleanliness-waitlist">
