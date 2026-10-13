@@ -34,7 +34,7 @@
    toggle.setAttribute('aria-expanded',String(open));
    toggle.textContent=open?'Close':'Menu';
   };
-  window.matchMedia('(max-width: 860px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
+  window.matchMedia('(max-width: 1180px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
   toggle.addEventListener('click',()=>setOpen(!nav.classList.contains('menu-open')));
   links.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('menu-open')){setOpen(false);toggle.focus();}});
@@ -142,6 +142,7 @@
  const remeasure=()=>{dirty=true;request();};
  window.addEventListener('scroll',request,{passive:true});
  window.addEventListener('resize',remeasure);
+ document.addEventListener('mouton:versionchange',remeasure);
  if('ResizeObserver' in window)new ResizeObserver(remeasure).observe(document.body);
  if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
