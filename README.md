@@ -14,6 +14,7 @@
 - [ブランド方針（BRAND.md）](BRAND.md) — 世界観・表現・判断基準
 - [プロジェクト定義書（docs/project-charter.md）](docs/project-charter.md) — 目的・成果物・開発優先順位・品質管理・成功指標
 - [要件定義書（REQUIREMENTS.md）](REQUIREMENTS.md) — 必要ページ、機能、計測、非機能、除外項目、受け入れ条件
+- [基本設計書（DESIGN.md）](DESIGN.md) — 情報構造、画面設計、デザインルール、利用者導線、計測データの流れ
 
 短期的な収益化施策も扱いますが、ブランドへの信頼と一貫性を維持して進めます。
 
