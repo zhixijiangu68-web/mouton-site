@@ -1,0 +1,14 @@
+{
+  "symbol": "USDJPY",
+  "source": "synthetic fixture; replace for real data",
+  "source_timezone": null,
+  "price_type": "mid",
+  "timeframe_minutes": 15,
+  "pivot_width": 2,
+  "splits": {
+    "start": "2025-01-06T00:00:00+09:00",
+    "development_end": "2025-01-07T00:00:00+09:00",
+    "validation_end": "2025-01-08T00:00:00+09:00",
+    "end": "2025-01-09T00:00:00+09:00"
+  }
+}
