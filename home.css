@@ -290,9 +290,9 @@
 .cover-btn{white-space:nowrap}
 
 /* ---------- First impression: opening veil, kinetic hero, ticker (home.js) ---------- */
-/* Opening veil: deliberately show the logo, hold it, then reveal the homepage. CSS also dismisses if JS fails. */
+/* Opening veil: logo settles, then dissolves over a gently rising homepage (also exits without JS). */
 .intro-veil{display:none}
-html.intro .intro-veil{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;gap:18px;background:radial-gradient(ellipse 60% 50% at 50% 60%,#1442c4 0%,#0b2f97 45%,#050c2a 100%);color:#f8f5ee;animation:veil-lift 1.15s cubic-bezier(.76,0,.24,1) 4.6s forwards;cursor:pointer}
+html.intro .intro-veil{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;gap:18px;background:radial-gradient(ellipse 60% 50% at 50% 60%,#1442c4 0%,#0b2f97 45%,#050c2a 100%);color:#f8f5ee;animation:veil-dissolve 1.6s cubic-bezier(.4,0,.2,1) 4.5s forwards;will-change:opacity,transform;cursor:pointer}
 html.intro .intro-veil::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:var(--grain)}
 .intro-word{margin:0;display:flex;font-family:var(--latin);font-style:italic;font-weight:300;font-size:clamp(4.5rem,17vw,15rem);line-height:.9;letter-spacing:-.02em;overflow:hidden;padding:0 .08em .06em}
 .intro-word span{display:inline-block;transform:translateY(105%) rotate(8deg);animation:intro-letter 1s cubic-bezier(.2,.8,.2,1) calc(.14s + var(--i) * .12s) forwards}
@@ -302,8 +302,8 @@ html.intro.intro-done .intro-veil{display:none}
 @keyframes intro-letter{to{transform:none}}
 @keyframes intro-fade{to{opacity:.8}}
 @keyframes intro-bar{to{transform:scaleX(1)}}
-@keyframes veil-lift{to{clip-path:inset(0 0 100% 0);visibility:hidden}}
-html.intro .intro-veil{clip-path:inset(0 0 0 0)}
+@keyframes veil-dissolve{0%,12%{opacity:1;transform:translate3d(0,0,0) scale(1);visibility:visible}100%{opacity:0;transform:translate3d(0,-12px,0) scale(1.02);visibility:hidden}}
+html.intro .intro-veil{opacity:1;transform:translate3d(0,0,0)}
 
 /* Hero: light that follows the pointer, a giant drifting wordmark, letters that rise in. */
 .cover{cursor:default}
@@ -313,7 +313,11 @@ html.intro .intro-veil{clip-path:inset(0 0 0 0)}
 .cover-inner .display{text-shadow:0 2px 40px rgba(5,10,40,.28)}
 .char{display:inline-block;white-space:pre}
 html.js .cover-title .char{opacity:0;transform:translateY(.55em) rotate(6deg);filter:blur(10px);animation:char-in 1.1s cubic-bezier(.2,.8,.2,1) calc(var(--start,.15s) + var(--c) * .045s) forwards}
-html.intro .cover-title .char{--start:4.75s}
+html.intro .cover-title .char{--start:4.65s}
+/* The underlying hero rises gently as the curtain fades, avoiding a hard visual cut. */
+html.intro .cover-inner{animation:home-arrive 1.65s cubic-bezier(.22,.8,.22,1) 4.5s both}
+@keyframes home-arrive{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}
+
 @keyframes char-in{to{opacity:1;transform:none;filter:none}}
 /* Leaving the hero, the letters scatter like something let go. */
 .cover-title .char{translate:calc(var(--dx,0) * var(--p,0) * 1em) calc(var(--dy,0) * var(--p,0) * 1em);rotate:calc(var(--dr,0) * var(--p,0) * 1deg)}
@@ -321,8 +325,8 @@ html.intro .cover-title .char{--start:4.75s}
 .cover-inner .eyebrow{animation-delay:.05s}.cover-inner .lede{animation-delay:.75s}.hero-latest{animation-delay:.95s}.hero-lang{animation-delay:1.1s}
 html.intro .cover-inner .eyebrow{animation-delay:1.6s}html.intro .cover-inner .lede{animation-delay:2.35s}html.intro .hero-latest{animation-delay:2.55s}html.intro .hero-lang{animation-delay:2.7s}
 @keyframes hero-up{from{opacity:0;translate:0 24px}}
-html.intro .cover .cover-art{animation:hero-zoom 2.5s cubic-bezier(.2,.8,.2,1) 4.45s both}
-@keyframes hero-zoom{from{scale:1.25;filter:saturate(1.6) blur(6px)}}
+html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.22,.8,.22,1) 4.35s both}
+@keyframes hero-zoom{from{scale:1.07;opacity:.82}to{scale:1;opacity:1}}
 .hero-latest-label{position:relative}
 .hero-latest-label::after{content:"";position:absolute;inset:-4px;border-radius:inherit;border:1px solid #fff;animation:pulse 2.4s ease-out 3s infinite;opacity:0}
 @keyframes pulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.5)}}
