@@ -1,0 +1,50 @@
+name: CI failure triage
+
+# workflow_run runs from the default branch. This job never checks out PR code,
+# executes failure logs, or dispatches AI with a secret.
+on:
+  workflow_run:
+    workflows: [Build check, Browser smoke, Security scan]
+    types: [completed]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  report:
+    if: github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const run = context.payload.workflow_run;
+            const title = '[CI failure] ' + run.name;
+            const body = [
+              '品質チェックに失敗しました。原因を調べて、修正PRで再検証してください。',
+              '',
+              '- Workflow: ' + run.name,
+              '- Run: ' + run.html_url,
+              '- Event: ' + run.event,
+              '- Commit: ' + run.head_sha,
+              '',
+              '手順: 失敗ログと（Browser smokeなら）スクリーンショットを確認 → 再現 → テスト追加 → 修正PR。',
+              '必要なら権限のあるメンバーが Issue に @ai-shain とコメントしてAIによる修正案を依頼します。',
+              'AIが提案した変更も必ず人間が確認し、CIを通過してからマージしてください。',
+              '',
+              '※ このワークフローは自動でAIを起動したり、PRをマージしたりしません。',
+            ].join('\n');
+            const { owner, repo } = context.repo;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'open', per_page: 100
+            });
+            const existing = issues.find(issue => !issue.pull_request && issue.title === title);
+            if (existing) {
+              await github.rest.issues.createComment({
+                owner, repo, issue_number: existing.number, body
+              });
+            } else {
+              await github.rest.issues.create({ owner, repo, title, body });
+            }
