@@ -18,11 +18,19 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
+      - name: Create downloadable Japanese A4 sample PDF
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          CHROME="$(command -v google-chrome || command -v chromium || true)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-dev-shm-usage --disable-gpu --no-pdf-header-footer --print-to-pdf="$(pwd)/cleanliness-sample.pdf" "file://$(pwd)/cleanliness-sample.html"
+          test -s cleanliness-sample.pdf
       - name: Commit generated HTML into feature branch
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- index.html cleanliness.html cleanliness-science.html cleanliness-sample.html
+          git add -- index.html cleanliness.html cleanliness-science.html cleanliness-sample.html cleanliness-sample.pdf
           if ! git diff --cached --quiet; then
             git commit -m "build: generate cleanliness prelaunch HTML"
             git push origin HEAD:feature/cleanliness-science-prelaunch
