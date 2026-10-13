@@ -33,8 +33,38 @@ description: "ムートンが作っているもの。観たアニメを記録す
     </div>
   </section>
 
+  {#- A small editorial portfolio: a single optimized 2x2 image atlas keeps mobile loading light. #}
+  <section class="mk-section mk-studies" id="visual-studies" aria-labelledby="mk-studies-title">
+    <div class="mk-studies-heading">
+      <div>
+        <p class="mk-eyebrow">01 / VISUAL STUDIES</p>
+        <h2 id="mk-studies-title">光と表情の、<wbr>断片。</h2>
+      </div>
+      <p>言葉にならない空気を、写真に残す。夜の熱、街の光、旅先の一瞬、静かなまなざし。ムートンのビジュアル制作ノート。</p>
+    </div>
+    <div class="mk-studies-grid">
+      <figure class="mk-study mk-study--one">
+        <div class="mk-study-photo" role="img" aria-label="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている"></div>
+        <figcaption><span>01 / AFTER HOURS</span><strong>夜の熱。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--two">
+        <div class="mk-study-photo" role="img" aria-label="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている"></div>
+        <figcaption><span>02 / NIGHT WALK</span><strong>街の光。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--three">
+        <div class="mk-study-photo" role="img" aria-label="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている"></div>
+        <figcaption><span>03 / SMALL JOY</span><strong>旅先の一瞬。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--four">
+        <div class="mk-study-photo" role="img" aria-label="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている"></div>
+        <figcaption><span>04 / WINDOW LIGHT</span><strong>静かなまなざし。</strong></figcaption>
+      </figure>
+    </div>
+    <p class="mk-studies-note">MOUTON / VISUAL ARCHIVE — 2026.10.14</p>
+  </section>
+
   <section class="mk-section" aria-labelledby="mk-projects">
-    <p class="mk-eyebrow">01 / いま作っているもの</p>
+    <p class="mk-eyebrow">02 / いま作っているもの</p>
     <h2 id="mk-projects">それぞれの、今の状態。</h2>
     <div class="mk-grid">
       {%- for p in projects %}{% if not p.placeholder %}
@@ -55,7 +85,7 @@ description: "ムートンが作っているもの。観たアニメを記録す
   </section>
 
   <section class="mk-section" aria-labelledby="mk-log">
-    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <p class="mk-eyebrow">03 / 制作の記録</p>
     <h2 id="mk-log">進んだ日のこと。</h2>
     <ol class="mk-log" reversed>
       {%- for e in makingLog %}
