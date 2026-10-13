@@ -328,3 +328,16 @@ document.querySelectorAll('[data-cover-toggle]').forEach(b=>{
   sync();
  });
 });
+
+// MOUTON RESEARCH: clicks into the cleanliness-science prelaunch LP.
+// Keep this separate from paid-order conversion events; no sale is possible yet.
+document.addEventListener('click',e=>{
+ const a=e.target.closest&&e.target.closest('a[data-lp-entry]');
+ if(!a||typeof window.gtag!=='function')return;
+ window.gtag('event','lp_entry_click',{
+  product_id:'cleanliness_001',
+  placement:a.dataset.placement||'unknown',
+  source_article:a.dataset.sourceArticle||'unknown',
+  transport_type:'beacon'
+ });
+});
