@@ -43,7 +43,11 @@ description: "ムートンが作っているもの。観たアニメを記録す
         <div class="mk-top"><span>{{ p.label }} · {{ p.kind }}</span><span class="mk-state">{{ p.status }}</span></div>
         <h3>{{ p.name }}</h3>
         <p class="mk-lead">{{ p.lead }}</p>
-        <p>{{ p.text }}</p>
+        <dl class="mk-summary">
+          <dt>目的</dt><dd>{{ p.purpose }}</dd>
+          <dt>現在地</dt><dd>{{ p.current }}</dd>
+          <dt>次の一歩</dt><dd>{{ p.nextShort }}</dd>
+        </dl>
         <a class="mk-more" href="making-{{ p.slug }}.html">{{ p.name }} の詳しい記録 <span aria-hidden="true">→</span></a>
       </article>
       {%- endif %}{% endfor %}
