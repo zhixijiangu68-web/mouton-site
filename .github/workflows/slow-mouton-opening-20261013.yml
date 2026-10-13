@@ -1,0 +1,93 @@
+name: Verify slow MOUTON opening
+on:
+  push:
+    branches: [fix/slower-mouton-opening-20261013]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: fix/slower-mouton-opening-20261013
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build and regression tests
+        run: |
+          node --check home.js
+          npm ci
+          npm run build
+          npm test
+      - name: Browser-test opening timing, tabs and reduced motion
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright';
+          import {resolve} from 'node:path';
+          const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+          const url='file://'+resolve('index.html');
+          for(const width of [390,1280]){
+            const page=await browser.newPage({viewport:{width,height:844},reducedMotion:'no-preference'});
+            const errors=[];
+            page.on('pageerror',e=>errors.push(e.message));
+            await page.goto(url,{waitUntil:'load'});
+            const opening=await page.evaluate(()=>{
+              const veil=document.querySelector('.intro-veil');
+              const s=getComputedStyle(veil);
+              return {active:document.documentElement.classList.contains('intro'),shown:s.display,
+               delay:s.animationDelay,duration:s.animationDuration,word:document.querySelector('.intro-word')?.textContent.trim(),
+               tabs:document.querySelectorAll('[role="tab"]').length,
+               viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth};
+            });
+            console.log('OPEN',width,JSON.stringify(opening));
+            if(!opening.active||opening.shown!=='grid'||opening.delay!=='4.6s'||opening.duration!=='1.15s'||opening.word!=='MOUTON'||opening.tabs!==4||opening.scrollWidth>opening.viewport+1)throw Error('Opening incorrect '+width);
+            await page.waitForTimeout(3100);
+            const hold=await page.evaluate(()=>{
+              const veil=document.querySelector('.intro-veil');
+              const word=veil.querySelector('.intro-word span:last-child');
+              return {veil:getComputedStyle(veil).display,wordTransform:getComputedStyle(word).transform,subOpacity:getComputedStyle(veil.querySelector('.intro-sub')).opacity};
+            });
+            console.log('HOLD',width,JSON.stringify(hold));
+            if(hold.veil!=='grid'||parseFloat(hold.subOpacity)<.75||hold.wordTransform!=='matrix(1, 0, 0, 1, 0, 0)')throw Error('Logo not held on screen '+width);
+            await page.waitForTimeout(2900);
+            const exit=await page.evaluate(()=>({veil:getComputedStyle(document.querySelector('.intro-veil')).display,title:!!document.querySelector('.cover-title'),tabVisible:document.querySelector('.home-tab-list').getBoundingClientRect().top<innerHeight}));
+            console.log('EXIT',width,JSON.stringify(exit));
+            if(exit.veil!=='none'||!exit.title||!exit.tabVisible)throw Error('Curtain did not reveal home '+width);
+            await page.reload({waitUntil:'load'});
+            const replay=await page.evaluate(()=>getComputedStyle(document.querySelector('.intro-veil')).display);
+            if(replay!=='grid')throw Error('Opening did not replay '+width);
+            await page.locator('.intro-veil').click();
+            if(await page.evaluate(()=>getComputedStyle(document.querySelector('.intro-veil')).display)!=='none')throw Error('Skip click failed '+width);
+            await page.locator('#home-tab-quiz').click();
+            if(await page.locator('#home-tab-quiz').getAttribute('aria-selected')!=='true')throw Error('Home tabs broken '+width);
+            await page.goto(url+'#journal',{waitUntil:'load'});
+            await page.reload({waitUntil:'load'});
+            const direct=await page.evaluate(()=>({intro:document.documentElement.classList.contains('intro'),journal:document.getElementById('home-tab-journal')?.getAttribute('aria-selected')}));
+            if(direct.intro||direct.journal!=='true')throw Error('Deep-link blocked '+width);
+            if(errors.length)throw Error('Browser errors '+width+': '+errors.join('; '));
+            await page.close();
+          }
+          const page=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+          await page.goto(url,{waitUntil:'load'});
+          const reduced=await page.evaluate(()=>({intro:document.documentElement.classList.contains('intro'),tabs:document.querySelectorAll('[role=tab]').length}));
+          console.log('REDUCED',JSON.stringify(reduced));
+          if(reduced.intro||reduced.tabs!==4)throw Error('Reduced motion preference ignored');
+          await page.close();
+          await browser.close();
+          JS
+      - name: Remove temporary workflow
+        run: |
+          rm -f .github/workflows/slow-mouton-opening-20261013.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Remove temporary slow-opening browser test workflow"
+            git push origin HEAD:fix/slower-mouton-opening-20261013
+          fi
+          test -z "$(git status --porcelain)"
