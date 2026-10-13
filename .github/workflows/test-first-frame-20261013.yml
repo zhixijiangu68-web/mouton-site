@@ -73,6 +73,8 @@ jobs:
             if(exit.veil!=='none'||exit.tabs.join()!=='reading')throw Error('Intro never revealed site '+width);
             await page.locator('#home-tab-quiz').click();
             if(await page.locator('#home-tab-quiz').getAttribute('aria-selected')!=='true')throw Error('Tab broken '+width);
+            // Tab selection sets a hash; a fresh no-hash visit should replay the introduction.
+            await page.goto(url,{waitUntil:'load'});
             await page.reload({waitUntil:'load'});
             if(await page.locator('.intro-veil').evaluate(x=>getComputedStyle(x).display)!=='grid')throw Error('Intro replay broken');
             await page.locator('.intro-veil').click();
