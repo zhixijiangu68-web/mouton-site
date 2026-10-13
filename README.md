@@ -15,6 +15,7 @@
 - [プロジェクト定義書（docs/project-charter.md）](docs/project-charter.md) — 目的・成果物・開発優先順位・品質管理・成功指標
 - [要件定義書（REQUIREMENTS.md）](REQUIREMENTS.md) — 必要ページ、機能、計測、非機能、除外項目、受け入れ条件
 - [基本設計書（DESIGN.md）](DESIGN.md) — 情報構造、画面設計、デザインルール、利用者導線、計測データの流れ
+- [アクセス解析・UTM運用（docs/analytics-operations.md）](docs/analytics-operations.md) — GA4／Search Consoleの導入確認、SNS計測URL、週次KPI
 
 短期的な収益化施策も扱いますが、ブランドへの信頼と一貫性を維持して進めます。
 
