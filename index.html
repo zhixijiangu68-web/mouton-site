@@ -127,6 +127,14 @@
     </div>
     <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
   </section>
+  <div class="home-tabs" id="explore" data-home-tabs>
+    <div class="home-tab-list" role="tablist" aria-label="トップページのコンテンツ">
+      <button class="home-tab" type="button" role="tab" id="home-tab-reading" aria-controls="home-panel-reading" aria-selected="true" tabindex="0" data-home-tab="reading">おすすめ</button>
+      <button class="home-tab" type="button" role="tab" id="home-tab-quiz" aria-controls="home-panel-quiz" aria-selected="false" tabindex="-1" data-home-tab="quiz">クイズ</button>
+      <button class="home-tab" type="button" role="tab" id="home-tab-topics" aria-controls="home-panel-topics" aria-selected="false" tabindex="-1" data-home-tab="topics">テーマ</button>
+      <button class="home-tab" type="button" role="tab" id="home-tab-journal" aria-controls="home-panel-journal" aria-selected="false" tabindex="-1" data-home-tab="journal">記事検索</button>
+    </div>
+    <div class="home-tab-panel" id="home-panel-reading" role="tabpanel" aria-labelledby="home-tab-reading" tabindex="0" data-home-panel="reading">
   <section class="section cover-section" id="reading" data-nav="dark" data-nav-solid="dark" aria-labelledby="reading-heading">
     <div class="section-inner">
       <h2 class="cover-section-title" id="reading-heading">いま読む<em>Now reading</em></h2>
@@ -147,6 +155,10 @@
       <p class="cover-more"><a href="#journal">記事をすべて見る <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
+
+
+    </div>
+    <div class="home-tab-panel" id="home-panel-quiz" role="tabpanel" aria-labelledby="home-tab-quiz" tabindex="0" data-home-panel="quiz">
   <section class="section cover-section" id="today-q" data-nav="dark" data-nav-solid="dark" aria-labelledby="today-heading">
     <div class="section-inner today-inner">
       <p class="today-kicker">今日の1問</p>
@@ -155,6 +167,10 @@
       <p class="cover-more"><a href="quiz.html">10問チャレンジ <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
+
+
+    </div>
+    <div class="home-tab-panel" id="home-panel-topics" role="tabpanel" aria-labelledby="home-tab-topics" tabindex="0" data-home-panel="topics">
   <section class="section home-topics" aria-labelledby="home-topics-heading" data-nav="light" data-nav-solid="light">
     <div class="section-inner">
       <div class="home-compact-heading">
@@ -186,7 +202,22 @@
       </div>
     </div>
   </section>
+  <section class="section home-more" aria-labelledby="home-more-heading" data-nav="dark" data-nav-solid="dark">
+    <div class="section-inner">
+      <div class="home-compact-heading">
+        <div><p class="eyebrow">More to discover</p><h2 class="section-title" id="home-more-heading">もう<wbr>少し、<wbr>見ていく。</h2></div>
+        <p class="copy">記事の<wbr>先に<wbr>ある、<wbr>本・<wbr>制作・ムートンに<wbr>ついて。</p>
+      </div>
+      <div class="home-more-grid">
+        <a id="books" href="books-habits.html"><span>BOOKS</span><strong>本棚</strong><em aria-hidden="true">↗</em></a>
+        <a id="projects" href="making.html"><span>MAKING</span><strong>制作の記録</strong><em aria-hidden="true">↗</em></a>
+        <a id="about" href="start.html"><span>ABOUT</span><strong>ムートンについて</strong><em aria-hidden="true">↗</em></a>
+      </div>
+    </div>
+  </section>
 
+    </div>
+    <div class="home-tab-panel" id="home-panel-journal" role="tabpanel" aria-labelledby="home-tab-journal" tabindex="0" data-home-panel="journal">
   <section class="section" id="journal" data-nav="light" data-nav-solid="light" aria-labelledby="journal-heading">
     <div class="section-inner">
       <div class="section-head" data-rise>
@@ -616,19 +647,10 @@
       </div>
     </div>
   </section>
-  <section class="section home-more" aria-labelledby="home-more-heading" data-nav="dark" data-nav-solid="dark">
-    <div class="section-inner">
-      <div class="home-compact-heading">
-        <div><p class="eyebrow">More to discover</p><h2 class="section-title" id="home-more-heading">もう<wbr>少し、<wbr>見ていく。</h2></div>
-        <p class="copy">記事の<wbr>先に<wbr>ある、<wbr>本・<wbr>制作・ムートンに<wbr>ついて。</p>
-      </div>
-      <div class="home-more-grid">
-        <a id="books" href="books-habits.html"><span>BOOKS</span><strong>本棚</strong><em aria-hidden="true">↗</em></a>
-        <a id="projects" href="making.html"><span>MAKING</span><strong>制作の記録</strong><em aria-hidden="true">↗</em></a>
-        <a id="about" href="start.html"><span>ABOUT</span><strong>ムートンについて</strong><em aria-hidden="true">↗</em></a>
-      </div>
+
+
     </div>
-  </section>
+  </div>
 </main>
 
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
@@ -675,6 +697,7 @@
 </footer>
 
 <script src="home.js" defer></script>
+<script src="home-tabs.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
