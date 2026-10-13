@@ -6,7 +6,7 @@
 
 ## 公開されるURL
 - `/cleanliness-science.html`：商品LP（構成・FAQ・発売案内）
-- `/cleanliness-sample.html`：5ページの無料サンプル（ブラウザの印刷からPDF保存可）
+- `/cleanliness-sample.html`：5ページの無料サンプル（Web版、印刷からPDF保存可）\n- `/cleanliness-sample.pdf`：A4・5ページのダウンロード版
 - `/cleanliness.html`：既存記事からのLP導線
 - トップの「おすすめ」タブにも小さなリンクを追加（タブやイントロ演出自体は変更しない）
 
@@ -33,7 +33,7 @@ GA4にメールアドレスやその他の個人情報を送信しない。
 | `lp_entry_click` | `site.js` | LPへの入り口クリック。 `source_article` / `placement` を記録 |
 | `lp_cta_click` | `cleanliness-science.js` | LP内で発売案内へスクロールする意図 |
 | `sample_click` | `cleanliness-science.js` | 無料サンプルのページへのクリック（実読了ではない） |
-| `sample_print_click` | 同上 | 印刷ダイアログ起動（実際のPDF保存成功ではない） |
+| `sample_pdf_click` | 同上 | PDFファイルのリンククリック（ダウンロード成功とは異なる） |\n| `sample_print_click` | 同上 | 印刷ダイアログ起動（実際のPDF保存成功ではない） |
 | `waitlist_submit` | 同上 | メールフォーム送信の試行のみ（登録確定とは異なる） |
 
 共通パラメータ：`product_id=cleanliness_001`、`placement`、`cta_target`。
