@@ -1,0 +1,80 @@
+name: Prepare MOUTON icon assets
+on:
+  push:
+    branches: [feature/mouton-new-site-icons-20261013]
+permissions:
+  contents: write
+jobs:
+  build-icons:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: feature/mouton-new-site-icons-20261013
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Render favicon and home screen icons from SVG
+        run: |
+          python3 -m pip install --quiet --break-system-packages pillow cairosvg
+          python3 - <<'PY'
+          from pathlib import Path
+          from io import BytesIO
+          from PIL import Image
+          import cairosvg
+
+          assert Path('favicon.svg').is_file()
+          def render(size):
+              src = cairosvg.svg2png(url='favicon.svg',output_width=size,output_height=size)
+              return Image.open(BytesIO(src)).convert('RGBA')
+
+          for filename, size in [
+              ('favicon-32x32.png', 32),
+              ('icon-192.png',192),
+              ('icon-512.png',512)
+          ]:
+              render(size).save(filename,optimize=True)
+
+          apple=render(180)
+          bg=Image.new('RGBA',(180,180),'#07152b')
+          bg.alpha_composite(apple)
+          bg.convert('RGB').save('apple-touch-icon.png',optimize=True)
+
+          images=[render(n) for n in [16,32,48]]
+          images[-1].save('favicon.ico',format='ICO',sizes=[(16,16),(32,32),(48,48)],append_images=images[:-1])
+
+          for f,s in [('favicon-32x32.png',32),('apple-touch-icon.png',180),('icon-192.png',192),('icon-512.png',512)]:
+              assert Image.open(f).size == (s,s),(f,Image.open(f).size)
+              print(f,s,'x',s,'bytes=',Path(f).stat().st_size)
+          assert Image.open('favicon.ico').size == (48,48)
+          PY
+      - name: Build and test complete site
+        run: |
+          npm ci
+          npm run build
+          npm test
+          node --input-type=module <<'JS'
+          import {readFileSync,statSync} from 'node:fs';
+          for (const path of ['index.html','en/index.html','operator.html','body-clock.html']) {
+            const html=readFileSync(path,'utf8');
+            for(const entry of ['favicon.svg','favicon-32x32.png','favicon.ico','apple-touch-icon.png','site.webmanifest']){
+              if(!html.includes(entry))throw Error('Missing '+entry+' in '+path);
+            }
+          }
+          for(const file of ['favicon.svg','favicon.ico','favicon-32x32.png','apple-touch-icon.png','icon-192.png','icon-512.png','site.webmanifest']) {
+            if(statSync(file).size===0)throw Error('Empty file: '+file);
+          }
+          console.log('New favicon links present throughout the site');
+          JS
+      - name: Commit generated icons and remove one-time workflow
+        run: |
+          rm -f .github/workflows/mouton-icons-20261013.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Generate complete MOUTON favicon and app icon set; rebuild site"
+            git push origin HEAD:feature/mouton-new-site-icons-20261013
+          fi
