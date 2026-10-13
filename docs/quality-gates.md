@@ -45,3 +45,11 @@ Repository → Settings → Rules → Rulesets（または Branch protection rul
 - CodeQLは静的解析であり、すべての脆弱性や秘密情報の流出を検出できるわけではない。
 - npm auditの脆弱性が見つかった場合は、むやみに --force せず影響と修正を調査する。
 - GitHub Actionsが失敗すると、CI failure triageに同じ名前の未解決Issueがあれば追記する。修正後は人間がIssueを閉じる。
+
+
+## 2026-10-13 導入時に判明したブロッカー
+
+初回CIでBuild checkとBrowser smokeは成功。Security scanは既存の依存関係とリポジトリ設定が原因で失敗した。
+- npm auditで9件（High 5件、Moderate 4件）。詳細は Issue #106。Eleventyの破壊的ダウングレードを提案する npm audit fix --force は実施しない。
+- Dependency reviewはDependency graphが未有効化のため実行不可。Settings → Security → Advanced Security から有効化して再実行する。
+- CIが赤い間は、失敗を無視してmainへマージしない。既存依存関係の修正と設定変更が必要。
