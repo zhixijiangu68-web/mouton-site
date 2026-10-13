@@ -295,15 +295,26 @@
 html.intro .intro-veil{position:fixed;inset:0;z-index:300;display:grid;place-content:center;justify-items:center;gap:18px;background:radial-gradient(ellipse 60% 50% at 50% 60%,#1442c4 0%,#0b2f97 45%,#050c2a 100%);color:#f8f5ee;animation:veil-dissolve 1.6s cubic-bezier(.4,0,.2,1) 4.5s forwards;will-change:opacity,transform;cursor:pointer}
 html.intro .intro-veil::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:var(--grain)}
 .intro-word{margin:0;display:flex;font-family:var(--latin);font-style:italic;font-weight:300;font-size:clamp(4.5rem,17vw,15rem);line-height:.9;letter-spacing:-.02em;overflow:hidden;padding:0 .08em .06em}
-.intro-word span{display:inline-block;transform:translateY(105%) rotate(8deg);animation:intro-letter 1s cubic-bezier(.2,.8,.2,1) calc(.14s + var(--i) * .12s) forwards}
+.intro-word span{display:inline-block;opacity:0;transform:translate3d(0,65%,0);animation:intro-letter 1.2s cubic-bezier(.22,1,.36,1) calc(.18s + var(--i) * .11s) both;backface-visibility:hidden;will-change:transform,opacity}
 .intro-sub{margin:0;font-family:var(--latin);font-style:italic;font-size:clamp(1rem,1.6vw,1.25rem);letter-spacing:.12em;opacity:0;animation:intro-fade .75s ease 1.3s forwards}
 .intro-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:linear-gradient(90deg,#d9b46a,#f8f5ee);transform:scaleX(0);transform-origin:left;animation:intro-bar 2.8s cubic-bezier(.6,0,.2,1) .35s forwards}
 html.intro.intro-done .intro-veil{display:none}
-@keyframes intro-letter{to{transform:none}}
+@keyframes intro-letter{from{opacity:0;transform:translate3d(0,65%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @keyframes intro-fade{to{opacity:.8}}
 @keyframes intro-bar{to{transform:scaleX(1)}}
 @keyframes veil-dissolve{0%,12%{opacity:1;transform:translate3d(0,0,0) scale(1);visibility:visible}100%{opacity:0;transform:translate3d(0,-12px,0) scale(1.02);visibility:hidden}}
 html.intro .intro-veil{opacity:1;transform:translate3d(0,0,0)}
+/* The first frame stays stable until the intro font is ready. CSS still runs if home.js is blocked. */
+html.intro.intro-preparing .intro-veil,
+html.intro.intro-preparing .intro-word span,
+html.intro.intro-preparing .intro-sub,
+html.intro.intro-preparing .intro-bar,
+html.intro.intro-preparing .cover-inner,
+html.intro.intro-preparing .cover .cover-art,
+html.intro.intro-preparing .cover-title .char{animation-play-state:paused}
+html.intro.intro-fallback-font .intro-word,
+html.intro.intro-fallback-font .intro-sub{font-family:Georgia,"Times New Roman",serif}
+
 
 /* Hero: light that follows the pointer, a giant drifting wordmark, letters that rise in. */
 .cover{cursor:default}
