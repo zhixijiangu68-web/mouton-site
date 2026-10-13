@@ -1,5 +1,5 @@
 'use strict';
-// Home page only: opening veil, kinetic headline, pointer light, cursor companion, tilting cards.
+// Home page only: opening veil, kinetic headline, pointer light and subtle card tilt.
 (()=>{
  const root=document.documentElement;
  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,26 +63,6 @@
  }
 
  if(!finePointer||reduce)return;
-
- // Cursor companion: a small dot that opens into a ring over anything clickable.
- const dot=document.createElement('div');
- dot.className='cursor-dot is-off';dot.setAttribute('aria-hidden','true');
- document.body.append(dot);
- let cx=-100,cy=-100,dx=-100,dy=-100,moving=0;
- const follow=()=>{
-  dx+=(cx-dx)*.22;dy+=(cy-dy)*.22;
-  dot.style.setProperty('--cx',dx.toFixed(1)+'px');dot.style.setProperty('--cy',dy.toFixed(1)+'px');
-  moving=Math.abs(cx-dx)+Math.abs(cy-dy)>.3?requestAnimationFrame(follow):0;
- };
- addEventListener('pointermove',e=>{
-  if(e.pointerType!=='mouse')return;
-  cx=e.clientX;cy=e.clientY;
-  dot.classList.remove('is-off');
-  dot.classList.toggle('is-link',!!e.target.closest('a,button,input,label,.journal-item'));
-  if(!moving)moving=requestAnimationFrame(follow);
- },{passive:true});
- document.addEventListener('mouseout',e=>{if(!e.relatedTarget)dot.classList.add('is-off');});
- addEventListener('blur',()=>dot.classList.add('is-off'));
 
  // Cards lean toward the pointer, with a soft glint where it is.
  document.querySelectorAll('.reading3-card,.guide-card,.science-card,.card-link').forEach(card=>{

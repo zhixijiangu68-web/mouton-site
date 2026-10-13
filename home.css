@@ -341,10 +341,7 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.2,.8,.2,1) 1
 .hero-ticker-list a:focus-visible{outline:2px solid #fff;outline-offset:-4px}
 @keyframes ticker{to{transform:translateX(-100%)}}
 
-/* Cursor companion (mouse only) and tilting cards. */
-.cursor-dot{position:fixed;left:0;top:0;z-index:250;width:44px;height:44px;margin:-22px 0 0 -22px;border:1px solid #fff;border-radius:50%;pointer-events:none;mix-blend-mode:difference;transform:translate3d(var(--cx,-100px),var(--cy,-100px),0) scale(var(--cs,.35));background:rgba(255,255,255,var(--cf,1));transition:scale .3s,opacity .3s,background-color .3s}
-.cursor-dot.is-link{--cs:1;--cf:0}
-.cursor-dot.is-off{opacity:0}
+/* Subtle card tilt; no custom cursor overlay. */
 .tilt{position:relative;overflow:hidden;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--lift,0))}
 .tilt::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle 220px at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 70%);opacity:0;transition:opacity .4s;mix-blend-mode:soft-light}
 .js .tilt.tilting{--lift:-6px;transition:transform .12s ease-out,background .4s,border-color .4s,opacity .8s,translate .8s}
@@ -384,3 +381,66 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.2,.8,.2,1) 1
   .cover .cover-title .char{animation:none;opacity:1;filter:none;transform:none;translate:none;rotate:none}
 }
 @media(max-width:760px){.cover .hero-word{opacity:.35}}
+
+
+/* Compact homepage: entry points rather than long parallax sections. */
+.cover:not(.cover-en){min-height:min(740px,88svh);padding-top:clamp(100px,12vh,130px);padding-bottom:clamp(108px,13vh,142px)}
+.home-topics,.home-more{padding-block:clamp(36px,5.5vw,72px)}
+.home-topics{background:var(--paper);color:var(--ink)}
+.home-compact-heading{display:flex;align-items:end;justify-content:space-between;gap:12px 28px;margin-bottom:clamp(18px,3vw,32px)}
+.home-compact-heading .eyebrow{margin-bottom:10px}
+.home-compact-heading .section-title{font-size:clamp(1.5rem,3vw,2.375rem);line-height:1.5;margin:0}
+.home-compact-heading .copy{font-size:.875rem;line-height:1.7;max-width:26em;margin:0;color:var(--muted)}
+.home-topic-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.home-topic-card{display:flex;flex-direction:column;gap:8px;min-height:170px;padding:clamp(20px,2.8vw,30px);background:#fff;border:1px solid var(--line);border-radius:12px;color:var(--ink);text-decoration:none;position:relative;transition:border-color .2s,transform .2s}
+.home-topic-card:hover,.home-topic-card:focus-visible{border-color:var(--blue);transform:translateY(-2px)}
+.home-topic-card:focus-visible,.home-more-grid a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.home-topic-no{font-family:var(--latin);font-size:.75rem;letter-spacing:.08em;color:var(--muted)}
+.home-topic-card strong{font-family:var(--serif);font-weight:500;font-size:clamp(1.25rem,2.2vw,1.6rem);line-height:1.45}
+.home-topic-card>span:nth-of-type(2){font-size:.875rem;line-height:1.65;color:var(--muted)}
+.home-topic-card em{position:absolute;right:22px;top:24px;font-style:normal;font-size:1.15rem;color:var(--blue)}
+#reading,#today-q,#guides,#journal{padding-block:clamp(40px,5vw,76px)}
+#reading .cover-section-title,#today-q .cover-section-title{margin-bottom:20px}
+#reading .reading3{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:12px}
+#reading .reading3-card.is-feature{grid-row:auto;min-height:220px}
+#reading .reading3-card{padding:clamp(20px,2.4vw,28px)}
+#reading .reading3-text{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#reading .cover-more,#today-q .cover-more{margin-top:18px}
+#guides .section-head,#journal .section-head{margin-bottom:20px;gap:10px 28px}
+#guides .guide-grid{gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+#guides .guide-card{min-height:0;padding:clamp(18px,2.5vw,26px)}
+#journal .journal-item{padding-block:18px;grid-template-columns:100px minmax(0,1fr) 34px}
+#journal .journal-excerpt{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;margin-top:3px}
+#journal .journal-read-time{margin-top:5px}
+#journal .journal-title{font-size:clamp(1.125rem,1.8vw,1.45rem)}
+#journal .journal-arrow{width:34px;height:34px}
+.home-more{background:var(--night);color:var(--on-night)}
+.home-more .home-compact-heading .copy{color:var(--on-night-2)}
+.home-more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.home-more-grid a{display:flex;align-items:center;gap:12px;min-height:92px;padding:18px 22px;border:1px solid rgba(181,188,208,.23);border-radius:12px;text-decoration:none;color:var(--on-night);transition:background .2s,border-color .2s}
+.home-more-grid a:hover{background:rgba(255,255,255,.07);border-color:rgba(181,188,208,.5)}
+.home-more-grid a>span{font-family:var(--latin);font-size:.6875rem;color:var(--on-night-2);letter-spacing:.05em}
+.home-more-grid a>strong{font-family:var(--serif);font-size:1.125rem;font-weight:500}
+.home-more-grid a>em{font-style:normal;margin-left:auto;color:var(--on-night-2)}
+@media(max-width:900px){
+ .home-compact-heading{align-items:flex-start;flex-direction:column}
+ .home-topic-grid{gap:8px}
+ .home-topic-card{padding:20px 16px;min-height:160px}
+ .home-topic-card em{right:14px;top:16px}
+}
+@media(max-width:760px){
+ .cover:not(.cover-en){min-height:85svh;padding-top:110px;padding-bottom:116px}
+ .home-topic-grid,.home-more-grid{grid-template-columns:1fr;gap:8px}
+ .home-topic-card{min-height:0;padding:16px 20px;gap:3px}
+ .home-topic-card>span:nth-of-type(2){font-size:.8125rem}
+ .home-more-grid a{min-height:64px}
+ #reading .reading3{grid-template-columns:1fr}
+ #reading .reading3-card.is-feature{min-height:0}
+ #journal .journal-item{grid-template-columns:72px minmax(0,1fr) 30px;gap:8px 12px}
+ #journal .journal-date{font-size:.82rem}
+ #journal .journal-arrow{width:30px;height:30px}
+ #guides .guide-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ .home-topic-card,.home-more-grid a{transition:none}
+}
