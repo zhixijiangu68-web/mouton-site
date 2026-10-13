@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">MOUTON — 月夜の羊</title>
+  <desc id="desc">紺色の夜空、金色の三日月、白い羊のシンボル</desc>
+  <defs>
+    <linearGradient id="night" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#07152b"/>
+      <stop offset=".6" stop-color="#102747"/>
+      <stop offset="1" stop-color="#071225"/>
+    </linearGradient>
+    <linearGradient id="wool" x1=".15" y1="0" x2=".85" y2="1">
+      <stop offset="0" stop-color="#fffaf0"/>
+      <stop offset="1" stop-color="#e2d8c4"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff2bb"/>
+      <stop offset="1" stop-color="#d8a95b"/>
+    </linearGradient>
+    <mask id="crescent">
+      <rect width="128" height="128" fill="#000"/>
+      <circle cx="53" cy="54" r="36" fill="#fff"/>
+      <circle cx="67" cy="43" r="34" fill="#000"/>
+    </mask>
+  </defs>
+  <rect width="128" height="128" rx="26" fill="url(#night)"/>
+  <circle cx="53" cy="54" r="36" fill="url(#gold)" mask="url(#crescent)"/>
+  <path d="M109 23v10M104 28h10M30 35v6M27 38h6" stroke="#f9da97" stroke-width="2" stroke-linecap="round" opacity=".9"/>
+  <circle cx="103" cy="49" r="1.7" fill="#e9c684"/>
+  <circle cx="92" cy="18" r="1.3" fill="#e9c684"/>
+  <circle cx="18" cy="76" r="1.3" fill="#e9c684"/>
+  <path d="M-4 105C24 94 45 101 64 106c25 8 40 2 68-14v40H-4Z" fill="#0b3451"/>
+  <path d="M0 114c26-12 42-10 65-4 28 8 41-3 63-10v28H0Z" fill="#102c43"/>
+  <g stroke="#8c7359" stroke-width="1.3" stroke-linejoin="round">
+    <path d="M53 92v18q3 3 8 0l3-18" fill="#685747"/>
+    <path d="M75 92v18q4 3 8 0l3-21" fill="#685747"/>
+  </g>
+  <g fill="url(#wool)" stroke="#cabca5" stroke-width=".75">
+    <ellipse cx="66" cy="76" rx="30" ry="23"/>
+    <circle cx="43" cy="75" r="11"/>
+    <circle cx="49" cy="62" r="11"/>
+    <circle cx="62" cy="56" r="11.5"/>
+    <circle cx="76" cy="57" r="12"/>
+    <circle cx="86" cy="66" r="12"/>
+    <circle cx="80" cy="82" r="12"/>
+    <circle cx="63" cy="88" r="12"/>
+    <circle cx="49" cy="86" r="10"/>
+    <circle cx="64" cy="70" r="12"/>
+  </g>
+  <path d="M87 62Q98 56 102 66Q102 77 96 84Q89 89 81 79Q80 68 87 62Z" fill="#d4bba0" stroke="#9b836d" stroke-width="1"/>
+  <path d="M84 63Q75 59 75 69Q79 72 85 70" fill="#bda18c" stroke="#8d7463" stroke-width=".9"/>
+  <path d="M98 75q6 1 5 5-4 4-9 1" fill="#dcc5ad"/>
+  <circle cx="94" cy="69" r="2.15" fill="#131e2b"/>
+  <circle cx="94.5" cy="68.5" r=".65" fill="#fff"/>
+  <ellipse cx="102" cy="79" rx="2.3" ry="1.45" fill="#423737"/>
+  <path d="M34 106Q65 103 98 108" stroke="#dfb868" stroke-width="2" stroke-linecap="round" fill="none" opacity=".83"/>
+</svg>
