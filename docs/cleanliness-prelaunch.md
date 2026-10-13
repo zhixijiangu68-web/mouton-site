@@ -23,6 +23,8 @@ PDFガイド（A4・32ページ、1,980円・税込）を BOOTH で売る。記�
 - `waitlistAction`：メール配信サービスのフォームPOST先URL（HTTPS）。
 - `waitlistEmailField`：配信先サービスが受け付けるメールフィールド名（通常は email）。
 - `waitlistService`：プライバシーポリシーに掲載するサービス名称。
+- `provider: 'buttondown'` と実在するButtondown埋め込みフォーム送信先を初期候補とする。別サービスを使う場合はフォームと検証コードを別途実装する。
+- `enabled: true` にする前に `doubleOptInVerified`、`unsubscribeVerified`、`privacyReviewed`、`senderDetailsVerified` の4項目を**実際に確認してから** `true` にする。不備があればビルドを失敗させる。
 
 フォーム送信にはサービス側の契約・本人確認・配信停止方法の設定が必要。
 未設定の場合、フォームを非表示にし「先行案内の受付は準備中」と示す。
