@@ -1,0 +1,85 @@
+name: Integrate reviewed PR sources (2026-10-13)
+on:
+  push:
+    branches:
+      - integrate-prs-66-67-83-84-87-88-90-20261013
+permissions:
+  contents: write
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: integrate-prs-66-67-83-84-87-88-90-20261013
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Restore only the feature sources and their share images
+        run: |
+          git fetch --no-tags origin '+refs/heads/claude/*:refs/remotes/origin/claude/*'
+          git restore --source=origin/claude/body-clock -- src/articles/body-clock.html images/og/body-clock.jpg
+          git restore --source=origin/claude/aspirin -- src/articles/aspirin.html images/og/aspirin.jpg
+          git restore --source=origin/claude/squat-dhea -- src/articles/squat-dhea.html images/og/squat-dhea.jpg
+          git restore --source=origin/claude/gon -- src/articles/gon.html images/og/gon.jpg
+          git restore --source=origin/claude/en-bailey -- src/en/articles/bailey-schildbach.html images/og/en/bailey-schildbach.jpg
+          git restore --source=origin/claude/favorites -- src/_data/favorites.js src/favorites.njk
+          python3 - <<'PY'
+          from pathlib import Path
+          def one(path, before, after):
+              p=Path(path); s=p.read_text(); assert before in s, f"Missing match {path}: {before[:50]}"; p.write_text(s.replace(before,after,1))
+          one('src/_includes/article.njk', "if lang == 'en' %}<a class=\"cover-lang\"", "if lang == 'en' and not enOnly %}<a class=\"cover-lang\"")
+          one('src/_includes/article.njk', "elif page.fileSlug in enSlugs %}", "elif lang != 'en' and page.fileSlug in enSlugs %}")
+          one('src/_includes/base.njk', 'if isArticle and page.fileSlug in enSlugs %}', 'if isArticle and page.fileSlug in enSlugs and not enOnly %}')
+          one('src/_includes/partials/nav-en.njk', "((page.fileSlug + '.html') if isArticle else 'index.html')", "((page.fileSlug + '.html') if (isArticle and not enOnly) else 'index.html')")
+          one('src/_includes/partials/article-end-en.njk', '<a href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語で読む</a>', '{% if not enOnly %}<a href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語で読む</a>{% endif %}')
+          one('src/_includes/partials/footer-map.njk', "{%- if not en %}<li><a href=\"feed.xml\">RSS</a></li>{% endif %}", "{%- if not en %}<li><a href=\"favorites.html\">運営者のお気に入り</a></li>{% endif %}\n      {%- if not en %}<li><a href=\"feed.xml\">RSS</a></li>{% endif %}")
+          one('src/operator.njk','  <div><dt>連絡先</dt>', '  <div><dt>お気に入り</dt><dd><a href="favorites.html">運営者のお気に入り（S〜Cランク）</a></dd></div>\n  <div><dt>連絡先</dt>')
+          css=Path('reading.css')
+          with css.open('a') as fh:
+              fh.write('\n/* Contrast and long-breadcrumb improvements for newly integrated articles. */\nbody.article-page article .pull p{color:inherit}\nbody.article-page .crumbs [aria-current]{max-width:min(22em,calc(100vw - 80px))}\n')
+          for path, old, new in [
+              ('.github/workflows/ai-shain.yml','actions/checkout@v5','actions/checkout@v7'),
+              ('.github/workflows/build-check.yml','actions/checkout@v4','actions/checkout@v7'),
+              ('.github/workflows/build-check.yml','actions/setup-node@v4','actions/setup-node@v6')]:
+              one(path,old,new)
+          PY
+      - name: Full build and repository test
+        run: |
+          npm ci
+          npm run build
+          npm test
+      - name: Browser layout, navigation and six-page smoke test
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          import { resolve } from 'node:path';
+          const browser = await chromium.launch({ headless: true, args: ['--no-sandbox'] });
+          const pages = ['body-clock.html','aspirin.html','squat-dhea.html','gon.html','en/bailey-schildbach.html','favorites.html'];
+          for (const width of [390,1280]) {
+            const page=await browser.newPage({ viewport:{width,height:844} });
+            for (const target of pages) {
+              await page.goto('file://'+resolve(target),{waitUntil:'load'});
+              const v=await page.evaluate(()=>({title:document.title,viewport:window.innerWidth,documentWidth:document.documentElement.scrollWidth,h1:document.querySelectorAll('h1').length,article:!!document.querySelector('main,article')}));
+              console.log(width,target,JSON.stringify(v));
+              if(v.h1!==1||v.documentWidth>v.viewport+1||!v.article)throw new Error('layout '+width+' '+target);
+            }
+            await page.goto('file://'+resolve('index.html'),{waitUntil:'load'});
+            const hasFavorites=await page.evaluate(()=>!!document.querySelector('a[href="favorites.html"]'));
+            if(!hasFavorites)throw new Error('Favorites nav missing');
+            await page.close();
+          }
+          await browser.close();
+          JS
+      - name: Remove temporary workflow and commit clean generated site
+        run: |
+          rm -f .github/workflows/integrate-prs-20261013.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Integrate seven pending PR features onto latest main; rebuild and test"
+          git push origin HEAD:integrate-prs-66-67-83-84-87-88-90-20261013
