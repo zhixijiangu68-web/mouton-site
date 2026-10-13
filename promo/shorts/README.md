@@ -26,7 +26,7 @@
 
 `promo/shorts/philosophy.json` の問いを、A・B の二択にした動画。「あなたならどっち？」→ 3・2・1 → 正解のカードが光る → 答えと一言。サルトルの教え子の話だけは、A・B どちらも消える（「どちらでもない」が答え）。
 
-- 作り方：`cd scripts/og && node x-video.mjs --philo <id>` → `promo/shorts/philo-<id>.mp4`
+- 作り方：`cd scripts/og && node x-video.mjs --philo <id>` → `promo/shorts/philo-<id>.mp4`（まだ動画がない問いをまとめて作るなら `sh shorts-all.sh`）
 - 問いを足すときは、記事に書いてある事実だけを使う（`slug` がその記事）。正解が A と B に偏らないようにする
 - おすすめの順番：sartre-student → narcissist-first → sisyphus → sartre-nobel → schopenhauer → marcus → epictetus（いちばん引きの強い「答えがない問い」から）
 
