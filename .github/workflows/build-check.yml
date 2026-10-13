@@ -22,8 +22,6 @@ jobs:
       - run: npm ci
       - name: Unit tests, Eleventy build and generated-site validation
         run: npm test
-      - name: Diagnostic diff (temporary)
-        run: git diff -- making.html | head -c 20000
       - name: Generated files are up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then
