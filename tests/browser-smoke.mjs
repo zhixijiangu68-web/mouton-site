@@ -147,6 +147,33 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
+
+    await t.test('making sections: open and close on desktop and phone; anchors expand', async () => {
+      for (const [label, options] of [
+        ['making-accordion-desktop', { viewport: { width: 1280, height: 900 } }],
+        ['making-accordion-phone', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
+          const panels = page.locator('main.making details.mk-accordion');
+          assert.equal(await panels.count(), 4, 'every major section has a disclosure control');
+          assert.equal(await panels.nth(1).evaluate(el => el.open), true, 'photo gallery is initially visible');
+          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'production log initially collapsed');
+          await panels.nth(3).locator('summary').click();
+          assert.equal(await panels.nth(3).evaluate(el => el.open), true, 'tap expands the production log');
+          await panels.nth(3).locator('summary').click();
+          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'tap collapses the production log');
+          const image = page.locator('.mk-study--two img');
+          assert.equal(await image.getAttribute('width'), '508', 'keep the original image dimensions');
+          const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.width <= sizes.viewport + 2, 'making gallery must not overflow');
+          await page.goto(origin + '/making.html#kioku', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('#kioku').isVisible(), true, 'project deep link opens containing section');
+          assert.equal(await page.locator('#mk-projects').count(), 1);
+        });
+      }
+    });
+
     await t.test('start page: brand introduction reaches making on desktop and mobile', async () => {
       for (const [label, options] of [
         ['start-desktop', { viewport: { width: 1440, height: 900 } }],
