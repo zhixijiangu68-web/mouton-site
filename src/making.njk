@@ -1,6 +1,7 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+extraCss: [mouton-art-scenes.css]
 permalink: making.html
 title: "制作 — ムートン"
 description: "ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
@@ -14,6 +15,14 @@ description: "ムートンが作っているもの。観たアニメを記録す
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
 
+  <figure class="mouton-scene mouton-scene--orbit" aria-label="金色の点と軌道を描いた抽象的なアート">
+    <div class="mouton-scene__image" aria-hidden="true"></div><div class="mouton-scene__overlay" aria-hidden="true"></div>
+    <figcaption class="mouton-scene__content">
+      <span class="mouton-scene__kicker">PROCESS / WORKS</span>
+      <p class="mouton-scene__line">点をつなぎ、形にする。</p>
+      <p class="mouton-scene__caption">未完成の試みも、軌跡として残す。</p>
+    </figcaption>
+  </figure>
   {#- サイトの最近の大きな変化を、制作一覧でも短く見せる。 #}
   <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
     <div class="mk-feature-header">
