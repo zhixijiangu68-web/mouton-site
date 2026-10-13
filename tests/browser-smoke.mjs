@@ -205,6 +205,7 @@ test('MOUTON browser smoke', async t => {
       ]) {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
+          await page.locator('[aria-labelledby="mk-projects"] .mk-accordion-summary').click();
           assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
           for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
