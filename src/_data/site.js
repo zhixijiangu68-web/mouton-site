@@ -1,3 +1,5 @@
+import { waitlistReady } from '../../scripts/waitlist-readiness.mjs';
+
 // サイト全体の設定。ここを書き換えて `npm run build` すると全ページに反映される。
 export default {
   name: 'ムートン',
@@ -35,12 +37,22 @@ export default {
     title: '新しい記事を、メールで受け取る',
     text: '記事を書いたときに、ときどきお知らせします。',
   },
-  // 発売前PDFの先行案内。外部配信サービスのPOST先が確定するまで受付しない。
-  prelaunch: {
-    waitlistAction: '',
-    waitlistEmailField: 'email',
-    waitlistService: '',
-  },
+  // BD-06: 先行案内は既定で完全停止。URLを設定しただけでは受付できない。
+  // 有効化は公式の配信先、本人確認、配信停止、個人情報・送信者情報のレビュー後にのみ行う。
+  prelaunch: (() => {
+    const config = {
+      enabled: false,
+      provider: '',              // 初期実装は 'buttondown' のみを許可
+      waitlistAction: '',        // 実際のButtondown embed-subscribeのHTTPS URL
+      waitlistEmailField: 'email',
+      waitlistService: '',       // 'Buttondown'
+      doubleOptInVerified: false,
+      unsubscribeVerified: false,
+      privacyReviewed: false,
+      senderDetailsVerified: false,
+    };
+    return { ...config, ready: waitlistReady(config) };
+  })(),
   // 「清潔感の科学」販売先。現行は BOOTH。Stripe を利用する場合は checkoutProvider:'stripe' に切り替える。
   // checkoutUrl：BOOTH の商品ページ（https://〜.booth.pm/items/〜）。空なら購入ボタンを出さず「発売準備中」と表示。
   // legalUrl：特定商取引法に基づく表示のページ。checkoutUrl を入れるときは必須（npm test で確かめる）。
