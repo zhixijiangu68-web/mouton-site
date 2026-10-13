@@ -154,6 +154,88 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
+    await t.test('tabs: keyboard selection and reload-safe anchors on desktop and mobile', async () => {
+      const anchors = [
+        ['reading', 'reading'], ['quiz', 'today-q'], ['topics', 'guides'], ['journal', 'journal'],
+      ];
+      for (const [label, options] of [
+        ['tabs-desktop', { viewport: { width: 1440, height: 900 } }],
+        ['tabs-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+          for (const [name, anchor] of anchors) {
+            const tab = page.locator('[data-home-tab="' + name + '"]');
+            await tab.click();
+            assert.equal(new URL(page.url()).hash, '#' + anchor, label + ': URL for ' + name);
+            assert.equal(await tab.getAttribute('aria-selected'), 'true');
+            await page.reload({ waitUntil: 'domcontentloaded' });
+            assert.equal(await tab.getAttribute('aria-selected'), 'true', label + ': reload of ' + name);
+            assert.equal(await page.locator('[data-home-panel="' + name + '"]').isVisible(), true);
+            assert.equal(await page.locator('[data-home-panel]:visible').count(), 1);
+          }
+          const journal = page.locator('[data-home-tab="journal"]');
+          await journal.focus();
+          await page.keyboard.press('Home');
+          assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true');
+          assert.equal(await page.locator('[data-home-tab="reading"]').evaluate(el => el === document.activeElement), true);
+          await page.keyboard.press('ArrowLeft');
+          assert.equal(await journal.getAttribute('aria-selected'), 'true', 'ArrowLeft should wrap');
+          await page.keyboard.press('ArrowRight');
+          assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true', 'ArrowRight should wrap');
+          await page.keyboard.press('End');
+          assert.equal(await journal.getAttribute('aria-selected'), 'true');
+          const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
+        });
+      }
+    });
+
+    await t.test('mobile menu: concealed panel anchors and focus recovery', async () => {
+      await checkPage(browser, 'menu-anchors', {
+        viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
+      }, async page => {
+        await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+        const menu = page.locator('.menu-toggle');
+        await menu.click();
+        assert.equal(await menu.getAttribute('aria-expanded'), 'true');
+        assert.equal(await page.locator('main').evaluate(el => el.inert), true, 'background should be inert');
+        await page.keyboard.press('Escape');
+        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
+        assert.equal(await page.locator('main').evaluate(el => el.inert), false);
+        assert.equal(await menu.evaluate(el => el === document.activeElement), true, 'focus should return to menu button');
+        await menu.click();
+        await page.locator('.site-links a[href="index.html#projects"]').click();
+        await page.waitForURL('**/index.html#projects');
+        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
+        assert.equal(await page.locator('main').evaluate(el => el.inert), false);
+        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
+        assert.equal(await page.locator('#projects').isVisible(), true);
+        await page.goto(origin + '/index.html#about', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
+        await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
+        assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true',
+          'cover topic anchor is not a tab link');
+      });
+    });
+
+    await t.test('no JavaScript: all four content panels remain readable', async () => {
+      await checkPage(browser, 'no-js-tabs', {
+        viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, javaScriptEnabled: false,
+      }, async page => {
+        await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('[data-home-tab]').count(), 4);
+        for (const name of ['reading', 'quiz', 'topics', 'journal']) {
+          assert.equal(await page.locator('[data-home-panel="' + name + '"]').isVisible(), true,
+            name + ' must be visible without scripts');
+        }
+        assert.equal(await page.locator('a[href="topic-philosophy.html"]').count() > 0, true);
+      });
+    });
+
     await t.test('deep links and article navigation', async () => {
       await checkPage(browser, 'deep-link', { viewport: { width: 1024, height: 768 } }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
