@@ -1,6 +1,7 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+extraCss: [mouton-art-scenes.css]
 permalink: start.html
 title: "はじめての方へ — ムートン"
 description: "ムートンをはじめて読む人のための案内です。どんなサイトか、気になることから選べる入り口、最初に読んでほしい5本、買う前に読む選び方、○×クイズへの近道をまとめています。"
@@ -22,6 +23,14 @@ firstReads: ["first-impression-sleep", "halitosis", "stoicism", "salary-change",
   <p><strong>作る。記録する。残していく。</strong> KIOKUや日記アプリ、このサイトも、日々の試行錯誤から生まれた制作物です。完成したものだけでなく、制作の途中も残しています。</p>
   <p><a class="btn btn-dark" href="making.html">作っているものを見る <span aria-hidden="true">→</span></a></p>
 
+  <figure class="mouton-scene mouton-scene--orb" aria-label="金色の光の粒子が集まる抽象的なアート">
+    <div class="mouton-scene__image" aria-hidden="true"></div><div class="mouton-scene__overlay" aria-hidden="true"></div>
+    <figcaption class="mouton-scene__content">
+      <span class="mouton-scene__kicker">MOUTON / PERSONAL ARCHIVE</span>
+      <p class="mouton-scene__line">内側から、世界が広がる。</p>
+      <p class="mouton-scene__caption">考えること。試すこと。残すこと。</p>
+    </figcaption>
+  </figure>
   <section class="quiz-more doc-quiz" aria-labelledby="start-quiz"><p class="quiz-more-title" id="start-quiz">まずは1問 <span>○×クイズ</span></p>
   <div class="qloop" data-qloop data-prefer="{% for s in firstReads %}{{ s }},{% endfor %}"></div></section>
 
