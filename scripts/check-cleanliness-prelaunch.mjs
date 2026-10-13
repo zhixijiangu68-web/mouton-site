@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
 const read = path => readFileSync(path, 'utf8');
-for (const file of ['cleanliness-science.html','cleanliness-sample.html','cleanliness-science.css','cleanliness-sample.css','cleanliness-science.js']) {
+for (const file of ['cleanliness-science.html','cleanliness-sample.html','cleanliness-sample.pdf','cleanliness-science.css','cleanliness-sample.css','cleanliness-science.js']) {
   assert(existsSync(file), `missing ${file}`);
 }
 const lp = read('cleanliness-science.html');
@@ -18,6 +18,7 @@ assert(lp.includes('cleanliness-sample.html'), 'sample CTA missing');
 assert(lp.includes('id="notify"'), 'interest section missing');
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
 assert(!lp.includes('id="cleanliness-waitlist"'), 'form must remain disabled until provider is configured');
+assert(sample.includes('cleanliness-sample.pdf'), 'download link missing');
 assert(sample.includes('data-sample-print'), 'print/PDF feature missing');
 assert((sample.match(/class="cs-sample-page(?: |")/g) || []).length === 5, 'sample must have five pages');
 assert(article.includes('data-lp-entry'), 'existing cleanliness article should link to LP');
