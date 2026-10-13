@@ -7,7 +7,8 @@ bodyClass: site
 extraCss: [home.css]
 ---
 <script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
-<script>try{if(!sessionStorage.getItem('mouton-intro-v1')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash){document.documentElement.classList.add('intro');sessionStorage.setItem('mouton-intro-v1','1');}}catch(e){}</script>
+{#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
+<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro');}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
   <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
   <p class="intro-sub">A personal archive — since 2026</p>
