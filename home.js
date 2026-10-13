@@ -42,9 +42,9 @@
   setTimeout(begin,900);
  }
 
- // Headline: split into letters that rise one after another. Screen readers get the whole line.
+ // The three-theme landing headline stays still; keep kinetic letters on older covers only.
  const h1=document.querySelector('.cover .cover-title');
- if(h1){
+ if(h1&&!h1.classList.contains('cover-title--choice')){
   h1.setAttribute('aria-label',h1.textContent.trim());
   let c=0;
   const walk=node=>{
