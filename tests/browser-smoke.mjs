@@ -279,7 +279,7 @@ test('MOUTON browser smoke', async t => {
             'clicks must not create fake conversions');
 
           await page.goto(origin + '/cleanliness-sample.html', { waitUntil: 'domcontentloaded' });
-          assert.equal(await page.locator('.cs-sample-page').count(), 5, 'five free Web sample pages');
+          assert.equal(await page.locator('.cs-sample-document > .cs-sample-page').count(), 5, 'five free Web sample pages');
           assert.match(await page.locator('.cs-sample-after').innerText(), /完成しています/);
           assert.equal(await page.locator('.cs-sample-after').innerText().then(text => text.includes('制作を検討')), false);
           await blockTrackedNavigation();
