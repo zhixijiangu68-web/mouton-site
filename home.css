@@ -523,3 +523,9 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
  .cover .cover-mode{top:var(--nav-h,64px);right:var(--gutter);bottom:auto}
  .cover .cover-mode span{padding:10px 12px}
 }
+
+/* On wide covers, the Day/Night button also stays above the headline and outside the links. */
+@media(min-width:901px){
+ .cover:not(.cover-en) .cover-kicker{max-width:calc(100% - 145px);text-align:left}
+ .cover:not(.cover-en) .cover-mode{top:var(--nav-h,72px);right:var(--gutter);bottom:auto}
+}
