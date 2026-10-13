@@ -516,3 +516,10 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
  .cover .cover-links{gap:6px 10px;font-size:.6875rem}
  .cover .cover-btn{min-width:112px;padding:0 12px}
 }
+
+
+@media(min-width:761px) and (max-width:900px){
+ .cover .cover-kicker{font-size:.75rem;max-width:calc(100% - 145px);text-align:left}
+ .cover .cover-mode{top:var(--nav-h,64px);right:var(--gutter);bottom:auto}
+ .cover .cover-mode span{padding:10px 12px}
+}
