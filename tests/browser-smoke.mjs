@@ -124,6 +124,36 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
+    await t.test('making page: purpose, progress and next steps on desktop and mobile', async () => {
+      for (const [label, options] of [
+        ['making-desktop', { viewport: { width: 1440, height: 900 } }],
+        ['making-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
+      ]) {
+        await checkPage(browser, label, options, async page => {
+          await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
+          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
+            const card = page.locator('.mk-grid > .mk-card#' + slug);
+            assert.equal(await card.locator('h3').textContent(), name);
+            assert.deepEqual(await card.locator('dl.mk-summary dt').allTextContents(), ['目的', '現在地', '次の一歩']);
+            const descriptions = await card.locator('dl.mk-summary dd').allTextContents();
+            assert.equal(descriptions.length, 3);
+            for (const description of descriptions) assert.ok(description.trim().length >= 12, name + ': missing summary');
+            assert.equal(await card.locator('.mk-state').count(), 1, name + ': status badge missing');
+            assert.equal(await card.locator('.mk-thumb img').count(), 1, name + ': thumbnail missing');
+            assert.equal(await card.getByRole('link', { name: name + ' の詳しい記録' }).getAttribute('href'),
+              'making-' + slug + '.html');
+          }
+          assert.match(await page.locator('#diary .mk-summary dd').nth(1).textContent(), /AIとの接続はまだ未実装/);
+          const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
+          await page.locator('#kioku').getByRole('link', { name: 'KIOKU の詳しい記録' }).click();
+          await page.waitForURL('**/making-kioku.html');
+          assert.equal(await page.locator('h1').innerText(), 'KIOKU');
+        });
+      }
+    });
+
     await t.test('deep links and article navigation', async () => {
       await checkPage(browser, 'deep-link', { viewport: { width: 1024, height: 768 } }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
