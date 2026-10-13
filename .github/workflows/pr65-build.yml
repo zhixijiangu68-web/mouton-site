@@ -1,0 +1,81 @@
+name: PR65 final build and responsive verification
+on:
+  push:
+    branches: [claude/home-first-impression]
+permissions:
+  contents: write
+jobs:
+  finish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: claude/home-first-impression
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Validate home JavaScript and build exact generated files
+        run: |
+          node --check home.js
+          npm ci
+          npm run build
+          npm test
+      - name: Browser checks on current homepage
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          node --input-type=module <<'JS'
+          import { chromium } from 'playwright';
+          import { resolve } from 'node:path';
+          const b=await chromium.launch({headless:true,args:['--no-sandbox']});
+          for (const width of [390,1280]) {
+            const page=await b.newPage({viewport:{width,height:844}});
+            const errors=[];
+            page.on('pageerror',e=>errors.push(e.message));
+            await page.goto('file://'+resolve('index.html'),{waitUntil:'load'});
+            await page.waitForTimeout(200);
+            const info=await page.evaluate(()=>({
+              h1:document.querySelectorAll('h1').length,
+              title:document.querySelector('h1')?.getAttribute('aria-label')||document.querySelector('h1')?.textContent,
+              chars:document.querySelectorAll('.cover-title .char').length,
+              ticker:document.querySelectorAll('.hero-ticker-list:first-child a').length,
+              nightDay:!!document.querySelector('[data-cover-toggle]'),
+              newArticleCards:document.querySelectorAll('.reading3-card').length,
+              quiz:!!document.querySelector('[data-qloop]'),
+              scroll:document.documentElement.scrollWidth,
+              viewport:innerWidth
+            }));
+            console.log('Homepage',width,JSON.stringify(info),'errors',JSON.stringify(errors));
+            if(info.h1!==1||info.chars<10||info.ticker<8||!info.nightDay||info.newArticleCards!==3||!info.quiz||info.scroll>info.viewport+1||errors.length)throw Error('Invalid homepage '+width);
+            await page.locator('[data-cover-toggle]').click();
+            const state=await page.evaluate(()=>document.documentElement.dataset.cover);
+            if(state!=='day')throw Error('Night/Day toggle failed');
+            await page.screenshot({path:'/tmp/pr65-'+width+'.png',fullPage:true,animations:'disabled'});
+            await page.close();
+          }
+          const reduce=await b.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+          await reduce.goto('file://'+resolve('index.html'),{waitUntil:'load'});
+          const s=await reduce.evaluate(()=>({intro:document.documentElement.classList.contains('intro'),ticker: getComputedStyle(document.querySelector('.hero-ticker-list')).animationName}));
+          console.log('Reduced motion',JSON.stringify(s));
+          if(s.intro||s.ticker!=='none')throw Error('Reduced motion not respected');
+          await reduce.close();
+          const making=await b.newPage();
+          await making.goto('file://'+resolve('making-site.html'),{waitUntil:'load'});
+          const comparisons=await making.locator('.mk-cmp').count();
+          console.log('Historical comparisons:',comparisons);
+          if(comparisons<2)throw Error('Missing comparison history');
+          await b.close();
+          JS
+      - name: Remove temporary workflow and commit up-to-date generated site
+        run: |
+          rm -f .github/workflows/pr65-build.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Generate PR65 updated home, test mobile and preserve current site"
+            git push origin HEAD:claude/home-first-impression
+          fi
+          test -z "$(git status --porcelain)"
