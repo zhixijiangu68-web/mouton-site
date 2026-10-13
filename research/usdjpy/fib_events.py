@@ -14,6 +14,12 @@ def detect(bars, width=2):
                 active = None
             else:
                 for ratio, price in list(active['levels'].items()):
+                    # A level passed between observed bars cannot later become
+                    # a first pullback touch in the opposite direction.
+                    jumped = b.high < price if active['direction'] == 'buy' else b.low > price
+                    if jumped:
+                        del active['levels'][ratio]
+                        continue
                     if b.low <= price <= b.high:
                         events.append({k: active[k] for k in ('wave_id', 'direction', 'confirmed_at')} |
                                       {'ratio': ratio, 'level': price, 'bar_start': b.start,

@@ -79,7 +79,7 @@ def main():
         'limitations': ['No rebound/entry/SL/TP/costs or performance metrics',
                         'Weekend gaps are heuristic candidates, not verified exchange holidays',
                         'CSV timestamp denotes minute open; every input row must be a completed minute',
-                        'Split dates are explicit; sample config dates are synthetic, not a real 60/20/20 split']}
+                        'Split dates are explicit; config.json is synthetic, real-data configs must be reviewed separately']}
     args.output.mkdir(parents=True, exist_ok=True)
     write_csv(args.output/'fib_events.csv', ['wave_id', 'direction', 'confirmed_at', 'ratio', 'level',
                                            'bar_start', 'available_at', 'session', 'partition'], event_rows)

@@ -106,3 +106,26 @@ outsideとの比較が可能。高ボラ時間帯としての有効性は実デ�
 SLとTPが同一1分足で成立する場合など、足内順序不明時の保守的な処理も先に固定する。
 PF・期待値・勝率・最大連敗・含み損益を含む最大DDは売買エンジン追加後に実装。
 現在の到達イベントをトレード件数に数えない。1000件達成のための条件緩和はしない。
+
+## 2026-10-13 追加検証
+
+検証記録は `VERIFICATION.md`、実データ集計は `verification-2012-summary.json`。
+保存済み2012年データの開発区間だけで実行した結果です。2012年の暦日366日の
+うち220日/73日/73日（約60/20/20）を事前に区切り、開発区間以外の価格は
+標準CSVに取り込みませんでした。これは2012年ファイルの検証用分割で、
+今後の全年度戦略評価の最終分割を決定するものではありません。
+
+手元のHISTDATA MetaTrader ZIPは、次のように変換します。生データの再配布はしません。
+
+```sh
+python -m research.usdjpy.import_histdata /path/to/HISTDATA_COM_MT_USDJPY_M12012.zip research/usdjpy/data/histdata-2012-development.csv --start 2012-01-01T00:00:00+09:00 --end 2012-08-08T00:00:00+09:00
+python -m research.usdjpy.run --input research/usdjpy/data/histdata-2012-development.csv --config research/usdjpy/config.histdata-2012.json --output research/usdjpy/output/real-2012
+```
+
+公式仕様では全データは固定EST（UTC−5、夏時間なし）、M1はBid。
+`America/New_York`の夏時間は適用しません。
+https://www.histdata.com/f-a-q/data-files-detailed-specification/
+
+追加仕様：水準を飛び越えて足全体が反対側に移った場合、その水準を監視終了します。
+後から逆方向に戻った足を初回の押し・戻りとして数えません。
+OHLCだけでは足内順序が不明なため、到達記録はその足の価格範囲との重なりです。

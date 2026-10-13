@@ -17,13 +17,18 @@ def parse_time(value, source_timezone=None):
         t = a
     if t.second or t.microsecond:
         raise ValueError('Timestamp must be minute-aligned')
-    return t.astimezone(timezone.utc)
+    t = t.astimezone(timezone.utc)
+    if t.second or t.microsecond:
+        raise ValueError('UTC timestamp must be minute-aligned')
+    return t
 
 
 def read_minutes(path, source_timezone=None):
     rows, duplicates = {}, 0
     with open(path, encoding='utf-8-sig', newline='') as f:
         reader = csv.DictReader(f)
+        if len(reader.fieldnames or []) != len(set(reader.fieldnames or [])):
+            raise ValueError('Duplicate CSV column names')
         if not {'timestamp', 'open', 'high', 'low', 'close'} <= set(reader.fieldnames or []):
             raise ValueError('Required columns: timestamp,open,high,low,close')
         for n, r in enumerate(reader, 2):

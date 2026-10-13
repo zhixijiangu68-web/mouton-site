@@ -22,6 +22,8 @@ jobs:
       - run: npm ci
       - name: Unit tests, Eleventy build and generated-site validation
         run: npm test
+      - name: USDJPY research regression tests
+        run: python3 -m unittest discover -s research/usdjpy/tests -v
       - name: Generated files are up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then
