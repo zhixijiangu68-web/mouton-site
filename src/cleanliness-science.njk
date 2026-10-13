@@ -150,15 +150,19 @@ extraCss: [cleanliness-science.css]
       <p>{% if checkoutReady %}商品内容と販売条件をご確認のうえ、お申し込みください。{% else %}価格は{{ cs.priceText }}円（税込）。{% if isStripe %}決済と安全な納品の準備が整いしだい{% else %}BOOTHの販売ページができしだい{% endif %}、このページから購入できるようにします。先行案内への登録は購入予約ではなく、支払いも購入義務もありません。{% endif %}</p>
       {% if checkoutReady %}
       <a href="#offer" class="cs-button cs-button-dark">販売内容を確認する ↑</a>
-      {% elif site.prelaunch and site.prelaunch.waitlistAction %}
+      {% elif site.prelaunch and site.prelaunch.ready %}
       <form class="cs-waitlist-form" method="post" action="{{ site.prelaunch.waitlistAction }}" target="_blank" rel="noopener noreferrer" id="cleanliness-waitlist">
         <label for="cs-email">メールアドレス</label>
         <div class="cs-email-row">
           <input type="email" id="cs-email" name="{{ site.prelaunch.waitlistEmailField or 'email' }}" required autocomplete="email" placeholder="you@example.com" maxlength="254">
           <button class="cs-button cs-button-dark" type="submit">先行案内に登録 <span aria-hidden="true">↗</span></button>
         </div>
-        <input type="hidden" name="product_id" value="cleanliness_001">
-        <p class="cs-note">登録情報は発売案内のために利用します。登録は無料で、案内は停止できます。<a href="privacy.html">個人情報の取り扱い</a></p>
+        <input type="hidden" name="embed" value="1">
+        <label for="cs-waitlist-consent" class="cs-consent-row">
+          <input type="checkbox" id="cs-waitlist-consent" name="signup_consent" value="yes" required>
+          <span>「清潔感の科学」の発売・販売開始に関するメール案内を受け取ることに同意します（無料・購入義務なし）。</span>
+        </label>
+        <p class="cs-note">確認メール内のリンクを押すと登録が完了します。メールには配信停止の案内が含まれます。詳しくは<a href="privacy.html">個人情報の取り扱い</a>をご確認ください。</p>
       </form>
       {% else %}
       <div class="cs-registration-pending" role="status">
