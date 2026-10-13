@@ -1,0 +1,44 @@
+name: Browser smoke
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: browser-smoke-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Generate pages
+        run: npm run build
+      - name: Install pinned Playwright runner (no lockfile mutation)
+        run: npm install --no-save --package-lock=false playwright@1.64.0
+      - name: Install Chromium with system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Browser tests (desktop, mobile, deep links)
+        run: node --test tests/browser-smoke.mjs
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure-screenshots
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7

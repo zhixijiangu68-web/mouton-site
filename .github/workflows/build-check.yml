@@ -1,11 +1,9 @@
 name: Build check
 
-# src/ を変えたのに `npm run build` を忘れてコミットした場合に知らせる。
 on:
   push:
   pull_request:
 
-# 読むだけ。ビルドの確認に書き込みの権限はいらない。
 permissions:
   contents: read
 
@@ -22,9 +20,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx eleventy
-      - name: Pages have no broken links or missing basics
-        run: node scripts/check-site.mjs
+      - name: Unit tests, Eleventy build and generated-site validation
+        run: npm test
       - name: Generated files are up to date
         run: |
           if [ -n "$(git status --porcelain)" ]; then
