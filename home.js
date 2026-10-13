@@ -12,7 +12,8 @@
   veil.addEventListener('animationend',e=>{if(e.animationName==='veil-lift')done();});
   veil.addEventListener('click',done);
   addEventListener('keydown',done,{once:true});
-  setTimeout(done,3000);
+  // CSS reveal completes in 5.75s; this is a safety fallback, not the normal exit.
+  setTimeout(done,7000);
  }
 
  // Headline: split into letters that rise one after another. Screen readers get the whole line.
