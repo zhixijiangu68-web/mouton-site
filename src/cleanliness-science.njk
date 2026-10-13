@@ -13,15 +13,15 @@ extraCss: [cleanliness-science.css]
     <div class="cs-shell cs-hero-grid">
       <div class="cs-hero-copy">
         <p class="cs-kicker">MOUTON RESEARCH <span>001 / PREVIEW</span></p>
-        <p class="cs-status"><span aria-hidden="true">◦</span> 制作検討中・現在は販売していません</p>
+        <p class="cs-status"><span aria-hidden="true">◦</span> {% if site.product.cleanScience.checkoutUrl %}デジタルガイド販売中{% else %}制作検討中・現在は販売していません{% endif %}</p>
         <h1 id="cs-title">清潔感の<span class="cs-em">科学。</span></h1>
         <p class="cs-lead">何から整えればいいか、<br>研究と予算から考える。</p>
         <p class="cs-intro">肌、髪、ヒゲ、歯、匂い、服装。「清潔感が大切」と言われても、何を優先すべきかは意外と分からない。感覚だけに頼らず、自分に必要な手入れを考えるための実践ガイドです。</p>
         <div class="cs-actions">
           <a class="cs-button cs-button-primary" href="cleanliness-sample.html" data-lp-event="sample_click" data-placement="hero" data-cta-target="sample">無料サンプルを読む <span aria-hidden="true">↗</span></a>
-          <a class="cs-button cs-button-ghost" href="#notify" data-lp-event="lp_cta_click" data-placement="hero" data-cta-target="waitlist">発売案内について <span aria-hidden="true">↓</span></a>
+          <a class="cs-button cs-button-ghost" href="#offer" data-lp-event="lp_cta_click" data-placement="hero" data-cta-target="offer">販売内容・価格について <span aria-hidden="true">↓</span></a>
         </div>
-        <p class="cs-spec">PDF予定・25〜35ページ / 予定価格 980円 / 発売日未定</p>
+        <p class="cs-spec">{% if site.product.cleanScience.checkoutUrl %}PDFガイド / 4,980円（税込）{% else %}PDF予定・25〜35ページ / 予定価格4,980円（税込） / 発売日未定{% endif %}</p>
       </div>
       <div class="cs-cover-wrap">
         <div class="cs-book" role="img" aria-label="清潔感の科学：暗い青の抽象的な円と日本語の文字を使った表紙デザイン">
@@ -72,10 +72,26 @@ extraCss: [cleanliness-science.css]
         <li><span>03</span><b>歯・口臭・体臭</b><small>セルフケアと受診の目安</small></li>
         <li><span>04</span><b>服装とサイズ</b><small>高い服より、合う服</small></li>
         <li><span>05</span><b>予算別の改善設計</b><small>0円・月3,000円・初回1万円</small></li>
-        <li><span>06</span><b>14日間の実践表</b><small>計画・記録・振り返り</small></li>
+        <li><span>06</span><b>30日間の実践表</b><small>計画・記録・振り返り</small></li>
         <li><span>07</span><b>参考文献</b><small>確認できる出典</small></li>
       </ol>
       <p class="cs-note">※構成とページ数は制作途中の案です。効果を保証する教材ではありません。</p>
+    </div>
+  </section>
+
+
+  <section class="cs-section cs-section-ivory" id="plan" data-nav="light" data-nav-solid="light" aria-labelledby="cs-plan">
+    <div class="cs-shell cs-narrow">
+      <p class="cs-overline">04 — THE 30-DAY PLAN</p>
+      <h2 id="cs-plan">30日を、<br>4つの段階に分ける。</h2>
+      <p>改善する箇所を一度に増やさず、日々の手入れを続けられる形にするための予定プログラムです。</p>
+      <div class="cs-plan-grid">
+        <div><small>WEEK 01</small><h3>観察</h3><p>生活と身だしなみの現状を点検し、見直す項目を一つ選ぶ。</p></div>
+        <div><small>WEEK 02</small><h3>習慣化</h3><p>必要な道具と手順を絞り、続けられる日課を作る。</p></div>
+        <div><small>WEEK 03</small><h3>調整</h3><p>費用、負担、無理のない継続方法を見直す。</p></div>
+        <div><small>WEEK 04</small><h3>定着</h3><p>自分に合う最低限の習慣を残して振り返る。</p></div>
+      </div>
+      <p class="cs-note">※行動計画の案です。実際の効果・印象の変化を保証するものではありません。</p>
     </div>
   </section>
 
@@ -96,12 +112,36 @@ extraCss: [cleanliness-science.css]
     </div>
   </section>
 
+
+  <section class="cs-section cs-section-ivory cs-offer" id="offer" data-nav="light" data-nav-solid="light" aria-labelledby="cs-offer">
+    <div class="cs-shell cs-narrow">
+      <p class="cs-overline">06 — PRODUCT / PRICING</p>
+      <h2 id="cs-offer">知識を、実践のための一冊に。</h2>
+      <p>研究の読み方と、予算・優先順位・継続のための実践シートを一つにまとめる有料版を準備しています。</p>
+      <div class="cs-offer-card">
+        <div><p class="cs-offer-label">{% if site.product.cleanScience.checkoutUrl %}販売価格{% else %}予定価格・需要検証中{% endif %}</p><p class="cs-offer-price">¥{{ site.product.cleanScience.priceText }} <small>税込</small></p><p class="cs-note">PDF予定｜最終の仕様・発売日・販売条件は公開前に確定します。</p></div>
+        <div><ul><li>研究とその限界の整理</li><li>7領域のセルフチェック</li><li>予算別・優先順位の判断方法</li><li>30日間の行動・記録シート</li></ul>
+        {% if site.product.cleanScience.checkoutUrl %}
+          <a class="cs-button cs-button-dark" href="{{ site.product.cleanScience.checkoutUrl }}" target="_blank" rel="noopener noreferrer" data-lp-event="begin_checkout" data-placement="offer" data-cta-target="checkout">購入手続きに進む ↗</a>
+          <p class="cs-note">決済画面にて商品・提供時期・返品条件をご確認ください。</p>
+        {% else %}
+          <p class="cs-offer-pending" role="status">現在は販売準備中です。購入・予約・決済は受け付けていません。</p>
+          <a href="#notify" class="cs-button cs-button-dark" data-lp-event="lp_cta_click" data-placement="offer" data-cta-target="waitlist">発売案内について ↓</a>
+        {% endif %}
+        </div>
+      </div>
+      <p class="cs-note">販売に先立ち<a href="operator.html">運営者情報</a>・<a href="contact.html">お問い合わせ</a>・<a href="privacy.html">プライバシー</a>に加え、特定商取引法に基づく表示・キャンセル条件・安全な納品方法を確認します。</p>
+    </div>
+  </section>
+
   <section class="cs-section cs-section-ivory" id="notify" data-nav="light" data-nav-solid="light" aria-labelledby="cs-notify">
     <div class="cs-shell cs-narrow cs-notify">
       <p class="cs-overline">05 — EARLY NOTICE</p>
-      <h2 id="cs-notify">発売が決まったら、<br>お知らせします。</h2>
-      <p>予定価格は980円。発売日は未定です。先行案内への登録は購入予約ではなく、支払いも購入義務もありません。</p>
-      {% if site.prelaunch and site.prelaunch.waitlistAction %}
+      <h2 id="cs-notify">{% if site.product.cleanScience.checkoutUrl %}販売を開始しました。{% else %}発売が決まったら、<br>お知らせします。{% endif %}</h2>
+      <p>{% if site.product.cleanScience.checkoutUrl %}商品内容と販売条件をご確認のうえ、お申し込みください。{% else %}予定価格は4,980円（税込）。発売日は未定です。先行案内への登録は購入予約ではなく、支払いも購入義務もありません。{% endif %}</p>
+      {% if site.product.cleanScience.checkoutUrl %}
+      <a href="#offer" class="cs-button cs-button-dark">販売内容を確認する ↑</a>
+      {% elif site.prelaunch and site.prelaunch.waitlistAction %}
       <form class="cs-waitlist-form" method="post" action="{{ site.prelaunch.waitlistAction }}" target="_blank" rel="noopener noreferrer" id="cleanliness-waitlist">
         <label for="cs-email">メールアドレス</label>
         <div class="cs-email-row">

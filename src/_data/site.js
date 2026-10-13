@@ -41,6 +41,10 @@ export default {
     waitlistEmailField: 'email',
     waitlistService: '',
   },
+  // 取引条件・PDF納品を完了し検証した後に HTTPS 決済リンクを指定。
+  product: {
+    cleanScience: { priceJPY: 4980, priceText: '4,980', checkoutUrl: '' },
+  },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },
   // 運営者情報・プライバシーポリシーの制定日

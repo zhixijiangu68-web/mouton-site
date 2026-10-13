@@ -12,9 +12,18 @@
     });
   }
 
+  // Product is currently in prelaunch: view_item reflects interest, never a purchase.
+  if (document.body.classList.contains("cs-page")) {
+    track("view_item", {currency:"JPY", value:4980, items:[{item_id:product_id,item_name:"清潔感の科学",price:4980}]});
+  }
+
   document.addEventListener("click", (event) => {
     const element = event.target.closest("[data-lp-event]");
     if (!element) return;
+    if (element.dataset.lpEvent === "begin_checkout") {
+      track("begin_checkout", { currency:"JPY",value:4980,items:[{item_id:product_id,item_name:"清潔感の科学",price:4980}] });
+      return;
+    }
     track(element.dataset.lpEvent, {
       placement: element.dataset.placement || "unknown",
       cta_target: element.dataset.ctaTarget || "unknown"
