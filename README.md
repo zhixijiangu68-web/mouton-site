@@ -131,3 +131,11 @@ Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", 
 ## AI開発・公開前の7つの品質ゲート
 
 要件定義、単体テスト、実ブラウザ操作、CI、セキュリティ、失敗時のAI修正フロー、マージ保護については [docs/quality-gates.md](docs/quality-gates.md) を参照してください。GitHubのmain用Rulesetは管理画面で別途有効化が必要です。
+
+## 「清潔感の科学」発売準備
+
+- LP: src/cleanliness-science.njk → cleanliness-science.html。5ページの無料サンプルとPDF、記事からの導線あり。
+- 商品は PDF（A4・32ページ、1,980円）を BOOTH で販売する。**有料PDFと原稿はこのリポジトリ（公開）に置かない。**
+- src/_data/site.js の product.cleanScience に checkoutUrl（BOOTH の商品ページ）と legalUrl（特定商取引法に基づく表示）を入れると、購入ボタンが出る。legalUrl が空のまま checkoutUrl を入れると npm test が失敗する。
+- GA4で view_item と begin_checkout を計測（価格は site.js から）。purchase は送らない（売上の正は BOOTH の注文記録）。
+- 手順は docs/cleanliness-prelaunch.md の「販売を始める手順」。

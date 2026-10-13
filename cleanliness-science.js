@@ -12,9 +12,19 @@
     });
   }
 
+  // Price comes from site.js via the offer card. view_item is interest, never a purchase.
+  const priceEl = document.querySelector("[data-product-price]");
+  const price = priceEl ? Number(priceEl.dataset.productPrice) : 0;
+  const item = {currency:"JPY", value:price, items:[{item_id:product_id,item_name:"清潔感の科学",price}]};
+  if (document.body.classList.contains("cs-page") && price) track("view_item", item);
+
   document.addEventListener("click", (event) => {
     const element = event.target.closest("[data-lp-event]");
     if (!element) return;
+    if (element.dataset.lpEvent === "begin_checkout") {
+      track("begin_checkout", item);
+      return;
+    }
     track(element.dataset.lpEvent, {
       placement: element.dataset.placement || "unknown",
       cta_target: element.dataset.ctaTarget || "unknown"
