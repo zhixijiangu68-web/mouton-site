@@ -1,36 +1,102 @@
 [
   {
-    "label": "PROJECT 001", "slug": "kioku", "name": "KIOKU", "kind": "APP / 視聴記録", "status": "制作中",
+    "label": "PROJECT 001",
+    "slug": "kioku",
+    "name": "KIOKU",
+    "kind": "APP / 視聴記録",
+    "status": "制作中",
     "text": "「観た」を記録し、記憶として残すためのアプリ。",
     "lead": "「観た」を、記憶に。",
     "about": "観たアニメを記録して、あとから振り返るためのアプリ。作品を探す、今夜観るものを選ぶ、観たものをマイページにまとめる、という流れを1つの画面で試している。",
-    "done": ["最初の画面を作った（作品を探す・今夜観るものを選ぶ・アニメの今を知る・マイページ）"],
+    "done": [
+      "最初の画面を作った（作品を探す・今夜観るものを選ぶ・アニメの今を知る・マイページ）"
+    ],
     "next": "日本語で作品を探し、迷わず記録できるようにする。検索から追加、履歴を振り返るまでの使いやすさを詰める。",
-    "image": "images/making/kioku.jpg", "video": "images/making/kioku.mp4", "caption": "KIOKU を動かしているところ（ホーム、次に観る、ニュース、マイページ）", "audio": "",
+    "image": "images/making/kioku.jpg",
+    "video": "images/making/kioku.mp4",
+    "caption": "KIOKU を動かしているところ（ホーム、次に観る、ニュース、マイページ）",
+    "audio": "",
     "url": "making-kioku.html"
   },
   {
-    "label": "PROJECT 002", "slug": "diary", "name": "DIARY", "kind": "APP / 日記", "status": "試作中",
+    "label": "PROJECT 002",
+    "slug": "diary",
+    "name": "DIARY",
+    "kind": "APP / 日記",
+    "status": "試作中",
     "text": "日々の記録を積み重ねる、小さな実験。",
     "lead": "一日を、AIと一緒に振り返る。",
     "about": "日記を書くと、振り返り・今日の気づき・自分への問いが返ってくる日記アプリの試作（AI JOURNAL）。日記はブラウザの中に保存して、過去の日を開き直せる。",
-    "done": ["バージョン0.1：日記を書く、振り返り・気づき・問いを表示する、過去の日記を開く", "振り返りをもう一段深める流れと、見た目を整えた"],
+    "done": [
+      "バージョン0.1：日記を書く、振り返り・気づき・問いを表示する、過去の日記を開く",
+      "振り返りをもう一段深める流れと、見た目を整えた"
+    ],
     "next": "いまの振り返りはブラウザ内の簡単な仕組み。安全なサーバーを経由して AI につなぎ、本文に合わせた振り返りを返せるようにする。",
-    "image": "images/making/diary.jpg", "video": "images/making/diary.mp4", "caption": "日記を書いて「今日を振り返る」を押したところ（文章はデモ）", "audio": "",
+    "image": "images/making/diary.jpg",
+    "video": "images/making/diary.mp4",
+    "caption": "日記を書いて「今日を振り返る」を押したところ（文章はデモ）",
+    "audio": "",
     "url": "making-diary.html"
   },
   {
-    "label": "PROJECT 003", "slug": "site", "name": "MOUTON", "kind": "WEB / このサイト", "status": "毎日更新",
+    "label": "PROJECT 003",
+    "slug": "site",
+    "name": "MOUTON",
+    "kind": "WEB / このサイト",
+    "status": "毎日更新",
     "text": "このサイト。記事と制作の記録を置く、自分の基地。",
     "lead": "書いたものと作ったものを、1か所に。",
     "about": "このサイト自体も制作物のひとつ。記事はテンプレートから自動でページを作る仕組み（Eleventy）にして、記事の執筆・点検・X の投稿準備を AI の社員チームに分担して回している。",
-    "done": ["9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた", "記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした", "独自ドメイン moutonarchive.com に移り、アクセス解析を入れた", "AI の社員チーム（記事・編集・X・保守）が毎日動く形にした"],
+    "done": [
+      "9月末に作り始め、哲学・身体・食事と科学・本の記事を書き足してきた",
+      "記事をテンプレートから作る形に移し、検索・読了時間・シェア画像を自動にした",
+      "独自ドメイン moutonarchive.com に移り、アクセス解析を入れた",
+      "AI の社員チーム（記事・編集・X・保守）が毎日動く形にした",
+      "最新のNight/Day切替を保ったまま、初回オープニング・動く見出し・新着記事の帯を追加した"
+    ],
     "next": "10月中に、記事から最初の1件が売れるところまで持っていく。",
-    "image": "images/making/site.jpg", "video": "images/making/site.mp4", "caption": "このサイトのトップと、選び方の記事をスクロールしたところ", "audio": "",
-    "compare": { "title": "最初のトップと、今のトップ", "before": { "label": "10月はじめ", "desktop": "images/making/site-ui-v1-desktop.jpg", "phone": "images/making/site-ui-v1-phone.jpg" }, "after": { "label": "今", "desktop": "images/making/site-ui-v3-desktop.jpg", "phone": "images/making/site-ui-v3-phone.jpg" }, "note": "落ち着いた灰色の一枚の画面から、空の写真で始まり、スクロールで場面が切り替わるトップへ。「選び方」への入口を一番上に置いた。" },
+    "image": "images/making/site.jpg",
+    "video": "images/making/site.mp4",
+    "caption": "このサイトのトップと、選び方の記事をスクロールしたところ",
+    "audio": "",
+    "compare": [
+      {
+        "title": "2026年10月8日の動くトップ案（制作記録）",
+        "before": {
+          "label": "当時の静かなトップ案",
+          "desktop": "images/making/site-ui-v4-desktop.jpg",
+          "phone": "images/making/site-ui-v4-phone.jpg"
+        },
+        "after": {
+          "label": "当時の動きのあるトップ案",
+          "desktop": "images/making/site-ui-v5-desktop.jpg",
+          "phone": "images/making/site-ui-v5-phone.jpg"
+        },
+        "note": "PR #65で検討した当時のデザイン案です。画像は現在のトップ画面とは異なりますが、演出を新しいNight/Dayトップへ引き継ぎました。"
+      },
+      {
+        "title": "最初のトップと、空のトップ（2026年10月7日）",
+        "before": {
+          "label": "10月はじめ",
+          "desktop": "images/making/site-ui-v1-desktop.jpg",
+          "phone": "images/making/site-ui-v1-phone.jpg"
+        },
+        "after": {
+          "label": "10月7日時点",
+          "desktop": "images/making/site-ui-v3-desktop.jpg",
+          "phone": "images/making/site-ui-v3-phone.jpg"
+        },
+        "note": "落ち着いた灰色の一枚の画面から、空の写真で始まり、スクロールで場面が切り替わるトップへ。「選び方」への入口を一番上に置いた。"
+      }
+    ],
     "url": "making-site.html"
   },
   {
-    "label": "NEXT", "slug": "next", "name": "…", "text": "まだ名前のないもの。", "url": "", "placeholder": true
+    "label": "NEXT",
+    "slug": "next",
+    "name": "…",
+    "text": "まだ名前のないもの。",
+    "url": "",
+    "placeholder": true
   }
 ]
