@@ -41,7 +41,12 @@ jobs:
             console.log('MEASURE',width,height,JSON.stringify(state));
             if(errors.length||state.scrollWidth>width+1||state.panels.join()!=='reading'||!state.intro)throw Error('Regression '+width+' '+height);
             if(state.tabs.top>height-50||state.tabs.bottom>height+1)throw Error('Tabs still not visible in initial viewport '+width+' '+height);
-            if(state.actions.bottom>state.toggle.top&&state.actions.top<state.toggle.bottom)throw Error('Actions obscured by day/night control');
+            const overlap=(a,b)=>a&&b&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
+            const placements=await page.evaluate(()=>{
+              const box=s=>{const v=document.querySelector(s)?.getBoundingClientRect();return v&&{left:v.left,right:v.right,top:v.top,bottom:v.bottom};};
+              return {toggle:box('[data-cover-toggle]'),kicker:box('.cover-kicker'),title:box('.cover-title'),actions:box('.cover-actions'),links:box('.cover-links')};
+            });
+            if(['kicker','title','actions','links'].some(x=>overlap(placements.toggle,placements[x])))throw Error('Day/Night overlays hero content: '+width+' '+height+' '+JSON.stringify(placements));
             await page.locator('#home-tab-journal').click();
             if(await page.locator('#home-tab-journal').getAttribute('aria-selected')!=='true')throw Error('Tab broken');
             await page.locator('[data-cover-toggle]').click();
