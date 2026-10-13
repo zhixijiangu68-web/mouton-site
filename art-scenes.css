@@ -1,0 +1,21 @@
+/* MOUTON Art Scenes — editorial inserts, no changes to existing tabs or cover toggle. */
+.mouton-scene{position:relative;display:block;width:min(100%,1160px);margin:clamp(25px,5vw,72px) auto;min-height:clamp(250px,38vw,530px);overflow:hidden;isolation:isolate;background:#050e1c;color:#f4efe6;border-radius:2px}
+.mouton-scene__art{position:absolute;inset:0;background-image:url("images/mouton-art-atlas.webp");background-repeat:no-repeat;background-size:200% 200%;opacity:.94;transform:scale(1.001);transition:transform 900ms ease}
+.mouton-scene:hover .mouton-scene__art{transform:scale(1.035)}
+.mouton-scene--moon .mouton-scene__art{background-position:right top}
+.mouton-scene--orb .mouton-scene__art{background-position:left bottom}
+.mouton-scene--orbit .mouton-scene__art{background-position:right bottom}
+.mouton-scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(0,6,17,.7),rgba(0,8,20,.15) 80%)}
+.mouton-scene__copy{position:absolute;z-index:2;inset:auto auto:clamp(22px,5vw,58px) auto;left:clamp(20px,5vw,60px);right:clamp(20px,5vw,60px);max-width:440px}
+.mouton-scene__eyebrow{display:block;font-size:.7rem;letter-spacing:.23em;opacity:.8;margin-bottom:14px}
+.mouton-scene__title{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(1.3rem,3vw,2rem);line-height:1.6;letter-spacing:.08em;margin:0}
+.mouton-scene__note{font-size:.78rem;line-height:1.8;letter-spacing:.025em;opacity:.84;margin:12px 0 0}
+.mouton-scene--moon::after{background:linear-gradient(90deg,rgba(2,10,25,.88),rgba(2,10,25,.12) 75%)}
+.mouton-scene--orb::after{background:linear-gradient(90deg,rgba(1,10,22,.85),rgba(1,10,22,.1) 72%)}
+.mouton-scene--orbit{background:#f8f4eb;color:#302d2a}
+.mouton-scene--orbit::after{background:linear-gradient(90deg,rgba(252,249,242,.97),rgba(252,249,242,.08) 75%)}
+.mouton-scene--journal{width:100%;max-width:none;margin:0 auto 34px}
+.mouton-scene--page{margin-top:34px;margin-bottom:40px}
+@media(max-width:700px){.mouton-scene{min-height:310px}.mouton-scene__art{background-size:200% 200%}.mouton-scene__copy{bottom:23px}.mouton-scene__note{font-size:.74rem}.mouton-scene:hover .mouton-scene__art{transform:none}}
+@media(prefers-reduced-motion:reduce){.mouton-scene__art{transition:none;transform:none}}
+@supports(animation-timeline:view()){ @media(prefers-reduced-motion:no-preference){.mouton-scene__copy{animation:mouton-scene-reveal 1s ease both;animation-timeline:view();animation-range:entry 0% entry 95%}@keyframes mouton-scene-reveal{from{opacity:0;translate:0 14px}to{opacity:1;translate:0 0}}}}
