@@ -451,9 +451,12 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.22,.8,.22,1)
  .home-more-grid a{min-height:64px}
  #reading .reading3{grid-template-columns:1fr}
  #reading .reading3-card.is-feature{min-height:0}
- #journal .journal-item{grid-template-columns:72px minmax(0,1fr) 30px;gap:8px 12px}
- #journal .journal-date{font-size:.82rem}
- #journal .journal-arrow{width:30px;height:30px}
+ /* On phones, date occupies row 1 and the title uses the wide row 2 track.
+    A later three-column override previously squeezed title text into 72px. */
+ #journal .journal-item{grid-template-columns:minmax(0,1fr) 30px;gap:8px 12px}
+ #journal .journal-date{grid-column:1/-1;font-size:.82rem}
+ #journal .journal-body{grid-column:1;min-width:0}
+ #journal .journal-arrow{grid-column:2;grid-row:2;width:30px;height:30px}
  #guides .guide-grid{grid-template-columns:1fr}
 }
 @media(prefers-reduced-motion:reduce){
