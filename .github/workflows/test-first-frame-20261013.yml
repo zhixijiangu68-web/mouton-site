@@ -1,0 +1,103 @@
+name: Verify smooth intro first frames
+on:
+  push:
+    branches: [fix/intro-first-frame-stutter-20261013]
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: fix/intro-first-frame-stutter-20261013
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Build and regressions
+        run: |
+          node --check home.js
+          node --check home-tabs.js
+          npm ci
+          npm run build
+          npm test
+      - name: Browser test smooth first-frame motion and delayed fonts
+        run: |
+          npm install --no-save --no-package-lock playwright
+          npx playwright install chromium
+          node --input-type=module <<'JS'
+          import {chromium} from 'playwright';
+          import {resolve} from 'node:path';
+          const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+          const url='file://'+resolve('index.html');
+          for(const width of [390,1280]){
+            const context=await browser.newContext({viewport:{width,height:844},reducedMotion:'no-preference'});
+            // Emulate an unavailable/late external font to reproduce cold-load jumps.
+            await context.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/,route=>route.abort());
+            const page=await context.newPage();const errors=[];
+            page.on('pageerror',e=>errors.push(e.message));
+            await page.goto(url,{waitUntil:'load'});
+            const begin=await page.evaluate(()=>{
+              const veil=document.querySelector('.intro-veil');
+              const letter=document.querySelector('.intro-word span');
+              return {intro:document.documentElement.classList.contains('intro'),veil:getComputedStyle(veil).display,
+               spanOpacity:Number(getComputedStyle(letter).opacity),spanTransform:getComputedStyle(letter).transform,
+               tabCount:document.querySelectorAll('[role=tab]').length};
+            });
+            console.log('INITIAL',width,JSON.stringify(begin));
+            if(!begin.intro||begin.veil!=='grid'||begin.spanOpacity>0.01||begin.tabCount!==4)throw Error('First frame renders abruptly '+width);
+            await page.waitForTimeout(1400);
+            const stable=await page.evaluate(()=>{
+              const root=document.documentElement, letter=document.querySelector('.intro-word span');
+              const style=getComputedStyle(letter);
+              return {preparing:root.classList.contains('intro-preparing'),fallback:root.classList.contains('intro-fallback-font'),
+               font:getComputedStyle(document.querySelector('.intro-word')).fontFamily,
+               opacity:Number(style.opacity),transform:style.transform};
+            });
+            console.log('FONT STABLE',width,JSON.stringify(stable));
+            if(stable.preparing||!stable.fallback||!stable.font.includes('Georgia')||stable.opacity<.4)throw Error('Font not locked before first movement '+width);
+            await page.waitForTimeout(1300);
+            const logo=await page.evaluate(()=>{
+              const word=document.querySelector('.intro-word');
+              return {opacity:Number(getComputedStyle(word.querySelector('span:last-child')).opacity),font:getComputedStyle(word).fontFamily,
+               veil:getComputedStyle(document.querySelector('.intro-veil')).display};
+            });
+            console.log('LOGO HOLD',width,JSON.stringify(logo));
+            if(logo.opacity<.99||!logo.font.includes('Georgia')||logo.veil!=='grid')throw Error('Logo not steady '+width);
+            await page.waitForTimeout(4600);
+            const exit=await page.evaluate(()=>({veil:getComputedStyle(document.querySelector('.intro-veil')).display,
+              tabs:[...document.querySelectorAll('[data-home-panel]')].filter(x=>!x.hidden).map(x=>x.dataset.homePanel)}));
+            console.log('EXIT',width,JSON.stringify(exit));
+            if(exit.veil!=='none'||exit.tabs.join()!=='reading')throw Error('Intro never revealed site '+width);
+            await page.locator('#home-tab-quiz').click();
+            if(await page.locator('#home-tab-quiz').getAttribute('aria-selected')!=='true')throw Error('Tab broken '+width);
+            await page.reload({waitUntil:'load'});
+            if(await page.locator('.intro-veil').evaluate(x=>getComputedStyle(x).display)!=='grid')throw Error('Intro replay broken');
+            await page.locator('.intro-veil').click();
+            if(await page.locator('.intro-veil').evaluate(x=>getComputedStyle(x).display)!=='none')throw Error('Skip broken');
+            await page.goto(url+'#journal',{waitUntil:'load'});await page.reload({waitUntil:'load'});
+            if(await page.evaluate(()=>document.documentElement.classList.contains('intro')))throw Error('Deep link has forced intro');
+            if(errors.length)throw Error('Unexpected JS errors: '+errors.join(';'));
+            await context.close();
+          }
+          const reduced=await browser.newPage({viewport:{width:390,height:844},reducedMotion:'reduce'});
+          await reduced.goto(url,{waitUntil:'load'});
+          const reducedState=await reduced.evaluate(()=>({intro:document.documentElement.classList.contains('intro'),panels:document.querySelectorAll('[role=tabpanel]').length}));
+          console.log('REDUCED',JSON.stringify(reducedState));
+          if(reducedState.intro||reducedState.panels!==4)throw Error('Reduced motion broken');
+          await reduced.close();
+          await browser.close();
+          JS
+      - name: Remove one-off workflow and commit generated HTML
+        run: |
+          rm -f .github/workflows/test-first-frame-20261013.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Regenerate intro first-frame animation; remove temporary verifier"
+            git push origin HEAD:fix/intro-first-frame-stutter-20261013
+          fi
+          test -z "$(git status --porcelain)"
