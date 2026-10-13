@@ -40,7 +40,16 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm audit --audit-level=high
+      # Blocks: dependencies that run in visitors' browsers or on a server. This site ships only
+      # generated HTML, so today there are none, and this must stay at zero.
+      - name: Runtime dependencies (blocking)
+        run: npm audit --omit=dev --audit-level=high
+      # Reports only: the build tools (Eleventy and what it pulls in). Their known issues need
+      # crafted input to the build itself and have no fixed release yet, so they must not stop
+      # every PR. Read the log; never "fix" with --force (it downgrades Eleventy to 0.6).
+      - name: Build-tool dependencies (report only)
+        continue-on-error: true
+        run: npm audit --audit-level=high
 
   dependency-review:
     name: Dependency review

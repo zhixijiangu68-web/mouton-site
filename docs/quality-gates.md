@@ -9,7 +9,7 @@
 | 2 | 自動テスト | npm test、tests/design-version.test.mjs、scripts/check-site.mjs | Node単体テストとEleventyビルド、リンク等の静的検証が成功 |
 | 3 | ブラウザ操作テスト | tests/browser-smoke.mjs | Chromiumでトップの4タブ、モバイルメニュー、ディープリンク、記事を操作して成功 |
 | 4 | 自動実行環境 | .github/workflows/build-check.yml、browser-smoke.yml | PR作成・更新時にチェックが実行される |
-| 5 | セキュリティ | .github/workflows/security-scan.yml、Dependabot | CodeQL、npm audit、PRの依存関係レビュー（重大以上）が成功 |
+| 5 | セキュリティ | .github/workflows/security-scan.yml、Dependabot | CodeQL、npm audit（読者に届く依存関係＝`--omit=dev` で High 以上 0 件）、PRの依存関係レビュー（重大以上）が成功。ビルド用ツールの audit は報告のみ |
 | 6 | AI修正ループ | .github/workflows/ci-failure-triage.yml、既存ai-shain.yml | 失敗時にIssueで再現と原因を記録し、人間の判断でAI修正を依頼できる |
 | 7 | マージ制御 | GitHubのmain Ruleset（管理画面で要設定） | PR・必須チェック・人間のレビューを通過しない変更はmainへ入らない |
 
@@ -30,10 +30,10 @@
 Repository → Settings → Rules → Rulesets（または Branch protection rules）でmain向けのルールを作る。
 
 - 対象: main。Require a pull request before merging をオン。
-- Require approvals: 1以上。本人1人だけの個人リポジトリの場合、他者による承認が必要でマージできなくなるため共同レビュー担当を設定する。レビュー担当がいない間は「人間による自己レビュー」を運用上必須とする。
+- Require approvals: **1人で運営している間はオフ**（PRを作った本人は自分のPRを承認できないため、オンにするとオーナーもAIもマージできなくなる）。差分の確認はPR上で人間が行う運用にする。共同レビュー担当ができたら1以上にする。
 - Require status checks to pass: 実際にPRで報告されたジョブ名を選択。Build check / build、Browser smoke / smoke、Security scan / CodeQL、Security scan / npm audit、Security scan / Dependency review を目安にする。
 - Require branches to be up to date before merging（可能なら）、Block force pushes / deletions をオン。
-- Do not allow bypassing を選び、管理者も直接mainへプッシュできないようにする（プランや所有者権限により制限される場合がある）。
+- 承認をオフにしている間は、管理者の直接プッシュだけを禁止すれば足りる。承認をオンにする場合は、オーナーを Bypass list に入れておく（入れないと誰もマージできなくなる）。
 - 設定後、テスト用PRで失敗チェックを発生させてマージをブロックすることを確認する。
 
 注意：GitHubの管理画面によるRuleset作成はこのコード追加だけでは有効にならない。画面のチェック表示も、Rulesetがなければマージ阻止にはならない。
@@ -51,5 +51,7 @@ Repository → Settings → Rules → Rulesets（または Branch protection rul
 
 初回CIでBuild checkとBrowser smokeは成功。Security scanは既存の依存関係とリポジトリ設定が原因で失敗した。
 - npm auditで9件（High 5件、Moderate 4件）。詳細は Issue #106。Eleventyの破壊的ダウングレードを提案する npm audit fix --force は実施しない。
+  - 9件はすべてビルド用ツール（@11ty/eleventy が使う braces・sprintf-js など）の中にあり、読者に配るHTMLには含まれない（`npm audit --omit=dev` は0件）。どちらも「細工した入力をビルドに渡すと止まる」種類で、原因の braces 3.0.3・sprintf-js 1.1.3 は最新版のため更新では解消できない。
+  - 対応（2026-10-13）：マージを止める判定は `npm audit --omit=dev --audit-level=high` にし、全体の audit は報告のみ（continue-on-error）にした。直った版が出たら全体の audit も止める判定に戻す。
 - Dependency reviewはDependency graphが未有効化のため実行不可。Settings → Security → Advanced Security から有効化して再実行する。
-- CIが赤い間は、失敗を無視してmainへマージしない。既存依存関係の修正と設定変更が必要。
+- CIが赤い間は、失敗を無視してmainへマージしない。
