@@ -506,7 +506,8 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
  .cover .cover-btn{min-height:44px;min-width:126px;padding:0 17px;font-size:.8125rem}
  .cover .cover-links{margin-top:12px;gap:8px 14px;font-size:.75rem}
  .cover .hero-ticker{bottom:64px}
- .cover .cover-mode{bottom:calc(124px + env(safe-area-inset-bottom,0px))}
+ .cover .cover-mode{top:calc(var(--nav-h,64px) + 10px);right:var(--gutter);bottom:auto}
+ .cover .cover-mode span{padding:10px 12px}
  .home-tabs{margin-top:-62px}
  .home-tab-list{min-height:60px;padding-block:7px;border-radius:12px 12px 0 0}
 }
