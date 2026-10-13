@@ -1,0 +1,6 @@
+/* MOUTON deep-ocean artwork: Night only. Keep navigation/intro/cards intact. */
+.cover.cover-choice:not(.cover-en) .cover-art { background-color:#020b17; background-image:linear-gradient(180deg,rgba(0,5,15,.08),rgba(0,5,15,.43) 48%,rgba(0,3,10,.8)),url('images/mouton-ocean.jpg'),url('images/mouton-ocean-fallback.svg'); background-position:center,center top,center top; background-size:cover; background-repeat:no-repeat; }
+.cover.cover-choice:not(.cover-en) .cover-art::after {content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(2,9,22,.03),rgba(2,8,21,.25) 48%,rgba(0,3,12,.65));}
+[data-cover="day"] .cover.cover-choice .cover-art {display:none;}
+@media (max-width:600px){.cover.cover-choice:not(.cover-en) .cover-art{background-position:center,52% top,52% top;}}
+@media (prefers-reduced-motion:reduce){.cover.cover-choice:not(.cover-en) .cover-art{animation:none;}}
