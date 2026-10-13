@@ -16,7 +16,7 @@
  }
 
  // Headline: split into letters that rise one after another. Screen readers get the whole line.
- const h1=document.querySelector('.scene-hero .display');
+ const h1=document.querySelector('.cover .cover-title');
  if(h1){
   h1.setAttribute('aria-label',h1.textContent.trim());
   let c=0;
@@ -37,8 +37,17 @@
   walk(h1);
  }
 
- const hero=document.querySelector('.scene-hero .scene-pin');
+ const hero=document.querySelector('.cover');
  const light=hero&&hero.querySelector('.hero-light');
+ if(hero&&!reduce){
+  let scheduled=false;
+  const update=()=>{
+   scheduled=false;
+   hero.style.setProperty('--p',Math.min(1,Math.max(0,-hero.getBoundingClientRect().top/Math.max(1,hero.offsetHeight))).toFixed(3));
+  };
+  addEventListener('scroll',()=>{if(!scheduled){scheduled=true;requestAnimationFrame(update)}},{passive:true});
+  update();
+ }
  if(hero&&light&&!reduce){
   // The light follows the pointer; without one it drifts slowly on its own.
   let tx=72,ty=28,x=72,y=28,active=false,raf=0,visible=true,t0=performance.now();
@@ -76,7 +85,7 @@
  addEventListener('blur',()=>dot.classList.add('is-off'));
 
  // Cards lean toward the pointer, with a soft glint where it is.
- document.querySelectorAll('.guide-card,.science-card,.card-link').forEach(card=>{
+ document.querySelectorAll('.reading3-card,.guide-card,.science-card,.card-link').forEach(card=>{
   card.classList.add('tilt');
   card.addEventListener('pointermove',e=>{
    const r=card.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;
