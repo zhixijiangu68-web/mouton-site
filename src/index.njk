@@ -7,6 +7,12 @@ bodyClass: site
 extraCss: [home.css]
 ---
 <script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
+<script>try{if(!sessionStorage.getItem('mouton-intro-v1')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash){document.documentElement.classList.add('intro');sessionStorage.setItem('mouton-intro-v1','1');}}catch(e){}</script>
+<div class="intro-veil" aria-hidden="true">
+  <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
+  <p class="intro-sub">A personal archive — since 2026</p>
+  <span class="intro-bar"></span>
+</div>
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 
@@ -14,6 +20,8 @@ extraCss: [home.css]
   {#- 表紙（Night）。Day に切り替えると空の写真になる（ボタンで切り替え、ブラウザに保存）。 #}
   <section class="cover" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
+    <div class="hero-light" aria-hidden="true"></div>
+    <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
     <div class="cover-inner">
       <p class="cover-kicker">A late-night club for questions</p>
       <h1 class="cover-title"><span class="nowrap">哲学と科学で、</span><br><span class="nowrap">日常の見え方を</span><span class="nowrap">変える。</span></h1>
@@ -23,6 +31,18 @@ extraCss: [home.css]
         <a class="cover-btn" href="#today-q">クイズを解く</a>
       </div>
       <p class="cover-links"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="guides.html">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a></p>
+    </div>
+    <div class="hero-ticker" aria-label="最近の記事">
+      <span class="hero-ticker-label">Now reading</span>
+      <div class="hero-ticker-track">
+        {%- for copy in [0, 1] %}
+        <ul class="hero-ticker-list"{% if copy %} aria-hidden="true"{% endif %}>
+          {%- for a in collections.articles | head(12) %}
+          <li><a href="{{ a.page.fileSlug }}.html"{% if copy %} tabindex="-1"{% endif %}>{{ a.data.guide.title if a.data.guide else (a.data.journal.title if a.data.journal else a.data.headline) }}</a></li>
+          {%- endfor %}
+        </ul>
+        {%- endfor %}
+      </div>
     </div>
     <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
   </section>
@@ -281,6 +301,7 @@ extraCss: [home.css]
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
+<script src="home.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
