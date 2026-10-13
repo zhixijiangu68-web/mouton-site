@@ -6,10 +6,11 @@
     "build": "eleventy",
     "start": "eleventy --serve",
     "check": "eleventy && git status --porcelain && test -z \"$(git status --porcelain)\"",
-    "test": "npm run test:design && npm run test:tracking && eleventy && node scripts/check-site.mjs",
+    "test": "npm run test:design && npm run test:tracking && npm run test:waitlist && eleventy && node scripts/check-site.mjs",
     "test:tracking": "node --test tests/campaign-url.test.mjs",
     "x:today": "node scripts/x-today.mjs",
-    "test:design": "node --test tests/design-version.test.mjs"
+    "test:design": "node --test tests/design-version.test.mjs",
+    "test:waitlist": "node --test tests/waitlist-readiness.test.mjs"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",
