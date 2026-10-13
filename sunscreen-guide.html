@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" data-root="">
+<html lang="ja" data-root="" data-version="original">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -22,7 +22,12 @@
 <link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
 <meta name="theme-color" content="#f8f5ee">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="article-base.css">
@@ -44,6 +49,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="design-version.css">
 <script src="site.js" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script src="article-share.js" defer></script>
@@ -56,6 +62,14 @@
 <body class="article-page">
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
+  <label class="version-picker">
+  <span class="version-picker-label" aria-hidden="true">VERSION</span>
+  <select data-version-picker aria-label="デザインのバージョン">
+    <option value="original">01 ORIGINAL</option>
+    <option value="club">02 CLUB</option>
+  </select>
+</label>
+
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
@@ -76,7 +90,7 @@
 <p class="lead">見た目の清潔感は、服や髪だけでなく肌にも出ます。そして肌の見た目を左右するものの一つが、毎日少しずつ浴びている紫外線です。</p>
 <details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">SPF50の日焼け止めを塗れば、SPF50の効果がある。○か×か？</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。塗る量しだいです。</p><p class="quiz-why">SPFは、肌1cm²あたり2mgという量を塗って測った数字です。実際に人が塗る量はそれよりずっと少ないことが多く、量が減ると防ぐ力も大きく下がります。</p></div></details>
 <p>日焼け止めを選ぶとき、つい数字の大きさを比べたくなります。でも先に考えたいのは、<strong>その日焼け止めを「十分な量」で「毎日」塗れるか</strong>です。</p>
-<details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">毎日塗った人は、肌の老化が進みにくかった</a></li><li><a href="#section-2">SPFとPAは、何を表しているか</a></li><li><a href="#section-3">足りないのは、だいたい「量」</a></li><li><a href="#section-4">選ぶときの目安</a></li><li><a href="#section-5">参考文献</a></li></ol></nav></details>
+<aside class="product-summary" aria-labelledby="product-summary-title"><p class="product-summary-title" id="product-summary-title">この記事で紹介している商品 <span class="pr-label">PR</span></p><ol><li data-product="毎日使う顔用の日焼け止め（PA表示あり）"><span class="product-summary-name">毎日使う顔用の日焼け止め（PA表示あり）</span><span class="product-summary-btns"><a data-placement="summary" class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E9%A1%94%E7%94%A8%20%E3%83%A1%E3%83%B3%E3%82%BA%20PA%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a data-placement="summary" class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a><a class="product-summary-why" href="#product-1">選んだ理由 <span aria-hidden="true">↓</span></a></span></li><li data-product="汗や水に強い日焼け止め（ウォータープルーフ）"><span class="product-summary-name">汗や水に強い日焼け止め（ウォータープルーフ）</span><span class="product-summary-btns"><a data-placement="summary" class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95%20SPF50%2B%20PA%2B%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a data-placement="summary" class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a><a class="product-summary-why" href="#product-2">選んだ理由 <span aria-hidden="true">↓</span></a></span></li></ol></aside><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">毎日塗った人は、肌の老化が進みにくかった</a></li><li><a href="#section-2">SPFとPAは、何を表しているか</a></li><li><a href="#section-3">足りないのは、だいたい「量」</a></li><li><a href="#section-4">選ぶときの目安</a></li><li><a href="#section-5">参考文献</a></li></ol></nav></details>
 
 <h2 id="section-1">毎日<wbr>塗った<wbr>人は、<wbr>肌の<wbr>老化が<wbr>進みに<wbr>くかった</h2>
 <p>オーストラリアで行われたランダム化比較試験では、55歳未満の大人903人を、日焼け止めを毎日塗るグループと、塗るかどうかを本人に任せるグループに分け、4年半後の手の甲の肌の状態を比べました <a href="#ref-1">[1]</a>。</p>
@@ -101,8 +115,8 @@
 <p>赤み・かゆみなど肌に合わないと感じたら、使うのをやめてください。肌が弱い人は、腕の内側などで少量試してから顔に使うと安心です。</p>
 
 <h2 id="section-mine">この<wbr>目安で<wbr>選ぶなら</h2>
-<aside class="product-card" aria-label="毎日使う顔用の日焼け止め（PA表示あり）"><p class="product-name">毎日使う顔用の日焼け止め（PA表示あり） <span class="pr-label">PR</span></p><p class="product-note">通勤や買い物など、ふだんの日に。塗っても白くなりにくく、べたつかないものを選ぶと毎日続けやすい。</p><p class="product-btns"><a class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E9%A1%94%E7%94%A8%20%E3%83%A1%E3%83%B3%E3%82%BA%20PA%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a></p></aside>
-<aside class="product-card" aria-label="汗や水に強い日焼け止め（ウォータープルーフ）"><p class="product-name">汗や水に強い日焼け止め（ウォータープルーフ） <span class="pr-label">PR</span></p><p class="product-note">運動や海・山など、長く外にいる日に。落ちにくいタイプでも、2〜3時間おきに塗り直す。</p><p class="product-btns"><a class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95%20SPF50%2B%20PA%2B%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a></p></aside>
+<aside class="product-card" id="product-1" aria-label="毎日使う顔用の日焼け止め（PA表示あり）"><p class="product-name">毎日使う顔用の日焼け止め（PA表示あり） <span class="pr-label">PR</span></p><p class="product-note">通勤や買い物など、ふだんの日に。塗っても白くなりにくく、べたつかないものを選ぶと毎日続けやすい。</p><p class="product-btns"><a class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E9%A1%94%E7%94%A8%20%E3%83%A1%E3%83%B3%E3%82%BA%20PA%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E9%25A1%2594%25E7%2594%25A8%2520%25E3%2583%25A1%25E3%2583%25B3%25E3%2582%25BA%2520PA%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a></p></aside>
+<aside class="product-card" id="product-2" aria-label="汗や水に強い日焼け止め（ウォータープルーフ）"><p class="product-name">汗や水に強い日焼け止め（ウォータープルーフ） <span class="pr-label">PR</span></p><p class="product-note">運動や海・山など、長く外にいる日に。落ちにくいタイプでも、2〜3時間おきに塗り直す。</p><p class="product-btns"><a class="product-btn product-amazon" href="https://www.amazon.co.jp/s?k=%E6%97%A5%E7%84%BC%E3%81%91%E6%AD%A2%E3%82%81%20%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%97%E3%83%AB%E3%83%BC%E3%83%95%20SPF50%2B%20PA%2B%2B%2B%2B&amp;tag=yuiga2003-22" rel="sponsored noopener" target="_blank">Amazonで見る</a><a class="product-btn product-rakuten" href="https://hb.afl.rakuten.co.jp/hgc/5844aa3f.402b05a0.5844aa40.481ea3b1/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F&amp;m=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F%25E6%2597%25A5%25E7%2584%25BC%25E3%2581%2591%25E6%25AD%25A2%25E3%2582%2581%2520%25E3%2582%25A6%25E3%2582%25A9%25E3%2583%25BC%25E3%2582%25BF%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25AB%25E3%2583%25BC%25E3%2583%2595%2520SPF50%252B%2520PA%252B%252B%252B%252B%2F" rel="sponsored noopener" target="_blank">楽天で見る</a></p></aside>
 
 <div class="sources"><h2 id="section-5">参考文献</h2>
 <p id="ref-1">1. Hughes, M. C. B., Williams, G. M., Baker, P., &amp; Green, A. C. (2013). Sunscreen and prevention of skin aging: a randomized trial. <em>Annals of Internal Medicine</em>, 158(11), 781–790.</p>
@@ -128,9 +142,9 @@
   </p>
 </nav>
 
-<p class="read-mark" data-total="86" aria-live="polite"></p>
+<p class="read-mark" data-total="90" aria-live="polite"></p>
 <section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
-<div class="qloop" data-qloop data-exclude="sunscreen-guide" data-prefer="first-impression-sleep,odor-care,deodorant-guide,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money"></div></section>
+<div class="qloop" data-qloop data-exclude="sunscreen-guide" data-prefer="first-impression-sleep,odor-care,deodorant-guide,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money,xmax-vs-rebel250-qa"></div></section>
 <aside class="article-note" aria-label="ご注意">
   <p class="article-note-title">この記事について</p>
   <p>この記事は、論文や公的な情報をもとにした一般的な情報提供を目的としています。医師による診断や治療の代わりにはなりません。体調に不安があるときや、持病・服薬がある場合は、医療機関に相談してください。</p>
@@ -181,7 +195,7 @@
     <ul><li><a href="start.html">はじめての方へ</a></li>
       <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
       <li><a href="editorial.html">編集方針</a></li>
-      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
     </ul>
   </div>
 </nav>

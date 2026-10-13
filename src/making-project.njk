@@ -23,6 +23,34 @@
     <p><span class="mk-state">{{ project.status }}</span></p>
   </header>
 
+  {%- if project.slug == 'site' %}
+  <section class="mk-section mk-evolution" id="site-evolution" aria-labelledby="site-evolution-heading">
+    <p class="mk-eyebrow">{{ siteEvolution.eyebrow }}</p>
+    <h2 id="site-evolution-heading">{{ siteEvolution.title }}</h2>
+    <p>{{ siteEvolution.summary }}</p>
+    <a class="mk-more" href="index.html">今のトップを見る <span aria-hidden="true">→</span></a>
+    <div class="mk-evolution-grid">
+      {%- for step in siteEvolution.stages %}
+      <article class="mk-evolution-step">
+        <div class="mk-evolution-step-top">
+          <span>{{ step.number }} / {{ step.label }}</span>
+          <time datetime="{{ step.date }}">{{ step.date | dotDate }}</time>
+        </div>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
+        {%- if step.prs.length %}
+        <p class="mk-evolution-refs">
+          {%- for n in step.prs %}
+          <a href="https://github.com/zhixijiangu68-web/mouton-site/pull/{{ n }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub Pull Request {{ n }} を開く">PR #{{ n }} <span aria-hidden="true">↗</span></a>
+          {%- endfor %}
+        </p>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
   {%- if project.video or project.image %}
   <figure class="mk-media">
     <div class="mk-phone"{% if project.image %} style="background-image:url({{ project.image }})"{% endif %}>
@@ -42,10 +70,10 @@
   <div class="mk-audio"><p class="mk-eyebrow">SOUND</p><audio src="{{ project.audio }}" controls preload="none"></audio></div>
   {%- endif %}
 
-  {%- if project.compare %}{% set c = project.compare %}
-  <section class="mk-section" aria-labelledby="mk-compare">
+  {%- for c in project.compare or [] %}
+  <section class="mk-section" {% if loop.first and project.slug == 'site' %}id="site-compare" {% endif %}aria-labelledby="mk-compare-{{ loop.index }}">
     <p class="mk-eyebrow">BEFORE / AFTER</p>
-    <h2 id="mk-compare">{{ c.title }}</h2>
+    <h2 id="mk-compare-{{ loop.index }}">{{ c.title }}</h2>
     <div class="mk-cmp" style="--pos:50%">
       <img src="{{ c.after.desktop }}" alt="{{ c.after.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
       <img class="mk-cmp-before" src="{{ c.before.desktop }}" alt="{{ c.before.label }}のトップ（パソコン）" width="1280" height="800" loading="lazy">
@@ -59,7 +87,7 @@
     </div>
     {%- if c.note %}<p>{{ c.note }}</p>{% endif %}
   </section>
-  {%- endif %}
+  {%- endfor %}
 
   <section class="mk-section" aria-labelledby="mk-now">
     <p class="mk-eyebrow">01 / 今の状態</p>

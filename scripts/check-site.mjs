@@ -85,3 +85,6 @@ if (problems.length) {
   process.exit(1);
 }
 console.log(`Checked ${pages.length} pages: no problems found.`);
+
+// Verify the initial research-product prelaunch funnel in CI as well.
+await import('./check-cleanliness-prelaunch.mjs');

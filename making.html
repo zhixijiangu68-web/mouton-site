@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" data-root="">
+<html lang="ja" data-root="" data-version="original">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -20,13 +20,19 @@
 <link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
 <meta name="twitter:site" content="@kodoku__alone">
 <meta name="theme-color" content="#f8f5ee">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="design-version.css">
 <script src="site.js" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -36,6 +42,14 @@
 <body class="site doc-page">
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
+  <label class="version-picker">
+  <span class="version-picker-label" aria-hidden="true">VERSION</span>
+  <select data-version-picker aria-label="デザインのバージョン">
+    <option value="original">01 ORIGINAL</option>
+    <option value="club">02 CLUB</option>
+  </select>
+</label>
+
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
@@ -56,6 +70,23 @@
     <h1 class="doc-title">作っている<wbr>もの。</h1>
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
+  <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
+    <div class="mk-feature-header">
+      <div>
+        <p class="mk-eyebrow">LATEST EVOLUTION / 2026.10.13</p>
+        <h2 id="mk-feature-heading">長い<wbr>トップから、<wbr>選べる<wbr>トップへ。</h2>
+        <p>静かな最初の画面から、映画的なオープニング、短いトップ、3つのテーマを選べる画面へ。MOUTON自身の変化を記録しました。</p>
+        <a class="mk-more" href="making-site.html#site-evolution">変化を時系列で見る <span aria-hidden="true">→</span></a>
+      </div>
+      <a class="mk-feature-preview" href="making-site.html#site-compare" aria-label="初期と最新のトップ画面を見比べる">
+        <picture>
+          <source media="(max-width:540px)" srcset="images/making/site-ui-20261013-phone.jpg">
+          <img src="images/making/site-ui-20261013-desktop.jpg" alt="10月13日のMOUTONトップ。哲学、身体、食と科学の3テーマカードが並ぶ" width="1280" height="800" loading="lazy">
+        </picture>
+        <span aria-hidden="true">BEFORE / AFTER <span>↗</span></span>
+      </a>
+    </div>
+  </section>
 
   <section class="mk-section" aria-labelledby="mk-projects">
     <p class="mk-eyebrow">01 / いま作っているもの</p>
@@ -89,6 +120,22 @@
     <p class="mk-eyebrow">02 / 制作の記録</p>
     <h2 id="mk-log">進んだ<wbr>日の<wbr>こと。</h2>
     <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-13">2026.10.13</time>
+        <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>3枚の<wbr>アートで、<wbr>記事への<wbr>入口が<wbr>できた。</h3><p>Philosophy / Body / Food &amp; Scienceの3テーマを大きく表示。生成したアートをカード用に調整し、「今日は、何が気になる？」の見出しは静止表示にした（PR #110・#112・#113）。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-13">2026.10.13</time>
+        <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>オープニングの<wbr>動きを、<wbr>納得できるまで<wbr>磨いた。</h3><p>MOUTONの文字をゆっくり見せてから、幕が滑らかに消える演出に。冒頭のカクつきやフォントの切り替わりを調整した（PR #100・#103・#107・#109）。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-13">2026.10.13</time>
+        <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>長い<wbr>スクロールを、<wbr>4つの<wbr>タブへ。</h3><p>白い追従カーソルを削除。トップを約63%短縮して、おすすめ・クイズ・選び方・記事検索をタブにまとめた（PR #98・#99・#101）。</p></div>
+      </li>
+      <li>
+        <time datetime="2026-10-13">2026.10.13</time>
+        <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>小さな<wbr>アイコンにも<wbr>世界観を。</h3><p>羊と三日月のファビコン、ホーム画面用アイコンを追加した（PR #97）。</p></div>
+      </li>
       <li>
         <time datetime="2026-10-07">2026.10.07</time>
         <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>選び方の<wbr>記事が<wbr>11本に<wbr>なった。</h3><p>ミニトランポリンと、耳栓・アイマスクの選び方を足した。読み物から選び方へのリンクも5本につないだ。</p></div>
@@ -141,7 +188,7 @@
     <ul><li><a href="start.html">はじめての方へ</a></li>
       <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
       <li><a href="editorial.html">編集方針</a></li>
-      <li><a href="operator.html">運営者情報</a></li><li><a href="feed.xml">RSS</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
     </ul>
   </div>
 </nav>

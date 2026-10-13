@@ -279,3 +279,373 @@ Ask, "What does a normal Tuesday look like in that life?"
 
 The first question gives you a dream. The second one gives you a plan.
 ```
+
+## Philosophy, built to stop the scroll（2026-10-09・未承認）
+
+オーナーの依頼「英語で哲学でバズりそうなツイート」。1行目で止め、最後の1行で言い切る型。哲学者の名前を出す案は、英語版の記事に書いてあることだけを使った（引用符で言葉を借りるのは、記事に載っている有名な一文だけ）。どれも280字以内。リンクを付けるなら、リプライに英語版の記事（`/en/<記事>.html?utm_source=x&utm_medium=social&utm_campaign=<記事>&utm_content=reply`）。
+
+### ENP-1｜camus-sisyphus
+```
+Camus asked us to imagine Sisyphus happy.
+
+Not because the boulder got lighter.
+Because he stopped waiting for the day it would.
+
+Same job. Same commute. Same Tuesday.
+The repetition isn't the problem. Waiting for it to end is.
+```
+
+### ENP-2｜nietzsche
+```
+"God is dead" wasn't a celebration.
+
+It was a much harder question:
+if no one hands you a meaning anymore,
+what are you going to build with your one life?
+
+Most of us answer it by scrolling.
+```
+
+### ENP-3｜stoicism
+```
+Epictetus sorted life into two piles:
+what's up to us, and what isn't.
+
+Your effort: up to you.
+Your reputation: not up to you.
+
+Most anxiety is trying to do the second pile's job.
+```
+
+### ENP-4｜sartre
+```
+Sartre's most uncomfortable idea:
+you are condemned to be free.
+
+"I had no choice" is usually a choice.
+Not deciding is deciding.
+Staying is choosing to stay.
+
+Freedom isn't a gift. It's a weight you carry either way.
+```
+
+### ENP-5｜comparison
+```
+You don't hate your life.
+
+You hate the comparison between your behind-the-scenes
+and everyone else's highlight reel.
+
+Close the app, and your life looks a little better without changing anything.
+```
+
+### ENP-6｜doing-nothing
+```
+Rest is not the reward for finishing.
+
+You will never finish.
+```
+
+### ENP-7｜self-image
+```
+Most habits die on the same sentence:
+"That's just not who I am."
+
+Change the sentence first.
+The habit needs somewhere to live.
+```
+
+### ENP-8｜fear
+```
+Fear asks: "What if it goes wrong?"
+Regret asks: "What if it would have gone right?"
+
+You only get to pick which one you'll be talking to at 40.
+```
+
+
+### ENP-9｜fear-of-change
+```
+Your brain feels a loss about twice as strongly as an equal gain.
+
+That's why staying feels safe.
+Not because it is.
+Because the price of staying never shows up on one single day.
+```
+
+### ENP-10｜fear-of-change
+```
+In the short run, we regret what we did.
+In the long run, we regret what we didn't.
+
+Choose which kind of regret you can live with.
+```
+
+### ENP-11｜boundaries
+```
+The harder you try to be liked by everyone,
+the blurrier you become.
+
+People can't love an outline they can't see.
+```
+
+### ENP-12｜disliked-priority
+```
+Being disliked by some people
+isn't a sign you did something wrong.
+
+It's usually a sign you did something.
+```
+
+### ENP-13｜freedom
+```
+Love keeps part of your standard outside you.
+Freedom keeps it inside.
+
+The trick isn't choosing one.
+It's knowing which one you're living by right now.
+```
+
+### ENP-14｜identity
+```
+Don't ask "what should I do?"
+Ask "what would the person I'm becoming do?"
+
+The first question gives you a to-do list.
+The second gives you a direction.
+```
+
+### ENP-15｜system-goal
+```
+You can't control the result.
+You can control whether you showed up today.
+
+Track the second.
+The first is just what happens to people who do.
+```
+
+### ENP-16｜refined-taste
+```
+The more good things you know,
+the harder it gets to be satisfied.
+
+Taste is a gift and a tax.
+```
+
+### ENP-17｜sunday-blues
+```
+Sunday night doesn't hurt because the weekend is ending.
+
+It hurts because on Monday,
+someone else decides how you spend your time again.
+```
+
+### ENP-18｜goggins
+```
+4,030 pull-ups.
+
+Nobody does that with motivation.
+Motivation shows up for the first 30.
+The other 4,000 are just a decision, repeated.
+```
+
+### ENP-19｜influence
+```
+You are what you let in.
+
+Your feed, your playlist, the five people you text most.
+Nobody chose your mood today.
+It was assembled.
+```
+
+### ENP-20｜quit-or-escape
+```
+Wanting to quit isn't always laziness.
+
+Sometimes it's the most honest data you have.
+Ask what exactly is draining you
+before you decide whether to leave or change it.
+```
+
+### ENP-21｜sartre
+```
+Existence precedes essence.
+
+Translation: you weren't born with a job description.
+Every "that's just how I am" was written by you,
+which means it can be rewritten by you.
+```
+
+### ENP-22｜stoicism
+```
+Seneca didn't think life was short.
+
+He thought we made it short,
+spending it on worries we can't change
+and on appearances kept up for other people.
+```
+
+### ENP-23｜stoicism
+```
+Before you worry about something, ask one question:
+
+Is this up to me?
+
+If yes, act.
+If no, let it go.
+If you're still worrying, you skipped the question.
+```
+
+### ENP-24｜nietzsche
+```
+Nobody is coming to tell you what your life means.
+
+That sounds bleak until you notice
+it also means nobody gets to tell you it means nothing.
+```
+
+### ENP-25｜camus-sisyphus
+```
+Wake up. Work. Eat. Sleep. Repeat.
+
+Camus didn't call that meaningless and stop there.
+He called it absurd, and then asked:
+so what will you do with the boulder today?
+```
+
+### ENP-26｜doing-nothing
+```
+Zoning out isn't wasted time.
+
+It's when your brain files the day,
+connects ideas you didn't know were connected,
+and quietly plans tomorrow.
+
+Not every hour has to produce something you can see.
+```
+
+### ENP-27｜comparison
+```
+"Stop comparing yourself to others" is advice nobody can follow.
+
+Comparison is how humans figure out who they are.
+
+The real question isn't whether you compare.
+It's who you compare with, and what for.
+```
+
+### ENP-28｜social-media-time
+```
+In one large study, people were paid to quit Facebook for four weeks.
+
+What did they do with the time?
+More time with family and friends.
+
+Your feed isn't free.
+You pay in evenings.
+```
+
+### ENP-29｜self-image
+```
+You don't act first because you're confident.
+You become confident because you acted first.
+
+The order matters.
+Most people wait for the wrong one.
+```
+
+### ENP-30｜job-change-happiness
+```
+Job satisfaction jumps right after a job change.
+Then it falls.
+
+The honeymoon isn't proof you chose right.
+The hangover isn't proof you chose wrong.
+Judge it after both have passed.
+```
+
+### ENP-31｜job-fit
+```
+"I'm not suited for this job" can mean three different things:
+
+the work,
+the workplace,
+or you just haven't gotten used to it yet.
+
+Only one of them is fixed by quitting.
+```
+
+### ENP-32｜hill
+```
+"Think and grow rich" was never "wish and get rich."
+
+Thinking only counts
+when it changes what you do tomorrow morning.
+```
+
+### ENP-33｜music-life
+```
+You don't need a reason to love a song.
+
+But there is one anyway:
+when music gives people intense pleasure,
+the brain regions for reward and emotion light up.
+```
+
+### ENP-34｜boundaries
+```
+Saying no to someone isn't rejecting them.
+
+It's telling them where you are,
+so they can find you.
+```
+
+### ENP-35｜freedom
+```
+Freedom isn't having no one to answer to.
+
+It's knowing whose standard you're living by,
+and choosing it on purpose.
+```
+
+### ENP-36｜identity
+```
+Ninety days from now, someone will wake up in your bed.
+
+Today, you decide who that person is.
+```
+
+### ENP-37｜fear
+```
+Courage isn't the absence of fear.
+
+It's noticing your hands are shaking
+and pressing send anyway.
+```
+
+### ENP-38｜disliked-priority
+```
+You need to belong. That's human.
+
+But "belong" and "be liked by everyone"
+are two different jobs,
+and only one of them has an end.
+```
+
+### ENP-39｜system-goal
+```
+Goals tell you where to go.
+Habits decide whether you get there.
+
+Write fewer goals.
+Design more Tuesdays.
+```
+
+### ENP-40｜refined-taste
+```
+The more stimulation you chase,
+the less any single thing satisfies you.
+
+Sometimes the upgrade isn't more.
+It's noticing what you already have.
+```

@@ -35,6 +35,12 @@ export default {
     title: '新しい記事を、メールで受け取る',
     text: '記事を書いたときに、ときどきお知らせします。',
   },
+  // 発売前PDFの先行案内。外部配信サービスのPOST先が確定するまで受付しない。
+  prelaunch: {
+    waitlistAction: '',
+    waitlistEmailField: 'email',
+    waitlistService: '',
+  },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },
   // 運営者情報・プライバシーポリシーの制定日

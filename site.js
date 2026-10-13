@@ -34,7 +34,7 @@
    toggle.setAttribute('aria-expanded',String(open));
    toggle.textContent=open?'Close':'Menu';
   };
-  window.matchMedia('(max-width: 860px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
+  window.matchMedia('(max-width: 1180px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
   toggle.addEventListener('click',()=>setOpen(!nav.classList.contains('menu-open')));
   links.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('menu-open')){setOpen(false);toggle.focus();}});
@@ -142,6 +142,7 @@
  const remeasure=()=>{dirty=true;request();};
  window.addEventListener('scroll',request,{passive:true});
  window.addEventListener('resize',remeasure);
+ document.addEventListener('mouton:versionchange',remeasure);
  if('ResizeObserver' in window)new ResizeObserver(remeasure).observe(document.body);
  if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
@@ -163,8 +164,10 @@ document.addEventListener('click',e=>{
  const a=e.target.closest&&e.target.closest('a[rel~="sponsored"]');
  if(!a||typeof window.gtag!=='function')return;
  const card=a.closest('.product-card');
- const name=card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
- window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,transport_type:'beacon'});
+ const name=a.closest('[data-product]')?.dataset.product||card?.querySelector('.product-name')?.firstChild?.textContent.trim()||a.textContent.trim();
+ // placement: the list near the top ("summary"), a product card ("card"), or a link in the text ("text").
+ const placement=a.dataset.placement||(card?'card':'text');
+ window.gtag('event','affiliate_click',{shop:/rakuten/.test(a.hostname)?'rakuten':'amazon',product:name.slice(0,100),article:location.pathname,placement,transport_type:'beacon'});
 });
 
 // Guides: a small bar that jumps to the products, so readers who arrive from X
@@ -323,5 +326,18 @@ document.querySelectorAll('[data-cover-toggle]').forEach(b=>{
   if(day)document.documentElement.dataset.cover='day';else delete document.documentElement.dataset.cover;
   try{localStorage.setItem('mouton.cover',day?'day':'night');}catch{}
   sync();
+ });
+});
+
+// MOUTON RESEARCH: clicks into the cleanliness-science prelaunch LP.
+// Keep this separate from paid-order conversion events; no sale is possible yet.
+document.addEventListener('click',e=>{
+ const a=e.target.closest&&e.target.closest('a[data-lp-entry]');
+ if(!a||typeof window.gtag!=='function')return;
+ window.gtag('event','lp_entry_click',{
+  product_id:'cleanliness_001',
+  placement:a.dataset.placement||'unknown',
+  source_article:a.dataset.sourceArticle||'unknown',
+  transport_type:'beacon'
  });
 });

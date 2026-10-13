@@ -5,8 +5,8 @@ bodyClass: article-page
 {% include "partials/nav-en.njk" if lang == "en" else "partials/nav.njk" %}
 {%- set coverImg = ["images/articles/" + page.fileSlug + ".jpg", "images/cover-" + category + ".jpg"] | firstImage %}
 <div class="cover ph-{{ category }}{{ '' if coverImg else ' is-placeholder' }}" data-nav="{{ 'light' if (category in ['books', 'body'] and not coverImg) else 'dark' }}"{% if coverImg %} style="--img:url('{{ root }}{{ coverImg }}')"{% endif %}><nav aria-label="{{ 'Back' if lang == 'en' else '戻る' }}"><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a>
-{%- if lang == 'en' %}<a class="cover-lang" href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語</a>
-{%- elif page.fileSlug in enSlugs %}<a class="cover-lang" href="en/{{ page.fileSlug }}.html" hreflang="en" lang="en">English</a>{% endif %}</nav></div>
+{%- if lang == 'en' and not enOnly %}<a class="cover-lang" href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語</a>
+{%- elif lang != 'en' and page.fileSlug in enSlugs %}<a class="cover-lang" href="en/{{ page.fileSlug }}.html" hreflang="en" lang="en">English</a>{% endif %}</nav></div>
 {%- set qbank = quizzesEn if lang == 'en' else quizzes %}
 {%- set mySeries = series | seriesOf(page.fileSlug) %}
 {{ content | crumbs(topics | findTopic(topic), journal.title if journal else headline, lang == 'en', 'guide' if guide else category) | seriesTag(mySeries, page.fileSlug, lang == 'en') | midQuiz(qbank, page.fileSlug, lang == 'en') | openQuiz(qbank | quizObj(page.fileSlug), lang == 'en') | prNotice(lang != 'en' and (category == 'books' or affiliate) and (site.affiliate.amazonTag or site.affiliate.rakutenId)) | safe }}

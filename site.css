@@ -42,7 +42,7 @@ body.site *,body.site *::before,body.site *::after{box-sizing:border-box}
 .menu-toggle{display:none;appearance:none;border:1px solid currentColor;background:transparent;color:inherit;border-radius:999px;min-height:44px;min-width:44px;padding:0 18px;font:inherit;font-family:var(--latin);font-style:italic;font-size:1.0625rem;cursor:pointer}
 .site-nav a:focus-visible,.menu-toggle:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
-@media(max-width:860px){
+@media(max-width:1180px){
  :root{--nav-h:64px}
  .menu-toggle{display:inline-flex;align-items:center;position:relative;z-index:2}
  .site-brand{position:relative;z-index:2}
@@ -418,3 +418,36 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 /* ④ Type and spacing rules (2026-10-09): navigation, buttons and explanations in Gothic;
    brand and headings stay Mincho. */
 @media(min-width:861px){.site-nav .site-links a{font-family:var(--gothic);font-weight:400}}
+
+
+/* MOUTON making: visible evolution, without turning the overview into a long landing page. */
+.making .mk-feature{scroll-margin-top:100px}
+.mk-feature-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(200px,.95fr);gap:clamp(20px,4vw,40px);align-items:center}
+.mk-feature-header>div{min-width:0}
+.mk-feature-header h2{margin-bottom:10px}
+.making .mk-feature-header>div>p:not(.mk-eyebrow){font-size:.9375rem;line-height:1.9;margin-bottom:12px}
+.mk-feature-preview{position:relative;display:block;min-width:0;overflow:hidden;border-radius:10px;border:1px solid var(--line);background:#0b1328;box-shadow:0 12px 34px rgba(17,30,52,.12);text-decoration:none}
+.mk-feature-preview img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.mk-feature-preview>span{position:absolute;right:0;bottom:0;display:flex;justify-content:space-between;gap:16px;width:100%;padding:11px 15px;background:linear-gradient(90deg,rgba(6,17,41,.74),rgba(6,17,41,.93));color:#f6f2e9;font:500 .675rem/1.5 Inter,sans-serif;letter-spacing:.11em}
+.mk-feature-preview:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.mk-evolution{scroll-margin-top:110px}
+.mk-evolution>.mk-more{margin-bottom:22px}
+.mk-evolution-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:8px}
+.mk-evolution-step{padding:20px 22px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.5)}
+.mk-evolution-step-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font:500 .68rem/1.5 Inter,sans-serif;letter-spacing:.08em;color:#555d59}
+.making .mk-evolution-step h3{font-size:clamp(1.02rem,1.8vw,1.18rem);line-height:1.65;margin:10px 0 6px}
+.making .mk-evolution-step p{font-size:.875rem;line-height:1.85;color:#454a45;margin-bottom:0}
+.making .mk-evolution-step .mk-evolution-refs{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.mk-evolution-refs a{display:inline-flex;align-items:center;gap:4px;min-height:30px;padding:5px 9px;border:1px solid #d5d8d0;border-radius:99px;color:#2f453d;text-decoration:none;font:500 .72rem/1.4 Inter,sans-serif}
+.mk-evolution-refs a:hover{border-color:#748e84;background:#eff3ed}
+.mk-evolution-refs a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+#site-compare{scroll-margin-top:100px}
+@media(max-width:660px){
+ .mk-feature-header{grid-template-columns:1fr;gap:14px}
+ .mk-feature-preview img{max-height:220px;object-fit:cover}
+ .mk-evolution-grid{grid-template-columns:1fr;gap:10px}
+ .mk-evolution-step{padding:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ .mk-feature-preview{scroll-behavior:auto}
+}

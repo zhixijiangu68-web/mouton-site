@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-root="../">
+<html lang="en" data-root="../" data-version="original">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -21,7 +21,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@kodoku__alone">
 <meta name="theme-color" content="#f8f5ee">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%231442c4%22/%3E%3Ctext x=%2250%22 y=%2270%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23f8f5ee%22 font-family=%22serif%22%3E%E3%83%A0%3C/text%3E%3C/svg%3E">
+<script src="../design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="shortcut icon" href="../favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="manifest" href="../site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
@@ -29,6 +34,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
 <link rel="stylesheet" href="../site.css">
 <link rel="stylesheet" href="../home.css">
+<link rel="stylesheet" href="../design-version.css">
 <script src="../site.js" defer></script>
 <script src="../quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -38,6 +44,14 @@
 <body class="site doc-page">
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">Mouton</a>
+  <label class="version-picker">
+  <span class="version-picker-label" aria-hidden="true">VERSION</span>
+  <select data-version-picker aria-label="Design version">
+    <option value="original">01 ORIGINAL</option>
+    <option value="club">02 CLUB</option>
+  </select>
+</label>
+
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="Main navigation">
     <ul class="site-links" id="site-links">
@@ -73,10 +87,16 @@
   <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">Try one <span>True or false</span></p>
   <div class="qloop" data-qloop></div></section>
   <section id="journal" aria-labelledby="journal-heading">
-    <h2 id="journal-heading" class="eyebrow">Journal — 60 articles</h2>
+    <h2 id="journal-heading" class="eyebrow">Journal — 61 articles</h2>
     <section id="philosophy" aria-labelledby="topic-philosophy">
       <h2 class="doc-title" id="topic-philosophy">Philosophy</h2>
       <div class="topic-list">
+        <a class="topic-item" data-rise href="bailey-schildbach.html">
+          <span class="topic-date">2026.10.09</span>
+          <span class="topic-title">Bailey Schildbach and the art of continuing</span>
+          <span class="topic-excerpt">She lives with pain and keeps training to run farther. The word she keeps coming back to isn&#39;t &quot;winning.&quot; It&#39;s &quot;continuing.&quot;</span>
+          <span class="topic-time">5 min read</span>
+        </a>
         <a class="topic-item" data-rise href="camus-sisyphus.html">
           <span class="topic-date">2026.10.07</span>
           <span class="topic-title">Can you be happy when every day is the same?</span>
