@@ -1,0 +1,22 @@
+---
+layout: page.njk
+permalink: en/contact.html
+jaPage: contact.html
+title: "Contact — Mouton"
+description: "How to get in touch with Mouton, the operator of this site: comments on articles, corrections, and work inquiries are all welcome."
+eyebrow: Contact
+heading: Contact
+---
+<p>Comments on articles, corrections, and work inquiries are all welcome. I'll read your message and reply when needed. It may take some time to get back to you. Replies may be in Japanese or English.</p>
+<div class="contact-list">
+  {%- if site.contact.formUrl %}
+  <a class="btn btn-dark" href="{{ site.contact.formUrl }}" target="_blank" rel="noopener noreferrer">Contact form <span aria-hidden="true">↗</span></a>
+  {%- endif %}
+  {%- if site.contact.email %}
+  <a class="btn btn-outline" href="mailto:{{ site.contact.email }}">Send an email ({{ site.contact.email }})</a>
+  {%- endif %}
+  {%- if site.contact.x %}
+  <a class="btn {{ 'btn-outline' if (site.contact.formUrl or site.contact.email) else 'btn-dark' }}" href="https://x.com/{{ site.contact.x }}" target="_blank" rel="noopener noreferrer">Message me on X (@{{ site.contact.x }}) <span aria-hidden="true">↗</span></a>
+  {%- endif %}
+</div>
+<p class="doc-small">For how information you send is handled, see the <a href="privacy.html">privacy policy</a>.</p>

@@ -5,49 +5,57 @@ title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
 extraCss: [home.css]
-preloadHero: true
 ---
-<script>try{if(!sessionStorage.getItem('mouton-intro-v1')&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&!location.hash){document.documentElement.classList.add('intro');sessionStorage.setItem('mouton-intro-v1','1');}}catch{}</script>
-<div class="intro-veil" aria-hidden="true">
-  <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
-  <p class="intro-sub">A personal archive — since 2026</p>
-  <span class="intro-bar"></span>
-</div>
+<script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 
 <main>
-  <section class="scene scene-hero" id="top" data-scene data-next-overlap data-nav="dark">
-    <div class="scene-pin">
-      <div class="scene-media ph-hero{{ '' if (["images/hero.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/hero.jpg" %}></div>
-      <div class="scene-shade"></div>
-      <div class="hero-light" aria-hidden="true"></div>
-      <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
-      <div class="scene-copy hero-copy" style="--y:center;--x:center;--w:1100px;text-align:center">
-        <p class="eyebrow reveal">A personal archive for things yet to come</p>
-        <h1 class="display reveal"><span class="nowrap">作る。</span><span class="nowrap">記録する。</span><br><span class="nowrap">残していく。</span></h1>
-        <p class="lede reveal-2">考えたこと。作ったもの。変わっていく自分。<br>その途中を、静かに残していく。</p>
-        {%- for a in collections.articles %}{% if loop.first %}
-        <a class="hero-latest reveal-2" href="{{ a.page.fileSlug }}.html"><span class="hero-latest-label">New</span><span class="hero-latest-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span><span aria-hidden="true">→</span></a>
-        {%- endif %}{% endfor %}
-        <p class="hero-lang reveal-2"><a href="en/index.html" hreflang="en" lang="en">Read in English <span aria-hidden="true">→</span></a></p>
+  {#- 表紙（Night）。Day に切り替えると空の写真になる（ボタンで切り替え、ブラウザに保存）。 #}
+  <section class="cover" id="top" data-nav="dark" data-nav-solid="dark">
+    <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
+    <div class="cover-inner">
+      <p class="cover-kicker">A late-night club for questions</p>
+      <h1 class="cover-title"><span class="nowrap">哲学と科学で、</span><br><span class="nowrap">日常の見え方を</span><span class="nowrap">変える。</span></h1>
+      <p class="cover-lede">外見・お金・生き方。研究で確かめてから書いた記事と、答えてから読む○×クイズ。</p>
+      <div class="cover-actions">
+        <a class="cover-btn is-primary" href="#reading">記事を読む</a>
+        <a class="cover-btn" href="#today-q">クイズを解く</a>
       </div>
-      <div class="hero-ticker" aria-label="最近の記事">
-        <span class="hero-ticker-label">Now reading</span>
-        <div class="hero-ticker-track">
-          {%- for copy in [0, 1] %}
-          <ul class="hero-ticker-list"{% if copy %} aria-hidden="true"{% endif %}>
-            {%- for a in collections.articles | head(12) %}
-            <li><a href="{{ a.page.fileSlug }}.html"{% if copy %} tabindex="-1"{% endif %}>{{ a.data.guide.title if a.data.guide else (a.data.journal.title if a.data.journal else a.data.headline) }}</a></li>
-            {%- endfor %}
-          </ul>
-          {%- endfor %}
-        </div>
+      <p class="cover-links"><a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a><a href="guides.html">買う前に読む「選び方」 <span aria-hidden="true">→</span></a><a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a></p>
+    </div>
+    <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
+  </section>
+
+  {#- いま読む3本：新しい順に、大きな1本と小さな2本。 #}
+  <section class="section cover-section" id="reading" data-nav="dark" data-nav-solid="dark" aria-labelledby="reading-heading">
+    <div class="section-inner">
+      <h2 class="cover-section-title" id="reading-heading">いま読む<em>Now reading</em></h2>
+      <div class="reading3">
+        {%- for a in collections.articles | head(3) %}
+        <a class="reading3-card{{ ' is-feature' if loop.first }}" href="{{ a.page.fileSlug }}.html">
+          <span class="reading3-meta">{{ {philosophy:'哲学・生き方', body:'身体', food:'食事・化学', books:'本', work:'仕事'}[a.data.category] or 'Journal' }}<span aria-hidden="true"> ・ </span>約{{ a.data.readMinutes }}分</span>
+          <span class="reading3-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+          <span class="reading3-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+          <span class="reading3-go">読む <span aria-hidden="true">→</span></span>
+        </a>
+        {%- endfor %}
       </div>
+      <p class="cover-more"><a href="#journal">記事をすべて見る <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 
-  <section class="scene overlap" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
+  {#- 今日の1問。答えると、その問題の記事へ進める。 #}
+  <section class="section cover-section" id="today-q" data-nav="dark" data-nav-solid="dark" aria-labelledby="today-heading">
+    <div class="section-inner today-inner">
+      <p class="today-kicker">今日の1問</p>
+      <h2 class="cover-section-title today-title" id="today-heading">その常識、<br>10秒でひっくり返す。</h2>
+      <div class="qloop today-qloop" data-qloop data-compact></div>
+      <p class="cover-more"><a href="quiz.html">10問チャレンジ <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+
+  <section class="scene" id="think" data-scene data-reveal data-next-overlap data-nav="dark">
     <div class="scene-pin">
       <div class="scene-media ph-think{{ '' if (["images/scene-think.jpg"] | firstImage) else ' is-placeholder' }}"{% bgImage "images/scene-think.jpg" %}></div>
       <div class="scene-shade"></div>
@@ -56,6 +64,7 @@ preloadHero: true
         <h2 class="scene-title reveal">考える。</h2>
         <p class="scene-latin reveal">Meaning is not given; <em>it is left behind.</em></p>
         <p class="scene-text reveal-2">神は死んだ。それでも、なぜ生きるのか。自由、恐怖、セルフイメージ。答えを急がず、問いのまま残していく。</p>
+        <a class="scene-q reveal-2" href="camus-sisyphus.html"><b>Q.</b> {{ quizzes | quizFor("camus-sisyphus") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#journal" data-filter-link="philosophy">哲学・生き方の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">01</div>
@@ -71,6 +80,7 @@ preloadHero: true
         <h2 class="scene-title reveal">身体で、<br>確かめる。</h2>
         <p class="scene-latin reveal">Measured, <em>not imagined.</em></p>
         <p class="scene-text reveal-2">体力、血糖値、匂い、口臭。なんとなくの感覚を、研究とデータでもう一度確かめ直す。</p>
+        <a class="scene-q reveal-2" href="first-impression-sleep.html"><b>Q.</b> {{ quizzes | quizFor("first-impression-sleep") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-dark reveal-2" href="#journal" data-filter-link="body">身体の記事 <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true" style="right:auto;left:var(--gutter)">02</div>
@@ -85,6 +95,7 @@ preloadHero: true
         <p class="eyebrow reveal">03 — Food &amp; Science</p>
         <h2 class="scene-title reveal">食べることを、<em>evidence</em>で。</h2>
         <p class="scene-text reveal-2" style="margin-inline:auto">ダークチョコ、オリーブ油、ブルーベリー。健康についての言葉を、論文とデータから確かめる。</p>
+        <a class="scene-q reveal-2" href="coffee.html"><b>Q.</b> {{ quizzes | quizFor("coffee") }}<span>○か×か？ 答えは記事で <span aria-hidden="true">→</span></span></a>
         <a class="btn btn-light reveal-2" href="#foodscience">食事・化学を読む <span aria-hidden="true">→</span></a>
       </div>
       <div class="scene-count" aria-hidden="true">03</div>
@@ -116,7 +127,7 @@ preloadHero: true
           <p class="eyebrow">Journal</p>
           <h2 class="section-title" id="journal-heading">記事<em>— notes in progress</em></h2>
         </div>
-        <p class="copy">思ったこと、気づいたこと、迷ったこと、嬉しかったこと。完成した答えより、途中に残ったものを記録する。</p>
+        <p class="copy">哲学と科学で確かめたこと。分類で絞るか、言葉で探す。</p>
       </div>
       <div class="journal-tools">
         <div class="journal-filters" role="group" aria-label="記事のカテゴリー">
@@ -132,10 +143,11 @@ preloadHero: true
         </div>
       </div>
       <p class="journal-search-status" role="status" aria-live="polite"></p>
-      <nav class="topic-links" aria-label="テーマ別のページ"><span>テーマ別に読む</span>{%- for t in topics %}<a href="topic-{{ t.key }}.html">{{ t.label }} <span aria-hidden="true">→</span></a>{% endfor %}</nav>
+      <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
+      <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
       <div class="journal-list">
         {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}">
+        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
           <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
@@ -265,10 +277,10 @@ preloadHero: true
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   <p class="quote">千里の道も、一歩から。</p>
   <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
+  {% include "partials/footer-map.njk" %}
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
-<script src="home.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};

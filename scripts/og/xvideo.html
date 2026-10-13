@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/400.css">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/600.css">
+<style>
+  html,body{margin:0;width:1080px;height:1920px;overflow:hidden}
+  body{background:#0b1020;color:#f5f3ee;font-family:"Noto Serif JP",serif;position:relative}
+  .light{position:absolute;border-radius:50%;filter:blur(80px)}
+  .l1{width:1300px;height:1300px;left:-420px;top:-480px;background:radial-gradient(circle,rgba(76,114,255,.8),rgba(76,114,255,0) 65%)}
+  .l2{width:1000px;height:1000px;right:-380px;bottom:-360px;background:radial-gradient(circle,rgba(46,84,214,.75),rgba(46,84,214,0) 65%)}
+  .wrap{position:absolute;inset:220px 90px 200px 90px;display:flex;flex-direction:column}
+  .tag{align-self:flex-start;font:600 34px/1 Georgia,serif;letter-spacing:.22em;padding:14px 30px;border-radius:999px;background:#f5f3ee;color:#0b1020}
+  .q{margin-top:120px;font-size:var(--fs,74px);font-weight:600;line-height:1.6;letter-spacing:.02em;word-break:keep-all;overflow-wrap:anywhere}
+  .ask{margin-top:50px;font-size:72px;color:#9fb3ff}
+  .count{position:absolute;left:0;right:0;top:1180px;text-align:center;font:600 260px/1 Georgia,serif;color:#f5f3ee}
+  .ans{position:absolute;left:90px;right:90px;top:1060px;text-align:center}
+  .mark{font-size:360px;line-height:1;font-weight:400}
+  .mark.o{color:#5ad19a}.mark.x{color:#ff7a6b}
+  .head{margin-top:30px;font-size:60px;font-weight:600;line-height:1.5;word-break:keep-all;overflow-wrap:anywhere}
+  .go{margin-top:40px;font-size:40px;color:#b5bcd0}
+  .foot{position:absolute;left:90px;right:90px;bottom:110px;display:flex;justify-content:space-between;font-size:40px;letter-spacing:.3em;color:#b5bcd0}
+  .foot small{font:italic 34px Georgia,serif;letter-spacing:.04em}
+</style></head>
+<body><i class="light l1"></i><i class="light l2"></i>
+<div class="wrap"><span class="tag">QUIZ</span><div class="q" id="q"></div><div class="ask" id="ask">○か×か？</div></div>
+<div class="count" id="count"></div>
+<div class="ans" id="ans"><div class="mark" id="mark"></div><div class="head" id="head"></div><div class="go">理由はリプライの記事で</div></div>
+<div class="foot"><span>ムートン</span><small>moutonarchive.com</small></div>
+<script>
+let D={};
+window.setup=d=>{D=d;const q=document.getElementById('q');q.innerHTML=d.qHtml;const n=d.q.length;q.style.setProperty('--fs',(n>60?60:n>44?66:74)+'px');
+ const m=document.getElementById('mark');m.textContent=d.a?'○':'×';m.className='mark '+(d.a?'o':'x');document.getElementById('head').innerHTML=d.headHtml;};
+// t in seconds. 0–0.5 fade in; 3.0–5.0 countdown; 5.0– answer.
+window.frame=t=>{
+ const ease=x=>x<0?0:x>1?1:1-Math.pow(1-x,3);
+ const inT=ease(t/.5);
+ document.querySelector('.wrap').style.cssText=`opacity:${inT};transform:translateY(${(1-inT)*20}px)`;
+ const c=document.getElementById('count');
+ if(t>=3&&t<5){const k=Math.floor((t-3)/(2/3));const f=((t-3)%(2/3))/(2/3);c.textContent=3-k;c.style.opacity=1-f*.6;c.style.transform=`scale(${1.25-f*.25})`;}else c.textContent='';
+ const a=document.getElementById('ans');const at=ease((t-5)/.35);a.style.opacity=at;
+ document.getElementById('mark').style.transform=`scale(${t<5?0.4:0.4+0.6*at+(t<5.5?Math.sin((t-5)*12)*.06*(1-at):0)})`;
+ document.getElementById('ask').style.opacity=t<5?1:1-at;
+};
+</script></body></html>

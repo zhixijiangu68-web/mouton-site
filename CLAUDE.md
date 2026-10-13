@@ -9,6 +9,7 @@
 - **10月中に最初の収益を出す**（「最初の1件が売れる」＋「どの記事から売れたか分かる」）
 - 流れは **X → 「選び方」記事 → Amazon・楽天**。検索からの流入は10月には間に合わない前提。Instagram は休止中（`instagram/README.md`）
 - 日々の運用は AI社員チーム（`.claude/skills/mouton-team/`）で回す。進み具合は `promo/status.md`
+- **作業ログ**：AI が仕事を1つ終えるたびに、`promo/log/YYYY-MM-DD.md` に「依頼・やったこと・判断・確かめたこと・見つけた問題・残り」を書き、その仕事のコミットに含める（書き方は `promo/log/README.md`）
 - 記事の柱は「外見（清潔感）」と「お金」。オーナーの考え：仕事や遊びが人生の本質だが、まずは外見と金を整える
 - **「つい見てしまう」を最優先する**：タイトル・1行目・冒頭で手を止めさせる（クイズ、意外な数字、常識の否定、比較、身近な場面）。ただし事実は出典で確かめたものだけ、あおり・誇張・嘘の緊急性は使わない
 - どの仕事も「この流れを太くするか」で優先度を決める。10月末に結果を測り、11月の計画を立てる
@@ -19,7 +20,7 @@
 - `src/index.njk`: トップページ。記事一覧・「食事・化学」のカードは記事の front matter から自動で作られる（手で書き足さない）
 - `src/_data/site.js`: サイト全体の設定。`src/_data/topics.js`: テーマ別ページ。`src/_data/notes.json`: ページのない短いメモ
 - `src/_includes/`: 共通部分（head、ナビ、記事の末尾、フッター）
-- `site.css` / `site.js` / `home.css` / `home.js` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
+- `site.css` / `site.js` / `home.css` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
 - 詳しい書き方は README.md の「記事を追加する」
 - `src/en/`: 英語版（`moutonarchive.com/en/`）。`src/en/articles/<ファイル名>.html` は日本語の記事と同じファイル名にする（hreflang と言語の切り替えが自動で付く）。英語版にはアフィリエイトのボタンと PR 表示を出さない（日本のお店のため。`productCard` はボタンなしのカードになる）。まだ訳していない記事へのリンクは、自動で日本語版に向く
 

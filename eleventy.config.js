@@ -1,4 +1,4 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { loadDefaultJapaneseParser } from 'budoux';
 import site from './src/_data/site.js';
 
@@ -52,6 +52,24 @@ export default function (eleventyConfig) {
     const notice = '<p class="pr-notice">PR｜この記事には広告（アフィリエイトリンク）が含まれます。<a href="privacy.html">詳しく</a></p>';
     return html.replace(/(<p class="reading-time">[\s\S]*?<\/p>)/, `$1${notice}`);
   });
+  // Quiz bank (src/_data/quizzes.json) → quizzes.json for quiz-loop.js, with each article's title.
+  eleventyConfig.addFilter('quizJson', (items, quizzes = []) => {
+    const titles = Object.fromEntries(items.map(a => [a.page.fileSlug, a.data.journal ? a.data.journal.title : a.data.headline]));
+    const n = {};
+    return JSON.stringify(quizzes.filter(q => titles[q.slug]).map(q => {
+      n[q.slug] = (n[q.slug] || 0) + 1;
+      return { id: `${q.slug}-${n[q.slug]}`, slug: q.slug, title: titles[q.slug], q: q.q, a: q.a, head: q.head, why: q.why };
+    }));
+  });
+  // Every article for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
+  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.map(a => ({
+    s: a.page.fileSlug,
+    t: a.data.journal ? a.data.journal.title : a.data.headline,
+    m: a.data.readMinutes,
+    q: (quizzes.find(q => q.slug === a.page.fileSlug) || {}).q || '',
+  }))));
+  // First quiz question for an article, used as a teaser on "next to read" cards.
+  eleventyConfig.addFilter('quizFor', (quizzes = [], slug) => (quizzes.find(q => q.slug === slug) || {}).q || '');
   eleventyConfig.addFilter('guideCards', items =>
     items.filter(a => a.data.guide).sort((a, b) => a.data.guide.order - b.data.guide.order));
   eleventyConfig.addFilter('scienceCards', items =>
@@ -97,11 +115,36 @@ export default function (eleventyConfig) {
     return picks;
   });
   // Articles in the order of the given slugs (unknown slugs are skipped).
+  // 連載: the series an article belongs to, and a "連載｜<title> n/m" line under its reading time.
+  // Visible breadcrumbs at the top of an article: ホーム › テーマ › 記事.
+  eleventyConfig.addFilter('crumbs', (html, t, title, en = false, kind = '') => {
+    const esc = x => String(x).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const parts = [`<a href="index.html">${en ? 'Home' : 'ホーム'}</a>`];
+    if (kind === 'guide') parts.push(`<a href="guides.html">${en ? 'Guides' : '選び方'}</a>`);
+    else if (t) parts.push(`<a href="${en ? `index.html#${t.key}` : `topic-${t.key}.html`}">${en ? t.en : t.label}</a>`);
+    else if (kind === 'books') parts.push(`<a href="index.html#${en ? 'more' : 'books'}">${en ? 'Books' : '本棚'}</a>`);
+    parts.push(`<span aria-current="page">${esc(title)}</span>`);
+    const nav = `<nav class="crumbs" aria-label="${en ? 'Breadcrumb' : 'パンくずリスト'}"><ol>${parts.map(x => `<li>${x}</li>`).join('')}</ol></nav>`;
+    for (const re of [/(<article class="article">)/, /(<main[^>]*>)/]) if (re.test(html)) return html.replace(re, `$1${nav}`);
+    return html;
+  });
+  eleventyConfig.addFilter('seriesOf', (series = [], slug) => series.find(s => s.slugs.includes(slug)) || null);
+  eleventyConfig.addFilter('seriesNav', (items, slug) => {
+    const i = items.findIndex(a => a.page.fileSlug === slug);
+    return { cur: i + 1, prev: i > 0 ? items[i - 1] : null, next: i >= 0 && i < items.length - 1 ? items[i + 1] : null };
+  });
+  eleventyConfig.addFilter('seriesTag', (html, s, slug, en = false) => {
+    if (!s) return html;
+    const n = s.slugs.indexOf(slug) + 1;
+    const tag = `<p class="series-tag"><a href="#series"><span>${en ? 'Series' : '連載'}</span>${en ? s.en : s.title}<em>${n} / ${s.slugs.length}</em></a></p>`;
+    return html.replace(/(<p class="reading-time">[\s\S]*?<\/p>)/, `$1${tag}`);
+  });
   eleventyConfig.addFilter('bySlugs', (items, slugs = []) => {
     const bySlug = new Map(items.map(a => [a.page.fileSlug, a]));
     return slugs.map(slug => bySlug.get(slug)).filter(Boolean);
   });
   eleventyConfig.addFilter('head', (items, n) => items.slice(0, n));
+  eleventyConfig.addFilter('origin', u => { try { return new URL(u).origin; } catch { return ''; } });
   eleventyConfig.addFilter('rfc822', d => new Date(d).toUTCString().replace('GMT', '+0000'));
   eleventyConfig.addFilter('json', v => JSON.stringify(v).replace(/</g, '\\u003c'));
   eleventyConfig.addFilter('absoluteUrl', (path, base) => (base ? new URL(String(path).replace(/^\//, ''), base.replace(/\/?$/, '/')).href : ''));
@@ -142,13 +185,43 @@ export default function (eleventyConfig) {
       + `</aside>`;
   });
 
-  // Tap-to-reveal quiz near the top of a guide: {% quiz "問題", "答え", "ひとこと解説" %}
-  eleventyConfig.addShortcode('quiz', function (question, answer, why = '') {
+  // Tap-to-reveal quiz: {% quiz "問題", "答え", "ひとこと解説" %}. When the answer starts with ○/× (or True/False),
+  // data-a lets site.js turn it into ○× buttons, so the reader guesses before seeing the answer.
+  const quizHtml = (question, answer, why, en) => {
     const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-    return `<details class="quiz"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
-      + `<span class="quiz-tap">${isEn(this.page) ? 'Show answer' : '答えを見る'}</span></summary>`
+    const a = /^(○|true)/i.test(answer) ? '1' : /^(×|false)/i.test(answer) ? '0' : '';
+    return `<details class="quiz"${a ? ` data-a="${a}"` : ''}><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">${esc(question)}</span>`
+      + `<span class="quiz-tap">${en ? 'Show answer' : '答えを見る'}</span></summary>`
       + `<div class="quiz-a"><p class="quiz-answer">${esc(answer)}</p>${why ? `<p class="quiz-why">${esc(why)}</p>` : ''}</div></details>`;
+  };
+  eleventyConfig.addShortcode('quiz', function (question, answer, why = '') {
+    return quizHtml(question, answer, why, isEn(this.page));
   });
+  // Articles without their own quiz open with the first question from the quiz bank,
+  // placed after the lead paragraph (or before the contents box, or after the deck).
+  eleventyConfig.addFilter('openQuiz', (html, q, en = false) => {
+    if (!q || !q.q || html.includes('class="quiz"')) return html;
+    const box = quizHtml(q.q, q.head, q.why, en);
+    // Right after the first intro paragraph, before the article starts giving answers.
+    const lead = /(<p class="lead">[\s\S]*?<\/p>)/;
+    if (lead.test(html)) return html.replace(lead, `$1${box}`);
+    if (html.includes('<details class="reading-toc">')) return html.replace('<details class="reading-toc">', `${box}<details class="reading-toc">`);
+    const deck = /(<div class="hero-line"><\/div>\s*(?:<article>)?)/;
+    if (deck.test(html)) return html.replace(deck, `$1${box}`);
+    return html;
+  });
+  // One more question in the middle of a long article: placed just before the section (h2)
+  // that holds its answer (`h2` in the quiz bank), so it never gives itself away.
+  eleventyConfig.addFilter('midQuiz', (html, quizzes = [], slug, en = false) => {
+    const mine = quizzes.filter(q => q.slug === slug);
+    const total = (html.match(/<h2[\s>]/g) || []).length;
+    const cands = mine.slice(1).filter(q => q.h2 >= 2 && q.h2 < total - 1);
+    if (!cands.length) return html;
+    const q = cands.reduce((a, b) => (Math.abs(b.h2 - total / 2) < Math.abs(a.h2 - total / 2) ? b : a));
+    let n = 0;
+    return html.replace(/<h2[\s>]/g, m => (++n === q.h2 ? quizHtml(q.q, q.head, q.why, en).replace('<details class="quiz"', '<details class="quiz quiz-mid"') + m : m));
+  });
+  eleventyConfig.addFilter('quizObj', (quizzes = [], slug) => quizzes.find(q => q.slug === slug));
 
   eleventyConfig.addShortcode('articleLd', (headline, description, date, updated, url, site, lang = 'ja') => {
     const iso = d => ymd(new Date(d)).join('-');
@@ -169,6 +242,33 @@ export default function (eleventyConfig) {
       ...(url ? { mainEntityOfPage: url } : {}),
     };
     return JSON.stringify(data).replace(/</g, '\\u003c');
+  });
+
+  // Guides with product cards: a short list of the products near the top (before the table of
+  // contents), so readers arriving from X see them without scrolling through the whole article.
+  // Each card gets an id the list links to ("理由を読む").
+  // Only "選び方" articles (front matter `guide`) get the list; research articles stay as they are.
+  const isGuide = page => {
+    const src = page.inputPath || '';
+    return src.includes('/articles/') && /^guide:/m.test(readFileSync(src, 'utf8'));
+  };
+  eleventyConfig.addTransform('product-summary', function (html) {
+    if (!(this.page.outputPath || '').endsWith('.html') || isEn(this.page) || !isGuide(this.page)) return html;
+    if (!html.includes('<details class="reading-toc"') || !html.includes('<aside class="product-card"')) return html;
+    const items = [];
+    html = html.replace(/<aside class="product-card" aria-label="([^"]*)">([\s\S]*?)<\/aside>/g, (m, name, inner) => {
+      const id = `product-${items.length + 1}`;
+      const btns = (inner.match(/<p class="product-btns">([\s\S]*?)<\/p>/) || [])[1] || '';
+      items.push({ id, name, btns: btns.replace(/class="product-btn /g, 'data-placement="summary" class="product-btn ') });
+      return `<aside class="product-card" id="${id}" aria-label="${name}">${inner}</aside>`;
+    });
+    if (!items.some(i => i.btns)) return html;
+    const list = `<aside class="product-summary" aria-labelledby="product-summary-title"><p class="product-summary-title" id="product-summary-title">この記事で紹介している商品 <span class="pr-label">PR</span></p><ol>`
+      + items.map(i => `<li data-product="${i.name}"><span class="product-summary-name">${i.name}</span>`
+        + `<span class="product-summary-btns">${i.btns}<a class="product-summary-why" href="#${i.id}">選んだ理由 <span aria-hidden="true">↓</span></a></span></li>`).join('')
+      + `</ol></aside>`;
+    const toc = html.indexOf('<details class="reading-toc"');
+    return html.slice(0, toc) + list + html.slice(toc);
   });
 
   eleventyConfig.addTransform('phrase-breaks', function (html) {

@@ -10,7 +10,8 @@ document.querySelectorAll('.article-share').forEach(group=>{
  post.target='_blank';
  post.rel='noopener noreferrer';
  post.textContent=isEn?'Post on X':'Xでポスト';
- group.querySelector('.copy-link').after(post);
+ const copy=group.querySelector('.copy-link');
+ if(copy)copy.after(post);else group.append(post);
  if(navigator.share&&matchMedia('(pointer: coarse)').matches){
   const native=document.createElement('button');
   native.type='button';
@@ -25,6 +26,7 @@ document.querySelectorAll('.article-share').forEach(group=>{
  const status=group.querySelector('.copy-status');
  const fallback=group.querySelector('.copy-fallback');
  const input=group.querySelector('.copy-url');
+ if(!button||!status||!fallback||!input)return;
  button.addEventListener('click',async()=>{
   const url={href:shareUrl()};
   button.disabled=true;

@@ -1,0 +1,54 @@
+---
+layout: page.njk
+permalink: en/privacy.html
+jaPage: privacy.html
+title: "Privacy Policy — Mouton"
+description: "Mouton's privacy policy: what information is collected through analytics, advertising, and contact, how it is used, and how to opt out."
+eyebrow: Privacy policy
+heading: Privacy policy
+---
+<p>Mouton ("this site") sets out the following privacy policy to handle visitors' personal information appropriately. This is an English version of the <a href="../privacy.html" hreflang="ja" lang="ja">Japanese privacy policy</a>; if the two differ, the Japanese version takes precedence.</p>
+
+<h2>Information collected and how it is used</h2>
+<p>When you contact this site, you may give your name (a nickname is fine) and contact details. These are used only to reply to your inquiry and for any necessary follow-up.</p>
+
+{%- if site.newsletter.action %}
+<h2>Newsletter</h2>
+<p>Email addresses registered for the newsletter are used only to send notices such as new articles. Sign-ups and delivery are handled by {{ site.newsletter.service or 'an external delivery service' }}, which manages the addresses. You can unsubscribe at any time.</p>
+{%- endif %}
+
+<h2>Analytics</h2>
+{%- if site.analytics.ga4 %}
+<p>This site uses Google Analytics, an analytics tool provided by Google LLC. Google Analytics uses cookies to collect information about visits (pages viewed, time spent, approximate region, device type, and so on). This information does not include anything that identifies you personally, such as your name.</p>
+<p>The data is handled under Google's privacy policy. You can disable cookies in your browser settings, or stop collection with the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics opt-out browser add-on</a>. For details, see <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how Google uses information from sites that use its services</a>.</p>
+{%- else %}
+<p>This site does not currently use analytics tools. If it does in the future, this page will list the tools and the information they collect.</p>
+{%- endif %}
+
+<h2>Advertising</h2>
+{%- if site.ads.adsenseClient %}
+<p>This site uses Google AdSense, a third-party advertising service. Ad vendors may use cookies to show ads based on visitors' interests. You can turn off personalized advertising in <a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google's Ad Settings</a>. For details, see <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">Google's advertising policies</a>.</p>
+{%- endif %}
+{%- if site.affiliate.amazonTag or site.affiliate.rakutenId %}
+<p>The Japanese edition of this site participates in affiliate programs (the Amazon Associates Program for Amazon.co.jp{% if site.affiliate.rakutenId %} and Rakuten Affiliate{% endif %}). As an Amazon Associate, this site earns from qualifying purchases. Affiliate links on the Japanese edition are labeled "PR." The English edition does not carry affiliate links.</p>
+{%- endif %}
+
+<h2>Information stored in your browser</h2>
+<p>This site saves the category you chose in the article list in your browser's session storage, so the list looks the same the next time you open it. This information stays in your browser and is never sent to this site.</p>
+
+<h2>External services</h2>
+<p>This site uses Google Fonts to display text. When fonts load, your browser sends information such as your IP address to Google's servers.</p>
+
+<h2>Disclosure to third parties</h2>
+<p>Personal information you provide will not be given to third parties without your consent, except as required by law.</p>
+
+<h2>Disclaimer</h2>
+<p>This site strives to publish accurate information, but does not guarantee its accuracy or safety. Health articles are general information and are not a substitute for diagnosis or treatment by a doctor. This site is not responsible for any damage resulting from use of its information.</p>
+<p>This site is not responsible for information or services provided on external sites it links to.</p>
+
+<h2>Copyright</h2>
+<p>Copyright in the text and images on this site belongs to the operator or the rightful owners. Please do not reproduce them beyond the scope of quotation without permission.</p>
+
+<h2>Changes</h2>
+<p>This privacy policy may be reviewed and revised as needed. Any changes will be announced on this page.</p>
+<p class="doc-date">Established: {{ site.policyDate | dotDate }}</p>

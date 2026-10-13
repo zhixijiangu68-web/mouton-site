@@ -1,0 +1,53 @@
+---
+layout: base.njk
+bodyClass: site doc-page
+permalink: start.html
+title: "はじめての方へ — ムートン"
+description: "ムートンをはじめて読む人のための案内です。どんなサイトか、気になることから選べる入り口、最初に読んでほしい5本、買う前に読む選び方、○×クイズへの近道をまとめています。"
+paths:
+  - { title: "見た目の清潔感を整えたい", text: "第一印象、匂い、口臭、日焼け。", href: "series.html#clean", label: "連載「清潔感を、確かめる」" }
+  - { title: "仕事やお金で迷っている", text: "辞めたい、転職、年収、お金の本。", href: "series.html#job", label: "連載「転職を考える」" }
+  - { title: "生き方について考えたい", text: "ストア派、ニーチェ、カミュ、サルトル。", href: "series.html#thinkers", label: "連載「哲学者に聞く」" }
+  - { title: "健康の「本当？」を知りたい", text: "コーヒー、ダークチョコ、オリーブ油。", href: "series.html#food-check", label: "連載「その健康法、本当？」" }
+  - { title: "よく眠りたい", text: "昼寝、寝だめ、朝型と夜型、寝室。", href: "series.html#sleep", label: "連載「眠りを確かめる」" }
+  - { title: "変わりたい、続けたい", text: "セルフイメージ、目標と仕組み、恐怖。", href: "series.html#habits", label: "連載「自分を変える仕組み」" }
+firstReads: ["first-impression-sleep", "halitosis", "stoicism", "salary-change", "nap"]
+---
+{% include "partials/nav.njk" %}
+<div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
+<main class="doc topic start-page" data-nav="light" data-nav-solid="light">
+  <p class="eyebrow">Start here</p>
+  <h1 class="doc-title">はじめての方へ</h1>
+  <p>ムートンは、気になったことを調べて、試して、記録していく個人のサイトです。「なんとなくそう言われていること」を、研究や公的な情報でもう一度確かめた記事を中心に書いています。記事の書き方は<a href="editorial.html">編集方針</a>にまとめています。</p>
+
+  <section class="quiz-more doc-quiz" aria-labelledby="start-quiz"><p class="quiz-more-title" id="start-quiz">まずは1問 <span>○×クイズ</span></p>
+  <div class="qloop" data-qloop data-prefer="{% for s in firstReads %}{{ s }},{% endfor %}"></div></section>
+
+  <h2 class="guide-group-title">気になることから選ぶ</h2>
+  <div class="start-paths">
+    {%- for p in paths %}
+    <a class="start-path" href="{{ p.href }}"><span class="start-path-title">{{ p.title }}</span><span class="start-path-text">{{ p.text }}</span><span class="start-path-more">{{ p.label }} <span aria-hidden="true">→</span></span></a>
+    {%- endfor %}
+  </div>
+
+  <h2 class="guide-group-title">最初に読んでほしい5本</h2>
+  <div class="topic-list">
+    {%- for a in collections.articles | bySlugs(firstReads) %}
+    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
+      <span class="topic-date">{{ loop.index }}</span>
+      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+    </a>
+    {%- endfor %}
+  </div>
+
+  <h2 class="guide-group-title">買う前に読む</h2>
+  <p>食べ物、身体のケア、本について、選ぶときに何を見ればいいかをまとめた「選び方」の記事があります。</p>
+  <p><a class="btn btn-dark" href="guides.html">選び方の記事を見る <span aria-hidden="true">→</span></a> <a class="btn btn-outline" href="quiz.html">○×クイズ10問 <span aria-hidden="true">→</span></a></p>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-map.njk" %}
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>

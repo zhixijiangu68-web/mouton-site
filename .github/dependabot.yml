@@ -1,0 +1,18 @@
+# 依存パッケージと GitHub Actions に、脆弱性の修正や更新があれば月に1回まとめてプルリクエストを作る。
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      all:
+        patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      all:
+        patterns: ["*"]
