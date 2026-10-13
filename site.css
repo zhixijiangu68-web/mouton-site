@@ -271,11 +271,11 @@ h1,h2,h3,.journal-title,.topic-title,.reading-card{word-break:keep-all;overflow-
 .making .mk-studies-heading > p { max-width:36ch; font-size:.9rem;line-height:1.9;margin:0; }
 .mk-studies-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(12px,2.5vw,28px); }
 .mk-study { min-width:0;margin:0;background:#171719;color:#faf6ed;overflow:hidden; }
-.mk-study-photo { display:block;width:100%;aspect-ratio:3/4;background-color:#272527;background-image:url("images/making/visual-studies-20261014.webp");background-repeat:no-repeat;background-size:200% 200%; }
-.mk-study--one .mk-study-photo { background-position:left top; }
-.mk-study--two .mk-study-photo { background-position:right top; }
-.mk-study--three .mk-study-photo { background-position:left bottom; }
-.mk-study--four .mk-study-photo { background-position:right bottom; }
+.mk-study-photo { display:block;width:100%;aspect-ratio:3/4;overflow:hidden;background:#272527; }
+.mk-study-photo img { display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .35s ease; }
+.mk-study-photo:hover img { transform:scale(1.015); }
+.mk-study-photo:focus-visible { outline:3px solid #d7ae65;outline-offset:3px; }
+@media(prefers-reduced-motion:reduce){ .mk-study-photo img {transition:none;} .mk-study-photo:hover img {transform:none;} }
 .mk-study figcaption { display:flex;gap:12px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;padding:16px 18px 18px; }
 .mk-study figcaption span { font:400 .6875rem/1.6 Inter,sans-serif;letter-spacing:.13em;color:#bcb7b0; }
 .mk-study figcaption strong { font:400 .9375rem/1.5 var(--serif);color:#f8f5ee; }
