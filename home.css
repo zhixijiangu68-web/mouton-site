@@ -444,3 +444,43 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.2,.8,.2,1) 1
 @media(prefers-reduced-motion:reduce){
  .home-topic-card,.home-more-grid a{transition:none}
 }
+
+
+/* The homepage is a compact dashboard: only the selected collection is shown. */
+.home-tabs{background:var(--paper);color:var(--ink)}
+.home-tab-list{position:sticky;top:var(--nav-h,72px);z-index:20;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:10px max(var(--gutter),calc((100vw - 1180px)/2));background:var(--night);border-bottom:1px solid rgba(181,188,208,.25);box-shadow:0 8px 22px rgba(9,18,36,.12)}
+.home-tab{appearance:none;border:1px solid transparent;border-radius:8px;min-width:0;min-height:48px;padding:10px 8px;background:transparent;color:var(--on-night-2);font-family:var(--gothic);font-size:clamp(.8125rem,1.4vw,.9375rem);font-weight:500;cursor:pointer;white-space:nowrap;transition:background .18s,color .18s}
+.home-tab:hover{background:rgba(255,255,255,.09);color:#fff}
+.home-tab[aria-selected="true"]{color:#fff;border-color:rgba(181,188,208,.45);background:rgba(76,114,255,.23)}
+.home-tab:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.home-tab-panel[hidden]{display:none!important}
+.home-tab-panel:focus{outline:none}
+.home-tab-panel:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+.home-tab-panel .section{scroll-margin-top:calc(var(--nav-h,72px) + 74px)}
+.home-tab-panel [id]{scroll-margin-top:calc(var(--nav-h,72px) + 74px)}
+.home-tabs .cover-section{background:var(--night);color:var(--on-night)}
+.home-tab-panel #reading,.home-tab-panel #today-q{padding-block:clamp(32px,4vw,58px)}
+.home-tab-panel #reading .reading3-card.is-feature{min-height:0}
+.home-tab-panel #journal{padding-block:clamp(28px,4vw,58px)}
+.home-tab-panel #guides,.home-tab-panel .home-topics{padding-block:clamp(30px,4vw,52px)}
+.home-tab-panel .home-more{padding-block:clamp(26px,3.5vw,42px)}
+.home-tab-panel .home-topics .home-compact-heading,.home-tab-panel #guides .section-head,.home-tab-panel #journal .section-head{margin-bottom:18px}
+@media(max-width:760px){
+ .home-tab-list{gap:2px;padding:8px 10px}
+ .home-tab{min-height:46px;padding:8px 4px;font-size:.8125rem;letter-spacing:0}
+ .home-tab-panel #reading .reading3-card{padding:18px}
+ .home-tab-panel #reading .reading3-title{font-size:1.125rem}
+ .home-tab-panel #reading .reading3-text{display:none}
+ .home-tab-panel #reading .reading3-card{gap:7px}
+ .home-tab-panel #journal .lucky{margin-block:12px}
+}
+@media(prefers-reduced-motion:reduce){.home-tab{transition:none}}
+/* CLUB mode: tab controls and content keep the same readable contrast. */
+html[data-version="club"] .home-tabs{background:#0d0d16;color:#f3edf8}
+html[data-version="club"] .home-tab-list{background:#10101b}
+html[data-version="club"] .home-tab[aria-selected="true"]{background:rgba(196,172,255,.2);border-color:#c4acff;color:#f3edf8}
+html[data-version="club"] .home-tab-panel .home-topics,
+html[data-version="club"] .home-tab-panel #guides,
+html[data-version="club"] .home-tab-panel #journal{background:#0d0d16;color:#f3edf8}
+html[data-version="club"] .home-tab-panel .home-topic-card{background:#191724;color:#f3edf8;border-color:rgba(205,185,236,.25)}
+html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
