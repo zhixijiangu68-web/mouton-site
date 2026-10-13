@@ -60,10 +60,12 @@ jobs:
             await page.locator('#home-tab-quiz').click();
             if(await page.locator('#home-tab-quiz').getAttribute('aria-selected')!=='true')throw Error('Tab switch broken');
             await page.goto(url+'#journal',{waitUntil:'load'});
+            await page.reload({waitUntil:'load'}); // Direct bookmarked entry, not same-document fragment navigation
             const hash=await page.evaluate(()=>({intro:document.documentElement.classList.contains('intro'),journal:document.querySelector('#home-tab-journal')?.getAttribute('aria-selected')}));
             console.log('DEEP LINK',width,JSON.stringify(hash));
             if(hash.intro||hash.journal!=='true')throw Error('Deep-link obstructed');
             await page.goto(url+'#top',{waitUntil:'load'});
+            await page.reload({waitUntil:'load'}); // Clicking the logo from another page performs a fresh navigation
             if(!(await page.evaluate(()=>document.documentElement.classList.contains('intro'))))throw Error('Logo homepage entry skips opening');
             if(errors.length)throw Error('Unexpected browser errors '+errors.join(';'));
             await page.close();
