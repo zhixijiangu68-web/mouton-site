@@ -24,11 +24,7 @@ jobs:
           npm test
           node --check home.js
           node --check home-tabs.js
-          python - <<'PY'
-          from pathlib import Path
-          from PIL import Image
-          PY
-        continue-on-error: true
+
       - name: Browser-test artwork, mobile layout, interactions and intro
         run: |
           npm install --no-save --no-package-lock playwright
