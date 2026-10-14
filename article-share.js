@@ -142,3 +142,77 @@ document.querySelectorAll('.article-share').forEach(group=>{
  update();
  window.addEventListener('resize',update);
 })();
+
+// Phones and narrow screens: a "contents" button at the bottom shows the section being read
+// and opens the table of contents as a sheet. Not on guides, where that spot jumps to the products.
+(()=>{
+ const toc=document.querySelector('.reading-toc nav');
+ if(!toc||document.querySelector('.jump-products')||typeof HTMLDialogElement!=='function')return;
+ const src=toc.querySelector('ol');
+ if(!src||src.querySelectorAll('a').length<4)return;
+ const narrow=window.matchMedia('(max-width: 1399px)');
+ const label=isEn?'Contents':'目次';
+ const fab=document.createElement('button');
+ fab.type='button';
+ fab.className='toc-fab';
+ fab.setAttribute('aria-haspopup','dialog');
+ fab.tabIndex=-1;
+ const fabLabel=document.createElement('span');
+ fabLabel.className='toc-fab-label';
+ fabLabel.textContent=label;
+ const fabNow=document.createElement('span');
+ fabNow.className='toc-fab-now';
+ fab.append(fabLabel,fabNow);
+ const sheet=document.createElement('dialog');
+ sheet.className='toc-sheet';
+ sheet.setAttribute('aria-label',label);
+ const head=document.createElement('div');
+ head.className='toc-sheet-head';
+ const title=document.createElement('p');
+ title.className='toc-sheet-title';
+ title.textContent=label;
+ const close=document.createElement('button');
+ close.type='button';
+ close.className='toc-sheet-close';
+ close.textContent=isEn?'Close':'閉じる';
+ head.append(title,close);
+ const list=src.cloneNode(true);
+ sheet.append(head,list);
+ document.body.append(fab,sheet);
+ const links=[...list.querySelectorAll('a')];
+ const headings=links.map(a=>document.getElementById(decodeURIComponent(a.hash.slice(1))));
+ const tocBox=document.querySelector('.reading-toc');
+ const clean=t=>t.replace(/^\s*\d+\.\s*/,'').trim();
+ let current=-1,ticking=false;
+ const update=()=>{
+  ticking=false;
+  const mid=window.innerHeight*.45;
+  let pick=-1;
+  headings.forEach((h,i)=>{if(h&&h.getBoundingClientRect().top<mid)pick=i;});
+  if(pick!==current){
+   current=pick;
+   links.forEach((a,i)=>{if(i===pick)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+   fabNow.textContent=pick>=0?clean(links[pick].textContent):'';
+   fab.setAttribute('aria-label',label+(pick>=0?(isEn?' (now: ':'（いま：')+clean(links[pick].textContent)+(isEn?')':'）'):''));
+  }
+  const passed=tocBox?tocBox.getBoundingClientRect().bottom<0:window.scrollY>window.innerHeight;
+  const on=narrow.matches&&passed;
+  fab.classList.toggle('visible',on);
+  fab.tabIndex=on?0:-1;
+ };
+ const request=()=>{if(!ticking){ticking=true;requestAnimationFrame(update);}};
+ window.addEventListener('scroll',request,{passive:true});
+ window.addEventListener('resize',request);
+ narrow.addEventListener('change',request);
+ fab.addEventListener('click',()=>{
+  sheet.showModal();
+  const here=list.querySelector('[aria-current="true"]')||links[0];
+  here.scrollIntoView({block:'center'});
+  here.focus({preventScroll:true});
+ });
+ close.addEventListener('click',()=>sheet.close());
+ sheet.addEventListener('click',e=>{if(e.target===sheet)sheet.close();});
+ links.forEach(a=>a.addEventListener('click',()=>sheet.close()));
+ sheet.addEventListener('close',()=>{if(document.activeElement===document.body)fab.focus({preventScroll:true});});
+ update();
+})();
