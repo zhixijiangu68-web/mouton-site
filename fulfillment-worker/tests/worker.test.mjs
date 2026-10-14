@@ -17,10 +17,10 @@ test("valid Stripe HMAC and replay window",async()=>{
  assert.equal(await verifyStripeSignature(raw,await signature(raw,"whsec_test",now-301),"whsec_test",now),false);
  assert.equal(await verifyStripeSignature(raw,"wrong","whsec_test",now),false);
 });
-test("paid session filters wrong link, currency, total, payment state",()=>{
- const s={id:sid,payment_intent:"pi_valid",customer_details:{email:"buyer@example.com"},mode:"payment",payment_status:"paid",amount_total:1980,currency:"jpy",payment_link:"plink_expected"};
+test("paid session filters wrong link, currency, total, payment state and obsolete 1980 JPY",()=>{
+ const s={id:sid,payment_intent:"pi_valid",customer_details:{email:"buyer@example.com"},mode:"payment",payment_status:"paid",amount_total:2980,currency:"jpy",payment_link:"plink_expected"};
  assert.equal(validPaidSession(s,"plink_expected"),true);
- for(const patch of [{payment_link:"plink_wrong"},{currency:"usd"},{amount_total:980},{payment_status:"unpaid"},{customer_details:{email:"bad"}}]){
+ for(const patch of [{payment_link:"plink_wrong"},{currency:"usd"},{amount_total:1980},{amount_total:980},{payment_status:"unpaid"},{customer_details:{email:"bad"}}]){
  assert.equal(validPaidSession({...s,...patch},"plink_expected"),false);
  }
 });
