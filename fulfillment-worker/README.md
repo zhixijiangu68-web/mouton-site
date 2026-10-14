@@ -5,7 +5,7 @@
 
 ## 何をするか
 - StripeからのWebhookに対してStripe-SignatureをHMAC SHA-256で検証（5分以内）。
-- 決済状態、Payment Link ID、JPY 1,980円、商品Price IDと購入数量1をStripe APIで照合。
+- 決済状態、Payment Link ID、JPY 2,980円、商品Price IDと購入数量1をStripe APIで照合。
 - D1に注文IDで状態を記録し、重複配布を抑制。メール送信にはResendとIdempotency-Keyを使う。
 - 決済確定後にのみ、購入者のメールへ有効期間7日・最大5回の署名付きURLを送る。
 - 有料PDFはCloudflare R2の**非公開バケット**に保存。公開GitHubへアップロードしない。
@@ -31,7 +31,7 @@
    charge.dispute.created
 10. Stripe**テスト環境**で支払い→メール→非公開PDFダウンロード→5回上限→重複Webhook→返金後停止を実際に検証し、送信ドメインとプライバシー説明を確定する。
 11. Stripe本番口座を接続し、本番決済リンクを発行する。販売者情報・特商法表記・返品条件を整え、E2Eで完成PDFを受け取れることを確認。
-12. すべて完了してからsrc/_data/site.jsのcheckoutProviderをstripeに、checkoutUrlとlegalUrlを実在URLにし、fulfillmentReadyをtrueにする。先にtrueにしてはならない。
+12. サイトのcheckoutProviderは既にstripeへ変更済みでcheckoutUrlは空。すべて完了してから本番checkoutUrlとlegalUrlを設定し、fulfillmentReadyをtrueにする。先にtrueにしてはならない。
 
 ## 決済リンク（テスト専用）
 - 【旧設定・流用禁止】1,980円 テスト商品: prod_VQx4tuODG8P62r
@@ -52,3 +52,16 @@
 - 返金Webhook到着より先に新規注文イベントが届いた場合、返金処理の順序によっては後の注文復旧処理に注意が必要です。実運用ではStripeとの注文状態の定期照合を追加してください。
 - 購入メールアドレスをD1に保存するため、保管期限・権限・削除方針をプライバシー規約に明示してください。
 - 送信メール処理とDB更新の間で停止すると、重複メールが発生することがあります。Resendの冪等キーとStripeの再送で抑制しますが、完全保証ではありません。
+
+## 2026-10-14 新価格のサンドボックス（テスト専用）
+- Account: `acct_1UQ564CL4xG9rfOJ`、livemode=false（ムートンサンドボックス）
+- Product: `prod_VRBSv0tp5arY3m`（75ページ版）
+- Price: `price_1UQJ5YCL4xG9rfOJ4FfXx6GW`（税込2,980円、JPY）
+- Payment Link: `plink_1UQJ5iCL4xG9rfOJ45Ebs9tn`
+- テストURL: https://buy.stripe.com/test_14AfZg4bz3U3dY80n443S01
+- Stripe APIでラインアイテム数量1・JPY 2,980円を確認済み。**決済・Webhook・メール・R2納品の結合試験はまだ未実施**。
+- テスト用Worker変数 `STRIPE_PRICE_ID` と `STRIPE_PAYMENT_LINK_ID` には上記IDを設定する。本番では**別アカウントの本番Priceとリンク**を発行する。
+- 2026-10-13の旧1,980円テスト商品・リンクは使用禁止。
+- 現在のサイトはStripe販売準備中・購入ボタンなし。テスト用リンクを公開サイトへ掲載しない。
+
+詳しい現状・公開条件：[Stripe発売手順](../docs/stripe-launch-20261014.md)。
