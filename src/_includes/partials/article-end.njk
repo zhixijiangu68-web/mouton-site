@@ -1,6 +1,6 @@
 {% include "partials/series-box.njk" %}
 <p class="read-mark" data-total="{{ collections.articles.length }}" aria-live="polite"></p>
-{%- if quizzes.length %}
+{%- if quizzes.length and not noQuiz %}
 <section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
 <div class="qloop" data-qloop data-exclude="{{ page.fileSlug }}" data-prefer="{{ (related or []) | join(',') }}{% for g in collections.articles | guideCards %},{{ g.page.fileSlug }}{% endfor %}"></div></section>
 {%- endif %}
