@@ -1,10 +1,31 @@
-# USD/JPY Fib検証 — 第1段階
+# USD/JPY Fib検証 — 到達検出と最小売買バックテスト
 
 Issue #1: https://github.com/zhixijiangu68-web/mouton-site/issues/1
 
 1分足CSV → JST正規化 → 完成足生成 → 確定スイング → Fib初回到達イベント。
-到達は反発・注文・約定ではありません。実相場の収益性評価はまだしていません。
+到達は反発・注文・約定ではありません。到達検出と売買CLIを分離しています。
 既存のEleventy入力 `src/` と独立したPython CLIです。
+
+## 第2段階: 開発区間の最小売買
+
+固定仕様は [BACKTEST_SPEC.md](BACKTEST_SPEC.md)。15分・Fib50%・到達足反発・
+次足始値・SL固定・2R単一TP・60分決済。Bidのみから仮定Askを作ります。
+スプレッド1pip/滑り片道0.1pip/数量1,000 USD/初期資金100万円は計算上の仮定です。
+
+下記のHISTDATA変換後に、未作成の出力フォルダを指定して実行します。
+
+```sh
+python -m unittest discover -s research/usdjpy/tests -v
+python -m research.usdjpy.run_backtest --input research/usdjpy/data/histdata-2012-development.csv --config research/usdjpy/config.backtest-2012.json --output research/usdjpy/output/backtest-2012
+```
+
+`signals.csv` / `trades.csv` / `equity.csv` / `backtest_report.json` を出力。
+development以外を拒否し、既存出力を上書きしません。
+保有中欠損があれば未解決台帳を残して終了コード2、正式な成績はnullになります。
+結果の件数・検証範囲は [BACKTEST_VERIFICATION.md](BACKTEST_VERIFICATION.md) を参照。
+1000取引検証や未使用区間での優位性確認は未実施です。
+
+以下は独立した到達検出CLIの説明です。
 
 ## 実行
 
@@ -101,10 +122,9 @@ holdoutはルール固定後に限り `--partition holdout --unlock-holdout`。
 年×時間帯の値幅中央値・最近順位法90パーセンタイルを出力。1pip=0.01円。
 outsideとの比較が可能。高ボラ時間帯としての有効性は実データ未検証。
 
-次は反発確認 → 次足エントリー → SL固定 → 単一TP/時間決済 → コスト → 取引台帳。
-その後、固定RR/直近高安/Fib extensionと30分/1h/2h/4h/セッション終了を比較する。
-SLとTPが同一1分足で成立する場合など、足内順序不明時の保守的な処理も先に固定する。
-PF・期待値・勝率・最大連敗・含み損益を含む最大DDは売買エンジン追加後に実装。
+別CLIの最小売買エンジンに反発・次足エントリー・固定SL・単一TP・時間決済・
+コスト・台帳・PF/期待値/勝率/最大連敗/含み損益を含む最大DDを実装。
+SL/TP同一1分足はSL優先。固定RR以外のTPや30分/2h/4h/セッション終了の比較は未実装。
 現在の到達イベントをトレード件数に数えない。1000件達成のための条件緩和はしない。
 
 ## 2026-10-13 追加検証
