@@ -199,6 +199,17 @@ export default function (eleventyConfig) {
   });
   // Articles without their own quiz open with the first question from the quiz bank,
   // placed after the lead paragraph (or before the contents box, or after the deck).
+  // "3行まとめ": front matter `points` (a short list) shown in the same box under the title of every article.
+  eleventyConfig.addFilter('keyPoints', (html, points, en = false) => {
+    if (!Array.isArray(points) || !points.length) return html;
+    const at = html.indexOf('</h1>');
+    if (at < 0) return html;
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const title = en ? 'In short' : (points.length === 3 ? '3行まとめ' : 'この記事の要点');
+    const box = `<aside class="key-points" aria-labelledby="key-points-title"><p class="key-points-title" id="key-points-title">${title}</p><ol>`
+      + points.map(t => `<li>${esc(t)}</li>`).join('') + '</ol></aside>';
+    return html.slice(0, at + 5) + box + html.slice(at + 5);
+  });
   eleventyConfig.addFilter('openQuiz', (html, q, en = false) => {
     if (!q || !q.q || html.includes('class="quiz"')) return html;
     const box = quizHtml(q.q, q.head, q.why, en);
