@@ -17,7 +17,8 @@ const js = read('cleanliness-science.js');
 const { default: site } = await import('../src/_data/site.js');
 const product = site.product.cleanScience;
 const provider = product.checkoutProvider || 'booth';
-assert(['booth','stripe'].includes(provider), 'checkoutProvider must be booth or stripe');
+assert(provider === 'stripe', 'Cleanliness Science must use Stripe as the approved seller');
+assert(product.checkoutUrl || product.fulfillmentReady === false, 'unconfigured checkout must have fulfillmentReady=false');
 assert(product.priceJPY === 2980, 'price must match current 2980 JPY guide');
 const configured = Boolean(product.checkoutUrl);
 if (configured) {
@@ -37,6 +38,7 @@ if (configured) {
   assert(!lp.includes('data-lp-event="begin_checkout"'), 'checkout link must be disabled until configured');
 }
 assert(!lp.includes('buy.stripe.com/test_'), 'sandbox Payment Link must never appear in the public LP');
+assert(!lp.includes('BOOTH'), 'obsolete BOOTH sales copy must not be published');
 assert(lp.includes(`${product.priceText}円`), 'price not displayed');
 assert(lp.includes('cleanliness-sample.html'), 'sample CTA missing');
 assert(lp.includes('id="notify"'), 'interest section missing');
