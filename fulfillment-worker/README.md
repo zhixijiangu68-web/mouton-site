@@ -1,6 +1,6 @@
 # 「清潔感の科学」安全なStripe納品システム（Cloudflare Worker）
 
-**現在の状態：GitHubにコード追加、未デプロイ。テスト決済と実購入は連携していません。**
+**現在の状態：GitHubにコード追加、未デプロイ。テスト決済と実購入は連携していません。現行商品は75ページ・税込2,980円です。**
 この仕組みはGitHub Pagesではなく、別サーバーとして動かすものです。
 
 ## 何をするか
@@ -19,7 +19,7 @@
 3. このフォルダのwrangler.example.tomlをwrangler.tomlにコピーする。D1 ID、送信者アドレス、workers.devの正しいURL、Stripe商品価格ID、Payment Link IDを設定する。
 4. D1マイグレーションを適用する。
    npx wrangler d1 migrations apply mouton-orders --remote
-5. 完成した**有料32ページPDF**を非公開バケットの clean-science-v2.pdf にアップロードする。無料サンプルをアップロードしない。公開アクセスは付与しない。
+5. 完成した**有料75ページPDF**を非公開バケットの `clean-science-2026-10-75p.pdf` にアップロードする。無料サンプルをアップロードしない。公開アクセスは付与しない。原本の SHA-256 は `bfaceb38a2eed3d1f391d2f0976cd773ec6d183c86f7619fd8144d595cbad377`（6,623,742 bytes）。必ず照合する。
 6. Resendで送信元ドメインを認証する。リンクのクリック追跡はオフにする（期限付きURLの漏えい防止）。
 7. Workerの秘密情報をCloudflare Secretsに登録する。STRIPE_WEBHOOK_SECRET, STRIPE_SECRET_KEY, RESEND_API_KEY, DOWNLOAD_SIGNING_SECRET（32文字以上）を npx wrangler secret put で設定する。コードやGitHubへ貼らない。
 8. Workerをデプロイする。
@@ -34,11 +34,11 @@
 12. すべて完了してからsrc/_data/site.jsのcheckoutProviderをstripeに、checkoutUrlとlegalUrlを実在URLにし、fulfillmentReadyをtrueにする。先にtrueにしてはならない。
 
 ## 決済リンク（テスト専用）
-- 1,980円 テスト商品: prod_VQx4tuODG8P62r
+- 【旧設定・流用禁止】1,980円 テスト商品: prod_VQx4tuODG8P62r
 - テスト価格: price_1UQ5BLCL4xG9rfOJ69G0HSle
 - テスト決済リンクID: plink_1UQ5BiCL4xG9rfOJbxK2OHUm
 - テスト画面: https://buy.stripe.com/test_5kQ14m37v3U3bQ02vc43S00
-- このテストリンクには完成版PDFの自動配布はまだつながっていません。
+- このテストリンクは**旧価格1,980円**であり、完成版75ページ／2,980円の商品には使用できません。新価格のテスト商品・Price ID・Payment Link IDを別途作成してください。完成版PDFの自動配布も未接続です。
 
 ## テスト
 - npm --prefix fulfillment-worker test
