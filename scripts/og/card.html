@@ -14,8 +14,8 @@
   .foot{display:flex;justify-content:space-between;align-items:flex-end;font-size:28px;letter-spacing:.3em;font-weight:300}
   .foot small{font-family:Georgia,serif;font-style:italic;letter-spacing:.04em;font-size:22px;color:#5b5d56}
   /* Quiz variant: question on the left, optional face photo on the right. */
-  body.quiz .sun{display:none}
-  body.quiz .wrap{right:var(--right,90px)}
+  body.quiz .sun,body.has-face .sun{display:none}
+  body.quiz .wrap,body.has-face .wrap{right:var(--right,90px)}
   .qtag{display:none;align-self:flex-start;font-family:Georgia,serif;font-size:24px;letter-spacing:.2em;padding:6px 18px;border-radius:999px;background:#1b1c19;color:#fff;margin-top:18px}
   body.quiz .qtag{display:inline-block}
   .face{display:none;position:absolute;top:14px;right:0;bottom:0;width:470px;background:center/cover no-repeat}
