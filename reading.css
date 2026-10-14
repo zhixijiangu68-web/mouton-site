@@ -247,7 +247,7 @@ body.article-page .crumbs [aria-current]{max-width:min(22em,calc(100vw - 80px))}
 /* 2026-10-14 記事の冒頭を見やすく：要約（deck）を題名の直下で読める大きさに。
    スマホでは表紙を低くし、分類と日付を1行にまとめ、題名と冒頭が最初の画面に入るようにする。 */
 body.article-page > main > .deck{font-size:clamp(1rem,1.9vw,1.125rem);line-height:1.95;opacity:1;color:#33362f;max-width:720px;margin:0 0 28px;padding-left:16px;border-left:2px solid #1442c4}
-.site-links .menu-version{display:none}
+
 @media(max-width:760px){
  .cover{height:clamp(190px,30vh,280px)}
  body.article-page > main, body.article-page > .wrap{margin-top:calc(-1 * clamp(40px,6vh,64px)) !important}

@@ -1,5 +1,6 @@
 /* Editions are additive: removing data-version="club" restores the original art. */
 .club-signature,.version-picker{display:none}
+.site-links .menu-version{display:none}
 .js .version-picker{display:grid;gap:2px;position:relative;z-index:2;flex:none;margin-right:auto;color:inherit}
 .version-picker-label{font:500 .5625rem/1 Inter,sans-serif;letter-spacing:.18em;position:absolute;top:5px;left:12px;pointer-events:none;opacity:.7}
 .version-picker select{appearance:none;-webkit-appearance:none;min-height:44px;width:126px;padding:17px 24px 5px 12px;border:1px solid currentColor;border-radius:6px;background:transparent;color:inherit;font:500 .6875rem/1.3 Inter,sans-serif;letter-spacing:.045em;cursor:pointer}
