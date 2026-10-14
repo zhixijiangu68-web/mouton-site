@@ -323,14 +323,14 @@ test('MOUTON browser smoke', async t => {
           await page.goto(origin + '/cleanliness-science.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('h1#cs-title').count(), 1);
           assert.match(await page.locator('.cs-status').innerText(), /発売準備中/);
-          assert.match(await page.locator('.cs-offer-price').innerText(), /1,980/);
+          assert.match(await page.locator('.cs-offer-price').innerText(), /2,980/);
           assert.equal(await page.locator('a[data-lp-event="begin_checkout"]').count(), 0, 'checkout must remain off');
           assert.equal(await page.locator('#cleanliness-waitlist').count(), 0, 'email signup must remain off');
           assert.equal(await page.locator('a[href="cleanliness-sample.html"]').count() >= 1, true);
           const initial = await events();
           const views = initial.filter(event => event.name === 'view_item');
           assert.equal(views.length, 1, 'one product view event on LP load');
-          assert.equal(views[0].params.value, 1980);
+          assert.equal(views[0].params.value, 2980);
           assert.equal(views[0].params.product_id, 'cleanliness_001');
           await blockTrackedNavigation();
           await page.locator('a[data-lp-event="sample_click"][data-placement="hero"]').click();

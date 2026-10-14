@@ -18,7 +18,7 @@ const { default: site } = await import('../src/_data/site.js');
 const product = site.product.cleanScience;
 const provider = product.checkoutProvider || 'booth';
 assert(['booth','stripe'].includes(provider), 'checkoutProvider must be booth or stripe');
-assert(product.priceJPY === 1980, 'price must match current 1980 JPY guide');
+assert(product.priceJPY === 2980, 'price must match current 2980 JPY guide');
 const configured = Boolean(product.checkoutUrl);
 if (configured) {
   assert(/^https:\/\//.test(product.checkoutUrl), 'checkoutUrl must be https');
