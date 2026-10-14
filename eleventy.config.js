@@ -271,6 +271,18 @@ export default function (eleventyConfig) {
     return html.slice(0, toc) + list + html.slice(toc);
   });
 
+  // The summary (deck) reads right under the title, before the share buttons and the contents box.
+  eleventyConfig.addTransform('deck-under-title', function (html) {
+    if (!(this.page.outputPath || '').endsWith('.html')) return html;
+    const m = html.match(/<p class="deck">[\s\S]*?<\/p>/);
+    const h1 = html.indexOf('</h1>');
+    const art = html.indexOf('<article');
+    if (!m || h1 < 0 || m.index < h1 || (art >= 0 && m.index > art)) return html;
+    const rest = html.slice(0, m.index) + html.slice(m.index + m[0].length);
+    const at = rest.indexOf('</h1>') + 5;
+    return rest.slice(0, at) + m[0] + rest.slice(at);
+  });
+
   eleventyConfig.addTransform('phrase-breaks', function (html) {
     if (!(this.page.outputPath || '').endsWith('.html')) return html;
     // English pages: link to the Japanese article while its translation does not exist yet.
