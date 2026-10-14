@@ -79,22 +79,30 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
-      <li><a href="index.html#journal">読む<span class="site-links-en">Read</span></a></li>
+      <li><a href="journal.html">読む<span class="site-links-en">Read</span></a></li>
       <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
       <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
-      <li><a href="index.html#projects">制作<span class="site-links-en">Projects</span></a></li>
-      <li><a href="index.html#about">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
       <li><a href="en/doing-nothing.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
+      <li class="menu-version"><label class="version-picker">
+  <span class="version-picker-label" aria-hidden="true">VERSION</span>
+  <select data-version-picker aria-label="デザインのバージョン">
+    <option value="original">01 ORIGINAL</option>
+    <option value="club">02 CLUB</option>
+  </select>
+</label>
+</li>
     </ul>
   </nav>
 </div>
 
-<div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="index.html#journal"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/doing-nothing.html" hreflang="en" lang="en">English</a></nav></div>
+<div class="cover ph-philosophy is-placeholder" data-nav="dark"><nav aria-label="戻る"><a class="cover-back" href="journal.html"><span aria-hidden="true">←</span> 記事一覧へ戻る</a><a class="cover-lang" href="en/doing-nothing.html" hreflang="en" lang="en">English</a></nav></div>
 <main data-nav="light" data-nav-solid="light"><nav class="crumbs" aria-label="パンくずリスト"><ol><li><a href="index.html">ホーム</a></li><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><span aria-current="page">何もしない時間は、本当に無駄なのか</span></li></ol></nav>
-<div class="eyebrow">JOURNAL / MIND / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>何もしない<wbr>時間は、<br>本当に<wbr>無駄なのか</h1>
+<div class="eyebrow">JOURNAL / MIND / PSYCHOLOGY</div><div class="meta">2026.10.05</div><h1>何もしない<wbr>時間は、<br>本当に<wbr>無駄なのか</h1><p class="deck">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。研究から「休むこと」の意味を考える。</p>
 <p class="reading-time">約10分で読めます（目安）</p>
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div><details class="reading-toc"><summary>目次</summary><nav aria-label="この記事の目次"><ol><li><a href="#section-1">1. 学んだ直後の「10分」が、記憶に残った</a></li><li><a href="#section-2">2. アイデアは、考え続けたときだけ生まれるわけではない</a></li><li><a href="#section-3">3. ぼーっとしているとき、人は未来を考えている</a></li><li><a href="#section-4">4. 「休んでいる脳」は、停止していない</a></li><li><a href="#section-5">5. では、スマホを眺めるのも「休息」なのか</a></li><li><a href="#section-6">6. 何もしない時間にも、代償はある</a></li><li><a href="#section-7">7. 「20分」という数字に、魔法はない</a></li><li><a href="#section-8">結論：休むことも、思考の一部である</a></li><li><a href="#refs-heading">参考文献</a></li></ol></nav></details>
-<p class="deck">記憶、創造性、未来の計画。ぼーっとしている時間に、脳では何が起きているのか。研究から「休むこと」の意味を考える。</p><div class="hero-line"></div><article>
+<div class="hero-line"></div><article>
 
 <p class="lead">何もしていないと、少し不安になる。</p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">物語を覚えた直後に10分休んだ高齢者は、7日後の記憶成績も高かった。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。7日後まで差が出た。</p><p class="quiz-why">Dewarらの実験では、10分の覚醒休息をとった条件で、直後だけでなく7日後の記憶成績も高くなった。勉強時間を増やしたわけではない。</p></div></details>
 
@@ -266,7 +274,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
 
 <nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="system-goal.html" data-slug="system-goal"><span class="reading-card-title">システムのないゴールは、動かない</span><span class="reading-card-q"><b>Q.</b> 研究では、習慣が自動化するまでの期間は18〜254日と大きな個人差があった。<em>○か×か？</em></span></a><a class="reading-card has-q" href="disliked-priority.html" data-slug="disliked-priority"><span class="reading-card-title">嫌われることを「気にしなくなる」のではない。優先順位が下がるだけだ</span><span class="reading-card-q"><b>Q.</b> 本気で打ち込む人が嫌われても動けるのは、嫌われることが気にならなくなったからではない。<em>○か×か？</em></span></a></div>
 <div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
-<p class="reading-returns"><a class="reading-return" href="index.html#journal">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+<p class="reading-returns"><a class="reading-return" href="journal.html">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
 
 </article></main>
 
@@ -276,7 +284,7 @@ sup a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(32,33,31,.
   <div class="footer-map-col">
     <p class="footer-map-h">テーマ</p>
     <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
-      <li><a href="index.html#journal">すべての記事</a></li>
+      <li><a href="journal.html">すべての記事</a></li>
     </ul>
   </div>
   <div class="footer-map-col">

@@ -122,7 +122,7 @@ export default function (eleventyConfig) {
     const parts = [`<a href="index.html">${en ? 'Home' : 'ホーム'}</a>`];
     if (kind === 'guide') parts.push(`<a href="guides.html">${en ? 'Guides' : '選び方'}</a>`);
     else if (t) parts.push(`<a href="${en ? `index.html#${t.key}` : `topic-${t.key}.html`}">${en ? t.en : t.label}</a>`);
-    else if (kind === 'books') parts.push(`<a href="index.html#${en ? 'more' : 'books'}">${en ? 'Books' : '本棚'}</a>`);
+    else if (kind === 'books') parts.push(`<a href="${en ? 'index.html#more' : 'books-habits.html'}">${en ? 'Books' : '本棚'}</a>`);
     parts.push(`<span aria-current="page">${esc(title)}</span>`);
     const nav = `<nav class="crumbs" aria-label="${en ? 'Breadcrumb' : 'パンくずリスト'}"><ol>${parts.map(x => `<li>${x}</li>`).join('')}</ol></nav>`;
     for (const re of [/(<article class="article">)/, /(<main[^>]*>)/]) if (re.test(html)) return html.replace(re, `$1${nav}`);
@@ -199,6 +199,17 @@ export default function (eleventyConfig) {
   });
   // Articles without their own quiz open with the first question from the quiz bank,
   // placed after the lead paragraph (or before the contents box, or after the deck).
+  // "3行まとめ": front matter `points` (a short list) shown in the same box under the title of every article.
+  eleventyConfig.addFilter('keyPoints', (html, points, en = false) => {
+    if (!Array.isArray(points) || !points.length) return html;
+    const at = html.indexOf('</h1>');
+    if (at < 0) return html;
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+    const title = en ? 'In short' : (points.length === 3 ? '3行まとめ' : 'この記事の要点');
+    const box = `<aside class="key-points" aria-labelledby="key-points-title"><p class="key-points-title" id="key-points-title">${title}</p><ol>`
+      + points.map(t => `<li>${esc(t)}</li>`).join('') + '</ol></aside>';
+    return html.slice(0, at + 5) + box + html.slice(at + 5);
+  });
   eleventyConfig.addFilter('openQuiz', (html, q, en = false) => {
     if (!q || !q.q || html.includes('class="quiz"')) return html;
     const box = quizHtml(q.q, q.head, q.why, en);
@@ -269,6 +280,18 @@ export default function (eleventyConfig) {
       + `</ol></aside>`;
     const toc = html.indexOf('<details class="reading-toc"');
     return html.slice(0, toc) + list + html.slice(toc);
+  });
+
+  // The summary (deck) reads right under the title, before the share buttons and the contents box.
+  eleventyConfig.addTransform('deck-under-title', function (html) {
+    if (!(this.page.outputPath || '').endsWith('.html')) return html;
+    const m = html.match(/<p class="deck">[\s\S]*?<\/p>/);
+    const h1 = html.indexOf('</h1>');
+    const art = html.indexOf('<article');
+    if (!m || h1 < 0 || m.index < h1 || (art >= 0 && m.index > art)) return html;
+    const rest = html.slice(0, m.index) + html.slice(m.index + m[0].length);
+    const at = rest.indexOf('</h1>') + 5;
+    return rest.slice(0, at) + m[0] + rest.slice(at);
   });
 
   eleventyConfig.addTransform('phrase-breaks', function (html) {

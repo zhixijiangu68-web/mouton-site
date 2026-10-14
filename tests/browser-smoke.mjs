@@ -1,4 +1,4 @@
-// Actual Chromium smoke tests for the existing site and its four-tab homepage.
+// Actual Chromium smoke tests for the existing site (simple homepage + journal page).
 // CI builds with Eleventy before running this file; only failures save screenshots.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
@@ -66,19 +66,13 @@ test('MOUTON browser smoke', async t => {
   let browser;
   try {
     browser = await chromium.launch({ headless: true });
-    await t.test('desktop: original cover and all four tabs', async () => {
-      await checkPage(browser, 'desktop-tabs', { viewport: { width: 1440, height: 900 } }, async page => {
+    await t.test('desktop: original cover with three theme cards, no tabs', async () => {
+      await checkPage(browser, 'desktop-home', { viewport: { width: 1440, height: 900 } }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('.intro-veil').count(), 1, 'keep the opening animation markup');
         assert.equal(await page.locator('.cover-title').count(), 1);
-        assert.equal(await page.locator('[data-home-tab]').count(), 4);
-        for (const name of ['reading', 'quiz', 'topics', 'journal']) {
-          await page.locator('[data-home-tab="' + name + '"]').click();
-          assert.equal(await page.locator('[data-home-tab="' + name + '"]').getAttribute('aria-selected'), 'true');
-          assert.equal(await page.locator('[data-home-panel="' + name + '"]').isVisible(), true);
-          const visible = await page.locator('[data-home-panel]').evaluateAll(panels => panels.filter(p => !p.hidden).length);
-          assert.equal(visible, 1, 'exactly one tab panel should be active');
-        }
+        assert.equal(await page.locator('.cover-choice-card').count(), 3);
+        assert.equal(await page.locator('[data-home-tab]').count(), 0, 'tabs were removed from the homepage');
       });
     });
 
@@ -93,8 +87,6 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await menu.getAttribute('aria-expanded'), 'true');
         await page.keyboard.press('Escape');
         assert.equal(await menu.getAttribute('aria-expanded'), 'false');
-        await page.locator('[data-home-tab="quiz"]').click();
-        assert.equal(await page.locator('[data-home-panel="quiz"]').isVisible(), true);
         const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
         assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow on mobile');
       });
@@ -109,8 +101,7 @@ test('MOUTON browser smoke', async t => {
         await checkPage(browser, label, {
           viewport: { width, height: 844 }, isMobile: true, hasTouch: true,
         }, async page => {
-          await page.goto(origin + '/index.html?version=' + version + '#journal', { waitUntil: 'domcontentloaded' });
-          await page.locator('[data-home-tab="journal"]').click();
+          await page.goto(origin + '/journal.html?version=' + version, { waitUntil: 'domcontentloaded' });
           const entry = page.locator('#journal .journal-item:not(.is-hidden):not(.is-collapsed)').first();
           assert.equal(await entry.count(), 1, label + ': journal entry missing');
           const rects = await entry.evaluate(el => {
@@ -270,41 +261,14 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
-    await t.test('tabs: keyboard selection and reload-safe anchors on desktop and mobile', async () => {
-      const anchors = [
-        ['reading', 'reading'], ['quiz', 'today-q'], ['topics', 'guides'], ['journal', 'journal'],
-      ];
-      for (const [label, options] of [
-        ['tabs-desktop', { viewport: { width: 1440, height: 900 } }],
-        ['tabs-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
-      ]) {
-        await checkPage(browser, label, options, async page => {
-          await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-          for (const [name, anchor] of anchors) {
-            const tab = page.locator('[data-home-tab="' + name + '"]');
-            await tab.click();
-            assert.equal(new URL(page.url()).hash, '#' + anchor, label + ': URL for ' + name);
-            assert.equal(await tab.getAttribute('aria-selected'), 'true');
-            await page.reload({ waitUntil: 'domcontentloaded' });
-            assert.equal(await tab.getAttribute('aria-selected'), 'true', label + ': reload of ' + name);
-            assert.equal(await page.locator('[data-home-panel="' + name + '"]').isVisible(), true);
-            assert.equal(await page.locator('[data-home-panel]:visible').count(), 1);
-          }
-          const journal = page.locator('[data-home-tab="journal"]');
-          await journal.focus();
-          await page.keyboard.press('Home');
-          assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true');
-          assert.equal(await page.locator('[data-home-tab="reading"]').evaluate(el => el === document.activeElement), true);
-          await page.keyboard.press('ArrowLeft');
-          assert.equal(await journal.getAttribute('aria-selected'), 'true', 'ArrowLeft should wrap');
-          await page.keyboard.press('ArrowRight');
-          assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true', 'ArrowRight should wrap');
-          await page.keyboard.press('End');
-          assert.equal(await journal.getAttribute('aria-selected'), 'true');
-          const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
-          assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
-        });
-      }
+    await t.test('legacy #journal link opens the journal page', async () => {
+      await checkPage(browser, 'journal-redirect', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
+        await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
+        await page.waitForURL(/journal\.html/);
+        assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal list missing');
+        const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
+      });
     });
 
     await t.test('mobile menu: concealed panel anchors and focus recovery', async () => {
@@ -321,37 +285,21 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('main').evaluate(el => el.inert), false);
         assert.equal(await menu.evaluate(el => el === document.activeElement), true, 'focus should return to menu button');
         await menu.click();
-        await page.locator('.site-links a[href="index.html#projects"]').click();
-        await page.waitForURL('**/index.html#projects');
-        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
-        assert.equal(await page.locator('main').evaluate(el => el.inert), false);
-        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
-        await page.reload({ waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
-        assert.equal(await page.locator('#projects').isVisible(), true);
-        await page.goto(origin + '/index.html#about', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true');
+        await page.locator('.site-links a[href="making.html"]').first().click();
+        await page.waitForURL('**/making.html');
         await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
-        assert.equal(await page.locator('[data-home-tab="topics"]').getAttribute('aria-selected'), 'true',
-          'a cover-only hash change must not unexpectedly switch tabs');
-        await page.reload({ waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('[data-home-tab="reading"]').getAttribute('aria-selected'), 'true',
-          'a fresh visit to a cover-only anchor uses the default tab');
       });
     });
 
-    await t.test('no JavaScript: all four content panels remain readable', async () => {
-      await checkPage(browser, 'no-js-tabs', {
+    await t.test('no JavaScript: theme cards and journal remain readable', async () => {
+      await checkPage(browser, 'no-js-home', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, javaScriptEnabled: false,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('[data-home-tab]').count(), 4);
-        for (const name of ['reading', 'quiz', 'topics', 'journal']) {
-          assert.equal(await page.locator('[data-home-panel="' + name + '"]').isVisible(), true,
-            name + ' must be visible without scripts');
-        }
         assert.equal(await page.locator('a[href="topic-philosophy.html"]').count() > 0, true);
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal must be readable without scripts');
       });
     });
 
@@ -437,8 +385,8 @@ test('MOUTON browser smoke', async t => {
 
     await t.test('deep links and article navigation', async () => {
       await checkPage(browser, 'deep-link', { viewport: { width: 1024, height: 768 } }, async page => {
-        await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('[data-home-tab="journal"]').getAttribute('aria-selected'), 'true');
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('h1').count(), 1);
         await page.goto(origin + '/nietzsche.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('h1').count(), 1);
         await page.goto(origin + '/en/index.html', { waitUntil: 'domcontentloaded' });

@@ -1,13 +1,13 @@
 # ムートン：AI開発の7つの品質ゲート
 
 方針：AIには実装や原因調査を任せられるが、本番公開に影響する最終判断は人間が行う。
-公開サイトの見た目・4タブ・トップの演出は変更しない。品質保証は主にGitHub Actionsで行う。
+公開サイトの見た目・トップの演出は変更しない（トップの4タブは2026-10-14に廃止）。品質保証は主にGitHub Actionsで行う。
 
 | # | ゲート | 実際の導入物 | 合格条件 |
 |---|---|---|---|
 | 1 | 要件の明文化 | .github/pull_request_template.md | 目的、変更範囲、観測可能な完了条件が明示される |
 | 2 | 自動テスト | npm test、tests/design-version.test.mjs、scripts/check-site.mjs | Node単体テストとEleventyビルド、リンク等の静的検証が成功 |
-| 3 | ブラウザ操作テスト | tests/browser-smoke.mjs | Chromiumでトップの4タブ、モバイルメニュー、ディープリンク、記事を操作して成功 |
+| 3 | ブラウザ操作テスト | tests/browser-smoke.mjs | Chromiumでトップの3テーマ、記事一覧（journal.html）、モバイルメニュー、ディープリンク、記事を操作して成功 |
 | 4 | 自動実行環境 | .github/workflows/build-check.yml、browser-smoke.yml | PR作成・更新時にチェックが実行される |
 | 5 | セキュリティ | .github/workflows/security-scan.yml、Dependabot | CodeQL、npm audit（読者に届く依存関係＝`--omit=dev` で High 以上 0 件）、PRの依存関係レビュー（重大以上）が成功。ビルド用ツールの audit は報告のみ |
 | 6 | AI修正ループ | .github/workflows/ci-failure-triage.yml、既存ai-shain.yml | 失敗時にIssueで再現と原因を記録し、人間の判断でAI修正を依頼できる |
