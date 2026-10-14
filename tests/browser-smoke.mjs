@@ -324,6 +324,8 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.locator('h1#cs-title').count(), 1);
           assert.match(await page.locator('.cs-status').innerText(), /発売準備中/);
           assert.match(await page.locator('.cs-offer-price').innerText(), /2,980/);
+          assert.match(await page.locator('.cs-spec').innerText(), /75ページ/);
+          assert.match(await page.locator('#cs-contents').locator('..').innerText(), /参考文献133件/);
           assert.equal(await page.locator('a[data-lp-event="begin_checkout"]').count(), 0, 'checkout must remain off');
           assert.equal(await page.locator('#cleanliness-waitlist').count(), 0, 'email signup must remain off');
           assert.equal(await page.locator('a[href="cleanliness-sample.html"]').count() >= 1, true);
