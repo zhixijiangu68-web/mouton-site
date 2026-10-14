@@ -14,7 +14,7 @@ extraCss: [home.css]
   <p class="intro-sub">A personal archive — since 2026</p>
   <span class="intro-bar"></span>
 </div>
-<a class="skip" href="#journal">記事一覧へスキップ</a>
+<a class="skip" href="#top">本文へスキップ</a>
 {% include "partials/nav.njk" %}
 
 <main>
@@ -58,8 +58,8 @@ extraCss: [home.css]
         </a>
       </nav>
       <p class="cover-links cover-links--choice">
-        <a href="#journal">記事を探す <span aria-hidden="true">→</span></a>
-        <a href="#today-q">○×クイズ <span aria-hidden="true">→</span></a>
+        <a href="journal.html">記事を探す <span aria-hidden="true">→</span></a>
+        <a href="quiz.html">○×クイズ <span aria-hidden="true">→</span></a>
         <a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a>
         <a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a>
       </p>
@@ -79,133 +79,6 @@ extraCss: [home.css]
     <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
   </section>
 
-  {#- ホームの内容を4つのタブに集約。JavaScriptが無効でも各セクションを読める構成。 #}
-  <div class="home-tabs" id="explore" data-home-tabs>
-    <div class="home-tab-list" role="tablist" aria-label="トップページのコンテンツ">
-      <button class="home-tab" type="button" role="tab" id="home-tab-reading" aria-controls="home-panel-reading" aria-selected="true" tabindex="0" data-home-tab="reading">おすすめ</button>
-      <button class="home-tab" type="button" role="tab" id="home-tab-quiz" aria-controls="home-panel-quiz" aria-selected="false" tabindex="-1" data-home-tab="quiz">クイズ</button>
-      <button class="home-tab" type="button" role="tab" id="home-tab-topics" aria-controls="home-panel-topics" aria-selected="false" tabindex="-1" data-home-tab="topics">選び方</button>
-      <button class="home-tab" type="button" role="tab" id="home-tab-journal" aria-controls="home-panel-journal" aria-selected="false" tabindex="-1" data-home-tab="journal">記事検索</button>
-    </div>
-    <div class="home-tab-panel" id="home-panel-reading" role="tabpanel" aria-labelledby="home-tab-reading" tabindex="0" data-home-panel="reading">
-  {#- いま読む2本。タブ切り替えで他のコンテンツを表示する。 #}
-  <section class="section cover-section" id="reading" data-nav="dark" data-nav-solid="dark" aria-labelledby="reading-heading">
-    <div class="section-inner">
-      <h2 class="cover-section-title" id="reading-heading">いま読む<em>Now reading</em></h2>
-      <div class="reading3">
-        {%- for a in collections.articles | head(2) %}
-        <a class="reading3-card{{ ' is-feature' if loop.first }}" href="{{ a.page.fileSlug }}.html">
-          <span class="reading3-meta">{{ {philosophy:'哲学・生き方', body:'身体', food:'食事・化学', books:'本', work:'仕事'}[a.data.category] or 'Journal' }}<span aria-hidden="true"> ・ </span>約{{ a.data.readMinutes }}分</span>
-          <span class="reading3-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
-          <span class="reading3-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
-          <span class="reading3-go">読む <span aria-hidden="true">→</span></span>
-        </a>
-        {%- endfor %}
-      </div>
-      <p class="cover-more"><a href="#journal">記事をすべて見る <span aria-hidden="true">→</span></a></p>
-      <p class="cover-more"><a href="cleanliness-science.html" data-lp-entry data-placement="home_reading" data-source-article="home">新企画｜「清潔感の科学」無料サンプルを見る <span aria-hidden="true">↗</span></a></p>
-    </div>
-  </section>
-
-
-    </div>
-    <div class="home-tab-panel" id="home-panel-quiz" role="tabpanel" aria-labelledby="home-tab-quiz" tabindex="0" data-home-panel="quiz">
-  {#- 今日の1問。答えると、その問題の記事へ進める。 #}
-  <section class="section cover-section" id="today-q" data-nav="dark" data-nav-solid="dark" aria-labelledby="today-heading">
-    <div class="section-inner today-inner">
-      <p class="today-kicker">今日の1問</p>
-      <h2 class="cover-section-title today-title" id="today-heading">その常識、<br>10秒でひっくり返す。</h2>
-      <div class="qloop today-qloop" data-qloop data-compact></div>
-      <p class="cover-more"><a href="quiz.html">10問チャレンジ <span aria-hidden="true">→</span></a></p>
-    </div>
-  </section>
-
-
-    </div>
-    <div class="home-tab-panel" id="home-panel-topics" role="tabpanel" aria-labelledby="home-tab-topics" tabindex="0" data-home-panel="topics">
-  {#- 3テーマのメイン導線は表紙に統合。ガイドと制作情報のみこのタブに残す。 #}
-  <section class="section" id="guides" data-nav="light" data-nav-solid="light" aria-labelledby="guides-heading">
-    <div class="section-inner">
-      <div class="section-head" data-rise>
-        <div>
-          <p class="eyebrow">Guides</p>
-          <h2 class="section-title" id="guides-heading">選び方<em>— before you buy</em></h2>
-        </div>
-        <p class="copy">買う前に、何を見ればいいのか。記事で調べたことを、選ぶときの目安にまとめています。</p>
-      </div>
-      <p class="section-more section-more-dark"><a href="guides.html">選び方の記事をすべて見る <span aria-hidden="true">→</span></a></p>
-      <div class="guide-grid">
-        {%- for a in collections.articles | guideCards | head(3) %}
-        <a class="guide-card" data-rise href="{{ a.page.fileSlug }}.html"><span class="guide-tag">{{ a.data.guide.tag }}</span><h3>{{ a.data.guide.title }}</h3><p>{{ a.data.guide.text }}</p><span class="guide-more">約{{ a.data.readMinutes }}分で読む →</span></a>
-        {%- endfor %}
-      </div>
-    </div>
-  </section>
-
-  {#- 詳細な棚・制作・運営者情報は別ページへ。従来のアンカーは残す。 #}
-  <section class="section home-more" aria-labelledby="home-more-heading" data-nav="dark" data-nav-solid="dark">
-    <div class="section-inner">
-      <div class="home-compact-heading">
-        <div><p class="eyebrow">More to discover</p><h2 class="section-title" id="home-more-heading">もう少し、見ていく。</h2></div>
-        <p class="copy">記事の先にある、本・制作・ムートンについて。</p>
-      </div>
-      <div class="home-more-grid">
-        <a id="books" href="books-habits.html"><span>BOOKS</span><strong>本棚</strong><em aria-hidden="true">↗</em></a>
-        <a id="projects" href="making.html"><span>MAKING</span><strong>制作の記録</strong><em aria-hidden="true">↗</em></a>
-        <a id="about" href="start.html"><span>ABOUT</span><strong>ムートンについて</strong><em aria-hidden="true">↗</em></a>
-      </div>
-    </div>
-  </section>
-
-    </div>
-    <div class="home-tab-panel" id="home-panel-journal" role="tabpanel" aria-labelledby="home-tab-journal" tabindex="0" data-home-panel="journal">
-  <section class="section" id="journal" data-nav="light" data-nav-solid="light" aria-labelledby="journal-heading">
-    <div class="section-inner">
-      <div class="section-head" data-rise>
-        <div>
-          <p class="eyebrow">Journal</p>
-          <h2 class="section-title" id="journal-heading">記事<em>— notes in progress</em></h2>
-        </div>
-        <p class="copy">哲学と科学で確かめたこと。分類で絞るか、言葉で探す。</p>
-      </div>
-      <div class="journal-tools">
-        <div class="journal-filters" role="group" aria-label="記事のカテゴリー">
-          <button class="journal-filter active" type="button" data-journal-filter="all">すべて</button>
-          <button class="journal-filter" type="button" data-journal-filter="body">身体</button>
-          <button class="journal-filter" type="button" data-journal-filter="philosophy">哲学・生き方</button>
-          <button class="journal-filter" type="button" data-journal-filter="work">仕事・働き方</button>
-          <button class="journal-filter" type="button" data-journal-filter="making">制作</button>
-        </div>
-        <div class="journal-search">
-          <label for="journal-search-input">記事を検索</label>
-          <input id="journal-search-input" type="search" placeholder="記事を検索（例：血糖、自由、匂い）" autocomplete="off" enterkeyhint="search">
-        </div>
-      </div>
-      <p class="journal-search-status" role="status" aria-live="polite"></p>
-      <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
-      <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
-      <div class="journal-list">
-        {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}" data-date="{{ a.page.date | dotDate }}">
-          <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
-          <div class="journal-arrow">→</div>
-        </a>
-        {%- endif %}{% endfor %}
-        {%- for n in notes %}
-        <div class="journal-item is-note" data-rise data-category="{{ n.category }}">
-          <div class="journal-date">{{ n.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ n.title }}</div><div class="journal-excerpt">{{ n.excerpt }}</div></div>
-          <div class="journal-arrow">—</div>
-        </div>
-        {%- endfor %}
-      </div>
-    </div>
-  </section>
-
-
-    </div>
-  </div>
 {%- if site.newsletter.action %}
   <div class="section home-newsletter" data-nav="light" data-nav-solid="light"><div class="section-inner">{% include "partials/newsletter.njk" %}</div></div>
   {%- endif %}
@@ -218,121 +91,11 @@ extraCss: [home.css]
 </footer>
 
 <script src="home.js" defer></script>
-<script src="home-tabs.js" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
 const legacy={now:'top'};
+if(location.hash==='#journal')location.replace('journal.html');
 (()=>{const name=location.hash.slice(1);if(articleRoutes[name])location.replace(articleRoutes[name]);else if(legacy[name])history.replaceState(null,'','#'+legacy[name]);})();
-
-// Journal: newest first, category filters, search.
-const journalList=document.querySelector('.journal-list');
-[...journalList.children].sort((a,b)=>{
- const date=node=>node.querySelector('.journal-date')?.textContent.trim()||'';
- return date(b).localeCompare(date(a));
-}).forEach(item=>journalList.appendChild(item));
-const items=[...journalList.querySelectorAll('.journal-item')];
-const filters=[...document.querySelectorAll('[data-journal-filter]')];
-const searchInput=document.getElementById('journal-search-input');
-const searchStatus=document.querySelector('.journal-search-status');
-const normalize=text=>text.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
-const storageKey='mouton-journal-filter-v2';
-items.forEach(item=>{item.dataset.search=normalize(item.querySelector('.journal-body').textContent);});
-filters.forEach(b=>{const v=b.dataset.journalFilter;const c=document.createElement('span');c.className='count';c.textContent=items.filter(i=>v==='all'||i.dataset.category===v).length;b.appendChild(c);});
-let filter='all';
-try{const v=sessionStorage.getItem(storageKey);if(filters.some(b=>b.dataset.journalFilter===v))filter=v;}catch{}
-// Full-text search: the article text is fetched the first time someone searches.
-let fullText=null,loadingText=null;
-const loadText=()=>loadingText||(loadingText=fetch('search.json').then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{
- fullText=new Map(d.map(e=>[e.url,{...e,norm:normalize(e.text)}]));
- if(searchInput.value)applyFilter(filter);
-}));
-// Only the newest entries show until the reader asks for the rest.
-const COLLAPSED_COUNT=4;
-const expandKey='mouton-journal-expanded-v2';
-let expanded=false;
-try{expanded=sessionStorage.getItem(expandKey)==='1';}catch{}
-const more=document.createElement('button');
-more.type='button';
-more.className='journal-more';
-more.setAttribute('aria-controls','journal-list');
-journalList.id='journal-list';
-more.addEventListener('click',()=>{
- expanded=true;
- try{sessionStorage.setItem(expandKey,'1');}catch{}
- const first=items.find(i=>i.classList.contains('is-collapsed'));
- applyFilter(filter);
- if(first)first.focus({preventScroll:true});
-});
-const extra=document.createElement('div');
-extra.className='journal-extra';
-journalList.after(extra);
-extra.after(more);
-function snippet(entry,raw){
- const text=entry.text,i=text.toLowerCase().indexOf(raw.toLowerCase());
- if(i<0)return null;
- const p=document.createElement('span');
- p.className='journal-snippet';
- const start=Math.max(0,i-36),end=Math.min(text.length,i+raw.length+60);
- const mark=document.createElement('mark');
- mark.textContent=text.slice(i,i+raw.length);
- p.append((start>0?'…':'')+text.slice(start,i),mark,text.slice(i+raw.length,end)+(end<text.length?'…':''));
- return p;
-}
-function applyFilter(value){
- filter=value;
- try{sessionStorage.setItem(storageKey,filter);}catch{}
- filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
- const raw=searchInput.value.trim();
- const query=normalize(raw);
- let shown=0;
- const listed=new Set();
- items.forEach(item=>{
-  const href=item.getAttribute('href');
-  if(href)listed.add(href);
-  item.querySelector('.journal-snippet')?.remove();
-  const entry=href&&fullText?fullText.get(href):null;
-  const inList=query===''||item.dataset.search.includes(query);
-  const inBody=!inList&&entry&&entry.norm.includes(query);
-  const hidden=(filter!=='all'&&item.dataset.category!==filter)||!(inList||inBody);
-  item.classList.toggle('is-hidden',hidden);
-  item.classList.remove('is-collapsed');
-  if(!hidden){shown++;if(inBody){const s=snippet(entry,raw);if(s)item.querySelector('.journal-body').append(s);}}
- });
- // Articles that are not in the journal list (food & science, books) still turn up in a search.
- extra.replaceChildren();
- if(query!==''&&fullText&&filter==='all'){
-  for(const entry of fullText.values()){
-   if(listed.has(entry.url)||!entry.norm.includes(query))continue;
-   const a=document.createElement('a');
-   a.className='journal-item clickable journal-link';
-   a.href=entry.url;
-   const date=document.createElement('div');date.className='journal-date';date.textContent=entry.date;
-   const body=document.createElement('div');body.className='journal-body';
-   const title=document.createElement('div');title.className='journal-title';title.textContent=entry.title;
-   const ex=document.createElement('div');ex.className='journal-excerpt';ex.textContent=entry.excerpt;
-   const time=document.createElement('span');time.className='journal-read-time';time.textContent='約'+entry.minutes+'分';
-   body.append(title,ex,time);
-   const s=snippet(entry,raw);if(s)body.append(s);
-   const arrow=document.createElement('div');arrow.className='journal-arrow';arrow.textContent='→';
-   a.append(date,body,arrow);
-   extra.append(a);shown++;
-  }
- }
- // Collapse the full, unfiltered list to its newest entries.
- const browsing=query===''&&filter==='all';
- if(browsing&&!expanded){
-  items.filter(i=>!i.classList.contains('is-hidden')).slice(COLLAPSED_COUNT).forEach(i=>i.classList.add('is-collapsed'));
- }
- const rest=items.filter(i=>i.classList.contains('is-collapsed')).length;
- more.hidden=rest===0;
- more.textContent='すべての記事を見る（あと'+rest+'件）';
- searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました'+(fullText?'（本文も検索しています）':''):'該当する記事はありませんでした';
-}
-filters.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.journalFilter)));
-searchInput.addEventListener('input',()=>{loadText();applyFilter(filter);});
-searchInput.addEventListener('focus',loadText,{once:true});
-document.querySelectorAll('[data-filter-link]').forEach(a=>a.addEventListener('click',()=>{searchInput.value='';applyFilter(a.dataset.filterLink);}));
-applyFilter(filter);
 
 </script>

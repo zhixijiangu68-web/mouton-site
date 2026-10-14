@@ -43,7 +43,7 @@ assert(lp.includes('id="notify"'), 'interest section missing');
 assert(lp.includes('id="offer"'), 'pricing section missing');
 assert(lp.includes('id="plan"'), '30 day plan missing');
 assert(lp.includes('30日間の実践表'), '30 day worksheet missing');
-assert(home.includes('intro-veil') && home.includes('data-home-tabs'), 'homepage intro and tabs must be preserved');
+assert(home.includes('intro-veil'), 'homepage intro must be preserved');
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
 assert.equal(site.prelaunch.ready, waitlistReady(site.prelaunch), 'prelaunch readiness must match validation');
 const privacy = read('privacy.html');
@@ -79,7 +79,6 @@ assert(faq.includes('{% if isStripe %}'), 'FAQ must reflect the configured check
 assert(sample.includes('data-sample-print'), 'print/PDF feature missing');
 assert((sample.match(/class="cs-sample-page(?: |")/g) || []).length === 5, 'sample must have five pages');
 assert(article.includes('data-lp-entry'), 'existing cleanliness article should link to LP');
-assert(home.includes('cleanliness-science.html'), 'home entry is missing');
 assert(js.includes('sample_click') || lp.includes('sample_click'), 'sample tracking missing');
 assert(js.includes('waitlist_submit'), 'waitlist attempt tracking missing');
 console.log('Cleanliness prelaunch checks passed.');

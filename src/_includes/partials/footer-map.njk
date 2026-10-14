@@ -4,7 +4,7 @@
     <p class="footer-map-h">{{ 'Topics' if en else 'テーマ' }}</p>
     <ul>
       {%- for t in topics %}<li><a href="{{ ('index.html#' + t.key) if en else ('topic-' + t.key + '.html') }}">{{ t.en if en else t.label }}</a></li>{% endfor %}
-      <li><a href="index.html#journal">{{ 'All articles' if en else 'すべての記事' }}</a></li>
+      <li><a href="{{ 'index.html#journal' if en else 'journal.html' }}">{{ 'All articles' if en else 'すべての記事' }}</a></li>
     </ul>
   </div>
   <div class="footer-map-col">

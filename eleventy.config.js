@@ -122,7 +122,7 @@ export default function (eleventyConfig) {
     const parts = [`<a href="index.html">${en ? 'Home' : 'ホーム'}</a>`];
     if (kind === 'guide') parts.push(`<a href="guides.html">${en ? 'Guides' : '選び方'}</a>`);
     else if (t) parts.push(`<a href="${en ? `index.html#${t.key}` : `topic-${t.key}.html`}">${en ? t.en : t.label}</a>`);
-    else if (kind === 'books') parts.push(`<a href="index.html#${en ? 'more' : 'books'}">${en ? 'Books' : '本棚'}</a>`);
+    else if (kind === 'books') parts.push(`<a href="${en ? 'index.html#more' : 'books-habits.html'}">${en ? 'Books' : '本棚'}</a>`);
     parts.push(`<span aria-current="page">${esc(title)}</span>`);
     const nav = `<nav class="crumbs" aria-label="${en ? 'Breadcrumb' : 'パンくずリスト'}"><ol>${parts.map(x => `<li>${x}</li>`).join('')}</ol></nav>`;
     for (const re of [/(<article class="article">)/, /(<main[^>]*>)/]) if (re.test(html)) return html.replace(re, `$1${nav}`);
