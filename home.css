@@ -207,7 +207,7 @@
 .site-stats a:hover{border-bottom-color:var(--blue)}
 
 /* ===== Night cover (2026-10-09) =====
-   Deep navy cover with slow blue light; Day swaps in the sky photo.
+   Deep navy cover with slow blue light.
    Brand and questions in Mincho, actions and explanations in Gothic. */
 :root{--night:#0b1020;--night-2:#111833;--glow:#4c72ff;--on-night:#f5f3ee;--on-night-2:#b5bcd0}
 .cover{position:relative;min-height:100vh;min-height:100svh;display:grid;place-items:center;padding:110px var(--gutter) 80px;background:var(--night);color:var(--on-night);overflow:hidden;isolation:isolate}
@@ -228,21 +228,12 @@
 .cover-btn:hover{border-color:var(--on-night);transform:translateY(-1px)}
 .cover-btn.is-primary{background:var(--glow);border-color:var(--glow);color:#fff}
 .cover-btn.is-primary:hover{background:#6587ff;border-color:#6587ff}
-.cover-btn:focus-visible,.cover-links a:focus-visible,.cover-mode:focus-visible,.reading3-card:focus-visible,.cover-more a:focus-visible{outline:2px solid var(--on-night);outline-offset:4px}
+.cover-btn:focus-visible,.cover-links a:focus-visible,.reading3-card:focus-visible,.cover-more a:focus-visible{outline:2px solid var(--on-night);outline-offset:4px}
 .cover-links{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;margin:28px 0 0;font-family:var(--gothic);font-size:.875rem}
 .cover-links a{color:var(--on-night-2);text-underline-offset:5px}
 .cover-links a:hover{color:var(--on-night)}
 .cover-links a[lang="en"]{font-family:var(--latin);font-style:italic;font-size:1rem}
-.cover-mode{position:absolute;right:var(--gutter);bottom:24px;display:inline-flex;padding:3px;border-radius:999px;border:1px solid rgba(181,188,208,.35);background:rgba(11,16,32,.4);color:var(--on-night-2);font:500 .75rem/1 var(--gothic);letter-spacing:.08em;cursor:pointer}
-.cover-mode span{padding:7px 12px;border-radius:999px;transition:background .18s ease,color .18s ease}
-.cover-mode-night{background:var(--on-night);color:var(--night)}
-/* Day: the sky photo with a dark veil behind the text, so white copy stays readable. */
-[data-cover="day"] .cover{background:#5b7fc4 url(images/placeholder/hero.jpg) center/cover no-repeat}
-[data-cover="day"] .cover::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse 70% 60% at 50% 48%,rgba(11,16,32,.55),rgba(11,16,32,.2) 75%),linear-gradient(180deg,rgba(11,16,32,.15),rgba(11,16,32,.55))}
-[data-cover="day"] .cover-lede,[data-cover="day"] .cover-links a,[data-cover="day"] .cover-kicker{color:var(--on-night);text-shadow:0 1px 12px rgba(11,16,32,.6)}
-[data-cover="day"] .cover-art{display:none}
-[data-cover="day"] .cover-mode-night{background:none;color:var(--on-night-2)}
-[data-cover="day"] .cover-mode-day{background:var(--on-night);color:var(--night)}
+
 /* Sections that continue the night under the cover. */
 .cover-section{background:var(--night);color:var(--on-night);padding-top:clamp(56px,9vh,110px);padding-bottom:clamp(56px,9vh,110px)}
 .cover-section + .cover-section{background:var(--night-2)}
@@ -267,7 +258,6 @@
  .cover{padding-top:96px}
  .cover-title{font-size:clamp(2.125rem,9.6vw,2.75rem)}
  .cover-btn{min-width:0;flex:1 1 140px}
- .cover-mode{bottom:18px}
  .reading3{grid-template-columns:1fr}
  .reading3-card.is-feature{grid-row:auto;min-height:260px}
 }
@@ -285,8 +275,6 @@
 /* English edition: the same night cover, a Latin title, and the paper page rising over it. */
 .cover-en{min-height:86vh;min-height:86svh;padding-bottom:clamp(120px,18vh,180px)}
 .cover-en .cover-title{font-family:var(--latin);font-weight:400;font-size:clamp(2.25rem,5.6vw,4.75rem);line-height:1.15;letter-spacing:0;max-width:16ch;margin:0 auto}
-[data-cover="day"] .cover-en{background-image:url(../images/placeholder/hero.jpg)}
-.cover-en .cover-mode{bottom:calc(clamp(80px,14vh,140px) + 18px)}
 .cover-btn{white-space:nowrap}
 
 /* ---------- First impression: opening veil, kinetic hero, ticker (home.js) ---------- */
@@ -379,12 +367,11 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.22,.8,.22,1)
 }
 
 
-/* Adapt #65 presentation to the current Night / Day cover and controls. */
+/* Adapt #65 presentation to the current single cover. */
 .cover{padding-bottom:clamp(122px,15vh,158px)}
 .cover .hero-light{z-index:0}
 .cover .hero-word{z-index:0}
 .cover .cover-inner{position:relative;z-index:1}
-.cover .cover-mode{z-index:4;bottom:calc(62px + env(safe-area-inset-bottom,0px))}
 .cover .hero-ticker{z-index:3}
 .cover .cover-title .char{will-change:transform}
 .cover .cover-title{position:relative}
@@ -493,15 +480,7 @@ html.intro .cover .cover-art{animation:hero-zoom 2.2s cubic-bezier(.22,.8,.22,1)
  .home-tab-panel #journal .lucky{margin-block:12px}
 }
 @media(prefers-reduced-motion:reduce){.home-tab{transition:none}}
-/* CLUB mode: tab controls and content keep the same readable contrast. */
-html[data-version="club"] .home-tabs{background:#0d0d16;color:#f3edf8}
-html[data-version="club"] .home-tab-list{background:#10101b}
-html[data-version="club"] .home-tab[aria-selected="true"]{background:rgba(196,172,255,.2);border-color:#c4acff;color:#f3edf8}
-html[data-version="club"] .home-tab-panel .home-topics,
-html[data-version="club"] .home-tab-panel #guides,
-html[data-version="club"] .home-tab-panel #journal{background:#0d0d16;color:#f3edf8}
-html[data-version="club"] .home-tab-panel .home-topic-card{background:#191724;color:#f3edf8;border-color:rgba(205,185,236,.25)}
-html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
+
 
 
 /* The tab bar must be discoverable without scrolling past a full-screen cover. */
@@ -514,18 +493,15 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
 .cover .cover-actions{margin-top:22px}
 .cover .cover-links{margin-top:16px}
 .cover .hero-ticker{bottom:64px}
-.cover .cover-mode{bottom:calc(126px + env(safe-area-inset-bottom,0px))}
 @media(max-width:760px){
  .cover:not(.cover-en){min-height:min(570px,72svh);padding-top:clamp(78px,10svh,96px);padding-bottom:110px}
- .cover .cover-kicker{font-size:.75rem;line-height:1.35;max-width:calc(100% - 140px);text-align:left;margin-bottom:10px}
+ .cover .cover-kicker{font-size:.75rem;line-height:1.35;max-width:100%;text-align:left;margin-bottom:10px}
  .cover .cover-title{font-size:clamp(2rem,8vw,2.5rem);line-height:1.27}
  .cover .cover-lede{font-size:.875rem;line-height:1.65;margin-top:12px}
  .cover .cover-actions{margin-top:17px;gap:8px}
  .cover .cover-btn{min-height:44px;min-width:126px;padding:0 17px;font-size:.8125rem}
  .cover .cover-links{margin-top:12px;gap:8px 14px;font-size:.75rem}
  .cover .hero-ticker{bottom:64px}
- .cover .cover-mode{top:var(--nav-h,64px);right:var(--gutter);bottom:auto}
- .cover .cover-mode span{padding:10px 12px}
  .home-tabs{margin-top:-62px}
  .home-tab-list{min-height:60px;padding-block:7px;border-radius:12px 12px 0 0}
 }
@@ -537,15 +513,12 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
 
 
 @media(min-width:761px) and (max-width:900px){
- .cover .cover-kicker{font-size:.75rem;max-width:calc(100% - 145px);text-align:left}
- .cover .cover-mode{top:var(--nav-h,64px);right:var(--gutter);bottom:auto}
- .cover .cover-mode span{padding:10px 12px}
+ .cover .cover-kicker{font-size:.75rem;max-width:100%;text-align:left}
 }
 
-/* On wide covers, the Day/Night button also stays above the headline and outside the links. */
+/* Wide cover heading spacing. */
 @media(min-width:901px){
- .cover:not(.cover-en) .cover-kicker{max-width:calc(100% - 145px);text-align:left}
- .cover:not(.cover-en) .cover-mode{top:var(--nav-h,72px);right:var(--gutter);bottom:auto}
+ .cover:not(.cover-en) .cover-kicker{max-width:100%;text-align:left}
 }
 
 
@@ -560,7 +533,7 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
   padding-bottom:clamp(112px,13svh,128px);
 }
 .cover-choice .cover-inner{width:min(1370px,100%);text-align:left}
-.cover-choice .cover-kicker{margin:0 0 12px;max-width:calc(100% - 145px);font-size:clamp(.75rem,1.2vw,.9375rem);letter-spacing:.085em;color:rgba(245,243,238,.83)}
+.cover-choice .cover-kicker{margin:0 0 12px;max-width:100%;font-size:clamp(.75rem,1.2vw,.9375rem);letter-spacing:.085em;color:rgba(245,243,238,.83)}
 .cover-choice .cover-title--choice{max-width:100%;font-size:clamp(2.2rem,4.3vw,3.9rem);line-height:1.32;letter-spacing:.06em;text-wrap:pretty}
 .cover-choice .cover-lede--choice{max-width:unset;margin:12px 0 0;font-size:clamp(.875rem,1.22vw,1.0625rem);line-height:1.75;text-align:left}
 .cover-choice-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(10px,1.45vw,20px);margin-top:clamp(22px,3.3vh,30px)}
@@ -597,11 +570,6 @@ html[data-version="club"] .home-tab-panel .home-topic-card>span{color:#b8aec6}
 .cover-choice-card:focus-visible{outline:3px solid #f6dfac;outline-offset:4px}
 .cover-choice .cover-links--choice{justify-content:flex-start;gap:9px 22px;margin:18px 0 0;font-size:.8125rem}
 .cover-choice .cover-links--choice a{color:rgba(245,243,238,.9)}
-[data-cover="day"] .cover-choice .cover-links--choice a{color:#fff}
-html[data-version="club"] .cover-choice-card--body{color:#251f16}
-html[data-version="club"] .cover-choice-card--body .cover-choice-title{color:#251f16}
-html[data-version="club"] .cover-choice-card--body .cover-choice-description{color:#332719}
-html[data-version="club"] .cover-choice-card--body .cover-choice-number{color:#332719}
 @media(max-width:900px){
  .cover-choice:not(.cover-en){padding-top:90px;padding-bottom:114px}
  .cover-choice-grid{gap:10px;margin-top:20px}

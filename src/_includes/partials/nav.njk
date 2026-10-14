@@ -1,6 +1,5 @@
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
-  {% include "partials/design-version.njk" %}
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
@@ -10,7 +9,6 @@
       <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
       <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
       <li><a href="en/{{ (page.fileSlug + '.html') if (isArticle and page.fileSlug in enSlugs) else 'index.html' }}" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
-      <li class="menu-version">{% include "partials/design-version.njk" %}</li>
     </ul>
   </nav>
 </div>
