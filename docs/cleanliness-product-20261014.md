@@ -1,47 +1,39 @@
 # MOUTON RESEARCH 001 — 完成版PDF商品台帳
 
-更新日：2026-10-14
+更新日：2026-10-14（**Stripe販売に最終決定**）
 
-## 現行の正式商品
-- 商品名：清潔感の科学。
-- 著者：ムートン
-- 版：第1版（2026年10月）
-- 販売価格：**税込2,980円**
-- 形式：A4 PDF／**全75ページ**（表紙1ページ＋本文の通し番号1–74）
-- 構成：理論・各論・実践の3部、**全14章**、30日間の実践表
-- 参考文献：**133件**（PDF末尾の文献番号1–133）
-- 元ファイル：ユーザーが2026-10-14に提供した完成版PDF。**この公開リポジトリには保存しない。**
-- 原本サイズ：6,623,742 bytes
-- 原本SHA-256：`bfaceb38a2eed3d1f391d2f0976cd773ec6d183c86f7619fd8144d595cbad377`
-- **販売先（2026-10-14確定）：BOOTHのダウンロード商品**。Stripe / Cloudflare R2 の代替納品システムは本商品では使用しない。
+## 正式商品
+- 『清潔感の科学。』／著者ムートン／2026年10月第1版
+- 価格：**税込2,980円**（一回払い）
+- A4 PDF全75ページ、3部構成・全14章、30日間実践表、参考文献133件
+- 原本ファイル：`清潔感の科学.pdf`（6,623,742 bytes）
+- SHA-256：`bfaceb38a2eed3d1f391d2f0976cd773ec6d183c86f7619fd8144d595cbad377`
+- **公開リポジトリに原本を保存しない。**
 
-## 公開・配布ポリシー
-- 公開 GitHub／GitHub Pages に有料原本を置かない。コミット、Issue、PRへの添付も禁止。
-- 上記SHA-256は本人がR2へアップロードした原本の一致確認用。公開ファイルや納品完了を意味しない。
-- 公開してよいのは5ページの無料サンプルと宣伝用の表紙・紹介文だけ。
-- 元PDFのBOOTHへのアップロード・BOOTHの商品ページ作成は**未実施**。購入受付を有効化しない。
-- LPの販売プロバイダーは既定BOOTH。`checkoutUrl` と `legalUrl` が揃うまでは発売準備中の表示。
+## 最終の販売経路
+MOUTONサイトLP → Stripe Payment Links → Stripeの決済完了Webhook署名・金額/商品照合 → Cloudflare Worker → 非公開R2 → 購入者にResendで期限付きPDFダウンロードURLを送信。
 
-## BOOTHでの販売開始条件
-1. BOOTHショップを開設し、振込先・オーナー情報・販売条件・特商法表示を確認する。
-2. 「ダウンロード商品」に正式PDF原本75ページ（SHA-256は上記）をアップロード。税込2,980円、掲載文、表紙画像を確認する。
-3. BOOTHで発行された商品の実URLとオーナー用の特商法表示ページURLを取得する。一般のBOOTH利用規約・運営者の特商法URLを代替として貼らない。
-4. 既存5ページ無料サンプルPDFの実ファイルが新版本体と矛盾しないか確認し、必要なら差し替える。
-5. `src/_data/site.js` の `checkoutProvider:'booth'` を維持して確認済みURLを設定。 `npm run build`、`npm test`、CI、iPhone SafariでLP・リンクをテストする。
-6. 販売開始後、BOOTHの購入履歴から原本が正しく取得できるかテストする。
-7. **実販売は確認前に有効にしない**。GA4の `begin_checkout` と売上数を混同しない。
+- Stripeサンドボックス（`acct_1UQ564CL4xG9rfOJ`）に2026-10-14、現価格2,980円の商品・Price・Payment Linkを作成済み。
+- 商品ID `prod_VRBSv0tp5arY3m`、価格ID `price_1UQJ5YCL4xG9rfOJ4FfXx6GW`、リンクID `plink_1UQJ5iCL4xG9rfOJ45Ebs9tn`。
+- テストURL `https://buy.stripe.com/test_14AfZg4bz3U3dY80n443S01`。**テスト決済専用。サイトへ掲載不可**。
+- R2の非公開オブジェクトキー `clean-science-2026-10-75p.pdf`。
+- 今回のStripeへの決定により、先に作ったBOOTH案は廃止。
+- Stripe本番アカウント・本番Payment Link・法定表示URL・R2原本・Webhook/メール納品・E2Eはまだ未設定／未検証。
 
-商品登録文面・手順は [BOOTH登録セット](booth-launch-20261014.md) にまとめた。既存Stripe Workerは予備コードとして残すが販売には使用しない。
+## サイトの現状
+`src/_data/site.js`：
+`checkoutProvider:'stripe'`, `checkoutUrl:''`, `legalUrl:''`, `fulfillmentReady:false`。
+表示は「Stripeでの発売準備中」。**購入受付不可**。
 
-## 状態
-- [x] 商品情報と価格の編集・ブランチ反映
-- [x] Stripe Workerの決済金額フィルタを2,980円へ更新（旧1,980円は拒否）
-- [x] LPに全14章と参考文献133件を反映
-- [ ] PDF本体のBOOTH商品ファイルへのアップロード
-- [ ] 旧無料サンプルPDFの実ファイル最終確認・必要な改版
-- [x] BOOTHを正式な販売先に決定（既存サイトの設定もBOOTH）
-- [ ] BOOTH販売者情報・特商法表示・実商品URL・購入導線を整える
-- [ ] 実購入相当のE2E、CI、Safari実機確認
-- [ ] 本番公開／購入受付開始
+## リリース前の未完了
+- [x] Stripe販売への切替（本番決済を無効に保つ）
+- [x] Stripeサンドボックスに2,980円（税込）の新テスト商品とリンクを作成
+- [x] PDF版・ページ数・金額の整合（75ページ、2,980円）
+- [ ] 非公開R2へ原本アップロード・SHA照合
+- [ ] D1・Resend・WorkerデプロイとWebhookテスト
+- [ ] テスト購入→実ファイル配信→期限・上限・返金テスト
+- [ ] Stripe本番アカウント、本番商品／Payment Link、販売者・特商法表示URL
+- [ ] 本番E2E、CI・セキュリティ検証、Safari実機確認
+- [ ] LPの本番購入リンク公開と本番販売
 
-詳細手順：[BOOTH商品登録セット](booth-launch-20261014.md)／[清潔感の科学・発売前LP](cleanliness-prelaunch.md)。
+詳細：[Stripe発売手順](stripe-launch-20261014.md)／[Worker README](../fulfillment-worker/README.md)。
