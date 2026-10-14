@@ -33,7 +33,7 @@ test("signed download token expires and cannot be tampered with",async()=>{
 });
 test("webhook cannot process unsigned events, and non-configured handler is unhealthy",async()=>{
  const env={ORDERS:{},PRIVATE_PDFS:{},STRIPE_WEBHOOK_SECRET:"whsec_test",STRIPE_SECRET_KEY:"sk_test",
- STRIPE_PRICE_ID:"price_valid",STRIPE_PAYMENT_LINK_ID:"plink_valid",DOWNLOAD_SIGNING_SECRET:key,RESEND_API_KEY:"re_test",FROM_EMAIL:"sender@example.com",PUBLIC_BASE_URL:"https://example.workers.dev"};
+ STRIPE_PRICE_ID:"price_valid",STRIPE_PAYMENT_LINK_ID:"plink_valid",PDF_OBJECT_KEY:"clean-science-2026-10-75p.pdf",DOWNLOAD_SIGNING_SECRET:key,RESEND_API_KEY:"re_test",FROM_EMAIL:"sender@example.com",PUBLIC_BASE_URL:"https://example.workers.dev"};
  const req=new Request("https://example.workers.dev/stripe/webhook",{method:"POST",headers:{"stripe-signature":"fake"},body:'{"type":"checkout.session.completed"}'});
  assert.equal((await handleWebhook(req,env)).status,400);
  assert.equal((await handler.fetch(new Request("https://example.workers.dev/health"),{})).status,503);
