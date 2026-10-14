@@ -67,6 +67,7 @@ assert(lpSource.includes('{% elif site.prelaunch and site.prelaunch.ready %}'), 
 const privacySource = read('src/privacy.njk');
 assert(privacySource.includes('site.prelaunch.ready'), 'privacy copy must use same readiness gate');
 assert(sample.includes('cleanliness-sample.pdf'), 'download link missing');
+assert(sample.includes('有料版（PDF・75ページ）'), 'free web sample must name final edition page count');
 const samplePdf = readFileSync('cleanliness-sample.pdf');
 assert.equal(samplePdf.subarray(0, 5).toString(), '%PDF-', 'sample download must be a real PDF');
 assert(samplePdf.byteLength > 1000, 'sample PDF is unexpectedly small');
