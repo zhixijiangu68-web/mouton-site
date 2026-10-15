@@ -21,23 +21,38 @@
   risers.forEach(r=>rise.observe(r));
  }else risers.forEach(r=>r.classList.add('risen'));
 
- // Menu (small screens)
+ // Shared menu on desktop and small screens.
  if(nav){
   const toggle=nav.querySelector('.menu-toggle');
   const links=nav.querySelector('.site-links');
   // While the full-screen menu is open, the page behind it is inert so focus stays in the menu.
   const behind=[...document.body.children].filter(el=>el!==nav&&el.tagName!=='SCRIPT');
+  const isJapanese=document.documentElement.lang==='ja';
+  const label=open=>isJapanese?(open?'閉じる':'メニュー'):(open?'Close':'Menu');
+  toggle.textContent=label(false);
   const setOpen=open=>{
    nav.classList.toggle('menu-open',open);
    document.body.classList.toggle('menu-locked',open);
    behind.forEach(el=>{el.inert=open;});
    toggle.setAttribute('aria-expanded',String(open));
-   toggle.textContent=open?'Close':'Menu';
+   toggle.textContent=label(open);
   };
-  window.matchMedia('(max-width: 1180px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
+  window.matchMedia('(max-width: 1180px)').addEventListener('change',()=>setOpen(false));
   toggle.addEventListener('click',()=>setOpen(!nav.classList.contains('menu-open')));
   links.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('menu-open')){setOpen(false);toggle.focus();}});
+  document.addEventListener('click',e=>{
+   if(nav.classList.contains('menu-open')&&!toggle.contains(e.target)&&!links.contains(e.target))setOpen(false);
+  });
+  document.addEventListener('keydown',e=>{
+   if(!nav.classList.contains('menu-open'))return;
+   if(e.key==='Escape'){setOpen(false);toggle.focus();}
+   if(e.key==='Tab'){
+    const focusable=[...nav.querySelectorAll('a[href],button')];
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+   }
+  });
  }
 
  const zones=[...document.querySelectorAll('[data-nav]')];
