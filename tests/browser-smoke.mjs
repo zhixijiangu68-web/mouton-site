@@ -76,19 +76,22 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
-    for (const [i, scene] of ['ocean','moon-botanical','orb-dark','orbit-light'].entries()) {
-      await t.test('still background and immediate intro skip: ' + scene, async () => {
-        await checkPage(browser, 'static-' + scene, {
+    for (const [i, device] of ['desktop','mobile'].entries()) {
+      const scene = 'moon-botanical';
+      const introArt = device === 'desktop' ? 'moon-botanical-wide.webp' : 'intro-sheep-moon.webp';
+      await t.test('fixed background, device intro art and immediate skip: ' + device, async () => {
+        await checkPage(browser, 'static-' + device, {
           reducedMotion: 'no-preference',
-          viewport: i % 2 ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+          viewport: i ? { width: 390, height: 844 } : { width: 1440, height: 900 },
         }, async page => {
           await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
-          await page.addInitScript(value => { Math.random = () => value; }, (i + .1) / 4);
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-          assert.equal(await page.locator('html').getAttribute('data-home-background'), scene);
-          assert.equal(await page.locator('link[rel="preload"][as="image"]').getAttribute('href'), 'images/mouton/intro-sheep-moon.webp');
-          assert(await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage.includes('intro-sheep-moon.webp')));
-          if (i % 2) await page.keyboard.press('Escape');
+          assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/moon-botanical-wide.webp"]').count(), 1);
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/intro-sheep-moon.webp"]').getAttribute('media'), '(max-width: 900px)');
+          const intro = await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage);
+          assert(intro.includes(introArt), device + ' intro art: ' + intro);
+          if (i) await page.keyboard.press('Escape');
           else await page.locator('.intro-veil').click({ force: true });
           const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
             opacity: getComputedStyle(el).opacity,

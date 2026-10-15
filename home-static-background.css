@@ -1,7 +1,7 @@
-/* One still artwork per visit. The original four images are from PR #141. */
+/* One fixed still artwork (moon & botanical). The other three from PR #141 are no longer used. */
 html .cover.cover-static .cover-art{
  background-color:#071324;
- background-image:linear-gradient(180deg,rgba(4,10,25,.28),rgba(4,10,25,.12) 55%,rgba(4,10,25,.48)),var(--home-background,url("images/mouton/ocean-wide.webp"));
+ background-image:linear-gradient(180deg,rgba(4,10,25,.28),rgba(4,10,25,.12) 55%,rgba(4,10,25,.48)),url("images/mouton/moon-botanical-wide.webp");
  background-size:cover;
  background-position:center;
  background-repeat:no-repeat;
@@ -12,10 +12,6 @@ html .cover.cover-static .cover-art{
  scale:none;
  opacity:1;
  will-change:auto;
-}
-/* White-and-gold artwork gets enough contrast for the white navigation and kicker. */
-html[data-home-background="orbit-light"] .cover-static .cover-art{
- background-image:linear-gradient(180deg,rgba(4,10,25,.62),rgba(4,10,25,.16) 55%,rgba(4,10,25,.48)),var(--home-background);
 }
 .cover-static .cover-choice-card,
 .cover-static .cover-choice-card:hover,
