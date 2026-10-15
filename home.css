@@ -640,3 +640,9 @@ html.intro .cover-choice .cover-inner{
 
 /* 記事一覧ページ（journal.html）：固定ヘッダーの下から始める */
 body.journal-page main{padding-top:72px}
+
+/* Articles page: every article stays listed, philosophy is the way in. */
+.journal-page .mind-door{margin:8px 0 40px}
+.journal-filter--lead:not(.active){border-color:var(--gold);color:var(--ink);background:rgba(185,138,50,.1)}
+.journal-tag{display:inline-block;margin:0 0 4px;padding:1px 9px;border:1px solid var(--gold);border-radius:999px;font:500 .6875rem/1.7 var(--gothic);letter-spacing:.08em;color:#7a5a1c}
+.journal-item.is-philosophy .journal-title{font-weight:400}
