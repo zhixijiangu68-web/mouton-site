@@ -4,18 +4,12 @@ permalink: index.html
 title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
-assetVersion: "20261015-intro-art-1"
+assetVersion: "20261015-intro-art-2"
 extraCss: [home.css, home-static-background.css, intro-art.css]
 ---
-<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp">
-<script>
-(()=>{
- const scenes=['ocean','moon-botanical','orb-dark','orbit-light'];
- const scene=scenes[Math.floor(Math.random()*scenes.length)];
- document.documentElement.dataset.homeBackground=scene;
- document.documentElement.style.setProperty('--home-background', 'url("images/mouton/'+scene+'-wide.webp")');
-})();
-</script>
+{#- 背景は「夜空・月・葉と果実」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
+<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp" media="(max-width: 900px)">
+<link rel="preload" as="image" href="images/mouton/moon-botanical-wide.webp">
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
