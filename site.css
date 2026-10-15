@@ -588,7 +588,13 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 .lp-hero-title{word-break:keep-all}
 .lp-lede{font-size:1.0625rem!important;line-height:2.1!important}
 .lp-worries{list-style:none;padding:0!important;margin:28px 0 8px!important;display:grid;gap:10px}
-.lp-worries li{margin:0!important;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:1rem}
+.lp-worries li{margin:0!important;padding:0;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:1rem;transition:border-color .25s}
+.lp-worries li:hover{border-color:var(--gold)}
+.doc .lp-worries a,.lp-worries a{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;padding:14px 18px;color:var(--ink);text-decoration:none}
+.lp-worries a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:10px}
+.lp-worry-text{font-family:var(--serif);line-height:1.8}
+.lp-worry-to{font-size:.8125rem;color:#7a5a1c;white-space:nowrap}
+.doc .lp-oneline,.lp-oneline{margin:0 0 18px;font-family:var(--serif);font-size:clamp(1.1rem,2.6vw,1.35rem);line-height:1.8;color:#7a5a1c}
 .lp-section{margin-top:72px}
 .lp-section > h2{border-top:0!important;padding-top:0!important;margin-top:0!important}
 

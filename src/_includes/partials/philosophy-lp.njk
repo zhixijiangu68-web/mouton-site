@@ -3,13 +3,15 @@
 {%- set paidList = collections.articles | paidCards %}
   <p class="eyebrow">Philosophy — three answers</p>
   <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
-  <p>哲学は、遠い昔の難しい学問ではない。いま僕らが抱えている悩みに、何百年も前から本気で向き合ってきた人たちの記録だ。</p>
+  <p class="lp-oneline">哲学を、読むものから使うものへ。</p>
+  <p>転職、独立、人間関係。岐路に立つと、頭ではわかっているのに動けなくなる。その原因の多くは、自分の判断基準がまだないことだと僕は思う。哲学は、遠い昔の難しい学問ではない。同じ悩みを抱えた人たちが、自分の基準をつくるために残した道具だ。</p>
+  {#- 悩みの一覧が、そのまま各哲学者への入口になる（文言は各記事の paid.worry）。 #}
   <ul class="lp-worries">
-    <li>本当の自分がわからない。何も決められない。</li>
-    <li>頑張る理由が見つからない。毎日が少しずつ虚しい。</li>
-    <li>怒りや嫉妬に振り回されて、あとで自己嫌悪になる。</li>
+    {%- for a in paidList %}
+    <li><a href="#{{ a.page.fileSlug | replace('paid-', '') }}"><span class="lp-worry-text">{{ a.data.paid.worry }}</span><span class="lp-worry-to">{{ a.data.paid.philosopher }}へ <span aria-hidden="true">↓</span></span></a></li>
+    {%- endfor %}
   </ul>
-  <p>この3つの悩みに、3人の哲学者がそれぞれ違う答えを出している。キルケゴール、ニーチェ、スピノザ。原典の書名と節番号を添えて、「悩み → 哲学者の答え → 今日からできること」の順に一本ずつまとめた。</p>
+  <p>3つの悩みに、3人の哲学者がそれぞれ違う処方箋を出している。原典の書名と節番号を添えて、「悩み → 哲学者の考え → 今日から書き込んで使えること」の順にまとめた。正しい生き方を押しつけるためではない。自分の基準で選び、選んだことを続けるための道具として。</p>
 
   <section class="lp-section" aria-labelledby="lp-cards-heading">
     <h2 id="lp-cards-heading">3人の哲学者</h2>
