@@ -33,10 +33,11 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css?v=20261015-menu-3">
+<link rel="stylesheet" href="site.css?v=20261015-static-1">
 <link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="home-static-background.css">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js?v=20261015-menu-3" defer></script>
+<script src="site.js?v=20261015-static-1" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。","inLanguage":"ja","url":"https://moutonarchive.com/"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone"]}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -44,7 +45,14 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
 </head>
 <body class="site">
-
+<script>
+(()=>{
+ const scenes=['ocean','moon-botanical','orb-dark','orbit-light'];
+ const scene=scenes[Math.floor(Math.random()*scenes.length)];
+ document.documentElement.dataset.homeBackground=scene;
+ document.documentElement.style.setProperty('--home-background', 'url("images/mouton/'+scene+'-wide.webp")');
+})();
+</script>
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
   <p class="intro-word"><span style="--i:0">M</span><span style="--i:1">O</span><span style="--i:2">U</span><span style="--i:3">T</span><span style="--i:4">O</span><span style="--i:5">N</span></p>
@@ -69,10 +77,8 @@
 
 
 <main>
-  <section class="cover cover-choice" id="top" data-nav="dark" data-nav-solid="dark">
-    <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
-    <div class="hero-light" aria-hidden="true"></div>
-    <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
+  <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
+    <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
       <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 哲学と<wbr>科学で、<wbr>日常の<wbr>見え方を<wbr>変える</h1>
@@ -123,7 +129,7 @@
 </div>
 </footer>
 
-<script src="home.js" defer></script>
+<script src="home.js?v=20261015-static-1" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};

@@ -76,6 +76,48 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    for (const [i, scene] of ['ocean','moon-botanical','orb-dark','orbit-light'].entries()) {
+      await t.test('still background and immediate intro skip: ' + scene, async () => {
+        await checkPage(browser, 'static-' + scene, {
+          reducedMotion: 'no-preference',
+          viewport: i % 2 ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+        }, async page => {
+          await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
+          await page.addInitScript(value => { Math.random = () => value; }, (i + .1) / 4);
+          await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('html').getAttribute('data-home-background'), scene);
+          if (i % 2) await page.keyboard.press('Escape');
+          else await page.locator('.intro-veil').click({ force: true });
+          const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
+            opacity: getComputedStyle(el).opacity,
+            animation: getComputedStyle(el).animationName,
+            preparing: document.documentElement.classList.contains('intro-preparing'),
+          }));
+          assert.equal(visibleNow.opacity, '1', 'skip must reveal cards immediately');
+          assert.equal(visibleNow.animation, 'none', 'no delayed arrival animation after skip');
+          assert.equal(visibleNow.preparing, false);
+          const before = await page.locator('.cover-art').evaluate(el => {
+            const s = getComputedStyle(el);
+            return { background: s.backgroundImage, transform: s.transform, animation: s.animationName };
+          });
+          assert(before.background.includes(scene + '-wide.webp'));
+          assert.equal(before.transform, 'none');
+          assert.equal(before.animation, 'none');
+          assert.equal(await page.evaluate(async name => {
+            const img = new Image(); img.src = 'images/mouton/' + name + '-wide.webp';
+            await img.decode(); return img.naturalWidth;
+          }, scene), 1600);
+          await page.mouse.move(200, 300);
+          await page.evaluate(() => scrollTo(0, 150));
+          await page.waitForTimeout(1100); // Late font preparation must not restart the intro.
+          assert.equal(await page.locator('.cover-inner').evaluate(el => getComputedStyle(el).opacity), '1');
+          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).backgroundImage), before.background);
+          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).transform), 'none');
+          assert.equal(await page.locator('.hero-light,.cover-light,.hero-word').count(), 0);
+        });
+      });
+    }
+
     await t.test('mobile: menu opens and closes with Escape', async () => {
       await checkPage(browser, 'mobile-menu', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
