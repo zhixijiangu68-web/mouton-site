@@ -1,0 +1,9 @@
+---js
+{
+  // app-ads.txt：アプリ（MOUTON・COUNT）の AdMob 広告のため、ストアに書いた「開発者のウェブサイト」の直下に置く。
+  // AdMob と AdSense が同じ Google アカウントなら、パブリッシャー ID は同じ（site.ads.adsenseClient）。
+  permalink: data => (data.site.ads.adsenseClient ? "app-ads.txt" : false),
+  eleventyExcludeFromCollections: true,
+}
+---
+google.com, {{ site.ads.adsenseClient | replace("ca-", "") }}, DIRECT, f08c47fec0942fa0
