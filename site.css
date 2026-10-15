@@ -649,14 +649,3 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 .mind-act-book-meta{margin-top:auto;padding-top:4px;font-size:.8125rem;color:var(--blue)}
 .doc .mind-act-close,.mind-act-close{margin:0;font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.8;color:var(--ink)}
 
-/* MAKING: MOUTON・COUNT */
-.making .mk-count{margin:0 0 clamp(28px,5vw,48px);padding:clamp(24px,4.5vw,40px);border-radius:14px;background:#1b1c19;color:#f1ebdf}
-.making .mk-count-title{border:0;padding:0;margin:0 0 20px;font:500 .75rem/1.6 Inter,sans-serif;letter-spacing:.32em;color:#e7c983}
-.making .mk-count-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0}
-.making .mk-count-item{min-width:0;padding-top:14px;border-top:1px solid rgba(241,235,223,.25)}
-.making .mk-count-item dt{margin:0 0 6px;font-size:.8125rem;line-height:1.6;color:rgba(241,235,223,.75)}
-.making .mk-count-item dd:not(.mk-count-note){margin:0;display:flex;align-items:baseline;gap:4px}
-.making .mk-count-num{font:300 clamp(2.2rem,6vw,3.4rem)/1.1 "Cormorant Garamond","Noto Serif JP",serif;font-variant-numeric:lining-nums tabular-nums;color:#f8f5ee}
-.making .mk-count-unit{font-family:var(--serif);font-size:.875rem;color:rgba(241,235,223,.8)}
-.making .mk-count-note{margin:6px 0 0;font:400 .6875rem/1.6 Inter,sans-serif;letter-spacing:.08em;color:rgba(241,235,223,.6)}
-@media(max-width:640px){.making .mk-count-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 16px}}

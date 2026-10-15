@@ -4,7 +4,7 @@ bodyClass: site doc-page
 assetVersion: "20261015-count"
 permalink: making.html
 title: "制作 — ムートン"
-description: "ムートンが作っているもの。MOUTON・COUNTで、作り始めてからの日数・記事・制作物の数を。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
+description: "ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
@@ -14,19 +14,6 @@ description: "ムートンが作っているもの。MOUTON・COUNTで、作り�
     <h1 class="doc-title">作っているもの。</h1>
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
-
-  {#- MOUTON・COUNT：制作の歩みを数字で。日数はブラウザで数える（生成物を毎日変えないため）。 #}
-  {%- set firstDay = (makingLog | sort(false, false, 'date') | first).date %}
-  {%- set realProjects = projects | rejectattr('placeholder') %}
-  <section class="mk-count" aria-labelledby="mk-count-title" data-count-since="{{ firstDay }}">
-    <h2 class="mk-count-title" id="mk-count-title">MOUTON・COUNT</h2>
-    <dl class="mk-count-grid">
-      <div class="mk-count-item"><dt>作り始めて</dt><dd><span class="mk-count-num" data-count-days>—</span><span class="mk-count-unit">日目</span></dd><dd class="mk-count-note">{{ firstDay | dotDate }} から</dd></div>
-      <div class="mk-count-item"><dt>書いた記事</dt><dd><span class="mk-count-num" data-count-to="{{ collections.articles.length }}">{{ collections.articles.length }}</span><span class="mk-count-unit">本</span></dd></div>
-      <div class="mk-count-item"><dt>作っているもの</dt><dd><span class="mk-count-num" data-count-to="{{ realProjects | length }}">{{ realProjects | length }}</span><span class="mk-count-unit">つ</span></dd></div>
-      <div class="mk-count-item"><dt>進んだ日の記録</dt><dd><span class="mk-count-num" data-count-to="{{ makingLog.length }}">{{ makingLog.length }}</span><span class="mk-count-unit">件</span></dd></div>
-    </dl>
-  </section>
 
   <section class="mk-section" aria-labelledby="mk-projects">
     <details class="mk-accordion" open>
@@ -140,32 +127,6 @@ description: "ムートンが作っているもの。MOUTON・COUNTで、作り�
 </main>
 <script>
 (function () {
-  // MOUTON・COUNT: days since the first making log (in Japan time), then count the numbers up once.
-  var count = document.querySelector('.mk-count');
-  if (count) {
-    var since = Date.parse(count.dataset.countSince + 'T00:00:00+09:00');
-    var today = Date.parse(new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10) + 'T00:00:00+09:00');
-    var days = Math.floor((today - since) / 864e5) + 1;
-    var dayEl = count.querySelector('[data-count-days]');
-    if (days > 0) { dayEl.textContent = days; dayEl.dataset.countTo = days; }
-    var nums = [].slice.call(count.querySelectorAll('[data-count-to]'));
-    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!still && 'IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
-        io.disconnect();
-        var start = performance.now();
-        nums.forEach(function (el) { el.textContent = '0'; });
-        (function tick(now) {
-          var t = Math.min(1, (now - start) / 900), e = 1 - Math.pow(1 - t, 3);
-          nums.forEach(function (el) { el.textContent = Math.round(e * Number(el.dataset.countTo)); });
-          if (t < 1) requestAnimationFrame(tick);
-        })(start);
-      });
-      io.observe(count);
-    }
-  }
-
   function openMakingAnchor() {
     if (!location.hash) return;
     var target;
