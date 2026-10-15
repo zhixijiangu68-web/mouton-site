@@ -4,9 +4,10 @@ permalink: index.html
 title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
-assetVersion: "20261015-static-1"
-extraCss: [home.css, home-static-background.css]
+assetVersion: "20261015-intro-art-1"
+extraCss: [home.css, home-static-background.css, intro-art.css]
 ---
+<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp">
 <script>
 (()=>{
  const scenes=['ocean','moon-botanical','orb-dark','orbit-light'];
@@ -20,6 +21,7 @@ extraCss: [home.css, home-static-background.css]
 <div class="intro-veil" aria-hidden="true">
   <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
   <p class="intro-sub">A personal archive — since 2026</p>
+  <span class="intro-skip-hint">タップしてはじめる</span>
   <span class="intro-bar"></span>
 </div>
 <a class="skip" href="#top">本文へスキップ</a>

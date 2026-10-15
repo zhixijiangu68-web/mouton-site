@@ -1,0 +1,38 @@
+/* MOUTON opening: a still, illustrated moonlit sky around live typography. */
+html.intro .intro-veil{
+ background:#041020;
+ color:#fff5df;
+ gap:18px;
+ isolation:isolate;
+}
+html.intro .intro-veil::before{
+ content:"";position:absolute;inset:0;left:50%;right:auto;width:min(100%,66.667svh);transform:translateX(-50%);z-index:-1;
+ background-image:url("images/mouton/intro-sheep-moon.webp");
+ background-repeat:no-repeat;background-position:center;background-size:cover;
+ -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+ mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+ pointer-events:none;
+}
+html.intro .intro-veil::after{opacity:.07}
+.intro-veil .intro-word{
+ font-size:clamp(3.4rem,17vw,8rem);
+ text-shadow:0 2px 24px rgba(0,0,0,.65),0 0 44px rgba(228,195,131,.16);
+}
+.intro-veil .intro-sub{
+ max-width:90vw;text-align:center;
+ font-size:clamp(.8rem,2.5vw,1.15rem);letter-spacing:.08em;
+ color:#f1dbb2;text-shadow:0 2px 12px #041020;
+}
+.intro-skip-hint{
+ position:absolute;bottom:calc(26px + env(safe-area-inset-bottom,0px));left:0;right:0;
+ text-align:center;font-family:var(--gothic);font-size:.6875rem;letter-spacing:.16em;
+ color:#f1dbb2;text-shadow:0 1px 10px #000;
+}
+/* Fade out without moving or enlarging the artwork. Keep the JS completion event. */
+@keyframes veil-dissolve{
+ 0%,12%{opacity:1;visibility:visible}
+ 100%{opacity:0;visibility:hidden}
+}
+@media(max-aspect-ratio:2/3){
+ html.intro .intro-veil::before{background-size:cover;-webkit-mask-image:none;mask-image:none}
+}
