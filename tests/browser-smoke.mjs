@@ -274,6 +274,29 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('legacy migration preserves campaign queries, reading data and history state', async () => {
+      await checkPage(browser, 'legacy-migration', { viewport: { width: 390, height: 844 } }, async page => {
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(() => {
+          localStorage.setItem('mouton.cover', 'day');
+          localStorage.setItem('mouton.designVersion', 'club');
+          localStorage.setItem('mouton.read', '{"nietzsche":true}');
+        });
+        await page.addInitScript(() => {
+          if (location.pathname.endsWith('/index.html')) history.replaceState({ preserved: true }, '', location.href);
+        });
+        for (const [hash, path] of [['journal', 'journal.html'], ['article-nietzsche', 'nietzsche.html'], ['now', 'index.html']]) {
+          await page.goto(origin + '/index.html?version=club&utm_source=smoke#' + hash, { waitUntil: 'domcontentloaded' });
+          await page.waitForURL(url => url.pathname.endsWith('/' + path) && !url.searchParams.has('version') && (hash !== 'now' || url.hash === '#top'));
+          assert.equal(new URL(page.url()).searchParams.get('utm_source'), 'smoke');
+          assert.deepEqual(await page.evaluate(() => history.state), { preserved: true });
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.cover')), null);
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.designVersion')), null);
+          assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('mouton.read')).nietzsche));
+        }
+      });
+    });
+
     await t.test('mobile menu: concealed panel anchors and focus recovery', async () => {
       await checkPage(browser, 'menu-anchors', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
@@ -327,6 +350,8 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.locator('h1#cs-title').count(), 1);
           assert.match(await page.locator('.cs-status').innerText(), /発売準備中/);
           assert.match(await page.locator('.cs-offer-price').innerText(), /2,980/);
+          assert.match(await page.locator('.cs-spec').innerText(), /75ページ/);
+          assert.match(await page.locator('#cs-contents').locator('..').innerText(), /参考文献133件/);
           assert.equal(await page.locator('a[data-lp-event="begin_checkout"]').count(), 0, 'checkout must remain off');
           assert.equal(await page.locator('#cleanliness-waitlist').count(), 0, 'email signup must remain off');
           assert.equal(await page.locator('a[href="cleanliness-sample.html"]').count() >= 1, true);

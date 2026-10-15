@@ -17,10 +17,10 @@ test("valid Stripe HMAC and replay window",async()=>{
  assert.equal(await verifyStripeSignature(raw,await signature(raw,"whsec_test",now-301),"whsec_test",now),false);
  assert.equal(await verifyStripeSignature(raw,"wrong","whsec_test",now),false);
 });
-test("paid session filters wrong link, currency, total, payment state",()=>{
- const s={id:sid,payment_intent:"pi_valid",customer_details:{email:"buyer@example.com"},mode:"payment",payment_status:"paid",amount_total:1980,currency:"jpy",payment_link:"plink_expected"};
+test("paid session filters wrong link, currency, total, payment state and obsolete 1980 JPY",()=>{
+ const s={id:sid,payment_intent:"pi_valid",customer_details:{email:"buyer@example.com"},mode:"payment",payment_status:"paid",amount_total:2980,currency:"jpy",payment_link:"plink_expected"};
  assert.equal(validPaidSession(s,"plink_expected"),true);
- for(const patch of [{payment_link:"plink_wrong"},{currency:"usd"},{amount_total:980},{payment_status:"unpaid"},{customer_details:{email:"bad"}}]){
+ for(const patch of [{payment_link:"plink_wrong"},{currency:"usd"},{amount_total:1980},{amount_total:980},{payment_status:"unpaid"},{customer_details:{email:"bad"}}]){
  assert.equal(validPaidSession({...s,...patch},"plink_expected"),false);
  }
 });
@@ -33,7 +33,7 @@ test("signed download token expires and cannot be tampered with",async()=>{
 });
 test("webhook cannot process unsigned events, and non-configured handler is unhealthy",async()=>{
  const env={ORDERS:{},PRIVATE_PDFS:{},STRIPE_WEBHOOK_SECRET:"whsec_test",STRIPE_SECRET_KEY:"sk_test",
- STRIPE_PRICE_ID:"price_valid",STRIPE_PAYMENT_LINK_ID:"plink_valid",DOWNLOAD_SIGNING_SECRET:key,RESEND_API_KEY:"re_test",FROM_EMAIL:"sender@example.com",PUBLIC_BASE_URL:"https://example.workers.dev"};
+ STRIPE_PRICE_ID:"price_valid",STRIPE_PAYMENT_LINK_ID:"plink_valid",PDF_OBJECT_KEY:"clean-science-2026-10-75p.pdf",DOWNLOAD_SIGNING_SECRET:key,RESEND_API_KEY:"re_test",FROM_EMAIL:"sender@example.com",PUBLIC_BASE_URL:"https://example.workers.dev"};
  const req=new Request("https://example.workers.dev/stripe/webhook",{method:"POST",headers:{"stripe-signature":"fake"},body:'{"type":"checkout.session.completed"}'});
  assert.equal((await handleWebhook(req,env)).status,400);
  assert.equal((await handler.fetch(new Request("https://example.workers.dev/health"),{})).status,503);

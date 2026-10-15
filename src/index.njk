@@ -92,7 +92,20 @@ extraCss: [home.css]
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
 const legacy={now:'top'};
-if(location.hash==='#journal')location.replace('journal.html');
-(()=>{const name=location.hash.slice(1);if(articleRoutes[name])location.replace(articleRoutes[name]);else if(legacy[name])history.replaceState(null,'','#'+legacy[name]);})();
+(()=>{
+  const current=new URL(location.href);
+  const name=current.hash.slice(1);
+  const route=name==='journal'?'journal.html':articleRoutes[name];
+  if(route){
+    const target=new URL(route,current);
+    target.search=current.search;
+    // Reload the replacement URL in the same history entry, retaining its state.
+    history.replaceState(history.state,'',target);
+    location.reload();
+  }else if(legacy[name]){
+    current.hash=legacy[name];
+    history.replaceState(history.state,'',current);
+  }
+})();
 
 </script>

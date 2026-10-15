@@ -20,14 +20,14 @@ export async function verifyToken(token,secret,now=Math.floor(Date.now()/1000)){
  }catch{return null}
 }
 function email(s){const e=s.customer_details?.email||s.customer_email||"";return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)&&e.length<=254?e:null}
-export function validPaidSession(s,link){return Boolean(s&&/^cs_[a-zA-Z0-9_]+$/.test(s.id||"")&&s.mode==="payment"&&s.payment_status==="paid"&&s.payment_link===link&&s.currency==="jpy"&&s.amount_total===1980&&typeof s.payment_intent==="string"&&s.payment_intent.startsWith("pi_")&&email(s))}
+export function validPaidSession(s,link){return Boolean(s&&/^cs_[a-zA-Z0-9_]+$/.test(s.id||"")&&s.mode==="payment"&&s.payment_status==="paid"&&s.payment_link===link&&s.currency==="jpy"&&s.amount_total===2980&&typeof s.payment_intent==="string"&&s.payment_intent.startsWith("pi_")&&email(s))}
 async function verifyItems(sid,env){
  const url="https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(sid)+"/line_items?limit=2";
  const res=await fetch(url,{headers:{Authorization:"Bearer "+env.STRIPE_SECRET_KEY},redirect:"error"});
  if(!res.ok)throw Error("Stripe verification failed");const data=await res.json(),rows=data.data||[];
- if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==1980||rows[0].currency!=="jpy")throw Error("wrong item");
+ if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==2980||rows[0].currency!=="jpy")throw Error("wrong item");
 }
-function ready(env){return Boolean(env.ORDERS&&env.PRIVATE_PDFS&&env.STRIPE_WEBHOOK_SECRET&&env.STRIPE_SECRET_KEY&&env.STRIPE_PRICE_ID&&env.STRIPE_PAYMENT_LINK_ID&&env.DOWNLOAD_SIGNING_SECRET?.length>=32&&env.RESEND_API_KEY&&env.FROM_EMAIL&&/^https:\/\/[^/]+\/?$/.test(env.PUBLIC_BASE_URL||""))}
+function ready(env){return Boolean(env.ORDERS&&env.PRIVATE_PDFS&&env.STRIPE_WEBHOOK_SECRET&&env.STRIPE_SECRET_KEY&&env.STRIPE_PRICE_ID&&env.STRIPE_PAYMENT_LINK_ID&&env.DOWNLOAD_SIGNING_SECRET?.length>=32&&env.RESEND_API_KEY&&env.FROM_EMAIL&&env.PDF_OBJECT_KEY==="clean-science-2026-10-75p.pdf"&&/^https:\/\/[^/]+\/?$/.test(env.PUBLIC_BASE_URL||""))}
 async function deliver(session,env){
  if(!validPaidSession(session,env.STRIPE_PAYMENT_LINK_ID))return response("not matching paid order",422);
  await verifyItems(session.id,env);const now=Math.floor(Date.now()/1000),expires=now+WEEK,recipient=email(session);
@@ -40,7 +40,7 @@ async function deliver(session,env){
  try{
    const token=await signToken(session.id,order.expires_at,env.DOWNLOAD_SIGNING_SECRET);
    const url=env.PUBLIC_BASE_URL.replace(/\/$/,"")+"/download/"+token;
-   const message="ご購入ありがとうございます。清潔感の科学（PDF 32ページ）をダウンロードできます。\n有効期限7日・最大5回。リンクは共有しないでください。\n"+url;
+   const message="ご購入ありがとうございます。清潔感の科学（PDF 75ページ）をダウンロードできます。\n有効期限7日・最大5回。リンクは共有しないでください。\n"+url;
    const result=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json","Idempotency-Key":"mouton-clean-science-"+session.id},body:JSON.stringify({from:env.FROM_EMAIL,to:[recipient],subject:"【ムートン】清潔感の科学｜PDFダウンロード",text:message})});
    if(!result.ok||!(await result.json()).id)throw Error("email not accepted");
    await env.ORDERS.prepare("UPDATE orders SET status='sent',updated_at=? WHERE session_id=? AND status='sending'").bind(now,session.id).run();
@@ -73,7 +73,7 @@ export async function handleDownload(token,env){
  if(!valid)return response("invalid download",403);
  const o=await env.ORDERS.prepare("SELECT status,expires_at,downloads FROM orders WHERE session_id=?").bind(valid.sid).first();
  if(!o||o.status!=="sent"||o.expires_at!==valid.exp||o.expires_at<=now||o.downloads>=5)return response("not available",403);
- const file=await env.PRIVATE_PDFS.get(env.PDF_OBJECT_KEY||"clean-science-v2.pdf");
+ const file=await env.PRIVATE_PDFS.get(env.PDF_OBJECT_KEY||"clean-science-2026-10-75p.pdf");
  if(!file)return response("PDF not uploaded",503);
  const done=await env.ORDERS.prepare("UPDATE orders SET downloads=downloads+1,updated_at=? WHERE session_id=? AND status='sent' AND expires_at>? AND downloads<5").bind(now,valid.sid,now).run();
  if(done.meta?.changes!==1)return response("limit reached",403);

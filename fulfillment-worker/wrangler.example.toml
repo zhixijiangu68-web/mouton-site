@@ -6,7 +6,7 @@ workers_dev = true
 [vars]
 PUBLIC_BASE_URL = "https://REPLACE_SUBDOMAIN.workers.dev"
 FROM_EMAIL = "MOUTON <downloads@REPLACE_DOMAIN>"
-PDF_OBJECT_KEY = "clean-science-v2.pdf"
+PDF_OBJECT_KEY = "clean-science-2026-10-75p.pdf"
 STRIPE_PRICE_ID = "price_REPLACE"
 STRIPE_PAYMENT_LINK_ID = "plink_REPLACE"
 [[d1_databases]]
