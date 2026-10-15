@@ -11,31 +11,6 @@
   </ul>
   <p>この3つの悩みに、3人の哲学者がそれぞれ違う答えを出している。キルケゴール、ニーチェ、スピノザ。原典の書名と節番号を添えて、「悩み → 哲学者の答え → 今日からできること」の順に一本ずつまとめた。</p>
 
-  <section class="lp-section" aria-labelledby="lp-quiz-heading">
-    <h2 id="lp-quiz-heading">30秒で選ぶ</h2>
-    <p>迷ったら、3つの質問に答えてほしい。いまの自分に近い哲学者を案内する。</p>
-    <form class="lp-quiz" id="lp-quiz">
-      <fieldset><legend>Q1. 眠る前、頭に浮かびやすいのは？</legend><div class="lp-quiz-options">
-        <label><input type="radio" name="q0" value="kierkegaard"><span>「このままの選択でいいのか」という迷い</span></label>
-        <label><input type="radio" name="q0" value="nietzsche"><span>「毎日、何のためにやっているんだろう」という虚しさ</span></label>
-        <label><input type="radio" name="q0" value="spinoza"><span>今日あった嫌なことへの怒りや後悔</span></label>
-      </div></fieldset>
-      <fieldset><legend>Q2. SNSを見たあと、残りやすい気持ちは？</legend><div class="lp-quiz-options">
-        <label><input type="radio" name="q1" value="kierkegaard"><span>自分だけ道が決まっていない焦り</span></label>
-        <label><input type="radio" name="q1" value="nietzsche"><span>全部どうでもよく見えてくる白け</span></label>
-        <label><input type="radio" name="q1" value="spinoza"><span>「あの人ずるい」という嫉妬</span></label>
-      </div></fieldset>
-      <fieldset><legend>Q3. いちばん欲しいのは？</legend><div class="lp-quiz-options">
-        <label><input type="radio" name="q2" value="kierkegaard"><span>「これでいく」と決める覚悟</span></label>
-        <label><input type="radio" name="q2" value="nietzsche"><span>明日を楽しみにできる理由</span></label>
-        <label><input type="radio" name="q2" value="spinoza"><span>感情に振り回されない落ち着き</span></label>
-      </div></fieldset>
-      <button class="lp-quiz-submit" type="submit">自分に合う哲学者を見る</button>
-      <p class="lp-quiz-hint">答えはこのページの中だけで使い、どこにも送らない。</p>
-      <div class="lp-quiz-result" id="lp-quiz-result" role="status" aria-live="polite" hidden></div>
-    </form>
-  </section>
-
   <section class="lp-section" aria-labelledby="lp-cards-heading">
     <h2 id="lp-cards-heading">3人の哲学者</h2>
     <div class="ph-cards">
@@ -46,10 +21,17 @@
       {%- set key = a.page.fileSlug | replace('paid-', '') %}
       <article class="ph-card{{ ' featured' if loop.first }}" id="{{ key }}" data-ph="{{ key }}" data-title="{{ p.title }}" data-name="{{ p.philosopher }}" data-rise>
         <div class="ph-card-head">
+          {%- set localImg = ["images/portraits/" + key + ".jpg"] | firstImage %}
+          <figure class="ph-portrait">
+            <img src="{{ localImg if localImg else 'https://commons.wikimedia.org/wiki/Special:FilePath/' + p.portrait.commons + '?width=480' }}" alt="{{ p.philosopher }}の肖像" width="240" height="300" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+            <span class="ph-portrait-mark" aria-hidden="true">{{ p.philosopher | first }}</span>
+          </figure>
+          <div class="ph-card-id">
           {% if loop.first %}<p class="ph-featured">まずはここから</p>{% endif %}
           <p class="ph-name-en">{{ p.en }}</p>
           <p class="ph-name">{{ p.philosopher }}</p>
           <p class="ph-for">{{ p.years }}<br>こんな人に：{{ p.worry }}</p>
+          </div>
         </div>
         <div class="ph-card-body">
           <h3 class="ph-card-title">{{ p.title }}</h3>
@@ -60,6 +42,7 @@
             <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
             <p class="ph-meta">全文 約{{ p.minutes }}分・¥{{ p.price }}</p>
           </div>
+          <p class="ph-credit">肖像：{{ p.portrait.credit }}。パブリックドメイン（Wikimedia Commons）</p>
           {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}
         </div>
       </article>
@@ -74,23 +57,9 @@
     <p><a class="btn btn-dark" href="journal.html">無料の記事を読む <span aria-hidden="true">→</span></a> <a class="lp-series" href="series.html">連載「哲学者に聞く」</a></p>
   </section>
   <script>
-  (()=>{
-   const form=document.getElementById('lp-quiz'),out=document.getElementById('lp-quiz-result');
-   if(!form)return;
-   form.addEventListener('submit',e=>{
-    e.preventDefault();
-    const score={kierkegaard:0,nietzsche:0,spinoza:0};let answered=0;
-    form.querySelectorAll('input:checked').forEach(i=>{score[i.value]++;answered++;});
-    out.hidden=false;
-    if(!answered){out.textContent='どれか一つでも選ぶと、おすすめを表示する。迷ったら、まずはキルケゴールから。';return;}
-    const pick=Object.keys(score).reduce((a,b)=>score[b]>score[a]?b:a,'kierkegaard');
-    const card=document.getElementById(pick);
-    if(!card)return;
-    out.replaceChildren();
-    const p1=document.createElement('p');p1.append('いまの自分に近いのは、');const b=document.createElement('strong');b.textContent=card.dataset.name;p1.append(b,'。');
-    const p2=document.createElement('p');const a=document.createElement('a');a.href='#'+pick;a.textContent='「'+card.dataset.title+'」を見る →';p2.append(a);
-    out.append(p1,p2);
-    document.querySelectorAll('.ph-card').forEach(c=>c.classList.toggle('is-picked',c===card));
-   });
-  })();
+  // 顔写真が読み込めないときは、名前の頭文字に切り替える
+  document.querySelectorAll('.ph-portrait img').forEach(img=>{
+   const fail=()=>img.closest('.ph-portrait').classList.add('is-missing');
+   if(img.complete&&img.naturalWidth===0)fail();else img.addEventListener('error',fail,{once:true});
+  });
   </script>
