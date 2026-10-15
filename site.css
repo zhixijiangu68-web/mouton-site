@@ -649,3 +649,5 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 .mind-act-book-meta{margin-top:auto;padding-top:4px;font-size:.8125rem;color:var(--blue)}
 .doc .mind-act-close,.mind-act-close{margin:0;font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.8;color:var(--ink)}
 
+.doc .mind-door-text.mind-door-lines,.mind-door-text.mind-door-lines{font-size:1.0625rem}
+.mind-door-rule{margin:26px 0;border:0;border-top:1px solid rgba(241,235,223,.2)}
