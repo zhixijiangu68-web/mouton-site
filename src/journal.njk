@@ -2,9 +2,11 @@
 layout: base.njk
 permalink: journal.html
 title: "すべての記事 — ムートン"
-description: "ムートンの記事の一覧。哲学・生き方、身体、仕事、制作の記事を、カテゴリーで絞りこんだり、本文まで検索したりできます。"
+description: "ムートンのすべての記事。まずはキルケゴールとニーチェから、哲学・生き方の記事を。身体、食事と科学、仕事、本、制作の記事も、分類で絞りこんだり本文まで検索したりできます。"
 bodyClass: site journal-page
 extraCss: [home.css]
+assetVersion: "20261015-mind"
+mindReads: ["kierkegaard", "nietzsche"]
 ---
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
@@ -18,12 +20,31 @@ extraCss: [home.css]
         </div>
         <p class="copy">哲学と科学で確かめたこと。分類で絞るか、言葉で探す。</p>
       </div>
+      {#- すべての記事を残したまま、まず哲学へ誘う。 #}
+      <section class="mind-door mind-door--journal" aria-labelledby="mind-door-title">
+        <p class="mind-door-kicker">Start with philosophy</p>
+        <h2 class="mind-door-title" id="mind-door-title">まず、哲学から。</h2>
+        <p class="mind-door-text">身体も食事も大切だ。けれど、考え方が定まっていなければ、何も始まらない。キルケゴールとニーチェから読んでほしい。</p>
+        <div class="mind-door-reads">
+          {%- for a in collections.articles | bySlugs(mindReads) %}
+          <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
+            <span class="mind-door-step">STEP {{ loop.index }}</span>
+            <span class="mind-door-read-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+            <span class="mind-door-read-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+            <span class="mind-door-more">読む・約{{ a.data.readMinutes }}分 <span aria-hidden="true">→</span></span>
+          </a>
+          {%- endfor %}
+        </div>
+        <p class="mind-door-all"><a href="#journal-list" data-filter-link="philosophy">哲学・生き方の記事だけを見る <span aria-hidden="true">↓</span></a></p>
+      </section>
       <div class="journal-tools">
         <div class="journal-filters" role="group" aria-label="記事のカテゴリー">
           <button class="journal-filter active" type="button" data-journal-filter="all">すべて</button>
+          <button class="journal-filter journal-filter--lead" type="button" data-journal-filter="philosophy">哲学・生き方</button>
           <button class="journal-filter" type="button" data-journal-filter="body">身体</button>
-          <button class="journal-filter" type="button" data-journal-filter="philosophy">哲学・生き方</button>
+          <button class="journal-filter" type="button" data-journal-filter="food">食事・科学</button>
           <button class="journal-filter" type="button" data-journal-filter="work">仕事・働き方</button>
+          <button class="journal-filter" type="button" data-journal-filter="books">本</button>
           <button class="journal-filter" type="button" data-journal-filter="making">制作</button>
         </div>
         <div class="journal-search">
@@ -34,14 +55,16 @@ extraCss: [home.css]
       <p class="journal-search-status" role="status" aria-live="polite"></p>
       <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
       <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
-      <div class="journal-list">
-        {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}" data-date="{{ a.page.date | dotDate }}">
+      <div class="journal-list" id="journal-list">
+        {#- journal を書いていない記事（食事・本など）も含め、すべての記事を並べる。 #}
+        {%- for a in collections.articles %}
+        {%- set cat = a.data.journal.category if a.data.journal else a.data.category %}
+        <a class="journal-item clickable journal-link{% if cat == 'philosophy' %} is-philosophy{% endif %}" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ cat }}" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-body">{% if cat == 'philosophy' %}<span class="journal-tag">哲学・生き方</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
         </a>
-        {%- endif %}{% endfor %}
+        {%- endfor %}
         {%- for n in notes %}
         <div class="journal-item is-note" data-rise data-category="{{ n.category }}">
           <div class="journal-date">{{ n.date | dotDate }}</div><div class="journal-dot"></div>

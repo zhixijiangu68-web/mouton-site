@@ -7,6 +7,13 @@
   <description>ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。</description>
   <language>ja</language>
   <item>
+    <title>自分を失っても、誰も気づかない。キルケゴールの「絶望」と「単独者」</title>
+    <link>https://moutonarchive.com/kierkegaard.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/kierkegaard.html</guid>
+    <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+    <description>腕や財布をなくせば、誰でも気づく。でも自分を失うことは、何事もないかのように静かに起きる。キルケゴールは『死に至る病』で、絶望に気づいていないことも絶望の一つの形だと書いた。自分の人生を自分で選ぶことを考える。</description>
+  </item>
+  <item>
     <title>欲望がなくなれば、稼ぐ力もなくなる</title>
     <link>https://moutonarchive.com/desire-earning.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/desire-earning.html</guid>
@@ -138,13 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/dhea.html</guid>
     <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
     <description>DHEAは20代前後をピークに年齢とともに下がるホルモンで、「若返りホルモン」と呼ばれてきました。でも高齢者に2年間補った試験では、体力や生活の質の改善は見られませんでした。研究と、日本で医薬品扱いになっている理由を整理します。</description>
-  </item>
-  <item>
-    <title>5α-リダクターゼとDHT。育毛・筋肉・性欲と、AGA（薄毛）の関係を研究で整理する</title>
-    <link>https://moutonarchive.com/dht-5a-reductase.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/dht-5a-reductase.html</guid>
-    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
-    <description>5α-リダクターゼはテストステロンをDHTに変える酵素で、DHTはAGA（男性型脱毛症）の原因になります。一方、筋肉を増やすのにDHTは必須ではありませんでした。薄毛のなりやすさに関わる遺伝子、薬の効果と副作用まで整理します。</description>
   </item>
 </channel>
 </rss>

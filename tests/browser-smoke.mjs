@@ -193,12 +193,16 @@ test('MOUTON browser smoke', async t => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
           const panels = page.locator('main.making details.mk-accordion');
           assert.equal(await panels.count(), 4, 'every major section has a disclosure control');
-          assert.equal(await panels.nth(1).evaluate(el => el.open), true, 'photo gallery is initially visible');
-          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'production log initially collapsed');
+          assert.equal(await panels.nth(0).evaluate(el => el.closest('section').getAttribute('aria-labelledby')), 'mk-projects', 'apps (KIOKU, diary) come first');
+          assert.equal(await panels.nth(0).evaluate(el => el.open), true, 'apps are initially visible');
+          assert.equal(await panels.nth(3).evaluate(el => el.closest('section').id), 'visual-studies', 'visual studies sit last');
+          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'visual studies initially collapsed');
+          assert.equal(await panels.nth(1).evaluate(el => el.open), false, 'production log initially collapsed');
+          await panels.nth(1).locator('summary').click();
+          assert.equal(await panels.nth(1).evaluate(el => el.open), true, 'tap expands the production log');
+          await panels.nth(1).locator('summary').click();
+          assert.equal(await panels.nth(1).evaluate(el => el.open), false, 'tap collapses the production log');
           await panels.nth(3).locator('summary').click();
-          assert.equal(await panels.nth(3).evaluate(el => el.open), true, 'tap expands the production log');
-          await panels.nth(3).locator('summary').click();
-          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'tap collapses the production log');
           const image = page.locator('.mk-study--two img');
           assert.equal(await image.getAttribute('width'), '508', 'keep the original image dimensions');
           const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
@@ -241,7 +245,7 @@ test('MOUTON browser smoke', async t => {
       ]) {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
-          await page.locator('[aria-labelledby="mk-projects"] .mk-accordion-summary').click();
+          assert.equal(await page.locator('[aria-labelledby="mk-projects"] details').evaluate(el => el.open), true, 'projects open by default');
           assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
           for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
