@@ -4,9 +4,17 @@ permalink: index.html
 title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
-assetVersion: "20261015-menu-2"
-extraCss: [home.css]
+assetVersion: "20261015-static-1"
+extraCss: [home.css, home-static-background.css]
 ---
+<script>
+(()=>{
+ const scenes=['ocean','moon-botanical','orb-dark','orbit-light'];
+ const scene=scenes[Math.floor(Math.random()*scenes.length)];
+ document.documentElement.dataset.homeBackground=scene;
+ document.documentElement.style.setProperty('--home-background', 'url("images/mouton/'+scene+'-wide.webp")');
+})();
+</script>
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
@@ -19,10 +27,8 @@ extraCss: [home.css]
 
 <main>
   {#- 表紙。通常デザインに統一。 #}
-  <section class="cover cover-choice" id="top" data-nav="dark" data-nav-solid="dark">
-    <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
-    <div class="hero-light" aria-hidden="true"></div>
-    <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
+  <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
+    <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
       {#- 見出しは画面に出さない（読み上げ・検索用に h1 だけ残す） #}
@@ -70,7 +76,7 @@ extraCss: [home.css]
   <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
-<script src="home.js" defer></script>
+<script src="home.js?v={{ assetVersion }}" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};

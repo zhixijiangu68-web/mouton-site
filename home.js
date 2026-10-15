@@ -8,13 +8,16 @@
  // Prepare the first frame once the intro font is ready: no late font swap mid-animation.
  const veil=document.querySelector('.intro-veil');
  if(veil&&root.classList.contains('intro')){
-  const done=()=>root.classList.add('intro-done');
+  const done=()=>{
+   root.classList.add('intro-done');
+   root.classList.remove('intro','intro-preparing');
+  };
   veil.addEventListener('animationend',e=>{if(e.animationName==='veil-dissolve')done();});
   veil.addEventListener('click',done);
   addEventListener('keydown',done,{once:true});
   let started=false;
   const begin=()=>{
-   if(started)return;
+   if(started||root.classList.contains('intro-done'))return;
    started=true;
    // If the webfont is not ready, lock a single fallback face for this animation.
    // Prevents the logo jumping when the network delivers the font late.
@@ -66,7 +69,7 @@
 
  const hero=document.querySelector('.cover');
  const light=hero&&hero.querySelector('.hero-light');
- if(hero&&!reduce){
+ if(hero&&!hero.classList.contains('cover-static')&&!reduce){
   let scheduled=false;
   const update=()=>{
    scheduled=false;
