@@ -6,7 +6,6 @@ description: "ムートンの個人的な制作と記録の場所。哲学・生
 bodyClass: site
 extraCss: [home.css]
 ---
-<script>try{if(localStorage.getItem('mouton.cover')==='day')document.documentElement.dataset.cover='day'}catch(e){}</script>
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
@@ -18,13 +17,12 @@ extraCss: [home.css]
 {% include "partials/nav.njk" %}
 
 <main>
-  {#- 表紙（Night）。Day に切り替えると空の写真になる（ボタンで切り替え、ブラウザに保存）。 #}
+  {#- 表紙。通常デザインに統一。 #}
   <section class="cover cover-choice" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"><i class="cover-light l1"></i><i class="cover-light l2"></i><i class="cover-light l3"></i></div>
     <div class="hero-light" aria-hidden="true"></div>
     <p class="hero-word" aria-hidden="true"><span>MOUTON</span><span>MOUTON</span></p>
     <div class="cover-inner">
-      <div class="club-signature" aria-hidden="true"><span>MOUTON / VOL.02</span><span>AFTER HOURS, OPEN MINDS.</span></div>
       <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
       {#- 見出しは画面に出さない（読み上げ・検索用に h1 だけ残す） #}
       <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 哲学と科学で、日常の見え方を変える</h1>
@@ -76,7 +74,6 @@ extraCss: [home.css]
         {%- endfor %}
       </div>
     </div>
-    <button class="cover-mode" type="button" data-cover-toggle aria-pressed="false"><span class="cover-mode-day">Day</span><span class="cover-mode-night">Night</span></button>
   </section>
 
 {%- if site.newsletter.action %}
@@ -95,7 +92,20 @@ extraCss: [home.css]
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
 const legacy={now:'top'};
-if(location.hash==='#journal')location.replace('journal.html');
-(()=>{const name=location.hash.slice(1);if(articleRoutes[name])location.replace(articleRoutes[name]);else if(legacy[name])history.replaceState(null,'','#'+legacy[name]);})();
+(()=>{
+  const current=new URL(location.href);
+  const name=current.hash.slice(1);
+  const route=name==='journal'?'journal.html':articleRoutes[name];
+  if(route){
+    const target=new URL(route,current);
+    target.search=current.search;
+    // Reload the replacement URL in the same history entry, retaining its state.
+    history.replaceState(history.state,'',target);
+    location.reload();
+  }else if(legacy[name]){
+    current.hash=legacy[name];
+    history.replaceState(history.state,'',current);
+  }
+})();
 
 </script>

@@ -1,66 +1,15 @@
-// Run before the stylesheets so the saved edition is present on the first paint.
+// Compatibility migration: retired appearance choices must not return on old links.
 (() => {
   'use strict';
-  const key = 'mouton.designVersion';
   const root = document.documentElement;
-  const valid = value => value === 'original' || value === 'club';
-  let stored;
-  try { stored = localStorage.getItem(key); } catch (_) { /* Storage is optional. */ }
-  const requested = new URL(location.href).searchParams.get('version');
-  let current = valid(requested) ? requested : valid(stored) ? stored : 'original';
-  let hasUnsavedSelection = false;
-
-  function apply(value, save = false) {
-    current = valid(value) ? value : 'original';
-    root.dataset.version = current;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = current === 'club' ? '#090910' : '#f8f5ee';
-    document.querySelectorAll('[data-version-picker]').forEach(picker => {
-      picker.value = current;
-    });
-    if (save) {
-      try {
-        localStorage.setItem(key, current);
-        hasUnsavedSelection = false;
-      } catch (_) {
-        hasUnsavedSelection = true;
-      }
-    }
-    document.dispatchEvent(new CustomEvent('mouton:versionchange', { detail: { version: current } }));
+  delete root.dataset.version;
+  delete root.dataset.cover;
+  for (const key of ['mouton.designVersion', 'mouton.cover']) {
+    try { localStorage.removeItem(key); } catch (_) { /* Storage is optional. */ }
   }
-
-  // Explicit edition links also carry the choice to the next page.
-  apply(current, valid(requested));
-
-  function reflectUrl() {
-    const url = new URL(location.href);
-    if (!url.searchParams.has('version')) return;
-    url.searchParams.set('version', current);
+  const url = new URL(location.href);
+  if (url.searchParams.has('version')) {
+    url.searchParams.delete('version');
     try { history.replaceState(history.state, '', url); } catch (_) { /* file: previews */ }
   }
-
-  function bind() {
-    document.querySelectorAll('[data-version-picker]').forEach(picker => {
-      picker.value = current;
-      picker.addEventListener('change', () => {
-        apply(picker.value, true);
-        reflectUrl();
-      });
-    });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bind, { once: true });
-  else bind();
-
-  // A choice in another tab is reflected here without reloading or losing reading position.
-  window.addEventListener('storage', event => {
-    if (event.key !== key && event.key !== null) return;
-    hasUnsavedSelection = false;
-    apply(event.newValue);
-    reflectUrl();
-  });
-  window.addEventListener('pageshow', event => {
-    // Do not replace a choice that could not be saved with an older stored value.
-    if (!event.persisted || hasUnsavedSelection) return;
-    try { apply(localStorage.getItem(key)); reflectUrl(); } catch (_) { /* Storage is optional. */ }
-  });
 })();

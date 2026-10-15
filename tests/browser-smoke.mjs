@@ -92,16 +92,19 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
-    await t.test('mobile journal: title stays readable at 320px and 390px in both editions', async () => {
+    await t.test('mobile journal: title stays readable at 320px and 390px including retired edition links', async () => {
       for (const [label, width, version] of [
         ['journal-320-original', 320, 'original'],
         ['journal-390-original', 390, 'original'],
-        ['journal-390-club', 390, 'club'],
+        ['journal-390-retired-link', 390, 'club'],
       ]) {
         await checkPage(browser, label, {
           viewport: { width, height: 844 }, isMobile: true, hasTouch: true,
         }, async page => {
           await page.goto(origin + '/journal.html?version=' + version, { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('[data-version-picker], [data-cover-toggle], .club-signature').count(), 0);
+          assert.equal(await page.locator('html').getAttribute('data-version'), null);
+          assert.equal(new URL(page.url()).searchParams.has('version'), false);
           const entry = page.locator('#journal .journal-item:not(.is-hidden):not(.is-collapsed)').first();
           assert.equal(await entry.count(), 1, label + ': journal entry missing');
           const rects = await entry.evaluate(el => {
@@ -268,6 +271,29 @@ test('MOUTON browser smoke', async t => {
         assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal list missing');
         const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
         assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
+      });
+    });
+
+    await t.test('legacy migration preserves campaign queries, reading data and history state', async () => {
+      await checkPage(browser, 'legacy-migration', { viewport: { width: 390, height: 844 } }, async page => {
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(() => {
+          localStorage.setItem('mouton.cover', 'day');
+          localStorage.setItem('mouton.designVersion', 'club');
+          localStorage.setItem('mouton.read', '{"nietzsche":true}');
+        });
+        await page.addInitScript(() => {
+          if (location.pathname.endsWith('/index.html')) history.replaceState({ preserved: true }, '', location.href);
+        });
+        for (const [hash, path] of [['journal', 'journal.html'], ['article-nietzsche', 'nietzsche.html'], ['now', 'index.html']]) {
+          await page.goto(origin + '/index.html?version=club&utm_source=smoke#' + hash, { waitUntil: 'domcontentloaded' });
+          await page.waitForURL(url => url.pathname.endsWith('/' + path) && !url.searchParams.has('version') && (hash !== 'now' || url.hash === '#top'));
+          assert.equal(new URL(page.url()).searchParams.get('utm_source'), 'smoke');
+          assert.deepEqual(await page.evaluate(() => history.state), { preserved: true });
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.cover')), null);
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.designVersion')), null);
+          assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('mouton.read')).nietzsche));
+        }
       });
     });
 
