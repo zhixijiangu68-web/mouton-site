@@ -7,10 +7,10 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>制作 — ムートン</title>
-<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta name="description" content="ムートンが作っているもの。MOUTON・COUNTで、作り始めてからの日数・記事・制作物の数を。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <link rel="canonical" href="https://moutonarchive.com/making.html">
 <meta property="og:title" content="制作 — ムートン">
-<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta property="og:description" content="ムートンが作っているもの。MOUTON・COUNTで、作り始めてからの日数・記事・制作物の数を。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -31,9 +31,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css?v=20261015-mind">
+<link rel="stylesheet" href="site.css?v=20261015-count">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js?v=20261015-mind" defer></script>
+<script src="site.js?v=20261015-count" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -48,8 +48,6 @@
       <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
       <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
       <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
-      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
-      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
     </ul>
   </nav>
@@ -62,6 +60,15 @@
     <h1 class="doc-title">作っている<wbr>もの。</h1>
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
+  <section class="mk-count" aria-labelledby="mk-count-title" data-count-since="2026-09-25">
+    <h2 class="mk-count-title" id="mk-count-title">MOUTON・COUNT</h2>
+    <dl class="mk-count-grid">
+      <div class="mk-count-item"><dt>作り始めて</dt><dd><span class="mk-count-num" data-count-days>—</span><span class="mk-count-unit">日目</span></dd><dd class="mk-count-note">2026.09.25 から</dd></div>
+      <div class="mk-count-item"><dt>書いた記事</dt><dd><span class="mk-count-num" data-count-to="104">104</span><span class="mk-count-unit">本</span></dd></div>
+      <div class="mk-count-item"><dt>作っているもの</dt><dd><span class="mk-count-num" data-count-to="3">3</span><span class="mk-count-unit">つ</span></dd></div>
+      <div class="mk-count-item"><dt>進んだ日の記録</dt><dd><span class="mk-count-num" data-count-to="10">10</span><span class="mk-count-unit">件</span></dd></div>
+    </dl>
+  </section>
 
   <section class="mk-section" aria-labelledby="mk-projects">
     <details class="mk-accordion" open>
@@ -224,6 +231,32 @@
 </main>
 <script>
 (function () {
+  // MOUTON・COUNT: days since the first making log (in Japan time), then count the numbers up once.
+  var count = document.querySelector('.mk-count');
+  if (count) {
+    var since = Date.parse(count.dataset.countSince + 'T00:00:00+09:00');
+    var today = Date.parse(new Date(Date.now() + 9 * 3600e3).toISOString().slice(0, 10) + 'T00:00:00+09:00');
+    var days = Math.floor((today - since) / 864e5) + 1;
+    var dayEl = count.querySelector('[data-count-days]');
+    if (days > 0) { dayEl.textContent = days; dayEl.dataset.countTo = days; }
+    var nums = [].slice.call(count.querySelectorAll('[data-count-to]'));
+    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!still && 'IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        io.disconnect();
+        var start = performance.now();
+        nums.forEach(function (el) { el.textContent = '0'; });
+        (function tick(now) {
+          var t = Math.min(1, (now - start) / 900), e = 1 - Math.pow(1 - t, 3);
+          nums.forEach(function (el) { el.textContent = Math.round(e * Number(el.dataset.countTo)); });
+          if (t < 1) requestAnimationFrame(tick);
+        })(start);
+      });
+      io.observe(count);
+    }
+  }
+
   function openMakingAnchor() {
     if (!location.hash) return;
     var target;

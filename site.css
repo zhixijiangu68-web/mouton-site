@@ -547,7 +547,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 /* Philosophy first: the mindset door on the start page and the articles page. */
 .mind-door{margin:28px 0 48px;padding:clamp(26px,5vw,48px);border-radius:14px;background:#1b1c19;color:#f1ebdf}
 .mind-door-kicker,.doc .mind-door-kicker{color:#e7c983;margin:0 0 14px;font:400 .6875rem/1.8 Inter,sans-serif;letter-spacing:.24em;text-transform:uppercase;opacity:.9}
-.doc .mind-door-title,.mind-door-title{margin:0 0 18px;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.5;color:#f8f5ee}
+.doc .mind-door-title,.mind-door-title{border:0;padding:0;margin:0 0 18px;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.5;color:#f8f5ee}
 .doc .mind-door-text,.mind-door-text{margin:0 0 12px;font-family:var(--serif);font-size:1rem;line-height:2;color:#f1ebdf}
 .mind-door-text strong{font-weight:600;color:#fff}
 .mind-door-reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:26px 0 18px}
@@ -641,3 +641,28 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 .ph-cards-pair{display:grid;gap:20px}
 .lp-free{padding-top:32px;border-top:1px solid var(--line)}
 @media(prefers-reduced-motion:reduce){.ph-card{transition:none}}
+.mind-act{margin:0 0 56px;padding:clamp(26px,5vw,48px);border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7)}
+.mind-act .mind-door-kicker{color:#7a5a1c;opacity:1}
+.doc .mind-act-title,.mind-act-title{border:0;padding:0;margin:0 0 16px;font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,3.8vw,2.2rem);line-height:1.6;color:var(--ink)}
+.doc .mind-act-text,.mind-act-text{margin:0 0 22px;font-family:var(--serif);font-size:1.0625rem;line-height:2}
+.mind-act-books{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 26px}
+.doc .mind-act-book,.mind-act-book{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);text-decoration:none;transition:border-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+.mind-act-book:hover{border-color:var(--gold);transform:translateY(-2px)}
+.mind-act-book:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.mind-act .mind-door-step{color:#7a5a1c}
+.mind-act-book-title{font-family:var(--serif);font-size:1.1875rem;line-height:1.6}
+.mind-act-book-text{font-size:.875rem;line-height:1.85;color:var(--muted)}
+.mind-act-book-meta{margin-top:auto;padding-top:4px;font-size:.8125rem;color:var(--blue)}
+.doc .mind-act-close,.mind-act-close{margin:0;font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.8;color:var(--ink)}
+
+/* MAKING: MOUTON・COUNT */
+.making .mk-count{margin:0 0 clamp(28px,5vw,48px);padding:clamp(24px,4.5vw,40px);border-radius:14px;background:#1b1c19;color:#f1ebdf}
+.making .mk-count-title{border:0;padding:0;margin:0 0 20px;font:500 .75rem/1.6 Inter,sans-serif;letter-spacing:.32em;color:#e7c983}
+.making .mk-count-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;margin:0}
+.making .mk-count-item{min-width:0;padding-top:14px;border-top:1px solid rgba(241,235,223,.25)}
+.making .mk-count-item dt{margin:0 0 6px;font-size:.8125rem;line-height:1.6;color:rgba(241,235,223,.75)}
+.making .mk-count-item dd:not(.mk-count-note){margin:0;display:flex;align-items:baseline;gap:4px}
+.making .mk-count-num{font:300 clamp(2.2rem,6vw,3.4rem)/1.1 "Cormorant Garamond","Noto Serif JP",serif;font-variant-numeric:lining-nums tabular-nums;color:#f8f5ee}
+.making .mk-count-unit{font-family:var(--serif);font-size:.875rem;color:rgba(241,235,223,.8)}
+.making .mk-count-note{margin:6px 0 0;font:400 .6875rem/1.6 Inter,sans-serif;letter-spacing:.08em;color:rgba(241,235,223,.6)}
+@media(max-width:640px){.making .mk-count-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 16px}}
