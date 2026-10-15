@@ -86,6 +86,8 @@ test('MOUTON browser smoke', async t => {
           await page.addInitScript(value => { Math.random = () => value; }, (i + .1) / 4);
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('html').getAttribute('data-home-background'), scene);
+          assert.equal(await page.locator('link[rel="preload"][as="image"]').getAttribute('href'), 'images/mouton/intro-sheep-moon.webp');
+          assert(await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage.includes('intro-sheep-moon.webp')));
           if (i % 2) await page.keyboard.press('Escape');
           else await page.locator('.intro-veil').click({ force: true });
           const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
