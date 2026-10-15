@@ -48,7 +48,8 @@ for (const page of pages) {
 
   for (const [, href] of html.matchAll(/\shref="([^"]+)"/g)) {
     if (/^(https?:|mailto:|data:|\/\/)/.test(href)) continue;
-    const [rel, hash] = href.split('#');
+    const [pathAndQuery, hash] = href.split('#');
+    const rel = pathAndQuery.split('?')[0];
     // Links are relative to the page's own folder.
     const file = rel && normalize(join(dirname(page), rel)).replace(/\/$/, '/index.html');
     if (file) {
