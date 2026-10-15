@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import { runInNewContext } from 'node:vm';
 const migration = readFileSync(new URL('../design-version.js', import.meta.url), 'utf8');
 const template = readFileSync(new URL('../src/index.njk', import.meta.url), 'utf8');
-const redirect = [...template.matchAll(/<script>([\s\S]*?)<\/script>/g)]
+const redirect = [...template.matchAll(/<script>([\s\S]*?)<\/script>/gi)]
   .map(match => match[1]).find(script => script.includes('const articleRoutes='));
 function navigate(hash) {
   let href = 'https://example.test/sub/index.html?version=club&utm_source=smoke&tag=a&tag=b' + hash;
