@@ -31,6 +31,7 @@
 - `src/_data/site.js`: サイト全体の設定。`src/_data/topics.js`: テーマ別ページ。`src/_data/notes.json`: ページのない短いメモ
 - `src/_includes/`: 共通部分（head、ナビ、記事の末尾、フッター）
 - `site.css` / `site.js` / `home.css` / `home.js` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
+- `src/puzzle.njk` → `puzzle.html`: パズルゲーム MOUTON BLOCKS。`puzzle-core.js`（ルール）・`puzzle.js`（画面・操作・広告・ランキング）・`puzzle.css` は直接編集してよい。リワード広告は `src/_data/site.js` の `game.rewardedAds`（AdSense の H5 ゲーム広告の承認後に true）。`puzzle.html?adtest=1` で Google のテスト広告の流れを確かめられる
 - 詳しい書き方は README.md の「記事を追加する」
 - `src/en/`: 英語版（`moutonarchive.com/en/`）。`src/en/articles/<ファイル名>.html` は日本語の記事と同じファイル名にする（hreflang と言語の切り替えが自動で付く）。英語版にはアフィリエイトのボタンと PR 表示を出さない（日本のお店のため。`productCard` はボタンなしのカードになる）。まだ訳していない記事へのリンクは、自動で日本語版に向く
 

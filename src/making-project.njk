@@ -21,6 +21,9 @@
     <p class="mk-lead">{{ project.lead }}</p>
     <p>{{ project.about }}</p>
     <p><span class="mk-state">{{ project.status }}</span></p>
+    {%- if project.play %}
+    <p><a class="btn btn-dark" href="{{ project.play }}">{{ project.name }} で遊ぶ <span aria-hidden="true">→</span></a></p>
+    {%- endif %}
   </header>
 
   {%- if project.slug == 'site' %}

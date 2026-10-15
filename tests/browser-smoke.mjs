@@ -184,8 +184,8 @@ test('MOUTON browser smoke', async t => {
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
           await making.click();
           await page.waitForURL('**/making.html');
-          for (const project of ['KIOKU', 'DIARY', 'MOUTON']) {
-            assert.equal(await page.locator('.mk-card h3').filter({ hasText: project }).count(), 1,
+          for (const project of ['KIOKU', 'DIARY', 'MOUTON', 'MOUTON BLOCKS']) {
+            assert.equal(await page.locator('.mk-card h3').filter({ hasText: new RegExp('^' + project + '$') }).count(), 1,
               label + ': missing ' + project + ' project');
           }
         });
@@ -200,8 +200,8 @@ test('MOUTON browser smoke', async t => {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
           await page.locator('[aria-labelledby="mk-projects"] .mk-accordion-summary').click();
-          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
-          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
+          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 4);
+          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON'], ['blocks', 'MOUTON BLOCKS']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
             assert.equal(await card.locator('h3').textContent(), name);
             assert.deepEqual(await card.locator('dl.mk-summary dt').allTextContents(), ['目的', '現在地', '次の一歩']);
@@ -214,6 +214,7 @@ test('MOUTON browser smoke', async t => {
               'making-' + slug + '.html');
           }
           assert.match(await page.locator('#diary .mk-summary dd').nth(1).textContent(), /AIとの接続はまだ未実装/);
+          assert.equal(await page.locator('#blocks').getByRole('link', { name: '遊ぶ' }).getAttribute('href'), 'puzzle.html');
           const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
           await page.locator('#kioku').getByRole('link', { name: 'KIOKU の詳しい記録' }).click();
@@ -407,6 +408,96 @@ test('MOUTON browser smoke', async t => {
           assert.ok(sizes.width <= sizes.viewport + 2, label + ': horizontal overflow');
         });
       }
+    });
+
+    await t.test('puzzle game: fits a phone, places, clears, ends, ranks, rewards', async () => {
+      const empty = () => new Array(64).fill(0);
+      const saved = extra => JSON.stringify({ v: 1, seed: 5, rng: 5, board: empty(), tray: ['0-0', '0-0', '0-0'], score: 0, lines: 0, combo: 0, moves: 1, items: { undo: 1, reroll: 1, star: 1 }, adRewards: 0, history: null, over: false, ...extra });
+      const start = async (page, state, query = '') => {
+        await page.goto(origin + '/puzzle.html' + query, { waitUntil: 'domcontentloaded' });
+        await page.evaluate(s => { localStorage.clear(); if (s) localStorage.setItem('mouton.puzzle.save', s); }, state);
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await page.locator('.pz-cell').first().waitFor();
+      };
+      const cell = (r, c) => `.pz-board > .pz-cell:nth-child(${r * 8 + c + 1})`;
+      const score = page => page.locator('[data-score]').textContent();
+      const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+
+      await checkPage(browser, 'puzzle-phone', phone, async page => {
+        await page.route(/googletagmanager/, route => route.abort());
+        await start(page, null);
+        assert.equal(await page.locator('h1').count(), 1);
+        assert.equal(await page.locator('script[src*="adsbygoogle"]').count(), 0, 'no ad code while rewarded ads are off');
+        const box = await page.evaluate(() => ({
+          width: document.documentElement.scrollWidth, viewport: innerWidth,
+          items: document.querySelector('.pz-items').getBoundingClientRect().bottom, height: innerHeight,
+        }));
+        assert.ok(box.width <= box.viewport + 2, 'puzzle overflows horizontally');
+        assert.ok(box.items <= box.height, 'board, pieces and items fit on one phone screen: ' + JSON.stringify(box));
+
+        // Tap a piece, tap a cell: the row fills and clears (1 block + 10 for the line).
+        const board = empty();
+        for (let c = 1; c < 8; c++) board[c] = 3;
+        board[63] = 4;
+        await start(page, saved({ board }));
+        await page.locator('[data-slot="0"]').tap();
+        assert.equal(await page.locator('[data-slot="0"]').getAttribute('aria-pressed'), 'true');
+        await page.locator(cell(0, 0)).tap();
+        assert.equal(await score(page), '11');
+        assert.equal(await page.locator('.pz-cell:not([data-c="0"])').count(), 1, 'the full row was cleared');
+
+        // Nothing fits and nothing helps: the game ends and the score is ranked.
+        const checker = empty().map((_, i) => ((Math.floor(i / 8) + i % 8) % 2 === 0 ? 2 : 0));
+        await start(page, saved({ board: checker, tray: ['7-0', '7-0', null], items: { undo: 0, reroll: 0, star: 0 }, score: 120, lines: 4, moves: 30 }));
+        await page.locator('[data-over]').waitFor({ state: 'visible', timeout: 3000 });
+        assert.equal(await page.locator('[data-final]').textContent(), '120');
+        assert.equal(await page.locator('[data-ranking] li').count(), 1);
+        assert.match(await page.locator('[data-share]').getAttribute('href'), /^https:\/\/x\.com\/intent\/post\?/);
+        await page.locator('[data-again]').tap();
+        assert.equal(await score(page), '0');
+        assert.equal(await page.locator('[data-best]').textContent(), '120');
+      });
+
+      await checkPage(browser, 'puzzle-reward-ad', phone, async page => {
+        // Google's script is replaced by a stand-in that plays a rewarded ad to the end.
+        await page.route(/googletagmanager/, route => route.abort());
+        await page.route(/googlesyndication/, route => route.fulfill({ status: 200, contentType: 'application/javascript', body: '' }));
+        await page.addInitScript(() => {
+          window.adsbygoogle = { push(o) {
+            if (o.type === 'reward') setTimeout(() => o.beforeReward(() => { o.beforeAd(); o.adViewed(); o.afterAd(); o.adBreakDone({ breakStatus: 'viewed' }); }), 20);
+          } };
+        });
+        await start(page, saved({ items: { undo: 1, reroll: 0, star: 1 } }), '?adtest=1');
+        assert.equal(await page.locator('script[src*="adsbygoogle"]').getAttribute('data-adbreak-test'), 'on');
+        const reroll = page.locator('[data-item="reroll"]');
+        assert.equal(await reroll.locator('[data-count]').textContent(), '広告で+1');
+        await reroll.tap();
+        await page.locator('[data-ad-dialog][open]').waitFor();
+        await page.locator('[data-ad-watch]').tap();
+        await page.waitForFunction(() => document.querySelector('[data-item="reroll"] [data-count]').textContent === '×1');
+        assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('mouton.puzzle.save')).adRewards), 1);
+      });
+
+      await checkPage(browser, 'puzzle-desktop-drag', { viewport: { width: 1280, height: 900 } }, async page => {
+        await page.route(/googletagmanager/, route => route.abort());
+        await start(page, saved({ tray: ['7-0', '0-0', '0-0'] }));
+        const from = await page.locator('[data-slot="0"]').boundingBox();
+        const to = await page.locator(cell(4, 4)).boundingBox();
+        const a = { x: from.x + from.width / 2, y: from.y + from.height / 2 };
+        const b = { x: to.x + to.width / 2, y: to.y + to.height / 2 };
+        await page.mouse.move(a.x, a.y);
+        await page.mouse.down();
+        await page.mouse.move(b.x, b.y, { steps: 10 });
+        assert.equal(await page.locator('.pz-cell.is-ghost').count(), 9, 'a 3×3 shadow shows where it lands');
+        await page.mouse.up();
+        assert.equal(await score(page), '9');
+        // Keyboard: choose a piece with 2, move it, place it with Enter.
+        await page.locator('[data-board]').focus();
+        await page.keyboard.press('2');
+        await page.keyboard.press('ArrowLeft');
+        await page.keyboard.press('Enter');
+        assert.equal(await score(page), '10');
+      });
     });
 
     await t.test('deep links and article navigation', async () => {

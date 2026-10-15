@@ -323,6 +323,8 @@ MOUTONのページ表示 ── page_view ──> GA4
 | `sample_pdf_click` | 同上 | ダウンロードリンクをクリック。保存成功ではない |
 | `waitlist_submit` | 同上（フォーム設定時のみ） | 送信試行。**有効登録ではない** |
 | `affiliate_click` | `site.js` | 広告クリック。確定報酬ではない |
+| `puzzle_start` / `puzzle_over` / `puzzle_share` | `puzzle.js` | パズルの開始、終了時のスコア・消した列・手数、Xへのシェアのクリック。シェアの投稿完了ではない |
+| `puzzle_reward` | 同上 | リワード広告を最後まで見て、アイテムを渡したこと。広告収益の確定ではない |
 
 `product_id=cleanliness_001`、`placement`、`cta_target`、`source_article` は利用可能な範囲で整合させる。GA4へのカスタムディメンション登録は別作業。イベントがコードに存在しても**DebugViewの実データ検証は別**。
 

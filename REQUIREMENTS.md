@@ -125,6 +125,7 @@ Aを**初期商品検証の中心読者**とし、B/Cもブランドとして尊
 | `waitlist_submit` | 登録フォーム送信の試行 | **いいえ（登録成功とは異なる）** |
 | `affiliate_click` | 広告リンクをクリック | いいえ（報酬確定ではない） |
 | `article_read` 等 | 記事や一部機能の利用 | いいえ |
+| `puzzle_start` / `puzzle_over` / `puzzle_share` / `puzzle_reward` | パズルの開始・終了・シェアのクリック・リワード広告の視聴完了 | いいえ |
 
 ### 6.2 取得すべき指標
 

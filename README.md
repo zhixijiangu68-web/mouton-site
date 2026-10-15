@@ -46,6 +46,7 @@ npm test         # 生成して、リンク切れ・ID の重複・title や説�
 | `site.css` / `site.js` | 全ページ共通のデザインと動き |
 | `home.css` | トップページのデザイン |
 | `article-base.css` / `reading.css` / `article-share.js` | 記事ページの共通スタイルと読書補助 |
+| `src/puzzle.njk` / `puzzle.css` / `puzzle.js` / `puzzle-core.js` | パズルゲーム（`puzzle.html`）。ルールは `puzzle-core.js`（`tests/puzzle-core.test.mjs` で確かめる）、画面と操作・リワード広告・この端末のランキングは `puzzle.js`。広告の設定は `site.js` の `game` |
 | `images/` | 画像。置き場所と名前は `images/README.md` |
 | `search.json` | 記事一覧の本文検索に使うデータ（生成される。検索欄を使ったときだけ読み込む） |
 | `scripts/check-site.mjs` | 生成したページの自動チェック |

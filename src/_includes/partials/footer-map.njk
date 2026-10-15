@@ -25,6 +25,7 @@
     <ul>
       {%- if not en %}<li><a href="start.html">はじめての方へ</a></li>{% endif %}
       <li><a href="quiz.html">{{ 'True-or-false quiz' if en else '○×クイズ' }}</a></li>
+      {%- if not en %}<li><a href="puzzle.html">パズルゲーム</a></li>{% endif %}
       {%- if not en %}<li><a href="now.html">いま取り組んでいること</a></li>
       <li><a href="editorial.html">編集方針</a></li>{% endif %}
       <li><a href="operator.html">{{ 'About the operator' if en else '運営者情報' }}</a></li>

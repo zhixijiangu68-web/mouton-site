@@ -1,0 +1,109 @@
+---
+layout: base.njk
+permalink: puzzle.html
+title: "MOUTON BLOCKS｜月夜のブロックパズル — ムートン"
+description: "8×8のマスにブロックを置いて、縦か横の列をそろえて消すパズル。続けて消すとコンボで点が伸びます。スコアはこの端末のランキングに残ります。登録なしで、スマホでもパソコンでも遊べます。"
+bodyClass: "site pz-page"
+extraCss: [puzzle.css]
+# 広告のスクリプトは puzzle.js が読み込む（リワード広告を使うときだけ。site.js の game.rewardedAds）
+ownAdScript: true
+---
+<a class="skip" href="#pz-game">ゲームへスキップ</a>
+{% include "partials/nav.njk" %}
+<main>
+  <section class="pz-stage" id="pz-game" data-nav="dark" data-nav-solid="dark" aria-labelledby="pz-title">
+    <div class="pz" data-puzzle data-ad-client="{{ site.ads.adsenseClient }}" data-rewarded="{{ 'on' if site.game.rewardedAds else 'off' }}" data-ad-cap="{{ site.game.adRewardsPerGame }}" data-x="{{ site.author.x }}">
+      <header class="pz-head">
+        <h1 class="pz-title" id="pz-title">MOUTON BLOCKS<span>月夜のブロックパズル</span></h1>
+        <dl class="pz-scores">
+          <div><dt>SCORE</dt><dd data-score>0</dd></div>
+          <div><dt>BEST</dt><dd data-best>0</dd></div>
+        </dl>
+      </header>
+
+      <div class="pz-board-wrap">
+        <div class="pz-board" data-board tabindex="0" aria-label="盤面（8×8）" aria-describedby="pz-keys"></div>
+        <div class="pz-over" data-over hidden>
+          <div class="pz-over-card">
+            <p class="pz-over-eyebrow">GAME OVER</p>
+            <h2 class="pz-over-score" tabindex="-1" data-final-heading><span data-final>0</span><small>点</small></h2>
+            <p class="pz-over-rank" data-rank></p>
+            <p class="pz-over-meta" data-meta></p>
+            <div class="pz-over-actions">
+              <button type="button" class="pz-btn pz-btn-primary" data-again>もう一度</button>
+              <a class="pz-btn" data-share href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">Xでシェア <span aria-hidden="true">↗</span></a>
+            </div>
+            <a class="pz-over-link" href="#ranking">ランキングを見る <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pz-tray" role="group" aria-label="置くブロック" data-tray>
+        <button type="button" class="pz-slot" data-slot="0"></button>
+        <button type="button" class="pz-slot" data-slot="1"></button>
+        <button type="button" class="pz-slot" data-slot="2"></button>
+      </div>
+
+      <div class="pz-items" role="group" aria-label="アイテム" data-items>
+        <button type="button" class="pz-item" data-item="undo"><span class="pz-item-icon" aria-hidden="true">↺</span><span class="pz-item-name">もどす</span><span class="pz-item-count" data-count></span></button>
+        <button type="button" class="pz-item" data-item="reroll"><span class="pz-item-icon" aria-hidden="true">⟳</span><span class="pz-item-name">引き直し</span><span class="pz-item-count" data-count></span></button>
+        <button type="button" class="pz-item" data-item="star"><span class="pz-item-icon" aria-hidden="true">✦</span><span class="pz-item-name">流れ星</span><span class="pz-item-count" data-count></span></button>
+      </div>
+
+      <div class="pz-bar">
+        <p class="pz-status" role="status" aria-live="polite" data-status>ブロックをドラッグして、盤面に置いてください。</p>
+        <button type="button" class="pz-end" data-end>おわる</button>
+      </div>
+      <p class="pz-sr" id="pz-keys">キーボードでは、1〜3のキーでブロックを選び、矢印キーで動かして Enter で置きます。Esc で選ぶのをやめます。</p>
+
+      <dialog class="pz-dialog" data-ad-dialog aria-labelledby="pz-ad-title">
+        <h2 id="pz-ad-title">広告を見て、アイテムをもらう</h2>
+        <p data-ad-text></p>
+        <div class="pz-dialog-actions">
+          <button type="button" class="pz-btn pz-btn-primary" data-ad-watch>広告を見る</button>
+          <button type="button" class="pz-btn" data-ad-cancel>やめる</button>
+        </div>
+      </dialog>
+    </div>
+    <noscript><p class="pz-noscript">遊ぶには JavaScript を有効にしてください。</p></noscript>
+  </section>
+
+  <div class="doc pz-doc" data-nav="light" data-nav-solid="light">
+    <h2>遊び方</h2>
+    <ol>
+      <li>下の3つのブロックを、盤面までドラッグして置きます。タップで選んでから、置きたいマスをタップしても置けます。</li>
+      <li>縦か横の1列がすべて埋まると、その列が消えます。</li>
+      <li>3つとも置くと、次の3つが出ます。どのブロックも置けなくなったら、おしまいです。</li>
+    </ol>
+
+    <h2>点数</h2>
+    <ul>
+      <li>ブロックを置くと、1マスにつき1点。</li>
+      <li>列を消すと、1列で10点、2列同時に30点、3列で60点、4列で100点。</li>
+      <li>置くたびに続けて消すと「コンボ」になり、列の点が2倍、3倍……と増えます。</li>
+      <li>盤面がすべて空になると、さらに300点。</li>
+    </ul>
+
+    <h2>アイテム</h2>
+    <dl class="pz-item-list">
+      <div><dt><span aria-hidden="true">↺</span> もどす</dt><dd>最後に置いたブロックを、ひとつ前に戻します。</dd></div>
+      <div><dt><span aria-hidden="true">⟳</span> 引き直し</dt><dd>手もとのブロックを、新しい3つに替えます。</dd></div>
+      <div><dt><span aria-hidden="true">✦</span> 流れ星</dt><dd>選んだマスのまわり3×3を消します（点は入りません）。</dd></div>
+    </dl>
+    <p>アイテムは、1ゲームにひとつずつ使えます。{% if site.game.rewardedAds %}使い切ったアイテムは、広告を最後まで見るともうひとつもらえます（1ゲームに{{ site.game.adRewardsPerGame }}回まで）。広告は、自分で「広告で+1」を選んだときだけ流れます。{% endif %}</p>
+
+    <h2 id="ranking">ランキング（この端末）</h2>
+    <ol class="pz-ranking" data-ranking></ol>
+    <p class="pz-ranking-empty" data-ranking-empty>まだ記録がありません。1回遊ぶと、ここにスコアが残ります。</p>
+    <p class="doc-small">スコアはこのブラウザの中だけに保存され、サーバーには送りません。ほかの人のスコアとは比べられないので、Xでシェアして競ってください。</p>
+    <p><button type="button" class="pz-clear" data-clear hidden>この端末の記録を消す</button></p>
+
+    <p class="doc-small">MOUTON BLOCKS は、ムートンの<a href="making-blocks.html">制作</a>のひとつです。</p>
+  </div>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  {% include "partials/footer-map.njk" %}
+  {% include "partials/footer-links.njk" %}
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+<script type="module" src="puzzle.js"></script>

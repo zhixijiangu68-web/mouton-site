@@ -27,6 +27,13 @@ export default {
   affiliate: { amazonTag: 'yuiga2003-22', rakutenId: '5844aa3f.402b05a0.5844aa40.481ea3b1' },
   // Google AdSense のパブリッシャーID（例: 'ca-pub-0000000000000000'）。入れると全ページに AdSense のコードと ads.txt が出る。adsenseSlot も入れると記事の末尾に広告枠を出す。
   ads: { adsenseClient: 'ca-pub-2111458982949833', adsenseSlot: '' },
+  // パズルゲーム（puzzle.html）。
+  // rewardedAds：AdSense の「H5 ゲーム広告」（リワード広告）の利用が Google に承認されたら true にする。
+  //   false の間は、このページでは広告のスクリプトを読み込まない（自動広告もドラッグ操作の邪魔をしない）。
+  //   true にしたら、AdSense の管理画面で puzzle.html を自動広告の対象から外す（盤面のそばに広告が出ると誤クリックの原因になる）。
+  //   puzzle.html?adtest=1 で開くと、設定に関係なく Google のテスト広告で「広告で+1」の流れを確かめられる。
+  // adRewardsPerGame：1ゲームで広告からもらえるアイテムの上限。
+  game: { rewardedAds: false, adRewardsPerGame: 3 },
   // メールマガジンの登録フォームの送信先。空なら登録欄を出さない。
   // 例（Buttondown）: action: 'https://buttondown.com/api/emails/embed-subscribe/ユーザー名', emailField: 'email'
   newsletter: {
@@ -61,6 +68,7 @@ export default {
   },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },
-  // 運営者情報・プライバシーポリシーの制定日
+  // 運営者情報・プライバシーポリシーの制定日と、プライバシーポリシーを最後に改定した日
   policyDate: '2026-10-05',
+  policyUpdated: '2026-10-15',
 };

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>MOUTON BLOCKS — 制作 — ムートン</title>
+<meta name="description" content="MOUTON BLOCKS（GAME / パズル）の制作の記録。8×8のマスにブロックを置き、縦か横の列をそろえて消すパズル。サイトのアイコンと同じ、紺の夜空・金の月・白い羊毛の色で作った。スマホでもパソコンでも、登録なしで遊べる。">
+<link rel="canonical" href="https://moutonarchive.com/making-blocks.html">
+<meta property="og:title" content="MOUTON BLOCKS — 制作 — ムートン">
+<meta property="og:description" content="MOUTON BLOCKS（GAME / パズル）の制作の記録。8×8のマスにブロックを置き、縦か横の列をそろえて消すパズル。サイトのアイコンと同じ、紺の夜空・金の月・白い羊毛の色で作った。スマホでもパソコンでも、登録なしで遊べる。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/making-blocks.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="design-version.css">
+<script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="journal.html">読む<span class="site-links-en">Read</span></a></li>
+      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
+      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
+      <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-hero" data-nav="dark"></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <a class="mk-back" href="making.html"><span aria-hidden="true">←</span> 制作の一覧へ</a>
+  <header class="mk-head">
+    <p class="mk-eyebrow">PROJECT 004 / GAME / パズル</p>
+    <h1 class="doc-title">MOUTON BLOCKS</h1>
+    <p class="mk-lead">そろえて、消して、また置く。</p>
+    <p>8×8のマスにブロックを置き、縦か横の列をそろえて消すパズル。サイトのアイコンと同じ、紺の夜空・金の月・白い羊毛の色で作った。スマホでもパソコンでも、登録なしで遊べる。</p>
+    <p><span class="mk-state">公開中</span></p>
+    <p><a class="btn btn-dark" href="puzzle.html">MOUTON BLOCKS で遊ぶ <span aria-hidden="true">→</span></a></p>
+  </header>
+  <figure class="mk-media">
+    <div class="mk-phone" style="background-image:url(images/making/blocks.jpg)">
+      <img src="images/making/blocks.jpg" alt="MOUTON BLOCKS を遊んでいるところ（盤面と点数はデモ）" loading="lazy" width="390" height="844">
+    </div>
+    <figcaption>MOUTON BLOCKS を遊んでいるところ（盤面と点数はデモ）</figcaption>
+  </figure>
+
+  <section class="mk-section" aria-labelledby="mk-now">
+    <p class="mk-eyebrow">01 / 今の状態</p>
+    <h2 id="mk-now">ここまでと、<wbr>次の<wbr>一歩。</h2>
+    <div class="mk-card">
+      <dl>
+        <dt>ここまで</dt><dd><ul><li>ブロックを置く・列を消す・コンボ・全消しの点数を作った</li><li>ドラッグ、タップ、キーボードの3つの操作で遊べるようにした</li><li>もどす・引き直し・流れ星（3×3を消す）の3つのアイテムを用意した</li><li>スコアをこの端末のランキング（ベスト10）に残し、Xでシェアできるようにした</li><li>広告を見るとアイテムがもらえる仕組み（Google の H5 ゲーム広告）を組み込んだ。承認されるまでは止めてある</li></ul></dd>
+        <dt>次にやること</dt><dd>AdSense の H5 ゲーム広告の承認を受けて、リワード広告を有効にする。ほかの人と競える全体のランキングは、サーバーと不正対策が要るので、遊ぶ人が増えてから考える。</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ<wbr>日の<wbr>こと。</h2>
+    <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-15">2026.10.15</time>
+        <div><h3>月夜の<wbr>ブロックパズルを<wbr>作った。</h3><p>8×8のマスにブロックを置いて列を消すパズル。スコアとこの端末のランキング、3つのアイテム、広告でアイテムがもらえる仕組み（承認待ち）まで入れた。</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-others">
+    <p class="mk-eyebrow">03 / ほかの制作</p>
+    <h2 id="mk-others">ほかに<wbr>作っている<wbr>もの。</h2>
+    <p class="mk-others">
+      <a class="mk-more" href="making-kioku.html">KIOKU <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-diary.html">DIARY <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-site.html">MOUTON <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making.html">制作の一覧 <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
+      <li><a href="journal.html">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">連載</p>
+    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">選び方</p>
+    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
+      <li><a href="guides.html">すべての選び方</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="puzzle.html">パズルゲーム</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="en/index.html" hreflang="en" lang="en">English</a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+</footer>
+
+</body>
+</html>

@@ -63,5 +63,10 @@ await page.evaluate(d => window.render(d), { title: '10 true-or-false questions.
 await page.evaluate(() => document.fonts.ready);
 await page.screenshot({ path: join(root, 'images', 'og', 'en', 'quiz.jpg'), type: 'jpeg', quality: 86 });
 count++;
+// The puzzle game (puzzle.html), shown when a score is shared on X.
+await page.evaluate(d => window.render(d), { title: '月夜のブロックパズル。<br>あなたは何点とれる？', label: 'MOUTON BLOCKS', quiz: false, face: '', brand: 'ムートン' });
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: join(root, 'images', 'og', 'puzzle.jpg'), type: 'jpeg', quality: 86 });
+count++;
 await browser.close();
 console.log(`\nwrote ${count} images to images/og/ and images/og/en/`);
