@@ -1,23 +1,45 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+assetVersion: "20261015-mind"
 permalink: start.html
 title: "はじめての方へ — ムートン"
-description: "ムートンをはじめて読む人のための案内です。どんなサイトか、気になることから選べる入り口、最初に読んでほしい5本、買う前に読む選び方、○×クイズへの近道をまとめています。"
+description: "ムートンをはじめて読む人のための案内です。身体や食事より先に、まず考え方を定める。キルケゴールとニーチェから始める哲学の入り口と、気になることから選べる記事、最初に読んでほしい5本をまとめています。"
 paths:
+  - { title: "生き方について考えたい", text: "キルケゴール、ニーチェ、ストア派、カミュ、サルトル。", href: "series.html#thinkers", label: "連載「哲学者に聞く」" }
   - { title: "見た目の清潔感を整えたい", text: "第一印象、匂い、口臭、日焼け。", href: "series.html#clean", label: "連載「清潔感を、確かめる」" }
   - { title: "仕事やお金で迷っている", text: "辞めたい、転職、年収、お金の本。", href: "series.html#job", label: "連載「転職を考える」" }
-  - { title: "生き方について考えたい", text: "ストア派、ニーチェ、カミュ、サルトル。", href: "series.html#thinkers", label: "連載「哲学者に聞く」" }
   - { title: "健康の「本当？」を知りたい", text: "コーヒー、ダークチョコ、オリーブ油。", href: "series.html#food-check", label: "連載「その健康法、本当？」" }
   - { title: "よく眠りたい", text: "昼寝、寝だめ、朝型と夜型、寝室。", href: "series.html#sleep", label: "連載「眠りを確かめる」" }
   - { title: "変わりたい、続けたい", text: "セルフイメージ、目標と仕組み、恐怖。", href: "series.html#habits", label: "連載「自分を変える仕組み」" }
-firstReads: ["first-impression-sleep", "halitosis", "stoicism", "salary-change", "nap"]
+firstReads: ["kierkegaard", "nietzsche", "stoicism", "first-impression-sleep", "salary-change"]
+mindReads: ["kierkegaard", "nietzsche"]
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
 <main class="doc topic start-page" data-nav="light" data-nav-solid="light">
   <p class="eyebrow">Start here</p>
   <h1 class="doc-title">はじめての方へ</h1>
+
+  {#- 最初に哲学へ誘う。身体・食事の記事より先に、考え方を定めてもらう。 #}
+  <section class="mind-door" aria-labelledby="mind-door-title">
+    <p class="mind-door-kicker">Mindset first</p>
+    <h2 class="mind-door-title" id="mind-door-title">マインドセットが、全てだ。</h2>
+    <p class="mind-door-text">身体も食事も大切だ。けれど、マインドが定まっていなければ、何も始まらない。</p>
+    <p class="mind-door-text"><strong>キルケゴールとニーチェから始めなさい。話は、それからだ。</strong></p>
+    <div class="mind-door-reads">
+      {%- for a in collections.articles | bySlugs(mindReads) %}
+      <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
+        <span class="mind-door-step">STEP {{ loop.index }}</span>
+        <span class="mind-door-read-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+        <span class="mind-door-read-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+        <span class="mind-door-more">読む・約{{ a.data.readMinutes }}分 <span aria-hidden="true">→</span></span>
+      </a>
+      {%- endfor %}
+    </div>
+    <p class="mind-door-all"><a href="topic-philosophy.html">哲学・生き方の記事をすべて見る <span aria-hidden="true">→</span></a></p>
+  </section>
+
   <p>ムートンは、気になったことを調べ、試し、作り、その過程を記録していく個人のサイトです。哲学や身体、食事と科学についても、研究や公的な情報を確かめながら記事を書いています。記事の作り方は<a href="editorial.html">編集方針</a>にまとめています。</p>
   <p><strong>作る。記録する。残していく。</strong> KIOKUや日記アプリ、このサイトも、日々の試行錯誤から生まれた制作物です。完成したものだけでなく、制作の途中も残しています。</p>
   <p><a class="btn btn-dark" href="making.html">作っているものを見る <span aria-hidden="true">→</span></a></p>
