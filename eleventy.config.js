@@ -101,6 +101,9 @@ export default function (eleventyConfig) {
       .replace(/\s+/g, ' ')
       .trim(),
   }))));
+  // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
+  eleventyConfig.addFilter('paidCards', items =>
+    items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
   eleventyConfig.addFilter('findTopic', (topics, key) => topics.find(t => t.key === key) || null);
   eleventyConfig.addFilter('inTopic', (items, key) => items.filter(a => a.data.topic === key));
   // Curated picks first, then the newest articles on the same topic.

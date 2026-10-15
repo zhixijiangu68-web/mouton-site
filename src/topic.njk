@@ -7,13 +7,16 @@ pagination:
   alias: t
 permalink: "topic-{{ t.key }}.html"
 eleventyComputed:
-  title: "{{ t.label }}の記事 — ムートン"
-  description: "{{ t.intro }}"
+  title: "{{ '3人の哲学者から選ぶ' if t.key == 'philosophy' else t.label + 'の記事' }} — ムートン"
+  description: "{{ t.lpIntro if t.lpIntro else t.intro }}"
 ---
 {%- set list = collections.articles | inTopic(t.key) %}
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-{{ t.ph }}" data-nav="dark"{% bgImage "images/cover-" + t.ph + ".jpg" %}></div>
 <main class="doc topic" data-nav="light" data-nav-solid="light">
+{%- if t.key == "philosophy" %}
+  {% include "partials/philosophy-lp.njk" %}
+{%- else %}
   <p class="eyebrow">{{ t.en }}</p>
   <h1 class="doc-title">{{ t.label }}</h1>
   <p>{{ t.intro }}</p>
@@ -28,6 +31,7 @@ eleventyComputed:
     </a>
     {%- endfor %}
   </div>
+{%- endif %}
   <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">このテーマから、1問 <span>○×クイズ</span></p>
   <div class="qloop" data-qloop data-prefer="{% for a in list %}{{ a.page.fileSlug }},{% endfor %}"></div></section>
   <nav class="topic-others" aria-label="ほかのテーマ">

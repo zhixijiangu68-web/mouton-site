@@ -6,6 +6,8 @@ export default [
     en: 'Philosophy',
     ph: 'philosophy',
     intro: '自由、恐怖、セルフイメージ、意味。答えを急がず、問いのまま考えたことを残しています。',
+    // topic-philosophy.html は記事一覧ではなく、3人の哲学者を選ぶページ（partials/philosophy-lp.njk）
+    lpIntro: '本当の自分がわからない、毎日が虚しい、感情に振り回される。悩みに合わせて、キルケゴール・ニーチェ・スピノザから一人を選んで読む。',
   },
   {
     key: 'body',

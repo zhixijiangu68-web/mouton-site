@@ -560,3 +560,84 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .mind-door-more{margin-top:auto;padding-top:4px;font-size:.8125rem;color:#e7c983}
 .mind-door-all{margin:0;font-size:.875rem}
 .doc .mind-door-all a,.mind-door-all a{color:#f1ebdf;text-decoration:underline;text-underline-offset:4px}
+
+/* ---------- 有料記事（paid-*.html）のペイウォールと、哲学のテーマページ（3人の哲学者） ---------- */
+.paid-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border:1px solid var(--gold,#b98a32);border-radius:999px;color:#7a5a1c;font-family:Inter,sans-serif;font-size:.75rem;letter-spacing:.1em}
+.paid-sub{font-family:"Noto Serif JP",serif;font-size:clamp(1.0625rem,2vw,1.375rem);line-height:1.8;color:#45473f;margin:-30px 0 26px}
+article blockquote{margin:36px 0;padding:6px 0 6px 22px;border-left:2px solid var(--gold,#b98a32)}
+article blockquote p{margin:0;font-size:1rem;line-height:2.1;color:#3a3c36}
+article .paid-preview-list{padding-left:1.3em;margin:0 0 27px}
+article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;line-height:2;margin:4px 0}
+
+/* 無料パートの終わり：本文がフェードして、販売カードへ */
+.paywall-fade{position:relative;height:120px;margin-top:-120px;background:linear-gradient(rgba(244,241,233,0),rgba(244,241,233,.96));pointer-events:none}
+.paywall{margin:24px 0 0;padding:clamp(26px,5vw,48px);border-radius:14px;background:linear-gradient(160deg,#0b2f97,#1442c4 70%,#2559d6);color:#fff;text-align:center}
+.paywall p{color:#fff;margin:0}
+.paywall-eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.0625rem;opacity:.85}
+.paywall-title{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(1.25rem,2.6vw,1.75rem)!important;line-height:1.6!important;margin:10px 0 6px!important}
+.paywall-price{font-family:"Cormorant Garamond",serif;font-size:clamp(2.25rem,5vw,3rem)!important;line-height:1.3!important;margin:8px 0 4px!important}
+.paywall-note{font-family:Inter,sans-serif;font-size:.8125rem!important;line-height:1.8!important;opacity:.82;margin-top:14px!important}
+.buy-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;margin-top:18px;padding:12px 32px;border-radius:999px;background:#fff;color:#1b1c19;text-decoration:none;font-family:Inter,sans-serif;font-size:1rem;letter-spacing:.04em;transition:transform .3s,background .3s}
+.buy-btn:hover{background:#f8f5ee;transform:translateY(-2px)}
+.buy-btn.is-soon{background:rgba(255,255,255,.18);color:#fff;border:1px dashed rgba(255,255,255,.6);cursor:default;transform:none}
+.buy-btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.other-philosophers{margin:56px 0 0;padding-top:32px;border-top:1px solid rgba(37,39,36,.22)}
+.other-philosophers h2{margin:0 0 22px!important;font-size:1.25rem!important}
+
+/* ---------- 哲学LP ---------- */
+.lp-hero-title{word-break:keep-all}
+.lp-lede{font-size:1.0625rem!important;line-height:2.1!important}
+.lp-worries{list-style:none;padding:0!important;margin:28px 0 8px!important;display:grid;gap:10px}
+.lp-worries li{margin:0!important;padding:14px 18px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:1rem}
+.lp-section{margin-top:72px}
+.lp-section > h2{border-top:0!important;padding-top:0!important;margin-top:0!important}
+
+/* 診断 */
+.lp-quiz{padding:clamp(22px,4vw,40px);border:1px solid var(--line);border-radius:14px;background:#fff}
+.lp-quiz fieldset{border:0;margin:0 0 26px;padding:0}
+.lp-quiz legend{font-family:var(--serif);font-size:1.0625rem;line-height:1.8;margin-bottom:12px;padding:0}
+.lp-quiz-options{display:grid;gap:8px}
+.lp-quiz-options label{display:flex;align-items:flex-start;gap:12px;min-height:48px;padding:12px 16px;border:1px solid var(--line);border-radius:10px;cursor:pointer;font-family:var(--serif);font-size:.9375rem;line-height:1.8;transition:border-color .25s,background .25s}
+.lp-quiz-options label:hover{border-color:var(--blue)}
+.lp-quiz-options input{margin-top:6px;accent-color:var(--blue);flex-shrink:0}
+.lp-quiz-options label:has(input:checked){border-color:var(--blue);background:rgba(20,66,196,.06)}
+.lp-quiz-submit{appearance:none;border:0;min-height:52px;padding:0 30px;border-radius:999px;background:var(--ink);color:var(--paper);font:inherit;font-size:1rem;cursor:pointer}
+.lp-quiz-submit:hover{background:var(--blue)}
+.lp-quiz-submit:focus-visible{outline:2px solid var(--blue);outline-offset:4px}
+.lp-quiz-hint{font-size:.875rem!important;color:var(--muted)!important;margin-top:10px!important}
+.lp-quiz-result{margin-top:24px;padding:22px 24px;border-left:3px solid var(--gold);background:var(--paper)}
+.lp-quiz-result p{margin:0 0 8px}
+.lp-quiz-result a{font-weight:500}
+
+/* 哲学者カード */
+.ph-cards{display:grid;gap:20px}
+.ph-card{display:grid;grid-template-columns:minmax(0,1fr);gap:0;border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line);scroll-margin-top:calc(var(--nav-h) + 16px);transition:box-shadow .4s,transform .4s}
+.ph-card.is-picked{box-shadow:0 0 0 3px var(--blue),0 24px 60px rgba(20,66,196,.18)}
+.ph-card-head{padding:clamp(26px,4vw,40px);color:#fff;background:linear-gradient(160deg,#081f6e,#1442c4 70%,#4f86e0)}
+.ph-card[data-ph="nietzsche"] .ph-card-head{background:linear-gradient(160deg,#2a1a0a,#7a4b16 60%,#b98a32)}
+.ph-card[data-ph="spinoza"] .ph-card-head{background:linear-gradient(160deg,#16261d,#2f5a45 60%,#5f8f74)}
+.ph-card-head p{color:#fff!important;margin:0}
+.ph-name-en{font-family:var(--latin);font-style:italic;font-size:1.125rem!important;opacity:.85}
+.ph-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.75rem,4vw,2.5rem)!important;line-height:1.4!important;margin:4px 0 10px!important;letter-spacing:.06em}
+.ph-for{font-size:.9375rem!important;opacity:.9}
+.ph-card-body{padding:clamp(24px,4vw,40px)}
+.ph-card-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.375rem,3vw,1.875rem);line-height:1.6;margin:0 0 6px;padding:0;border:0}
+.ph-card-sub{color:var(--muted)!important;margin-bottom:18px!important}
+.ph-learn{margin:0 0 22px!important}
+.ph-card-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.ph-card-foot .btn{color:var(--paper)!important}
+.ph-free{margin:14px 0 0!important;font-size:.9375rem!important}
+.paywall-toc{font-size:.9375rem!important;line-height:1.9!important;opacity:.9}
+.paid-back{margin-top:28px}
+.paid-back a{color:var(--blue,#1442c4);text-underline-offset:4px}
+.lp-series{display:inline-flex;align-items:center;min-height:48px;margin-left:12px;text-underline-offset:4px}
+.ph-meta{font-size:.875rem!important;color:var(--muted)!important;margin:0!important}
+.ph-card.featured .ph-card-head{padding-top:clamp(34px,5vw,56px)}
+.ph-featured{display:inline-block;margin-bottom:12px!important;padding:2px 12px;border:1px solid rgba(255,255,255,.7);border-radius:999px;font-family:Inter,sans-serif;font-size:.75rem!important;letter-spacing:.12em}
+@media(min-width:860px){
+ .ph-card.featured{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+ .ph-cards-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+}
+.ph-cards-pair{display:grid;gap:20px}
+.lp-free{padding-top:32px;border-top:1px solid var(--line)}
+@media(prefers-reduced-motion:reduce){.ph-card{transition:none}}

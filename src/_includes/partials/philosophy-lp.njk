@@ -1,0 +1,96 @@
+{#- 哲学のテーマページ（topic-philosophy.html）。記事一覧の代わりに、3人の哲学者の有料記事へ案内する。
+    カードは front matter に `paid` がある記事から作られる（並び順は paid.order）。 -#}
+{%- set paidList = collections.articles | paidCards %}
+  <p class="eyebrow">Philosophy — three answers</p>
+  <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
+  <p>哲学は、遠い昔の難しい学問ではない。いま僕らが抱えている悩みに、何百年も前から本気で向き合ってきた人たちの記録だ。</p>
+  <ul class="lp-worries">
+    <li>本当の自分がわからない。何も決められない。</li>
+    <li>頑張る理由が見つからない。毎日が少しずつ虚しい。</li>
+    <li>怒りや嫉妬に振り回されて、あとで自己嫌悪になる。</li>
+  </ul>
+  <p>この3つの悩みに、3人の哲学者がそれぞれ違う答えを出している。キルケゴール、ニーチェ、スピノザ。原典の書名と節番号を添えて、「悩み → 哲学者の答え → 今日からできること」の順に一本ずつまとめた。</p>
+
+  <section class="lp-section" aria-labelledby="lp-quiz-heading">
+    <h2 id="lp-quiz-heading">30秒で選ぶ</h2>
+    <p>迷ったら、3つの質問に答えてほしい。いまの自分に近い哲学者を案内する。</p>
+    <form class="lp-quiz" id="lp-quiz">
+      <fieldset><legend>Q1. 眠る前、頭に浮かびやすいのは？</legend><div class="lp-quiz-options">
+        <label><input type="radio" name="q0" value="kierkegaard"><span>「このままの選択でいいのか」という迷い</span></label>
+        <label><input type="radio" name="q0" value="nietzsche"><span>「毎日、何のためにやっているんだろう」という虚しさ</span></label>
+        <label><input type="radio" name="q0" value="spinoza"><span>今日あった嫌なことへの怒りや後悔</span></label>
+      </div></fieldset>
+      <fieldset><legend>Q2. SNSを見たあと、残りやすい気持ちは？</legend><div class="lp-quiz-options">
+        <label><input type="radio" name="q1" value="kierkegaard"><span>自分だけ道が決まっていない焦り</span></label>
+        <label><input type="radio" name="q1" value="nietzsche"><span>全部どうでもよく見えてくる白け</span></label>
+        <label><input type="radio" name="q1" value="spinoza"><span>「あの人ずるい」という嫉妬</span></label>
+      </div></fieldset>
+      <fieldset><legend>Q3. いちばん欲しいのは？</legend><div class="lp-quiz-options">
+        <label><input type="radio" name="q2" value="kierkegaard"><span>「これでいく」と決める覚悟</span></label>
+        <label><input type="radio" name="q2" value="nietzsche"><span>明日を楽しみにできる理由</span></label>
+        <label><input type="radio" name="q2" value="spinoza"><span>感情に振り回されない落ち着き</span></label>
+      </div></fieldset>
+      <button class="lp-quiz-submit" type="submit">自分に合う哲学者を見る</button>
+      <p class="lp-quiz-hint">答えはこのページの中だけで使い、どこにも送らない。</p>
+      <div class="lp-quiz-result" id="lp-quiz-result" role="status" aria-live="polite" hidden></div>
+    </form>
+  </section>
+
+  <section class="lp-section" aria-labelledby="lp-cards-heading">
+    <h2 id="lp-cards-heading">3人の哲学者</h2>
+    <div class="ph-cards">
+    {%- for a in paidList %}
+    {%- set p = a.data.paid %}
+    {%- set slug = p.free if p.free else a.page.fileSlug %}
+    {%- if loop.first %}{% else %}{% if loop.index == 2 %}<div class="ph-cards-pair">{% endif %}{% endif %}
+      {%- set key = a.page.fileSlug | replace('paid-', '') %}
+      <article class="ph-card{{ ' featured' if loop.first }}" id="{{ key }}" data-ph="{{ key }}" data-title="{{ p.title }}" data-name="{{ p.philosopher }}" data-rise>
+        <div class="ph-card-head">
+          {% if loop.first %}<p class="ph-featured">まずはここから</p>{% endif %}
+          <p class="ph-name-en">{{ p.en }}</p>
+          <p class="ph-name">{{ p.philosopher }}</p>
+          <p class="ph-for">{{ p.years }}<br>こんな人に：{{ p.worry }}</p>
+        </div>
+        <div class="ph-card-body">
+          <h3 class="ph-card-title">{{ p.title }}</h3>
+          <p class="ph-card-sub">{{ p.subtitle }}</p>
+          <p>{{ p.excerpt }}</p>
+          <ul class="ph-learn">{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}</ul>
+          <div class="ph-card-foot">
+            <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
+            <p class="ph-meta">全文 約{{ p.minutes }}分・¥{{ p.price }}</p>
+          </div>
+          {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}
+        </div>
+      </article>
+    {%- if loop.last and loop.length > 1 %}</div>{% endif %}
+    {%- endfor %}
+    </div>
+  </section>
+
+  <section class="lp-section lp-free" aria-labelledby="lp-free-heading">
+    <h2 id="lp-free-heading">まずは無料で</h2>
+    <p>有料記事の前に、ムートンの考え方を知りたい人へ。哲学・生き方の無料記事も、記事ページで読める。</p>
+    <p><a class="btn btn-dark" href="journal.html">無料の記事を読む <span aria-hidden="true">→</span></a> <a class="lp-series" href="series.html">連載「哲学者に聞く」</a></p>
+  </section>
+  <script>
+  (()=>{
+   const form=document.getElementById('lp-quiz'),out=document.getElementById('lp-quiz-result');
+   if(!form)return;
+   form.addEventListener('submit',e=>{
+    e.preventDefault();
+    const score={kierkegaard:0,nietzsche:0,spinoza:0};let answered=0;
+    form.querySelectorAll('input:checked').forEach(i=>{score[i.value]++;answered++;});
+    out.hidden=false;
+    if(!answered){out.textContent='どれか一つでも選ぶと、おすすめを表示する。迷ったら、まずはキルケゴールから。';return;}
+    const pick=Object.keys(score).reduce((a,b)=>score[b]>score[a]?b:a,'kierkegaard');
+    const card=document.getElementById(pick);
+    if(!card)return;
+    out.replaceChildren();
+    const p1=document.createElement('p');p1.append('いまの自分に近いのは、');const b=document.createElement('strong');b.textContent=card.dataset.name;p1.append(b,'。');
+    const p2=document.createElement('p');const a=document.createElement('a');a.href='#'+pick;a.textContent='「'+card.dataset.title+'」を見る →';p2.append(a);
+    out.append(p1,p2);
+    document.querySelectorAll('.ph-card').forEach(c=>c.classList.toggle('is-picked',c===card));
+   });
+  })();
+  </script>
