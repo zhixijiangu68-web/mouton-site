@@ -6,7 +6,7 @@ export default {
   // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
   url: 'https://moutonarchive.com/',
-  description: 'ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。',
+  description: 'MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。',
   author: {
     name: 'ムートン',
     x: 'kodoku__alone',

@@ -7,10 +7,10 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>制作 — ムートン</title>
-<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <link rel="canonical" href="https://moutonarchive.com/making.html">
 <meta property="og:title" content="制作 — ムートン">
-<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -31,9 +31,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css?v=20261015-mind">
+<link rel="stylesheet" href="site.css?v=20261015-count">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js?v=20261015-mind" defer></script>
+<script src="site.js?v=20261015-count" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -48,8 +48,6 @@
       <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
       <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
       <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
-      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
-      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
       <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
     </ul>
   </nav>
@@ -94,6 +92,17 @@
         </dl>
         <a class="mk-more" href="making-diary.html">DIARY の詳しい記録 <span aria-hidden="true">→</span></a>
       </article>
+      <article class="mk-card" id="count"><a class="mk-thumb" href="making-count.html" tabindex="-1" aria-hidden="true"><img src="images/making/count.jpg" alt="" loading="lazy" width="390" height="844"></a>
+        <div class="mk-top"><span>PROJECT 004 · GAME / 落ちものパズル</span><span class="mk-state">制作中</span></div>
+        <h3>MOUTON・COUNT</h3>
+        <p class="mk-lead">羊を数える、眠れない夜のパズル。</p>
+        <dl class="mk-summary">
+          <dt>目的</dt><dd>眠れない夜に、羊を数えながら遊べるやさしい落ちものパズルを作る。</dd>
+          <dt>現在地</dt><dd>フリープレイ・クエスト15の夜・着せかえまで遊べる。AndroidとiPhoneのアプリが組み上がることを確かめた。</dd>
+          <dt>次の一歩</dt><dd>TestFlightで試し、App StoreとGoogle Playに出す。</dd>
+        </dl>
+        <a class="mk-more" href="making-count.html">MOUTON・COUNT の詳しい記録 <span aria-hidden="true">→</span></a>
+      </article>
       <article class="mk-card" id="site"><a class="mk-thumb" href="making-site.html" tabindex="-1" aria-hidden="true"><img src="images/making/site.jpg" alt="" loading="lazy" width="390" height="844"></a>
         <div class="mk-top"><span>PROJECT 003 · WEB / このサイト</span><span class="mk-state">毎日更新</span></div>
         <h3>MOUTON</h3>
@@ -120,6 +129,10 @@
     
     
     <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-15">2026.10.15</time>
+        <div><a class="mk-tag" href="making-count.html">MOUTON・COUNT</a><h3>羊を<wbr>数える<wbr>落ちもの<wbr>パズルを<wbr>作った。</h3><p>眠れない夜に羊の群れを並べる「MOUTON・COUNT」。ルール・音・クエスト・着せかえまで作り、Android と iPhone のアプリが組み上がることを確かめた。</p></div>
+      </li>
       <li>
         <time datetime="2026-10-13">2026.10.13</time>
         <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>3枚の<wbr>アートで、<wbr>記事への<wbr>入口が<wbr>できた。</h3><p>Philosophy / Body / Food &amp; Scienceの3テーマを大きく表示。生成したアートをカード用に調整し、「今日は、何が気になる？」の見出しは静止表示にした（PR #110・#112・#113）。</p></div>
@@ -278,7 +291,7 @@
 </nav>
 <p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
 
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>
 
 </body>

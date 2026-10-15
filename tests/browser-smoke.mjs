@@ -235,8 +235,8 @@ test('MOUTON browser smoke', async t => {
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
           await making.click();
           await page.waitForURL('**/making.html');
-          for (const project of ['KIOKU', 'DIARY', 'MOUTON']) {
-            assert.equal(await page.locator('.mk-card h3').filter({ hasText: project }).count(), 1,
+          for (const project of ['KIOKU', 'DIARY', 'MOUTON・COUNT', 'MOUTON']) {
+            assert.equal(await page.locator('.mk-card h3').filter({ hasText: new RegExp('^' + project + '$') }).count(), 1,
               label + ': missing ' + project + ' project');
           }
         });
@@ -251,8 +251,8 @@ test('MOUTON browser smoke', async t => {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('[aria-labelledby="mk-projects"] details').evaluate(el => el.open), true, 'projects open by default');
-          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
-          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
+          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 4);
+          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['count', 'MOUTON・COUNT'], ['site', 'MOUTON']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
             assert.equal(await card.locator('h3').textContent(), name);
             assert.deepEqual(await card.locator('dl.mk-summary dt').allTextContents(), ['目的', '現在地', '次の一歩']);

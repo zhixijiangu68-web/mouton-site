@@ -1,8 +1,8 @@
 ---
 layout: base.njk
 permalink: index.html
-title: "ムートン — Personal Archive"
-description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
+title: "ムートン — Philosophy of Life"
+description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。"
 bodyClass: site
 assetVersion: "20261015-intro-art-2"
 extraCss: [home.css, home-static-background.css, intro-art.css]
@@ -14,7 +14,7 @@ extraCss: [home.css, home-static-background.css, intro-art.css]
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
   <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
-  <p class="intro-sub">A personal archive — since 2026</p>
+  <p class="intro-sub">Philosophy of life — since 2026</p>
   <span class="intro-skip-hint">タップしてはじめる</span>
   <span class="intro-bar"></span>
 </div>
@@ -26,9 +26,9 @@ extraCss: [home.css, home-static-background.css, intro-art.css]
   <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
-      <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
+      <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       {#- 見出しは画面に出さない（読み上げ・検索用に h1 だけ残す） #}
-      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 哲学と科学で、日常の見え方を変える</h1>
+      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 生き方が変われば、行動が変わる。</h1>
       <nav class="cover-choice-grid" aria-label="3つのテーマから読む">
         <a class="cover-choice-card cover-choice-card--think" id="think" href="topic-philosophy.html">
           <span class="cover-choice-art" aria-hidden="true"></span>

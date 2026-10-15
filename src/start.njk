@@ -1,18 +1,10 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
-assetVersion: "20261015-mind"
+assetVersion: "20261015-brand"
 permalink: start.html
 title: "はじめての方へ — ムートン"
-description: "ムートンをはじめて読む人のための案内です。身体や食事より先に、まず考え方を定める。キルケゴールとニーチェから始める哲学の入り口と、気になることから選べる記事、最初に読んでほしい5本をまとめています。"
-paths:
-  - { title: "生き方について考えたい", text: "キルケゴール、ニーチェ、ストア派、カミュ、サルトル。", href: "series.html#thinkers", label: "連載「哲学者に聞く」" }
-  - { title: "見た目の清潔感を整えたい", text: "第一印象、匂い、口臭、日焼け。", href: "series.html#clean", label: "連載「清潔感を、確かめる」" }
-  - { title: "仕事やお金で迷っている", text: "辞めたい、転職、年収、お金の本。", href: "series.html#job", label: "連載「転職を考える」" }
-  - { title: "健康の「本当？」を知りたい", text: "コーヒー、ダークチョコ、オリーブ油。", href: "series.html#food-check", label: "連載「その健康法、本当？」" }
-  - { title: "よく眠りたい", text: "昼寝、寝だめ、朝型と夜型、寝室。", href: "series.html#sleep", label: "連載「眠りを確かめる」" }
-  - { title: "変わりたい、続けたい", text: "セルフイメージ、目標と仕組み、恐怖。", href: "series.html#habits", label: "連載「自分を変える仕組み」" }
-firstReads: ["kierkegaard", "nietzsche", "stoicism", "first-impression-sleep", "salary-change"]
+description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランドです。外側から飾るのではなく、内側から自分自身をつくっていく。正しい生き方は押しつけず、考えるための問いと試すための方法を置いています。"
 mindReads: ["kierkegaard", "nietzsche"]
 ---
 {% include "partials/nav.njk" %}
@@ -21,12 +13,16 @@ mindReads: ["kierkegaard", "nietzsche"]
   <p class="eyebrow">Start here</p>
   <h1 class="doc-title">はじめての方へ</h1>
 
-  {#- 最初に哲学へ誘う。身体・食事の記事より先に、考え方を定めてもらう。 #}
+  {#- ブランドメッセージ。正しい生き方を押しつけず、考える問いと試す方法を置く（BRAND.md）。 #}
   <section class="mind-door" aria-labelledby="mind-door-title">
-    <p class="mind-door-kicker">Mindset first</p>
-    <h2 class="mind-door-title" id="mind-door-title">マインドセットが、全てだ。</h2>
-    <p class="mind-door-text">身体も食事も大切だ。けれど、マインドが定まっていなければ、何も始まらない。</p>
-    <p class="mind-door-text"><strong>キルケゴールとニーチェから始めなさい。話は、それからだ。</strong></p>
+    <p class="mind-door-kicker">MOUTON — Philosophy of Life</p>
+    <h2 class="mind-door-title" id="mind-door-title">生き方が変われば、<br>行動が変わる。</h2>
+    <p class="mind-door-text mind-door-lines">行動が変われば、習慣が変わる。<br>習慣が変われば、やがて外見や日常にも変化が表れる。</p>
+    <p class="mind-door-text">MOUTONは、哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。人を外側から飾るのではなく、内側から自分自身をつくっていく。</p>
+    <p class="mind-door-text">正しい生き方を、押しつけることはしない。考えるための問いと、試すための方法を置いておく。どう生きるかを選ぶのは、いつも自分自身だ。</p>
+    <hr class="mind-door-rule">
+    <p class="mind-door-text">身体も食事も大切だ。でも僕は、その前に考え方を整えることから始めた。</p>
+    <p class="mind-door-text"><strong>入口に選ぶなら、キルケゴールとニーチェ。答えを渡すためではなく、自分で選ぶための問いとして。</strong></p>
     <div class="mind-door-reads">
       {%- for a in collections.articles | bySlugs(mindReads) %}
       <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
@@ -40,38 +36,38 @@ mindReads: ["kierkegaard", "nietzsche"]
     <p class="mind-door-all"><a href="topic-philosophy.html">哲学・生き方の記事をすべて見る <span aria-hidden="true">→</span></a></p>
   </section>
 
+  {#- 動画を探し回るより、一冊を読んで試す。販売状態は site.js と記事の front matter から出す。 #}
+  {%- set paidList = collections.articles | paidCards %}
+  {%- set paidLive = false %}{% for a in paidList %}{% if a.data.paid.url %}{% set paidLive = true %}{% endif %}{% endfor %}
+  {%- set cs = site.product.cleanScience %}
+  <section class="mind-act" aria-labelledby="mind-act-title">
+    <p class="mind-door-kicker">Practice</p>
+    <h2 class="mind-act-title" id="mind-act-title">動画を探し回るより、<br>一冊を読んで、試してみる。</h2>
+    <p class="mind-act-text">僕の本は、そのための道具だ。</p>
+    <div class="mind-act-books">
+      <a class="mind-act-book" href="topic-philosophy.html">
+        <span class="mind-door-step">MIND / 考え方</span>
+        <span class="mind-act-book-title">3人の哲学者に学ぶ</span>
+        <span class="mind-act-book-text">{% for a in paidList %}{{ a.data.paid.philosopher }}{% if not loop.last %}・{% endif %}{% endfor %}。悩みから入る有料記事{{ paidList.length }}本。</span>
+        <span class="mind-act-book-meta">note・各{{ paidList[0].data.paid.price if paidList.length else 500 }}円 / {{ 'noteで公開中' if paidLive else 'noteで公開準備中' }}</span>
+      </a>
+      <a class="mind-act-book" href="cleanliness-science.html">
+        <span class="mind-door-step">BODY / 外見と日常</span>
+        <span class="mind-act-book-title">清潔感の科学</span>
+        <span class="mind-act-book-text">肌・睡眠・髪とヒゲ・口元・匂い・服。研究から、何をどの順で整えるかを決める一冊。</span>
+        <span class="mind-act-book-meta">PDF・{{ cs.pages }}ページ・{{ cs.priceText }}円（税込）/ {{ 'BOOTHで販売中' if cs.checkoutUrl else '発売準備中' }}</span>
+      </a>
+    </div>
+    <p class="mind-act-close">人生は短い。<br>小さくても、今日から始めてみてほしい。</p>
+  </section>
+
   <p>ムートンは、気になったことを調べ、試し、作り、その過程を記録していく個人のサイトです。哲学や身体、食事と科学についても、研究や公的な情報を確かめながら記事を書いています。記事の作り方は<a href="editorial.html">編集方針</a>にまとめています。</p>
   <p><strong>作る。記録する。残していく。</strong> KIOKUや日記アプリ、このサイトも、日々の試行錯誤から生まれた制作物です。完成したものだけでなく、制作の途中も残しています。</p>
   <p><a class="btn btn-dark" href="making.html">作っているものを見る <span aria-hidden="true">→</span></a></p>
 
-  <section class="quiz-more doc-quiz" aria-labelledby="start-quiz"><p class="quiz-more-title" id="start-quiz">まずは1問 <span>○×クイズ</span></p>
-  <div class="qloop" data-qloop data-prefer="{% for s in firstReads %}{{ s }},{% endfor %}"></div></section>
-
-  <h2 class="guide-group-title">気になることから選ぶ</h2>
-  <div class="start-paths">
-    {%- for p in paths %}
-    <a class="start-path" href="{{ p.href }}"><span class="start-path-title">{{ p.title }}</span><span class="start-path-text">{{ p.text }}</span><span class="start-path-more">{{ p.label }} <span aria-hidden="true">→</span></span></a>
-    {%- endfor %}
-  </div>
-
-  <h2 class="guide-group-title">最初に読んでほしい5本</h2>
-  <div class="topic-list">
-    {%- for a in collections.articles | bySlugs(firstReads) %}
-    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
-      <span class="topic-date">{{ loop.index }}</span>
-      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
-      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
-      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
-    </a>
-    {%- endfor %}
-  </div>
-
-  <h2 class="guide-group-title">買う前に読む</h2>
-  <p>食べ物、身体のケア、本について、選ぶときに何を見ればいいかをまとめた「選び方」の記事があります。</p>
-  <p><a class="btn btn-dark" href="guides.html">選び方の記事を見る <span aria-hidden="true">→</span></a> <a class="btn btn-outline" href="quiz.html">○×クイズ10問 <span aria-hidden="true">→</span></a></p>
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-map.njk" %}
   {% include "partials/footer-links.njk" %}
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>

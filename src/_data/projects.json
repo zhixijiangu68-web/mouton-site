@@ -45,6 +45,31 @@
     "url": "making-diary.html"
   },
   {
+    "label": "PROJECT 004",
+    "slug": "count",
+    "name": "MOUTON・COUNT",
+    "kind": "GAME / 落ちものパズル",
+    "status": "制作中",
+    "purpose": "眠れない夜に、羊を数えながら遊べるやさしい落ちものパズルを作る。",
+    "current": "フリープレイ・クエスト15の夜・着せかえまで遊べる。AndroidとiPhoneのアプリが組み上がることを確かめた。",
+    "nextShort": "TestFlightで試し、App StoreとGoogle Playに出す。",
+    "text": "羊を数える、眠れない夜のパズル。",
+    "lead": "羊を数える、眠れない夜のパズル。",
+    "about": "落ちてくる羊の群れを並べ、横一列がそろうと羊が柵を跳んで数えられる落ちものパズル。22時から数えはじめて、160匹で朝になる。列がそろっても残る黒い羊と、それが生む「れんさ」、4つのアイテム、15の夜のクエストがある。ブラウザで作り、iPhone・Androidのアプリにしている。",
+    "done": [
+      "落ちものパズルの試作を作った（羊の群れ・黒い羊・れんさ・連続ボーナス・夜空から朝へ変わる空）",
+      "音楽・効果音・振動を入れ、操作（左右・タップで回す・長押し・はらって落とす）を整えた",
+      "クエストモード（15の夜）、ウールで着せかえ、羊飼いランク・実績・月のカレンダーを作った",
+      "4つのアイテム（牧羊犬・入れ替え・ゆっくり・笛）を入れた",
+      "アプリの形にし、GitHubでAndroid・iPhoneのアプリが組み上がることを確かめた。名前を「MOUTON・COUNT」にした"
+    ],
+    "next": "Macを使わずにiPhoneのTestFlightへ送り、実機で試す。ストアの説明文とプライバシーポリシーを仕上げて、App StoreとGoogle Playに出す。",
+    "image": "images/making/count.jpg",
+    "video": "",
+    "caption": "MOUTON・COUNT を遊んでいるところ（連続ボーナスの最中）",
+    "audio": ""
+  },
+  {
     "label": "PROJECT 003",
     "slug": "site",
     "name": "MOUTON",
