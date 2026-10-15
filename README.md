@@ -12,6 +12,7 @@
 本サイトは **MOUTON Personal Brand Project** として、ムートンという名前・思想・作品群の長期的なブランド価値向上を目指します。
 
 - [ブランド方針（BRAND.md）](BRAND.md) — 世界観・表現・判断基準
+- [商品起点の事業方針（2026-10-15）](docs/product-first-strategy-20261015.md) — 誰の悩みを何円で解決するか、初回有料購入の検証、商品完成→販売準備→集客の順序
 - [プロジェクト定義書（docs/project-charter.md）](docs/project-charter.md) — 目的・成果物・開発優先順位・品質管理・成功指標
 - [要件定義書（REQUIREMENTS.md）](REQUIREMENTS.md) — 必要ページ、機能、計測、非機能、除外項目、受け入れ条件
 - [基本設計書（DESIGN.md）](DESIGN.md) — 情報構造、画面設計、デザインルール、利用者導線、計測データの流れ
