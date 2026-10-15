@@ -79,12 +79,12 @@
 <link rel="preload" as="style" href="{{ fontsUrl }}">
 <link rel="stylesheet" href="{{ fontsUrl }}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="{{ fontsUrl }}"></noscript>
-<link rel="stylesheet" href="{{ root }}site.css">
+<link rel="stylesheet" href="{{ root }}site.css{% if assetVersion %}?v={{ assetVersion }}{% endif %}">
 {%- for css in extraCss %}
 <link rel="stylesheet" href="{{ root }}{{ css }}">
 {%- endfor %}
 <link rel="stylesheet" href="{{ root }}design-version.css">
-<script src="{{ root }}site.js" defer></script>
+<script src="{{ root }}site.js{% if assetVersion %}?v={{ assetVersion }}{% endif %}" defer></script>
 <script src="{{ root }}quiz-loop.js" defer></script>
 {%- if isArticle %}
 <script src="{{ root }}article-share.js" defer></script>

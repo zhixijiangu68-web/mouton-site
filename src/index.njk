@@ -4,6 +4,7 @@ permalink: index.html
 title: "ムートン — Personal Archive"
 description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
 bodyClass: site
+assetVersion: "20261015-menu-2"
 extraCss: [home.css]
 ---
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
@@ -61,18 +62,6 @@ extraCss: [home.css]
         <a href="start.html">はじめての方へ <span aria-hidden="true">→</span></a>
         <a href="en/index.html" hreflang="en" lang="en">English <span aria-hidden="true">→</span></a>
       </p>
-    </div>
-    <div class="hero-ticker" aria-label="最近の記事">
-      <span class="hero-ticker-label">Now reading</span>
-      <div class="hero-ticker-track">
-        {%- for copy in [0, 1] %}
-        <ul class="hero-ticker-list"{% if copy %} aria-hidden="true"{% endif %}>
-          {%- for a in collections.articles | head(12) %}
-          <li><a href="{{ a.page.fileSlug }}.html"{% if copy %} tabindex="-1"{% endif %}>{{ a.data.guide.title if a.data.guide else (a.data.journal.title if a.data.journal else a.data.headline) }}</a></li>
-          {%- endfor %}
-        </ul>
-        {%- endfor %}
-      </div>
     </div>
   </section>
 
