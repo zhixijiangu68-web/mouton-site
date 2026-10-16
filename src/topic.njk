@@ -1,21 +1,24 @@
 ---
 layout: base.njk
-bodyClass: site doc-page
+extraCss: ["philosophy-lp.css?v=20261016-1"]
 pagination:
   data: topics
   size: 1
   alias: t
 permalink: "topic-{{ t.key }}.html"
 eleventyComputed:
-  title: "{{ '3人の哲学者から選ぶ' if t.key == 'philosophy' else t.label + 'の記事' }} — ムートン"
+  bodyClass: "{{ 'site doc-page ph-landing' if t.key == 'philosophy' else 'site doc-page' }}"
+  title: "{{ '自分で選ぶための哲学' if t.key == 'philosophy' else t.label + 'の記事' }} — ムートン"
   description: "{{ t.lpIntro if t.lpIntro else t.intro }}"
 ---
 {%- set list = collections.articles | inTopic(t.key) %}
-{% include "partials/nav.njk" %}
+{%- include "partials/nav.njk" %}
+{%- if t.key != "philosophy" %}
 <div class="doc-cover ph-{{ t.ph }}" data-nav="dark"{% bgImage "images/cover-" + t.ph + ".jpg" %}></div>
+{%- endif %}
 <main class="doc topic" data-nav="light" data-nav-solid="light">
 {%- if t.key == "philosophy" %}
-  {% include "partials/philosophy-lp.njk" %}
+{%- include "partials/philosophy-lp.njk" %}
 {%- else %}
   <p class="eyebrow">{{ t.en }}</p>
   <h1 class="doc-title">{{ t.label }}</h1>
@@ -36,14 +39,16 @@ eleventyComputed:
   <section class="quiz-more doc-quiz" aria-labelledby="doc-quiz-heading"><p class="quiz-more-title" id="doc-quiz-heading">このテーマから、1問 <span>○×クイズ</span></p>
   <div class="qloop" data-qloop data-prefer="{% for a in list %}{{ a.page.fileSlug }},{% endfor %}"></div></section>
 {%- endif %}
+{%- if t.key != "philosophy" %}
   <nav class="topic-others" aria-label="ほかのテーマ">
     {%- for o in topics %}{% if o.key != t.key %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endif %}{% endfor %}
     <a href="journal.html">すべての記事</a>
   </nav>
-  {% include "partials/newsletter.njk" %}
+{%- include "partials/newsletter.njk" %}
+{%- endif %}
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
-  {% include "partials/footer-map.njk" %}
-  {% include "partials/footer-links.njk" %}
+{%- if t.key != "philosophy" %}{% include "partials/footer-map.njk" %}{% endif %}
+{%- include "partials/footer-links.njk" %}
   <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>

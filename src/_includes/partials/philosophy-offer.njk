@@ -1,0 +1,16 @@
+<section class="ph-offer" id="offer" aria-labelledby="paywall-title">
+  <p class="ph-kicker">READ &amp; PRACTICE</p>
+  <h2 id="paywall-title">この先を読む前に。</h2>
+  <p>{{ paid.practiceGoal }}</p>
+  <dl class="ph-offer-facts"><dt>形式</dt><dd>noteで全文を読む有料記事</dd><dt>読む時間</dt><dd>全文約{{ paid.minutes }}分（実践の時間は別）</dd><dt>{{ '価格' if paid.url else '公開予定価格' }}</dt><dd>{{ paid.price }}円 / この記事1本</dd><dt>含まれないもの</dt><dd>紙の本・PDF・個別相談・添削</dd></dl>
+{%- if paid.url %}
+  <a class="btn ph-primary" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer" data-ph-action="checkout" data-ph-product="{{ page.fileSlug | replace('paid-', '') }}" data-ph-placement="offer">noteで購入条件を確認する <span aria-hidden="true">↗</span></a>
+  <p class="ph-note">購入・全文の閲覧はnoteで行います。決済前に価格と返金の可否・条件をご確認ください。</p>
+{%- else %}
+  <p class="ph-offer-status"><strong>有料全文は公開準備中です。</strong><br>まだ購入できません。公開後、この場所からnoteの購入ページへ進めます。</p>
+  <a href="topic-philosophy.html#sample">まずは無料の問いを試してみる <span aria-hidden="true">→</span></a>
+{%- endif %}
+  <p class="ph-note">自分の考えを整理するための記事です。悩みの解消や変化を保証するものではありません。</p>
+  <p><a href="topic-philosophy.html#faq">購入前のよくある質問</a> <span aria-hidden="true">／</span> <a href="contact.html">お問い合わせ</a></p>
+</section>
+<script src="philosophy-lp.js?v=20261016-1" defer></script>

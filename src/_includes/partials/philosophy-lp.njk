@@ -1,65 +1,96 @@
-{#- 哲学のテーマページ（topic-philosophy.html）。記事一覧の代わりに、3人の哲学者の有料記事へ案内する。
-    カードは front matter に `paid` がある記事から作られる（並び順は paid.order）。 -#}
 {%- set paidList = collections.articles | paidCards %}
-  <p class="eyebrow">Philosophy — three answers</p>
-  <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
-  <p>哲学は、遠い昔の難しい学問ではない。いま僕らが抱えている悩みに、何百年も前から本気で向き合ってきた人たちの記録だ。</p>
-  <ul class="lp-worries">
-    <li>本当の自分がわからない。何も決められない。</li>
-    <li>頑張る理由が見つからない。毎日が少しずつ虚しい。</li>
-    <li>怒りや嫉妬に振り回されて、あとで自己嫌悪になる。</li>
+{%- set first = paidList[0] %}
+{%- set p = first.data.paid %}
+<header class="ph-intro" data-nav="dark" data-nav-solid="dark">
+  <p class="ph-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
+  <p class="ph-small-label">考え方から、今日の一歩へ。</p>
+  <h1 class="doc-title lp-hero-title">正解を探して、<br>決められないあなたへ。</h1>
+  <p class="ph-lead">人の意見はたくさん読んだ。<br>それでも、自分がどうしたいか分からない。</p>
+  <p>哲学を、自分の迷いを整理する道具に。<br>ムートンは、哲学者の考え方を、日常の場面と小さな実践につなげて届けます。</p>
+  <div class="ph-actions"><a class="btn ph-primary" href="#sample" data-ph-action="sample" data-ph-product="kierkegaard" data-ph-placement="hero">まずは、ひとつ試してみる <span aria-hidden="true">↓</span></a><a href="#kierkegaard">記事の内容と価格を見る</a></div>
+  <p class="ph-status">{% if p.url %}キルケゴールの記事：{{ p.price }}円・全文約{{ p.minutes }}分{% else %}有料全文は公開準備中。無料の冒頭と、このページの問いは今すぐ読めます。{% endif %}</p>
+</header>
+
+<section class="ph-section" aria-labelledby="ph-worry-title">
+  <p class="ph-kicker">01 / YOUR EVERYDAY</p>
+  <h2 id="ph-worry-title">こんなところで、<br>足が止まっていませんか。</h2>
+  <ul class="ph-worry-list">
+    <li>転職や新しい挑戦を考えるたび、情報を集めては先送りしてしまう。</li>
+    <li>「どう思われるか」が気になって、自分の希望を後回しにする。</li>
+    <li>失敗しない選択を探しているうちに、今日も何も決められない。</li>
   </ul>
-  <p>この3つの悩みに、3人の哲学者がそれぞれ違う答えを出している。キルケゴール、ニーチェ、スピノザ。原典の書名と節番号を添えて、「悩み → 哲学者の答え → 今日からできること」の順に一本ずつまとめた。</p>
+  <p>目指すのは、不安をゼロにすることではありません。何を恐れ、何を大切にしたいのかを言葉にして、次に試すことを考える。その入口として、まずキルケゴールを紹介します。</p>
+</section>
 
-  <section class="lp-section" aria-labelledby="lp-cards-heading">
-    <h2 id="lp-cards-heading">3人の哲学者</h2>
-    <div class="ph-cards">
-    {%- for a in paidList %}
-    {%- set p = a.data.paid %}
-    {%- set slug = p.free if p.free else a.page.fileSlug %}
-    {%- if loop.first %}{% else %}{% if loop.index == 2 %}<div class="ph-cards-pair">{% endif %}{% endif %}
-      {%- set key = a.page.fileSlug | replace('paid-', '') %}
-      <article class="ph-card{{ ' featured' if loop.first }}" id="{{ key }}" data-ph="{{ key }}" data-title="{{ p.title }}" data-name="{{ p.philosopher }}" data-rise>
-        <div class="ph-card-head">
-          {%- set localImg = ["images/portraits/" + key + ".jpg"] | firstImage %}
-          <figure class="ph-portrait">
-            <img src="{{ localImg if localImg else 'https://commons.wikimedia.org/wiki/Special:FilePath/' + p.portrait.commons + '?width=480' }}" alt="{{ p.philosopher }}の肖像" width="240" height="300" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-            <span class="ph-portrait-mark" aria-hidden="true">{{ p.philosopher | first }}</span>
-          </figure>
-          <div class="ph-card-id">
-          {% if loop.first %}<p class="ph-featured">まずはここから</p>{% endif %}
-          <p class="ph-name-en">{{ p.en }}</p>
-          <p class="ph-name">{{ p.philosopher }}</p>
-          <p class="ph-for">{{ p.years }}<br>こんな人に：{{ p.worry }}</p>
-          </div>
-        </div>
-        <div class="ph-card-body">
-          <h3 class="ph-card-title">{{ p.title }}</h3>
-          <p class="ph-card-sub">{{ p.subtitle }}</p>
-          <p>{{ p.excerpt }}</p>
-          <ul class="ph-learn">{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}</ul>
-          <div class="ph-card-foot">
-            <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
-            <p class="ph-meta">全文 約{{ p.minutes }}分・¥{{ p.price }}</p>
-          </div>
-          <p class="ph-credit">肖像：{{ p.portrait.credit }}。パブリックドメイン（Wikimedia Commons）</p>
-          {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}
-        </div>
-      </article>
-    {%- if loop.last and loop.length > 1 %}</div>{% endif %}
-    {%- endfor %}
-    </div>
-  </section>
+{%- include "partials/philosophy-sample.njk" %}
 
-  <section class="lp-section lp-free" aria-labelledby="lp-free-heading">
-    <h2 id="lp-free-heading">まずは無料で</h2>
-    <p>有料記事の前に、ムートンの考え方を知りたい人へ。哲学・生き方の無料記事も、記事ページで読める。</p>
-    <p><a class="btn btn-dark" href="journal.html">無料の記事を読む <span aria-hidden="true">→</span></a> <a class="lp-series" href="series.html">連載「哲学者に聞く」</a></p>
-  </section>
-  <script>
-  // 顔写真が読み込めないときは、名前の頭文字に切り替える
-  document.querySelectorAll('.ph-portrait img').forEach(img=>{
-   const fail=()=>img.closest('.ph-portrait').classList.add('is-missing');
-   if(img.complete&&img.naturalWidth===0)fail();else img.addEventListener('error',fail,{once:true});
-  });
-  </script>
+<section class="ph-section" aria-labelledby="ph-method-title">
+  <p class="ph-kicker">03 / HOW TO USE</p>
+  <h2 id="ph-method-title">読んだ言葉を、<br>自分の選択につなげる。</h2>
+  <ol class="ph-steps">
+    <li><span>01</span><div><h3>ひとつの見方を知る</h3><p>哲学者の考えを、悩みに結びつけて読む。気になった箇所は、示された原典をたどれます。</p></div></li>
+    <li><span>02</span><div><h3>自分の場面に置き換える</h3><p>「自分なら、どんなときだろう」。思い当たる出来事を、手元のメモに書いてみる。</p></div></li>
+    <li><span>03</span><div><h3>小さく試して、振り返る</h3><p>記事で紹介する実践から、ひとつ選ぶ。試した後の気づきも、自分の言葉で残してみる。</p></div></li>
+  </ol>
+  <p class="ph-note">各記事の読む時間は約15分が目安。書いたり試したりする時間は別に、自分のペースで取れます。</p>
+</section>
+
+<section class="ph-section" aria-labelledby="ph-products-title">
+  <p class="ph-kicker">04 / CHOOSE YOUR QUESTION</p>
+  <h2 id="ph-products-title">いまの自分に近い、<br>ひとつの悩みから。</h2>
+  <p>3本はそれぞれ独立した記事です。最初から全部を読む必要はありません。</p>
+  <div class="ph-products">
+{%- for a in paidList %}
+{%- set p = a.data.paid %}{% set key = a.page.fileSlug | replace('paid-', '') %}
+    <article class="ph-item{{ ' ph-item-featured' if loop.first }}" id="{{ key }}">
+      <div class="ph-item-identity">
+        <p class="ph-kicker">{{ 'まずはここから / 01' if loop.first else 'もうひとつの入口 / 0' + loop.index }}</p>
+        <p class="ph-item-worry">{{ p.worry }}</p>
+{%- set localImg = ["images/portraits/" + key + ".jpg"] | firstImage %}
+{%- if localImg %}<img src="{{ localImg }}" alt="{{ p.philosopher }}の肖像" width="120" height="150" loading="lazy" decoding="async">{% endif %}
+        <p class="ph-item-name">{{ p.philosopher }}<span>{{ p.en }}</span></p>
+      </div>
+      <div class="ph-item-body">
+        <h3>{{ p.title }}</h3><p>{{ p.subtitle }}</p>
+        <p class="ph-item-goal">{{ p.practiceGoal }}</p>
+        <details class="ph-details"><summary>この記事で扱うこと</summary><ul>{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}<li>日常で試せる、小さな実践</li></ul></details>
+        <p class="ph-price">{{ p.price }}<span>円 / {{ '有料記事' if p.url else '公開予定価格' }}</span></p>
+        <p class="ph-note">全文約{{ p.minutes }}分・noteで読む記事{% if not p.url %}・有料全文は公開準備中{% endif %}</p>
+        <a class="btn ph-primary" href="{{ a.page.fileSlug }}.html" data-ph-action="preview" data-ph-product="{{ key }}" data-ph-placement="product-card">冒頭を無料で読む <span aria-hidden="true">→</span></a>
+{%- if localImg %}<p class="ph-credit">肖像：{{ p.portrait.credit }}／パブリックドメイン（Wikimedia Commons）</p>{% endif %}
+      </div>
+    </article>
+{%- endfor %}
+  </div>
+</section>
+
+<section class="ph-section ph-editorial" aria-labelledby="ph-why-title">
+  <p class="ph-kicker">05 / WHY MOUTON</p>
+  <h2 id="ph-why-title">知ったことを、<br>自分の人生に持ち帰るために。</h2>
+  <p>僕がムートンで届けたいのは、考えるための問いと、試すための方法です。正しい生き方を決めるのは、読んだ人自身。哲学を学ぶ時間が、今日の選択を見直す時間にもなればと思っています。</p>
+  <div class="ph-value-grid">
+    <div><h3>悩みから入る</h3><p>哲学史を順に覚える構成ではなく、いま抱えている迷いから読み始められます。</p></div>
+    <div><h3>出典に戻れる</h3><p>引用・要約には原典の書名や参照箇所を添え、ムートンの解釈や実践の提案と区別します。</p></div>
+    <div><h3>試すところまで考える</h3><p>考え方の説明に、日常の場面と小さな実践を組み合わせます。実際の文章は無料の冒頭で確かめられます。</p></div>
+  </div>
+  <p class="ph-note">専門的な研究書を探している方には、原典や学術的な解説書が向いています。無料の文章を読んで、自分に合うか確かめてみてください。</p>
+  <p><a href="editorial.html">ムートンの編集方針</a> <span aria-hidden="true">／</span> <a href="operator.html">作っている人について</a></p>
+</section>
+
+<section class="ph-section" id="faq" aria-labelledby="ph-faq-title">
+  <p class="ph-kicker">06 / BEFORE YOU READ</p>
+  <h2 id="ph-faq-title">読む前に、気になること。</h2>
+  <details class="ph-details"><summary>哲学の知識がなくても読めますか？</summary><p>予備知識のない方を想定し、日常の悩みから考え方を紹介しています。文章の難しさや雰囲気は、各記事の無料の冒頭で確認できます。</p></details>
+  <details class="ph-details"><summary>無料記事と有料記事は、何が違いますか？</summary><p>無料の入門記事は、その哲学者を知る入口です。有料記事はひとつの悩みに絞り、考え方の解説と日常で試す実践をまとめます。購入前ページに、無料の冒頭と続きの項目を掲載しています。</p></details>
+  <details class="ph-details"><summary>本やPDF、講座が届くのですか？</summary><p>このページで紹介する3本は、noteで全文を読む有料記事です。紙の本、ダウンロード用PDF、個別相談や添削は含みません。このページの問いは、手元の紙やメモアプリで試せます。</p></details>
+  <details class="ph-details"><summary>読むだけで、悩みは解決しますか？</summary><p>悩みの解消や行動の変化を保証するものではありません。自分の状況を整理し、考えるための材料として使う記事です。すぐに答えが出なくても、気になった問いに戻って構いません。</p></details>
+  <details class="ph-details"><summary>購入方法や返金条件は、どこで確認できますか？</summary><p>有料全文が公開されると、各記事の購入前ページからnoteへ進めます。決済前に、noteの商品ページで価格・支払い方法・閲覧方法・返金の可否と条件をご確認ください。公開準備中の記事は、まだ購入できません。</p></details>
+</section>
+
+<section class="ph-closing" data-nav="dark" data-nav-solid="dark" aria-labelledby="ph-close-title">
+  <p class="ph-kicker">ONE SMALL STEP</p>
+  <h2 id="ph-close-title">今日、ひとつ。<br>自分の言葉で考えてみる。</h2>
+  <p>まずは無料の問いから。読み方が合いそうなら、記事の冒頭へ。</p>
+  <div class="ph-actions"><a class="btn ph-primary" href="paid-kierkegaard.html" data-ph-action="preview" data-ph-product="kierkegaard" data-ph-placement="closing">キルケゴールの冒頭を読む <span aria-hidden="true">→</span></a><a href="#sample">無料の問いに戻る</a></div>
+</section>
+<script src="philosophy-lp.js?v=20261016-1" defer></script>

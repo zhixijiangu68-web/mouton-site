@@ -137,3 +137,17 @@ https://moutonarchive.com/cleanliness-science.html?utm_source=x&utm_medium=organ
 - 外部管理者に依存するもの：GA4とSearch Consoleのログイン権限、確認コード、DebugViewの実受信、カスタムディメンション登録、SNSへの公開投稿、商品の購入／登録データ。**この文書の追加だけでは完了しない**。
 
 参考：[Google公式・DebugView](https://support.google.com/analytics/answer/7201382?hl=ja) / [Google公式・カスタムディメンション](https://support.google.com/analytics/answer/14240153?hl=ja)
+
+## 2026-10-16：哲学LPの購入前導線
+
+`philosophy-lp.js` は既存の `gtag` が利用可能な場合だけ、リンクのクリックを送信する。本文・メモ・自由入力は収集しない。
+
+| イベント | 意味 | パラメータ |
+| --- | --- | --- |
+| `philosophy_sample_click` | LP内の無料の問いへ移動する操作 | `product_id`, `placement` |
+| `philosophy_preview_click` | 各商品の無料冒頭へ移動する操作 | `product_id`, `placement` |
+| `philosophy_checkout_click` | 設定済みのnote商品ページへ移動する操作 | `product_id`, `placement` |
+
+いずれも**実購入・読了・成果ではない**。GA4での実受信は未確認。実購入はnote側の確定注文で確認する。現在は3記事の `paid.url` が未設定なので、checkoutリンクは生成されない。価格は既存の各500円を保持し、未公開時は予定価格と表示。
+
+販売開始に残る作業：有料全文の仕上げ・内容照合 → noteの有料範囲、価格、購入条件、閲覧方法の確認 → 公開済み商品URLを該当記事の `paid.url` に設定 → 購入から全文閲覧までの実動作確認。LPだけの変更で販売開始や収益化完了とは扱わない。

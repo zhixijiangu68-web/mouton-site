@@ -123,6 +123,40 @@ test('MOUTON browser smoke', async t => {
       });
     }
 
+    await t.test('philosophy: sample, honest availability, mobile layout and interest events', async () => {
+      for (const width of [320, 390, 1440]) {
+        await checkPage(browser, 'philosophy-' + width, { viewport: { width, height: 900 } }, async page => {
+          await page.goto(origin + '/topic-philosophy.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('h1').count(), 1);
+          assert.equal(await page.locator('.ph-item').count(), 3);
+          assert(await page.locator('.ph-status').innerText().then(text => text.includes('公開準備中')));
+          assert.equal(await page.locator('a[data-ph-action="checkout"]').count(), 0);
+          assert((await page.locator('.ph-intro').evaluate(el => getComputedStyle(el).backgroundImage)).includes('gold-laurel-wide.webp'));
+          await page.waitForFunction(() => document.querySelector('.site-nav').dataset.theme === 'dark');
+          await page.evaluate(() => { window.__phEvents = []; window.gtag = (...args) => window.__phEvents.push(args); });
+          await page.locator('[data-ph-action="sample"]').click();
+          assert.equal(new URL(page.url()).hash, '#sample');
+          await page.locator('.ph-example summary').click();
+          assert.equal(await page.locator('.ph-example').getAttribute('open'), '');
+          assert(await page.locator('.ph-example').innerText().then(text => text.includes('架空の記入例')));
+          assert.deepEqual(await page.evaluate(() => window.__phEvents.map(args => args[1])), ['philosophy_sample_click']);
+          await page.locator('#faq summary').first().click();
+          assert.equal(await page.locator('#faq details').first().getAttribute('open'), '');
+          const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+          assert.ok(sizes.page <= sizes.viewport + 2, 'philosophy LP horizontal overflow');
+          await page.locator('#kierkegaard [data-ph-action="preview"]').click();
+          await page.waitForLoadState('domcontentloaded');
+          assert(new URL(page.url()).pathname.endsWith('/paid-kierkegaard.html'));
+          assert.equal(await page.locator('.ph-offer-status').count(), 1);
+          assert.equal(await page.locator('[data-qloop], [data-lucky]').count(), 0);
+          assert.equal(await page.locator('a[data-ph-action="checkout"]').count(), 0);
+          await page.locator('.ph-preview-status a').click();
+          assert.equal(new URL(page.url()).hash, '#offer');
+          assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), 'paid preview horizontal overflow');
+        });
+      }
+    });
+
     await t.test('mobile: menu opens and closes with Escape', async () => {
       await checkPage(browser, 'mobile-menu', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,

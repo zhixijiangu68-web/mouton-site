@@ -4,10 +4,13 @@ headline: "不安は、自由のめまいである。——キルケゴールに
 description: "本当の自分がわからない、決められない。キルケゴールは不安を「自由のめまい」と呼び、絶望を3つの形に分けた。『死に至る病』『あれか、これか』から、自分を選ぶための考え方と5つの実践をまとめる。"
 date: 2026-10-15
 category: philosophy
+bodyClass: article-page ph-product
+noQuiz: true
+extraCss: ["philosophy-lp.css?v=20261016-1"]
 health: false
 back:
   href: "topic-philosophy.html"
-  text: "3人の哲学者に戻る"
+  text: "哲学の商品案内に戻る"
 related: ["kierkegaard", "paid-nietzsche", "paid-spinoza"]
 paid:
   order: 1
@@ -18,6 +21,7 @@ paid:
   title: "不安は、自由のめまいである。"
   subtitle: "キルケゴールに学ぶ「自分を選ぶ」技術"
   excerpt: "本当の自分がわからない。決められない。その不安は、壊れている証拠ではなく、自由がある証拠だった。"
+  practiceGoal: "選べずに迷う場面を、不安・他人の評価・自分の意志という切り口から考える。何を大切に選びたいか、整理するための記事です。"
   minutes: 15
   price: 500
   free: "kierkegaard"
@@ -41,6 +45,7 @@ styles: |
         <h1>不安は、<br>自由のめまいである。</h1>
         <p class="paid-sub">キルケゴールに学ぶ「自分を選ぶ」技術</p>
         <p class="reading-time">全文は約{{ paid.minutes }}分。ここで読めるのは冒頭の約{{ readMinutes }}分（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        <aside class="ph-preview-status"><p>{{ paid.practiceGoal }}</p><p>{% if paid.url %}有料全文 {{ paid.price }}円{% else %}<strong>有料全文は公開準備中</strong>・予定価格 {{ paid.price }}円{% endif %}。以下は無料の冒頭です。<a href="#offer">内容と購入について</a></p></aside>
         <p class="lead">就職、転職、恋人、住む場所。選ばなければいけないことは山ほどあるのに、どれを選んでも「本当にこれでいいのか」という声が消えない。</p>
         <p>周りを見れば、みんな迷いなく進んでいるように見える。自分だけが、スタートラインで足踏みしている。</p>
         <p><strong>「本当の自分」がわからない。だから、何も決められない。</strong></p>
@@ -61,16 +66,8 @@ styles: |
         <p>キルケゴールは、人が「自分になれない」ときに陥る状態を、驚くほど細かく分けている。そして、そこを抜け出す方法として、<strong>「自分を選ぶ」</strong>という、一見すると奇妙な答えを出した。</p>
         <p>ここから先では、次のことを書いている。</p>
         <ul class="paid-preview-list"><li>「自分がない」状態をキルケゴールが分けた、絶望の3つの形</li><li>なぜSNS時代の僕らは「写し」になりやすいのか</li><li>「何を選ぶか」より先に「選ぶ自分」を選ぶ、という発想</li><li>人生はうしろ向きに理解し、前向きに生きる</li><li>今日からできる、5つの小さな実践</li></ul>
-        <div class="paywall-fade" aria-hidden="true"></div>
-        <section class="paywall" aria-labelledby="paywall-title">
-          <p class="paywall-eyebrow">Continue reading</p>
-          <p class="paywall-title" id="paywall-title">ここから先は有料です</p>
-          <p class="paywall-price">¥{{ paid.price }}</p>
-          <p class="paywall-toc">続き：絶望とは、自分になれないこと／SNS時代の「写し」問題／「何を選ぶか」の前に、「自分を選ぶ」／人生は、うしろ向きに理解され、前向きに生きられる／群衆は、非真理である／今日からできること／おわりに</p>
-          {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
-          <p class="paywall-note">購入と全文の閲覧はnoteで行います。引用には書名と節番号を添えています。</p>
-        </section>
+        {% include "partials/philosophy-offer.njk" %}
         <p class="paid-back"><a href="topic-philosophy.html">ほかの2人の哲学者と比べる →</a></p>
 {% include "partials/article-end.njk" %}
-{% include "partials/reading-next.njk" %}
+
 </article></main>
