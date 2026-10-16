@@ -39,3 +39,18 @@ for (const slug of ['paid-kierkegaard', 'paid-nietzsche', 'paid-spinoza']) {
 }
 if (ph.fulfillmentReady) assert(/^https:\/\//.test(ph.legalUrl || ''), 'fulfillmentReady requires legalUrl');
 console.log('Paid philosophy sales checks passed.');
+// 特定商取引法に基づく表記：必要な欄がすべて埋まるまで legal.html は作らない。埋まったら、必要な項目が出ているか確かめる。
+{
+  const { existsSync } = await import('node:fs');
+  const { default: legal } = await import('../src/_data/legal.js');
+  if (legal.ready) {
+    assert(existsSync('legal.html'), 'legal.html must be built once src/_data/legal.js is complete');
+    const page = read('legal.html');
+    for (const v of [legal.seller, legal.manager, legal.email, legal.payMethods]) assert(page.includes(v), `legal.html is missing: ${v}`);
+    for (const label of ['販売価格', 'お支払い方法', 'お支払いの時期', '商品の引き渡し時期・方法', '返品・返金について', '動作環境']) assert(page.includes(label), `legal.html must include ${label}`);
+  } else {
+    assert(!existsSync('legal.html'), 'legal.html must not be published until src/_data/legal.js is complete');
+    for (const p of Object.values(site.product)) assert(!p.legalUrl || !/legal\.html$/.test(p.legalUrl), 'legalUrl points to legal.html before it exists');
+  }
+  console.log('Legal page checks passed.');
+}
