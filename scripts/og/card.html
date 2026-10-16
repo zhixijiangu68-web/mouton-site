@@ -37,5 +37,11 @@ window.render = ({ title, label, quiz, face, brand = 'ムートン' }) => {
   h.innerHTML = title;
   const len = h.textContent.length;
   h.style.setProperty('--fs', (face ? (len > 40 ? 38 : len > 28 ? 44 : 52) : (len > 80 ? 42 : len > 34 ? 50 : len > 24 ? 58 : 68)) + 'px');
+  // Quiz questions have no phrase breaks (<wbr>). When breaking only at punctuation does not fit, the line used to
+  // break anywhere and could leave a lone "。" or "」". Then let the browser find Japanese phrases and even out the lines.
+  h.style.wordBreak = h.style.textWrap = '';
+  h.style.overflowWrap = 'normal';
+  if (quiz && h.scrollWidth > h.clientWidth) { h.style.wordBreak = 'auto-phrase'; h.style.textWrap = 'balance'; }
+  h.style.overflowWrap = '';
 };
 </script></body></html>
