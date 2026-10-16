@@ -343,3 +343,22 @@ document.addEventListener('click',e=>{
   transport_type:'beacon'
  });
 });
+// 哲学の有料記事：どこで流れが細くなっているかを見るための計測（無料の記事 → 販売ページ → 冒頭を読み終える → note の購入ボタン）。
+// 購入そのものは note の売上で確かめる。クリックを購入と数えない。メールアドレスや書いた文字は送らない。
+(()=>{
+ const send=(name,params)=>{if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({transport_type:'beacon'},params));};
+ const page=(location.pathname.replace(/^.*\//,'').replace(/\.html$/,''))||'index';
+ const where=a=>{for(const c of ['paid-cta','ph-card','lp-worries','change-step','mind-act','reading-next','paid-back']){if(a.closest('.'+c))return c;}return 'link';};
+ document.addEventListener('click',e=>{
+  const a=e.target.closest&&e.target.closest('a[href]');
+  if(!a)return;
+  const m=(a.getAttribute('href')||'').match(/^(paid-[a-z-]+)\.html(?:#.*)?$/);
+  if(m&&m[1]!==page)send('paid_cta_click',{product_id:m[1],source_page:page,placement:where(a)});
+  if(a.classList.contains('buy-btn')&&/^paid-/.test(page))send('paid_buy_click',{product_id:page,source_page:page});
+ });
+ const cut=/^paid-/.test(page)&&document.querySelector('.plp-sample-cut');
+ if(cut&&'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();send('paid_sample_read',{product_id:page});}});
+  io.observe(cut);
+ }
+})();

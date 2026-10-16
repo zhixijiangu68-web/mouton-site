@@ -1,9 +1,11 @@
 {#- 無料の哲学記事の最後に置く、有料記事への案内。
     使い方：{% set ctaSlug = "paid-kierkegaard" %}{% include "partials/paid-cta.njk" %}
-    ctaSlug が空なら、哲学のページ（3人の哲学者から選ぶ）へ案内する。カードの文言は有料記事の front matter `paid` から。 -#}
+    ctaSlug が空なら、哲学のページ（3人の哲学者から選ぶ）へ案内する。カードの文言は有料記事の front matter `paid` から。
+    記事に miniWork（partials/mini-work.njk）があれば、その続きが有料であることを最初に一行で書く。 -#}
 {%- set ctaList = (collections.articles | bySlugs([ctaSlug])) if ctaSlug else [] %}
 {%- set c = ctaList[0] if ctaList.length else null %}
 <aside class="paid-cta" aria-labelledby="paid-cta-title">
+  {%- if miniWork %}<p class="paid-cta-bridge">{{ "「1分だけ、書いてみる」のような書き込みワークを5つ、この有料記事にまとめている。" if c else "「1分だけ、書いてみる」のような書き込みワークを、悩みごとに3本の有料記事にまとめている。" }}</p>{% endif %}
   {%- if c %}
   <p class="paid-cta-kicker">この悩みの続き — {{ c.data.paid.philosopher }}</p>
   <p class="paid-cta-title" id="paid-cta-title">{{ c.data.paid.title }}</p>
