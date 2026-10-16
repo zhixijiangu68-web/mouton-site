@@ -456,7 +456,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .start-path-more{margin-top:auto;padding-top:6px;font-size:.8125rem;color:var(--blue)}
 .start-page .guide-group-title{margin-top:56px}
 /* Footer site map */
-.footer-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 32px;width:min(1040px,100%);margin:0 auto 28px;padding:0 0 28px;border-bottom:1px solid currentColor;border-bottom-color:rgba(127,127,127,.25);text-align:left}
+.footer-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;width:min(1040px,100%);margin:0 auto 28px;padding:0 0 28px;border-bottom:1px solid currentColor;border-bottom-color:rgba(127,127,127,.25);text-align:left}
 .footer-map-h{margin:0 0 10px;font-family:Inter,sans-serif;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;opacity:.65}
 .footer-map ul{margin:0;padding:0;list-style:none}
 .footer-map li{margin:0}
@@ -662,3 +662,18 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 .lp-why-list{margin:22px 0 18px;padding-left:1.4em}
 .doc .lp-why-list li,.lp-why-list li{margin:0 0 14px;line-height:2}
 .lp-why-list strong{display:block;font-weight:600}
+
+/* Free philosophy articles: the card that leads to the paid article (partials/paid-cta.njk) */
+.paid-cta{margin:56px 0 40px;padding:clamp(24px,5vw,40px);border-radius:14px;background:#1b1c19;color:#f1ebdf;text-align:left}
+article .paid-cta p{margin:0;font-family:var(--serif)}
+.paid-cta .paid-cta-kicker{margin:0 0 12px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.2em;color:#e7c983}
+.paid-cta .paid-cta-title{margin:0 0 6px;font-size:clamp(1.3rem,3.6vw,1.75rem);line-height:1.6;color:#f8f5ee}
+.paid-cta .paid-cta-sub{margin:0 0 16px;font-size:.9375rem;line-height:1.8;color:rgba(241,235,223,.8)}
+.paid-cta .paid-cta-text{margin:0 0 22px;font-size:.9375rem;line-height:2;color:#f1ebdf}
+.paid-cta .paid-cta-action{margin:0 0 12px}
+.paid-cta .paid-cta-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 22px;border-radius:999px;background:#e7c983;color:#1b1c19;font:600 .9375rem/1.4 var(--gothic);text-decoration:none}
+.paid-cta .paid-cta-btn:hover{background:#f1d79a}
+.paid-cta .paid-cta-btn:focus-visible{outline:2px solid #f8f5ee;outline-offset:3px}
+.paid-cta .paid-cta-meta{font:400 .75rem/1.7 var(--gothic);color:rgba(241,235,223,.65)}
+.paid-cta .paid-cta-all{margin-top:18px;font-size:.8125rem}
+.paid-cta .paid-cta-all a{color:#f1ebdf;text-decoration:underline;text-underline-offset:4px}

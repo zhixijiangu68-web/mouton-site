@@ -1,0 +1,21 @@
+{#- 無料の哲学記事の最後に置く、有料記事への案内。
+    使い方：{% set ctaSlug = "paid-kierkegaard" %}{% include "partials/paid-cta.njk" %}
+    ctaSlug が空なら、哲学のページ（3人の哲学者から選ぶ）へ案内する。カードの文言は有料記事の front matter `paid` から。 -#}
+{%- set ctaList = (collections.articles | bySlugs([ctaSlug])) if ctaSlug else [] %}
+{%- set c = ctaList[0] if ctaList.length else null %}
+<aside class="paid-cta" aria-labelledby="paid-cta-title">
+  {%- if c %}
+  <p class="paid-cta-kicker">この悩みの続き — {{ c.data.paid.philosopher }}</p>
+  <p class="paid-cta-title" id="paid-cta-title">{{ c.data.paid.title }}</p>
+  <p class="paid-cta-sub">{{ c.data.paid.subtitle }}</p>
+  <p class="paid-cta-text">{{ c.data.paid.excerpt }}</p>
+  <p class="paid-cta-action"><a class="paid-cta-btn" href="{{ c.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a></p>
+  <p class="paid-cta-meta">全文 約{{ c.data.paid.minutes }}分・¥{{ c.data.paid.price.toLocaleString("ja-JP") }}（税込）・書き込みワークつき</p>
+  {%- else %}
+  <p class="paid-cta-kicker">悩みから選ぶ</p>
+  <p class="paid-cta-title" id="paid-cta-title">その悩み、どの哲学者に聞くか。</p>
+  <p class="paid-cta-text">{% for a in collections.articles | paidCards %}{{ a.data.paid.worry.split("。")[0] }}{% if not loop.last %}／{% endif %}{% endfor %}。3人の哲学者から、いまの自分に合う一人を。</p>
+  <p class="paid-cta-action"><a class="paid-cta-btn" href="topic-philosophy.html">3人の哲学者を見る <span aria-hidden="true">→</span></a></p>
+  {%- endif %}
+  {%- if c %}<p class="paid-cta-all"><a href="topic-philosophy.html">ほかの悩みと、ほかの哲学者を見る</a></p>{% endif %}
+</aside>
