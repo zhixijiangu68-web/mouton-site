@@ -63,7 +63,8 @@ steps:
 
   {#- 動画を探し回るより、一冊を読んで試す。販売状態は site.js と記事の front matter から出す。 #}
   {%- set paidList = collections.articles | paidCards %}
-  {%- set paidLive = false %}{% for a in paidList %}{% if a.data.paid.url %}{% set paidLive = true %}{% endif %}{% endfor %}
+  {%- set ph = site.product.philosophy %}
+  {%- set paidLive = false %}{% for a in paidList %}{% if a.data.paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}{% set paidLive = true %}{% endif %}{% endfor %}
   {%- set cs = site.product.cleanScience %}
   <section class="mind-act" aria-labelledby="mind-act-title">
     <p class="mind-door-kicker">Practice</p>
@@ -74,7 +75,7 @@ steps:
         <span class="mind-door-step">MIND / 考え方</span>
         <span class="mind-act-book-title">3人の哲学者に学ぶ</span>
         <span class="mind-act-book-text">{% for a in paidList %}{{ a.data.paid.role }}（{{ a.data.paid.philosopher }}）{% if not loop.last %} → {% endif %}{% endfor %}。一本の道でつながる、悩みから入る有料記事{{ paidList.length }}本。</span>
-        <span class="mind-act-book-meta">note・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円 / {{ 'noteで公開中' if paidLive else 'noteで公開準備中' }}</span>
+        <span class=\"mind-act-book-meta\">PDF・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円 / {{ 'このサイトで販売中' if paidLive else 'このサイトで販売準備中' }}</span>
       </a>
       <a class="mind-act-book" href="cleanliness-science.html">
         <span class="mind-door-step">BODY / 外見と日常</span>

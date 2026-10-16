@@ -58,6 +58,9 @@ export default {
   // legalUrl：特定商取引法に基づく表示のページ。checkoutUrl を入れるときは必須（npm test で確かめる）。
   product: {
     cleanScience: { priceJPY: 2980, priceText: '2,980', pages: 75, checkoutProvider: 'stripe', checkoutUrl: '', legalUrl: '', fulfillmentReady: false },
+    // 哲学の有料記事3本（paid-*.html）。note ではなくこのサイトで販売する（Stripe → Cloudflare Worker → メールで PDF）。
+    // 各記事の Payment Link は記事の front matter `paid.checkoutUrl`。納品の E2E が終わるまで fulfillmentReady は false のまま。
+    philosophy: { priceJPY: 2980, checkoutProvider: 'stripe', legalUrl: '', fulfillmentReady: false },
   },
   // お問い合わせ先。空でないものだけページに表示する。
   contact: { formUrl: '', email: '', x: 'kodoku__alone' },

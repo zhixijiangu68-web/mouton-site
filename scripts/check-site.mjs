@@ -89,3 +89,4 @@ console.log(`Checked ${pages.length} pages: no problems found.`);
 
 // Verify the initial research-product prelaunch funnel in CI as well.
 await import('./check-cleanliness-prelaunch.mjs');
+await import('./check-paid-sales.mjs');
