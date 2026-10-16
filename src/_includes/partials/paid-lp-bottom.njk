@@ -1,0 +1,62 @@
+{#- 有料記事の販売ページ（後半）：④内容と使い方 → ⑤ムートンが作る理由 → ⑥向いている人・向いていない人 → ⑦価格と購入 → ⑧FAQ。
+    文言は各記事の front matter（paid・lp）と、ここに書いた共通の文から。 -#}
+<section class="plp-section plp-contents" aria-labelledby="plp-contents-h">
+  <p class="plp-step">04 / Contents</p>
+  <h2 id="plp-contents-h">内容と使い方</h2>
+  <ol class="plp-toc">
+    {%- for t in lp.toc %}<li>{{ t }}</li>{% endfor %}
+  </ol>
+  <dl class="plp-spec">
+    <div><dt>形式</dt><dd>note の有料記事（スマホ・パソコンで読める）</dd></div>
+    <div><dt>分量</dt><dd>全文 約{{ paid.minutes }}分。冒頭はこのページで無料で読める</dd></div>
+    <div><dt>ワーク</dt><dd>空欄に書き込む5つのワーク（約10分）</dd></div>
+    <div><dt>出典</dt><dd>引用には書名と節・章を明記。研究は著者・年・誌名つき</dd></div>
+  </dl>
+  <ol class="plp-howto">
+    <li><strong>通して読む。</strong>まずは約{{ paid.minutes }}分、最後まで。</li>
+    <li><strong>書き込む。</strong>紙かスマホのメモに、ワークの空欄を埋める。正解はない。書けないところは空けたままでいい。</li>
+    <li><strong>1週間後に見直す。</strong>書いたものを読み返して、何が変わったか、何が変わらなかったかを確かめる。</li>
+  </ol>
+</section>
+
+<section class="plp-section plp-why" aria-labelledby="plp-why-h">
+  <p class="plp-step">05 / Why Mouton</p>
+  <h2 id="plp-why-h">ムートンが、これを作る理由</h2>
+  <p>MOUTONは、哲学を知識で終わらせず、自分の人生に落とし込むためのブランドだ。人を外側から飾るのではなく、内側から自分自身をつくっていく。</p>
+  <p>やり方を教えてくれるものは、たくさんある。けれど、状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より、「自分は何を基準に選ぶのか」だと僕は思う。だから、哲学者の考えを悩みに合わせて「使える形」にし、書き込みながら試せるようにした。</p>
+  <p>正しい生き方を押しつけるつもりはない。渡したいのは答えではなく、自分で考えるための問いと、試すための方法だ。原典にあたり、言えないことは言い切らない。それが、僕がこの記事でいちばん守っていることだ。</p>
+</section>
+
+<section class="plp-section plp-fit" aria-labelledby="plp-fit-h">
+  <p class="plp-step">06 / Who it's for</p>
+  <h2 id="plp-fit-h">向いている人・向いていない人</h2>
+  <div class="plp-fit-grid">
+    <div class="plp-fit-col plp-fit-yes"><p class="plp-fit-h">向いている人</p><ul>{% for x in lp.fit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    <div class="plp-fit-col plp-fit-no"><p class="plp-fit-h">向いていない人</p><ul>{% for x in lp.unfit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+  </div>
+</section>
+
+<section class="plp-section plp-buy" id="buy" aria-labelledby="plp-buy-h">
+  <p class="plp-step">07 / Price</p>
+  <h2 id="plp-buy-h">価格と購入</h2>
+  <div class="paywall">
+    <p class="paywall-eyebrow">{{ paid.philosopher }} — {{ paid.title }}</p>
+    <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }} <span class="paywall-tax">税込</span></p>
+    <p class="paywall-toc">全文 約{{ paid.minutes }}分・書き込みワーク5つ・note の有料記事</p>
+    {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで購入して続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
+    <p class="paywall-note">購入と全文の閲覧は note で行います。お支払い方法や購入の条件は、note の購入画面でご確認ください。{% if not paid.url %}現在は、購入・予約は受け付けていません。{% endif %}</p>
+  </div>
+</section>
+
+<section class="plp-section plp-faq" aria-labelledby="plp-faq-h">
+  <p class="plp-step">08 / FAQ</p>
+  <h2 id="plp-faq-h">よくある質問</h2>
+  {%- for f in lp.faq %}
+  <details class="plp-q"><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+  {%- endfor %}
+  <details class="plp-q"><summary>哲学の知識がなくても読めますか？</summary><p>読める。専門用語はできるだけ使わず、出てきたときは一言で言い換えている。学術的な解説はしていない。</p></details>
+  <details class="plp-q"><summary>無料の記事とは、何が違いますか？</summary><p>無料の記事は、悩みの見え方を変える一つの視点まで。有料の記事では、その先の具体的な考え方と、今日から試せる使い方、書き込みワークをまとめている。</p></details>
+  <details class="plp-q"><summary>3本とも読む必要がありますか？</summary><p>ない。いまの悩みにいちばん近い1本からでいい。<a href="topic-philosophy.html">3人の哲学者の比較</a>から選べる。</p></details>
+  <details class="plp-q"><summary>購入後の返品・返金はできますか？</summary><p>デジタルの記事のため、購入と返金の扱いは note の規約にしたがう。購入前に、このページの冒頭（無料）で文章が合うかを確かめてほしい。</p></details>
+  <details class="plp-q"><summary>心の不調の治療の代わりになりますか？</summary><p>ならない。眠れない、食べられない、気分の落ち込みが長く続くなど、生活に支障があるときは、まず医師や専門の相談窓口を頼ってほしい。</p></details>
+</section>
