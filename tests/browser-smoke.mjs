@@ -77,8 +77,8 @@ test('MOUTON browser smoke', async t => {
     });
 
     for (const [i, device] of ['desktop','mobile'].entries()) {
-      const scene = 'moon-botanical';
-      const introArt = device === 'desktop' ? 'moon-botanical-wide.webp' : 'intro-sheep-moon.webp';
+      const scene = 'gold-laurel';
+      const introArt = device === 'desktop' ? 'gold-laurel-wide.webp' : 'intro-sheep-moon.webp';
       await t.test('fixed background, device intro art and immediate skip: ' + device, async () => {
         await checkPage(browser, 'static-' + device, {
           reducedMotion: 'no-preference',
@@ -87,7 +87,7 @@ test('MOUTON browser smoke', async t => {
           await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
-          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/moon-botanical-wide.webp"]').count(), 1);
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/gold-laurel-wide.webp"]').count(), 1);
           assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/intro-sheep-moon.webp"]').getAttribute('media'), '(max-width: 900px)');
           const intro = await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage);
           assert(intro.includes(introArt), device + ' intro art: ' + intro);
@@ -111,7 +111,7 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.evaluate(async name => {
             const img = new Image(); img.src = 'images/mouton/' + name + '-wide.webp';
             await img.decode(); return img.naturalWidth;
-          }, scene), 1600);
+          }, scene), 1536);
           await page.mouse.move(200, 300);
           await page.evaluate(() => scrollTo(0, 150));
           await page.waitForTimeout(1100); // Late font preparation must not restart the intro.
