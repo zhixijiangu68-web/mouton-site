@@ -17,5 +17,5 @@
   <p class="paid-cta-text">{% for a in collections.articles | paidCards %}{{ a.data.paid.worry.split("。")[0] }}{% if not loop.last %}／{% endif %}{% endfor %}。3人の哲学者から、いまの自分に合う一人を。</p>
   <p class="paid-cta-action"><a class="paid-cta-btn" href="topic-philosophy.html">3人の哲学者を見る <span aria-hidden="true">→</span></a></p>
   {%- endif %}
-  {%- if c %}<p class="paid-cta-all"><a href="topic-philosophy.html">ほかの悩みと、ほかの哲学者を見る</a></p>{% endif %}
+  {%- if c %}<p class="paid-cta-all"><a class="paid-cta-link" href="topic-philosophy.html">ほかの悩みと、ほかの哲学者を見る</a></p>{% endif %}
 </aside>
