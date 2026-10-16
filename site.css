@@ -657,3 +657,8 @@ article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;l
 
 .doc .mind-door-text.mind-door-lines,.mind-door-text.mind-door-lines{font-size:1.0625rem}
 .mind-door-rule{margin:26px 0;border:0;border-top:1px solid rgba(241,235,223,.2)}
+
+/* Philosophy LP: why philosophy */
+.lp-why-list{margin:22px 0 18px;padding-left:1.4em}
+.doc .lp-why-list li,.lp-why-list li{margin:0 0 14px;line-height:2}
+.lp-why-list strong{display:block;font-weight:600}
