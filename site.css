@@ -753,3 +753,17 @@ body.article-page article .plp-compare-row.is-this{background:rgba(185,138,50,.1
  body.article-page article .plp-compare-row span:nth-child(3)::before{content:"残りやすいこと：";color:#7a5a1c}
 }
 body.article-page article .paywall a.plp-light{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+/* Start page: MOUTON's order of change */
+.change-order{margin:0 0 48px}
+.doc .change-order-title,.change-order-title{border:0;padding:0;margin:0 0 12px;font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,3.8vw,2.1rem);line-height:1.6;color:var(--ink)}
+.change-order .mind-door-kicker{color:#7a5a1c;opacity:1}
+.doc .change-order-lead,.change-order-lead{margin:0 0 22px}
+.change-steps{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:1px solid rgba(122,90,28,.45);margin-left:14px}
+.doc .change-steps li,.change-step{position:relative;margin:0;padding:0 0 26px 30px}
+.change-step-n{position:absolute;left:-15px;top:0;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#1b1c19;color:#e7c983;font:500 .8125rem/1 Inter,sans-serif}
+.doc .change-step-t,.change-step-t{margin:2px 0 6px;font-family:var(--serif);font-size:1.0625rem;line-height:1.7;font-weight:600;color:var(--ink)}
+.doc .change-step-x,.change-step-x{margin:0 0 8px;font-size:.9375rem;line-height:1.95}
+.doc .change-step-reads,.change-step-reads{margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8125rem;line-height:1.7}
+.doc .change-step-reads a{color:var(--blue);text-underline-offset:3px}
+.change-paid{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--gold);border-radius:999px;font-size:.6875rem;line-height:1.6;color:#7a5a1c;text-decoration:none;vertical-align:1px}
