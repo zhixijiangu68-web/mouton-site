@@ -1,14 +1,14 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
-assetVersion: "20261016-path"
+assetVersion: "20261016-bodyfood"
 pagination:
   data: topics
   size: 1
   alias: t
 permalink: "topic-{{ t.key }}.html"
 eleventyComputed:
-  title: "{{ '3人の哲学者から選ぶ' if t.key == 'philosophy' else t.label + 'の記事' }} — ムートン"
+  title: "{{ '3人の哲学者から選ぶ' if t.key == 'philosophy' else (t.lp.title if t.lp else t.label + 'の記事') }} — ムートン"
   description: "{{ t.lpIntro if t.lpIntro else t.intro }}"
 ---
 {%- set list = collections.articles | inTopic(t.key) %}
@@ -17,6 +17,8 @@ eleventyComputed:
 <main class="doc topic" data-nav="light" data-nav-solid="light">
 {%- if t.key == "philosophy" %}
   {% include "partials/philosophy-lp.njk" %}
+{%- elif t.lp %}
+  {% include "partials/topic-lp.njk" %}
 {%- else %}
   <p class="eyebrow">{{ t.en }}</p>
   <h1 class="doc-title">{{ t.label }}</h1>
