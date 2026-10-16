@@ -14,7 +14,7 @@
   <language>ja</language>
   {%- for a in collections.articles | head(20) %}
   <item>
-    <title>{{ a.data.headline }}</title>
+    <title>{{ a.data.headline }}{% if a.data.paid %}（有料・冒頭は無料）{% endif %}</title>
     <link>{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</link>
     <guid isPermaLink="true">{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</guid>
     <pubDate>{{ a.page.date | rfc822 }}</pubDate>
