@@ -42,13 +42,13 @@
 
 ## PDF（公開リポジトリには入れない）
 
-note 用に書いた全文から作った。表紙・本文・書き込み用ページ（印刷して書ける罫線つき）・「この PDF について」（個人で読むためのもの、要約と訳、治療の代わりにならない）。A5。
+note 用に書いた全文から作った。表紙・「この PDF の使い方」（読むだけでいい、いまの状態 → 読むところの地図。見出しを押すとそのページへ移る）・本文・「次の一歩」（今日やること・やめること）・書き込み用ページ（印刷して書ける罫線つき）・「この PDF について」（個人で読むためのもの、要約と訳、治療の代わりにならない）。A5。
 
 | 記事 | R2 に置くファイル名（案） | ページ | SHA-256 |
 |---|---|---|---|
-| キルケゴール | `mouton-philosophy-01-kierkegaard.pdf` | 22 | `c1e5184b1dfdb6abaa5746619ad072cc651445071752d2960935621d208ad716` |
-| ニーチェ | `mouton-philosophy-02-nietzsche.pdf` | 23 | `95d58ac843f8b7b6fb67c8a1ce0a7e4fb8cf195320b54b9b6f361b401675e7e9` |
-| スピノザ | `mouton-philosophy-03-spinoza.pdf` | 21 | `07dba07751b4994a8549c72aa11a4860b014fc7c1bc14588d4fc8b16e82d9574` |
+| キルケゴール | `mouton-philosophy-01-kierkegaard.pdf` | 23 | `6aaac1d8664f0561b6cea07e41654f34462afd4cd105425e597fee8fefa8d696` |
+| ニーチェ | `mouton-philosophy-02-nietzsche.pdf` | 24 | `eb436656b90a51c73732719cac251e7cb607dbfc6b9c8af1d292a14cc9b7ea43` |
+| スピノザ | `mouton-philosophy-03-spinoza.pdf` | 22 | `6d1ed42b30330c802a3971a1dfe2c308b4b84a9b6dbd294a9df73fced4ef844d` |
 
 本文を直したら PDF を作り直し、この表の SHA-256 も書き換える。
 

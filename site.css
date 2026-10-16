@@ -829,3 +829,18 @@ body.article-page article .plp-scope .plp-small{color:rgba(241,235,223,.75)!impo
 body.article-page article .plp-scope-stop{margin:0 0 12px!important;padding:10px 12px;border:1px dashed rgba(231,201,131,.55);border-radius:8px;font-size:.9375rem!important;line-height:1.85!important;color:#f1ebdf!important}
 body.article-page article .plp-scope-stop-label{display:block;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif;letter-spacing:.12em;color:#e7c983}
 .doc .mind-door .mind-door-ask,.mind-door .mind-door-ask{font-family:var(--serif);font-size:clamp(1.05rem,2.6vw,1.25rem);line-height:2;color:#f8f5ee;padding-left:14px;border-left:2px solid #e7c983}
+
+/* Paid page: value from reading alone, and why it is paid (design, not volume) */
+body.article-page article .plp-read{margin:22px 0 10px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.4)}
+body.article-page article .plp-read-h{margin:0 0 8px!important;font-family:"Noto Serif JP",serif;font-size:1.0625rem!important;line-height:1.8!important}
+body.article-page article .plp-read-reframe{margin:0 0 14px!important;padding-left:12px;border-left:2px solid #b98a32;font-size:.9375rem!important;line-height:1.95!important;color:#45473f}
+body.article-page article .plp-read-sub{margin:0 0 6px!important;font:500 .75rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.06em;color:#7a5a1c}
+body.article-page article .plp-read-why{list-style:none;margin:0 0 10px;padding:0}
+body.article-page article .plp-read-why li{margin:0;padding:8px 0;border-top:1px solid var(--line);font-size:.9375rem;line-height:1.85}
+body.article-page article .plp-read-why strong{display:block}
+body.article-page article .plp-map summary{cursor:pointer;font-size:.875rem;color:#7a5a1c;padding:6px 0}
+body.article-page article .plp-map-list{list-style:none;margin:6px 0 0;padding:0}
+body.article-page article .plp-map-list li{margin:0;padding:8px 0;border-top:1px dashed var(--line);font-size:.875rem;line-height:1.8}
+body.article-page article .plp-map-state{display:block;font-weight:600}
+body.article-page article .plp-map-read{display:block;color:#45473f}
+body.article-page article .plp-scope-sub{margin:0 0 4px!important;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.1em;color:#e7c983!important}
