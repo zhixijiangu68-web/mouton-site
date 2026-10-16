@@ -62,7 +62,8 @@ export default function (eleventyConfig) {
     }));
   });
   // Every article for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
-  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.map(a => ({
+  // Paid pages are sales pages, not reads, so "pick one for me" leaves them out.
+  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.filter(a => !a.data.paid).map(a => ({
     s: a.page.fileSlug,
     t: a.data.journal ? a.data.journal.title : a.data.headline,
     m: a.data.readMinutes,
