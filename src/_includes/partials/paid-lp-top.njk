@@ -21,5 +21,16 @@
     {%- for l in paid.learn %}<li>{{ l }}</li>{% endfor %}
     <li>空欄に書き込む、5つのワーク</li>
   </ul>
+  {%- if lp.scope %}
+  {#- 本との違い：範囲を「自己理解」で終わらせず、ひとつの選択を決めて実行するところまでに絞る。 #}
+  <div class="plp-scope">
+    <p class="plp-scope-h">扱うのは、ひとつの選択だけ。決めて、動くところまで。</p>
+    <p class="plp-scope-target">対象：{{ lp.scope.target }}</p>
+    <ol class="plp-scope-steps">
+      {%- for s in lp.scope.steps %}<li>{{ s }}</li>{% endfor %}
+    </ol>
+    <p class="plp-small">哲学者の思想の全体像や、人生全体の自己分析は扱わない。それは本のほうが向いている。ここでは、いま抱えているひとつのことだけを、読んで15分、書いて10分、1週間後に見直すところまで進める。</p>
+  </div>
+  {%- endif %}
   <p class="plp-small">変化を約束するものではない。考える材料と、試す方法を渡すための記事だ。</p>
 </section>

@@ -817,3 +817,12 @@ body.article-page article a.paid-series-link{color:var(--ink,#252724);text-decor
 .doc .trust-list li,.trust-list li{margin:0!important;padding:12px 0;border-bottom:1px solid var(--line);line-height:1.9;font-size:.9375rem}
 .trust-list strong{display:block;font-weight:600;color:var(--ink)}
 .doc .trust-more,.trust-more{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+
+/* Paid page: scope = one choice, decided and acted on (vs. books) */
+body.article-page article .plp-scope{margin:22px 0 14px;padding:20px 22px;border-radius:12px;background:#1b1c19;color:#f1ebdf}
+body.article-page article .plp-scope p{color:#f1ebdf}
+body.article-page article .plp-scope-h{margin:0 0 8px!important;font-family:"Noto Serif JP",serif;font-size:1.0625rem!important;line-height:1.8!important;color:#f8f5ee!important}
+body.article-page article .plp-scope-target{margin:0 0 10px!important;font-size:.875rem!important;line-height:1.8!important;color:#e7c983!important}
+body.article-page article .plp-scope-steps{margin:0 0 10px;padding-left:1.4em}
+body.article-page article .plp-scope-steps li{margin:4px 0;color:#f1ebdf;line-height:1.85}
+body.article-page article .plp-scope .plp-small{color:rgba(241,235,223,.75)!important;margin:0!important}
