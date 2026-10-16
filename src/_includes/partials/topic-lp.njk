@@ -1,0 +1,41 @@
+{#- 身体・食事のテーマページ。哲学のページと同じく「悩み → 見え方の読み替え（読むだけで得られること）→ 読む記事 → 次の一歩」。
+    文言と記事の並びは src/_data/topics.js の lp。すべての記事は下の「すべての記事」に残す。 -#}
+{%- set L = t.lp %}
+  <p class="eyebrow">{{ t.en }}</p>
+  <h1 class="doc-title lp-hero-title">{{ L.title }}</h1>
+  <p class="lp-for">{{ L.for }}</p>
+  <p class="lp-oneline">{{ L.oneline }}</p>
+  <p>{{ L.lead }}</p>
+  <ul class="lp-worries">
+    {%- for w in L.worries %}
+    <li><a href="#{{ w.id }}"><span class="lp-worry-text">{{ w.worry }}</span><span class="lp-worry-to">読むところへ <span aria-hidden="true">↓</span></span></a></li>
+    {%- endfor %}
+  </ul>
+  {%- for w in L.worries %}
+  <section class="lp-section tlp-worry" id="{{ w.id }}" aria-labelledby="{{ w.id }}-h">
+    <p class="tlp-n">{{ loop.index }} / {{ L.worries.length }}</p>
+    <h2 id="{{ w.id }}-h">{{ w.worry }}</h2>
+    <p class="tlp-reframe">{{ w.reframe }}</p>
+    <ol class="tlp-reads">
+      {%- for a in collections.articles | bySlugs(w.reads) %}
+      <li><a href="{{ a.page.fileSlug }}.html"><span class="tlp-read-title">{{ a.data.journal.title if a.data.journal else (a.data.science.title if a.data.science else a.data.headline) }}</span><span class="tlp-read-time">約{{ a.data.readMinutes }}分</span></a></li>
+      {%- endfor %}
+    </ol>
+    {%- if w.next %}
+    <a class="tlp-next" href="{{ w.next.href }}"><span class="tlp-next-k">{{ 'この悩みの続き・有料' if w.next.paid else 'この悩みの続き' }}</span><span class="tlp-next-t">{{ w.next.label }}</span><span class="tlp-next-x">{{ w.next.text }}</span></a>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+  <details class="tlp-all">
+    <summary>すべての記事（{{ list.length }}本）</summary>
+    <div class="topic-list">
+      {%- for a in list %}
+      <a class="topic-item" href="{{ a.page.fileSlug }}.html" data-date="{{ a.page.date | dotDate }}">
+        <span class="topic-date">{{ a.page.date | dotDate }}</span>
+        <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.science.title }}</span>
+        <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.science.text }}</span>
+        <span class="topic-time">約{{ a.data.readMinutes }}分</span>
+      </a>
+      {%- endfor %}
+    </div>
+  </details>

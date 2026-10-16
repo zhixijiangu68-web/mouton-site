@@ -844,3 +844,20 @@ body.article-page article .plp-map-list li{margin:0;padding:8px 0;border-top:1px
 body.article-page article .plp-map-state{display:block;font-weight:600}
 body.article-page article .plp-map-read{display:block;color:#45473f}
 body.article-page article .plp-scope-sub{margin:0 0 4px!important;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.1em;color:#e7c983!important}
+
+/* Body / Food topic pages: worry → reframe → reads → next (same shape as the philosophy page) */
+.tlp-worry{scroll-margin-top:80px}
+.doc .tlp-n,.tlp-n{margin:0 0 4px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.2em;color:#7a5a1c}
+.doc .tlp-reframe,.tlp-reframe{margin:0 0 16px;padding-left:12px;border-left:2px solid #b98a32;font-family:var(--serif);line-height:2;color:#45473f}
+.tlp-reads{list-style:none;padding:0!important;margin:0 0 14px!important;border-top:1px solid var(--line)}
+.doc .tlp-reads li,.tlp-reads li{margin:0!important;border-bottom:1px solid var(--line)}
+.doc .tlp-reads a,.tlp-reads a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 2px;color:var(--ink);text-decoration:none}
+.tlp-reads a:hover .tlp-read-title{text-decoration:underline;text-underline-offset:4px}
+.tlp-read-title{font-family:var(--serif);line-height:1.7}
+.tlp-read-time{flex:none;font-size:.75rem;color:var(--muted,#666a64)}
+.doc .tlp-next,.tlp-next{display:block;padding:16px 18px;border-radius:12px;background:#1b1c19;color:#f1ebdf;text-decoration:none}
+.tlp-next-k{display:block;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif;letter-spacing:.12em;color:#e7c983}
+.tlp-next-t{display:block;font-family:var(--serif);font-size:1.0625rem;line-height:1.7;color:#f8f5ee}
+.tlp-next-x{display:block;font-size:.8125rem;line-height:1.8;color:rgba(241,235,223,.75)}
+.tlp-all{margin:40px 0 0}
+.tlp-all summary{cursor:pointer;font-family:var(--serif);font-size:1.0625rem;padding:12px 0;border-top:1px solid var(--line)}
