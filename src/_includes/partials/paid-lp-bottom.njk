@@ -1,5 +1,9 @@
 {#- 有料記事の販売ページ（後半）：④内容と使い方 → ⑤ムートンが作る理由 → ⑥向いている人・向いていない人 → ⑦価格と購入 → ⑧FAQ。
-    文言は各記事の front matter（paid・lp）と、ここに書いた共通の文から。 -#}
+    文言は各記事の front matter（paid・lp）と、ここに書いた共通の文から。
+    販売はこのサイトで（Stripe で支払い → メールで PDF）。購入ボタンは、記事の paid.checkoutUrl と、
+    site.product.philosophy の fulfillmentReady（納品の確認済み）・legalUrl（特定商取引法に基づく表記）がそろったときだけ出す。 -#}
+{%- set ph = site.product.philosophy %}
+{%- set live = paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}
 <section class="plp-section plp-contents" aria-labelledby="plp-contents-h">
   <p class="plp-step">04 / Contents</p>
   <h2 id="plp-contents-h">内容と使い方</h2>
@@ -7,7 +11,8 @@
     {%- for t in lp.toc %}<li>{{ t }}</li>{% endfor %}
   </ol>
   <dl class="plp-spec">
-    <div><dt>形式</dt><dd>note の有料記事（スマホ・パソコンで読める）</dd></div>
+    <div><dt>形式</dt><dd>PDF（スマホ・パソコンで読める。印刷して書き込める）</dd></div>
+    <div><dt>受け取り</dt><dd>お支払いのあと、入力したメールアドレスにダウンロード用のリンクが届く（有効期限7日・最大5回）</dd></div>
     <div><dt>分量</dt><dd>全文 約{{ paid.minutes }}分。冒頭はこのページで無料で読める</dd></div>
     <div><dt>ワーク</dt><dd>空欄に書き込む5つのワーク（約10分）</dd></div>
     <div><dt>出典</dt><dd>引用には書名と節・章を明記。研究は著者・年・誌名つき</dd></div>
@@ -52,9 +57,9 @@
   <div class="paywall">
     <p class="paywall-eyebrow">{{ paid.philosopher }} — {{ paid.title }}</p>
     <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }} <span class="paywall-tax">税込</span></p>
-    <p class="paywall-toc">全文 約{{ paid.minutes }}分・書き込みワーク5つ・note の有料記事</p>
-    {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで購入して続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
-    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。購入と全文の閲覧は note で行います。お支払い方法や購入の条件は、note の購入画面でご確認ください。{% if not paid.url %}現在は、購入・予約は受け付けていません。{% endif %}</p>
+    <p class="paywall-toc">PDF・全文 約{{ paid.minutes }}分・書き込みワーク5つ</p>
+    {% if live %}<a class="buy-btn" href="{{ paid.checkoutUrl }}" rel="noopener">購入する（PDF） <span aria-hidden="true">→</span></a>{% else %}<span class="buy-btn is-soon">このサイトでの販売準備中</span>{% endif %}
+    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。お支払いは Stripe の決済画面で行い、お支払いのあと、入力したメールアドレスに PDF のダウンロード用リンクが届きます（有効期限7日・最大5回。期限内に保存してください）。{% if live %}<a class="plp-light" href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>{% else %}現在は、購入・予約は受け付けていません。{% endif %}</p>
   </div>
 </section>
 
@@ -67,6 +72,7 @@
   <details class="plp-q"><summary>哲学の知識がなくても読めますか？</summary><p>読める。専門用語はできるだけ使わず、出てきたときは一言で言い換えている。学術的な解説はしていない。</p></details>
   <details class="plp-q"><summary>無料の記事とは、何が違いますか？</summary><p>無料の記事は、悩みの見え方を変える一つの視点まで。有料の記事では、その先の具体的な考え方と、今日から試せる使い方、書き込みワークをまとめている。</p></details>
   <details class="plp-q"><summary>3本とも読む必要がありますか？</summary><p>ない。いまの悩みにいちばん近い1本からでいい。<a href="topic-philosophy.html">3人の哲学者の比較</a>から選べる。</p></details>
-  <details class="plp-q"><summary>購入後の返品・返金はできますか？</summary><p>デジタルの記事のため、購入と返金の扱いは note の規約にしたがう。購入前に、このページの冒頭（無料）で文章が合うかを確かめてほしい。</p></details>
+  <details class="plp-q"><summary>購入後の返品・返金はできますか？</summary><p>購入前に、このページの冒頭（無料）で文章が合うかを確かめてほしい。{% if live %}返品・返金の条件は、<a href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>に載せている。{% else %}返品・返金の条件は、販売を始めるときに「特定商取引法に基づく表記」に載せる。{% endif %}</p></details>
+  <details class="plp-q"><summary>購入したのに、メールが届きません。</summary><p>まず、迷惑メールのフォルダを確かめてほしい。それでも届かないときは、<a href="contact.html">お問い合わせ</a>から、購入した日と記事の名前を知らせてほしい（カード番号などは書かないでほしい）。</p></details>
   <details class="plp-q"><summary>心の不調の治療の代わりになりますか？</summary><p>ならない。眠れない、食べられない、気分の落ち込みが長く続くなど、生活に支障があるときは、まず医師や専門の相談窓口を頼ってほしい。</p></details>
 </section>

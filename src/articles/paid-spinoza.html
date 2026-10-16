@@ -31,8 +31,9 @@ paid:
   portrait:
     commons: "Spinoza.jpg"
     credit: "作者不詳の肖像画（1665年ごろ、ヘルツォーク・アウグスト図書館）"
-  # noteで公開したら、記事のURLを入れる（空なら「noteで公開準備中」と表示）
-  url: ""
+  # このサイトで販売する：Stripe の本番 Payment Link（https://buy.stripe.com/…）を入れる。空なら「このサイトでの販売準備中」。
+  # 購入ボタンは site.product.philosophy の fulfillmentReady・legalUrl もそろったときだけ出る（npm test で確かめる）
+  checkoutUrl: ""
 # 販売ページの中身（悩み・ワークの見本・目次・向き不向き・この記事だけのFAQ）。共通の文は partials/paid-lp-*.njk
 lp:
   hook: "続かなかったことより、そのあと自分を責める夜のほうがつらい。"
@@ -66,7 +67,7 @@ styles: |
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
           <p class="plp-step">03 / Sample</p>
           <h2 id="plp-sample-h">実物の見本</h2>
-          <p class="plp-small">note で販売する記事の冒頭を、そのまま載せている（全文は約{{ paid.minutes }}分）。</p>
+          <p class="plp-small">販売する記事（PDF）の冒頭を、そのまま載せている（全文は約{{ paid.minutes }}分）。</p>
           <div class="plp-sample-body">
           <p class="lead">早起きは、三日で止まった。</p>
           <p>英語のアプリは、連続記録が途切れた日に消した。</p>
