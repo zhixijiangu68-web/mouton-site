@@ -868,3 +868,10 @@ body.article-page article .plp-look-grid{display:grid;grid-template-columns:1fr 
 body.article-page article .plp-look figure{margin:0}
 body.article-page article .plp-look img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 18px rgba(25,31,28,.08);background:#fff}
 body.article-page article .plp-look figcaption{margin-top:6px!important;font-size:.75rem!important;line-height:1.7!important;color:var(--muted,#666a64)!important;text-align:left!important}
+
+/* 特定商取引法に基づく表記 */
+.legal-list{margin:0 0 28px;border-top:1px solid var(--line)}
+.legal-list>div{display:grid;grid-template-columns:11em 1fr;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.legal-list dt{font-weight:600;font-size:.875rem;line-height:1.8}
+.legal-list dd{margin:0;font-size:.9375rem;line-height:1.85;overflow-wrap:anywhere}
+@media(max-width:560px){.legal-list>div{grid-template-columns:1fr;gap:2px}}
