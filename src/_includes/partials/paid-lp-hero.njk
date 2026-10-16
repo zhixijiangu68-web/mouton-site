@@ -1,0 +1,10 @@
+{#- 有料記事の販売ページ：最初の画面（スクロールせずに見える部分）。
+    結果（読んで書き込んだあと、どうなるか）＋かかる時間＋なぜ効くのか を、はっきり書く。
+    「〜せずに」で、読者がすでに試したやり方との違いを示す。価格はここでは出さない（中身を見てから）。 -#}
+<h1>{{ lp.headline }}</h1>
+<p class="paid-sub">{{ lp.subhead }}</p>
+<ul class="plp-benefits">
+  {%- for b in lp.benefits %}<li>{{ b }}</li>{% endfor %}
+</ul>
+<p class="plp-hero-cta"><a class="plp-btn" href="#sample">冒頭を無料で読む <span aria-hidden="true">↓</span></a> <a class="plp-hero-more" href="#plp-contents-h">内容を見る</a></p>
+<p class="plp-product">記事：「{{ paid.title }}」{{ paid.subtitle }}（note・全文 約{{ paid.minutes }}分）</p>

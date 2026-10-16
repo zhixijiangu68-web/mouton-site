@@ -24,6 +24,16 @@
   <h2 id="plp-why-h">ムートンが、これを作る理由</h2>
   <p>MOUTONは、哲学を知識で終わらせず、自分の人生に落とし込むためのブランドだ。人を外側から飾るのではなく、内側から自分自身をつくっていく。</p>
   <p>やり方を教えてくれるものは、たくさんある。けれど、状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より、「自分は何を基準に選ぶのか」だと僕は思う。だから、哲学者の考えを悩みに合わせて「使える形」にし、書き込みながら試せるようにした。</p>
+  {%- if lp.compare %}
+  <h3 class="plp-sub-h">ほかの方法と、何が違うのか</h3>
+  <div class="plp-compare" role="table" aria-label="ほかの方法との違い">
+    <div class="plp-compare-row plp-compare-head" role="row"><span role="columnheader">方法</span><span role="columnheader">得られるもの</span><span role="columnheader">残りやすいこと</span></div>
+    {%- for c in lp.compare %}
+    <div class="plp-compare-row{{ ' is-this' if loop.last }}" role="row"><span role="cell">{{ c.method }}</span><span role="cell">{{ c.gives }}</span><span role="cell">{{ c.gap }}</span></div>
+    {%- endfor %}
+  </div>
+  <p class="plp-small">ほかの方法を否定するためではない。どれも役に立つ場面がある。ただ、悩みの根にある「自分の基準」には届きにくい、というのが僕の考えだ。</p>
+  {%- endif %}
   <p>正しい生き方を押しつけるつもりはない。渡したいのは答えではなく、自分で考えるための問いと、試すための方法だ。原典にあたり、言えないことは言い切らない。それが、僕がこの記事でいちばん守っていることだ。</p>
 </section>
 
@@ -44,7 +54,7 @@
     <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }} <span class="paywall-tax">税込</span></p>
     <p class="paywall-toc">全文 約{{ paid.minutes }}分・書き込みワーク5つ・note の有料記事</p>
     {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで購入して続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
-    <p class="paywall-note">購入と全文の閲覧は note で行います。お支払い方法や購入の条件は、note の購入画面でご確認ください。{% if not paid.url %}現在は、購入・予約は受け付けていません。{% endif %}</p>
+    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。購入と全文の閲覧は note で行います。お支払い方法や購入の条件は、note の購入画面でご確認ください。{% if not paid.url %}現在は、購入・予約は受け付けていません。{% endif %}</p>
   </div>
 </section>
 

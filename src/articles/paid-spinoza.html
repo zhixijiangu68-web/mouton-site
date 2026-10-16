@@ -32,11 +32,19 @@ paid:
   url: ""
 # 販売ページの中身（悩み・ワークの見本・目次・向き不向き・この記事だけのFAQ）。共通の文は partials/paid-lp-*.njk
 lp:
-  pains: ["早起きも勉強も、三日で止まってしまう", "やる気がある日は頑張れるのに、落ち込んだ日に全部やめてしまう", "続かなかった自分を責めて、もう一度始めるのが重くなる", "「意志が弱いから」と、いつも同じ理由で片づけている"]
+  headline: "気分に左右されずに、続けられる形をつくる。"
+  subhead: "気合いにも、一気にやめるデトックスにも頼らずに。スピノザの「感情の仕組み」の考え方を、15分で読める記事と5つの書き込みワークにした。"
+  benefits: ["止まりそうな日に、それが何の感情なのかが分かる", "続かなかった日に、自分を責めずに戻る方法が決まる", "来るとわかっている日のための一文が、先に手もとにある"]
+  compare:
+    - { method: "気合い・根性で続ける", gives: "最初の数日の勢い", gap: "意志では感情は止まらない、とスピノザは書いた（第4部定理7）" }
+    - { method: "デトックス・モンクモードで一気にやめる", gives: "強い区切り", gap: "一度崩れると、責める気持ちとともに元に戻りやすい" }
+    - { method: "この記事", gives: "スピノザの考え方と、5つの書き込みワーク", gap: "感情を理解し、喜びにつなぎ、戻り方を先に決める手順が残る" }
+  pains: ["早起きも勉強も、三日で止まってしまう", "やる気の出る動画を見た夜は燃えるのに、3日後には元どおりになっている", "やる気がある日は頑張れるのに、落ち込んだ日に全部やめてしまう", "続かなかった自分を責めて、もう一度始めるのが重くなる", "「意志が弱いから」と、いつも同じ理由で片づけている"]
   toc: ["「やる気」も、感情のひとつにすぎない", "意志の力では、感情は止まらない", "自分を責めると、二度負ける", "理解すると、感情は受け身ではなくなる", "今日からの使い方：喜びにつなぎ、原則を先に置く", "書き込みワーク", "おわりに"]
   fit: ["始めることはできるのに、続かないことに悩んでいる人", "気分の波で、積み上げたものを手放してしまう人", "気合いや根性ではない続け方を知りたい人"]
   unfit: ["一晩で習慣が身につく方法を探している人", "スピノザの哲学を、学術的に体系立てて学びたい人", "気分の落ち込みが長く続き、眠れない・食べられないなど生活に支障が出ている人（まず医師や専門の窓口に相談してほしい）"]
   faq:
+    - { q: "デジタルデトックスやモンクモードとは、何が違いますか？", a: "一気にやめるやり方は、強い区切りになる一方で、崩れたときに自分を責めて元に戻りやすい、と僕は考えている。この記事は、何かを一気に断つのではなく、止まりそうな感情を理解し、続けたいことを「少し力が増す」感覚につなぎ、戻り方を先に決めておく、という小さな形を扱う。" }
     - { q: "心理学の研究も出てきますか？", a: "出てくる。感情に名前をつける研究、先延ばしと自分を許すことの研究、習慣ができるまでの研究など、実在の研究を著者・年・誌名つきで紹介している。結果は言い切らずに書いている。" }
     - { q: "『エチカ』は難しい本だと聞きましたが？", a: "『エチカ』は数学のような形で書かれた難しい本だ。この記事では、感情と「続ける」ことに関わる定理だけを選び、部と定理の番号を添えて、ふつうの言葉に置き換えている。" }
 styles: |
@@ -49,9 +57,7 @@ styles: |
 ---
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.10.15　/　PHILOSOPHY　/　スピノザ　<span class="paid-badge">有料記事</span></div>
-        <h1>続かないのは、<br>意志が弱いからではない。</h1>
-        <p class="paid-sub">スピノザ『エチカ』に学ぶ、感情に振り回されない続け方</p>
-        <p class="reading-time">note の有料記事・全文 約{{ paid.minutes }}分・¥{{ paid.price.toLocaleString("ja-JP") }}（税込）。<a href="#sample">冒頭は無料で読める</a></p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        {% include "partials/paid-lp-hero.njk" %}<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/paid-lp-top.njk" %}
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
           <p class="plp-step">03 / Sample</p>

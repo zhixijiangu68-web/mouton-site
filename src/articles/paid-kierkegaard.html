@@ -32,6 +32,13 @@ paid:
   url: ""
 # 販売ページの中身（悩み・ワークの見本・目次・向き不向き・この記事だけのFAQ）。共通の文は partials/paid-lp-*.njk
 lp:
+  headline: "決められずにいる決断を、自分で選べる形にする。"
+  subhead: "これ以上調べ続けず、気合いにも頼らずに。キルケゴールの「不安を抱えたまま選ぶ」考え方を、15分で読める記事と5つの書き込みワークにした。"
+  benefits: ["何と何のあいだで迷っているのかが、一行ではっきりする", "怖さの正体が言葉になり、取り返しがつくことかどうかが見える", "決める日と、最初の小さな一歩が決まる"]
+  compare:
+    - { method: "もっと調べる・比べる", gives: "情報と選択肢", gap: "選択肢が増えるほど迷う。確信は、選ぶ前には来ない" }
+    - { method: "動画や本で背中を押してもらう", gives: "その夜のやる気", gap: "やる気は数日で戻る。選ぶための基準は残らない" }
+    - { method: "この記事", gives: "キルケゴールの考え方と、5つの書き込みワーク", gap: "不安を抱えたまま選ぶ手順と、選んだ理由が紙に残る" }
   pains: ["転職サイトを開いては、何も決めずに閉じる夜が続いている", "「もう少し調べてから」「貯金ができたら」と、決める日を先にのばしている", "比べる表は細かくなるのに、気持ちは少しも動かない", "決められない自分を「優柔不断だ」と責めてしまう"]
   toc: ["選ばないことも、いつか選んだことになる", "正しく選ぶより、真剣に選ぶ", "不安は、消してから進むものではない", "確かさは、選んだあとに育つ", "僕が、決められないときにやっている5つのこと", "書き込みワーク", "おわりに"]
   fit: ["転職・独立・人間関係など、いま決めたいことが一つある人", "情報を集めるのは得意なのに、最後の一歩が出ない人", "正解を教えてもらうより、自分で選べるようになりたい人"]
@@ -49,9 +56,7 @@ styles: |
 ---
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.10.15　/　PHILOSOPHY　/　キルケゴール　<span class="paid-badge">有料記事</span></div>
-        <h1>決められないのは、<br>考えが足りないからではない。</h1>
-        <p class="paid-sub">キルケゴールに学ぶ、不安を抱えたまま選ぶ技術</p>
-        <p class="reading-time">note の有料記事・全文 約{{ paid.minutes }}分・¥{{ paid.price.toLocaleString("ja-JP") }}（税込）。<a href="#sample">冒頭は無料で読める</a></p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        {% include "partials/paid-lp-hero.njk" %}<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/paid-lp-top.njk" %}
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
           <p class="plp-step">03 / Sample</p>
