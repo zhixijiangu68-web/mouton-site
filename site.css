@@ -767,3 +767,25 @@ body.article-page article .paywall a.plp-light{color:#fff;text-decoration:underl
 .doc .change-step-reads,.change-step-reads{margin:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8125rem;line-height:1.7}
 .doc .change-step-reads a{color:var(--blue);text-underline-offset:3px}
 .change-paid{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--gold);border-radius:999px;font-size:.6875rem;line-height:1.6;color:#7a5a1c;text-decoration:none;vertical-align:1px}
+
+/* Paid page: one line in the reader's own words, above the headline */
+body.article-page article .plp-hook{margin:0 0 18px;padding-left:14px;border-left:2px solid #b98a32;font-family:"Noto Serif JP",serif;font-size:clamp(1.0625rem,2.2vw,1.3rem);line-height:1.8;color:#45473f}
+/* Philosophy page: who it's for, and what is (not) here */
+.doc .lp-for,.lp-for{margin:-6px 0 6px;font-family:var(--serif);font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.8;color:var(--ink)}
+.doc .lp-contrast-h,.lp-contrast-h{margin:30px 0 12px;font-family:var(--serif);font-weight:400;font-size:1.125rem;line-height:1.7;border:0;padding:0}
+.lp-contrast{margin:0 0 10px;border-top:1px solid var(--line)}
+.lp-contrast-row{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.9375rem;line-height:1.8}
+.lp-contrast dt{color:var(--muted,#666a64)}
+.lp-contrast dd{margin:0;font-weight:600;color:var(--ink)}
+.lp-contrast dd::before{content:"→ ";color:#7a5a1c;font-weight:400}
+.doc .lp-contrast-note,.lp-contrast-note{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+@media(max-width:560px){.lp-contrast-row{grid-template-columns:1fr;gap:0}}
+/* Free articles: a one-minute writing prompt before the paid card (value first, never hidden) */
+body.article-page article .mini-work{margin:56px 0 0;padding:clamp(22px,4.5vw,36px);border:1px dashed rgba(122,90,28,.6);border-radius:12px;background:rgba(255,255,255,.3)}
+body.article-page article .mini-work-kicker{margin:0 0 6px!important;font:500 .6875rem/1.6 Inter,sans-serif!important;letter-spacing:.2em;text-transform:uppercase;color:#7a5a1c}
+body.article-page article .mini-work h2{margin:0 0 14px;font-size:clamp(1.25rem,2.6vw,1.5rem)}
+body.article-page article .mini-work-lines{margin:0 0 14px;padding-left:1.4em}
+body.article-page article .mini-work-lines li{font-family:"Noto Serif JP",serif;line-height:2.1;margin:6px 0}
+body.article-page article .mini-work-note{margin:0!important;font-size:.8125rem!important;line-height:1.9!important;color:var(--muted,#666a64)}
+.paid-cta .paid-cta-bridge{margin:0 0 14px;font-size:.875rem;line-height:1.9;color:#d9d2c3}
+body.article-page article .mw-blank,body.article-page article .plp-work-list .mw-blank{white-space:nowrap}
