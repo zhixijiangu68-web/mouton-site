@@ -29,6 +29,10 @@
     <ol class="plp-scope-steps">
       {%- for s in lp.scope.steps %}<li>{{ s }}</li>{% endfor %}
     </ol>
+    {%- if lp.scope.stop %}
+    {#- 始めることだけでなく、やめることも一つ決める（BRAND.md「始めること・やめること」）。 #}
+    <p class="plp-scope-stop"><span class="plp-scope-stop-label">やめること</span>{{ lp.scope.stop }}</p>
+    {%- endif %}
     <p class="plp-small">哲学者の思想の全体像や、人生全体の自己分析は扱わない。それは本のほうが向いている。ここでは、いま抱えているひとつのことだけを、読んで15分、書いて10分、1週間後に見直すところまで進める。</p>
   </div>
   {%- endif %}
