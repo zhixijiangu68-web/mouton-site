@@ -5,11 +5,11 @@ assetVersion: "20261016-stop"
 permalink: start.html
 title: "はじめての方へ — ムートン"
 description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランドです。外側から飾るのではなく、内側から自分自身をつくっていく。正しい生き方は押しつけず、考えるための問いと試すための方法を置いています。"
-mindReads: ["kierkegaard", "nietzsche"]
+mindReads: ["kierkegaard", "nietzsche", "spinoza"]
 steps:
   - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["identity", "paid-nietzsche"] }
   - { t: "「僕は、〜する人間だ」と書く", x: "結果（いくら稼ぐ、何キロ痩せる）ではなく、やり方で書く。「僕は、自分との約束を守る人間だ」のように。その一文が、迷ったときの基準になる。", reads: ["self-image"] }
-  - { t: "考えと感情を、道具として扱う", x: "自分次第のことと、そうでないことを分ける。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみる。役に立たないなら、感じきってから手放す。", reads: ["stoicism", "paid-spinoza"] }
+  - { t: "考えと感情を、道具として扱う", x: "自分次第のことと、そうでないことを分ける。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみる。役に立たないなら、感じきってから手放す。", reads: ["stoicism", "spinoza", "paid-spinoza"] }
   - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、逆から考える。「こうすれば確実にうまくいかない」を書き出すと、やめることが見えてくる。", reads: ["paid-kierkegaard", "fear", "habit-context"] }
   - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。努力しているのに何も変わらないように見える、冬のような時期がある。その時期を、自分を責めずに過ごせるかどうか。", reads: ["habit-days-decisions", "system-goal"] }
 ---
@@ -29,7 +29,7 @@ steps:
     <p class="mind-door-text">正しい生き方を、押しつけることはしない。考えるための問いと、試すための方法を置いておく。どう生きるかを選ぶのは、いつも自分自身だ。</p>
     <hr class="mind-door-rule">
     <p class="mind-door-text">身体も食事も大切だ。でも僕は、その前に考え方を整えることから始めた。</p>
-    <p class="mind-door-text"><strong>入口に選ぶなら、キルケゴールとニーチェ。答えを渡すためではなく、自分で選ぶための問いとして。</strong></p>
+    <p class="mind-door-text"><strong>入口に選ぶなら、キルケゴール、ニーチェ、スピノザ。答えを渡すためではなく、自分で選ぶための問いとして。</strong></p>
     <div class="mind-door-reads">
       {%- for a in collections.articles | bySlugs(mindReads) %}
       <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
