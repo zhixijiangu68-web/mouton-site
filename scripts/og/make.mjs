@@ -45,7 +45,8 @@ for (const file of readdirSync(srcDir).filter(f => f.endsWith('.html'))) {
   const face = src.match(/^face: "(.*)"$/m)?.[1];
   const faceUrl = face ? pathToFileURL(join(root, face)).href : '';
   await page.evaluate(d => window.render(d), quiz
-    ? { title: quiz.replace(/&/g, '&amp;').replace(/</g, '&lt;') + (/[？?]$/.test(quiz) ? '' : `<span style="display:block;margin-top:.35em;color:#1442c4">${brand === 'ムートン' ? '○か×か？' : 'True or false?'}</span>`), label: labels[category] ?? 'Journal', quiz: true, face: faceUrl, brand }
+    // A question that already asks something (or lists choices A. B. C.) gets no "○か×か？" line; the choices start on their own line.
+    ? { title: quiz.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(?<=[？?])[\s　]*(?=A[.．])/, '<br>') + (/[？?]/.test(quiz) ? '' : `<span style="display:block;margin-top:.35em;color:#1442c4">${brand === 'ムートン' ? '○か×か？' : 'True or false?'}</span>`), label: labels[category] ?? 'Journal', quiz: true, face: faceUrl, brand }
     : { title: h1, label: labels[category] ?? 'Journal', face: faceUrl, brand });
   if (faceUrl) await page.waitForFunction(() => document.getElementById('face').style.backgroundImage !== '');
   await page.evaluate(() => document.fonts.ready);
