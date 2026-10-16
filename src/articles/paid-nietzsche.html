@@ -19,7 +19,7 @@ paid:
   subtitle: "ニーチェに学ぶ、人の物差しから降りて自分の価値をつくる"
   excerpt: "親の期待、上司の評価、SNSの反応。気づけば他人の物差しで選んでいる。ニーチェは、そこから静かに降りる道を残した。"
   minutes: 15
-  price: 500
+  price: 2980
   free: "nietzsche"
   learn: ["駱駝・獅子・子ども：竜から静かに降りる", "「本当に愛したもの」で自分の物差しをつくる", "永劫回帰：誰も見ていなくても選びたいか"]
   # 顔写真：images/portraits/nietzsche.jpg を置くとそれを使い、なければ Wikimedia Commons のパブリックドメイン画像を表示する
@@ -76,7 +76,7 @@ styles: |
         <section class="paywall" aria-labelledby="paywall-title">
           <p class="paywall-eyebrow">Continue reading</p>
           <p class="paywall-title" id="paywall-title">ここから先は有料です</p>
-          <p class="paywall-price">¥{{ paid.price }}</p>
+          <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }}</p>
           <p class="paywall-toc">続き：竜の名前は「汝なすべし」／なぜ、人の目はこんなに重いのか／自分の物差しは、もう手の中にある／誰も見ていない場所で、もう一度選びたいか／今日からの使い方／書き込みワーク／おわりに</p>
           {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
           <p class="paywall-note">購入と全文の閲覧はnoteで行います。引用には書名と節番号を添えています。</p>

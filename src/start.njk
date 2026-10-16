@@ -49,7 +49,7 @@ mindReads: ["kierkegaard", "nietzsche"]
         <span class="mind-door-step">MIND / 考え方</span>
         <span class="mind-act-book-title">3人の哲学者に学ぶ</span>
         <span class="mind-act-book-text">{% for a in paidList %}{{ a.data.paid.philosopher }}{% if not loop.last %}・{% endif %}{% endfor %}。悩みから入る有料記事{{ paidList.length }}本。</span>
-        <span class="mind-act-book-meta">note・各{{ paidList[0].data.paid.price if paidList.length else 500 }}円 / {{ 'noteで公開中' if paidLive else 'noteで公開準備中' }}</span>
+        <span class="mind-act-book-meta">note・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円 / {{ 'noteで公開中' if paidLive else 'noteで公開準備中' }}</span>
       </a>
       <a class="mind-act-book" href="cleanliness-science.html">
         <span class="mind-door-step">BODY / 外見と日常</span>

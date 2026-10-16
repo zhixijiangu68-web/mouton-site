@@ -19,7 +19,7 @@ paid:
   subtitle: "スピノザ『エチカ』に学ぶ、感情に振り回されない続け方"
   excerpt: "やる気がある日は頑張れるのに、落ち込むと全部やめてしまう。スピノザの感情の仕組みから、続けるための道具をつくる。"
   minutes: 15
-  price: 500
+  price: 2980
   free: ""
   learn: ["やる気に頼ると続かない、感情の仕組み", "自分を責めるほど動けなくなる理由", "感情を理解し、喜びにつないで続ける方法"]
   # 顔写真：images/portraits/spinoza.jpg を置くとそれを使い、なければ Wikimedia Commons のパブリックドメイン画像を表示する
@@ -77,7 +77,7 @@ styles: |
         <section class="paywall" aria-labelledby="paywall-title">
           <p class="paywall-eyebrow">Continue reading</p>
           <p class="paywall-title" id="paywall-title">ここから先は有料です</p>
-          <p class="paywall-price">¥{{ paid.price }}</p>
+          <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }}</p>
           <p class="paywall-toc">続き：「やる気」も、感情のひとつにすぎない／意志の力では、感情は止まらない／自分を責めると、二度負ける／理解すると、感情は受け身ではなくなる／今日からの使い方：喜びにつなぎ、原則を先に置く／書き込みワーク／おわりに</p>
           {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
           <p class="paywall-note">購入と全文の閲覧はnoteで行います。引用には書名と節番号を添えています。</p>

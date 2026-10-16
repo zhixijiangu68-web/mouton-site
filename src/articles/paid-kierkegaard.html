@@ -19,7 +19,7 @@ paid:
   subtitle: "キルケゴールに学ぶ、不安を抱えたまま選ぶ技術"
   excerpt: "調べても比べても、確信は来なかった。不安が消えるのを待たずに選び、選んだものを自分の答えにしていく方法。"
   minutes: 15
-  price: 500
+  price: 2980
   free: "kierkegaard"
   learn: ["「考えすぎて動けない」状態の正体を知る", "確信がなくても選ぶための、5つの方法", "選んだあとで、選択を自分の答えにする"]
   # 顔写真：images/portraits/kierkegaard.jpg を置くとそれを使い、なければ Wikimedia Commons のパブリックドメイン画像を表示する
@@ -76,7 +76,7 @@ styles: |
         <section class="paywall" aria-labelledby="paywall-title">
           <p class="paywall-eyebrow">Continue reading</p>
           <p class="paywall-title" id="paywall-title">ここから先は有料です</p>
-          <p class="paywall-price">¥{{ paid.price }}</p>
+          <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }}</p>
           <p class="paywall-toc">続き：選ばないことも、いつか選んだことになる／正しく選ぶより、真剣に選ぶ／不安は、消してから進むものではない／確かさは、選んだあとに育つ／僕が、決められないときにやっている5つのこと／書き込みワーク／おわりに</p>
           {% if paid.url %}<a class="buy-btn" href="{{ paid.url }}" target="_blank" rel="noopener noreferrer">noteで続きを読む <span aria-hidden="true">↗</span></a>{% else %}<span class="buy-btn is-soon">noteで公開準備中</span>{% endif %}
           <p class="paywall-note">購入と全文の閲覧はnoteで行います。引用には書名と節番号を添えています。</p>

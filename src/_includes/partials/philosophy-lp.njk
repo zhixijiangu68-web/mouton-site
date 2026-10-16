@@ -42,7 +42,7 @@
           <ul class="ph-learn">{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}</ul>
           <div class="ph-card-foot">
             <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
-            <p class="ph-meta">全文 約{{ p.minutes }}分・¥{{ p.price }}</p>
+            <p class="ph-meta">全文 約{{ p.minutes }}分・¥{{ p.price.toLocaleString("ja-JP") }}（税込）</p>
           </div>
           <p class="ph-credit">肖像：{{ p.portrait.credit }}。パブリックドメイン（Wikimedia Commons）</p>
           {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}
