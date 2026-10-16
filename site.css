@@ -677,3 +677,56 @@ article .paid-cta p{margin:0;font-family:var(--serif)}
 .paid-cta .paid-cta-meta{font:400 .75rem/1.7 var(--gothic);color:rgba(241,235,223,.65)}
 .paid-cta .paid-cta-all{margin-top:18px;font-size:.8125rem}
 .paid-cta .paid-cta-all a{color:#f1ebdf;text-decoration:underline;text-underline-offset:4px}
+
+/* Paid article product page (partials/paid-lp-*.njk): 悩み → 取り組めること → 見本 → 内容 → 理由 → 向き不向き → 価格 → FAQ */
+body.article-page article .plp-section{margin:64px 0 0}
+body.article-page article .plp-step{margin:0 0 6px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.22em;color:#7a5a1c}
+body.article-page article .plp-section > h2{margin:0 0 22px}
+body.article-page article .plp-small{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+body.article-page article .plp-pains-list{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
+body.article-page article .plp-pains-list li{margin:0;padding:14px 18px 14px 44px;position:relative;background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:10px;font-family:"Noto Serif JP",serif;font-size:.9375rem;line-height:1.9}
+body.article-page article .plp-pains-list li::before{content:"";position:absolute;left:18px;top:1.35em;width:12px;height:12px;border:1.5px solid #7a5a1c;border-radius:3px}
+body.article-page article .plp-pains-name{margin:0;font-size:clamp(1.05rem,2.4vw,1.3rem);line-height:1.9;font-weight:600}
+body.article-page article .plp-ba{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch;margin:0 0 22px}
+body.article-page article .plp-ba-item{padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.55)}
+body.article-page article .plp-ba-after{background:#1b1c19;border-color:#1b1c19}
+body.article-page article .plp-ba-after p{color:#f1ebdf}
+body.article-page article .plp-ba-label{margin:0 0 6px!important;font:500 .6875rem/1.6 Inter,sans-serif!important;letter-spacing:.14em;color:#7a5a1c}
+body.article-page article .plp-ba-after .plp-ba-label{color:#e7c983}
+body.article-page article .plp-ba-text{margin:0!important;font-size:.9375rem!important;line-height:1.9!important}
+body.article-page article .plp-ba-arrow{align-self:center;font-size:1.25rem;color:#7a5a1c}
+@media(max-width:640px){body.article-page article .plp-ba{grid-template-columns:1fr}body.article-page article .plp-ba-arrow{justify-self:center;transform:rotate(90deg)}}
+body.article-page article .plp-learn{margin:0 0 14px;padding-left:1.3em}
+body.article-page article .plp-learn li{font-family:"Noto Serif JP",serif;line-height:2;margin:2px 0}
+body.article-page article .plp-sample-body{position:relative;padding:clamp(22px,4vw,36px);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.7)}
+body.article-page article .plp-sample-body h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.7;margin:40px 0 18px}
+body.article-page article .plp-sample-cut{margin:28px 0 0!important;text-align:center;font:500 .75rem/1.6 Inter,sans-serif!important;letter-spacing:.2em;color:#7a5a1c}
+body.article-page article .plp-work{margin:18px 0 0;padding:20px 22px;border:1px dashed rgba(122,90,28,.6);border-radius:12px}
+body.article-page article .plp-work-h{margin:0 0 10px!important;font:500 .75rem/1.6 Inter,sans-serif!important;letter-spacing:.12em;color:#7a5a1c}
+body.article-page article .plp-work-list{margin:0;padding-left:1.4em}
+body.article-page article .plp-work-list li{font-family:"Noto Serif JP",serif;line-height:2.1;margin:4px 0}
+body.article-page article .plp-toc{margin:0 0 22px;padding-left:1.5em}
+body.article-page article .plp-toc li{font-family:"Noto Serif JP",serif;line-height:2;margin:2px 0}
+body.article-page article .plp-spec{margin:0 0 24px;display:grid;gap:0;border-top:1px solid var(--line)}
+body.article-page article .plp-spec > div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+body.article-page article .plp-spec dt{font:500 .8125rem/1.8 Inter,"Noto Sans JP",sans-serif;color:#7a5a1c}
+body.article-page article .plp-spec dd{margin:0;font-size:.9375rem;line-height:1.8}
+body.article-page article .plp-howto{margin:0;padding-left:1.5em}
+body.article-page article .plp-howto li{font-family:"Noto Serif JP",serif;line-height:2;margin:6px 0}
+body.article-page article .plp-fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+body.article-page article .plp-fit-col{padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.55)}
+body.article-page article .plp-fit-no{background:transparent}
+body.article-page article .plp-fit-h{margin:0 0 8px!important;font-weight:600}
+body.article-page article .plp-fit-col ul{margin:0;padding-left:1.2em}
+body.article-page article .plp-fit-col li{font-family:"Noto Serif JP",serif;font-size:.9375rem;line-height:1.95;margin:4px 0}
+body.article-page article .plp-buy .paywall{margin-top:0}
+body.article-page article .plp-q{border-bottom:1px solid var(--line)}
+body.article-page article .plp-q summary{cursor:pointer;padding:16px 0;font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.8;list-style:none;position:relative;padding-right:28px}
+body.article-page article .plp-q summary::-webkit-details-marker{display:none}
+body.article-page article .plp-q summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.25rem;color:#7a5a1c}
+body.article-page article .plp-q[open] summary::after{content:"−"}
+body.article-page article .plp-q summary:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
+body.article-page article .plp-q p{margin:0 0 18px!important;font-size:.9375rem!important;line-height:2!important}
+body.article-page article .paywall p{color:#fff}
+body.article-page article .paywall .paywall-tax{font-size:.875rem;font-family:Inter,sans-serif;letter-spacing:.06em;opacity:.85}
+body.article-page article .paywall .paywall-note{opacity:.85}

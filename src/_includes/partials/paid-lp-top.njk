@@ -1,0 +1,25 @@
+{#- 有料記事の販売ページ（前半）：①具体的な悩み → ②この記事で取り組めること。
+    文言は各記事の front matter（paid・lp）から。 -#}
+<section class="plp-section plp-pains" aria-labelledby="plp-pains-h">
+  <p class="plp-step">01 / Worries</p>
+  <h2 id="plp-pains-h">こんな状態が、続いていないか。</h2>
+  <ul class="plp-pains-list">
+    {%- for x in lp.pains %}<li>{{ x }}</li>{% endfor %}
+  </ul>
+  <p class="plp-pains-name">{{ paid.worry }}</p>
+</section>
+
+<section class="plp-section plp-can" aria-labelledby="plp-can-h">
+  <p class="plp-step">02 / What you can do</p>
+  <h2 id="plp-can-h">この記事で取り組めること</h2>
+  <div class="plp-ba">
+    <div class="plp-ba-item"><p class="plp-ba-label">いま</p><p class="plp-ba-text">{{ paid.before }}</p></div>
+    <div class="plp-ba-arrow" aria-hidden="true">→</div>
+    <div class="plp-ba-item plp-ba-after"><p class="plp-ba-label">読んで、書き込んだあと</p><p class="plp-ba-text">{{ paid.after }}</p></div>
+  </div>
+  <ul class="plp-learn">
+    {%- for l in paid.learn %}<li>{{ l }}</li>{% endfor %}
+    <li>空欄に書き込む、5つのワーク</li>
+  </ul>
+  <p class="plp-small">変化を約束するものではない。考える材料と、試す方法を渡すための記事だ。</p>
+</section>
