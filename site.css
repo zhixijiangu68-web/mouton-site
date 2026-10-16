@@ -826,3 +826,6 @@ body.article-page article .plp-scope-target{margin:0 0 10px!important;font-size:
 body.article-page article .plp-scope-steps{margin:0 0 10px;padding-left:1.4em}
 body.article-page article .plp-scope-steps li{margin:4px 0;color:#f1ebdf;line-height:1.85}
 body.article-page article .plp-scope .plp-small{color:rgba(241,235,223,.75)!important;margin:0!important}
+body.article-page article .plp-scope-stop{margin:0 0 12px!important;padding:10px 12px;border:1px dashed rgba(231,201,131,.55);border-radius:8px;font-size:.9375rem!important;line-height:1.85!important;color:#f1ebdf!important}
+body.article-page article .plp-scope-stop-label{display:block;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif;letter-spacing:.12em;color:#e7c983}
+.doc .mind-door .mind-door-ask,.mind-door .mind-door-ask{font-family:var(--serif);font-size:clamp(1.05rem,2.6vw,1.25rem);line-height:2;color:#f8f5ee;padding-left:14px;border-left:2px solid #e7c983}
