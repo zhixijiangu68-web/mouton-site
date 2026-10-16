@@ -2,11 +2,11 @@
 layout: base.njk
 permalink: journal.html
 title: "すべての記事 — ムートン"
-description: "ムートンのすべての記事。まずはキルケゴールとニーチェから、哲学・生き方の記事を。身体、食事と科学、仕事、本、制作の記事も、分類で絞りこんだり本文まで検索したりできます。"
+description: "ムートンのすべての記事。まずはキルケゴール、ニーチェ、スピノザから、哲学・生き方の記事を。身体、食事と科学、仕事、本、制作の記事も、分類で絞りこんだり本文まで検索したりできます。"
 bodyClass: site journal-page
 extraCss: ["home.css?v=20261016-paidtag"]
 assetVersion: "20261016-paidtag"
-mindReads: ["kierkegaard", "nietzsche"]
+mindReads: ["kierkegaard", "nietzsche", "spinoza"]
 ---
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
@@ -24,7 +24,7 @@ mindReads: ["kierkegaard", "nietzsche"]
       <section class="mind-door mind-door--journal" aria-labelledby="mind-door-title">
         <p class="mind-door-kicker">Start with philosophy</p>
         <h2 class="mind-door-title" id="mind-door-title">まず、哲学から。</h2>
-        <p class="mind-door-text">身体も食事も大切だ。けれど、考え方が定まっていなければ、何も始まらない。キルケゴールとニーチェから読んでほしい。</p>
+        <p class="mind-door-text">身体も食事も大切だ。けれど、考え方が定まっていなければ、何も始まらない。キルケゴール、ニーチェ、スピノザから読んでほしい。</p>
         <div class="mind-door-reads">
           {%- for a in collections.articles | bySlugs(mindReads) %}
           <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">

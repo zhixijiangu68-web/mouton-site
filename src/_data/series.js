@@ -7,8 +7,8 @@ export default [
     key: 'thinkers',
     title: '哲学者に聞く',
     en: 'Asking the philosophers',
-    intro: 'ストア派、キルケゴール、ニーチェ、カミュ、サルトル。2000年分の哲学者に、いまの悩みを持っていって聞いてみる連載です。',
+    intro: 'ストア派、キルケゴール、ニーチェ、スピノザ、カミュ、サルトル。2000年分の哲学者に、いまの悩みを持っていって聞いてみる連載です。',
     enIntro: 'The Stoics, Nietzsche, Camus, Sartre. Taking today\'s worries to two thousand years of philosophers.',
-    slugs: ['stoicism', 'kierkegaard', 'nietzsche', 'camus-sisyphus', 'sartre', 'books-philosophy'],
+    slugs: ['stoicism', 'kierkegaard', 'nietzsche', 'spinoza', 'camus-sisyphus', 'sartre', 'books-philosophy'],
   },
 ];
