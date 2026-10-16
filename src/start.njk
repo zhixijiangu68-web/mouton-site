@@ -1,11 +1,17 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
-assetVersion: "20261015-brand"
+assetVersion: "20261016-order"
 permalink: start.html
 title: "はじめての方へ — ムートン"
 description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランドです。外側から飾るのではなく、内側から自分自身をつくっていく。正しい生き方は押しつけず、考えるための問いと試すための方法を置いています。"
 mindReads: ["kierkegaard", "nietzsche"]
+steps:
+  - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["identity", "paid-nietzsche"] }
+  - { t: "「僕は、〜する人間だ」と書く", x: "結果（いくら稼ぐ、何キロ痩せる）ではなく、やり方で書く。「僕は、自分との約束を守る人間だ」のように。その一文が、迷ったときの基準になる。", reads: ["self-image"] }
+  - { t: "考えと感情を、道具として扱う", x: "自分次第のことと、そうでないことを分ける。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみる。役に立たないなら、感じきってから手放す。", reads: ["stoicism", "paid-spinoza"] }
+  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。何かを足すより、邪魔をしているものを一つ外す。", reads: ["paid-kierkegaard", "fear", "habit-context"] }
+  - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。何も変わらないように見える時期を、自分を責めずに過ごせるかどうか。", reads: ["habit-days-decisions", "system-goal"] }
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
@@ -34,6 +40,25 @@ mindReads: ["kierkegaard", "nietzsche"]
       {%- endfor %}
     </div>
     <p class="mind-door-all"><a href="topic-philosophy.html">哲学・生き方の記事をすべて見る <span aria-hidden="true">→</span></a></p>
+  </section>
+
+  {#- MOUTON の考える「変わる順番」。在り方 → 信念 → 考えと感情 → 行動 → 結果（遅れて来る）。 #}
+  <section class="change-order" aria-labelledby="change-order-title">
+    <p class="mind-door-kicker">How change happens</p>
+    <h2 class="change-order-title" id="change-order-title">変わるには、順番がある。</h2>
+    <p class="change-order-lead">行動から変えようとすると、たいてい続かない。僕は、変わるには順番があると思っている。どこでつまずいているかで、読むものも変わる。</p>
+    <ol class="change-steps">
+      {%- for st in steps %}
+      <li class="change-step">
+        <span class="change-step-n">{{ loop.index }}</span>
+        <div class="change-step-body">
+          <p class="change-step-t">{{ st.t }}</p>
+          <p class="change-step-x">{{ st.x }}</p>
+          <p class="change-step-reads">{% for a in collections.articles | bySlugs(st.reads) %}<a href="{{ a.page.fileSlug }}.html">{{ a.data.paid.title if a.data.paid else (a.data.journal.title if a.data.journal else a.data.headline) }}{% if a.data.paid %}<span class="change-paid">有料</span>{% endif %}</a>{% endfor %}</p>
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
   </section>
 
   {#- 動画を探し回るより、一冊を読んで試す。販売状態は site.js と記事の front matter から出す。 #}
