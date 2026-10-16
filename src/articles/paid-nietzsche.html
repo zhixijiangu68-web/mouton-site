@@ -32,6 +32,13 @@ paid:
   url: ""
 # 販売ページの中身（悩み・ワークの見本・目次・向き不向き・この記事だけのFAQ）。共通の文は partials/paid-lp-*.njk
 lp:
+  headline: "人の物差しではなく、自分の物差しで選ぶ。"
+  subhead: "「気にするな」と言い聞かせず、人の意見も切り捨てずに。ニーチェの「人の物差しから降りる」考え方を、15分で読める記事と5つの書き込みワークにした。"
+  benefits: ["頭の中の「すべき」が、誰の声なのかが分かる", "人の意見を「情報」として聞き、選ぶときは自分の物差しを使える", "これまで本当に愛してきたものから、自分の物差しの目盛りが見える"]
+  compare:
+    - { method: "「気にしない」と言い聞かせる", gives: "一時的な強がり", gap: "「すべき」の正体が分からないまま、また気になる" }
+    - { method: "人に相談して決めてもらう", gives: "その場の安心", gap: "物差しが自分の外にあるまま" }
+    - { method: "この記事", gives: "ニーチェの考え方と、5つの書き込みワーク", gap: "人の声を情報として聞き、自分の物差しで選ぶ手順が残る" }
   pains: ["書き終えた投稿を、送信の手前で消してしまう", "気になる求人を見つけても、先に浮かぶのは親や周りの顔", "会議で言いかけた意見を、上司の表情を見て飲みこむ", "自分の人生なのに、自分で決めた気がしない"]
   toc: ["竜の名前は「汝なすべし」", "なぜ、人の目はこんなに重いのか", "自分の物差しは、もう手の中にある", "誰も見ていない場所で、もう一度選びたいか", "今日からの使い方", "書き込みワーク", "おわりに"]
   fit: ["「どう思われるか」が先に浮かんで、選択がいつも無難になる人", "人の意見は大事にしたいけれど、振り回されたくない人", "反抗するのではなく、静かに自分の基準を持ちたい人"]
@@ -49,9 +56,7 @@ styles: |
 ---
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.10.15　/　PHILOSOPHY　/　ニーチェ　<span class="paid-badge">有料記事</span></div>
-        <h1>その選択は、<br>誰の物差しで決めたのか。</h1>
-        <p class="paid-sub">ニーチェに学ぶ、人の物差しから降りて自分の価値をつくる</p>
-        <p class="reading-time">note の有料記事・全文 約{{ paid.minutes }}分・¥{{ paid.price.toLocaleString("ja-JP") }}（税込）。<a href="#sample">冒頭は無料で読める</a></p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
+        {% include "partials/paid-lp-hero.njk" %}<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
 {% include "partials/paid-lp-top.njk" %}
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
           <p class="plp-step">03 / Sample</p>

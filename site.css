@@ -730,3 +730,26 @@ body.article-page article .plp-q p{margin:0 0 18px!important;font-size:.9375rem!
 body.article-page article .paywall p{color:#fff}
 body.article-page article .paywall .paywall-tax{font-size:.875rem;font-family:Inter,sans-serif;letter-spacing:.06em;opacity:.85}
 body.article-page article .paywall .paywall-note{opacity:.85}
+/* Paid page: first screen and comparison */
+body.article-page article .plp-benefits{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+body.article-page article .plp-benefits li{position:relative;margin:0;padding-left:30px;font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.85}
+body.article-page article .plp-benefits li::before{content:"✓";position:absolute;left:4px;top:0;color:#7a5a1c;font-family:Inter,sans-serif;font-weight:600}
+body.article-page article .plp-hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin:0 0 14px}
+body.article-page article a.plp-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 26px;border-radius:999px;background:#1b1c19;color:#f8f5ee;font:600 .9375rem/1.4 Inter,"Noto Sans JP",sans-serif;text-decoration:none}
+body.article-page article a.plp-btn:hover{background:#33352f}
+body.article-page article a.plp-btn:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
+body.article-page article .plp-hero-more{font-size:.9375rem}
+body.article-page article .plp-product{margin:0 0 22px;font-size:.8125rem;line-height:1.8;color:var(--muted,#666a64)}
+body.article-page article .plp-sub-h{margin:34px 0 14px;font-family:"Noto Serif JP",serif;font-weight:400;font-size:1.125rem;line-height:1.7}
+body.article-page article .plp-compare{margin:0 0 10px;border-top:1px solid var(--line)}
+body.article-page article .plp-compare-row{display:grid;grid-template-columns:1.1fr 1fr 1.4fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.875rem;line-height:1.8}
+body.article-page article .plp-compare-head{font:500 .75rem/1.6 Inter,"Noto Sans JP",sans-serif;color:#7a5a1c;letter-spacing:.06em}
+body.article-page article .plp-compare-row.is-this{background:rgba(185,138,50,.1);padding:12px 10px;margin:0 -10px;border-radius:8px;border-bottom:0;font-weight:600}
+@media(max-width:640px){
+ body.article-page article .plp-compare-head{display:none}
+ body.article-page article .plp-compare-row{grid-template-columns:1fr;gap:2px}
+ body.article-page article .plp-compare-row span:first-child{font-weight:600}
+ body.article-page article .plp-compare-row span:nth-child(2)::before{content:"得られるもの：";color:#7a5a1c}
+ body.article-page article .plp-compare-row span:nth-child(3)::before{content:"残りやすいこと：";color:#7a5a1c}
+}
+body.article-page article .paywall a.plp-light{color:#fff;text-decoration:underline;text-underline-offset:3px}
