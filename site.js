@@ -348,7 +348,7 @@ document.addEventListener('click',e=>{
 (()=>{
  const send=(name,params)=>{if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({transport_type:'beacon'},params));};
  const page=(location.pathname.replace(/^.*\//,'').replace(/\.html$/,''))||'index';
- const where=a=>{for(const c of ['paid-cta','ph-card','lp-worries','change-step','mind-act','reading-next','paid-back']){if(a.closest('.'+c))return c;}return 'link';};
+ const where=a=>{for(const c of ['paid-cta','paid-series','ph-card','lp-worries','change-step','mind-act','reading-next','paid-back']){if(a.closest('.'+c))return c;}return 'link';};
  document.addEventListener('click',e=>{
   const a=e.target.closest&&e.target.closest('a[href]');
   if(!a)return;

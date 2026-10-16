@@ -20,6 +20,9 @@ paid:
   excerpt: "親の期待、上司の評価、SNSの反応。気づけば他人の物差しで選んでいる。ニーチェは、そこから静かに降りる道を残した。"
   before: "何を選ぶにも先に「どう思われるか」を考えてしまって、自分で決めた気がしない。"
   after: "人の意見は聞くけれど、最後は自分の物差しで選べるし、選んだことを誰に見せなくても続けられる。"
+  # 3本の流れ（選ぶ → 自分の物差しで → 続ける）の中での役割。partials/paid-series.njk・哲学のページで使う
+  role: "自分の物差しで"
+  step: "その選択を、人の物差しではなく、自分の物差しで。"
   minutes: 15
   price: 2980
   free: "nietzsche"
@@ -101,7 +104,7 @@ styles: |
           </div>
         </section>
 {% include "partials/paid-lp-bottom.njk" %}
-        <p class="paid-back"><a href="topic-philosophy.html">ほかの2人の哲学者と比べる →</a></p>
+{% include "partials/paid-series.njk" %}
 {% include "partials/article-end.njk" %}
 {% include "partials/reading-next.njk" %}
 </article></main>

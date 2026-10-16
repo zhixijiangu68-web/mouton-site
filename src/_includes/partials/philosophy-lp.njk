@@ -43,6 +43,9 @@
 
   <section class="lp-section" aria-labelledby="lp-cards-heading">
     <h2 id="lp-cards-heading">3人の哲学者</h2>
+    {#- 3本を一本の道として見せる（paid.role）。どこからでも読める。 #}
+    <p class="lp-path">{% for a in paidList %}<span class="lp-path-step">{{ a.data.paid.role }}<span class="lp-path-name">{{ a.data.paid.philosopher }}</span></span>{% if not loop.last %}<span class="lp-path-arrow" aria-hidden="true">→</span>{% endif %}{% endfor %}</p>
+    <p>選ぼうとすると、誰の物差しで選ぶのかが問われる。選んだあとには、続けられるかが問われる。3人は、僕には一本の道に見える。ただし、どこからでも読める。いまいちばん近い悩みの1本からでいい。</p>
     <div class="ph-cards">
     {%- for a in paidList %}
     {%- set p = a.data.paid %}
@@ -58,6 +61,7 @@
           </figure>
           <div class="ph-card-id">
           {% if loop.first %}<p class="ph-featured">まずはここから</p>{% endif %}
+          <p class="ph-path-step">STEP {{ loop.index }}・{{ p.role }}</p>
           <p class="ph-name-en">{{ p.en }}</p>
           <p class="ph-name">{{ p.philosopher }}</p>
           <p class="ph-for">{{ p.years }}<br>こんな人に：{{ p.worry }}</p>

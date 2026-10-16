@@ -789,3 +789,21 @@ body.article-page article .mini-work-lines li{font-family:"Noto Serif JP",serif;
 body.article-page article .mini-work-note{margin:0!important;font-size:.8125rem!important;line-height:1.9!important;color:var(--muted,#666a64)}
 .paid-cta .paid-cta-bridge{margin:0 0 14px;font-size:.875rem;line-height:1.9;color:#d9d2c3}
 body.article-page article .mw-blank,body.article-page article .plp-work-list .mw-blank{white-space:nowrap}
+
+/* Three paid articles as one path: 選ぶ → 自分の物差しで → 続ける */
+body.article-page article .paid-series-list{list-style:none;margin:22px 0 14px;padding:0;display:grid;gap:10px}
+body.article-page article .paid-series-item{display:grid;grid-template-columns:34px 1fr;gap:12px;margin:0;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.35)}
+body.article-page article .paid-series-item.is-here{border-color:rgba(185,138,50,.7);background:rgba(185,138,50,.1)}
+body.article-page article .paid-series-n{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px solid rgba(122,90,28,.6);font:600 .875rem/1 Inter,sans-serif;color:#7a5a1c}
+body.article-page article .paid-series-body p{margin:0!important}
+body.article-page article .paid-series-role{font:500 .75rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.08em;color:#7a5a1c}
+body.article-page article .paid-series-step{font-size:1rem!important;line-height:1.8!important}
+body.article-page article .paid-series-title{font-size:.875rem!important;line-height:1.8!important;color:var(--muted,#666a64)}
+body.article-page article .paid-series-here{display:inline-block;margin-left:8px;padding:0 10px;border-radius:999px;background:#1b1c19;color:#f8f5ee;font:500 .6875rem/1.8 Inter,"Noto Sans JP",sans-serif}
+body.article-page article .paid-series .paid-back{margin-top:18px}
+body.article-page article a.paid-series-link{color:var(--ink,#252724);text-decoration:underline;text-decoration-color:rgba(122,90,28,.5);text-underline-offset:4px}
+.doc .lp-path,.lp-path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;font-family:var(--serif);font-size:.9375rem;line-height:1.5}
+.lp-path-step{display:inline-flex;flex-direction:column;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.lp-path-name{font-family:Inter,"Noto Sans JP",sans-serif;font-size:.625rem;letter-spacing:.04em;color:#7a5a1c}
+.lp-path-arrow{color:#7a5a1c;font-size:.875rem}
+.ph-path-step{margin:0 0 6px!important;font-family:Inter,"Noto Sans JP",sans-serif;font-size:.75rem!important;letter-spacing:.12em;opacity:.75}
