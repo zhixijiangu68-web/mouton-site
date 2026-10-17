@@ -137,6 +137,15 @@
       <button type="button" class="link sheet-back" data-quests-back><span aria-hidden="true">←</span> メニュー</button>
       <h2 id="quests-h">クエスト</h2>
       <p class="shop-lead">夜ごとに目標がひとつ。限られた群れで達成しよう。</p>
+      <div class="story-card" data-story-card>
+        <p class="eyebrow">ものがたり</p>
+        <p class="story-card-text" data-story-card-text></p>
+        <div class="actions">
+          <button type="button" class="btn btn-main" data-story-card-main></button>
+          <button type="button" class="btn" data-story-card-sub hidden></button>
+        </div>
+        <button type="button" class="link" data-story-card-reset hidden>はじめからにする</button>
+      </div>
       <p class="quest-total" data-quest-total></p>
       <div class="quests" data-quest-list></div>
     </section>
@@ -145,6 +154,7 @@
       <button type="button" class="link sheet-back" data-qi-back><span aria-hidden="true">←</span> 一覧</button>
       <p class="eyebrow" data-qi-n></p>
       <h2 id="qi-name" data-qi-name></h2>
+      <p class="qi-story" data-qi-story hidden></p>
       <p class="qi-goal" data-qi-goal></p>
       <p class="qi-limit" data-qi-limit></p>
       <p class="qi-note" data-qi-stars></p>
@@ -162,12 +172,36 @@
       <p class="qc-stars" data-qc-stars></p>
       <p class="final-clock" data-qc-left></p>
       <p class="final-wool" data-qc-wool></p>
+      <p class="qc-story" data-qc-story hidden></p>
       <p class="goodnight" data-goodnight hidden></p>
       <div class="actions">
+        <button type="button" class="btn btn-main" data-qc-story-next hidden>つづきを読む</button>
         <button type="button" class="btn btn-main" data-qc-next>つぎの夜へ</button>
         <button type="button" class="btn" data-qc-again>もう一度</button>
       </div>
       <button type="button" class="link" data-qc-list>クエスト一覧</button>
+    </section>
+
+    <section class="sheet" data-sheet="story" hidden aria-labelledby="story-h">
+      <p class="eyebrow" id="story-h" data-story-eyebrow>ものがたり</p>
+      <div class="story-lines" data-story-lines></div>
+      <div class="story-choices" data-story-choices></div>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-story-next hidden></button>
+      </div>
+      <button type="button" class="link" data-story-later hidden></button>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="shiori" hidden aria-labelledby="shiori-h">
+      <button type="button" class="link sheet-back" data-shiori-back><span aria-hidden="true">←</span> クエスト</button>
+      <h2 id="shiori-h">夜のしおり</h2>
+      <dl class="shiori-rows" data-shiori-rows></dl>
+      <p class="rec-note" data-shiori-care></p>
+      <div class="actions">
+        <button type="button" class="btn" data-shiori-copy>しおりをコピー</button>
+      </div>
+      <h3 class="ach-head" data-shiori-past-head hidden>これまでのしおり</h3>
+      <ol class="shiori-past" data-shiori-past hidden></ol>
     </section>
 
     <section class="sheet" data-sheet="qfail" hidden aria-labelledby="qf-h">

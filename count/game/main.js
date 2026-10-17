@@ -7,6 +7,7 @@ import { drawBlock } from './skins.js';
 import { Wallet, SKINS, skinById } from './wool.js';
 import { QUESTS, GOALS, questById, questGame, progress, outcome, record, unlocked } from './quest.js';
 import { Profile, ACHIEVEMENTS, rankOf, gameStats, moonPhase, localDate, goodnightMessage } from './profile.js';
+import * as S from './story.js';
 
 const app = document.querySelector('[data-app]');
 const field = app.querySelector('[data-field]');
@@ -21,6 +22,7 @@ const SETTINGS = 'mouton.sheep.settings';
 const WALLET = 'mouton.sheep.wallet';
 const QUEST_SAVE = 'mouton.sheep.quest.save';
 const RESULTS = 'mouton.sheep.quests';
+const STORY = 'mouton.sheep.story';
 const AD_FLOCKS = 5;          // flocks added by an ad when a quest runs out
 const PROFILE = 'mouton.sheep.profile';
 const TIPS = 'mouton.sheep.tips';     // one-time tips already shown
@@ -66,6 +68,8 @@ let extra = 0;                // flocks added by an ad in this attempt
 let adFlocksUsed = false;
 let results = storage.get(RESULTS, {});
 if (typeof results !== 'object' || !results) results = {};
+let story = S.normalize(storage.get(STORY, null));      // ものがたり (optional; see story.js)
+const saveStory = () => storage.set(STORY, story);
 const profile = new Profile(storage.get(PROFILE, {}));
 const saveProfile = () => storage.set(PROFILE, profile.toJSON());
 let synced = {};              // this night's numbers already added to the profile
@@ -1166,6 +1170,7 @@ function questList() {
     btn.setAttribute('aria-label', `第${q.id}夜 ${q.name}、${open ? `星${stars}つ` : 'まだ遊べない'}`);
     return btn;
   }));
+  storyCard();
   show('quests');
 }
 
@@ -1179,6 +1184,9 @@ function questIntro(q) {
   $('[data-qi-stars]').textContent = `★★ 群れを${q.stars[0]}個のこす　★★★ ${q.stars[1]}個のこす`;
   $('[data-qi-wool]').textContent = `はじめて取った★1つにつき ウール ${q.wool}`;
   $('[data-qi-best]').textContent = results[q.id] ? `これまで ${starText(results[q.id])}` : '';
+  const lead = S.before(story, q.id);
+  $('[data-qi-story]').textContent = lead || '';
+  $('[data-qi-story]').hidden = !lead;
   const saved = storage.get(QUEST_SAVE, null);
   $('[data-qi-continue]').hidden = !(saved && saved.game && saved.game.quest === q.id && !saved.game.over);
   show('qintro');
@@ -1200,6 +1208,188 @@ $('[data-qi-continue]').addEventListener('click', () => {
   adFlocksUsed = Boolean(saved.adFlocksUsed);
   start(false);
 });
+
+// ---- ものがたり ----------------------------------------------------------------
+// The story is optional and starts only when the player taps. Everything it
+// says comes from story.js; here it is only shown.
+
+function storyScene({ eyebrow = 'ものがたり', lines, choices = [], next = null, later = null }) {
+  $('[data-story-eyebrow]').textContent = eyebrow;
+  $('[data-sheet="story"]').style.setProperty('--story-wait', `${lines.length * 0.45 + 0.2}s`);
+  $('[data-story-lines]').replaceChildren(...lines.map((t, i) => {
+    const p = document.createElement('p');
+    p.textContent = t;
+    p.style.animationDelay = `${i * 0.45}s`;
+    return p;
+  }));
+  $('[data-story-choices]').replaceChildren(...choices.map(c => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'choice';
+    b.textContent = c.label;
+    b.addEventListener('click', c.run, { once: true });
+    return b;
+  }));
+  const nextBtn = $('[data-story-next]');
+  nextBtn.hidden = !next;
+  if (next) { nextBtn.textContent = next.label; nextBtn.onclick = next.run; }
+  const laterBtn = $('[data-story-later]');
+  laterBtn.hidden = !later;
+  if (later) { laterBtn.textContent = later.label; laterBtn.onclick = later.run; }
+  show('story');
+}
+
+function storyPrologue() {
+  storyScene({
+    lines: S.PROLOGUE,
+    next: { label: '夜をはじめる', run: () => { story = S.begin(story, localDate()); saveStory(); storyWord(); } },
+    later: { label: 'やめておく', run: questList },
+  });
+}
+
+function storyWord() {
+  storyScene({
+    lines: [S.WORD_ASK],
+    choices: S.WORDS.map(w => ({ label: w, run: () => storyWordPicked(w) })),
+    later: { label: 'あとで', run: () => storyWordPicked(null) },
+  });
+}
+
+function storyWordPicked(word) {
+  story = S.chooseWord(story, word);
+  saveStory();
+  storyScene({
+    lines: [story.word && story.word !== 'いまは、見たくない' ? S.WORD_REPLY.named : S.WORD_REPLY.none],
+    next: { label: '第1夜へ', run: () => questIntro(questById(1)) },
+  });
+}
+
+// After the eleventh night: what the player did with the black sheep, and one question.
+function storyAsk() {
+  storyScene({
+    lines: [S.mirror(story), S.VIEW_ASK],
+    choices: S.VIEWS.map(v => ({ label: v.label, run: () => storyAnswered(v.id) })),
+  });
+}
+
+function storyAnswered(id) {
+  const r = S.answer(story, id);
+  story = r.state;
+  saveStory();
+  storyScene({ lines: [r.reply], next: { label: `第${story.night}夜へ`, run: () => questIntro(questById(story.night)) } });
+}
+
+// After the last night: the story ends when the player says so.
+function storyDawn() {
+  storyScene({ lines: S.DAWN, next: { label: '朝にする', run: storyFinish } });
+}
+
+function storyFinish() {
+  const r = S.finish(story, localDate());
+  if (!r.lines.length) { questList(); return; }
+  story = r.state;
+  saveStory();
+  sound.sfx('dawn');
+  storyScene({
+    eyebrow: S.ENDINGS[story.ending].name,
+    lines: r.lines,
+    next: { label: '夜のしおりを見る', run: () => shioriShow(S.lastKeepsake(story)) },
+  });
+}
+
+function shioriShow(k) {
+  if (!k) { questList(); return; }
+  const r = S.shiori(k);
+  $('[data-shiori-rows]').replaceChildren(...r.rows.map(([name, value]) => {
+    const row = document.createElement('div');
+    const dt = document.createElement('dt');
+    const dd = document.createElement('dd');
+    dt.textContent = name;
+    dd.textContent = value;
+    row.append(dt, dd);
+    return row;
+  }));
+  $('[data-shiori-care]').textContent = S.CARE;
+  $('[data-shiori-copy]').onclick = async () => {
+    try { await navigator.clipboard.writeText(r.text); toast('しおりをコピーしました'); }
+    catch { toast(r.text.split('\n')[1]); }
+  };
+  const past = story.status === 'ended' ? story.history : story.history.slice(1);
+  $('[data-shiori-past-head]').hidden = !past.length;
+  const list = $('[data-shiori-past]');
+  list.hidden = !past.length;
+  list.replaceChildren(...past.map(h => {
+    const li = document.createElement('li');
+    const a = document.createElement('span');
+    const b = document.createElement('span');
+    a.textContent = (h.ended || h.started || '').replaceAll('-', '/').slice(5) || '—';
+    b.textContent = S.ENDINGS[h.ending].name;
+    li.append(a, b);
+    return li;
+  }));
+  show('shiori');
+}
+
+// The card at the top of the quest list: start, go on, or look back.
+let resetArmed = 0;
+function storyCard() {
+  const text = $('[data-story-card-text]');
+  const main = $('[data-story-card-main]');
+  const sub = $('[data-story-card-sub]');
+  const reset = $('[data-story-card-reset]');
+  resetArmed = 0;
+  reset.textContent = 'はじめからにする';
+  sub.hidden = true;
+  reset.hidden = true;
+  if (story.status === 'active') {
+    if (story.pending === 'ask') { text.textContent = 'つづきがあります。'; main.textContent = 'つづきを読む'; }
+    else if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
+    else { text.textContent = `第${story.night}夜から。`; main.textContent = 'つづける'; }
+    reset.hidden = false;
+  } else if (story.status === 'ended') {
+    text.textContent = `ものがたりは、おわりました。「${S.ENDINGS[story.ending].name}」`;
+    main.textContent = 'しおりを見る';
+    sub.textContent = 'もう一度、はじめる';
+    sub.hidden = false;
+  } else {
+    text.textContent = '15の夜に、ひとつの夜の話を重ねます。はじめるのも、終わらせるのも、あなたです。';
+    main.textContent = 'ものがたりを はじめる';
+    if (story.history.length) { sub.textContent = 'しおりを見る'; sub.hidden = false; }
+  }
+}
+
+$('[data-story-card-main]').addEventListener('click', () => {
+  if (story.status === 'ended') { shioriShow(S.lastKeepsake(story)); return; }
+  if (story.status !== 'active') { storyPrologue(); return; }
+  if (story.pending === 'ask') { storyAsk(); return; }
+  if (story.pending === 'dawn') { storyDawn(); return; }
+  const q = questById(story.night);
+  if (q && unlocked(results, q)) questIntro(q);
+  else questList();
+});
+$('[data-story-card-sub]').addEventListener('click', () => {
+  if (story.status === 'ended') storyPrologue();
+  else shioriShow(S.lastKeepsake(story));
+});
+// Starting over asks twice (a second tap within four seconds), so it cannot happen by accident.
+$('[data-story-card-reset]').addEventListener('click', e => {
+  const btn = e.currentTarget;
+  if (!resetArmed) {
+    const armed = resetArmed = performance.now();
+    btn.textContent = 'もう一度タップで、はじめから';
+    setTimeout(() => { if (resetArmed === armed) { resetArmed = 0; btn.textContent = 'はじめからにする'; } }, 4000);
+    return;
+  }
+  story = { ...S.fresh(), history: story.history };
+  saveStory();
+  storyCard();
+});
+$('[data-qc-story-next]').addEventListener('click', () => {
+  if (story.pending === 'ask') storyAsk();
+  else if (story.pending === 'dawn') storyDawn();
+  else questList();
+});
+$('[data-shiori-back]').addEventListener('click', questList);
 
 function questEnd(o) {
   goodnight();
@@ -1230,8 +1420,15 @@ function questEnd(o) {
     stars.setAttribute('aria-label', `星${o.stars}つ`);
     $('[data-qc-left]').textContent = extra ? `群れを${extra}個たして クリア` : `群れを${o.left}個のこして クリア`;
     $('[data-qc-wool]').textContent = r.wool ? `ウール +${r.wool}（ぜんぶで ${wallet.wool.toLocaleString('ja-JP')}）` : '';
+    // The story moves on only when this is the story's night. The black sheep
+    // that went home by the dog are in game.blacks too, so they are taken out.
+    const sr = S.afterNight(story, quest.id, { homed: Math.max(0, game.blacks - game.dogged), walked: game.walked, dogged: game.dogged });
+    if (sr.state !== story) { story = sr.state; saveStory(); }
+    $('[data-qc-story]').textContent = sr.after;
+    $('[data-qc-story]').hidden = !sr.after;
+    $('[data-qc-story-next]').hidden = !sr.pending;
     const next = questById(quest.id + 1);
-    $('[data-qc-next]').hidden = !next;
+    $('[data-qc-next]').hidden = !next || Boolean(sr.pending);
     show('qclear');
   } else {
     state = 'over';

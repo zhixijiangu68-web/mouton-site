@@ -171,6 +171,26 @@ button{font:inherit;color:inherit}
 .qi-limit{margin:0;font-size:.9375rem}
 .qi-note{margin:0;font-size:.75rem;color:var(--muted)}
 .qi-best{margin:0;font-size:.875rem;color:var(--moon);letter-spacing:.08em}
+/* ものがたり: the story card on the quest list, the story sheet, and the keepsake */
+.story-card{width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 10px;border:1px solid var(--line);border-radius:16px;background:rgba(243,234,216,.04);text-align:center}
+.story-card-text{margin:0;font-family:var(--serif);font-size:.9375rem;line-height:1.8;text-wrap:balance}
+.story-card .actions{margin-top:2px}
+.story-lines{display:grid;gap:14px;width:100%;max-width:340px}
+.story-lines p{margin:0;font-family:var(--serif);font-size:1rem;line-height:2;text-wrap:balance;animation:story-in .9s ease both}
+/* The choices and buttons arrive after the last line (main.js sets --story-wait), so the words are not skipped. */
+[data-sheet="story"] .story-choices,[data-sheet="story"] .actions,[data-sheet="story"] [data-story-later]{animation:story-in .9s ease both;animation-delay:var(--story-wait,0s)}
+@keyframes story-in{from{opacity:0;transform:translateY(6px)}}
+.story-choices{display:grid;gap:8px;width:min(100%,320px)}
+.choice{appearance:none;min-height:48px;padding:10px 16px;border:1px solid rgba(243,234,216,.4);border-radius:16px;background:rgba(243,234,216,.04);font-size:.9375rem;line-height:1.5;cursor:pointer;text-wrap:balance}
+.choice:focus-visible{outline:2px solid var(--moon);outline-offset:3px}
+.qi-story,.qc-story{margin:0;max-width:20em;font-family:var(--serif);font-size:.9375rem;line-height:1.9;color:var(--muted);text-wrap:balance}
+.qi-story[hidden],.qc-story[hidden]{display:none}
+.shiori-rows{margin:0;display:grid;gap:6px;width:min(100%,300px)}
+.shiori-rows div{display:flex;justify-content:space-between;gap:12px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:.875rem;text-align:left}
+.shiori-rows dt{margin:0;color:var(--muted);white-space:nowrap}
+.shiori-rows dd{margin:0;text-align:right}
+.shiori-past{list-style:none;margin:0;padding:0;width:min(100%,300px);font-size:.8125rem;color:var(--muted)}
+.shiori-past li{display:flex;justify-content:space-between;gap:12px;padding:6px 2px;border-bottom:1px solid var(--line)}
 .qc-stars{margin:0;display:flex;gap:6px;font-size:2.75rem;line-height:1;color:rgba(243,234,216,.25)}
 .qc-stars span{display:inline-block;animation:star-in .45s cubic-bezier(.2,1.6,.4,1) both}
 .qc-stars span.is-on{color:var(--moon);text-shadow:0 0 18px rgba(244,227,161,.55)}
@@ -250,4 +270,4 @@ button{font:inherit;color:inherit}
 .ad-mock-time{margin:0;font-size:.875rem;color:var(--moon)}
 .ad-mock-close{appearance:none;margin-top:12px;padding:8px 18px;border:1px solid var(--line);border-radius:999px;background:transparent;cursor:pointer}
 
-@media(prefers-reduced-motion:reduce){.hint,.app.is-pinch .field,.app.is-chance .field,.hud-count.bump strong,.qc-stars span,.toast.is-in,.chip-star{animation:none}}
+@media(prefers-reduced-motion:reduce){.story-lines p,[data-sheet="story"] .story-choices,[data-sheet="story"] .actions,[data-sheet="story"] [data-story-later]{animation:none}.hint,.app.is-pinch .field,.app.is-chance .field,.hud-count.bump strong,.qc-stars span,.toast.is-in,.chip-star{animation:none}}

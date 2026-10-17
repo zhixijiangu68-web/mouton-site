@@ -73,6 +73,8 @@ export class Game {
     this.count = saved.count || 0;
     this.rows = saved.rows || 0;
     this.blacks = saved.blacks || 0;
+    this.walked = saved.walked || 0;              // black sheep walked off with the whistle
+    this.dogged = saved.dogged || 0;              // black sheep the sheepdog drove off (also in `blacks`)
     this.best = saved.bestChain || 0;
     this.items = { ...START_ITEMS, ...(saved.items || {}) };
     this.adRewards = saved.adRewards || 0;
@@ -100,7 +102,7 @@ export class Game {
   toJSON() {
     return {
       v: 1, seed: this.seed, rng: this.rng.state, board: this.board, count: this.count, rows: this.rows,
-      blacks: this.blacks, bestChain: this.best, items: this.items, adRewards: this.adRewards, over: this.over,
+      blacks: this.blacks, walked: this.walked, dogged: this.dogged, bestChain: this.best, items: this.items, adRewards: this.adRewards, over: this.over,
       queue: this.queue, piece: this.piece, placed: this.placed,
       blackFrom: this.blackFrom, blackChance: this.blackChance, quest: this.quest, goldChance: this.goldChance,
       streak: this.streak, bestStreak: this.bestStreak, golds: this.golds, moons: this.moons,
@@ -295,6 +297,7 @@ export class Game {
     for (let c = 0; c < COLS; c++) if (this.board[at(ROWS - 1, c)]) bottom.push(at(ROWS - 1, c));
     const jumped = bottom.filter(i => isWhite(this.board[i]));
     const freed = bottom.filter(i => this.board[i] === BLACK);
+    this.dogged += freed.length;
     return this.resolve({ rows: [], jumped, freed });
   }
 
@@ -305,6 +308,7 @@ export class Game {
   whistle(i) {
     if (!this.canUse('whistle') || this.board[i] !== BLACK) return null;
     this.items.whistle -= 1;
+    this.walked += 1;
     const sheep = [{ i, v: BLACK }];
     const moves = this.settle(new Set([i]));
     const away = { rows: [], jumped: [], freed: [], sheep, gained: 0, chain: 0, rowsBonus: 1, moves, golds: 0, moon: false, whistle: true };
