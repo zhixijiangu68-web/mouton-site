@@ -2,7 +2,7 @@
 
 ムートンの個人サイト。ページは `src/` のテンプレートから Eleventy で生成し、リポジトリ直下に HTML として書き出している。
 
-**リポジトリ直下の `*.html`・`search.json` は生成物。直接編集しない。** `src/` を編集してから `npm run build` で生成し、生成物も一緒にコミットする。
+**リポジトリ直下の `*.html`・`picks.json`・`quizzes.json` は生成物。直接編集しない。** `src/` を編集してから `npm run build` で生成し、生成物も一緒にコミットする。
 
 ## 最新の事業方針（2026-10-15、従来の集客優先方針より優先）
 
@@ -62,7 +62,7 @@
 2. ファイル名は英小文字とハイフン（例: `olive-oil.html`）
 3. `npm ci`（初回）→ `npm run build` → `npm test` を実行し、エラーがないことを確かめる
    - シェア用の画像（`images/og/<ファイル名>.jpg`）は `cd scripts/og && npm install && node make.mjs` で作り直せる（記事を足したら実行し、画像もコミットする）
-4. `src/articles/` の記事と、生成されたリポジトリ直下の HTML・`search.json` をまとめてコミットする
+4. `src/articles/` の記事と、生成されたリポジトリ直下の HTML・`picks.json` をまとめてコミットする
 5. 英語版も作るなら、`src/en/articles/` に同じファイル名で置く（既存の英語の記事をコピーし、末尾の include は `article-end-en.njk` / `reading-next-en.njk`）。シェア用の画像は `images/og/en/` に作られる
 
 ## 文章のルール

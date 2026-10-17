@@ -83,26 +83,6 @@ export default function (eleventyConfig) {
     const src = paths.find(p => existsSync(p));
     return src ? ` style="--img:url('${src}')"` : '';
   });
-  // Plain text of every article for the journal's full-text search (loaded on demand).
-  eleventyConfig.addFilter('searchIndex', items => JSON.stringify(items.map(a => ({
-    url: `${a.page.fileSlug}.html`,
-    title: a.data.journal?.title || a.data.science?.title || a.data.headline,
-    excerpt: a.data.journal?.excerpt || a.data.science?.text || a.data.description,
-    date: ymd(new Date(a.page.date)).join('.'),
-    minutes: a.data.readMinutes,
-    category: a.data.journal?.category || a.data.topic || a.data.category,
-    text: (a.templateContent || '')
-      .replace(/<(style|script|nav)[^>]*>[\s\S]*?<\/\1>/g, ' ')
-      .replace(/<div class="article-share">[\s\S]*?<\/label><\/div><\/div>/g, ' ')
-      .replace(/<details class="reading-toc">[\s\S]*?<\/details>/g, ' ')
-      .replace(/<p class="reading-time">[\s\S]*?<\/p>/g, ' ')
-      .replace(/リンクを(長押しして)?コピー/g, ' ')
-      .replace(/<aside[\s\S]*?<\/aside>/g, ' ')
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-      .replace(/\s+/g, ' ')
-      .trim(),
-  }))));
   // アーカイブに移した記事の上に出す注記。本文はそのまま残し、いまの入口（記事・哲学の3本）を示す。
   eleventyConfig.addFilter('archiveNote', (html, on) => on ? html.replace(/<article\b[^>]*>/, m => m
     + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
