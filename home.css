@@ -734,3 +734,24 @@ body.journal-page main{padding-top:72px}
 .home-cycle-quote+.home-cycle-close{margin-top:22px}
 .home-cycle-close+.home-cycle-close{margin-top:14px}
 @media(max-width:600px){.home-cycle-quote p{font-size:1.05rem;letter-spacing:.02em}}
+/* トップの最初の画面（2026-10-17）：ムートンは誰か／何をつくるか／あなたに何ができるか */
+.cover-who{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:clamp(16px,2.6vh,26px) 0 0;padding:4px clamp(14px,1.6vw,22px);border:1px solid rgba(230,201,138,.34);border-radius:14px;background:rgba(5,12,32,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.cover-who-row{padding:14px clamp(14px,1.6vw,22px) 14px 0}
+.cover-who-row+.cover-who-row{padding-left:clamp(14px,1.6vw,22px);border-left:1px solid rgba(230,201,138,.22)}
+.cover-who .nw{white-space:nowrap}
+.cover-who dt{margin:0 0 4px;font-size:.6875rem;letter-spacing:.18em;color:#e6c98a}
+.cover-who dd{margin:0;font-size:clamp(.875rem,1.05vw,1rem);line-height:1.8;color:rgba(245,243,238,.92);word-break:auto-phrase;text-wrap:pretty}
+.cover-choice--cycle .cover-actions--who{margin-top:clamp(14px,2.2vh,22px)}
+.cover-choice--cycle #think{scroll-margin-top:96px}
+@media(max-width:800px){
+ .cover-who{grid-template-columns:1fr}
+ .cover-who{padding:2px 14px}
+ .cover-who-row,.cover-who-row+.cover-who-row{display:grid;grid-template-columns:5.2em 1fr;gap:10px;padding:10px 0;border-left:0}
+ .cover-who dd{font-size:.84rem;line-height:1.75}
+ .cover-who-row+.cover-who-row{border-top:1px solid rgba(230,201,138,.18)}
+ .cover-who dt{margin:3px 0 0;white-space:nowrap}
+}
+@media(max-width:600px){
+ .cover-choice--cycle .cover-actions--who{flex-wrap:nowrap;gap:14px}
+ .cover-choice--cycle .cover-actions--who .cover-btn--primary{flex:1 1 auto}
+}
