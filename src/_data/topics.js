@@ -31,7 +31,7 @@ export default [
           reads: ['body-clock', 'weekend-sleep', 'chronotype', 'nap', 'stamina'] },
         { id: 'drive', worry: 'やる気が出ない。気分に振り回される。',
           reframe: '「我慢すると意志力が減る」という説は、大規模な追試ではほぼ確かめられなかった。やる気が出ないのは、意志が弱いからとは限らない。',
-          reads: ['ego-depletion-depression', 'dopamine-performance-habits', 'amygdala', 'prefrontal-inflammation', 'spinoza'],
+          reads: ['ego-depletion-depression', 'dopamine-performance-habits', 'amygdala', 'prefrontal-inflammation', 'chosen-habits', 'spinoza'],
           next: { href: 'paid-spinoza.html', label: 'スピノザ「続かないのは、意志が弱いからではない。」', text: '感情の仕組みから、気分に左右されずに続ける形をつくる。', paid: true } },
       ],
     },
