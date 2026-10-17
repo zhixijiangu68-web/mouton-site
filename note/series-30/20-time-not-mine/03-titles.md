@@ -19,19 +19,19 @@
 - 洞察：断る前に思い浮かべる相手の反応は、実際より重くなりやすい（Givi & Kirk 2024、Lu ほか 2023）。頼む側は、断ることの気まずさを見落としやすい（Flynn & Lake 2008、Bohns 2016）。保留は、答える順番を「答えてから予定表」から「予定表を見てから答える」に入れ替える（これは僕の見立てで、研究の結果ではないと本文に明記した）。
 
 ## 事実の確認
-全文（原文）は、この環境から開けない（WebFetch は使えない）。下の確認は、すべて WebSearch が返した書誌・要旨・報道要旨の要約による。
+全文（原文）は、この環境から開けない（WebFetch は使えない）。下の確認は、すべて WebSearch（全部で14回、上限15回）が返した書誌・要旨・報道要旨の要約による。
 - 確認できた出典：
   - [1] Givi, J., & Kirk, C. P. (2024). Saying no: The negative ramifications from invitation declines are less severe than we think. Journal of Personality and Social Psychology, 126(6), 1103–1115.
-    （確認の方法：WebSearch 計4回。APA のプレスリリース、PsyPost、ScienceAlert、BPS の要約などで、五つの実験、断る側の過大な見積もり、誘った側の答え、理由への注目の差を確認。巻号・ページは APA の補足資料ページ1件のみ。）
+    （確認の方法：WebSearch 複数回。APA のプレスリリース、PsyPost、ScienceAlert、BPS の要約などで、五つの実験、断る側の過大な見積もり、誘った側の答え、理由への注目の差を確認。巻号・ページは APA の補足資料ページ1件のみ。）
   - [2] Lu, J., Fang, Q., & Qiu, T. (2023). Rejecters overestimate the negative consequences they will face from refusal. Journal of Experimental Psychology: Applied, 29(2), 280–291.
-    （確認の方法：WebSearch 3回。華東師範大学の研究者データベース（pure.ecnu.edu.cn）の書誌・要旨で、七つの研究、想像・実際・報酬つきの場面での過大評価、悪い結果を避けたい気持ちが背景、を確認。）
+    （確認の方法：WebSearch 複数回。華東師範大学の研究者データベース（pure.ecnu.edu.cn）の書誌・要旨で、七つの研究、想像・実際・報酬つきの場面での過大評価、悪い結果を避けたい気持ちが背景、を確認。）
   - [3] Flynn, F. J., & Lake, V. K. B. (2008). If you need help, just ask: Underestimating compliance with direct requests for help. Journal of Personality and Social Psychology, 95(1), 128–143.
-    （確認の方法：WebSearch 1回。Stanford GSB の論文ページ（要旨）と Cornell eCommons の書誌で、「最大で50%」「断ることの社会的コストを見落とす」を確認。）
+    （確認の方法：WebSearch。Stanford GSB の論文ページ（要旨）と Cornell eCommons の書誌で、「最大で50%」「断ることの社会的コストを見落とす」を確認。）
   - [4] Bohns, V. K. (2016). (Mis)understanding our influence over others: A review of the underestimation-of-compliance effect. Current Directions in Psychological Science, 25(2), 119–123.
-    （確認の方法：WebSearch 1回。APS の論文ページと Cornell eCommons で書誌を確認し、「頼む側は一貫して承諾を少なく見積もる」という総説の主旨を確認。）
+    （確認の方法：WebSearch。APS の論文ページと Cornell eCommons で書誌を確認し、「頼む側は一貫して承諾を少なく見積もる」という総説の主旨を確認。）
 - 確認できなかった点（本文から外したもの）：
   - 指示の洞察（断る側が反応を大きく見積もる）は、[3][4] が示した向きと逆。[3][4] は「頼む側が承諾を低く見積もる」研究なので、断る側の見積もりは、検索で見つけた [1][2] で補った。
-  - 「保留は断りより軽い」「保留が相手にどう受け取られるか」を調べた研究は、検索1回では見つからなかった。本文は「僕の見立て」「見つけられなかった」と明記。
+  - 「保留は断りより軽い」を直接調べた研究は見つからなかった。近い話題（返事の遅れが誠実さの評価を下げる、という報告）は検索に出たが、書誌を確かめていないので使っていない。本文は「僕の見立て」と明記し、返事の時刻を伝える提案を添えた。
   - 原文は未確認（要旨・報道要旨のみ）。[1] の「誘った側の答え」「理由への注目の差」は報道要旨だけが根拠。人数・効果量は本文に書いていない（使った数は「五つの実験」「七つの研究」「最大でおよそ5割」だけ）。
   - 日本の参加者での結果と、追試の有無は確かめられていない（本文に明記）。
   - [1] の巻号・ページと、[2] の発行年（2023。オンライン公開は2022年10月）は、公開前に確かめたい。
