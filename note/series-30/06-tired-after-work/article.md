@@ -84,6 +84,8 @@
 
 4. Wood, W., & Rünger, D. (2016). Psychology of habit. Annual Review of Psychology, 67, 289–314. DOI: 10.1146/annurev-psych-122414-033417
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

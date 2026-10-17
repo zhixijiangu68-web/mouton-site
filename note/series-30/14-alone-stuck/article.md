@@ -69,6 +69,8 @@ SNSに出す形もあるが、反応の数が点になりやすい。ここで�
 
 2. Gollwitzer, P. M., Sheeran, P., Michalski, V., & Seifert, A. E. (2009). When intentions go public: Does social reality widen the intention-behavior gap? Psychological Science, 20(5), 612–618. DOI: 10.1111/j.1467-9280.2009.02336.x
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

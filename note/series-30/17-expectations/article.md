@@ -76,6 +76,8 @@
 
 4. Chirkov, V., Ryan, R. M., Kim, Y., & Kaplan, U. (2003). Differentiating autonomy from individualism and independence: A self-determination theory perspective on internalization of cultural orientations and well-being. Journal of Personality and Social Psychology, 84(1), 97–110.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

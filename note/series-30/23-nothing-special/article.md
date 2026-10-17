@@ -81,6 +81,8 @@
 
 4. Sartre, J.-P. (1946). L'existentialisme est un humanisme. Paris: Nagel. 1945年10月29日、パリのクラブ・マントナンでの講演をもとにした本。英訳：Existentialism Is a Humanism. 邦訳に『実存主義とは何か』（人文書院）など。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

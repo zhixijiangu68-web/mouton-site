@@ -78,6 +78,8 @@
 
 3. Kierkegaard, S. (1843). Enten – Eller（『あれか、これか』）. 偽名で刊行。第2部は判事ヴィルヘルムの手紙. 英訳：Either/Or, Part II, trans. H. V. Hong & E. H. Hong, Princeton University Press, 1987（普及版は1988）.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

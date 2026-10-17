@@ -79,12 +79,14 @@
 
 2. Webb, T. L., & Sheeran, P. (2006). Does changing behavioral intentions engender behavior change? A meta-analysis of the experimental evidence. Psychological Bulletin, 132(2), 249–268. DOI: 10.1037/0033-2909.132.2.249
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き
 
-次に読むなら：**「頑張っている」と感じているあいだは、まだ意志で動いている。**
-{URL_S30_03}
+次に読むなら：**気づいたら、スマホを手に取っている。**
+{URL_S30_09}
 
 この悩みに近い有料記事：**続かないのは、意志が弱いからではない。**（¥2,980・税込・書き込みワークつき）
 {PAID_URL_SPINOZA}

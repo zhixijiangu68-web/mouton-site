@@ -77,12 +77,14 @@
 
 5. Iyengar, S. S., Wells, R. E., & Schwartz, B. (2006). Doing better but feeling worse: Looking for the "best" job undermines satisfaction. Psychological Science, 17(2), 143–150. DOI: 10.1111/j.1467-9280.2006.01677.x
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き
 
-次に読むなら：**親や周りの期待に、応えなければと思っている。**
-{URL_S30_17}
+次に読むなら：**「何のために」は、動いたあとに見つかる。**
+{URL_S30_21}
 
 この悩みに近い有料記事：**決められないのは、考えが足りないからではない。**（¥2,980・税込・書き込みワークつき）
 {PAID_URL_KIERKEGAARD}

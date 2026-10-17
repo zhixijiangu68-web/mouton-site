@@ -85,6 +85,8 @@
 
 4. Kierkegaard, S. (1843). Journalen JJ:167（日記。Papirer IV A 164 とも表記される）. 原文はデンマーク語。英訳は H. V. Hong & E. H. Hong 編訳 Søren Kierkegaard's Journals and Papers（Indiana University Press）に収められている。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

@@ -93,6 +93,8 @@
 
 6. Fernandez-Duque, D., & Landers, M. (2008). "Feeling more regret than I would have imagined": Self-report and behavioral evidence. Judgment and Decision Making, 3(6), 449–456.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

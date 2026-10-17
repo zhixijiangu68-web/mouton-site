@@ -88,6 +88,8 @@
 
 3. Spinoza, B. de (1677). Ethica, ordine geometrico demonstrata（『エチカ』）. Opera Posthuma（遺稿集）所収. 第5部 定理3. 英訳：R. H. M. Elwes 訳（Project Gutenberg で公開）. 邦訳に畠中尚志訳（岩波文庫）など。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

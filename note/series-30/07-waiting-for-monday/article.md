@@ -81,6 +81,8 @@
 
 4. Kierkegaard, S. (1843). Gjentagelsen（『反復』）. コンスタンティン・コンスタンティウス名義で刊行。英訳：Fear and Trembling / Repetition (Kierkegaard's Writings VI), H. V. Hong & E. H. Hong 編訳, Princeton University Press, 1983.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

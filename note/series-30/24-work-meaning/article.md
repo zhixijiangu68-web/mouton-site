@@ -69,6 +69,8 @@
 
 3. Sakuraya, A., Shimazu, A., Imamura, K., & Kawakami, N. (2020). Effects of a job crafting intervention program on work engagement among Japanese employees: A randomized controlled trial. Frontiers in Psychology, 11, 235. DOI: 10.3389/fpsyg.2020.00235
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

@@ -79,6 +79,8 @@ Stojanovic らは、場所のような安定した状況は、習慣を始める
 
 2. Seneca, L. A. Epistulae morales ad Lucilium（『倫理書簡集』）. 第2書簡. 英訳：R. M. Gummere 訳（Loeb Classical Library, 1917）。題は “On Discursiveness in Reading”。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

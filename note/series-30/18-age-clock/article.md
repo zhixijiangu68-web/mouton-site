@@ -76,6 +76,8 @@
 
 3. Nietzsche, F. (1884). Also sprach Zarathustra. Ein Buch für Alle und Keinen（『ツァラトゥストラはこう語った』）. 第3部（Dritter Theil）「Vom Geist der Schwere」（重力の霊について）. 原文は Zeno.org、Nietzsche Source（eKGWB）、Project Gutenberg で公開されている。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

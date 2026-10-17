@@ -79,9 +79,11 @@
 
 4. Costin, V., & Vignoles, V. L. (2020). Meaning is about mattering: Evaluating coherence, purpose, and existential mattering as precursors of meaning in life judgments. Journal of Personality and Social Psychology, 118(4), 864–884.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き
 
-次に読むなら：**自分には、これといった取り柄がない。**
-{URL_S30_23}
+次に読むなら：**また続かなかった。やっぱり自分はダメだ、と思った夜に。**
+{URL_S30_27}

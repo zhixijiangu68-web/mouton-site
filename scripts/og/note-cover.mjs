@@ -1,7 +1,8 @@
 // Makes the header image (1280x670) of every article in note/series-30/ → note/series-30/<NN-slug>/cover.jpg,
 // and of the index article → note/series-30/00-index/cover.jpg. The text is the "見出し画像の文言" (大／小) in
 // each 03-titles.md. The artwork changes with the path (道) the article belongs to.
-//   cd scripts/og && npm install && node note-cover.mjs [番号 ...]
+// The free article note/free-habit/ gets one in the same style (artwork of the profile header).
+//   cd scripts/og && npm install && node note-cover.mjs [番号 ... | habit]
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -25,7 +26,9 @@ const PATHS = [
 ];
 const pathOf = n => PATHS.find(p => n <= p.to);
 
-const only = process.argv.slice(2).map(Number);
+const args = process.argv.slice(2);
+const only = args.filter(a => /^\d+$/.test(a)).map(Number);
+const habit = !args.length || args.includes('habit');
 const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
 const page = await browser.newPage({ viewport: { width: 1280, height: 670 } });
 await page.goto(pathToFileURL(join(here, 'note-cover.html')).href);
@@ -34,7 +37,7 @@ await page.evaluate(() => document.fonts.ready);
 let count = 0;
 for (const dir of readdirSync(base).filter(d => /^\d\d-/.test(d)).sort()) {
   const n = Number(dir.slice(0, 2));
-  if (only.length && !only.includes(n)) continue;
+  if (args.length && !only.includes(n)) continue;
   const f = join(base, dir, '03-titles.md');
   if (!existsSync(f)) continue;
   const t = readFileSync(f, 'utf8');
@@ -51,5 +54,20 @@ for (const dir of readdirSync(base).filter(d => /^\d\d-/.test(d)).sort()) {
   await page.screenshot({ path: join(base, dir, 'cover.jpg'), type: 'jpeg', quality: 86 });
   count++;
 }
+
+if (habit) {
+  const dir = join(root, 'note', 'free-habit');
+  const t = readFileSync(join(dir, '03-titles.md'), 'utf8');
+  const big = t.match(/^- 大：(.+)$/m)[1].trim();
+  const small = t.match(/^- 小：(.+)$/m)?.[1]?.trim() || '';
+  await page.evaluate(a => window.render(a), {
+    num: 0, total: 30, path: '全文無料', bigHtml: phrased(big), bigLen: big.length, small,
+    art: pathToFileURL(join(root, 'images', 'mouton', 'gold-laurel-wide.webp')).href, pos: 'center 8%',
+    series: 'MOUTON — PHILOSOPHY OF LIFE',
+  });
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: join(dir, 'cover.jpg'), type: 'jpeg', quality: 86 });
+  count++;
+}
 await browser.close();
-console.log(`${count} cover(s) in note/series-30/`);
+console.log(`${count} cover(s)`);

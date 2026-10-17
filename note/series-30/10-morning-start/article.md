@@ -76,12 +76,14 @@
 
 3. Bélanger-Gravel, A., Godin, G., & Amireault, S. (2013). A meta-analytic review of the effect of implementation intentions on physical activity. Health Psychology Review, 7(1), 23–54.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き
 
-次に読むなら：**勉強が続かないのは、場所が決まっていないからかもしれない。**
-{URL_S30_11}
+次に読むなら：**何を選んでも、後悔しそうで決められない。**
+{URL_S30_15}
 
 無料の記事：**意志力に頼らない習慣設計——行動科学と4人の哲学者でつくる、66日のワーク**
 {URL_FREE_HABIT}

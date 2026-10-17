@@ -78,6 +78,8 @@ Flynn と Lake（のちの Bohns）は2008年に、頼みごとをする側が�
 
 4. Bohns, V. K. (2016). (Mis)understanding our influence over others: A review of the underestimation-of-compliance effect. Current Directions in Psychological Science, 25(2), 119–123. DOI: 10.1177/0963721415628011
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き

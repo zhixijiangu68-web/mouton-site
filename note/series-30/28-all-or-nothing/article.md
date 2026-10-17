@@ -83,12 +83,14 @@
 
 4. Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., & Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology, 40(6), 998–1009. DOI: 10.1002/ejsp.674
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## 続き
 
-次に読むなら：**休んでしまって、もう一度始められない。**
-{URL_S30_29}
+次に読むなら：**30の不安と、30の最初の一歩（目次）**
+{URL_S30_INDEX}
 
 この悩みに近い有料記事：**続かないのは、意志が弱いからではない。**（¥2,980・税込・書き込みワークつき）
 {PAID_URL_SPINOZA}
