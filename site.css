@@ -89,12 +89,11 @@ body.menu-locked{overflow:hidden}
 .js .scene:not(.scene-hero):not(.near) .scene-media{--ph-img:none}
 /* Placeholder dots for scene art that has no file yet (the page bands below use the moonlit art). */
 .scene-media.is-placeholder::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.22) 1px,transparent 1.6px) 0 0/7px 7px;mix-blend-mode:soft-light}
-/* 帯（ページ上部の絵）は、トップと同じ月夜の絵でそろえる（2026-10-17、オーナーの判断で B 案）。
-   哲学・案内・本・仕事＝月桂樹と三日月（トップと同じ絵）、身体＝金の球、食事＝満月と木の実。
+/* 帯（ページ上部の絵）は、トップと同じ月夜の絵でそろえる（2026-10-17、オーナーの判断）。
+   絵は2種類：哲学・案内・本・仕事＝月桂樹と三日月（トップと同じ絵）、身体・食事＝満月と木の実。
    上側を暗くして、ナビの文字を読みやすくする。絵の読み込み前は紺のグラデーション。 */
 .ph-hero,.ph-think,.ph-philosophy,.ph-about,.ph-books,.ph-work{--ph-img:url("images/mouton/gold-laurel-wide.webp");--ph-pos:center 18%;--ph-grad:linear-gradient(180deg,#071324 0%,#0b1a3a 100%)}
-.ph-body,.ph-making{--ph-img:url("images/mouton/orb-dark-wide.webp");--ph-pos:center 45%;--ph-grad:linear-gradient(180deg,#050b18 0%,#0b1a3a 100%)}
-.ph-food{--ph-img:url("images/mouton/moon-botanical-wide.webp");--ph-pos:center 40%;--ph-grad:linear-gradient(180deg,#061024 0%,#0e2048 100%)}
+.ph-body,.ph-making,.ph-food{--ph-img:url("images/mouton/moon-botanical-wide.webp");--ph-pos:center 40%;--ph-grad:linear-gradient(180deg,#061024 0%,#0e2048 100%)}
 
 
 /* ---------- Site information: footer links, notes, author ---------- */
