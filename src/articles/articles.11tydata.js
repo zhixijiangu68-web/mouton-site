@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import currentArticles from '../_data/currentArticles.js';
 
 // Japanese prose reads at roughly 400–600 characters a minute.
 const CHARS_PER_MINUTE = 500;
@@ -22,5 +23,7 @@ export default {
     readMinutes: data => readMinutes(data.page.inputPath),
     // Which topic page the article belongs to (philosophy / body / work / food), if any.
     topic: data => data.journal?.category ?? (data.science ? 'food' : null),
+    // アーカイブに移した記事（src/_data/currentArticles.js にない記事）。
+    archived: data => !currentArticles.includes(data.page.fileSlug),
   },
 };
