@@ -75,6 +75,9 @@ if (typeof results !== 'object' || !results) results = {};
 let nightResults = storage.get(NIGHT_RESULTS, {});
 if (typeof nightResults !== 'object' || !nightResults) nightResults = {};
 let nightMs = 0;              // time on a story night not yet added to the story's played time
+let freeSnap = null;          // free play: what has been added to the story so far ({ placed, homed, walked, dogged })
+let freePassed = 0;           // story nights passed by this free-play night
+const nightCost = n => storyNightAt(n)?.cost || 0;
 // A story night has an id above 100 (the fifteen quests are 1 to 15) and its number in `n`.
 const isStoryNight = q => Boolean(q) && q.id > 100;
 const nightNo = q => q.n || q.id;
@@ -356,7 +359,7 @@ function frame(now) {
     shownCount = Math.min(game.count, shownCount + Math.max(1, Math.ceil((game.count - shownCount) / 8)));
     $('[data-count]').textContent = shownCount.toLocaleString('ja-JP');
   }
-  if (state === 'play') { playTime += dt; if (mode === 'quest' && isStoryNight(quest)) nightMs += dt; stars(); }
+  if (state === 'play') { playTime += dt; if (mode === 'quest' ? isStoryNight(quest) : S.isActive(story)) nightMs += dt; stars(); }
   if (state === 'play' && now >= busyUntil) step(dt, now);
   if (now - (frame.chips || 0) > 150) { frame.chips = now; chips(); }
   draw(now);
@@ -834,10 +837,12 @@ function start(fresh = true) {
     dawnShown = false;
     extra = 0;
     adFlocksUsed = false;
+    freeSnap = mode === 'free' ? freeCounts(game) : null;
     profile.played(localDate());
     saveProfile();
   }
   synced = gameStats(game);    // a continued night was already added up to here
+  freePassed = 0;
   prevBest = mode === 'free' ? (leaderboard.top()[0]?.s || 0) : 0;
   bestPassed = prevBest > 0 && game.count > prevBest;
   nextStar = mode === 'free' ? playTime + 30000 + Math.random() * 30000 : 0;
@@ -890,6 +895,8 @@ function resume() {
 
 function finish() {
   if (state === 'over') return;
+  creditFreePlay();
+  flushPlayed();
   state = 'over';
   storage.remove(SAVE);
   sound.stop(0.3);
@@ -924,6 +931,12 @@ function finish() {
   saveWallet();
   showWool();
   $('[data-double]').hidden = !(earned > 0 && ads.available());
+  // What free play did for the story, in one quiet line (only when there is something to say).
+  const waits = S.isActive(story) && (story.owed.length > 0 || Boolean(story.pending));
+  const line = $('[data-over-story]');
+  line.hidden = !freePassed && !waits;
+  line.textContent = (freePassed ? `ものがたりが、${freePassed}夜ぶん進みました。` : '') + (waits ? '読む場面が、待っています。' : freePassed ? `いまは第${story.night}夜です。` : '');
+  $('[data-over-story-open]').hidden = !waits;
   shownCount = game.count;
   show('over');
   hud();
@@ -1027,19 +1040,55 @@ for (const btn of app.querySelectorAll('[data-shop]')) btn.addEventListener('cli
 });
 $('[data-shop-back]').addEventListener('click', () => (shopFrom === 'menu' ? menu() : title()));
 
-// Time on a story night goes into the story's record (shown on the keepsake) each time the
-// night is saved, so closing the app loses at most a few seconds.
+// Time on a story night (or in free play while the story is on) goes into the story's record
+// (shown on the keepsake) each time the night is saved, so closing the app loses a few seconds at most.
 function flushPlayed() {
   if (nightMs <= 0) return;
   if (S.isActive(story)) { story = S.addPlayed(story, nightMs); saveStory(); }
   nightMs = 0;
 }
 
+// Free play moves the story (story.js addCredit): what was put down and the black sheep treated
+// since the last save are added. freeSnap remembers what was added and is saved with the night,
+// so a night that is continued later is never added twice.
+const freeCounts = g => ({ placed: g.placed, homed: Math.max(0, g.blacks - g.dogged), walked: g.walked, dogged: g.dogged });
+function creditFreePlay() {
+  if (mode !== 'free' || !game) return;
+  const now = freeCounts(game);
+  const was = freeSnap || now;
+  freeSnap = now;
+  if (!S.isActive(story)) return;
+  const r = S.addCredit(story, { flocks: now.placed - was.placed, homed: now.homed - was.homed, walked: now.walked - was.walked, dogged: now.dogged - was.dogged }, nightCost);
+  if (r.state === story) return;
+  story = r.state;
+  saveStory();
+  if (!r.passed.length) return;
+  freePassed += r.passed.length;
+  dropPassedNightSave(r.passed);
+  toast(story.owed.length || story.pending ? 'ものがたりに、読む場面があります' : `ものがたりが、第${story.night}夜に進みました`);
+}
+
+// After an answer, or a story night cleared or skipped: the bank may already cover the next nights.
+function flushCredit() {
+  const r = S.addCredit(story, {}, nightCost);
+  if (r.state === story) return;
+  story = r.state;
+  saveStory();
+  dropPassedNightSave(r.passed);
+}
+
+// A story night left half-played is let go once free play has passed it.
+function dropPassedNightSave(passed) {
+  const id = storage.get(QUEST_SAVE, null)?.game?.quest;
+  if (id > 100 && passed.includes(id - 100)) storage.remove(QUEST_SAVE);
+}
+
 function save() {
-  if (mode === 'quest' && isStoryNight(quest)) flushPlayed();
+  flushPlayed();
+  creditFreePlay();
   if (!game || game.over || state === 'title') return;
   if (mode === 'quest') storage.set(QUEST_SAVE, { game: game.toJSON(), extra, adFlocksUsed });
-  else storage.set(SAVE, game.toJSON());
+  else storage.set(SAVE, { ...game.toJSON(), credited: freeSnap });
 }
 
 function title() {
@@ -1077,8 +1126,13 @@ $('[data-start]').addEventListener('click', () => { mode = 'free'; quest = null;
 $('[data-continue]').addEventListener('click', () => {
   mode = 'free';
   quest = null;
-  try { game = new Game(storage.get(SAVE, null)); } catch { game = null; }
+  const saved = storage.get(SAVE, null);
+  try { game = new Game(saved); } catch { game = null; }
   if (!game || game.over) { start(true); return; }
+  // An older save (or a damaged number) adds nothing from before: only what is played from now.
+  const now = freeCounts(game);
+  const c = saved?.credited;
+  freeSnap = c && Object.keys(now).every(k => Number.isFinite(c[k]) && c[k] >= 0 && c[k] <= now[k]) ? { placed: c.placed, homed: c.homed, walked: c.walked, dogged: c.dogged } : now;
   shownCount = game.count;
   dawnShown = game.count >= DAWN;
   start(false);
@@ -1088,6 +1142,7 @@ $('[data-resume]').addEventListener('click', resume);
 $('[data-restart]').addEventListener('click', () => start(true));
 $('[data-again]').addEventListener('click', () => start(true));
 $('[data-to-title]').addEventListener('click', title);
+$('[data-over-story-open]').addEventListener('click', storyResume);
 $('[data-quit]').addEventListener('click', () => { save(); if (mode === 'quest') questList(); else title(); });
 
 // ---- Record: rank, moon calendar, achievements -----------------------------------
@@ -1175,6 +1230,7 @@ const starText = n => '★'.repeat(n) + '☆'.repeat(3 - n);
 
 function questList() {
   flushPlayed();
+  flushCredit();
   state = 'title';
   sound.stop();
   mood = nightMood = null;
@@ -1229,17 +1285,33 @@ function skipLinks(night) {
   $('[data-qi-skip-buy]').hidden = !(night && !own && purchases.available());
 }
 
-// The story moves on after a night is over (cleared or skipped): its lines, then the
-// question that waits, or the next night.
-function storyAfter(lines, pending) {
-  const go = () => (pending ? storyAsk() : goNextNight());
-  if (lines.length) storyScene({ lines, next: { label: pending ? 'つづきを読む' : `第${story.night}夜へ`, run: go } });
-  else go();
+// The story moves on after a night is over (cleared or skipped): its lines, then whatever waits.
+function storyAfter(lines) {
+  flushCredit();
+  const waits = story.owed.length || story.pending;
+  if (lines.length) storyScene({ lines, next: { label: waits ? 'つづきを読む' : `第${story.night}夜へ`, run: storyResume } });
+  else storyResume();
 }
 
-function goNextNight() {
-  const next = story.status === 'active' && !story.pending ? storyNightAt(story.night) : null;
-  if (next) questIntro(next); else questList();
+// Where the story waits: a scene that passed in free play, a question, the dawn, or the next night.
+function storyResume() {
+  if (story.status !== 'active') { questList(); return; }
+  flushCredit();
+  if (story.owed.length) storyRead();
+  else if (story.pending === 'dawn') storyDawn();
+  else if (story.pending) storyAsk();
+  else { const next = storyNightAt(story.night); if (next) questIntro(next); else questList(); }
+}
+
+// A scene night that passed in free play, read now: the scene before and after, in one go.
+function storyRead() {
+  const item = story.owed[0];
+  const more = story.owed.length > 1 || Boolean(story.pending);
+  storyScene({
+    eyebrow: `ものがたり　第${item.night}夜`,
+    lines: S.sceneLines(story, item),
+    next: { label: more ? 'つづきを読む' : `第${story.night}夜へ`, run: () => { story = S.readOwed(story); saveStory(); storyResume(); } },
+  });
 }
 
 $('[data-qi-skip]').addEventListener('click', e => {
@@ -1259,7 +1331,7 @@ $('[data-qi-skip]').addEventListener('click', e => {
   saveStory();
   const saved = storage.get(QUEST_SAVE, null);
   if (saved && saved.game && saved.game.quest === quest.id) storage.remove(QUEST_SAVE);
-  storyAfter(r.after, r.pending);
+  storyAfter(r.after);
 });
 $('[data-qi-skip-buy]').addEventListener('click', () => purchasesOpen(() => questIntro(quest)));
 
@@ -1362,7 +1434,9 @@ function storyAnswered(id) {
     storyScene({ lines: r.reply, next: { label: '答え合わせへ', run: storyDawn } });
     return;
   }
-  storyScene({ lines: r.reply, next: { label: `第${story.night}夜へ`, run: goNextNight } });
+  flushCredit();              // what free play banked while the question waited moves the story on now
+  const waits = story.owed.length || story.pending;
+  storyScene({ lines: r.reply, next: { label: waits ? 'つづきを読む' : `第${story.night}夜へ`, run: storyResume } });
 }
 
 // After the last answer: the story ends when the player says so.
@@ -1474,7 +1548,8 @@ function storyCard() {
   found.hidden = !story.seen.length;
   found.textContent = `見つけた朝 ${story.seen.length} / ${S.ENDING_COUNT}`;
   if (story.status === 'active') {
-    if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
+    if (story.owed.length) { text.textContent = 'フリープレイで、夜が進みました。読む場面があります。'; main.textContent = 'つづきを読む'; }
+    else if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
     else if (story.pending) { text.textContent = 'つづきがあります。'; main.textContent = 'つづきを読む'; }
     else { text.textContent = `第${story.night}夜から。（全${S.LAST_NIGHT}夜・ここまで ${S.formatPlayed(story.played)}）`; main.textContent = 'つづける'; }
     reset.hidden = false;
@@ -1484,7 +1559,7 @@ function storyCard() {
     sub.textContent = 'もう一度、はじめる';
     sub.hidden = false;
   } else {
-    text.textContent = `${S.LAST_NIGHT}の夜に、あなたと私（あなたの羊）の話を重ねます。ゆっくり、数時間かけて。途中でやめても、続きから。はじめるのも、終わらせるのも、あなたです。`;
+    text.textContent = `${S.LAST_NIGHT}の夜に、あなたと私（あなたの羊）の話を重ねます。ゆっくり、数時間かけて。途中でやめても、続きから。フリープレイで数えても、夜は進みます。はじめるのも、終わらせるのも、あなたです。`;
     main.textContent = 'ものがたりを はじめる';
     if (story.history.length) { sub.textContent = 'しおりを見る'; sub.hidden = false; }
   }
@@ -1493,9 +1568,7 @@ function storyCard() {
 $('[data-story-card-main]').addEventListener('click', () => {
   if (story.status === 'ended') { shioriShow(S.lastKeepsake(story)); return; }
   if (story.status !== 'active') { storyPrologue(); return; }
-  if (story.pending === 'dawn') { storyDawn(); return; }
-  if (story.pending) { storyAsk(); return; }
-  goNextNight();
+  storyResume();
 });
 $('[data-story-card-sub]').addEventListener('click', () => {
   if (story.status === 'ended') storyPrologue();
@@ -1514,11 +1587,7 @@ $('[data-story-card-reset]').addEventListener('click', e => {
   saveStory();
   storyCard();
 });
-$('[data-qc-story-next]').addEventListener('click', () => {
-  if (story.pending === 'dawn') storyDawn();
-  else if (story.pending) storyAsk();
-  else goNextNight();
-});
+$('[data-qc-story-next]').addEventListener('click', storyResume);
 $('[data-shiori-back]').addEventListener('click', questList);
 $('[data-shiori-another]').addEventListener('click', storyAnother);
 for (const el of app.querySelectorAll('[data-story-about-open]')) {
@@ -1563,10 +1632,12 @@ function questEnd(o) {
       ? S.afterNight(story, quest.n, { homed: Math.max(0, game.blacks - game.dogged), walked: game.walked, dogged: game.dogged })
       : { state: story, after: [], pending: null };
     if (sr.state !== story) { story = sr.state; saveStory(); }
+    if (night) flushCredit();
     storyLines($('[data-qc-story]'), sr.after);
-    $('[data-qc-story-next]').hidden = !sr.pending;
-    const next = night ? (story.status === 'active' && !story.pending ? storyNightAt(story.night) : null) : questById(quest.id + 1);
-    $('[data-qc-next]').hidden = !next || Boolean(sr.pending);
+    const waits = night && (story.owed.length > 0 || Boolean(story.pending));
+    $('[data-qc-story-next]').hidden = !waits;
+    const next = night ? (story.status === 'active' && !waits ? storyNightAt(story.night) : null) : questById(quest.id + 1);
+    $('[data-qc-next]').hidden = !next || waits;
     $('[data-qc-next]').textContent = night && next ? `第${next.n}夜へ` : 'つぎの夜へ';
     show('qclear');
   } else {
@@ -1605,7 +1676,8 @@ $('[data-qf-more]').addEventListener('click', async () => {
 for (const sel of ['[data-qc-again]', '[data-qf-again]']) $(sel).addEventListener('click', () => { storage.remove(QUEST_SAVE); start(true); });
 for (const sel of ['[data-qc-list]', '[data-qf-list]']) $(sel).addEventListener('click', questList);
 $('[data-qc-next]').addEventListener('click', () => {
-  const next = isStoryNight(quest) ? (!story.pending ? storyNightAt(story.night) : null) : questById(quest.id + 1);
+  if (isStoryNight(quest)) { storyResume(); return; }
+  const next = questById(quest.id + 1);
   if (next) questIntro(next);
 });
 $('[data-copy]').addEventListener('click', async () => {

@@ -158,24 +158,24 @@ const WAY_4 = {
   none: ['黒い羊は、数に入らないまま、夜の中にいました。'],
 };
 const WAY_7 = {
-  home: ['二匹とも、囲んで帰しました。白い羊が、そばにいてくれました。'],
+  home: ['黒い羊を、囲んで帰しました。白い羊が、そばにいてくれました。'],
   walk: ['何匹かは、散歩に出しました。牧場の外にも、夜はあります。'],
   dog: ['犬に任せた夜でした。夜は、少し早く進みました。'],
   mix: ['帰し方は、いろいろでした。'],
   none: ['黒い羊は、また夜の中にいました。'],
 };
 const WAY_14 = {
-  home: ['四匹とも、囲んで帰しました。囲まれた羊は、静かに帰っていきました。'],
+  home: ['囲まれた黒い羊は、静かに帰っていきました。'],
   walk: ['何匹かは、散歩に出しました。戻ってくるかは、また別の夜のことです。'],
   dog: ['犬が追いました。それでも、夜は進みました。'],
   mix: ['帰し方は、いろいろでした。どれも、この夜の羊の帰し方です。'],
-  none: ['黒い羊の群れは、夜の中にいました。'],
+  none: ['黒い羊は、まだ夜の中にいました。'],
 };
 
 // before(s): lines under the night's name. after(s, way): lines on the clear screen.
 export const NIGHTS = {
-  1: { before: () => ['第一幕　在り方', 'こんばんは。羊が一匹、柵の前に立っています。私です。', 'まずは、1列。数えてくれますか。'],
-    after: () => ['1列そろうと、私は柵を跳びました。', '跳ぶと、不思議と、考えごとが静かになります。あなたは、どうでしたか。'] },
+  1: { before: () => ['第一幕　在り方', 'こんばんは。羊が一匹、柵の前に立っています。私です。', 'まずは、数えてくれますか。'],
+    after: () => ['あなたが数えてくれると、私は柵を跳べます。', '跳ぶと、不思議と、考えごとが静かになります。あなたは、どうでしたか。'] },
   2: { before: () => ['あなたのことを、少し聞かせてください。数えながらで構いません。'],
     after: s => ['静かな時間は、長くは続きません。', `ふと、${worryPhrase(s)}のことを、思い出しませんか。`] },
   3: { before: () => ['柵の板に、文字が彫ってあることに気づきました。'],
@@ -183,7 +183,7 @@ export const NIGHTS = {
   4: { before: () => ['第二幕　信念', '列がそろっても、残る羊がいます。黒い羊。', '私は、あの子たちが、少し苦手です。'],
     after: (s, way) => pick(WAY_4, way) },
   5: { before: () => ['ひとつ動くと、ほかの羊も動きます。続けて、動くことがあります。'],
-    after: () => ['ひとつ跳んだら、続けて跳びました。', 'きっかけは、小さくてもよかったのですね。'] },
+    after: () => ['ひとつ跳ぶと、続けて跳ぶ羊もいます。', 'きっかけは、小さくてもいいのかもしれません。'] },
   6: { before: s => ['夜は、まだ半分も過ぎていません。', '黒い羊のことが、頭から離れません。',
     ...(optionOf('creed', s.answers.creed) ? [`あなたは、「${optionOf('creed', s.answers.creed).label}」と書きました。`] : [])],
     after: () => ['黒い羊の一匹が、私のそばに来ました。', '何か、言いたそうです。'] },
@@ -196,16 +196,16 @@ export const NIGHTS = {
     after: () => ['胸のあたりが、ざわざわします。'] },
   10: { before: s => ['第四幕　引き算', '積もったものが、高く見える夜があります。',
     ...(s.answers.alarm === 'danger' ? ['胸のざわつきは、守ろうとする合図だと、あなたは言いました。'] : s.answers.alarm === 'ready' ? ['胸のざわつきは、準備の合図かもしれないと、あなたは言いました。'] : [])],
-    after: () => ['高く見えたのは、積んだ羊のせいでしょうか。見ている目のせいでしょうか。'] },
-  11: { before: () => ['黒い羊が、三匹。ここまで、いろいろな帰し方をしてきましたね。'],
-    after: () => ['三匹。夜の半分は、もう過ぎました。'] },
+    after: () => ['高く見えるのは、積んだ羊のせいでしょうか。見ている目のせいでしょうか。'] },
+  11: { before: () => ['ここまでの夜を、少し振り返ります。'],
+    after: () => ['夜の半分は、もう過ぎました。'] },
   12: { before: () => ['夜は、いちばん深いところを通ります。'],
     after: () => ['深い夜を、数えて抜けました。', '霧の向こうに、うすく空が見えます。'] },
   13: { before: () => ['第五幕　遅れてくるもの', 'そろえ続けた手は、もう覚えています。', '明日の一歩を、決めましたね。'],
     after: () => ['霧は、さっきより薄いです。消えたわけではありません。'] },
-  14: { before: () => ['黒い羊が、群れで来ました。'],
+  14: { before: () => ['黒い羊が、群れで来る夜もあります。'],
     after: (s, way) => pick(WAY_14, way) },
-  15: { before: () => ['最後の夜です。160匹で、朝になります。'],
+  15: { before: () => ['最後の夜です。朝は、もうすぐです。'],
     after: () => ['夜を、数えきりました。', '空が、白んでいきます。'] },
 };
 
@@ -371,7 +371,8 @@ export const endingTitle = id => (ENDING[id] ? ENDING[id].title : '');
 // ---- state --------------------------------------------------------------------
 
 export function fresh() {
-  return { v: VERSION, status: 'idle', night: 1, pending: null, worry: null, answers: {}, homed: 0, walked: 0, dogged: 0, played: 0, skipped: 0, started: '', ended: '', ending: null, seen: [], history: [] };
+  return { v: VERSION, status: 'idle', night: 1, pending: null, worry: null, answers: {}, homed: 0, walked: 0, dogged: 0, played: 0, skipped: 0,
+    credit: 0, bank: { homed: 0, walked: 0, dogged: 0 }, owed: [], freed: 0, started: '', ended: '', ending: null, seen: [], history: [] };
 }
 
 const num = n => (Number.isFinite(n) && n > 0 ? Math.floor(n) : 0);
@@ -396,17 +397,21 @@ export function normalize(raw) {
   s.answers = cleanAnswers(raw.answers);
   s.homed = num(raw.homed); s.walked = num(raw.walked); s.dogged = num(raw.dogged);
   s.played = num(raw.played); s.skipped = Math.min(LAST_NIGHT, num(raw.skipped));
+  s.credit = num(raw.credit); s.freed = Math.min(LAST_NIGHT, num(raw.freed));
+  s.bank = { homed: num(raw.bank?.homed), walked: num(raw.bank?.walked), dogged: num(raw.bank?.dogged) };
+  s.owed = Array.isArray(raw.owed) ? raw.owed.filter(o => o && beatOf(o.night) && WAY_IDS.includes(o.way)).slice(0, BEATS).map(o => ({ night: o.night, way: o.way })) : [];
   s.started = str(raw.started); s.ended = str(raw.ended);
   s.ending = ENDING[raw.ending] ? raw.ending : null;
   s.seen = Array.isArray(raw.seen) ? [...new Set(raw.seen.filter(id => ENDING[id]))] : [];
   if (Array.isArray(raw.history)) {
     s.history = raw.history.slice(0, HISTORY_MAX).map(h => ({
       started: str(h?.started), ended: str(h?.ended), worry: WORRIES[h?.worry] ? h.worry : null, answers: cleanAnswers(h?.answers),
-      homed: num(h?.homed), walked: num(h?.walked), dogged: num(h?.dogged), played: num(h?.played), skipped: Math.min(LAST_NIGHT, num(h?.skipped)),
+      homed: num(h?.homed), walked: num(h?.walked), dogged: num(h?.dogged), played: num(h?.played), skipped: Math.min(LAST_NIGHT, num(h?.skipped)), freed: Math.min(LAST_NIGHT, num(h?.freed)),
       ending: ENDING[h?.ending] ? h.ending : null,
     }));
   }
   if (s.status === 'ended' && !s.ending) s.status = 'idle';
+  if (s.status !== 'active') { s.credit = 0; s.owed = []; s.bank = { homed: 0, walked: 0, dogged: 0 }; }
   return s;
 }
 
@@ -423,6 +428,8 @@ export function begin(s, date) {
 export function setWorry(s, id) {
   return { ...s, worry: WORRIES[id] ? id : null };
 }
+
+const WAY_IDS = ['home', 'walk', 'dog', 'mix', 'none'];
 
 // Which way the black sheep were mostly treated: home (surrounded), walk
 // (whistle), dog, mix (no one way is most), none.
@@ -467,8 +474,41 @@ export function skipNight(s, night) {
   return r.state === s ? r : { ...r, state: { ...r.state, skipped: s.skipped + 1 } };
 }
 
-// Time spent playing the story's nights (a night on screen, not menus or scenes). Kept
-// in the keepsake so the length can be checked against the four hours it is built for.
+// Free play moves the story too (2026-10-17, the owner: progress while playing free play, in the
+// gaps, with rests). Every flock put down in free play while the story is on is banked, with the
+// black sheep treated; when the bank covers the night's cost (storynights.js), the night passes as
+// if it had been played. A scene night that passes this way waits in `owed` to be read, and its
+// question waits as after any night. Nothing is lost by resting, and nothing passes while a
+// question waits: the bank only grows. gain: { flocks, homed, walked, dogged }. costOf(night): flocks.
+export function addCredit(s, gain = {}, costOf = () => Infinity) {
+  if (!isActive(s)) return { state: s, passed: [] };
+  const g = { flocks: num(gain.flocks), homed: num(gain.homed), walked: num(gain.walked), dogged: num(gain.dogged) };
+  let t = g.flocks || g.homed || g.walked || g.dogged
+    ? { ...s, credit: s.credit + g.flocks, bank: { homed: s.bank.homed + g.homed, walked: s.bank.walked + g.walked, dogged: s.bank.dogged + g.dogged } }
+    : s;
+  const passed = [];
+  for (;;) {
+    const cost = costOf(t.night);
+    if (t.pending || !(cost > 0) || t.credit < cost) break;
+    const night = t.night;
+    const r = afterNight(t, night, t.bank);
+    if (r.state === t) break;
+    t = { ...r.state, credit: t.credit - cost, bank: { homed: 0, walked: 0, dogged: 0 }, freed: Math.min(LAST_NIGHT, t.freed + 1),
+      owed: beatOf(night) ? [...t.owed, { night, way: way(t.bank) }] : t.owed };
+    passed.push(night);
+  }
+  return { state: t, passed };
+}
+
+// A scene night that passed in free play, read later: its lines before and after, in one go.
+export function sceneLines(s, item) {
+  const beat = item ? beatOf(item.night) : 0;
+  return beat ? [...NIGHTS[beat].before(s), ...NIGHTS[beat].after(s, item.way)] : [];
+}
+export const readOwed = s => (s.owed.length ? { ...s, owed: s.owed.slice(1) } : s);
+
+// Time spent playing while the story is on: its nights, and free play (which moves it too), not
+// menus or scenes. Kept in the keepsake so the length can be checked against the four hours.
 export function addPlayed(s, ms) {
   return ms > 0 && isActive(s) ? { ...s, played: s.played + Math.floor(ms) } : s;
 }
@@ -580,7 +620,7 @@ export function reopen(s) {
 }
 
 function keepsake(s) {
-  return { started: s.started, ended: s.ended, worry: s.worry, answers: s.answers, homed: s.homed, walked: s.walked, dogged: s.dogged, played: s.played, skipped: s.skipped, ending: s.ending };
+  return { started: s.started, ended: s.ended, worry: s.worry, answers: s.answers, homed: s.homed, walked: s.walked, dogged: s.dogged, played: s.played, skipped: s.skipped, freed: s.freed, ending: s.ending };
 }
 
 // ---- the keepsake: 夜のしおり ---------------------------------------------------
@@ -606,6 +646,7 @@ export function shiori(k) {
     ['黒い羊', sheep],
     ['遊んだ時間', formatPlayed(k.played || 0)],
     ['とばした夜', `${k.skipped || 0}夜`],
+    ['フリープレイで進んだ夜', `${k.freed || 0}夜`],
   ];
   return {
     title: '夜のしおり', rows, chosen, memo,

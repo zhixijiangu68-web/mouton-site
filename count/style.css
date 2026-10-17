@@ -133,6 +133,7 @@ button{font:inherit;color:inherit}
 .wool-pill b,.shop-wool b{color:var(--moon);font-variant-numeric:tabular-nums}
 .over-links{margin:0;display:flex;gap:16px;justify-content:center}
 .final-wool{margin:0;font-size:.875rem;color:var(--moon)}
+.over-story{margin:0;max-width:22em;font-size:.8125rem;line-height:1.7;color:var(--muted)}
 .btn-double{border-color:var(--moon);color:var(--moon)}
 .sheet-shop,.sheet-list{justify-content:flex-start;padding-top:14px}
 .sheet-back{align-self:flex-start;text-decoration:none;font-size:.875rem;color:var(--wool)}
