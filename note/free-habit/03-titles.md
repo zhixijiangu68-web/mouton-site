@@ -22,10 +22,11 @@
 
 ## 公開するとき
 
-1. 有料3本（`note/paid-*/listing.md`）を先に公開し、URL を控える。
-2. `article.md` の末尾の `{PAID_URL_KIERKEGAARD}`・`{PAID_URL_NIETZSCHE}`・`{PAID_URL_SPINOZA}` を、その URL に置き換える（置き換え忘れが残っていないか、公開前に検索して確かめる）。
-3. `article.md` を note のエディタに貼る（`#` は記事のタイトル、`##` は大見出し、`###` は小見出し、`>` は引用、`1.` は番号つきリスト）。貼ったあと、見た目を一度確かめる。
-4. 見出し画像・説明・ハッシュタグを設定して公開。
+無料の20本の1日目（世界観）に出す（`note/series-30/plan.md` の「公開の順番」）。
+
+1. 入門3本と同じ日に出す。末尾の `{URL_FREE_KIERKEGAARD}`・`{URL_FREE_NIETZSCHE}`・`{URL_FREE_SPINOZA}` を、入門3本の URL に置き換える（公開キット（`note/README.md`）なら URL を入れるだけ）。
+2. `article.md` を note のエディタに貼る。見出し画像・説明・ハッシュタグを設定して公開。
+3. 有料3本を出す日に、末尾の「この悩みの続き」を `paid-section.md` の形に入れ替える。いまは有料記事への案内を外して、無料の入門3本へ案内している。
 
 ## 確認すること
 
