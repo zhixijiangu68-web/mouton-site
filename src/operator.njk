@@ -3,7 +3,7 @@ layout: page.njk
 permalink: operator.html
 enPage: en/operator.html
 title: "運営者情報 — ムートン"
-description: "ムートンのサイトの運営者情報。運営者、サイトの目的、記事の書き方の方針、連絡先について。"
+description: "ムートンのサイトの運営者情報。運営者、サイトの目的、文章の書き方の方針、広告、連絡先について。"
 eyebrow: About the author
 heading: 運営者情報
 ---
@@ -11,18 +11,17 @@ heading: 運営者情報
   <div><dt>サイト名</dt><dd>{{ site.name }}</dd></div>
   <div><dt>運営者</dt><dd>{{ site.author.name }}</dd></div>
   <div><dt>所在地</dt><dd>日本</dd></div>
-  <div><dt>お気に入り</dt><dd><a href="favorites.html">運営者のお気に入り（S〜Cランク）</a></dd></div>
   <div><dt>連絡先</dt><dd><a href="contact.html">お問い合わせ</a>をご覧ください</dd></div>
   <div><dt>SNS</dt><dd><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X / @{{ site.author.x }}</a>{% if site.author.instagram %}<br><a href="https://www.instagram.com/{{ site.author.instagram }}/" target="_blank" rel="noopener noreferrer">Instagram / @{{ site.author.instagram }}</a>{% endif %}{% if site.author.note %}<br><a href="https://note.com/{{ site.author.note }}" target="_blank" rel="noopener noreferrer">note / {{ site.author.note }}</a>{% endif %}</dd></div>
 </dl>
 
 <h2>このサイトについて</h2>
 <p>{{ site.author.bio }}</p>
-<p>完成したものだけでなく、考えている途中のことや、作っている途中のものも記録していく、個人的なアーカイブです。</p>
+<p>いまは、悩みから選ぶ哲学の3本（PDF）と、読んだあとに自分で考えるための無料の記事を置いています。以前に書いた身体・食事と科学・仕事・本の記事と、制作の記録は、<a href="archive.html">アーカイブ</a>に残しています。</p>
 
 <h2>記事の書き方</h2>
 <ul>
-  <li>身体・食事・健康についての記事は、できるかぎり論文や公的機関の情報を確認し、本文中に出典を示しています。</li>
+  <li>研究や哲学者の言葉を使うときは、できるかぎり原典・論文・公的機関の情報を確認し、本文中に出典を示しています。</li>
   <li>研究で分かっていることと、まだ分かっていないこと、個人の感想を、なるべく区別して書いています。</li>
   <li>健康に関する記事は一般的な情報提供を目的としたもので、医師による診断や治療の代わりにはなりません。</li>
   <li>内容に誤りが見つかった場合は、確認のうえ修正し、記事に更新日を記載します。</li>
