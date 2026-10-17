@@ -38,6 +38,21 @@ Claude Code でこのリポジトリを開いて：
                         └─ 差し戻し ─┘（最大2回）
 ```
 
+## サイトの哲学記事を note に載せる分（2026-10-17）
+
+`/note` で新しく書く記事とは別に、サイトの記事を**本文そのまま** note に載せる形にしたものがある。アカウントの設定（名前・ID・自己紹介・ヘッダー・アイコン）と公開の順番は `profile/profile.md`。
+
+| 場所 | 中身 |
+|---|---|
+| `profile/` | ヘッダー画像（`header.jpg`）・アイコン（`icon.png`）・名前・自己紹介 |
+| `start/` | 「はじめての方へ」（ブランドの考え方と、3人の哲学者への入口） |
+| `free-kierkegaard/`・`free-nietzsche/`・`free-spinoza/` | 無料の入門記事（`article.md`・`03-titles.md`） |
+| `paid-kierkegaard/`・`paid-nietzsche/`・`paid-spinoza/` | 有料記事の出品シート（`listing.md`）と、無料の冒頭（`free-part.md`）。**有料の続きの全文は公開リポジトリに入れない**（オーナーの手元の原稿を貼る） |
+
+- 本文はサイトの記事から写した。サイトの記事を直したら、note の版を直すかどうかを決める（直さないと古くなる）。
+- 末尾の `{PAID_URL}` ・ `{URL_FREE_*}` ・ `{URL_PAID_*}` は、公開した note の URL に置き換えてから貼る。
+- note で売るかどうか（A／B／C）の整理は `docs/note-monetization-20261017.md`。
+
 ## 公開するとき（人がやること）
 
 1. `04-review.md` の「人が確認すべきこと」を見る

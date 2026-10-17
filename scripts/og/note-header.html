@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/300.css">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-serif-jp/500.css">
+<style>
+  /* note のヘッダー画像（1280x670）。トップと同じ月桂樹と三日月の絵に、ブランドメッセージだけを置く。
+     スマホでは中央が切り取られるので、文字は中央の帯に収める。 */
+  html,body{margin:0;width:1280px;height:670px;overflow:hidden}
+  body{position:relative;background:#070d1c url("../../images/mouton/gold-laurel-wide.webp") center 8%/cover no-repeat;color:#f4ecd8;font-family:"Noto Serif JP",serif}
+  body::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 62% 52% at 50% 56%,rgba(5,10,24,.72),rgba(5,10,24,.25) 70%,transparent 100%)}
+  .wrap{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:70px;text-align:center}
+  .label{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:26px;letter-spacing:.32em;color:#e9c684}
+  h1{margin:26px 0 24px;font-weight:300;font-size:58px;line-height:1.5;letter-spacing:.06em;text-shadow:0 2px 24px rgba(0,0,0,.6)}
+  p{margin:0;font-weight:300;font-size:25px;line-height:1.9;letter-spacing:.08em;color:#dcd3bf;text-shadow:0 1px 14px rgba(0,0,0,.7)}
+</style></head>
+<body><div class="wrap">
+  <div class="label">MOUTON — PHILOSOPHY OF LIFE</div>
+  <h1>哲学を、読むものから<wbr>使うものへ。</h1>
+  <p>決められない。人の目が気になる。続けられない。<br>そんな日々に、自分で考え、試すための道具を。</p>
+</div></body></html>
