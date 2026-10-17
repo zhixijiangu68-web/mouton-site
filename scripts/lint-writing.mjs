@@ -21,6 +21,47 @@ const rules = [
   ['健康の言い切り', /(治る|治ります|効く|効きます|痩せる)/g],
 ];
 
+// タグと Nunjucks の印（{% %}・{{ }}）を外して、文だけにする。
+// 正規表現を使わず一文字ずつ進める：文章の点検が目的で HTML の無害化ではないこと、長い行でも線形で終わることのため。
+function plainText(s) {
+  let out = '';
+  let i = 0;
+  while (i < s.length) {
+    const c = s[i];
+    if (c === '<') {
+      const j = s.indexOf('>', i + 1);
+      if (j !== -1) { i = j + 1; continue; }
+    } else if (c === '{' && (s[i + 1] === '%' || s[i + 1] === '{')) {
+      const close = s[i + 1] === '%' ? '%}' : '}}';
+      const j = s.indexOf(close, i + 2);
+      if (j !== -1) { i = j + close.length; continue; }
+    }
+    out += c;
+    i++;
+  }
+  return out;
+}
+
+// <p ...>〜</p> の中の文を順に取り出す（<pre> などは除く）。
+function paragraphs(html) {
+  const out = [];
+  let i = 0;
+  for (;;) {
+    const a = html.indexOf('<p', i);
+    if (a === -1) break;
+    const after = html[a + 2];
+    if (after !== '>' && after !== ' ') { i = a + 2; continue; }
+    const b = html.indexOf('>', a);
+    if (b === -1) break;
+    const c = html.indexOf('</p>', b);
+    if (c === -1) break;
+    const t = plainText(html.slice(b + 1, c)).trim();
+    if (t) out.push(t);
+    i = c + 4;
+  }
+  return out;
+}
+
 let warnings = 0;
 for (const slug of slugs) {
   const file = `src/articles/${slug}.html`;
@@ -34,7 +75,7 @@ for (const slug of slugs) {
   const active = rules.filter(([kind]) => kind !== '健康の言い切り' || isHealth);
   // 言い回し：行ごとに、タグを除いた文で照らす
   lines.forEach((line, i) => {
-    const text = line.replace(/<[^>]+>/g, '').replace(/\{%[^%]*%\}|\{\{[^}]*\}\}/g, '').trim();
+    const text = plainText(line).trim();
     if (!text) return;
     for (const [kind, re] of active) {
       re.lastIndex = 0;
@@ -53,13 +94,14 @@ for (const slug of slugs) {
   }
   const refs = [...body.matchAll(/id="ref-(\d+)"/g)].map(m => Number(m[1]));
   const cites = [...body.matchAll(/href="#ref-(\d+)"/g)].map(m => Number(m[1]));
-  if (/研究|調査|分析|％|%/.test(body.replace(/<[^>]+>/g, '')) && !refs.length) out.push('  [出典] 「研究」「調査」「％」とあるのに、参考文献の節（<section class="refs">）がない');
+  if (/研究|調査|分析|％|%/.test(plainText(body)) && !refs.length) out.push('  [出典] 「研究」「調査」「％」とあるのに、参考文献の節（<section class="refs">）がない');
   for (const n of new Set(cites)) if (!refs.includes(n)) out.push(`  [出典] 本文の [${n}] に対応する <p id="ref-${n}"> がない`);
   for (const n of refs) if (!cites.includes(n)) out.push(`  [出典] 参考文献 ${n} が本文から引かれていない`);
-  // 終わり方：参考文献の節（なければ共有ボタン）の前の段落に、問いがあるか
-  const before = body.split(/<section class="refs">|<div class="article-share">(?![\s\S]*<div class="article-share">)/)[0];
-  const paras = [...before.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)].map(m => m[1].replace(/<[^>]+>/g, '').trim()).filter(Boolean);
-  const tail = paras.slice(-3).join(' ');
+  // 終わり方：参考文献の節（なければ最後の共有ボタン）の前の段落に、問いがあるか
+  const refsAt = body.indexOf('<section class="refs">');
+  const shareAt = body.lastIndexOf('<div class="article-share">');
+  const before = refsAt !== -1 ? body.slice(0, refsAt) : shareAt !== -1 ? body.slice(0, shareAt) : body;
+  const tail = paragraphs(before).slice(-3).join(' ');
   if (!/[？?]|だろう。|だろうか。|ませんか。|でしょうか。/.test(tail)) out.push('  [終わり方] 本文の最後の3段落に問いが見当たらない（最後に問いを一つ置く）');
   // 読者への手順：本文（参考文献より前）に <ol> があれば知らせる
   if (/<ol[\s>]/.test(before)) out.push('  [終わり方] 本文に番号付きの手順（<ol>）がある。読者への手順になっていないか読む');
