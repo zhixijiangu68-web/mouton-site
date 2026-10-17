@@ -4,7 +4,7 @@
   <title>ムートン</title>
   <link>https://moutonarchive.com/</link>
   <atom:link href="https://moutonarchive.com/feed.xml" rel="self" type="application/rss+xml"/>
-  <description>MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。</description>
+  <description>MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。</description>
   <language>ja</language>
   <item>
     <title>「このままで終わりたくない」と思ったら。没頭、他人の評価からの自由、行動優先</title>
@@ -12,6 +12,13 @@
     <guid isPermaLink="true">https://moutonarchive.com/absorption-freedom-action.html</guid>
     <pubDate>Sat, 17 Oct 2026 00:00:00 +0000</pubDate>
     <description>夢中になれば、成功はその副産物になる。どう見られるかではなく、どう生きたいかで決める。完璧な計画を待たずに動き、直す。動画で聞いた3つの考えを、フランクルと、情熱・スポットライト効果の研究で確かめる。</description>
+  </item>
+  <item>
+    <title>完璧な計画を待たないほうがいい理由。行動優先を6つの研究で確かめる</title>
+    <link>https://moutonarchive.com/action-bias.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/action-bias.html</guid>
+    <pubDate>Sat, 17 Oct 2026 00:00:00 +0000</pubDate>
+    <description>完璧な計画を待たず、動いて、間違いから学び、直す。量と質、計画錯誤、後悔、行動活性化、熟練起業家の研究から、行動優先が効く理由と、動かないほうがいい場面を確かめる。</description>
   </item>
   <item>
     <title>反省するほど、動けなくなるのはなぜだろう。スピノザ「謙遜は徳ではない」</title>
@@ -138,13 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/aspirin.html</guid>
     <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
     <description>130年近く使われてきた薬、アスピリン。心臓病や脳卒中を経験した人には益がはっきりしている。では健康な人が毎日飲むとどうなるのか。日本の1万4千人の試験と、オーストラリアと米国の約1万9千人の試験から確かめる。</description>
-  </item>
-  <item>
-    <title>「何時間寝たか」より「毎日同じ時間か」。体内時計は、光と食事と運動で動く</title>
-    <link>https://moutonarchive.com/body-clock.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/body-clock.html</guid>
-    <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
-    <description>約6万人のデータでは、睡眠の規則正しさのほうが、睡眠時間より死亡リスクと強く結びついていた。脳の奥の体内時計は何で動くのか。光・食事のタイミング・運動の実験から確かめる。</description>
   </item>
 </channel>
 </rss>
