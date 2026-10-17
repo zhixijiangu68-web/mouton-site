@@ -175,6 +175,9 @@ button{font:inherit;color:inherit}
 .story-card{width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 12px 10px;border:1px solid var(--line);border-radius:16px;background:rgba(243,234,216,.04);text-align:center}
 .story-card-text{margin:0;font-family:var(--serif);font-size:.9375rem;line-height:1.8;text-wrap:balance}
 .story-card .actions{margin-top:2px}
+/* Long endings must scroll from their top: centre with spacers, not with justify-content (which cuts off the top). */
+.sheet[data-sheet="story"]{justify-content:flex-start}
+.sheet[data-sheet="story"]::before,.sheet[data-sheet="story"]::after{content:"";flex:1 0 0}
 .story-lines{display:grid;gap:14px;width:100%;max-width:340px}
 .story-lines p{margin:0;font-family:var(--serif);font-size:1rem;line-height:2;text-wrap:balance;animation:story-in .9s ease both}
 /* The choices and buttons arrive after the last line (main.js sets --story-wait), so the words are not skipped. */
@@ -183,12 +186,23 @@ button{font:inherit;color:inherit}
 .story-choices{display:grid;gap:8px;width:min(100%,320px)}
 .choice{appearance:none;min-height:48px;padding:10px 16px;border:1px solid rgba(243,234,216,.4);border-radius:16px;background:rgba(243,234,216,.04);font-size:.9375rem;line-height:1.5;cursor:pointer;text-wrap:balance}
 .choice:focus-visible{outline:2px solid var(--moon);outline-offset:3px}
-.qi-story,.qc-story{margin:0;max-width:20em;font-family:var(--serif);font-size:.9375rem;line-height:1.9;color:var(--muted);text-wrap:balance}
+.qi-story,.qc-story{margin:0;max-width:20em;white-space:pre-line;font-family:var(--serif);font-size:.9375rem;line-height:1.9;color:var(--muted);text-wrap:balance}
 .qi-story[hidden],.qc-story[hidden]{display:none}
 .shiori-rows{margin:0;display:grid;gap:6px;width:min(100%,300px)}
 .shiori-rows div{display:flex;justify-content:space-between;gap:12px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:.875rem;text-align:left}
 .shiori-rows dt{margin:0;color:var(--muted);white-space:nowrap}
 .shiori-rows dd{margin:0;text-align:right}
+.story-card-found{margin:0;font-size:.75rem;color:var(--muted)}
+.story-card-found[hidden]{display:none}
+.story-card .link{padding:4px 8px;font-size:.75rem}
+.found{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;width:min(100%,320px);font-size:.75rem;color:var(--muted);text-align:left}
+.found li{padding:4px 2px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
+.found li.is-found{color:var(--wool)}
+.sheet[data-sheet="storyabout"] h2{font-size:1.375rem;letter-spacing:.06em}
+.about-lines{display:grid;gap:10px;width:min(100%,320px);text-align:left}
+.about-lines p{margin:0;font-family:var(--serif);font-size:.9375rem;line-height:1.9}
+.about-sources{margin:0;padding:0;list-style:none;display:grid;gap:10px;width:min(100%,320px);text-align:left;font-size:.75rem;line-height:1.6;color:var(--muted)}
+.about-sources strong{display:block;color:var(--wool);font-weight:600}
 .shiori-past{list-style:none;margin:0;padding:0;width:min(100%,300px);font-size:.8125rem;color:var(--muted)}
 .shiori-past li{display:flex;justify-content:space-between;gap:12px;padding:6px 2px;border-bottom:1px solid var(--line)}
 .qc-stars{margin:0;display:flex;gap:6px;font-size:2.75rem;line-height:1;color:rgba(243,234,216,.25)}

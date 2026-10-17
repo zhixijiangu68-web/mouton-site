@@ -144,7 +144,9 @@
           <button type="button" class="btn btn-main" data-story-card-main></button>
           <button type="button" class="btn" data-story-card-sub hidden></button>
         </div>
+        <p class="story-card-found" data-story-card-found hidden></p>
         <button type="button" class="link" data-story-card-reset hidden>はじめからにする</button>
+        <button type="button" class="link" data-story-about-open>このものがたりについて</button>
       </div>
       <p class="quest-total" data-quest-total></p>
       <div class="quests" data-quest-list></div>
@@ -196,12 +198,27 @@
       <button type="button" class="link sheet-back" data-shiori-back><span aria-hidden="true">←</span> クエスト</button>
       <h2 id="shiori-h">夜のしおり</h2>
       <dl class="shiori-rows" data-shiori-rows></dl>
+      <h3 class="ach-head">あなたが選んだ言葉</h3>
+      <dl class="shiori-rows" data-shiori-chosen></dl>
+      <p class="rec-note" data-shiori-memo hidden></p>
+      <h3 class="ach-head">見つけた朝 <span data-shiori-found-n></span></h3>
+      <ol class="found" data-shiori-found></ol>
+      <h3 class="ach-head" data-shiori-past-head hidden>これまでのしおり</h3>
+      <ol class="shiori-past" data-shiori-past hidden></ol>
       <p class="rec-note" data-shiori-care></p>
       <div class="actions">
         <button type="button" class="btn" data-shiori-copy>しおりをコピー</button>
+        <button type="button" class="btn btn-main" data-shiori-another hidden>別の朝を見る</button>
       </div>
-      <h3 class="ach-head" data-shiori-past-head hidden>これまでのしおり</h3>
-      <ol class="shiori-past" data-shiori-past hidden></ol>
+      <button type="button" class="link" data-story-about-open>このものがたりについて</button>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="storyabout" hidden aria-labelledby="about-h">
+      <button type="button" class="link sheet-back" data-about-back><span aria-hidden="true">←</span> もどる</button>
+      <h2 id="about-h">このものがたりについて</h2>
+      <div class="about-lines" data-about-lines></div>
+      <h3 class="ach-head">考え方の元</h3>
+      <ol class="about-sources" data-about-sources></ol>
     </section>
 
     <section class="sheet" data-sheet="qfail" hidden aria-labelledby="qf-h">

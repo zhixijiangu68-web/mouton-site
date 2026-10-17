@@ -1184,9 +1184,7 @@ function questIntro(q) {
   $('[data-qi-stars]').textContent = `★★ 群れを${q.stars[0]}個のこす　★★★ ${q.stars[1]}個のこす`;
   $('[data-qi-wool]').textContent = `はじめて取った★1つにつき ウール ${q.wool}`;
   $('[data-qi-best]').textContent = results[q.id] ? `これまで ${starText(results[q.id])}` : '';
-  const lead = S.before(story, q.id);
-  $('[data-qi-story]').textContent = lead || '';
-  $('[data-qi-story]').hidden = !lead;
+  storyLines($('[data-qi-story]'), S.before(story, q.id) || []);
   const saved = storage.get(QUEST_SAVE, null);
   $('[data-qi-continue]').hidden = !(saved && saved.game && saved.game.quest === q.id && !saved.game.over);
   show('qintro');
@@ -1211,15 +1209,24 @@ $('[data-qi-continue]').addEventListener('click', () => {
 
 // ---- ものがたり ----------------------------------------------------------------
 // The story is optional and starts only when the player taps. Everything it
-// says comes from story.js; here it is only shown.
+// says comes from story.js; here it is only shown. The sheep speaks ("I") and
+// the player is "you"; every question has two or three answers, none typed.
 
+function storyLines(el, lines) {
+  el.textContent = lines.join('\n');
+  el.hidden = !lines.length;
+}
+
+// One screen of the story: lines, then (after the last line has appeared)
+// the choices or the buttons.
 function storyScene({ eyebrow = 'ものがたり', lines, choices = [], next = null, later = null }) {
+  const step = Math.min(0.45, 3.2 / lines.length);
   $('[data-story-eyebrow]').textContent = eyebrow;
-  $('[data-sheet="story"]').style.setProperty('--story-wait', `${lines.length * 0.45 + 0.2}s`);
+  $('[data-sheet="story"]').style.setProperty('--story-wait', `${lines.length * step + 0.2}s`);
   $('[data-story-lines]').replaceChildren(...lines.map((t, i) => {
     const p = document.createElement('p');
     p.textContent = t;
-    p.style.animationDelay = `${i * 0.45}s`;
+    p.style.animationDelay = `${i * step}s`;
     return p;
   }));
   $('[data-story-choices]').replaceChildren(...choices.map(c => {
@@ -1249,26 +1256,28 @@ function storyPrologue() {
 
 function storyWord() {
   storyScene({
-    lines: [S.WORD_ASK],
-    choices: S.WORDS.map(w => ({ label: w, run: () => storyWordPicked(w) })),
-    later: { label: 'あとで', run: () => storyWordPicked(null) },
+    lines: S.WORD.prompt,
+    choices: Object.entries(S.WORRIES).map(([id, label]) => ({ label, run: () => storyWordPicked(id) })),
+    later: { label: S.WORD.skip, run: () => storyWordPicked(null) },
   });
 }
 
-function storyWordPicked(word) {
-  story = S.chooseWord(story, word);
+function storyWordPicked(id) {
+  story = S.setWorry(story, id);
   saveStory();
   storyScene({
-    lines: [story.word && story.word !== 'いまは、見たくない' ? S.WORD_REPLY.named : S.WORD_REPLY.none],
+    lines: story.worry ? S.WORD.replyNamed : S.WORD.replyNone,
     next: { label: '第1夜へ', run: () => questIntro(questById(1)) },
   });
 }
 
-// After the eleventh night: what the player did with the black sheep, and one question.
+// The question that waits (after a night): the sheep asks, the player taps one answer.
 function storyAsk() {
+  const q = S.question(story);
+  if (!q) { questList(); return; }
   storyScene({
-    lines: [S.mirror(story), S.VIEW_ASK],
-    choices: S.VIEWS.map(v => ({ label: v.label, run: () => storyAnswered(v.id) })),
+    lines: q.prompt,
+    choices: q.options.map(o => ({ label: o.label, run: () => storyAnswered(o.id) })),
   });
 }
 
@@ -1276,10 +1285,15 @@ function storyAnswered(id) {
   const r = S.answer(story, id);
   story = r.state;
   saveStory();
-  storyScene({ lines: [r.reply], next: { label: `第${story.night}夜へ`, run: () => questIntro(questById(story.night)) } });
+  if (story.pending === 'dawn') {
+    storyScene({ lines: r.reply, next: { label: '答え合わせへ', run: storyDawn } });
+    return;
+  }
+  const next = questById(story.night);
+  storyScene({ lines: r.reply, next: { label: `第${story.night}夜へ`, run: () => (next && unlocked(results, next) ? questIntro(next) : questList()) } });
 }
 
-// After the last night: the story ends when the player says so.
+// After the last answer: the story ends when the player says so.
 function storyDawn() {
   storyScene({ lines: S.DAWN, next: { label: '朝にする', run: storyFinish } });
 }
@@ -1291,16 +1305,22 @@ function storyFinish() {
   saveStory();
   sound.sfx('dawn');
   storyScene({
-    eyebrow: S.ENDINGS[story.ending].name,
+    eyebrow: r.title,
     lines: r.lines,
     next: { label: '夜のしおりを見る', run: () => shioriShow(S.lastKeepsake(story)) },
+    later: { label: '別の朝を見る', run: storyAnother },
   });
 }
 
-function shioriShow(k) {
-  if (!k) { questList(); return; }
-  const r = S.shiori(k);
-  $('[data-shiori-rows]').replaceChildren(...r.rows.map(([name, value]) => {
+// The same night, the last question asked again: another morning.
+function storyAnother() {
+  story = S.reopen(story);
+  saveStory();
+  storyAsk();
+}
+
+function listRows(target, rows) {
+  target.replaceChildren(...rows.map(([name, value]) => {
     const row = document.createElement('div');
     const dt = document.createElement('dt');
     const dd = document.createElement('dd');
@@ -1309,11 +1329,33 @@ function shioriShow(k) {
     row.append(dt, dd);
     return row;
   }));
+}
+
+function foundMornings() {
+  return S.ENDING_LIST.map(e => [e, story.seen.includes(e.id)]);
+}
+
+function shioriShow(k) {
+  if (!k) { questList(); return; }
+  const r = S.shiori(k);
+  listRows($('[data-shiori-rows]'), r.rows);
+  listRows($('[data-shiori-chosen]'), r.chosen);
+  const memo = $('[data-shiori-memo]');
+  memo.hidden = !r.memo.length;
+  memo.textContent = r.memo.length ? `私のメモ：${r.memo.join('、')}` : '';
+  $('[data-shiori-found-n]').textContent = `${story.seen.length} / ${S.ENDING_COUNT}`;
+  $('[data-shiori-found]').replaceChildren(...foundMornings().map(([e, got]) => {
+    const li = document.createElement('li');
+    li.className = got ? 'is-found' : '';
+    li.textContent = got ? e.title : '？';
+    return li;
+  }));
   $('[data-shiori-care]').textContent = S.CARE;
   $('[data-shiori-copy]').onclick = async () => {
     try { await navigator.clipboard.writeText(r.text); toast('しおりをコピーしました'); }
     catch { toast(r.text.split('\n')[1]); }
   };
+  $('[data-shiori-another]').hidden = story.status !== 'ended';
   const past = story.status === 'ended' ? story.history : story.history.slice(1);
   $('[data-shiori-past-head]').hidden = !past.length;
   const list = $('[data-shiori-past]');
@@ -1323,11 +1365,26 @@ function shioriShow(k) {
     const a = document.createElement('span');
     const b = document.createElement('span');
     a.textContent = (h.ended || h.started || '').replaceAll('-', '/').slice(5) || '—';
-    b.textContent = S.ENDINGS[h.ending].name;
+    b.textContent = S.endingTitle(h.ending) || '—';
     li.append(a, b);
     return li;
   }));
   show('shiori');
+}
+
+// "このものがたりについて": what it is not, and where the ideas come from.
+let aboutBack = questList;
+function storyAbout(back) {
+  aboutBack = back;
+  $('[data-about-lines]').replaceChildren(...S.ABOUT.map(t => { const p = document.createElement('p'); p.textContent = t; return p; }));
+  $('[data-about-sources]').replaceChildren(...S.SOURCES.map(([what, ref]) => {
+    const li = document.createElement('li');
+    const b = document.createElement('strong');
+    b.textContent = what;
+    li.append(b, document.createTextNode(ref));
+    return li;
+  }));
+  show('storyabout');
 }
 
 // The card at the top of the quest list: start, go on, or look back.
@@ -1337,22 +1394,25 @@ function storyCard() {
   const main = $('[data-story-card-main]');
   const sub = $('[data-story-card-sub]');
   const reset = $('[data-story-card-reset]');
+  const found = $('[data-story-card-found]');
   resetArmed = 0;
   reset.textContent = 'はじめからにする';
   sub.hidden = true;
   reset.hidden = true;
+  found.hidden = !story.seen.length;
+  found.textContent = `見つけた朝 ${story.seen.length} / ${S.ENDING_COUNT}`;
   if (story.status === 'active') {
-    if (story.pending === 'ask') { text.textContent = 'つづきがあります。'; main.textContent = 'つづきを読む'; }
-    else if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
+    if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
+    else if (story.pending) { text.textContent = 'つづきがあります。'; main.textContent = 'つづきを読む'; }
     else { text.textContent = `第${story.night}夜から。`; main.textContent = 'つづける'; }
     reset.hidden = false;
   } else if (story.status === 'ended') {
-    text.textContent = `ものがたりは、おわりました。「${S.ENDINGS[story.ending].name}」`;
+    text.textContent = `ものがたりは、おわりました。「${S.endingTitle(story.ending)}」`;
     main.textContent = 'しおりを見る';
     sub.textContent = 'もう一度、はじめる';
     sub.hidden = false;
   } else {
-    text.textContent = '15の夜に、ひとつの夜の話を重ねます。はじめるのも、終わらせるのも、あなたです。';
+    text.textContent = '15の夜に、あなたと私（あなたの羊）の話を重ねます。はじめるのも、終わらせるのも、あなたです。';
     main.textContent = 'ものがたりを はじめる';
     if (story.history.length) { sub.textContent = 'しおりを見る'; sub.hidden = false; }
   }
@@ -1361,8 +1421,8 @@ function storyCard() {
 $('[data-story-card-main]').addEventListener('click', () => {
   if (story.status === 'ended') { shioriShow(S.lastKeepsake(story)); return; }
   if (story.status !== 'active') { storyPrologue(); return; }
-  if (story.pending === 'ask') { storyAsk(); return; }
   if (story.pending === 'dawn') { storyDawn(); return; }
+  if (story.pending) { storyAsk(); return; }
   const q = questById(story.night);
   if (q && unlocked(results, q)) questIntro(q);
   else questList();
@@ -1380,16 +1440,21 @@ $('[data-story-card-reset]').addEventListener('click', e => {
     setTimeout(() => { if (resetArmed === armed) { resetArmed = 0; btn.textContent = 'はじめからにする'; } }, 4000);
     return;
   }
-  story = { ...S.fresh(), history: story.history };
+  story = { ...S.fresh(), seen: story.seen, history: story.history };
   saveStory();
   storyCard();
 });
 $('[data-qc-story-next]').addEventListener('click', () => {
-  if (story.pending === 'ask') storyAsk();
-  else if (story.pending === 'dawn') storyDawn();
+  if (story.pending === 'dawn') storyDawn();
+  else if (story.pending) storyAsk();
   else questList();
 });
 $('[data-shiori-back]').addEventListener('click', questList);
+$('[data-shiori-another]').addEventListener('click', storyAnother);
+for (const el of app.querySelectorAll('[data-story-about-open]')) {
+  el.addEventListener('click', () => storyAbout(el.closest('[data-sheet="shiori"]') ? () => shioriShow(S.lastKeepsake(story)) : questList));
+}
+$('[data-about-back]').addEventListener('click', () => aboutBack());
 
 function questEnd(o) {
   goodnight();
@@ -1424,8 +1489,7 @@ function questEnd(o) {
     // that went home by the dog are in game.blacks too, so they are taken out.
     const sr = S.afterNight(story, quest.id, { homed: Math.max(0, game.blacks - game.dogged), walked: game.walked, dogged: game.dogged });
     if (sr.state !== story) { story = sr.state; saveStory(); }
-    $('[data-qc-story]').textContent = sr.after;
-    $('[data-qc-story]').hidden = !sr.after;
+    storyLines($('[data-qc-story]'), sr.after);
     $('[data-qc-story-next]').hidden = !sr.pending;
     const next = questById(quest.id + 1);
     $('[data-qc-next]').hidden = !next || Boolean(sr.pending);
