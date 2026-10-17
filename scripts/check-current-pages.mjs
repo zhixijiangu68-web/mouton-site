@@ -29,6 +29,11 @@ for (const p of ['index.html', 'start.html', 'topic-philosophy.html', 'journal.h
   if (/mw-blank|＿＿＿/.test(html)) report(p, '穴埋めの空欄が出ている');
   if (/class="quiz-more|data-qloop/.test(html)) report(p, '○×クイズが出ている');
 }
+// アーカイブに移したページ（テーマ別・選び方・クイズ・いま取り組んでいること・お気に入り・制作・リンク集）には注記が出る。哲学のページには出ない
+for (const p of ['topic-body.html', 'topic-work.html', 'topic-food.html', 'guides.html', 'quiz.html', 'now.html', 'favorites.html', 'making.html', 'links.html']) {
+  if (!read(p).includes('class="archive-note"')) report(p, 'アーカイブのページに注記がない');
+}
+if (read('topic-philosophy.html').includes('class="archive-note"')) report('topic-philosophy.html', '残すページにアーカイブの注記が出ている');
 const index = read('index.html');
 for (const label of ['ムートン', 'つくるもの', 'あなたに']) {
   if (!new RegExp(`<dt>${label}</dt>`).test(index)) report('index.html', `最初の画面の3行に「${label}」がない`);
