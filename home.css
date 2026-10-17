@@ -649,3 +649,34 @@ body.journal-page main{padding-top:72px}
 /* 有料のページは一覧でもそうと分かるようにする（お金の出どころを隠さない） */
 .journal-tag + .journal-tag{margin-left:6px}
 .journal-tag--paid{border-color:rgba(37,39,36,.4);color:var(--ink)}
+
+/* 2026-10-17 — トップの入口：ブランドの一文と「悩みから選ぶ」を主な入口に。身体・食事はその下に小さく置く。
+   カードは月夜の背景の上に置く半透明の紺。昼の絵（images/home/*-card.webp）はもう使わない。 */
+.cover-choice--worry .cover-title--choice{margin:0;font-size:clamp(1.9rem,4vw,3.4rem);line-height:1.45;letter-spacing:.05em;color:#fbf7ee}
+.cover-choice--worry .cover-lede--choice{max-width:40em;color:rgba(245,243,238,.86)}
+.cover-choice-label{margin:clamp(22px,3.4vh,34px) 0 0;font-family:var(--gothic);font-size:.75rem;font-weight:500;letter-spacing:.2em;color:#e6c98a}
+.cover-choice--worry .cover-choice-grid{margin-top:12px}
+.cover-choice-card--worry{min-height:clamp(140px,11vw,170px);background:rgba(7,18,48,.6);border:1px solid rgba(230,201,138,.38);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fbf7ee}
+.cover-choice-card--worry:after{display:none}
+.cover-choice-card--worry .cover-choice-number{color:#e6c98a}
+.cover-choice-card--worry .cover-choice-title{font-size:clamp(1.2rem,1.9vw,1.6rem);line-height:1.5;word-break:auto-phrase;text-wrap:balance}
+.cover-choice-card--worry:hover,.cover-choice-card--worry:focus-visible{border-color:rgba(246,223,172,.85);background:rgba(9,24,64,.74)}
+.cover-choice-more{display:flex;flex-wrap:wrap;gap:0 22px;margin:10px 0 0}
+.cover-choice-more a{display:inline-flex;align-items:center;min-height:40px;font-size:.8125rem;color:rgba(245,243,238,.92);text-underline-offset:4px}
+.cover-next{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;margin-top:clamp(14px,2.4vh,24px);padding-top:clamp(14px,2.2vh,20px);border-top:1px solid rgba(230,201,138,.25)}
+.cover-next-label{flex-basis:100%;margin:0;font-size:.75rem;letter-spacing:.14em;color:rgba(245,243,238,.72)}
+.cover-next-link{display:inline-flex;align-items:baseline;gap:10px;min-height:44px;padding:10px 18px;border:1px solid rgba(245,243,238,.28);border-radius:999px;background:rgba(7,18,48,.68);color:#fbf7ee;text-decoration:none}
+.cover-next-title{font-family:var(--serif);font-size:1rem;letter-spacing:.04em}
+.cover-next-text{font-size:.75rem;color:rgba(245,243,238,.8)}
+.cover-next-link:hover,.cover-next-link:focus-visible{border-color:rgba(246,223,172,.8)}
+.cover-next-link:focus-visible,.cover-choice-more a:focus-visible{outline:3px solid #f6dfac;outline-offset:3px}
+@media(max-width:600px){
+ .cover-choice--worry .cover-title--choice{font-size:clamp(1.55rem,6.4vw,2.05rem);line-height:1.45}
+ .cover-choice-label{margin-top:18px}
+ .cover-choice--worry .cover-choice-grid{margin-top:8px;gap:7px}
+ .cover-choice-card--worry{min-height:0}
+ .cover-choice-card--worry .cover-choice-content{padding:12px 16px;gap:3px}
+ .cover-choice-card--worry .cover-choice-title{padding-right:6.8em;font-size:1.04rem;line-height:1.45}
+ .cover-choice-card--worry .cover-choice-action{bottom:14px}
+ .cover-next-link{padding:8px 14px;gap:8px}
+}

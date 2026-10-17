@@ -33,12 +33,12 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css?v=20261016-gold-1">
-<link rel="stylesheet" href="home.css">
+<link rel="stylesheet" href="site.css?v=20261017-entry">
+<link rel="stylesheet" href="home.css?v=20261017-entry">
 <link rel="stylesheet" href="home-static-background.css?v=20261016-gold-1">
 <link rel="stylesheet" href="intro-art.css?v=20261016-gold-1">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js?v=20261016-gold-1" defer></script>
+<script src="site.js?v=20261017-entry" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。","inLanguage":"ja","url":"https://moutonarchive.com/"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone"]}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -72,39 +72,41 @@
 
 
 <main>
-  <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
+  <section class="cover cover-choice cover-choice--worry cover-static" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
-      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 生き方が<wbr>変われば、<wbr>行動が<wbr>変わる。</h1>
-      <nav class="cover-choice-grid" aria-label="3つのテーマから読む">
-        <a class="cover-choice-card cover-choice-card--think" id="think" href="topic-philosophy.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
+      <h1 class="cover-title cover-title--choice">哲学を、<br>読む<wbr>ものから<wbr>使う<wbr>ものへ。</h1>
+      <p class="cover-lede cover-lede--choice">生き方が変われば、行動が変わる。いま近い悩みをひとつ選ぶと、そこに合う哲学者の考えから始められる。</p>
+      <p class="cover-choice-label" id="think">悩みから選ぶ</p>
+      <nav class="cover-choice-grid" aria-labelledby="think">
+        <a class="cover-choice-card cover-choice-card--worry" href="topic-philosophy.html#kierkegaard">
           <span class="cover-choice-content">
-            <span class="cover-choice-number">01 / Philosophy</span>
-            <strong class="cover-choice-title">考える。</strong>
-            <span class="cover-choice-description">哲学・生き方・自分との向き合い方</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+            <span class="cover-choice-number">01 / Kierkegaard</span>
+            <strong class="cover-choice-title">考えすぎて決められない。</strong>
+            <span class="cover-choice-action">キルケゴールへ <span aria-hidden="true">→</span></span>
           </span>
         </a>
-        <a class="cover-choice-card cover-choice-card--body" id="body" href="topic-body.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
+        <a class="cover-choice-card cover-choice-card--worry" href="topic-philosophy.html#nietzsche">
           <span class="cover-choice-content">
-            <span class="cover-choice-number">02 / Body</span>
-            <strong class="cover-choice-title">身体で、確かめる。</strong>
-            <span class="cover-choice-description">睡眠・体力・外見・身体のこと</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+            <span class="cover-choice-number">02 / Nietzsche</span>
+            <strong class="cover-choice-title">人の目や評価が気になる。</strong>
+            <span class="cover-choice-action">ニーチェへ <span aria-hidden="true">→</span></span>
           </span>
         </a>
-        <a class="cover-choice-card cover-choice-card--food" id="food" href="topic-food.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
+        <a class="cover-choice-card cover-choice-card--worry" href="topic-philosophy.html#spinoza">
           <span class="cover-choice-content">
-            <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
-            <strong class="cover-choice-title">食べることを、科学で。</strong>
-            <span class="cover-choice-description">食べ物・栄養・成分のエビデンス</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+            <span class="cover-choice-number">03 / Spinoza</span>
+            <strong class="cover-choice-title">感情に振り回されて続かない。</strong>
+            <span class="cover-choice-action">スピノザへ <span aria-hidden="true">→</span></span>
           </span>
         </a>
+      </nav>
+      <p class="cover-choice-more"><a href="topic-philosophy.html">3人の哲学者を見る</a><a href="start.html">はじめての方へ</a></p>
+      <nav class="cover-next" aria-labelledby="cover-next-label">
+        <p class="cover-next-label" id="cover-next-label">その先に、身体と食事</p>
+        <a class="cover-next-link" id="body" href="topic-body.html"><span class="cover-next-title">身体</span><span class="cover-next-text">睡眠・体力・外見</span></a>
+        <a class="cover-next-link" id="food" href="topic-food.html"><span class="cover-next-title" id="foodscience">食事・化学</span><span class="cover-next-text">食べ物と栄養のエビデンス</span></a>
       </nav>
     </div>
   </section>
@@ -124,7 +126,7 @@
 </div>
 </footer>
 
-<script src="home.js?v=20261016-gold-1" defer></script>
+<script src="home.js?v=20261017-entry" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};

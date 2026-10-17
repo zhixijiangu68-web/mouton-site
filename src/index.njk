@@ -4,8 +4,8 @@ permalink: index.html
 title: "ムートン — Philosophy of Life"
 description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。"
 bodyClass: site
-assetVersion: "20261016-gold-1"
-extraCss: [home.css, "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
+assetVersion: "20261017-entry"
+extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
 ---
 {#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
 <link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp" media="(max-width: 900px)">
@@ -22,41 +22,32 @@ extraCss: [home.css, "home-static-background.css?v=20261016-gold-1", "intro-art.
 {% include "partials/nav.njk" %}
 
 <main>
-  {#- 表紙。通常デザインに統一。 #}
-  <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
+  {#- 表紙。2026-10-17：オーナーの判断で、ブランドの一文と「悩みから選ぶ」を主な入口に。身体・食事はその下に置く
+      （「まず生き方、その後に身体や日常」という順番を伝えるため）。悩みと哲学者は有料記事の front matter `paid` から。 #}
+  <section class="cover cover-choice cover-choice--worry cover-static" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
-      {#- 見出しは画面に出さない（読み上げ・検索用に h1 だけ残す） #}
-      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 生き方が変われば、行動が変わる。</h1>
-      <nav class="cover-choice-grid" aria-label="3つのテーマから読む">
-        <a class="cover-choice-card cover-choice-card--think" id="think" href="topic-philosophy.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
+      <h1 class="cover-title cover-title--choice">哲学を、<br>読むものから使うものへ。</h1>
+      <p class="cover-lede cover-lede--choice">生き方が変われば、行動が変わる。いま近い悩みをひとつ選ぶと、そこに合う哲学者の考えから始められる。</p>
+      <p class="cover-choice-label" id="think">悩みから選ぶ</p>
+      <nav class="cover-choice-grid" aria-labelledby="think">
+        {%- for a in collections.articles | paidCards %}
+        {%- set p = a.data.paid %}
+        <a class="cover-choice-card cover-choice-card--worry" href="topic-philosophy.html#{{ a.page.fileSlug | replace('paid-', '') }}">
           <span class="cover-choice-content">
-            <span class="cover-choice-number">01 / Philosophy</span>
-            <strong class="cover-choice-title">考える。</strong>
-            <span class="cover-choice-description">哲学・生き方・自分との向き合い方</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
+            <span class="cover-choice-number">0{{ loop.index }} / {{ p.en.split(' ') | last }}</span>
+            <strong class="cover-choice-title">{{ p.worry.split('。')[0] }}。</strong>
+            <span class="cover-choice-action">{{ p.philosopher }}へ <span aria-hidden="true">→</span></span>
           </span>
         </a>
-        <a class="cover-choice-card cover-choice-card--body" id="body" href="topic-body.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
-          <span class="cover-choice-content">
-            <span class="cover-choice-number">02 / Body</span>
-            <strong class="cover-choice-title">身体で、確かめる。</strong>
-            <span class="cover-choice-description">睡眠・体力・外見・身体のこと</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
-          </span>
-        </a>
-        <a class="cover-choice-card cover-choice-card--food" id="food" href="topic-food.html">
-          <span class="cover-choice-art" aria-hidden="true"></span>
-          <span class="cover-choice-content">
-            <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
-            <strong class="cover-choice-title">食べることを、科学で。</strong>
-            <span class="cover-choice-description">食べ物・栄養・成分のエビデンス</span>
-            <span class="cover-choice-action">記事を見る <span aria-hidden="true">→</span></span>
-          </span>
-        </a>
+        {%- endfor %}
+      </nav>
+      <p class="cover-choice-more"><a href="topic-philosophy.html">3人の哲学者を見る</a><a href="start.html">はじめての方へ</a></p>
+      <nav class="cover-next" aria-labelledby="cover-next-label">
+        <p class="cover-next-label" id="cover-next-label">その先に、身体と食事</p>
+        <a class="cover-next-link" id="body" href="topic-body.html"><span class="cover-next-title">身体</span><span class="cover-next-text">睡眠・体力・外見</span></a>
+        <a class="cover-next-link" id="food" href="topic-food.html"><span class="cover-next-title" id="foodscience">食事・化学</span><span class="cover-next-text">食べ物と栄養のエビデンス</span></a>
       </nav>
     </div>
   </section>

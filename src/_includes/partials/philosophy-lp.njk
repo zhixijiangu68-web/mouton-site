@@ -3,49 +3,20 @@
 {%- set paidList = collections.articles | paidCards %}
   <p class="eyebrow">Philosophy — three answers</p>
   <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
-  {#- 誰のためのページかを、最初に一行で。自己啓発という大きな市場の中の、小さな一角（BRAND.md「目立ち方」）。 #}
-  <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった人へ。</p>
-  <p class="lp-oneline">哲学を、読むものから使うものへ。</p>
-  <p>転職、独立、人間関係。岐路に立つと、頭ではわかっているのに動けなくなる。その原因の多くは、自分の判断基準がまだないことだと僕は思う。哲学は、遠い昔の難しい学問ではない。同じ悩みを抱えた人たちが、自分の基準をつくるために残した道具だ。</p>
+  {#- 2026-10-17：オーナーの判断で、悩みの3択 → 商品カード → 詳しい考え方 の順に。ブランドの考え方の全体は「はじめての方へ」に1か所だけ置き、ここでは繰り返さない。 #}
+  <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった人へ。いま近い悩みを、ひとつ選ぶ。</p>
   {#- 悩みの一覧が、そのまま各哲学者への入口になる（文言は各記事の paid.worry）。 #}
   <ul class="lp-worries">
     {%- for a in paidList %}
     <li><a href="#{{ a.page.fileSlug | replace('paid-', '') }}"><span class="lp-worry-text">{{ a.data.paid.worry }}</span><span class="lp-worry-to">{{ a.data.paid.philosopher }}へ <span aria-hidden="true">↓</span></span></a></li>
     {%- endfor %}
   </ul>
-  <p>3つの悩みに、3人の哲学者がそれぞれ違う処方箋を出している。原典の書名と節番号を添えて、「悩み → 哲学者の考え → 今日から書き込んで使えること」の順にまとめた。正しい生き方を押しつけるためではない。自分の基準で選び、選んだことを続けるための道具として。</p>
-
-  {#- 「なぜ自己啓発ではなく、哲学なのか」に先に答える。 #}
-  <section class="lp-section lp-why" aria-labelledby="lp-why-heading">
-    <h2 id="lp-why-heading">なぜ、哲学なのか。</h2>
-    <p>やり方を教えてくれる本や動画は、たくさんある。朝5時に起きる、目標を紙に書く、10秒で決める。僕もいくつも試した。けれど、状況が変わると、やり方はすぐに使えなくなった。転職か、残るか。人にどう思われても、やるか。そういう岐路で必要だったのは、新しいやり方ではなく、<strong>「自分は何を基準に選ぶのか」</strong>だった。</p>
-    <ol class="lp-why-list">
-      <li><strong>やり方ではなく、基準をつくる。</strong>やり方は場面ごとに変わる。基準は、どの岐路でも使える。哲学は、その基準を自分で組み立てるための道具だと僕は思う。</li>
-      <li><strong>同じ悩みを、何百年も考え抜いた人たちがいる。</strong>決められない、人の目が気になる、続かない。どれも新しい悩みではない。流行りの方法が入れ替わっても残ってきた考えには、それだけの理由がある。</li>
-      <li><strong>答えではなく、問いを渡してくれる。</strong>哲学者は「こう生きろ」とは言わない（言ったとしても、従う必要はない）。渡されるのは、自分で考えるための問いだ。どう生きるかを選ぶのは、いつも自分自身。</li>
-    </ol>
-    <p>だからここでは、学術的な解説はしない。精神論も語らない。哲学者の考えを、悩みに合わせて「使える形」にして、書き込みながら試せるようにした。</p>
-    {#- よくある自己啓発の逆側を引き受ける。ほかを否定する言い方はしない（BRAND.md「目立ち方」）。 #}
-    <h3 class="lp-contrast-h">ここには、ないもの。代わりに、あるもの。</h3>
-    <dl class="lp-contrast">
-      {%- for c in [
-        ["気持ちを上げる言葉", "書き込むための空欄"],
-        ["「これで人生が変わる」という約束", "試す方法と、1週間後に見直す日"],
-        ["成功した人の型", "自分の基準をつくる問い"],
-        ["次々に流れてくる、たくさんの方法", "一つの悩みに、一人の哲学者"],
-        ["「今だけ」「残りわずか」", "買う前に読める、冒頭の無料公開"]
-      ] %}
-      <div class="lp-contrast-row"><dt>{{ c[0] }}</dt><dd>{{ c[1] }}</dd></div>
-      {%- endfor %}
-    </dl>
-    <p class="lp-contrast-note">ほかのやり方を否定するためではない。どれも、合う人と合う時期がある。ここでは、その反対側を引き受けたい。</p>
-  </section>
 
   <section class="lp-section" aria-labelledby="lp-cards-heading">
     <h2 id="lp-cards-heading">3人の哲学者</h2>
     {#- 3本を一本の道として見せる（paid.role）。どこからでも読める。 #}
     <p class="lp-path">{% for a in paidList %}<span class="lp-path-step">{{ a.data.paid.role }}<span class="lp-path-name">{{ a.data.paid.philosopher }}</span></span>{% if not loop.last %}<span class="lp-path-arrow" aria-hidden="true">→</span>{% endif %}{% endfor %}</p>
-    <p>選ぼうとすると、誰の物差しで選ぶのかが問われる。選んだあとには、続けられるかが問われる。3人は、僕には一本の道に見える。ただし、どこからでも読める。いまいちばん近い悩みの1本からでいい。</p>
+    <p>選ぶ、自分の物差しで決める、続ける。3人は一本の道につながっているが、どこからでも読める。</p>
     <div class="ph-cards">
     {%- for a in paidList %}
     {%- set p = a.data.paid %}
@@ -83,6 +54,31 @@
     {%- if loop.last and loop.length > 1 %}</div>{% endif %}
     {%- endfor %}
     </div>
+  </section>
+
+  {#- 詳しい考え方は、商品のあとに短く。 #}
+  <section class="lp-section lp-why" aria-labelledby="lp-why-heading">
+    <h2 id="lp-why-heading">なぜ、哲学なのか。</h2>
+    <p>やり方を教えてくれる本や動画は、たくさんある。けれど状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より<strong>「自分は何を基準に選ぶのか」</strong>だと僕は思う。</p>
+    <ol class="lp-why-list">
+      <li><strong>やり方ではなく、基準をつくる。</strong>やり方は場面ごとに変わる。基準は、どの岐路でも使える。</li>
+      <li><strong>同じ悩みを、何百年も考え抜いた人たちがいる。</strong>流行りの方法が入れ替わっても残ってきた考えには、それだけの理由がある。</li>
+      <li><strong>読むだけでなく、書き込んで試せる形にした。</strong>学術的な解説や精神論ではなく、悩みに合わせた問いと空欄。</li>
+    </ol>
+    {#- よくある自己啓発の逆側を引き受ける。ほかを否定する言い方はしない（BRAND.md「目立ち方」）。 #}
+    <h3 class="lp-contrast-h">ここには、ないもの。代わりに、あるもの。</h3>
+    <dl class="lp-contrast">
+      {%- for c in [
+        ["気持ちを上げる言葉", "書き込むための空欄"],
+        ["「これで人生が変わる」という約束", "試す方法と、1週間後に見直す日"],
+        ["成功した人の型", "自分の基準をつくる問い"],
+        ["次々に流れてくる、たくさんの方法", "一つの悩みに、一人の哲学者"],
+        ["「今だけ」「残りわずか」", "買う前に読める、冒頭の無料公開"]
+      ] %}
+      <div class="lp-contrast-row"><dt>{{ c[0] }}</dt><dd>{{ c[1] }}</dd></div>
+      {%- endfor %}
+    </dl>
+    <p class="lp-contrast-note">ほかのやり方を否定するためではない。ムートンの考え方の全体は、<a href="start.html">はじめての方へ</a>に。</p>
   </section>
 
   <section class="lp-section lp-free" aria-labelledby="lp-free-heading">
