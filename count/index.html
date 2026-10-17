@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07152b">
+<title>MOUTON・COUNT</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="落ちてくる羊の群れを並べて、柵を跳ばせて数える。眠れない夜の、やさしい落ちものパズル。スマホで遊べます。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MOUTON・COUNT">
+<meta property="og:description" content="落ちてくる羊の群れを並べて、柵を跳ばせて数える。眠れない夜の、やさしい落ちものパズル。スマホで遊べます。">
+<meta property="og:url" content="https://moutonarchive.com/count/">
+<meta property="og:image" content="https://moutonarchive.com/count/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app" data-app>
+  <header class="hud">
+    <div class="hud-count"><strong data-count>0</strong><span data-unit>匹</span></div>
+    <div class="hud-clock" data-clock>22:00</div>
+    <div class="hud-next"><span>つぎ</span><canvas data-next aria-label="次の群れ"></canvas></div>
+    <button type="button" class="hud-pause" data-pause aria-label="一時停止"><span aria-hidden="true">Ⅱ</span></button>
+    <p class="hud-goal" data-goal hidden></p>
+  </header>
+
+  <div class="field-wrap" data-wrap>
+    <canvas class="field" data-field aria-label="牧場"></canvas>
+    <p class="hint" data-hint hidden>ずらす ・ タップで回す ・ 上にはらうと落ちる</p>
+    <p class="hint hint-pick" data-pick hidden>おさんぽに出す黒い羊をタップ<small>ほかの所をタップでやめる</small></p>
+    <p class="toast" data-toast role="status" aria-live="polite" hidden></p>
+    <div class="chips" aria-live="polite">
+      <span class="chip chip-combo" data-chip-combo hidden></span>
+      <span class="chip chip-star" data-chip-star hidden></span>
+      <span class="chip chip-best" data-chip-best hidden></span>
+    </div>
+
+    <section class="sheet sheet-title" data-sheet="title" aria-labelledby="title-h">
+      <div class="title-top">
+        <p class="eyebrow">ムートン・カウント</p>
+        <h1 id="title-h" class="title-name">MOUTON・<br>COUNT</h1>
+        <p class="rank-line" data-rank-line></p>
+      </div>
+      <div class="title-main">
+        <button type="button" class="btn btn-main btn-hero" data-start>フリープレイ</button>
+        <button type="button" class="btn" data-continue hidden>つづきから</button>
+        <p class="best" data-best></p>
+      </div>
+      <div class="title-foot">
+        <button type="button" class="btn btn-menu" data-menu><span class="menu-icon" aria-hidden="true">☰</span>メニュー</button>
+      </div>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="menu" hidden aria-labelledby="menu-h">
+      <button type="button" class="link sheet-back" data-menu-back><span aria-hidden="true">←</span> タイトル</button>
+      <h2 id="menu-h">メニュー</h2>
+      <div class="menu-list">
+        <button type="button" class="menu-item" data-quests><span class="menu-name">クエスト</span><small>目標のある15の夜</small></button>
+        <button type="button" class="menu-item" data-shop><span class="menu-name">着せかえ</span><span class="wool-pill">ウール <b data-wool-balance>0</b></span></button>
+        <button type="button" class="menu-item" data-record><span class="menu-name">記録</span><small>ランク・ランキング・月のカレンダー・実績</small></button>
+        <button type="button" class="menu-item" data-howto><span class="menu-name">遊び方</span><small>ルール・操作・アイテム</small></button>
+      </div>
+      <div class="toggles" role="group" aria-label="音の設定">
+        <button type="button" class="toggle" data-setting="music" aria-pressed="true">音楽 オン</button>
+        <button type="button" class="toggle" data-setting="sfx" aria-pressed="true">効果音 オン</button>
+        <button type="button" class="toggle" data-setting="vibe" aria-pressed="true">振動 オン</button>
+        <button type="button" class="toggle" data-sound-test>音を確かめる</button>
+      </div>
+      <p class="sound-status" data-sound-status aria-live="polite"></p>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="howto" hidden aria-labelledby="howto-h">
+      <button type="button" class="link sheet-back" data-howto-back><span aria-hidden="true">←</span> メニュー</button>
+      <h2 id="howto-h">遊び方</h2>
+      <p class="lead">眠れない夜に、落ちてくる羊の群れを並べる。<br>横一列がそろうと、羊は柵を跳んで数えられる。</p>
+      <h3 class="howto-h">ルール</h3>
+      <ul class="rules">
+        <li><b>黒い羊</b>は列がそろっても残る。上下左右を白い羊で囲むと帰って、5匹ぶん。</li>
+        <li>羊が抜けると上の羊が下がり、また列がそろうと<b>れんさ</b>。数が倍になる。</li>
+        <li>続けて列を消すと<b>連続</b>ボーナス。<b>金の羊</b>は3匹ぶん。<b>流れ星</b>が流れたら8秒間、数が2倍。</li>
+        <li>22時から数えはじめて、160匹で朝になる。羊があふれたら、その夜はおしまい。</li>
+      </ul>
+      <h3 class="howto-h">操作</h3>
+      <ul class="rules">
+        <li><b>ずらす</b>：群れが横に動く</li>
+        <li><b>タップ</b>：群れが回る</li>
+        <li><b>長押し</b>：押している間、速く落ちる</li>
+        <li><b>上にはらう</b>：一気に下まで落ちる</li>
+      </ul>
+      <h3 class="howto-h">アイテム（1夜に1つずつ）</h3>
+      <ul class="rules">
+        <li><b>牧羊犬</b>：いちばん下の列の羊を全部帰す（黒い羊も）</li>
+        <li><b>入れ替え</b>：いま落ちている群れと、つぎの群れを入れ替える</li>
+        <li><b>ゆっくり</b>：20秒間、ゆっくり落ちる</li>
+        <li><b>笛</b>：黒い羊を1匹えらんで、おさんぽに出す（数には入らない）。上の羊はその分下がる</li>
+        <li>使い切ったら、広告を見るともう1つもらえる（1夜に3回まで）</li>
+      </ul>
+    </section>
+
+    <section class="sheet sheet-shop" data-sheet="shop" hidden aria-labelledby="shop-h">
+      <button type="button" class="link sheet-back" data-shop-back><span aria-hidden="true">←</span> もどる</button>
+      <h2 id="shop-h">着せかえ</h2>
+      <p class="shop-lead">数えた羊1匹で、ウールが1つ貯まる。<br>ウールで羊の見た目を変えられる。</p>
+      <p class="shop-wool">ウール <b data-wool-balance>0</b></p>
+      <div class="skins" data-skins></div>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="record" hidden aria-labelledby="record-h">
+      <button type="button" class="link sheet-back" data-record-back><span aria-hidden="true">←</span> メニュー</button>
+      <h2 id="record-h">記録</h2>
+      <div class="rec-rank">
+        <p class="eyebrow">羊飼いランク</p>
+        <p class="rec-rank-name" data-rec-rank></p>
+        <div class="rec-bar" data-rec-bar aria-hidden="true"><span></span></div>
+        <p class="rec-next" data-rec-next></p>
+        <p class="rec-totals" data-rec-totals></p>
+      </div>
+      <div class="cal-head">
+        <button type="button" class="link" data-cal-prev aria-label="前の月">‹</button>
+        <h3 data-cal-title></h3>
+        <button type="button" class="link" data-cal-next aria-label="次の月">›</button>
+      </div>
+      <div class="cal-week" aria-hidden="true"><span>日</span><span>月</span><span>火</span><span>水</span><span>木</span><span>金</span><span>土</span></div>
+      <div class="cal" data-cal></div>
+      <p class="rec-note">遊んだ日は、その夜の本当の月の形で光ります。</p>
+      <h3 class="ach-head">この端末のランキング</h3>
+      <ol class="ranking" data-rec-ranking hidden></ol>
+      <p class="rec-note" data-rec-ranking-empty>フリープレイの夜を数えると、ここに残ります。</p>
+      <h3 class="ach-head">実績 <span data-ach-count></span></h3>
+      <div class="achs" data-ach></div>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="quests" hidden aria-labelledby="quests-h">
+      <button type="button" class="link sheet-back" data-quests-back><span aria-hidden="true">←</span> メニュー</button>
+      <h2 id="quests-h">クエスト</h2>
+      <p class="shop-lead">夜ごとに目標がひとつ。限られた群れで達成しよう。</p>
+      <p class="quest-total" data-quest-total></p>
+      <div class="quests" data-quest-list></div>
+    </section>
+
+    <section class="sheet" data-sheet="qintro" hidden aria-labelledby="qi-name">
+      <button type="button" class="link sheet-back" data-qi-back><span aria-hidden="true">←</span> 一覧</button>
+      <p class="eyebrow" data-qi-n></p>
+      <h2 id="qi-name" data-qi-name></h2>
+      <p class="qi-goal" data-qi-goal></p>
+      <p class="qi-limit" data-qi-limit></p>
+      <p class="qi-note" data-qi-stars></p>
+      <p class="qi-note" data-qi-wool></p>
+      <p class="qi-best" data-qi-best></p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-qi-start>はじめる</button>
+        <button type="button" class="btn" data-qi-continue hidden>つづきから</button>
+      </div>
+    </section>
+
+    <section class="sheet" data-sheet="qclear" hidden aria-labelledby="qc-h">
+      <p class="eyebrow" data-qc-n></p>
+      <h2 id="qc-h">クリア</h2>
+      <p class="qc-stars" data-qc-stars></p>
+      <p class="final-clock" data-qc-left></p>
+      <p class="final-wool" data-qc-wool></p>
+      <p class="goodnight" data-goodnight hidden></p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-qc-next>つぎの夜へ</button>
+        <button type="button" class="btn" data-qc-again>もう一度</button>
+      </div>
+      <button type="button" class="link" data-qc-list>クエスト一覧</button>
+    </section>
+
+    <section class="sheet" data-sheet="qfail" hidden aria-labelledby="qf-h">
+      <p class="eyebrow" data-qf-n></p>
+      <h2 id="qf-h" data-qf-why></h2>
+      <p class="final-clock" data-qf-progress></p>
+      <p class="goodnight" data-goodnight hidden></p>
+      <button type="button" class="btn btn-double" data-qf-more hidden>広告を見て 群れ+5</button>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-qf-again>もう一度</button>
+      </div>
+      <button type="button" class="link" data-qf-list>クエスト一覧</button>
+    </section>
+
+    <section class="sheet" data-sheet="pause" hidden aria-label="一時停止中">
+      <h2>ひと休み</h2>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-resume>つづける</button>
+        <button type="button" class="btn" data-restart>はじめから</button>
+      </div>
+      <button type="button" class="link" data-quit>やめる</button>
+      <div class="toggles" role="group" aria-label="音の設定">
+        <button type="button" class="toggle" data-setting="music" aria-pressed="true">音楽 オン</button>
+        <button type="button" class="toggle" data-setting="sfx" aria-pressed="true">効果音 オン</button>
+        <button type="button" class="toggle" data-setting="vibe" aria-pressed="true">振動 オン</button>
+        <button type="button" class="toggle" data-sound-test>音を確かめる</button>
+      </div>
+      <p class="sound-status" data-sound-status aria-live="polite"></p>
+    </section>
+
+    <section class="sheet" data-sheet="over" hidden aria-labelledby="over-h">
+      <p class="eyebrow" id="over-h">羊があふれた</p>
+      <p class="final"><strong data-final>0</strong><span>匹</span></p>
+      <p class="final-clock" data-final-clock></p>
+      <p class="final-note" data-final-note></p>
+      <p class="final-detail" data-final-detail></p>
+      <p class="final-wool" data-final-wool></p>
+      <button type="button" class="btn btn-double" data-double hidden>広告を見て ウール2倍</button>
+      <p class="goodnight" data-goodnight hidden></p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-again>もう一度</button>
+        <button type="button" class="btn" data-copy>記録をコピー</button>
+      </div>
+      <ol class="ranking" data-over-ranking hidden></ol>
+      <p class="over-links"><button type="button" class="link" data-shop>着せかえ</button><button type="button" class="link" data-to-title>タイトルへ</button></p>
+    </section>
+  </div>
+
+  <nav class="items" aria-label="アイテム">
+    <button type="button" class="item" data-item="dog"><span class="item-icon" aria-hidden="true">⤓</span><span>牧羊犬</span><small data-n>×1</small></button>
+    <button type="button" class="item" data-item="swap"><span class="item-icon" aria-hidden="true">⇄</span><span>入れ替え</span><small data-n>×1</small></button>
+    <button type="button" class="item" data-item="slow"><span class="item-icon" aria-hidden="true">☾</span><span>ゆっくり</span><small data-n>×1</small></button>
+    <button type="button" class="item" data-item="whistle"><span class="item-icon" aria-hidden="true">♪</span><span>笛</span><small data-n>×1</small></button>
+  </nav>
+</main>
+<script type="module" src="game/main.js"></script>
+</body>
+</html>
