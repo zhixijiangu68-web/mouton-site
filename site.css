@@ -910,8 +910,9 @@ main>.archive-inline{margin:96px 16px 0}
 .archive-index{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
 .archive-index a{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:.8125rem;color:var(--ink);text-decoration:none}
 .archive-index a span{font-size:.6875rem;opacity:.65}
-.archive-h{margin:48px 0 6px;font-family:var(--serif,serif);font-weight:400;font-size:clamp(1.2rem,2.2vw,1.5rem);scroll-margin-top:84px}
-.archive-h span{font-size:.75rem;opacity:.6;margin-left:6px}
+.archive-h,.journal-h{margin:48px 0 6px;font-family:var(--serif,serif);font-weight:400;font-size:clamp(1.2rem,2.2vw,1.5rem);scroll-margin-top:84px}
+.archive-h span,.journal-h span{font-size:.75rem;opacity:.6;margin-left:6px}
+.journal-h:first-of-type{margin-top:8px}
 .archive-pages{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
 .archive-pages li{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:.9375rem}
 .archive-pages li span{font-size:.8125rem;opacity:.7}
