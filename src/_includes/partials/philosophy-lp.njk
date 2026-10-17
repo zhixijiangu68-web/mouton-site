@@ -1,7 +1,8 @@
 {#- 哲学のテーマページ（topic-philosophy.html）。記事一覧の代わりに、3人の哲学者の有料記事へ案内する。
     カードは front matter に `paid` がある記事から作られる（並び順は paid.order）。 -#}
 {%- set paidList = collections.articles | paidCards %}
-  <p class="eyebrow">Philosophy — three answers</p>
+{%- set ph = site.product.philosophy %}
+  <p class="eyebrow">Philosophy — three philosophers</p>
   <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
   {#- 2026-10-17：オーナーの判断で、悩みの3択 → 商品カード → 詳しい考え方 の順に。ブランドの考え方の全体は「はじめての方へ」に1か所だけ置き、ここでは繰り返さない。 #}
   <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった。そんなとき、いちばん近い悩みはどれだろう。</p>
@@ -45,7 +46,7 @@
           <ul class="ph-learn">{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}</ul>
           <div class="ph-card-foot">
             <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
-            <p class="ph-meta">PDF・全文 約{{ p.minutes }}分・¥{{ p.price.toLocaleString("ja-JP") }}（税込）</p>
+            <p class="ph-meta">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if (p.checkoutUrl and ph.fulfillmentReady and ph.legalUrl) else '・販売準備中' }}</p>
           </div>
           <p class="ph-credit">肖像：{{ p.portrait.credit }}。パブリックドメイン（Wikimedia Commons）</p>
           {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}

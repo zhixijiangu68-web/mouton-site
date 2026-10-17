@@ -23,13 +23,14 @@ assetVersion: "20261017-archive"
       </div>
       {#- 3つの組に分けて並べる：悩みから選ぶ有料の3本 → 連載「哲学者に聞く」（読む順）→ 3つの姿勢（残り）。 #}
       {%- set paidList = collections.current | paidCards %}
+      {%- set ph = site.product.philosophy %}
       {%- set thinkerSlugs = series[0].slugs %}
       <h2 class="journal-h" id="journal-paid">悩みから選ぶ <span>有料・冒頭は無料</span></h2>
       <div class="journal-list" id="journal-list">
         {%- for a in paidList %}{% set p = a.data.paid %}
         <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ p.role }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><span class="journal-tag journal-tag--paid">{{ p.philosopher }}</span><div class="journal-title">{{ p.title }}</div><div class="journal-excerpt">{{ p.worry }}</div><span class="journal-read-time">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）</span></div>
+          <div class="journal-body"><span class="journal-tag journal-tag--paid">{{ p.philosopher }}</span><div class="journal-title">{{ p.title }}</div><div class="journal-excerpt">{{ p.worry }}</div><span class="journal-read-time">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if (p.checkoutUrl and ph.fulfillmentReady and ph.legalUrl) else '・販売準備中' }}</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endfor %}
@@ -44,7 +45,7 @@ assetVersion: "20261017-archive"
         </a>
         {%- endfor %}
       </div>
-      <h2 class="journal-h" id="journal-rest">3つの姿勢 <span>無料</span></h2>
+      <h2 class="journal-h" id="journal-rest">3つの姿勢 <span>無料・没頭、自由、行動</span></h2>
       <div class="journal-list">
         {%- for a in collections.current %}{% if not a.data.paid and not (a.page.fileSlug in thinkerSlugs) %}
         <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">

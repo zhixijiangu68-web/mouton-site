@@ -55,10 +55,10 @@
   <h2 id="plp-buy-h">価格と購入</h2>
   <div class="paywall">
     <p class="paywall-eyebrow">{{ paid.philosopher }} — {{ paid.title }}</p>
-    <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }} <span class="paywall-tax">税込</span></p>
+    <p class="paywall-price">{{ paid.price.toLocaleString("ja-JP") }}円<span class="paywall-tax">（税込）</span></p>
     <p class="paywall-toc">PDF・全文 約{{ paid.minutes }}分</p>
     {% if live %}<a class="buy-btn" href="{{ paid.checkoutUrl }}" rel="noopener">購入する（PDF） <span aria-hidden="true">→</span></a>{% else %}<span class="buy-btn is-soon">このサイトでの販売準備中</span>{% endif %}
-    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。お支払いは Stripe の決済画面で行い、お支払いのあと、入力したメールアドレスに PDF のダウンロード用リンクが届きます（有効期限7日・最大5回。期限内に保存してください）。{% if live %}<a class="plp-light" href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>{% else %}現在は、購入・予約は受け付けていません。{% endif %}</p>
+    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。お支払いは Stripe の決済画面で行い、お支払いのあと、入力したメールアドレスに PDF のダウンロード用リンクが届きます（リンクは7日間・5回まで有効）。{% if live %}<a class="plp-light" href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>{% else %}現在は、購入・予約は受け付けていません。{% endif %}</p>
   </div>
 </section>
 
@@ -68,7 +68,7 @@
   {%- for f in lp.faq %}
   <details class="plp-q"><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
   {%- endfor %}
-  <details class="plp-q"><summary>哲学の本やビジネス書と、何が違いますか？</summary><p>本は、哲学者の考えを広く深く学ぶのに向いている。この記事は範囲を絞っている。いま抱えているひとつの選択について、自分で考えるところまで。一般的なビジネス書より少し高い値段にしているのは、知識を増やすことより、自分の悩みに当てて考えるところまでを、場面の例と読むところの地図で支えるものだからだ。</p></details>
+  <details class="plp-q"><summary>哲学の本やビジネス書と、何が違いますか？</summary><p>本は、哲学者の考えを広く深く学ぶのに向いている。この記事は範囲を絞っている。いま抱えている、ひとつの悩みについて、自分で考えるところまで。一般的なビジネス書より少し高い値段にしているのは、知識を増やすことより、自分の悩みに当てて考えるところまでを、場面の例と読むところの地図で支えるものだからだ。</p></details>
   <details class="plp-q"><summary>無料の記事とは、何が違いますか？</summary><p>無料の記事は、悩みの見え方を変える一つの視点まで。有料の記事には、場面の例と、読むところの地図と、最後に残す問いがある。違いは情報の量ではなく、使いやすさだ。{% if paid.free %}考え方が自分に合うかは、<a href="{{ paid.free }}.html">無料の入門記事</a>で先に確かめられる。{% endif %}</p></details>
   <details class="plp-q"><summary>3本とも読む必要がありますか？</summary><p>ない。いまの悩みにいちばん近い1本からでいい。<a href="topic-philosophy.html">3人の哲学者の比較</a>から選べる。</p></details>
   <details class="plp-q"><summary>ムートンの考えを信じないと、使えませんか？</summary><p>信じなくていい。書いてあるのは答えではなく、自分で確かめるための材料だ。読んで合わなかった考えは、使わなくていい。</p></details>
