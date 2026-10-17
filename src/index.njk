@@ -48,7 +48,7 @@ extraCss: ["home.css?v=20261017-who", "home-static-background.css?v=20261016-gol
             <span class="cover-choice-number">0{{ loop.index }} / {{ p.philosopher }}</span>
             <strong class="cover-choice-title">{{ p.worry }}</strong>
             <span class="cover-choice-description">{{ p.title }}</span>
-            <span class="cover-product-meta"><span>PDF・全文 約{{ p.minutes }}分</span> <span>{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if live else '・販売準備中' }}</span></span>
+            <span class="cover-product-meta"><span>PDF・全文 約{{ p.minutes }}分・冒頭は無料</span> <span>{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if live else '・販売準備中' }}</span></span>
           </span>
         </a>
         {%- endfor %}

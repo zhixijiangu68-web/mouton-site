@@ -8,7 +8,7 @@ extraCss: ["home.css?v=20261017-archive"]
 assetVersion: "20261017-archive"
 ---
 {#- 2026-10-17（オーナー）：必要な記事だけを残し、あとはアーカイブ（archive.html）へ。残す記事は src/_data/currentArticles.js。
-    10本なので、分類・検索・おまかせは外した。 #}
+    10本なので、分類・検索・おまかせは外し、3つの組に分けて並べる。 #}
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 <main>
@@ -21,15 +21,38 @@ assetVersion: "20261017-archive"
         </div>
         <p class="copy">答えを渡す記事ではなく、考えが動きだす記事だけを、ここに残した。何を試すかは、読んだあなたが決める。</p>
       </div>
+      {#- 3つの組に分けて並べる：悩みから選ぶ有料の3本 → 連載「哲学者に聞く」（読む順）→ 3つの姿勢（残り）。 #}
+      {%- set paidList = collections.current | paidCards %}
+      {%- set thinkerSlugs = series[0].slugs %}
+      <h2 class="journal-h" id="journal-paid">悩みから選ぶ <span>有料・冒頭は無料</span></h2>
       <div class="journal-list" id="journal-list">
-        {%- for a in collections.current %}
-        {%- set cat = a.data.journal.category if a.data.journal else a.data.category %}
-        <a class="journal-item clickable journal-link{% if cat == 'philosophy' %} is-philosophy{% endif %}" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ cat }}" data-date="{{ a.page.date | dotDate }}">
-          <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body">{% if a.data.paid %}<span class="journal-tag journal-tag--paid">有料・冒頭は無料</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">{% if a.data.paid %}PDF・全文 約{{ a.data.paid.minutes }}分{% else %}約{{ a.data.readMinutes }}分{% endif %}</span></div>
+        {%- for a in paidList %}{% set p = a.data.paid %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">{{ p.role }}</div><div class="journal-dot"></div>
+          <div class="journal-body"><span class="journal-tag journal-tag--paid">{{ p.philosopher }}</span><div class="journal-title">{{ p.title }}</div><div class="journal-excerpt">{{ p.worry }}</div><span class="journal-read-time">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endfor %}
+      </div>
+      <h2 class="journal-h" id="journal-series">連載「哲学者に聞く」 <span>無料・読む順</span></h2>
+      <div class="journal-list">
+        {%- for a in collections.current | bySlugs(thinkerSlugs) %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">第{{ loop.index }}回</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        {%- endfor %}
+      </div>
+      <h2 class="journal-h" id="journal-rest">3つの姿勢 <span>無料</span></h2>
+      <div class="journal-list">
+        {%- for a in collections.current %}{% if not a.data.paid and not (a.page.fileSlug in thinkerSlugs) %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        {%- endif %}{% endfor %}
       </div>
       <p class="journal-archive-link"><a href="archive.html">以前の記事（アーカイブ・{{ collections.archived.length }}本） <span aria-hidden="true">→</span></a></p>
     </div>

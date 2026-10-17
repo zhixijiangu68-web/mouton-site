@@ -386,6 +386,31 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('first view: who / what / for-you rows and the worry button fit the first screen on a phone', async () => {
+      await checkPage(browser, 'first-view-mobile', {
+        viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
+      }, async page => {
+        await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+        await page.locator('.intro-veil').click({ force: true }).catch(() => {});
+        assert.equal(await page.locator('.cover-who .cover-who-row').count(), 3, 'three rows under the headline');
+        const bottom = await page.locator('a[data-home-entry="worry"]').evaluate(el => el.getBoundingClientRect().bottom);
+        assert.ok(bottom <= 844, 'the worry button must be inside the first screen, got bottom=' + bottom);
+      });
+    });
+
+    await t.test('archive: an archived article carries the note, a current one has no quiz', async () => {
+      await checkPage(browser, 'archive-note', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
+        await page.goto(origin + '/coffee.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('article .archive-note').count(), 1, 'archived article shows the archive note');
+        assert.equal(await page.locator('.archive-note a[href="journal.html"]').count(), 1);
+        await page.goto(origin + '/kierkegaard.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
+        assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work').count(), 0, 'current article has no quiz or work');
+        await page.goto(origin + '/archive.html', { waitUntil: 'domcontentloaded' });
+        assert.ok((await page.locator('#archive .journal-item').count()) > 50, 'archive lists the archived articles');
+      });
+    });
+
     await t.test('cleanliness LP and sample: accurate state, PDF and one GA4 event per click', async () => {
       for (const [label, options] of [
         ['cleanliness-desktop', { viewport: { width: 1440, height: 900 } }],
