@@ -470,6 +470,53 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('h1').count(), 1);
       });
     });
+
+    await t.test('MOUTON・LEAP: swipe changes lane, tap jumps, the run ends and restarts', async () => {
+      await checkPage(browser, 'leap', { viewport: { width: 390, height: 844 } }, async page => {
+        const bad = [];
+        page.on('response', r => { if (r.status() >= 400) bad.push(r.status() + ' ' + r.url()); });
+        page.on('requestfailed', r => bad.push('failed ' + r.url()));
+        await page.goto(origin + '/leap/?seed=11', { waitUntil: 'load' });
+        const state = () => page.evaluate(() => window.__moutonLeap.state());
+        assert.equal((await state()).mode, 'title');
+        assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex');
+        await page.locator('[data-start]').click();
+        assert.equal((await state()).mode, 'play');
+
+        // One finger: a swipe is a drag of a few dozen pixels, a tap is a click.
+        const swipe = async dx => {
+          await page.mouse.move(195, 520);
+          await page.mouse.down();
+          await page.mouse.move(195 + dx / 2, 520, { steps: 3 });
+          await page.mouse.move(195 + dx, 520, { steps: 3 });
+          await page.mouse.up();
+        };
+        await swipe(80);
+        assert.equal((await state()).lane, 1, 'swipe right moves one lane right');
+        await swipe(80);
+        assert.equal((await state()).lane, 1, 'the sheep stays inside the right lane');
+        for (let i = 0; i < 3; i++) await swipe(-80);
+        assert.equal((await state()).lane, -1, 'swipes left end at the left lane');
+        await page.mouse.click(195, 480);
+        assert.equal((await state()).airborne, true, 'a tap jumps');
+
+        // Doing nothing: the first fence ends the run, and the end sheet shows the score.
+        await page.waitForFunction(() => window.__moutonLeap.state().mode === 'over', null, { timeout: 20000 });
+        const over = await state();
+        assert.equal(await page.locator('[data-sheet="over"]').isVisible(), true);
+        assert.equal(await page.locator('[data-final]').textContent(), String(over.score));
+        assert.equal(over.best, over.score);
+
+        await page.waitForTimeout(700);              // taps right after the end are ignored for a moment
+        await page.locator('[data-again]').click();
+        const again = await state();
+        assert.equal(again.mode, 'play');
+        assert.equal(again.plays, 2);
+        const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.width <= sizes.viewport, 'leap: horizontal overflow');
+        assert.deepEqual(bad, [], 'leap: every file loads');
+      });
+    });
   } finally {
     if (browser) await browser.close();
     await new Promise(resolveClose => server.close(resolveClose));

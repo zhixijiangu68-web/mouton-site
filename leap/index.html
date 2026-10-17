@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#07152b">
+<title>MOUTON・LEAP</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="月夜の草原を羊と駆けて、柵を跳ぶ。スワイプで左右へ、タップでジャンプ。片手で遊べる小さなゲームです。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MOUTON・LEAP">
+<meta property="og:description" content="月夜の草原を羊と駆けて、柵を跳ぶ。スワイプで左右へ、タップでジャンプ。片手で遊べる小さなゲームです。">
+<meta property="og:url" content="https://moutonarchive.com/leap/">
+<meta property="og:image" content="https://moutonarchive.com/leap/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="app" data-app>
+  <canvas class="stage" data-stage role="img" aria-label="月夜の草原を走る羊。左右にスワイプしてレーンを移り、タップで柵を跳ぶ。"></canvas>
+
+  <header class="hud" data-hud hidden>
+    <div class="hud-stars" aria-label="集めた星"><span aria-hidden="true">★</span><b data-stars>0</b></div>
+    <div class="hud-score"><strong data-score>0</strong></div>
+    <button type="button" class="hud-pause" data-pause aria-label="一時停止"><i></i><i></i></button>
+  </header>
+  <p class="hint" data-hint role="status" aria-live="polite" hidden></p>
+
+  <section class="sheet sheet-title" data-sheet="title" aria-labelledby="title-h">
+    <p class="eyebrow">ムートン・リープ</p>
+    <h1 id="title-h">月夜を駆けて、<br>柵を跳ぶ。</h1>
+    <ul class="moves">
+      <li>
+        <svg viewBox="0 0 64 40" aria-hidden="true"><path d="M8 20h48M8 20l10-9M8 20l10 9M56 20l-10-9M56 20l-10 9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <b>スワイプ</b><small>左右へ移る</small>
+      </li>
+      <li>
+        <svg viewBox="0 0 64 40" aria-hidden="true"><circle cx="32" cy="20" r="6" fill="currentColor"/><circle cx="32" cy="20" r="13" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".6"/><circle cx="32" cy="20" r="19" fill="none" stroke="currentColor" stroke-width="2" opacity=".3"/></svg>
+        <b>タップ</b><small>ジャンプ</small>
+      </li>
+    </ul>
+    <p class="rule">岩はよける。柵は跳ぶ。星を集める。</p>
+    <div class="actions">
+      <button type="button" class="btn btn-main" data-start>はじめる</button>
+    </div>
+    <p class="best" data-best hidden></p>
+    <button type="button" class="toggle" data-sound aria-pressed="true">音 オン</button>
+  </section>
+
+  <section class="sheet" data-sheet="pause" hidden aria-label="一時停止中">
+    <h2>ひと休み</h2>
+    <div class="actions">
+      <button type="button" class="btn btn-main" data-resume>つづける</button>
+      <button type="button" class="btn" data-restart>はじめから</button>
+    </div>
+    <button type="button" class="link" data-to-title>タイトルへ</button>
+    <button type="button" class="toggle" data-sound aria-pressed="true">音 オン</button>
+  </section>
+
+  <section class="sheet" data-sheet="over" hidden aria-labelledby="over-h">
+    <p class="eyebrow" id="over-h">ここまで</p>
+    <p class="final"><strong data-final>0</strong></p>
+    <p class="badge" data-new hidden>新記録</p>
+    <dl class="detail">
+      <div><dt>走った距離</dt><dd><span data-dist>0</span> m</dd></div>
+      <div><dt>集めた星</dt><dd><span data-star-n>0</span> 個（+<span data-star-pt>0</span>）</dd></div>
+      <div><dt>跳んだ柵</dt><dd><span data-fence-n>0</span></dd></div>
+    </dl>
+    <p class="best" data-over-best></p>
+    <p class="murmur" data-murmur></p>
+    <div class="actions">
+      <button type="button" class="btn btn-main" data-again>もう一度</button>
+    </div>
+    <button type="button" class="link" data-to-title>タイトルへ</button>
+  </section>
+</main>
+<script type="module" src="game/main.js"></script>
+</body>
+</html>

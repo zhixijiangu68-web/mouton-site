@@ -45,6 +45,7 @@
 - `src/_includes/`: 共通部分（head、ナビ、記事の末尾、フッター）
 - `site.css` / `site.js` / `home.css` / `home.js` / `article-base.css` / `reading.css` / `article-share.js`: デザインと動き（これらは直接編集してよい）
 - 詳しい書き方は README.md の「記事を追加する」
+- `count/`・`leap/`: ゲーム（MOUTON・COUNT、MOUTON・LEAP）のブラウザ版。Eleventy の生成物ではなく、そのまま置いたファイル（noindex・サイトのメニューからはリンクしない・`npm test` のページ検査の対象外）。LEAP（スワイプとタップだけで遊ぶ3レーンのランナー）のルールの検査は `tests/leap-core.test.mjs`、操作のブラウザテストは `tests/browser-smoke.mjs`、アイコンと OG 画像は `cd scripts/og && npm install && node leap-images.mjs`
 - `src/en/`: 英語版（`moutonarchive.com/en/`）。`src/en/articles/<ファイル名>.html` は日本語の記事と同じファイル名にする（hreflang と言語の切り替えが自動で付く）。英語版にはアフィリエイトのボタンと PR 表示を出さない（日本のお店のため。`productCard` はボタンなしのカードになる）。まだ訳していない記事へのリンクは、自動で日本語版に向く
 
 ## 記事を追加するとき
