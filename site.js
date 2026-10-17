@@ -343,8 +343,14 @@ document.addEventListener('click',e=>{
   transport_type:'beacon'
  });
 });
-// 哲学の有料記事：どこで流れが細くなっているかを見るための計測（無料の記事 → 販売ページ → 冒頭を読み終える → note の購入ボタン）。
-// 購入そのものは note の売上で確かめる。クリックを購入と数えない。メールアドレスや書いた文字は送らない。
+// トップの入口：どのボタンから入ったかを数える（2026-10-17。出して、測って、直すため）。どのボタンかだけを送る。
+document.addEventListener('click',e=>{
+ const a=e.target.closest&&e.target.closest('a[data-home-entry]');
+ if(!a||typeof window.gtag!=='function')return;
+ window.gtag('event','home_entry_click',{entry:a.dataset.homeEntry,transport_type:'beacon'});
+});
+// 哲学の有料記事：どこで流れが細くなっているかを見るための計測（無料の記事 → 販売ページ → 冒頭を読み終える → 購入ボタン）。
+// 購入そのものは Stripe の売上で確かめる。クリックを購入と数えない。メールアドレスや書いた文字は送らない。
 (()=>{
  const send=(name,params)=>{if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({transport_type:'beacon'},params));};
  const page=(location.pathname.replace(/^.*\//,'').replace(/\.html$/,''))||'index';

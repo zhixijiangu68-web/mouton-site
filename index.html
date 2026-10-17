@@ -33,12 +33,12 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css?v=20261017-entry">
+<link rel="stylesheet" href="site.css?v=20261017-measure">
 <link rel="stylesheet" href="home.css?v=20261017-entry">
 <link rel="stylesheet" href="home-static-background.css?v=20261016-gold-1">
 <link rel="stylesheet" href="intro-art.css?v=20261016-gold-1">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js?v=20261017-entry" defer></script>
+<script src="site.js?v=20261017-measure" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"ムートン","description":"MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。","inLanguage":"ja","url":"https://moutonarchive.com/"},{"@type":"Person","name":"ムートン","description":"興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。","sameAs":["https://x.com/kodoku__alone"]}]}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
@@ -78,9 +78,9 @@
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       <h1 class="cover-title cover-title--choice">哲学を、<br>読む<wbr>ものから<wbr>使う<wbr>ものへ。</h1>
       <p class="cover-lede cover-lede--choice">決められない。人の目が気になる。続けられない。<br>そんな日々に、自分で考え、試すための道具を。</p>
-      <p class="cover-actions"><a class="cover-btn cover-btn--primary" href="topic-philosophy.html">いまの悩みから選ぶ <span aria-hidden="true">→</span></a><a class="cover-btn cover-btn--ghost" href="journal.html">無料の記事を読む</a></p>
+      <p class="cover-actions"><a class="cover-btn cover-btn--primary" href="topic-philosophy.html" data-home-entry="worry">いまの悩みから選ぶ <span aria-hidden="true">→</span></a><a class="cover-btn cover-btn--ghost" href="journal.html" data-home-entry="free">無料の記事を読む</a></p>
       <nav class="cover-choice-grid cover-themes" aria-label="テーマ">
-        <a class="cover-choice-card cover-choice-card--main" id="think" href="topic-philosophy.html">
+        <a class="cover-choice-card cover-choice-card--main" id="think" href="topic-philosophy.html" data-home-entry="philosophy">
           <span class="cover-choice-content">
             <span class="cover-choice-number">01 / Philosophy</span>
             <strong class="cover-choice-title">考え方から。</strong>
@@ -89,14 +89,14 @@
           </span>
         </a>
         <p class="cover-themes-bridge">考え方から、日々の暮らしへ</p>
-        <a class="cover-choice-card cover-choice-card--sub" id="body" href="topic-body.html">
+        <a class="cover-choice-card cover-choice-card--sub" id="body" href="topic-body.html" data-home-entry="body">
           <span class="cover-choice-content">
             <span class="cover-choice-number">02 / Body</span>
             <strong class="cover-choice-title">身体</strong>
             <span class="cover-choice-description">睡眠・体力・外見</span>
           </span>
         </a>
-        <a class="cover-choice-card cover-choice-card--sub" id="food" href="topic-food.html">
+        <a class="cover-choice-card cover-choice-card--sub" id="food" href="topic-food.html" data-home-entry="food">
           <span class="cover-choice-content">
             <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
             <strong class="cover-choice-title">食事・化学</strong>
@@ -104,7 +104,7 @@
           </span>
         </a>
       </nav>
-      <a class="cover-app" href="making-diary.html"><span class="cover-app-kind">APP / 試作中</span><span class="cover-app-name">DIARY</span><span class="cover-app-text">考えたことを、日々に残す道具</span></a>
+      <a class="cover-app" href="making-diary.html" data-home-entry="app"><span class="cover-app-kind">APP / 試作中</span><span class="cover-app-name">DIARY</span><span class="cover-app-text">考えたことを、日々に残す道具</span></a>
     </div>
   </section>
 </main>
@@ -123,7 +123,7 @@
 </div>
 </footer>
 
-<script src="home.js?v=20261017-entry" defer></script>
+<script src="home.js?v=20261017-measure" defer></script>
 <script>
 'use strict';
 const articleRoutes={"article-self-image":"self-image.html","article-hill":"hill.html","article-nietzsche":"nietzsche.html","article-trampoline":"trampoline.html","article-stamina":"stamina.html"};
