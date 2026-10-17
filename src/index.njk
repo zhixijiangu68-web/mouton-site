@@ -4,7 +4,7 @@ permalink: index.html
 title: "ムートン — Philosophy of Life"
 description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。"
 bodyClass: site
-assetVersion: "20261017-entry"
+assetVersion: "20261017-measure"
 extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
 ---
 {#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
@@ -30,9 +30,9 @@ extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-g
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       <h1 class="cover-title cover-title--choice">哲学を、<br>読むものから使うものへ。</h1>
       <p class="cover-lede cover-lede--choice">決められない。人の目が気になる。続けられない。<br>そんな日々に、自分で考え、試すための道具を。</p>
-      <p class="cover-actions"><a class="cover-btn cover-btn--primary" href="topic-philosophy.html">いまの悩みから選ぶ <span aria-hidden="true">→</span></a><a class="cover-btn cover-btn--ghost" href="journal.html">無料の記事を読む</a></p>
+      <p class="cover-actions"><a class="cover-btn cover-btn--primary" href="topic-philosophy.html" data-home-entry="worry">いまの悩みから選ぶ <span aria-hidden="true">→</span></a><a class="cover-btn cover-btn--ghost" href="journal.html" data-home-entry="free">無料の記事を読む</a></p>
       <nav class="cover-choice-grid cover-themes" aria-label="テーマ">
-        <a class="cover-choice-card cover-choice-card--main" id="think" href="topic-philosophy.html">
+        <a class="cover-choice-card cover-choice-card--main" id="think" href="topic-philosophy.html" data-home-entry="philosophy">
           <span class="cover-choice-content">
             <span class="cover-choice-number">01 / Philosophy</span>
             <strong class="cover-choice-title">考え方から。</strong>
@@ -41,14 +41,14 @@ extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-g
           </span>
         </a>
         <p class="cover-themes-bridge">考え方から、日々の暮らしへ</p>
-        <a class="cover-choice-card cover-choice-card--sub" id="body" href="topic-body.html">
+        <a class="cover-choice-card cover-choice-card--sub" id="body" href="topic-body.html" data-home-entry="body">
           <span class="cover-choice-content">
             <span class="cover-choice-number">02 / Body</span>
             <strong class="cover-choice-title">身体</strong>
             <span class="cover-choice-description">睡眠・体力・外見</span>
           </span>
         </a>
-        <a class="cover-choice-card cover-choice-card--sub" id="food" href="topic-food.html">
+        <a class="cover-choice-card cover-choice-card--sub" id="food" href="topic-food.html" data-home-entry="food">
           <span class="cover-choice-content">
             <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
             <strong class="cover-choice-title">食事・化学</strong>
@@ -56,7 +56,7 @@ extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-g
           </span>
         </a>
       </nav>
-      <a class="cover-app" href="making-diary.html"><span class="cover-app-kind">APP / 試作中</span><span class="cover-app-name">DIARY</span><span class="cover-app-text">考えたことを、日々に残す道具</span></a>
+      <a class="cover-app" href="making-diary.html" data-home-entry="app"><span class="cover-app-kind">APP / 試作中</span><span class="cover-app-name">DIARY</span><span class="cover-app-text">考えたことを、日々に残す道具</span></a>
     </div>
   </section>
 
