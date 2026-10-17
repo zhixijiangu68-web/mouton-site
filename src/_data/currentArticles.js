@@ -9,4 +9,6 @@ export default [
   'kierkegaard', 'nietzsche', 'spinoza',
   'stoicism', 'camus-sisyphus', 'sartre',
   'absorption-freedom-action',
+  // 単品の有料記事（2026-10-17）。販売ページなのでアーカイブの注記を出さない。哲学の3本の並びには入らない（paid.standalone）。
+  'paid-dependence',
 ];
