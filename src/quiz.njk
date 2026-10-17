@@ -9,6 +9,7 @@ description: "日焼け止め、睡眠、コーヒー、口臭、転職、哲学
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-body" data-nav="dark"{% bgImage "images/cover-body.jpg" %}></div>
 <main class="doc quiz-page" data-nav="light" data-nav-solid="light">
+{% include "partials/archive-hub.njk" %}
   <p class="eyebrow">Quiz</p>
   <h1 class="doc-title">○×クイズ10問</h1>
   <p>ムートンの記事に書いた研究や事実から、10問をランダムに出します。全{{ quizzes.length }}問の中から、まだ解いていない問題を優先して出すので、何度でも違う問題が出ます。</p>

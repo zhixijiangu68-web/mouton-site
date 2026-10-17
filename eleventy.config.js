@@ -106,7 +106,7 @@ export default function (eleventyConfig) {
   // アーカイブに移した記事の上に出す注記。本文はそのまま残し、いまの入口（記事・哲学の3本）を示す。
   eleventyConfig.addFilter('archiveNote', (html, on) => on ? html.replace(/<article\b[^>]*>/, m => m
     + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
-    + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。読んだあとに書いて試す記事は<a href="journal.html">記事</a>に、哲学の3本は<a href="topic-philosophy.html">こちら</a>にあります。</p></aside>') : html);
+    + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。</p></aside>') : html);
   // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
   eleventyConfig.addFilter('paidCards', items =>
     items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
