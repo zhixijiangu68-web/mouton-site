@@ -1,9 +1,9 @@
 {% include "partials/series-box.njk" %}
-<p class="read-mark" data-total="{{ collections.articles.length }}" aria-live="polite"></p>
+<p class="read-mark" data-total="{{ collections.current.length }}" aria-live="polite"></p>
 {#- 販売ページ（paid）には出さない：買うかどうか考えている人を、別の記事へ連れて行かないため。
     哲学の記事では、3人の哲学者の入門記事の問題を優先する（答えから入門記事へ、入門記事の最後から有料記事へ進める）。
     それ以外の記事は、関連記事と「選び方」の問題を優先する。 -#}
-{%- if quizzes.length and not noQuiz and not paid %}
+{%- if quizzes.length and not noQuiz and not paid and archived %}
 {%- set qPrefer = [] %}
 {%- for s in related or [] %}{% set qPrefer = (qPrefer.push(s), qPrefer) %}{% endfor %}
 {%- if category == 'philosophy' %}{% for a in collections.articles | paidCards %}{% if a.data.paid.free %}{% set qPrefer = (qPrefer.push(a.data.paid.free), qPrefer) %}{% endif %}{% endfor %}

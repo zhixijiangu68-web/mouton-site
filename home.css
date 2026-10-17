@@ -716,7 +716,7 @@ body.journal-page main{padding-top:72px}
 .home-cycle-close{margin:clamp(32px,5vw,48px) 0 0;font-family:var(--serif);font-size:clamp(.95rem,1.4vw,1.125rem);line-height:2;color:#fbf7ee}
 .home-cycle-facts{margin:clamp(28px,4vw,40px) 0 0;padding:clamp(16px,2vw,22px) 0 0;border-top:1px solid rgba(230,201,138,.22);display:grid;gap:10px}
 .home-cycle-facts div{display:grid;grid-template-columns:7.5em 1fr;gap:12px;font-size:.8125rem;line-height:1.8}
-.home-cycle-facts dt{color:#e6c98a;letter-spacing:.08em}
+.home-cycle-facts dt{color:#e6c98a;letter-spacing:.08em;white-space:nowrap}
 .home-cycle-facts dd{margin:0;color:rgba(235,229,214,.9)}
 .home-cycle-facts a{color:#fbf7ee;text-underline-offset:3px;display:inline-block;min-height:24px}
 @media(max-width:800px){
@@ -727,5 +727,10 @@ body.journal-page main{padding-top:72px}
 @media(max-width:600px){
  .cover-choice--cycle .cover-actions{flex-wrap:nowrap}
  .cover-choice--cycle .cover-actions .cover-btn--ghost{flex:0 1 auto}
- .home-cycle-facts div{grid-template-columns:6.5em 1fr}
+ .home-cycle-facts div{grid-template-columns:7.2em 1fr;gap:8px}
 }
+.home-cycle-quote{margin:clamp(36px,5vw,56px) 0 0;padding:0 0 0 clamp(16px,2vw,24px);border-left:2px solid rgba(230,201,138,.7)}
+.home-cycle-quote p{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(1.15rem,2.2vw,1.6rem);line-height:1.9;letter-spacing:.04em;color:#fbf7ee}
+.home-cycle-quote+.home-cycle-close{margin-top:22px}
+.home-cycle-close+.home-cycle-close{margin-top:14px}
+@media(max-width:600px){.home-cycle-quote p{font-size:1.05rem;letter-spacing:.02em}}

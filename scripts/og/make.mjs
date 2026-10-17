@@ -20,6 +20,8 @@ const sets = [
 
 // Japanese articles without their own {% quiz %} use the first question from the quiz bank.
 const bank = JSON.parse(readFileSync(join(root, 'src', '_data', 'quizzes.json'), 'utf8'));
+// いまの中心に置く日本語の記事には、ページに○×クイズを出さない（2026-10-17）。シェア用の画像も見出しのカードにする。
+const current = (await import(pathToFileURL(join(root, 'src', '_data', 'currentArticles.js')).href)).default;
 const bankEn = JSON.parse(readFileSync(join(root, 'src', '_data', 'quizzesEn.json'), 'utf8'));
 const bankQuiz = (slug, en) => (en ? bankEn : bank).find(q => q.slug === slug)?.q;
 
@@ -41,7 +43,7 @@ for (const file of readdirSync(srcDir).filter(f => f.endsWith('.html'))) {
   const built = readFileSync(join(builtDir, file), 'utf8');
   const h1 = built.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? headline;
   const quiz = src.match(/\{% quiz "((?:[^"\\]|\\.)*)"/)?.[1]?.replace(/\\"/g, '"')
-    ?? bankQuiz(file.replace(/\.html$/, ''), brand !== 'ムートン');
+    ?? (brand === 'ムートン' && current.includes(file.replace(/\.html$/, '')) ? undefined : bankQuiz(file.replace(/\.html$/, ''), brand !== 'ムートン'));
   const face = src.match(/^face: "(.*)"$/m)?.[1];
   const faceUrl = face ? pathToFileURL(join(root, face)).href : '';
   await page.evaluate(d => window.render(d), quiz

@@ -9,6 +9,7 @@ export default [
     en: 'Asking the philosophers',
     intro: 'ストア派、キルケゴール、ニーチェ、スピノザ、カミュ、サルトル。2000年分の哲学者に、いまの悩みを持っていって聞いてみる連載です。',
     enIntro: 'The Stoics, Nietzsche, Camus, Sartre. Taking today\'s worries to two thousand years of philosophers.',
-    slugs: ['stoicism', 'kierkegaard', 'nietzsche', 'spinoza', 'camus-sisyphus', 'sartre', 'books-philosophy'],
+    // 2026-10-17：本の記事（books-philosophy）はアーカイブに移したので外した。
+    slugs: ['stoicism', 'kierkegaard', 'nietzsche', 'spinoza', 'camus-sisyphus', 'sartre'],
   },
 ];
