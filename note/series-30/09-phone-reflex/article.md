@@ -76,11 +76,11 @@
 
 2. Ward, A. F., Duke, K., Gneezy, A., & Bos, M. W. (2017). Brain drain: The mere presence of one's own smartphone reduces available cognitive capacity. Journal of the Association for Consumer Research, 2(2), 140–154. DOI: 10.1086/691462
 
-3. Ruiz Pardo & Minda (2022). Acta Psychologica, 230.（Ward ほか 2017 の第2実験を、事前に計画を登録して行った直接追試）
+3. Ruiz Pardo & Minda (2022). Acta Psychologica, 230, 103717. DOI: 10.1016/j.actpsy.2022.103717（Ward ほか 2017 の第2実験を、事前に計画を登録して行った直接追試）
 
-4. Böttger, Poschik, & Zierer (2023). Does the brain drain effect really exist? A meta-analysis. Behavioral Sciences, 13(9), 751. DOI: 10.3390/bs13090751
+4. Böttger, T., Poschik, M., & Zierer, K. (2023). Does the brain drain effect really exist? A meta-analysis. Behavioral Sciences, 13(9), 751. DOI: 10.3390/bs13090751
 
-5. Grüning, Riedel, & Lorenz-Spreen (2023). Directing smartphone use through the self-nudge app one sec. Proceedings of the National Academy of Sciences, 120(8).
+5. Grüning, D. J., Riedel, F., & Lorenz-Spreen, P. (2023). Directing smartphone use through the self-nudge app one sec. Proceedings of the National Academy of Sciences, 120(8), e2213114120. DOI: 10.1073/pnas.2213114120
 
 ---
 
