@@ -10,6 +10,8 @@ export const GOALS = {
   count: { label: '数えた羊', text: n => `羊を${n}匹数える`, unit: '匹' },
   blacks: { label: '帰した黒い羊', text: n => `黒い羊を${n}匹帰す`, unit: '匹' },
   chain: { label: 'れんさ', text: n => `${n}れんさを起こす`, unit: 'れんさ' },
+  // The story's long, calm nights: put flocks down without the field overflowing.
+  place: { label: '置いた群れ', text: n => `あふれずに、群れを${n}個置く`, unit: '個' },
 };
 
 // board: rows of the field from the top of the preset down to the ground.
@@ -65,7 +67,7 @@ export function questGame(q) {
 }
 
 export function progress(q, game) {
-  const value = { rows: game.rows, count: game.count, blacks: game.blacks, chain: game.best }[q.goal];
+  const value = { rows: game.rows, count: game.count, blacks: game.blacks, chain: game.best, place: game.placed }[q.goal];
   return { value, target: q.target, done: value >= q.target };
 }
 

@@ -58,10 +58,12 @@
       <button type="button" class="link sheet-back" data-menu-back><span aria-hidden="true">←</span> タイトル</button>
       <h2 id="menu-h">メニュー</h2>
       <div class="menu-list">
-        <button type="button" class="menu-item" data-quests><span class="menu-name">クエスト</span><small>目標のある15の夜</small></button>
+        <button type="button" class="menu-item" data-quests><span class="menu-name">ものがたり・クエスト</span><small>ものがたり50夜と、目標のある15の夜</small></button>
         <button type="button" class="menu-item" data-shop><span class="menu-name">着せかえ</span><span class="wool-pill">ウール <b data-wool-balance>0</b></span></button>
         <button type="button" class="menu-item" data-record><span class="menu-name">記録</span><small>ランク・ランキング・月のカレンダー・実績</small></button>
         <button type="button" class="menu-item" data-howto><span class="menu-name">遊び方</span><small>ルール・操作・アイテム</small></button>
+        <button type="button" class="menu-item" data-purchases hidden><span class="menu-name">夜をとばす・広告なし</span><small>買い切り。買わなくても、最後まで遊べます</small></button>
+        <button type="button" class="menu-item" data-transfer><span class="menu-name">引き継ぎ</span><small>記録を、別のスマホへ</small></button>
       </div>
       <div class="toggles" role="group" aria-label="音の設定">
         <button type="button" class="toggle" data-setting="music" aria-pressed="true">音楽 オン</button>
@@ -135,8 +137,8 @@
 
     <section class="sheet sheet-list" data-sheet="quests" hidden aria-labelledby="quests-h">
       <button type="button" class="link sheet-back" data-quests-back><span aria-hidden="true">←</span> メニュー</button>
-      <h2 id="quests-h">クエスト</h2>
-      <p class="shop-lead">夜ごとに目標がひとつ。限られた群れで達成しよう。</p>
+      <h2 id="quests-h">ものがたり・クエスト</h2>
+      <p class="shop-lead">ものがたりは、50の夜。そのあとに、夜ごとに目標がひとつの15のクエストがあります。</p>
       <div class="story-card" data-story-card>
         <p class="eyebrow">ものがたり</p>
         <p class="story-card-text" data-story-card-text></p>
@@ -147,6 +149,7 @@
         <p class="story-card-found" data-story-card-found hidden></p>
         <button type="button" class="link" data-story-card-reset hidden>はじめからにする</button>
         <button type="button" class="link" data-story-about-open>このものがたりについて</button>
+        <button type="button" class="link" data-purchases-open hidden>夜をとばす・広告なし</button>
       </div>
       <p class="quest-total" data-quest-total></p>
       <div class="quests" data-quest-list></div>
@@ -166,6 +169,8 @@
         <button type="button" class="btn btn-main" data-qi-start>はじめる</button>
         <button type="button" class="btn" data-qi-continue hidden>つづきから</button>
       </div>
+      <button type="button" class="link" data-qi-skip hidden>この夜をとばす</button>
+      <button type="button" class="link" data-qi-skip-buy hidden>夜をとばす（購入）</button>
     </section>
 
     <section class="sheet" data-sheet="qclear" hidden aria-labelledby="qc-h">
@@ -182,6 +187,36 @@
         <button type="button" class="btn" data-qc-again>もう一度</button>
       </div>
       <button type="button" class="link" data-qc-list>クエスト一覧</button>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="purchases" hidden aria-labelledby="pu-h">
+      <button type="button" class="link sheet-back" data-purchases-back><span aria-hidden="true">←</span> もどる</button>
+      <h2 id="pu-h">夜をとばす・広告なし</h2>
+      <p class="shop-lead" data-purchases-free></p>
+      <p class="rec-note" data-purchases-test hidden>これは試用の画面です。お金はかかりません。</p>
+      <div class="wares" data-wares></div>
+      <button type="button" class="link" data-purchases-restore>購入を復元する</button>
+      <p class="rec-note" data-purchases-msg role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="sheet sheet-list" data-sheet="transfer" hidden aria-labelledby="tr-h">
+      <button type="button" class="link sheet-back" data-transfer-back><span aria-hidden="true">←</span> メニュー</button>
+      <h2 id="tr-h">引き継ぎ</h2>
+      <p class="shop-lead">いまの記録（ものがたり・ウール・記録）を、コード1つにまとめます。新しいスマホで「コードを読み込む」と、続きから遊べます。購入したものはコードに入りません（「購入を復元する」で戻ります）。</p>
+      <div class="actions">
+        <button type="button" class="btn btn-main" data-transfer-copy>コードをコピー</button>
+        <button type="button" class="btn" data-transfer-read>コードを読み込む</button>
+      </div>
+      <div class="paste" data-transfer-paste hidden>
+        <textarea data-transfer-text rows="4" spellcheck="false" autocomplete="off" aria-label="引き継ぎコード" placeholder="ここにコードを貼り付ける"></textarea>
+        <button type="button" class="btn" data-transfer-go>このコードを調べる</button>
+      </div>
+      <div class="transfer-confirm" data-transfer-confirm hidden>
+        <p data-transfer-summary></p>
+        <button type="button" class="btn btn-main" data-transfer-apply>いまの記録を置きかえる</button>
+        <button type="button" class="link" data-transfer-cancel>やめる</button>
+      </div>
+      <p class="rec-note" data-transfer-msg role="status" aria-live="polite"></p>
     </section>
 
     <section class="sheet" data-sheet="story" hidden aria-labelledby="story-h">

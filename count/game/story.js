@@ -2,10 +2,12 @@
 // main.js shows it and tests/story.test.mjs checks it. The long version of the
 // reasoning is in docs/story-bible.md.
 //
-// "I" is the player's sheep and "you" is the player. The story rides on the
-// fifteen quest nights and is optional: the player starts it from the quest
-// list. Each night has a few lines before and after; after some nights the
-// sheep asks one question (two or three answers, never more, never typed).
+// "I" is the player's sheep and "you" is the player. The story has its own
+// fifty nights (storynights.js, about four hours in all) and is optional: the
+// player starts it from the quest list. Scenes sit on nights 1, 5 and 10 of
+// each act (fifteen "beats"); the nights between have a short line. After ten
+// of the beats the sheep asks one question (two or three answers, never more,
+// never typed).
 // Five acts follow MOUTON's "変わる順番" (BRAND.md of mouton-site): who you
 // want to be, what you believe, thoughts and feelings as tools, subtracting,
 // results that arrive late.
@@ -22,8 +24,13 @@
 // Words follow BRAND.md: no orders, no "right way", no promises about health,
 // nothing that blames the player (tests/story.test.mjs checks every line).
 
-export const VERSION = 2;
-export const LAST_NIGHT = 15;
+export const VERSION = 3;
+export const LAST_NIGHT = 50;               // the story's nights (a saved night is one of these)
+export const BEATS = 15;                    // the scenes: three in each of the five acts
+// Beat k (1 to 15) falls on this night: nights 1, 5, 10 of act one, 11, 15, 20 of act two, ...
+export const beatNight = k => 10 * Math.floor((k - 1) / 3) + [1, 5, 10][(k - 1) % 3];
+const BEAT_AT = Object.fromEntries(Array.from({ length: BEATS }, (_, i) => [beatNight(i + 1), i + 1]));
+export const beatOf = night => BEAT_AT[night] || 0;
 const HISTORY_MAX = 5;
 
 // ---- what the player is asked ------------------------------------------------
@@ -119,8 +126,9 @@ export const QUESTIONS = {
   },
 };
 
-// After which night each question is asked.
+// After which beat each question is asked.
 export const ASK_AFTER = { 2: 'core', 3: 'curio', 5: 'creed', 6: 'talk', 8: 'sort', 9: 'alarm', 11: 'stop', 12: 'step', 14: 'wait', 15: 'who' };
+export const askAfter = night => ASK_AFTER[beatOf(night)] || null;
 
 export const WORD = {
   prompt: ['霧が見えます。あなたの頭のなかの、霧です。', 'いま、いちばん近いのは。'],
@@ -170,7 +178,7 @@ export const NIGHTS = {
     after: () => ['1列そろうと、私は柵を跳びました。', '跳ぶと、不思議と、考えごとが静かになります。あなたは、どうでしたか。'] },
   2: { before: () => ['あなたのことを、少し聞かせてください。数えながらで構いません。'],
     after: s => ['静かな時間は、長くは続きません。', `ふと、${worryPhrase(s)}のことを、思い出しませんか。`] },
-  3: { before: () => ['20匹。柵の板に、文字が彫ってあることに気づきました。'],
+  3: { before: () => ['柵の板に、文字が彫ってあることに気づきました。'],
     after: () => ['数えても、霧は晴れませんでした。', 'それでも、数えているあいだは、息がしやすかったです。'] },
   4: { before: () => ['第二幕　信念', '列がそろっても、残る羊がいます。黒い羊。', '私は、あの子たちが、少し苦手です。'],
     after: (s, way) => pick(WAY_4, way) },
@@ -178,27 +186,66 @@ export const NIGHTS = {
     after: () => ['ひとつ跳んだら、続けて跳びました。', 'きっかけは、小さくてもよかったのですね。'] },
   6: { before: s => ['夜は、まだ半分も過ぎていません。', '黒い羊のことが、頭から離れません。',
     ...(optionOf('creed', s.answers.creed) ? [`あなたは、「${optionOf('creed', s.answers.creed).label}」と書きました。`] : [])],
-    after: () => ['30匹。黒い羊の一匹が、私のそばに来ました。', '何か、言いたそうです。'] },
+    after: () => ['黒い羊の一匹が、私のそばに来ました。', '何か、言いたそうです。'] },
   7: { before: s => ['第三幕　道具', '黒い羊は、一匹では終わりませんでした。',
     ...(s.answers.talk === 'listen' ? ['あの子の声が、まだ耳に残っています。'] : s.answers.talk === 'name' ? ['名前をつけた子の姿が、まだ目に残っています。'] : s.answers.talk === 'distance' ? ['遠くへ行った子のことが、少し気になっています。'] : [])],
     after: (s, way) => pick(WAY_7, way) },
   8: { before: () => ['手を動かしているあいだ、考えごとは静かになります。', '静かになるだけで、消えたわけではありません。'],
-    after: () => ['4列。霧は、まだそこにあります。'] },
+    after: () => ['霧は、まだそこにあります。'] },
   9: { before: () => ['ときどき、あなたではない誰かの声が、遠くから聞こえます。', '柵の向こうからでしょうか。', '白い羊のあいだに、黒い羊がまじっています。いつから、いたのでしょう。'],
-    after: () => ['50匹。胸のあたりが、ざわざわします。'] },
+    after: () => ['胸のあたりが、ざわざわします。'] },
   10: { before: s => ['第四幕　引き算', '積もったものが、高く見える夜があります。',
     ...(s.answers.alarm === 'danger' ? ['胸のざわつきは、守ろうとする合図だと、あなたは言いました。'] : s.answers.alarm === 'ready' ? ['胸のざわつきは、準備の合図かもしれないと、あなたは言いました。'] : [])],
     after: () => ['高く見えたのは、積んだ羊のせいでしょうか。見ている目のせいでしょうか。'] },
   11: { before: () => ['黒い羊が、三匹。ここまで、いろいろな帰し方をしてきましたね。'],
     after: () => ['三匹。夜の半分は、もう過ぎました。'] },
-  12: { before: () => ['60匹。夜は、いちばん深いところを通ります。'],
+  12: { before: () => ['夜は、いちばん深いところを通ります。'],
     after: () => ['深い夜を、数えて抜けました。', '霧の向こうに、うすく空が見えます。'] },
-  13: { before: () => ['第五幕　遅れてくるもの', '6列。そろえ続けた手は、もう覚えています。', '明日の一歩を、決めましたね。'],
+  13: { before: () => ['第五幕　遅れてくるもの', 'そろえ続けた手は、もう覚えています。', '明日の一歩を、決めましたね。'],
     after: () => ['霧は、さっきより薄いです。消えたわけではありません。'] },
   14: { before: () => ['黒い羊が、群れで来ました。'],
     after: (s, way) => pick(WAY_14, way) },
   15: { before: () => ['最後の夜です。160匹で、朝になります。'],
-    after: () => ['160匹。数えきりました。', '空が、白んでいきます。'] },
+    after: () => ['夜を、数えきりました。', '空が、白んでいきます。'] },
+};
+
+// The nights between the scenes: a line before and/or after. Rest nights (7, 17, 27, 37, 47) say so.
+export const INTERLUDES = {
+  2: { after: ['羊が、また一匹、柵を跳びました。数えるほど、夜は静かになります。'] },
+  3: { after: ['あなたは、数えるのが、上手ですね。……そう言われると、困りますか。'] },
+  4: { after: ['柵は、いつも同じ場所に立っています。跳ぶ私が、毎回、違うだけです。'] },
+  6: { after: ['星が、ひとつ、増えた気がします。気のせいでしょうか。'] },
+  7: { before: ['今夜は、休みの夜です。急がなくて、大丈夫です。'], after: ['休むのも、夜の仕事です。'] },
+  8: { after: ['柵の板の文字が、少しだけ、読みやすくなった気がします。'] },
+  9: { after: ['長い列でした。ここまで来たことも、ひとつ、数えられそうです。'] },
+  12: { after: ['霧が、少し濃くなりました。見えないものがあると、足を止めたくなります。'] },
+  13: { after: ['「私は、こういう人間だ」。そう決めると、楽になることも、窮屈になることもあるようです。'] },
+  14: { after: ['やり方で書いた言葉は、結果が出なくても、残ります。'] },
+  16: { after: ['遠くから、誰かの声が、聞こえた気がします。あなたの声に、似ているような。'] },
+  17: { before: ['休みの夜です。黒い羊も、今夜は、のんびりしています。'], after: ['静かな夜も、ちゃんと夜です。'] },
+  18: { after: ['名前のないものに、名前をつけると、少しだけ、扱いやすくなります。'] },
+  19: { after: ['黒い羊は、増えたのではなく、見えるようになったのかもしれません。'] },
+  22: { before: ['考えも、気持ちも、道具のように持てたらいいのに、と私は思います。'], after: ['道具は、使い方を選べます。気持ちも、少しだけ。'] },
+  23: { after: ['変えられることと、変えられないこと。どちらも、あなたの夜のものです。'] },
+  24: { after: ['黒い羊は、誰かを困らせたいわけではないようです。'] },
+  26: { after: ['胸のざわつきは、まだそこにあります。いなくならなくても、一緒に数えられます。'] },
+  27: { before: ['休みの夜です。ざわつきも、今夜は、小さめです。'], after: ['小さな静けさを、ひとつ、拾いました。'] },
+  28: { after: ['遠くの声が、さっきより、近くなりました。誰の声でしょう。'] },
+  29: { after: ['深くなる夜は、こわいだけではありません。星が、よく見えます。'] },
+  32: { before: ['足すことは得意でも、引くことは、少し苦手です。'], after: ['ひとつ引くと、風通しがよくなります。'] },
+  33: { after: ['やめることは、あきらめることとは、少し違います。'] },
+  34: { after: ['手放したものは、どこへ行くのでしょう。柵の向こうでしょうか。'] },
+  36: { after: ['高く見えたものも、近づくと、ただの柵でした。ときどき、ですが。'] },
+  37: { before: ['休みの夜です。何も足さず、何も引かない夜。'], after: ['何もしない時間も、あなたの時間です。'] },
+  38: { after: ['小さな一歩の話を、していましたね。私の一歩は、跳ぶことです。'] },
+  39: { after: ['深い夜でした。それでも、数えきりました。'] },
+  42: { before: ['変化は、いつも少し遅れて、やってきます。'], after: ['遅れてきたものに、気づく夜があります。'] },
+  43: { after: ['見えない変化も、積もっています。柵の下の、小さな土のように。'] },
+  44: { after: ['黒い羊の群れが、少し違って見えます。数が減ったのではなく、私の見方が。'] },
+  46: { after: ['変わらない夜に見えても、数えた夜は、ちゃんと増えています。'] },
+  47: { before: ['最後のひとつ前の、休みの夜です。'], after: ['ここまで、一緒に来てくれて、ありがとうございます。'] },
+  48: { after: ['空の色が、ほんの少し、変わった気がします。'] },
+  49: { before: ['あと一夜です。'], after: ['柵が、さっきより、低く見えます。……私が、大きくなったのかもしれません。'] },
 };
 
 export const DAWN = ['答え合わせを、しましょうか。', 'この夜を終わらせるのは、あなたです。'];
@@ -324,7 +371,7 @@ export const endingTitle = id => (ENDING[id] ? ENDING[id].title : '');
 // ---- state --------------------------------------------------------------------
 
 export function fresh() {
-  return { v: VERSION, status: 'idle', night: 1, pending: null, worry: null, answers: {}, homed: 0, walked: 0, dogged: 0, started: '', ended: '', ending: null, seen: [], history: [] };
+  return { v: VERSION, status: 'idle', night: 1, pending: null, worry: null, answers: {}, homed: 0, walked: 0, dogged: 0, played: 0, skipped: 0, started: '', ended: '', ending: null, seen: [], history: [] };
 }
 
 const num = n => (Number.isFinite(n) && n > 0 ? Math.floor(n) : 0);
@@ -348,13 +395,15 @@ export function normalize(raw) {
   s.worry = WORRIES[raw.worry] ? raw.worry : null;
   s.answers = cleanAnswers(raw.answers);
   s.homed = num(raw.homed); s.walked = num(raw.walked); s.dogged = num(raw.dogged);
+  s.played = num(raw.played); s.skipped = Math.min(LAST_NIGHT, num(raw.skipped));
   s.started = str(raw.started); s.ended = str(raw.ended);
   s.ending = ENDING[raw.ending] ? raw.ending : null;
   s.seen = Array.isArray(raw.seen) ? [...new Set(raw.seen.filter(id => ENDING[id]))] : [];
   if (Array.isArray(raw.history)) {
     s.history = raw.history.slice(0, HISTORY_MAX).map(h => ({
       started: str(h?.started), ended: str(h?.ended), worry: WORRIES[h?.worry] ? h.worry : null, answers: cleanAnswers(h?.answers),
-      homed: num(h?.homed), walked: num(h?.walked), dogged: num(h?.dogged), ending: ENDING[h?.ending] ? h.ending : null,
+      homed: num(h?.homed), walked: num(h?.walked), dogged: num(h?.dogged), played: num(h?.played), skipped: Math.min(LAST_NIGHT, num(h?.skipped)),
+      ending: ENDING[h?.ending] ? h.ending : null,
     }));
   }
   if (s.status === 'ended' && !s.ending) s.status = 'idle';
@@ -385,24 +434,47 @@ export function way({ homed = 0, walked = 0, dogged = 0 }) {
   return top === homed ? 'home' : top === walked ? 'walk' : 'dog';
 }
 
-// What to show before a night, or null (story off, not this night, or waiting on a choice).
+// What to show before a night (a list of lines, maybe empty), or null (story off,
+// not this night, or waiting on an answer).
 export function before(s, night) {
-  if (!isActive(s) || s.pending || s.night !== night || !NIGHTS[night]) return null;
-  return NIGHTS[night].before(s);
+  if (!isActive(s) || s.pending || s.night !== night || night < 1 || night > LAST_NIGHT) return null;
+  const beat = beatOf(night);
+  if (beat) return NIGHTS[beat].before(s);
+  return (INTERLUDES[night] && INTERLUDES[night].before) || [];
 }
 
 // A night was cleared. c: that night's black sheep { homed, walked, dogged }.
 // Returns the new state, the lines for the clear screen, and what waits next:
-// 'ask:<question>' or 'dawn' (or null).
+// 'ask:<question>' (after most of the scenes) or 'dawn' (or null).
 export function afterNight(s, night, c = {}) {
   const none = { state: s, after: [], pending: null };
-  if (!isActive(s) || s.pending || s.night !== night || !NIGHTS[night]) return none;
+  if (!isActive(s) || s.pending || s.night !== night || night < 1 || night > LAST_NIGHT) return none;
   const counts = { homed: num(c.homed), walked: num(c.walked), dogged: num(c.dogged) };
   const next = { ...s, homed: s.homed + counts.homed, walked: s.walked + counts.walked, dogged: s.dogged + counts.dogged };
-  const pending = ASK_AFTER[night] ? `ask:${ASK_AFTER[night]}` : null;
+  const q = askAfter(night);
+  const pending = q ? `ask:${q}` : null;
   next.pending = pending;
   next.night = night === LAST_NIGHT ? LAST_NIGHT : night + 1;
-  return { state: next, after: NIGHTS[night].after(s, way(counts)), pending };
+  const beat = beatOf(night);
+  const after = beat ? NIGHTS[beat].after(s, way(counts)) : (INTERLUDES[night] && INTERLUDES[night].after) || [];
+  return { state: next, after, pending };
+}
+
+// A night skipped (a purchase, see purchases.js): it counts as cleared with no black sheep
+// treated either way, and is counted in the keepsake. The scenes and questions still come.
+export function skipNight(s, night) {
+  const r = afterNight(s, night, {});
+  return r.state === s ? r : { ...r, state: { ...r.state, skipped: s.skipped + 1 } };
+}
+
+// Time spent playing the story's nights (a night on screen, not menus or scenes). Kept
+// in the keepsake so the length can be checked against the four hours it is built for.
+export function addPlayed(s, ms) {
+  return ms > 0 && isActive(s) ? { ...s, played: s.played + Math.floor(ms) } : s;
+}
+export function formatPlayed(ms) {
+  const m = Math.round(ms / 60000);
+  return m < 60 ? `${m}分` : `${Math.floor(m / 60)}時間${m % 60}分`;
 }
 
 // The look back before the question on the eleventh night.
@@ -508,7 +580,7 @@ export function reopen(s) {
 }
 
 function keepsake(s) {
-  return { started: s.started, ended: s.ended, worry: s.worry, answers: s.answers, homed: s.homed, walked: s.walked, dogged: s.dogged, ending: s.ending };
+  return { started: s.started, ended: s.ended, worry: s.worry, answers: s.answers, homed: s.homed, walked: s.walked, dogged: s.dogged, played: s.played, skipped: s.skipped, ending: s.ending };
 }
 
 // ---- the keepsake: 夜のしおり ---------------------------------------------------
@@ -532,6 +604,8 @@ export function shiori(k) {
     ['おわり', k.ended || '—'],
     ['霧の言葉', k.worry ? WORRIES[k.worry] : 'なし'],
     ['黒い羊', sheep],
+    ['遊んだ時間', formatPlayed(k.played || 0)],
+    ['とばした夜', `${k.skipped || 0}夜`],
   ];
   return {
     title: '夜のしおり', rows, chosen, memo,

@@ -1,13 +1,16 @@
 // MOUTON・COUNT on screen: drawing the field, touch controls, items,
 // the night sky that turns to dawn, music and sounds, saving, and the device ranking.
 import { Game, COLS, ROWS, BLACK, GOLD, DAWN, clock, fallDelay, addScore, height, moodFor } from './core.js';
-import { storage, ads, leaderboard, haptics, onBack } from './services.js';
+import { storage, ads, leaderboard, haptics, onBack, purchases } from './services.js';
 import { Sound } from './audio.js';
 import { drawBlock } from './skins.js';
 import { Wallet, SKINS, skinById } from './wool.js';
 import { QUESTS, GOALS, questById, questGame, progress, outcome, record, unlocked } from './quest.js';
 import { Profile, ACHIEVEMENTS, rankOf, gameStats, moonPhase, localDate, goodnightMessage } from './profile.js';
 import * as S from './story.js';
+import { storyNightAt } from './storynights.js';
+import { WARES, WARE_IDS, FREE_NOTE } from './purchases.js';
+import * as T from './transfer.js';
 
 const app = document.querySelector('[data-app]');
 const field = app.querySelector('[data-field]');
@@ -23,6 +26,7 @@ const WALLET = 'mouton.sheep.wallet';
 const QUEST_SAVE = 'mouton.sheep.quest.save';
 const RESULTS = 'mouton.sheep.quests';
 const STORY = 'mouton.sheep.story';
+const NIGHT_RESULTS = 'mouton.sheep.storynights';   // the story's fifty nights: best stars of each
 const AD_FLOCKS = 5;          // flocks added by an ad when a quest runs out
 const PROFILE = 'mouton.sheep.profile';
 const TIPS = 'mouton.sheep.tips';     // one-time tips already shown
@@ -68,7 +72,14 @@ let extra = 0;                // flocks added by an ad in this attempt
 let adFlocksUsed = false;
 let results = storage.get(RESULTS, {});
 if (typeof results !== 'object' || !results) results = {};
-let story = S.normalize(storage.get(STORY, null));      // ものがたり (optional; see story.js)
+let nightResults = storage.get(NIGHT_RESULTS, {});
+if (typeof nightResults !== 'object' || !nightResults) nightResults = {};
+let nightMs = 0;              // time on a story night not yet added to the story's played time
+// A story night has an id above 100 (the fifteen quests are 1 to 15) and its number in `n`.
+const isStoryNight = q => Boolean(q) && q.id > 100;
+const nightNo = q => q.n || q.id;
+const resultsOf = q => (isStoryNight(q) ? nightResults : results);
+let story =S.normalize(storage.get(STORY, null));      // ものがたり (optional; see story.js)
 const saveStory = () => storage.set(STORY, story);
 const profile = new Profile(storage.get(PROFILE, {}));
 const saveProfile = () => storage.set(PROFILE, profile.toJSON());
@@ -316,7 +327,7 @@ function hud() {
     $('[data-clock]').textContent = `群れ のこり ${left}`;
     $('[data-clock]').classList.toggle('is-low', left <= 3);
     goal.hidden = false;
-    goal.textContent = `第${quest.id}夜　${GOALS[quest.goal].text(quest.target)}`;
+    goal.textContent = `第${nightNo(quest)}夜　${GOALS[quest.goal].text(quest.target)}`;
   } else {
     $('[data-count]').textContent = shownCount.toLocaleString('ja-JP');
     $('[data-unit]').textContent = '匹';
@@ -328,7 +339,7 @@ function hud() {
     const item = btn.dataset.item;
     const n = game ? game.items[item] : 0;
     const offer = game && n === 0 && ads.available() && game.adRewards < AD_CAP && !game.over;
-    btn.querySelector('[data-n]').textContent = offer ? '広告で+1' : `×${n}`;
+    btn.querySelector('[data-n]').textContent = offer ? (ads.free() ? 'もらう+1' : '広告で+1') : `×${n}`;
     btn.classList.toggle('is-ad', Boolean(offer));
     btn.classList.toggle('is-on', (item === 'slow' && performance.now() < slowUntil) || (item === 'whistle' && state === 'pick'));
     btn.disabled = state === 'pick' ? item !== 'whistle' : state !== 'play' || !(game.canUse(item) || offer);
@@ -345,7 +356,7 @@ function frame(now) {
     shownCount = Math.min(game.count, shownCount + Math.max(1, Math.ceil((game.count - shownCount) / 8)));
     $('[data-count]').textContent = shownCount.toLocaleString('ja-JP');
   }
-  if (state === 'play') { playTime += dt; stars(); }
+  if (state === 'play') { playTime += dt; if (mode === 'quest' && isStoryNight(quest)) nightMs += dt; stars(); }
   if (state === 'play' && now >= busyUntil) step(dt, now);
   if (now - (frame.chips || 0) > 150) { frame.chips = now; chips(); }
   draw(now);
@@ -690,14 +701,16 @@ async function useItem(item) {
   if (state !== 'play') return;
   if (game.items[item] === 0) {
     if (game.adRewards >= AD_CAP || !ads.available()) return;
-    state = 'pause';
-    sound.stop(0.2);          // the ad has its own sound
-    mood = nightMood = null;
+    const shown = !ads.free();   // with "no ads" the item is simply given: no pause, no sound change
+    if (shown) {
+      state = 'pause';
+      sound.stop(0.2);          // the ad has its own sound
+      mood = nightMood = null;
+    }
     const ok = await ads.showRewarded(app);
-    state = 'play';
-    last = performance.now();
+    if (shown) { state = 'play'; last = performance.now(); }
     if (ok && game.reward(item, AD_CAP)) { save(); sound.sfx('reward'); toast(`${NAMES[item]}を1つもらいました`); }
-    updateMood();
+    if (shown) updateMood();
     hud();
     return;
   }
@@ -1014,13 +1027,23 @@ for (const btn of app.querySelectorAll('[data-shop]')) btn.addEventListener('cli
 });
 $('[data-shop-back]').addEventListener('click', () => (shopFrom === 'menu' ? menu() : title()));
 
+// Time on a story night goes into the story's record (shown on the keepsake) each time the
+// night is saved, so closing the app loses at most a few seconds.
+function flushPlayed() {
+  if (nightMs <= 0) return;
+  if (S.isActive(story)) { story = S.addPlayed(story, nightMs); saveStory(); }
+  nightMs = 0;
+}
+
 function save() {
+  if (mode === 'quest' && isStoryNight(quest)) flushPlayed();
   if (!game || game.over || state === 'title') return;
   if (mode === 'quest') storage.set(QUEST_SAVE, { game: game.toJSON(), extra, adFlocksUsed });
   else storage.set(SAVE, game.toJSON());
 }
 
 function title() {
+  flushPlayed();
   state = 'title';
   if (mode === 'quest') game = null;   // the quest field is not shown behind the title
   mode = 'free';
@@ -1151,12 +1174,13 @@ $('[data-cal-next]').addEventListener('click', () => { const [y, m] = calMonth; 
 const starText = n => '★'.repeat(n) + '☆'.repeat(3 - n);
 
 function questList() {
+  flushPlayed();
   state = 'title';
   sound.stop();
   mood = nightMood = null;
   app.classList.remove('is-pinch', 'is-chance');
   const total = QUESTS.reduce((sum, q) => sum + (results[q.id] || 0), 0);
-  $('[data-quest-total]').textContent = `★ ${total} / ${QUESTS.length * 3}`;
+  $('[data-quest-total]').textContent = `クエスト　★ ${total} / ${QUESTS.length * 3}`;
   $('[data-quest-list]').replaceChildren(...QUESTS.map(q => {
     const btn = document.createElement('button');
     btn.type = 'button';
@@ -1177,18 +1201,67 @@ function questList() {
 function questIntro(q) {
   quest = q;
   mode = 'quest';
-  $('[data-qi-n]').textContent = `第${q.id}夜`;
+  const night = isStoryNight(q);
+  $('[data-qi-n]').textContent = night ? `第${q.n}夜　全${S.LAST_NIGHT}夜` : `第${q.id}夜`;
   $('[data-qi-name]').textContent = q.name;
   $('[data-qi-goal]').textContent = GOALS[q.goal].text(q.target);
   $('[data-qi-limit]').textContent = `群れは ${q.limit}個まで`;
   $('[data-qi-stars]').textContent = `★★ 群れを${q.stars[0]}個のこす　★★★ ${q.stars[1]}個のこす`;
   $('[data-qi-wool]').textContent = `はじめて取った★1つにつき ウール ${q.wool}`;
-  $('[data-qi-best]').textContent = results[q.id] ? `これまで ${starText(results[q.id])}` : '';
-  storyLines($('[data-qi-story]'), S.before(story, q.id) || []);
+  const best = resultsOf(q)[q.id] || 0;
+  $('[data-qi-best]').textContent = best ? `これまで ${starText(best)}` : '';
+  storyLines($('[data-qi-story]'), night ? S.before(story, q.n) || [] : []);
+  skipLinks(night);
   const saved = storage.get(QUEST_SAVE, null);
   $('[data-qi-continue]').hidden = !(saved && saved.game && saved.game.quest === q.id && !saved.game.over);
   show('qintro');
 }
+
+// Skipping a night is a purchase (purchases.js). It is offered only on a story night, never as a
+// pop-up, and the scenes and questions around it still come.
+let skipArmed = 0;
+function skipLinks(night) {
+  const own = night && purchases.owns('skip');
+  const skip = $('[data-qi-skip]');
+  skipArmed = 0;
+  skip.textContent = 'この夜をとばす';
+  skip.hidden = !own;
+  $('[data-qi-skip-buy]').hidden = !(night && !own && purchases.available());
+}
+
+// The story moves on after a night is over (cleared or skipped): its lines, then the
+// question that waits, or the next night.
+function storyAfter(lines, pending) {
+  const go = () => (pending ? storyAsk() : goNextNight());
+  if (lines.length) storyScene({ lines, next: { label: pending ? 'つづきを読む' : `第${story.night}夜へ`, run: go } });
+  else go();
+}
+
+function goNextNight() {
+  const next = story.status === 'active' && !story.pending ? storyNightAt(story.night) : null;
+  if (next) questIntro(next); else questList();
+}
+
+$('[data-qi-skip]').addEventListener('click', e => {
+  if (!isStoryNight(quest) || !purchases.owns('skip')) return;
+  const btn = e.currentTarget;
+  // Two taps (the second within four seconds): it cannot happen by accident.
+  if (!skipArmed) {
+    const armed = skipArmed = performance.now();
+    btn.textContent = 'もう一度タップで、とばす';
+    setTimeout(() => { if (skipArmed === armed) { skipArmed = 0; btn.textContent = 'この夜をとばす'; } }, 4000);
+    return;
+  }
+  skipArmed = 0;
+  const r = S.skipNight(story, quest.n);
+  if (r.state === story) { questList(); return; }
+  story = r.state;
+  saveStory();
+  const saved = storage.get(QUEST_SAVE, null);
+  if (saved && saved.game && saved.game.quest === quest.id) storage.remove(QUEST_SAVE);
+  storyAfter(r.after, r.pending);
+});
+$('[data-qi-skip-buy]').addEventListener('click', () => purchasesOpen(() => questIntro(quest)));
 
 $('[data-quests]').addEventListener('click', questList);
 $('[data-quest-list]').addEventListener('click', e => {
@@ -1267,7 +1340,7 @@ function storyWordPicked(id) {
   saveStory();
   storyScene({
     lines: story.worry ? S.WORD.replyNamed : S.WORD.replyNone,
-    next: { label: '第1夜へ', run: () => questIntro(questById(1)) },
+    next: { label: '第1夜へ', run: () => questIntro(storyNightAt(1)) },
   });
 }
 
@@ -1289,8 +1362,7 @@ function storyAnswered(id) {
     storyScene({ lines: r.reply, next: { label: '答え合わせへ', run: storyDawn } });
     return;
   }
-  const next = questById(story.night);
-  storyScene({ lines: r.reply, next: { label: `第${story.night}夜へ`, run: () => (next && unlocked(results, next) ? questIntro(next) : questList()) } });
+  storyScene({ lines: r.reply, next: { label: `第${story.night}夜へ`, run: goNextNight } });
 }
 
 // After the last answer: the story ends when the player says so.
@@ -1404,7 +1476,7 @@ function storyCard() {
   if (story.status === 'active') {
     if (story.pending === 'dawn') { text.textContent = '最後の夜を、数えきりました。'; main.textContent = 'つづきを読む'; }
     else if (story.pending) { text.textContent = 'つづきがあります。'; main.textContent = 'つづきを読む'; }
-    else { text.textContent = `第${story.night}夜から。`; main.textContent = 'つづける'; }
+    else { text.textContent = `第${story.night}夜から。（全${S.LAST_NIGHT}夜・ここまで ${S.formatPlayed(story.played)}）`; main.textContent = 'つづける'; }
     reset.hidden = false;
   } else if (story.status === 'ended') {
     text.textContent = `ものがたりは、おわりました。「${S.endingTitle(story.ending)}」`;
@@ -1412,7 +1484,7 @@ function storyCard() {
     sub.textContent = 'もう一度、はじめる';
     sub.hidden = false;
   } else {
-    text.textContent = '15の夜に、あなたと私（あなたの羊）の話を重ねます。はじめるのも、終わらせるのも、あなたです。';
+    text.textContent = `${S.LAST_NIGHT}の夜に、あなたと私（あなたの羊）の話を重ねます。ゆっくり、数時間かけて。途中でやめても、続きから。はじめるのも、終わらせるのも、あなたです。`;
     main.textContent = 'ものがたりを はじめる';
     if (story.history.length) { sub.textContent = 'しおりを見る'; sub.hidden = false; }
   }
@@ -1423,9 +1495,7 @@ $('[data-story-card-main]').addEventListener('click', () => {
   if (story.status !== 'active') { storyPrologue(); return; }
   if (story.pending === 'dawn') { storyDawn(); return; }
   if (story.pending) { storyAsk(); return; }
-  const q = questById(story.night);
-  if (q && unlocked(results, q)) questIntro(q);
-  else questList();
+  goNextNight();
 });
 $('[data-story-card-sub]').addEventListener('click', () => {
   if (story.status === 'ended') storyPrologue();
@@ -1447,7 +1517,7 @@ $('[data-story-card-reset]').addEventListener('click', e => {
 $('[data-qc-story-next]').addEventListener('click', () => {
   if (story.pending === 'dawn') storyDawn();
   else if (story.pending) storyAsk();
-  else questList();
+  else goNextNight();
 });
 $('[data-shiori-back]').addEventListener('click', questList);
 $('[data-shiori-another]').addEventListener('click', storyAnother);
@@ -1465,15 +1535,17 @@ function questEnd(o) {
   if (o.state === 'clear') {
     state = 'over';
     storage.remove(QUEST_SAVE);
-    const r = record(results, quest, o.stars);
-    results = r.results;
-    storage.set(RESULTS, results);
+    const night = isStoryNight(quest);
+    flushPlayed();
+    const r = record(resultsOf(quest), quest, o.stars);
+    if (night) { nightResults = r.results; storage.set(NIGHT_RESULTS, nightResults); }
+    else { results = r.results; storage.set(RESULTS, results); }
     celebrate(profile.finished(results));
     saveProfile();
     if (r.wool) { wallet.earn(r.wool); saveWallet(); }
     sound.sfx('dawn');
     haptics.clear(3);
-    $('[data-qc-n]').textContent = `第${quest.id}夜 ${quest.name}`;
+    $('[data-qc-n]').textContent = `第${nightNo(quest)}夜 ${quest.name}`;
     const stars = $('[data-qc-stars]');
     stars.replaceChildren(...[0, 1, 2].map(k => {
       const el = document.createElement('span');
@@ -1485,20 +1557,24 @@ function questEnd(o) {
     stars.setAttribute('aria-label', `星${o.stars}つ`);
     $('[data-qc-left]').textContent = extra ? `群れを${extra}個たして クリア` : `群れを${o.left}個のこして クリア`;
     $('[data-qc-wool]').textContent = r.wool ? `ウール +${r.wool}（ぜんぶで ${wallet.wool.toLocaleString('ja-JP')}）` : '';
-    // The story moves on only when this is the story's night. The black sheep
-    // that went home by the dog are in game.blacks too, so they are taken out.
-    const sr = S.afterNight(story, quest.id, { homed: Math.max(0, game.blacks - game.dogged), walked: game.walked, dogged: game.dogged });
+    // The story moves on only when this is the story's night (the fifteen quests are apart from it).
+    // The black sheep that went home by the dog are in game.blacks too, so they are taken out.
+    const sr = night
+      ? S.afterNight(story, quest.n, { homed: Math.max(0, game.blacks - game.dogged), walked: game.walked, dogged: game.dogged })
+      : { state: story, after: [], pending: null };
     if (sr.state !== story) { story = sr.state; saveStory(); }
     storyLines($('[data-qc-story]'), sr.after);
     $('[data-qc-story-next]').hidden = !sr.pending;
-    const next = questById(quest.id + 1);
+    const next = night ? (story.status === 'active' && !story.pending ? storyNightAt(story.night) : null) : questById(quest.id + 1);
     $('[data-qc-next]').hidden = !next || Boolean(sr.pending);
+    $('[data-qc-next]').textContent = night && next ? `第${next.n}夜へ` : 'つぎの夜へ';
     show('qclear');
   } else {
     state = 'over';
     sound.sfx('over');
     haptics.over();
-    $('[data-qf-n]').textContent = `第${quest.id}夜 ${quest.name}`;
+    flushPlayed();
+    $('[data-qf-n]').textContent = `第${nightNo(quest)}夜 ${quest.name}`;
     $('[data-qf-why]').textContent = game.over ? '羊があふれた' : '群れを使いきった';
     $('[data-qf-progress]').textContent = `${GOALS[quest.goal].label} ${Math.min(p.value, p.target)} / ${p.target}`;
     // Five more flocks for an ad, once, if the field still has room.
@@ -1529,7 +1605,7 @@ $('[data-qf-more]').addEventListener('click', async () => {
 for (const sel of ['[data-qc-again]', '[data-qf-again]']) $(sel).addEventListener('click', () => { storage.remove(QUEST_SAVE); start(true); });
 for (const sel of ['[data-qc-list]', '[data-qf-list]']) $(sel).addEventListener('click', questList);
 $('[data-qc-next]').addEventListener('click', () => {
-  const next = questById(quest.id + 1);
+  const next = isStoryNight(quest) ? (!story.pending ? storyNightAt(story.night) : null) : questById(quest.id + 1);
   if (next) questIntro(next);
 });
 $('[data-copy]').addEventListener('click', async () => {
@@ -1576,6 +1652,169 @@ for (const btn of app.querySelectorAll('[data-sound-test]')) {
     setTimeout(() => { out.textContent = sound.status(); }, 400);
   });
 }
+// ---- 購入（夜をとばす・広告なし） ------------------------------------------------
+// Two purchases, each bought once (purchases.js). Nothing here is a pop-up: the screen is
+// opened from the menu, the story card, or the small link on a story night. With no store
+// (a browser, or an app whose products are not set up yet) none of it is shown.
+
+let purchasesBack = menu;
+function purchasesOpen(back) {
+  purchasesBack = back;
+  renderPurchases();
+  show('purchases');
+}
+
+function renderPurchases(msg = '') {
+  $('[data-purchases-free]').textContent = FREE_NOTE;
+  $('[data-purchases-test]').hidden = purchases.mode !== 'test';
+  $('[data-purchases-msg]').textContent = msg;
+  $('[data-wares]').replaceChildren(...WARE_IDS.map(id => {
+    const own = purchases.owns(id);
+    const el = document.createElement('div');
+    el.className = `ware${own ? ' is-owned' : ''}`;
+    const h = document.createElement('h3');
+    const p = document.createElement('p');
+    const b = document.createElement('button');
+    h.textContent = WARES[id].name;
+    p.textContent = WARES[id].text;
+    b.type = 'button';
+    b.className = 'btn';
+    b.disabled = own;
+    b.textContent = own ? '購入ずみ' : `${purchases.price(id)}　買う`.trim();
+    b.addEventListener('click', async () => {
+      b.disabled = true;
+      const r = await purchases.buy(id);
+      renderPurchases(r.ok ? `${WARES[id].name}を、使えるようになりました。`
+        : r.reason === 'cancelled' ? '購入は、しませんでした。'
+        : '購入できませんでした。時間をおいて、もう一度お試しください。');
+    });
+    el.append(h, p, b);
+    return el;
+  }));
+}
+
+// What the screens show depends on what is bought and on whether the store is there.
+function applyPurchases() {
+  const can = purchases.available();
+  $('[data-purchases]').hidden = !can;
+  $('[data-purchases-open]').hidden = !can;
+  // "No ads": the same buttons, now simply giving what the ad would have given.
+  for (const [sel, free] of [['[data-double]', 'ウール2倍をもらう'], ['[data-qf-more]', '群れ+5をもらう']]) {
+    const el = $(sel);
+    el.dataset.adText ??= el.textContent;
+    el.textContent = ads.free() ? free : el.dataset.adText;
+  }
+  hud();
+}
+purchases.onChange(applyPurchases);
+purchases.load().then(applyPurchases);
+applyPurchases();
+
+for (const el of app.querySelectorAll('[data-purchases], [data-purchases-open]')) {
+  el.addEventListener('click', () => purchasesOpen(el.closest('[data-sheet="quests"]') ? questList : menu));
+}
+$('[data-purchases-back]').addEventListener('click', () => purchasesBack());
+$('[data-purchases-restore]').addEventListener('click', async () => {
+  $('[data-purchases-msg]').textContent = '調べています…';
+  const r = await purchases.restore();
+  renderPurchases(!r.ok ? '調べられませんでした。時間をおいて、もう一度お試しください。'
+    : r.found.length ? `購入ずみ：${r.found.map(id => WARES[id].name).join('、')}` : '復元できる購入は、見つかりませんでした。');
+});
+
+// ---- 引き継ぎ（コードをコピーして、別のスマホで読み込む） ----------------------------
+// The whole save as one piece of text (transfer.js). No account, no server. Purchases are
+// not in it (the store gives them back). Loading replaces what is on this phone, so it shows
+// what the code holds and asks first.
+
+let transferEntries = null;
+const transferMsg = text => { $('[data-transfer-msg]').textContent = text; };
+const TRANSFER_REASONS = {
+  empty: 'コードが入っていません。',
+  format: 'ムートン・カウントのコードではないようです。コピーし直してみてください。',
+  damaged: 'コードが途中で切れているか、文字が違っているようです。もう一度コピーしてください。',
+  version: 'このコードは、このバージョンでは読み込めません。',
+  invalid: 'コードの中身を読み込めませんでした。',
+};
+
+function transferOpen() {
+  transferEntries = null;
+  $('[data-transfer-paste]').hidden = true;
+  $('[data-transfer-confirm]').hidden = true;
+  $('[data-transfer-text]').value = '';
+  transferMsg('');
+  show('transfer');
+}
+
+$('[data-transfer]').addEventListener('click', transferOpen);
+$('[data-transfer-back]').addEventListener('click', menu);
+
+$('[data-transfer-copy]').addEventListener('click', async () => {
+  flushPlayed();
+  const entries = {};
+  for (const k of storage.keys()) if (T.wanted(k)) entries[k] = storage.raw(k);
+  const code = T.pack(entries, new Date().toISOString());
+  $('[data-transfer-confirm]').hidden = true;
+  try {
+    await navigator.clipboard.writeText(code);
+    $('[data-transfer-paste]').hidden = true;
+    transferMsg('コードをコピーしました。新しいスマホで「コードを読み込む」から貼り付けてください。メモ帳などに貼っておくと、なくしません。');
+  } catch {
+    // The phone would not let the page copy: show the code to be copied by hand.
+    const box = $('[data-transfer-text]');
+    $('[data-transfer-paste]').hidden = false;
+    box.value = code;
+    box.focus();
+    box.select();
+    transferMsg('自動でコピーできませんでした。下の文字を、すべて選んでコピーしてください。');
+  }
+});
+
+$('[data-transfer-read]').addEventListener('click', async () => {
+  $('[data-transfer-confirm]').hidden = true;
+  $('[data-transfer-paste]').hidden = false;
+  const box = $('[data-transfer-text]');
+  box.value = '';
+  transferMsg('コードを貼り付けて、「このコードを調べる」を押してください。');
+  try {
+    const text = await navigator.clipboard.readText();
+    if (/^\s*MOUTON1\./.test(text)) box.value = text.trim();
+  } catch {}      // the phone may not allow reading: the player pastes by hand
+  box.focus();
+});
+
+$('[data-transfer-go]').addEventListener('click', () => {
+  const r = T.unpack($('[data-transfer-text]').value);
+  if (!r.ok) { transferMsg(TRANSFER_REASONS[r.reason]); $('[data-transfer-confirm]').hidden = true; return; }
+  transferEntries = r.entries;
+  const sum = T.summarize(r.entries);
+  const parts = [
+    sum.story === 'ended' ? 'ものがたり：おわりました' : sum.story === 'active' ? `ものがたり：第${sum.night}夜まで（遊んだ時間 ${S.formatPlayed(sum.played)}）` : 'ものがたり：まだはじめていません',
+    `ウール ${sum.wool.toLocaleString('ja-JP')}`,
+  ];
+  $('[data-transfer-summary]').textContent = `${r.date ? `${r.date.replaceAll('-', '/')} のコードです。` : ''}${parts.join('　')}\nこのスマホの記録は、これに置きかえられます。`;
+  $('[data-transfer-confirm]').hidden = false;
+  $('[data-transfer-confirm]').scrollIntoView({ block: 'nearest' });
+  transferMsg('');
+});
+
+$('[data-transfer-cancel]').addEventListener('click', () => {
+  transferEntries = null;
+  $('[data-transfer-confirm]').hidden = true;
+  transferMsg('読み込みは、やめました。');
+});
+
+$('[data-transfer-apply]').addEventListener('click', () => {
+  if (!transferEntries) return;
+  const entries = transferEntries;
+  transferEntries = null;
+  T.apply(entries, { keys: () => storage.keys(), set: (k, v) => storage.setRaw(k, v), remove: k => storage.remove(k) });
+  $('[data-transfer-confirm]').hidden = true;
+  $('[data-transfer-paste]').hidden = true;
+  transferMsg('読み込みました。開き直します…');
+  // A moment for the phone's own storage to finish writing, then start again from what was loaded.
+  setTimeout(() => location.reload(), 900);
+});
+
 addEventListener('resize', layout);
 
 layout();

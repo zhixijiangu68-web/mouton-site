@@ -198,6 +198,18 @@ button{font:inherit;color:inherit}
 .found{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 12px;width:min(100%,320px);font-size:.75rem;color:var(--muted);text-align:left}
 .found li{padding:4px 2px;border-bottom:1px solid var(--line);overflow-wrap:anywhere}
 .found li.is-found{color:var(--wool)}
+.wares{display:grid;gap:12px;width:min(100%,340px)}
+.ware{display:grid;gap:6px;padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(243,234,216,.04);text-align:left}
+.ware h3{margin:0;font-family:var(--serif);font-weight:400;font-size:1.0625rem;letter-spacing:.06em}
+.ware p{margin:0;font-size:.8125rem;line-height:1.7;color:var(--muted)}
+.ware .btn{justify-self:start;min-height:44px}
+.ware.is-owned .btn{opacity:.6}
+.paste{display:grid;gap:8px;width:min(100%,340px)}
+.paste textarea{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(243,234,216,.06);color:var(--wool);font:inherit;font-size:.75rem;line-height:1.5;resize:vertical;-webkit-user-select:text;user-select:text}
+.transfer-confirm{display:grid;gap:10px;justify-items:center;width:min(100%,340px);padding:14px;border:1px solid var(--moon);border-radius:16px}
+.transfer-confirm p{margin:0;font-size:.875rem;line-height:1.8;text-align:center;white-space:pre-line}
+.paste[hidden],.transfer-confirm[hidden]{display:none}
+.link[data-qi-skip]{color:var(--wool)}
 .sheet[data-sheet="storyabout"] h2{font-size:1.375rem;letter-spacing:.06em}
 .about-lines{display:grid;gap:10px;width:min(100%,320px);text-align:left}
 .about-lines p{margin:0;font-family:var(--serif);font-size:.9375rem;line-height:1.9}

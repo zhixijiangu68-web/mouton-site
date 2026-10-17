@@ -2,7 +2,8 @@
 // rewarded ads, the ranking (this device), vibration and the back button.
 // In the app (Capacitor) they use the phone's own features; in a browser,
 // the browser's (and a stand-in screen for ads).
-import { ADMOB_REWARDED } from './config.js';
+import { ADMOB_REWARDED, PRODUCT_IDS } from './config.js';
+import { createPurchases } from './purchases.js';
 
 // Capacitor puts its bridge and the installed plugins on window.Capacitor.
 const cap = globalThis.Capacitor;
@@ -41,6 +42,19 @@ export const storage = {
   remove(key) {
     try { localStorage.removeItem(key); } catch {}
     Preferences?.remove({ key }).catch(() => {});
+  },
+  // For 引き継ぎ (transfer.js): every saved key with its stored text, and a write of that text as it is.
+  keys() {
+    const out = [];
+    try { for (let i = 0; i < localStorage.length; i++) out.push(localStorage.key(i)); } catch {}
+    return out;
+  },
+  raw(key) {
+    try { return localStorage.getItem(key); } catch { return null; }
+  },
+  setRaw(key, text) {
+    try { localStorage.setItem(key, text); } catch {}
+    Preferences?.set({ key, value: text }).catch(() => {});
   },
 };
 
@@ -95,7 +109,7 @@ const nativeAds = {
   },
 };
 
-export const ads = AdMob && adUnit ? {
+const baseAds = AdMob && adUnit ? {
   prepare: () => nativeAds.start(),
   available: () => nativeAds.ready,
   showRewarded: () => nativeAds.show(),
@@ -121,6 +135,20 @@ export const ads = AdMob && adUnit ? {
       el.querySelector('.ad-mock-close').addEventListener('click', () => done(false));
     });
   },
+};
+
+// What can be bought (see purchases.js). In the app: the store plugin, if installed.
+// In the browser: nothing, unless the address has ?test-purchases (a free stand-in to try the screens).
+const testPurchases = !native && new URLSearchParams(globalThis.location?.search || '').has('test-purchases');
+export const purchases = createPurchases({ plugin: plugin('NativePurchases'), storage, test: testPurchases, ids: PRODUCT_IDS });
+
+// "No ads": the buttons that say "watch an ad" give their reward at once (same limits),
+// no ad is loaded and the consent form is not shown.
+export const ads = {
+  prepare: () => (purchases.owns('noads') ? undefined : baseAds.prepare()),
+  available: () => purchases.owns('noads') || baseAds.available(),
+  showRewarded: host => (purchases.owns('noads') ? Promise.resolve(true) : baseAds.showRewarded(host)),
+  free: () => purchases.owns('noads'),
 };
 
 const SCORES = 'mouton.sheep.scores';
