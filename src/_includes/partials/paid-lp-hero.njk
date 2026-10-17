@@ -1,12 +1,18 @@
 {#- 有料記事の販売ページ：最初の画面（スクロールせずに見える部分）。
     結果（読んで書き込んだあと、どうなるか）＋かかる時間＋なぜ効くのか を、はっきり書く。
-    「〜せずに」で、読者がすでに試したやり方との違いを示す。価格はここでは出さない（中身を見てから）。
+    「〜せずに」で、読者がすでに試したやり方との違いを示す。
+    2026-10-17：オーナーの判断で、冒頭で4つが分かるようにする（どんな悩みに向けたものか／読む・書くことで何を整理できるか／届くもの（PDF）と価格／いま買えるか）。
+    そのあとに 見本 → 詳しい内容 → 制作理由。読者が自分のペースで判断できる並びにする（押しつけない）。
     lp.hook：見出しの上の一行。読者が心の中で言っていそうな言葉で、いまいる場所から始める（あおらない・落とさない）。 -#}
+{%- set ph = site.product.philosophy %}{%- set live = paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}
 {%- if lp.hook %}<p class="plp-hook">{{ lp.hook }}</p>{% endif %}
 <h1>{{ lp.headline }}</h1>
+<dl class="plp-glance">
+  <div class="plp-glance-row"><dt>こんな悩みに</dt><dd>{{ paid.worry }}</dd></div>
+  <div class="plp-glance-row"><dt>読んで、書いて、整理できること</dt><dd><ul class="plp-benefits">{% for b in lp.benefits %}<li>{{ b }}</li>{% endfor %}</ul></dd></div>
+  <div class="plp-glance-row"><dt>届くもの・価格</dt><dd><span class="plp-fact">PDF（全文 約{{ paid.minutes }}分・書き込みワーク5つ）</span><br><span class="plp-fact plp-price">{{ paid.price.toLocaleString("ja-JP") }}円（税込）</span></dd></div>
+  <div class="plp-glance-row"><dt>いま</dt><dd>{{ 'このサイトで購入できます。' if live else '販売準備中。見本は無料で読めます。' }}</dd></div>
+</dl>
+<p class="plp-hero-cta"><a class="plp-btn" href="#sample">見本を無料で読む <span aria-hidden="true">↓</span></a> <a class="plp-hero-more" href="#plp-pains-h">詳しい内容</a> <a class="plp-hero-more" href="#buy">価格と購入</a></p>
 <p class="paid-sub">{{ lp.subhead }}</p>
-<ul class="plp-benefits">
-  {%- for b in lp.benefits %}<li>{{ b }}</li>{% endfor %}
-</ul>
-<p class="plp-hero-cta"><a class="plp-btn" href="#sample">冒頭を無料で読む <span aria-hidden="true">↓</span></a> <a class="plp-hero-more" href="#plp-contents-h">内容を見る</a></p>
-<p class="plp-product">記事：「{{ paid.title }}」{{ paid.subtitle }}（PDF・全文 約{{ paid.minutes }}分）</p>
+<p class="plp-product">記事：「{{ paid.title }}」{{ paid.subtitle }}</p>

@@ -649,3 +649,48 @@ body.journal-page main{padding-top:72px}
 /* 有料のページは一覧でもそうと分かるようにする（お金の出どころを隠さない） */
 .journal-tag + .journal-tag{margin-left:6px}
 .journal-tag--paid{border-color:rgba(37,39,36,.4);color:var(--ink)}
+
+/* 2026-10-17 — トップを「ムートンの入口」に：一文・短い説明・主なボタン、哲学を大きく、身体・食事を小さく、アプリは日々の道具として。
+   カードは月夜の背景の上に置く半透明の紺。昼の絵（images/home/*-card.webp）はもう使わない。 */
+.cover-choice--entry .cover-title--choice{margin:0;font-size:clamp(1.9rem,4vw,3.4rem);line-height:1.45;letter-spacing:.05em;color:#fbf7ee}
+.cover-choice--entry .cover-lede--choice{max-width:40em;margin-top:14px;font-size:clamp(.9rem,1.25vw,1.0625rem);line-height:1.85;color:rgba(245,243,238,.9)}
+.cover-choice--entry .cover-inner{width:min(1080px,100%)}
+.cover-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:10px 14px;margin:clamp(18px,2.8vh,26px) 0 0}
+.cover-btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font-family:var(--gothic);font-size:.9375rem;font-weight:600;letter-spacing:.04em;text-decoration:none}
+.cover-btn--primary{background:#f2e3bd;color:#14213f}
+.cover-btn--primary:hover,.cover-btn--primary:focus-visible{background:#fbf1d6}
+.cover-btn--ghost{border:1px solid rgba(245,243,238,.55);color:#fbf7ee;background:rgba(7,18,48,.45)}
+.cover-btn--ghost:hover,.cover-btn--ghost:focus-visible{border-color:#f6dfac}
+.cover-btn:focus-visible{outline:3px solid #f6dfac;outline-offset:3px}
+.cover-choice--entry .cover-themes{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:clamp(22px,3.4vh,34px)}
+.cover-choice--entry .cover-choice-card{min-height:0;background:rgba(7,18,48,.62);border:1px solid rgba(230,201,138,.36);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fbf7ee}
+.cover-choice--entry .cover-choice-card:after{display:none}
+.cover-choice--entry .cover-choice-card:hover,.cover-choice--entry .cover-choice-card:focus-visible{border-color:rgba(246,223,172,.85);background:rgba(9,24,64,.76)}
+.cover-choice--entry .cover-choice-number{color:#e6c98a}
+.cover-choice-card--main{grid-column:1/-1}
+.cover-choice-card--main .cover-choice-title{font-size:clamp(1.5rem,2.6vw,2.2rem)}
+.cover-choice-card--main .cover-choice-description{font-size:clamp(.85rem,1.05vw,1rem);line-height:1.8;color:rgba(245,243,238,.86);word-break:auto-phrase;text-wrap:pretty}
+.cover-choice-card--sub .cover-choice-content{padding:clamp(14px,1.6vw,22px) clamp(18px,1.8vw,26px);gap:2px}
+.cover-choice-card--sub .cover-choice-title{font-size:clamp(1.1rem,1.6vw,1.35rem)}
+.cover-choice-card--sub .cover-choice-description{color:rgba(245,243,238,.78)}
+.cover-themes-bridge{grid-column:1/-1;margin:8px 0 -2px;font-size:.75rem;letter-spacing:.16em;color:rgba(245,243,238,.75)}
+.cover-app{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;margin-top:12px;padding:12px 18px;border:1px dashed rgba(230,201,138,.4);border-radius:12px;background:rgba(7,18,48,.5);color:#fbf7ee;text-decoration:none}
+.cover-app:hover,.cover-app:focus-visible{border-color:rgba(246,223,172,.85)}
+.cover-app:focus-visible{outline:3px solid #f6dfac;outline-offset:3px}
+.cover-app-kind{font-size:.6875rem;letter-spacing:.14em;color:#e6c98a}
+.cover-app-name{font-family:var(--latin);font-size:1rem;letter-spacing:.12em}
+.cover-app-text{font-size:.8125rem;color:rgba(245,243,238,.82)}
+@media(max-width:600px){
+ .cover-choice--entry .cover-title--choice{font-size:clamp(1.55rem,6.4vw,2.05rem)}
+ .cover-choice--entry .cover-lede--choice{font-size:.84rem;line-height:1.75}
+ .cover-btn{min-height:46px;padding:0 20px;font-size:.875rem}
+ .cover-actions .cover-btn--primary{flex:1 1 100%;justify-content:center}
+ .cover-actions .cover-btn--ghost{flex:1 1 100%;justify-content:center}
+ .cover-choice--entry .cover-themes{gap:8px}
+ .cover-choice-card--main .cover-choice-content{padding:14px 16px}
+ .cover-choice-card--main .cover-choice-title{font-size:1.25rem}
+ .cover-choice-card--main .cover-choice-action{position:static;margin-top:6px}
+ .cover-choice-card--sub .cover-choice-content{padding:12px 14px}
+ .cover-choice-card--sub .cover-choice-title{font-size:1.02rem}
+ .cover-choice-card--sub .cover-choice-description{font-size:.7rem}
+}

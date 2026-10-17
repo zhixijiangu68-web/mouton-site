@@ -1,8 +1,8 @@
-{#- 有料記事の販売ページ（前半）：①具体的な悩み → ②この記事で取り組めること。
+{#- 有料記事の販売ページ（見本のあと）：②具体的な悩み → ③この記事で取り組めること。
     文言は各記事の front matter（paid・lp）から。 -#}
 <section class="plp-section plp-pains" aria-labelledby="plp-pains-h">
-  <p class="plp-step">01 / Worries</p>
-  <h2 id="plp-pains-h">こんな状態が、続いていないか。</h2>
+  <p class="plp-step">02 / Worries</p>
+  <h2 id="plp-pains-h">いま、こんな夜が続いていませんか。</h2>
   <ul class="plp-pains-list">
     {%- for x in lp.pains %}<li>{{ x }}</li>{% endfor %}
   </ul>
@@ -10,8 +10,8 @@
 </section>
 
 <section class="plp-section plp-can" aria-labelledby="plp-can-h">
-  <p class="plp-step">02 / What you can do</p>
-  <h2 id="plp-can-h">この記事で取り組めること</h2>
+  <p class="plp-step">03 / What you can do</p>
+  <h2 id="plp-can-h">読んで、書き込んだあとに</h2>
   <div class="plp-ba">
     <div class="plp-ba-item"><p class="plp-ba-label">いま</p><p class="plp-ba-text">{{ paid.before }}</p></div>
     <div class="plp-ba-arrow" aria-hidden="true">→</div>
@@ -20,12 +20,12 @@
   {%- if lp.reframe %}
   {#- 読むだけで得られる価値：悩みを違う角度から捉え直せること。有料の理由は情報量ではなく、使いやすさの設計。 #}
   <div class="plp-read">
-    <p class="plp-read-h">読むだけでも、悩みの見え方が変わる。</p>
+    <p class="plp-read-h">書き込まなくても、読むだけで見え方が変わるかもしれない。</p>
     <p class="plp-read-reframe">{{ lp.reframe }}</p>
     <p class="plp-read-sub">有料にしているのは、情報の量ではなく、使いやすさのため。</p>
     <ul class="plp-read-why">
-      <li><strong>自分の悩みに当てはめやすい。</strong>{{ lp.scenes }}など、よくある場面の例に、自分のことを重ねて読める。</li>
-      <li><strong>必要な答えにたどり着ける。</strong>最初のページに「いまの状態 → 読むところ」の地図。全部を読まなくても、近いところから読める。</li>
+      <li><strong>自分の悩みに当てはめやすい。</strong>{{ lp.scenes }}など、よくある場面の例に、あなたのことを重ねて読める。</li>
+      <li><strong>必要なところにたどり着ける。</strong>最初のページに「いまの状態 → 読むところ」の地図。全部を読まなくても、いまのあなたに近いところから読める。</li>
       <li><strong>次の行動まで分かる。</strong>最後に、今日できるいちばん小さな一歩と、やめることを一つ。</li>
     </ul>
     <details class="plp-map"><summary>地図の中身を見る</summary>
