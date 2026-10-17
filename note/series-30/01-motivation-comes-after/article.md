@@ -78,8 +78,6 @@
 
 紙かスマホのメモに。正解はないし、書けないところは空けたままでいい。
 
-つらさが続くときは、一人で抱えず、専門家に相談してほしい。この記事は診断や治療の代わりにはならない。
-
 ## 参考
 
 1. Gollwitzer, P. M., & Sheeran, P. (2006). Implementation intentions and goal achievement: A meta-analysis of effects and processes. Advances in Experimental Social Psychology, 38, 69–119.

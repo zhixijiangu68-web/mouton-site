@@ -73,8 +73,6 @@
 
 紙かスマホのメモに。正解はないし、書けないところは空けたままでいい。
 
-つらさが続くときは、一人で抱えず、専門家に相談してほしい。この記事は診断や治療の代わりにはならない。
-
 ## 参考
 
 1. Galla, B. M., & Duckworth, A. L. (2015). More than resisting temptation: Beneficial habits mediate the relationship between self-control and positive life outcomes. Journal of Personality and Social Psychology, 109(3), 508–525.
