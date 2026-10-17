@@ -2,10 +2,10 @@
 layout: base.njk
 permalink: index.html
 title: "ムートン — Philosophy of Life"
-description: "MOUTON — Philosophy of Life。読むだけでは、何も変わらなかった。だから哲学を一つの行動に結びつける。点を打ち、線にして、また点を打つ。悩みから選ぶ哲学の3本（PDF）。"
+description: "MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。"
 bodyClass: site
 assetVersion: "20261017-measure"
-extraCss: ["home.css?v=20261017-archive", "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
+extraCss: ["home.css?v=20261017-who", "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
 ---
 {#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
 <link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp" media="(max-width: 900px)">
@@ -24,7 +24,8 @@ extraCss: ["home.css?v=20261017-archive", "home-static-background.css?v=20261016
 <main>
   {#- 表紙。2026-10-17（夜）：オーナーの言葉「記事を読んだところで人生は何一つ変わらない。行動に結びつける。点と点を線にし、また点を作る。サイクルを回す」を入口にした。
       3枚のカードは、悩みから選ぶ有料の3本（PDF）。知識の記事・身体・食事・アプリはトップから外した（ページは残っている）。
-      言葉は読む人への命令にせず、ムートンの経験として書く（BRAND.md「点と線」）。 #}
+      言葉は読む人への命令にせず、ムートンの経験として書く（BRAND.md「点と線」）。
+      2026-10-17（オーナー）：最初の画面で世界観が分かるように。ムートンは誰か／何をつくるか／あなたに何ができるか を、見出しのすぐ下に置く。 #}
   {%- set ph = site.product.philosophy %}
   {%- set paidList = collections.articles | paidCards %}
   <section class="cover cover-choice cover-choice--entry cover-choice--cycle cover-static" id="top" data-nav="dark" data-nav-solid="dark">
@@ -32,7 +33,13 @@ extraCss: ["home.css?v=20261017-archive", "home-static-background.css?v=20261016
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       <h1 class="cover-title cover-title--choice">読むだけでは、<br>何も変わらなかった。</h1>
-      <p class="cover-lede cover-lede--choice">だから、哲学を一つの行動に結びつける。<br>点を打ち、点と点を線にして、また次の点を打つ。</p>
+      <p class="cover-lede cover-lede--choice">だから、哲学を一つの行動に結びつける。</p>
+      <dl class="cover-who">
+        <div class="cover-who-row"><dt>ムートン</dt><dd>迷いながら、哲学を自分の毎日で試し、記録している一人。先生ではない。</dd></div>
+        <div class="cover-who-row"><dt>つくるもの</dt><dd>哲学者の考えを、いまの悩みに当てて読む文章。キルケゴール、ニーチェ、スピノザ。<span class="nw">PDF・各約15分。</span></dd></div>
+        <div class="cover-who-row"><dt>あなたに</dt><dd>自分で考えて、選んで、試すための材料を置いておく。答えは、あなたが出す。</dd></div>
+      </dl>
+      <p class="cover-actions cover-actions--who"><a class="cover-btn cover-btn--primary" href="#think" data-home-entry="worry">いまの悩みから選ぶ <span aria-hidden="true">↓</span></a><a class="cover-text-link" href="start.html" data-home-entry="about">ムートンについて</a></p>
       <p class="cover-themes-bridge cover-products-label">いまの悩みから、一つ。</p>
       <nav class="cover-choice-grid cover-themes cover-products" id="think" aria-label="悩みから選ぶ">
         {%- for a in paidList %}{% set p = a.data.paid %}{% set live = p.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}
