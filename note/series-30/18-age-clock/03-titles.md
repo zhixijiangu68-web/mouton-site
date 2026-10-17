@@ -24,8 +24,8 @@
 - 確認できた出典：
   - [1] Neugarten, B. L., Moore, J. W., & Lowe, J. C. (1965). Age norms, age constraints, and adult socialization. American Journal of Sociology, 70(6), 710–717.
     （書誌が複数の二次資料で一致。年齢の目安が「ちょうどよい時期」として働くこと、Neugarten が「社会的な時計」の語を名づけたことを、二次資料の要約で確認。）
-  - [2] 厚生労働省「人口動態統計」。2023年は夫31.1歳・妻29.7歳（令和5年の概況の要約と、国立社会保障・人口問題研究所の資料を引く県の資料）。1975年は夫27.0歳・妻24.7歳（年次推移表の全国値と、宮崎県の表で一致）。
-    （検索の要約で確認。原表は開いていない。）
+  - [2] 厚生労働省「人口動態統計」。平均初婚年齢は、2023年が夫31.1歳・妻29.7歳、1975年が夫27.0歳・妻24.7歳。
+    （2023年は令和5年の概況の要約と県の資料で、1975年は厚労省の年次推移表の全国値と宮崎県の表で、それぞれ一致。原表は開いていない。）
   - [3] Nietzsche, Also sprach Zarathustra, Dritter Theil（1884）「Vom Geist der Schwere」。Zeno.org・Nietzsche Source（eKGWB）・Project Gutenberg に該当箇所があり、「Das — ist nun mein Weg, — wo ist der eure? … Den Weg nämlich — den giebt es nicht!」と一致することを確認。
     （訳は僕の訳。邦訳の頁・節番号は未確認。）
 - 確認できなかった点（本文から外したもの・弱めて書いたもの）：
