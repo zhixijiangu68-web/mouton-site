@@ -108,8 +108,9 @@ export default function (eleventyConfig) {
     + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
     + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。読んだあとに書いて試す記事は<a href="journal.html">記事</a>に、哲学の3本は<a href="topic-philosophy.html">こちら</a>にあります。</p></aside>') : html);
   // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
+  // 単品の有料記事（paid.standalone: true）は、哲学の3本の並びに入れない。
   eleventyConfig.addFilter('paidCards', items =>
-    items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
+    items.filter(a => a.data.paid && !a.data.paid.standalone).sort((a, b) => a.data.paid.order - b.data.paid.order));
   eleventyConfig.addFilter('findTopic', (topics, key) => topics.find(t => t.key === key) || null);
   eleventyConfig.addFilter('inTopic', (items, key) => items.filter(a => a.data.topic === key));
   // Curated picks first, then the newest articles on the same topic.
