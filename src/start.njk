@@ -8,9 +8,9 @@ description: "ムートンは、迷いながら哲学を自分の毎日で試し
 mindReads: ["kierkegaard", "nietzsche", "spinoza"]
 steps:
   - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["absorption-freedom-action", "paid-nietzsche"] }
-  - { t: "「僕は、〜する人間だ」と書く", x: "結果（いくら稼ぐ、何キロ痩せる）ではなく、やり方で書く。「僕は、自分との約束を守る人間だ」のように。その一文が、迷ったときの基準になる。", reads: ["sartre"] }
-  - { t: "考えと感情を、道具として扱う", x: "自分次第のことと、そうでないことを分ける。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみる。役に立たないなら、感じきってから手放す。", reads: ["stoicism", "spinoza", "paid-spinoza"] }
-  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。完璧な計画ができるのを待たなくていい。試して、ずれていたら直せばいい。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、逆から考える。「こうすれば確実にうまくいかない」を書き出すと、やめることが見えてくる。", reads: ["kierkegaard", "paid-kierkegaard"] }
+  - { t: "結果ではなく、やり方で自分を言い表す", x: "僕は、いくら稼ぐ、何キロ痩せる、という結果ではなく、「自分との約束を守る人間だ」のように、やり方で自分を言い表すようにしている。その一文が、迷ったときの基準になる。", reads: ["sartre"] }
+  - { t: "考えと感情を、道具として扱う", x: "僕は、自分次第のことと、そうでないことを分けて考える。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみて、役に立たないなら、感じきってから手放す。", reads: ["stoicism", "spinoza", "paid-spinoza"] }
+  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。完璧な計画ができるのを待たず、試して、ずれていたら直す。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、「こうすれば確実にうまくいかない」から逆に考える。僕は、そうしている。", reads: ["kierkegaard", "paid-kierkegaard"] }
   - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。努力しているのに何も変わらないように見える、冬のような時期がある。その時期を、自分を責めずに過ごせるかどうか。", reads: ["camus-sisyphus"] }
 ---
 {% include "partials/nav.njk" %}
@@ -33,7 +33,7 @@ steps:
     <div class="mind-door-reads">
       {%- for a in collections.articles | bySlugs(mindReads) %}
       <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
-        <span class="mind-door-step">STEP {{ loop.index }}</span>
+        <span class="mind-door-step">無料・{{ loop.index }}本目</span>
         <span class="mind-door-read-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
         <span class="mind-door-read-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
         <span class="mind-door-more">読む・約{{ a.data.readMinutes }}分 <span aria-hidden="true">→</span></span>
@@ -88,7 +88,7 @@ steps:
         <span class="mind-act-book-meta">PDF・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円（税込） / {{ 'このサイトで販売中' if paidLive else 'このサイトで販売準備中' }}</span>
       </a>
     </div>
-    <p class="mind-act-close">人生は短い。<br>小さくても、今日から始めてみてほしい。</p>
+    <p class="mind-act-close">人生は、思っているより短い。<br>だから僕は、小さくても今日から始めている。</p>
   </section>
 
   {#- 人が何かを信じたくなる気持ちを、利用しない（BRAND.md「信者をつくらない」）。 #}
@@ -98,17 +98,17 @@ steps:
     <p class="trust-lead">何かを信じたくなるときは、誰にでもあると思う。だからこそ、ここは信じてもらう場所ではなく、あなたが自分で試して確かめる場所にしたい。</p>
     <ul class="trust-list">
       <li><strong>合わなければ、使わなくていい。</strong>読んで合わなかった考えは、そのまま置いていっていい。</li>
-      <li><strong>ムートンは、先生ではない。</strong>同じ悩みを試している一人として、経験と提案を書いている。</li>
+      <li><strong>同じ悩みを試している一人として書く。</strong>先生としてではなく、経験と提案を書いている。</li>
       <li><strong>敵をつくらない。</strong>ほかのやり方にも、合う人と合う時期がある。</li>
       <li><strong>お金の出どころを隠さない。</strong>収入は、有料の記事（PDF）から。以前の記事（アーカイブ）には、本などの紹介（アフィリエイト。リンクに「PR」と表示）と Google の広告が残っている。</li>
       <li><strong>いつでも離れていい。</strong>会員制も定期購読もなく、休んでも失うものはない。</li>
     </ul>
-    <p class="trust-more">広告と紹介の決まりは、編集方針と<a href="privacy.html">プライバシーポリシー</a>に書いている。</p>
+    <p class="trust-more">広告と紹介の決まりは、<a href="privacy.html">プライバシーポリシー</a>と、このページの終わりにある編集方針に書いている。</p>
   </section>
 
   <section class="mind-door" aria-label="人の助けと自分の選択">
     <p class="mind-door-kicker">On asking for help</p>
-    <p class="mind-door-text mind-door-ask"><strong>人は、君が最も助けを必要としているときに、必ず助けてくれるとは限らない。君を助けることが自分の利益になるときに、手を差し伸べることもある。</strong></p>
+    <p class="mind-door-text mind-door-ask"><strong>人は、あなたが最も助けを必要としているときに、必ず助けてくれるとは限らない。あなたを助けることが自分の利益になるときに、手を差し伸べることもある。</strong></p>
     <p class="mind-door-text">これは、人の善意を疑えという話ではない。人にはそれぞれ事情があり、できることにも限りがある。「利益」はお金だけでなく、信頼や相手を大切に思う気持ちにつながることもある。</p>
     <p class="mind-door-text">だから、助けを求めるときは、何に困っていて、何を手伝ってほしいのかを言葉にしてみる。それでも返事が来ないことはある。そんなとき、相手の選択は変えられなくても、自分が次にできることは探せる。</p>
     <p class="mind-door-text"><strong>誰かに頼ることと、自分の人生の舵を手放さないことは、両立できる。</strong></p>
