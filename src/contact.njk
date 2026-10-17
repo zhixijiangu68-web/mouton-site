@@ -19,4 +19,8 @@ heading: お問い合わせ
   <a class="btn {{ 'btn-outline' if (site.contact.formUrl or site.contact.email) else 'btn-dark' }}" href="https://x.com/{{ site.contact.x }}" target="_blank" rel="noopener noreferrer">X（@{{ site.contact.x }}）にメッセージを送る <span aria-hidden="true">↗</span></a>
   {%- endif %}
 </div>
+{%- if legal.ready %}
+<h2>購入についてのお問い合わせ</h2>
+<p>PDF が届かない、開けないなど、購入についてのお問い合わせは <a href="mailto:{{ legal.email }}">{{ legal.email }}</a> へ（{{ legal.hours }}）。購入した日・商品名・購入時のメールアドレスをお知らせください。カード番号などは書かないでください。返品・返金の条件は<a href="legal.html#refund">特定商取引法に基づく表記</a>にあります。</p>
+{%- endif %}
 <p class="doc-small">お知らせいただいた情報の取り扱いについては、<a href="privacy.html">プライバシーポリシー</a>をご覧ください。</p>

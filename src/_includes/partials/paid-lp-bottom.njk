@@ -1,0 +1,82 @@
+{#- 有料記事の販売ページ（後半）：④内容と使い方 → ⑤ムートンが作る理由 → ⑥向いている人・向いていない人 → ⑦価格と購入 → ⑧FAQ。
+    文言は各記事の front matter（paid・lp）と、ここに書いた共通の文から。
+    販売はこのサイトで（Stripe で支払い → メールで PDF）。購入ボタンは、記事の paid.checkoutUrl と、
+    site.product.philosophy の fulfillmentReady（納品の確認済み）・legalUrl（特定商取引法に基づく表記）がそろったときだけ出す。 -#}
+{%- set ph = site.product.philosophy %}
+{%- set live = paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}
+<section class="plp-section plp-contents" aria-labelledby="plp-contents-h">
+  <p class="plp-step">04 / Contents</p>
+  <h2 id="plp-contents-h">内容と使い方</h2>
+  <ol class="plp-toc">
+    {%- for t in lp.toc %}<li>{{ t }}</li>{% endfor %}
+  </ol>
+  <dl class="plp-spec">
+    <div><dt>形式</dt><dd>PDF（スマホ・パソコンで読める。印刷して書き込める）</dd></div>
+    <div><dt>受け取り</dt><dd>お支払いのあと、入力したメールアドレスにダウンロード用のリンクが届く（有効期限7日・最大5回）</dd></div>
+    <div><dt>分量</dt><dd>全文 約{{ paid.minutes }}分。冒頭はこのページで無料で読める</dd></div>
+    <div><dt>ワーク</dt><dd>空欄に書き込む5つのワーク（任意・約10分）</dd></div>
+    <div><dt>地図</dt><dd>最初のページに「いまの状態 → 読むところ」</dd></div>
+    <div><dt>出典</dt><dd>引用には書名と節・章を明記。研究は著者・年・誌名つき</dd></div>
+  </dl>
+  <ol class="plp-howto">
+    <li><strong>地図から読む。</strong>最初のページで、いまの自分に近いところを選ぶ。最初から通して読んでもいい。</li>
+    <li><strong>気になったら、書き込む。</strong>任意。紙かスマホのメモに、ワークの空欄を埋める。正解はない。</li>
+    <li><strong>1週間後に読み返す。</strong>見え方や、踏んだ一歩がどう変わったかを確かめる。</li>
+  </ol>
+</section>
+
+<section class="plp-section plp-why" aria-labelledby="plp-why-h">
+  <p class="plp-step">05 / Why Mouton</p>
+  <h2 id="plp-why-h">ムートンが、これを作る理由</h2>
+  <p>MOUTONは、哲学を知識で終わらせず、自分の人生に落とし込むためのブランドだ。人を外側から飾るのではなく、内側から自分自身をつくっていく。</p>
+  <p>やり方を教えてくれるものは、たくさんある。けれど、状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より、「自分は何を基準に選ぶのか」だと僕は思う。だから、哲学者の考えを悩みに合わせて「使える形」にし、書き込みながら試せるようにした。</p>
+  {%- if lp.compare %}
+  <h3 class="plp-sub-h">ほかの方法と、何が違うのか</h3>
+  <div class="plp-compare" role="table" aria-label="ほかの方法との違い">
+    <div class="plp-compare-row plp-compare-head" role="row"><span role="columnheader">方法</span><span role="columnheader">得られるもの</span><span role="columnheader">残りやすいこと</span></div>
+    {%- for c in lp.compare %}
+    <div class="plp-compare-row{{ ' is-this' if loop.last }}" role="row"><span role="cell">{{ c.method }}</span><span role="cell">{{ c.gives }}</span><span role="cell">{{ c.gap }}</span></div>
+    {%- endfor %}
+  </div>
+  <p class="plp-small">ほかの方法を否定するためではない。どれも役に立つ場面がある。ただ、悩みの根にある「自分の基準」には届きにくい、というのが僕の考えだ。</p>
+  {%- endif %}
+  <p>正しい生き方を押しつけるつもりはない。渡したいのは答えではなく、自分で考えるための問いと、試すための方法だ。原典にあたり、言えないことは言い切らない。それが、僕がこの記事でいちばん守っていることだ。</p>
+</section>
+
+<section class="plp-section plp-fit" aria-labelledby="plp-fit-h">
+  <p class="plp-step">06 / Who it's for</p>
+  <h2 id="plp-fit-h">向いている人・向いていない人</h2>
+  <div class="plp-fit-grid">
+    <div class="plp-fit-col plp-fit-yes"><p class="plp-fit-h">向いている人</p><ul>{% for x in lp.fit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    <div class="plp-fit-col plp-fit-no"><p class="plp-fit-h">向いていない人</p><ul>{% for x in lp.unfit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+  </div>
+</section>
+
+<section class="plp-section plp-buy" id="buy" aria-labelledby="plp-buy-h">
+  <p class="plp-step">07 / Price</p>
+  <h2 id="plp-buy-h">価格と購入</h2>
+  <div class="paywall">
+    <p class="paywall-eyebrow">{{ paid.philosopher }} — {{ paid.title }}</p>
+    <p class="paywall-price">¥{{ paid.price.toLocaleString("ja-JP") }} <span class="paywall-tax">税込</span></p>
+    <p class="paywall-toc">PDF・全文 約{{ paid.minutes }}分・書き込みワーク5つ</p>
+    {% if live %}<a class="buy-btn" href="{{ paid.checkoutUrl }}" rel="noopener">購入する（PDF） <span aria-hidden="true">→</span></a>{% else %}<span class="buy-btn is-soon">このサイトでの販売準備中</span>{% endif %}
+    <p class="paywall-note">買う前に、このページの<a class="plp-light" href="#sample">冒頭（無料）</a>で、文章が自分に合うかを確かめられます。お支払いは Stripe の決済画面で行い、お支払いのあと、入力したメールアドレスに PDF のダウンロード用リンクが届きます（有効期限7日・最大5回。期限内に保存してください）。{% if live %}<a class="plp-light" href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>{% else %}現在は、購入・予約は受け付けていません。{% endif %}</p>
+  </div>
+</section>
+
+<section class="plp-section plp-faq" aria-labelledby="plp-faq-h">
+  <p class="plp-step">08 / FAQ</p>
+  <h2 id="plp-faq-h">よくある質問</h2>
+  {%- for f in lp.faq %}
+  <details class="plp-q"><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+  {%- endfor %}
+  <details class="plp-q"><summary>哲学の本やビジネス書と、何が違いますか？</summary><p>本は、哲学者の考えを広く深く学ぶのに向いている。この記事は範囲を絞っている。いま抱えているひとつの選択について、決めて、最初の一歩を踏むところまで。一般的なビジネス書より少し高い値段にしているのは、知識を増やすことより、その一歩までを書き込みワークで支えるものだからだ。</p></details>
+  <details class="plp-q"><summary>無料の記事とは、何が違いますか？</summary><p>無料の記事は、悩みの見え方を変える一つの視点まで。有料の記事には、場面の例と、読むところの地図と、次の一歩がある。違いは情報の量ではなく、使いやすさだ。{% if paid.free %}考え方が自分に合うかは、<a href="{{ paid.free }}.html">無料の入門記事</a>で先に確かめられる。{% endif %}</p></details>
+  <details class="plp-q"><summary>書き込むのは苦手です。読むだけでも意味がありますか？</summary><p>ある。悩みを違う角度から捉え直せること自体に、価値があると僕は思っている。書き込みワークは任意で、もっと自分に当てはめたいときに使えばいい。</p></details>
+  <details class="plp-q"><summary>3本とも読む必要がありますか？</summary><p>ない。いまの悩みにいちばん近い1本からでいい。<a href="topic-philosophy.html">3人の哲学者の比較</a>から選べる。</p></details>
+  <details class="plp-q"><summary>ムートンの考えを信じないと、使えませんか？</summary><p>信じなくていい。書き込みワークは、自分で確かめるための道具だ。読んで合わなかった考えは、使わなくていい。</p></details>
+  <details class="plp-q"><summary>買ったあと、ほかの商品や会員制の集まりに誘われますか？</summary><p>誘わない。購入のときのメールアドレスは、PDF を届けることと、問い合わせへの返事にだけ使う。会員制のサロンや定期購読はない。</p></details>
+  <details class="plp-q"><summary>購入後の返品・返金はできますか？</summary><p>購入前に、このページの冒頭（無料）で文章が合うかを確かめてほしい。{% if live %}返品・返金の条件は、<a href="{{ ph.legalUrl }}">特定商取引法に基づく表記</a>に載せている。{% else %}返品・返金の条件は、販売を始めるときに「特定商取引法に基づく表記」に載せる。{% endif %}</p></details>
+  <details class="plp-q"><summary>購入したのに、メールが届きません。</summary><p>まず、迷惑メールのフォルダを確かめてほしい。それでも届かないときは、<a href="contact.html">お問い合わせ</a>から、購入した日と記事の名前を知らせてほしい（カード番号などは書かないでほしい）。</p></details>
+  <details class="plp-q"><summary>心の不調の治療の代わりになりますか？</summary><p>ならない。眠れない、食べられない、気分の落ち込みが長く続くなど、生活に支障があるときは、まず医師や専門の相談窓口を頼ってほしい。</p></details>
+</section>

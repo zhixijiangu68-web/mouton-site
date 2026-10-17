@@ -1,0 +1,11 @@
+{#- 実物の見本：PDF の実際のページ（表紙・地図・次の一歩）。画像は「何が届くのか分からない」という引っかかりを外すためのもの。
+    画像は images/paid/<記事のファイル名>-cover|map|next.jpg（納品用 PDF から書き出した一部。全文は公開しない）。 -#}
+{%- set slug = page.fileSlug %}
+<div class="plp-look">
+  <p class="plp-work-h">PDF の中身（実物の一部）</p>
+  <div class="plp-look-grid">
+    <figure><a href="images/paid/{{ slug }}-cover.jpg"><img src="images/paid/{{ slug }}-cover.jpg" alt="PDF の表紙" width="560" height="793" loading="lazy" decoding="async"></a><figcaption>表紙。A5 の PDF で、スマホでも読める。</figcaption></figure>
+    <figure><a href="images/paid/{{ slug }}-map.jpg"><img src="images/paid/{{ slug }}-map.jpg" alt="2ページ目の「この PDF の使い方」と、いまの状態から読むところへの地図" width="560" height="793" loading="lazy" decoding="async"></a><figcaption>2ページ目の地図。いまの状態から、読むところへ。見出しを押すと、そのページに移る。</figcaption></figure>
+  </div>
+  <figure class="plp-look-wide"><a href="images/paid/{{ slug }}-next.jpg"><img src="images/paid/{{ slug }}-next.jpg" alt="最後の「次の一歩」：今日やることと、やめること" width="720" height="{{ 496 if slug == 'paid-nietzsche' else 537 }}" loading="lazy" decoding="async"></a><figcaption>最後の「次の一歩」。今日やることと、やめることを一つずつ。</figcaption></figure>
+</div>

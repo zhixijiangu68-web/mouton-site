@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>MOUTON・COUNT — 制作 — ムートン</title>
+<meta name="description" content="MOUTON・COUNT（GAME / 落ちものパズル）の制作の記録。落ちてくる羊の群れを並べ、横一列がそろうと羊が柵を跳んで数えられる落ちものパズル。22時から数えはじめて、160匹で朝になる。列がそろっても残る黒い羊と、それが生む「れんさ」、4つのアイテム、15の夜のクエストがある。ブラウザで作り、iPhone・Androidのアプリにしている。">
+<link rel="canonical" href="https://moutonarchive.com/making-count.html">
+<meta property="og:title" content="MOUTON・COUNT — 制作 — ムートン">
+<meta property="og:description" content="MOUTON・COUNT（GAME / 落ちものパズル）の制作の記録。落ちてくる羊の群れを並べ、横一列がそろうと羊が柵を跳んで数えられる落ちものパズル。22時から数えはじめて、160匹で朝になる。列がそろっても残る黒い羊と、それが生む「れんさ」、4つのアイテム、15の夜のクエストがある。ブラウザで作り、iPhone・Androidのアプリにしている。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/making-count.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og-default.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@kodoku__alone">
+<meta name="theme-color" content="#f8f5ee">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="design-version.css">
+<script src="site.js" defer></script>
+<script src="quiz-loop.js" defer></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="site doc-page">
+<div class="site-nav" role="banner" data-theme="dark">
+  <a class="site-brand" href="index.html#top">ムートン</a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
+  <nav aria-label="メインナビゲーション">
+    <ul class="site-links" id="site-links">
+      <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
+      <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
+      <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="doc-cover ph-hero" data-nav="dark"></div>
+<main class="doc topic making" data-nav="light" data-nav-solid="light">
+  <a class="mk-back" href="making.html"><span aria-hidden="true">←</span> 制作の一覧へ</a>
+  <header class="mk-head">
+    <p class="mk-eyebrow">PROJECT 004 / GAME / 落ちものパズル</p>
+    <h1 class="doc-title">MOUTON・COUNT</h1>
+    <p class="mk-lead">羊を数える、眠れない夜のパズル。</p>
+    <p>落ちてくる羊の群れを並べ、横一列がそろうと羊が柵を跳んで数えられる落ちものパズル。22時から数えはじめて、160匹で朝になる。列がそろっても残る黒い羊と、それが生む「れんさ」、4つのアイテム、15の夜のクエストがある。ブラウザで作り、iPhone・Androidのアプリにしている。</p>
+    <p><span class="mk-state">制作中</span></p>
+  </header>
+  <figure class="mk-media">
+    <div class="mk-phone" style="background-image:url(images/making/count.jpg)">
+      <img src="images/making/count.jpg" alt="MOUTON・COUNT を遊んでいるところ（連続ボーナスの最中）" loading="lazy" width="390" height="844">
+    </div>
+    <figcaption>MOUTON・COUNT を遊んでいるところ（連続ボーナスの最中）</figcaption>
+  </figure>
+
+  <section class="mk-section" aria-labelledby="mk-now">
+    <p class="mk-eyebrow">01 / 今の状態</p>
+    <h2 id="mk-now">ここまでと、<wbr>次の<wbr>一歩。</h2>
+    <div class="mk-card">
+      <dl>
+        <dt>ここまで</dt><dd><ul><li>落ちものパズルの試作を作った（羊の群れ・黒い羊・れんさ・連続ボーナス・夜空から朝へ変わる空）</li><li>音楽・効果音・振動を入れ、操作（左右・タップで回す・長押し・はらって落とす）を整えた</li><li>クエストモード（15の夜）、ウールで着せかえ、羊飼いランク・実績・月のカレンダーを作った</li><li>4つのアイテム（牧羊犬・入れ替え・ゆっくり・笛）を入れた</li><li>アプリの形にし、GitHubでAndroid・iPhoneのアプリが組み上がることを確かめた。名前を「MOUTON・COUNT」にした</li></ul></dd>
+        <dt>次にやること</dt><dd>Macを使わずにiPhoneのTestFlightへ送り、実機で試す。ストアの説明文とプライバシーポリシーを仕上げて、App StoreとGoogle Playに出す。</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-log">
+    <p class="mk-eyebrow">02 / 制作の記録</p>
+    <h2 id="mk-log">進んだ<wbr>日の<wbr>こと。</h2>
+    <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-15">2026.10.15</time>
+        <div><h3>羊を<wbr>数える<wbr>落ちもの<wbr>パズルを<wbr>作った。</h3><p>眠れない夜に羊の群れを並べる「MOUTON・COUNT」。ルール・音・クエスト・着せかえまで作り、Android と iPhone のアプリが組み上がることを確かめた。</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="mk-section" aria-labelledby="mk-others">
+    <p class="mk-eyebrow">03 / ほかの制作</p>
+    <h2 id="mk-others">ほかに<wbr>作っている<wbr>もの。</h2>
+    <p class="mk-others">
+      <a class="mk-more" href="making-kioku.html">KIOKU <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-diary.html">DIARY <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making-site.html">MOUTON <span aria-hidden="true">→</span></a>
+      <a class="mk-more" href="making.html">制作の一覧 <span aria-hidden="true">→</span></a>
+    </p>
+  </section>
+</main>
+<footer class="mini-footer" data-nav="light" data-nav-solid="light">
+  
+<nav class="footer-map" aria-label="サイトの案内">
+  <div class="footer-map-col">
+    <p class="footer-map-h">テーマ</p>
+    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li><li><a href="series.html#thinkers">連載「哲学者に聞く」</a></li>
+      <li><a href="journal.html">すべての記事</a></li>
+    </ul>
+  </div>
+  <div class="footer-map-col">
+    <p class="footer-map-h">このサイト</p>
+    <ul><li><a href="start.html">はじめての方へ</a></li>
+      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <nav class="footer-links" aria-label="サイト情報">
+  <a href="operator.html">運営者情報</a>
+  <a href="privacy.html">プライバシーポリシー</a>
+  <a href="contact.html">お問い合わせ</a>
+  <a href="en/index.html" hreflang="en" lang="en">English</a>
+  <a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a>
+</nav>
+<p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
+</footer>
+
+</body>
+</html>

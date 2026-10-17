@@ -646,3 +646,6 @@ body.journal-page main{padding-top:72px}
 .journal-filter--lead:not(.active){border-color:var(--gold);color:var(--ink);background:rgba(185,138,50,.1)}
 .journal-tag{display:inline-block;margin:0 0 4px;padding:1px 9px;border:1px solid var(--gold);border-radius:999px;font:500 .6875rem/1.7 var(--gothic);letter-spacing:.08em;color:#7a5a1c}
 .journal-item.is-philosophy .journal-title{font-weight:400}
+/* 有料のページは一覧でもそうと分かるようにする（お金の出どころを隠さない） */
+.journal-tag + .journal-tag{margin-left:6px}
+.journal-tag--paid{border-color:rgba(37,39,36,.4);color:var(--ink)}

@@ -4,14 +4,49 @@
   <title>ムートン</title>
   <link>https://moutonarchive.com/</link>
   <atom:link href="https://moutonarchive.com/feed.xml" rel="self" type="application/rss+xml"/>
-  <description>ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。</description>
+  <description>MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。</description>
   <language>ja</language>
   <item>
-    <title>自分を失っても、誰も気づかない。キルケゴールの「絶望」と「単独者」</title>
+    <title>反省するほど、動けなくなるのはなぜだろう。スピノザ「謙遜は徳ではない」</title>
+    <link>https://moutonarchive.com/spinoza.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/spinoza.html</guid>
+    <pubDate>Fri, 16 Oct 2026 00:00:00 +0000</pubDate>
+    <description>今日できなかったことを夜に数えて、翌朝もっと動けなくなる。スピノザは『エチカ』で、自分の無力を思い浮かべると心は悲しむと書き、その悲しみを謙遜と呼んで「徳ではない」とした。責める時間の正体を考える。</description>
+  </item>
+  <item>
+    <title>どの食事法が、いちばんやせるのか。研究の答えは「続けられるもの」</title>
+    <link>https://moutonarchive.com/diet-adherence.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/diet-adherence.html</guid>
+    <pubDate>Fri, 16 Oct 2026 00:00:00 +0000</pubDate>
+    <description>糖質制限か、脂質制限か。人気の食事法を1年比べた試験でも、48の試験をまとめた分析でも、食事法どうしの差は小さいものでした。体重の減り方と結びついていたのは、どれを選んだかより、どれだけ続けられたかです。</description>
+  </item>
+  <item>
+    <title>決められないのは、弱いからだろうか。キルケゴールの「自由のめまい」</title>
     <link>https://moutonarchive.com/kierkegaard.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/kierkegaard.html</guid>
     <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
-    <description>腕や財布をなくせば、誰でも気づく。でも自分を失うことは、何事もないかのように静かに起きる。キルケゴールは『死に至る病』で、絶望に気づいていないことも絶望の一つの形だと書いた。自分の人生を自分で選ぶことを考える。</description>
+    <description>転職サイトを開いては閉じ、不安が消えるのを待ったまま、今夜も決められない。キルケゴールは『不安の概念』で、不安を「自由のめまい」と呼んだ。その不安は弱さではなく、選べる場所に立っているしるしかもしれない。</description>
+  </item>
+  <item>
+    <title>決められないのは、考えが足りないからではない。——キルケゴールに学ぶ、不安を抱えたまま選ぶ技術（有料・冒頭は無料）</title>
+    <link>https://moutonarchive.com/paid-kierkegaard.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/paid-kierkegaard.html</guid>
+    <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+    <description>転職、独立、人間関係。調べて比べても決められず、先延ばしにしてしまう。キルケゴールの『あれか、これか』『不安の概念』『死に至る病』を手がかりに、不安を抱えたまま選び、選んだことを引き受けるための考え方と、僕の5つの方法をまとめる。</description>
+  </item>
+  <item>
+    <title>その選択は、誰の物差しで決めたのか。——ニーチェに学ぶ、人の物差しから降りて自分の価値をつくる（有料・冒頭は無料）</title>
+    <link>https://moutonarchive.com/paid-nietzsche.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/paid-nietzsche.html</guid>
+    <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+    <description>人の目や評価が気になり、転職や生き方まで「どう思われるか」で決めてしまう。ニーチェの「三つの変化」「君自身であれ」「永劫回帰」を道具にして、他人の物差しから降り、自分の価値をつくる方法を書き込みワークつきでまとめる。</description>
+  </item>
+  <item>
+    <title>続かないのは、意志が弱いからではない。——スピノザ『エチカ』に学ぶ、感情に振り回されない続け方（有料・冒頭は無料）</title>
+    <link>https://moutonarchive.com/paid-spinoza.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/paid-spinoza.html</guid>
+    <pubDate>Thu, 15 Oct 2026 00:00:00 +0000</pubDate>
+    <description>始めたことが三日で止まり、続かない自分を責めて、さらに動けなくなる。スピノザは『エチカ』で、感情は意志では止まらず、はっきり理解したときに受け身ではなくなると書いた。喜びにつないで続けるための考え方と書き込みワーク。</description>
   </item>
   <item>
     <title>欲望がなくなれば、稼ぐ力もなくなる</title>
@@ -110,41 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/ego-depletion-depression.html</guid>
     <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
     <description>我慢すると意志力が減る「エゴ枯渇」は、23の研究室・2,141人の追試で効果がほぼ見られませんでした。絶望感やうつとの関係を示した研究も、小さな実験と相関の調査です。何が言えて何が言えないかを整理します。</description>
-  </item>
-  <item>
-    <title>ピリオドじゃなく、カンマ。GONが選手を「休んだ」理由</title>
-    <link>https://moutonarchive.com/gon.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/gon.html</guid>
-    <pubDate>Fri, 09 Oct 2026 00:00:00 +0000</pubDate>
-    <description>VALORANTのIGLとしてFENNELを率いたGON。準優勝で終えた2025年のあと、彼は引退ではなく「休む」を選んだ。「Deeds, not words」の看板を背負った男が言葉にした、続けるための休み方について。</description>
-  </item>
-  <item>
-    <title>扁桃体とは何か。恐怖をつくる脳の部位と、睡眠・言葉・ストレスの研究</title>
-    <link>https://moutonarchive.com/amygdala.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/amygdala.html</guid>
-    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
-    <description>扁桃体が壊れた人は、ヘビにもお化け屋敷にも怖がらなかった。寝不足の扁桃体は約60%強く反応し、気持ちを言葉にすると反応が下がった。恐怖をつくる脳の部位について、研究を整理します。</description>
-  </item>
-  <item>
-    <title>清潔感を分解する。肌、寝不足、ひげ、歯、服、匂いを研究で確かめる</title>
-    <link>https://moutonarchive.com/cleanliness.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/cleanliness.html</guid>
-    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
-    <description>清潔感は抽象的ですが、分解すると、肌の色ムラ、寝不足の顔、ひげの長さ、歯の色、服のサイズ、匂いといった要素に分かれます。それぞれが相手の印象をどう変えるのかを研究で確かめ、一覧表にしました。</description>
-  </item>
-  <item>
-    <title>ドーパミンを「受け取る側」の話。D2受容体は、環境で変わる</title>
-    <link>https://moutonarchive.com/d2-receptor.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/d2-receptor.html</guid>
-    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
-    <description>ドーパミンが働くには、受け取る受容体が要る。その一つD2受容体は、順位が上がったサルで増え、一晩の徹夜で減った。快感ではなく「欲しい」に関わる仕組みを、研究から整理します。</description>
-  </item>
-  <item>
-    <title>DHEAは「若返りホルモン」なのか。研究と日本での扱いを整理する</title>
-    <link>https://moutonarchive.com/dhea.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/dhea.html</guid>
-    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
-    <description>DHEAは20代前後をピークに年齢とともに下がるホルモンで、「若返りホルモン」と呼ばれてきました。でも高齢者に2年間補った試験では、体力や生活の質の改善は見られませんでした。研究と、日本で医薬品扱いになっている理由を整理します。</description>
   </item>
 </channel>
 </rss>

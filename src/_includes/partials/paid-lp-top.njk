@@ -1,0 +1,54 @@
+{#- 有料記事の販売ページ（前半）：①具体的な悩み → ②この記事で取り組めること。
+    文言は各記事の front matter（paid・lp）から。 -#}
+<section class="plp-section plp-pains" aria-labelledby="plp-pains-h">
+  <p class="plp-step">01 / Worries</p>
+  <h2 id="plp-pains-h">こんな状態が、続いていないか。</h2>
+  <ul class="plp-pains-list">
+    {%- for x in lp.pains %}<li>{{ x }}</li>{% endfor %}
+  </ul>
+  <p class="plp-pains-name">{{ paid.worry }}</p>
+</section>
+
+<section class="plp-section plp-can" aria-labelledby="plp-can-h">
+  <p class="plp-step">02 / What you can do</p>
+  <h2 id="plp-can-h">この記事で取り組めること</h2>
+  <div class="plp-ba">
+    <div class="plp-ba-item"><p class="plp-ba-label">いま</p><p class="plp-ba-text">{{ paid.before }}</p></div>
+    <div class="plp-ba-arrow" aria-hidden="true">→</div>
+    <div class="plp-ba-item plp-ba-after"><p class="plp-ba-label">読んで、書き込んだあと</p><p class="plp-ba-text">{{ paid.after }}</p></div>
+  </div>
+  {%- if lp.reframe %}
+  {#- 読むだけで得られる価値：悩みを違う角度から捉え直せること。有料の理由は情報量ではなく、使いやすさの設計。 #}
+  <div class="plp-read">
+    <p class="plp-read-h">読むだけでも、悩みの見え方が変わる。</p>
+    <p class="plp-read-reframe">{{ lp.reframe }}</p>
+    <p class="plp-read-sub">有料にしているのは、情報の量ではなく、使いやすさのため。</p>
+    <ul class="plp-read-why">
+      <li><strong>自分の悩みに当てはめやすい。</strong>{{ lp.scenes }}など、よくある場面の例に、自分のことを重ねて読める。</li>
+      <li><strong>必要な答えにたどり着ける。</strong>最初のページに「いまの状態 → 読むところ」の地図。全部を読まなくても、近いところから読める。</li>
+      <li><strong>次の行動まで分かる。</strong>最後に、今日できるいちばん小さな一歩と、やめることを一つ。</li>
+    </ul>
+    <details class="plp-map"><summary>地図の中身を見る</summary>
+      <ul class="plp-map-list">{%- for m in lp.map %}<li><span class="plp-map-state">{{ m.state }}</span><span class="plp-map-read">→「{{ m.read }}」</span></li>{% endfor %}</ul>
+    </details>
+  </div>
+  {%- endif %}
+  {%- if lp.scope %}
+  {#- 本との違い：範囲を「自己理解」で終わらせず、ひとつの選択を決めて実行するところまでに絞る。 #}
+  <div class="plp-scope">
+    <p class="plp-scope-h">扱うのは、ひとつの選択だけ。決めて、動くところまで。</p>
+    <p class="plp-scope-target">対象：{{ lp.scope.target }}</p>
+    <p class="plp-scope-sub">書き込むなら（任意・約10分）</p>
+    <ol class="plp-scope-steps">
+      {%- for s in lp.scope.steps %}<li>{{ s }}</li>{% endfor %}
+    </ol>
+    {%- if lp.scope.stop %}
+    {#- 始めることだけでなく、やめることも一つ決める（BRAND.md「始めること・やめること」）。 #}
+    <p class="plp-scope-stop"><span class="plp-scope-stop-label">やめること</span>{{ lp.scope.stop }}</p>
+    {%- endif %}
+    <p class="plp-small">思想の全体像や、人生全体の自己分析は扱わない（それは本のほうが向いている）。変化を約束するものでもない。考える材料と、試す方法を渡すための記事だ。</p>
+  </div>
+  {%- else %}
+  <p class="plp-small">変化を約束するものではない。考える材料と、試す方法を渡すための記事だ。</p>
+  {%- endif %}
+</section>

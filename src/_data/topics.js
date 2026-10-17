@@ -6,6 +6,8 @@ export default [
     en: 'Philosophy',
     ph: 'philosophy',
     intro: '自由、恐怖、セルフイメージ、意味。答えを急がず、問いのまま考えたことを残しています。',
+    // topic-philosophy.html は記事一覧ではなく、3人の哲学者を選ぶページ（partials/philosophy-lp.njk）
+    lpIntro: '考えすぎて決められない、人の目が気になる、感情に振り回されて続かない。悩みに合わせて、キルケゴール・ニーチェ・スピノザから一人を選ぶ。哲学を、読むものから使うものへ。',
   },
   {
     key: 'body',
@@ -13,6 +15,26 @@ export default [
     en: 'Body',
     ph: 'body',
     intro: '体力、血糖値、匂い、口臭。なんとなくの感覚を、研究とデータでもう一度確かめ直しています。',
+    // topic-body.html は、哲学のページと同じく「悩み → 読み替え → 読む記事 → 次」の形（partials/topic-lp.njk）。記事はすべて下に残す
+    lp: {
+      title: 'その不調、どこから整えるか。',
+      for: '流行りの健康法や気合いで、続かなかった人へ。',
+      oneline: '身体を、気分ではなく、確かめられることから。',
+      lead: '生き方が変われば、行動が変わり、やがて外見や日常にも表れる。身体は、その変化がいちばん最後に表れる場所だと僕は思う。だからここでは、研究で確かめられることから、ひとつずつ整える。',
+      worries: [
+        { id: 'look', worry: '人にどう見られているか、清潔感が気になる。',
+          reframe: '清潔感は、顔立ちの話ではない。肌、睡眠、ひげ、歯、服、匂いという、自分で整えられる要素に分けられる。',
+          reads: ['cleanliness', 'first-impression-sleep', 'smell', 'odor-care', 'halitosis'],
+          next: { href: 'cleanliness-science.html', label: '清潔感の科学（PDF）', text: '何をどの順で整えるかを、研究から決める一冊。' } },
+        { id: 'tired', worry: '寝ても疲れがとれない。体力がない。',
+          reframe: '何時間寝たかより、毎日同じ時間に寝起きしているかのほうが、からだと強く結びついていた。体力も、限界の高さより、一日を終えたあとに残る余力で考えられる。',
+          reads: ['body-clock', 'weekend-sleep', 'chronotype', 'nap', 'stamina'] },
+        { id: 'drive', worry: 'やる気が出ない。気分に振り回される。',
+          reframe: '「我慢すると意志力が減る」という説は、大規模な追試ではほぼ確かめられなかった。やる気が出ないのは、意志が弱いからとは限らない。',
+          reads: ['ego-depletion-depression', 'dopamine-performance-habits', 'amygdala', 'prefrontal-inflammation', 'spinoza'],
+          next: { href: 'paid-spinoza.html', label: 'スピノザ「続かないのは、意志が弱いからではない。」', text: '感情の仕組みから、気分に左右されずに続ける形をつくる。', paid: true } },
+      ],
+    },
   },
   {
     key: 'work',
@@ -27,5 +49,23 @@ export default [
     en: 'Food & Science',
     ph: 'food',
     intro: '食べ物、栄養、代謝、成分。健康についての言葉を、論文とデータから確かめています。',
+    lp: {
+      title: 'その食べ方、何を信じて選ぶか。',
+      for: '「体にいい」の情報が多すぎて、何を信じればいいか分からない人へ。',
+      oneline: '食事を、流行りではなく、確かめられることから。',
+      lead: '食事は毎日のことだから、極端な情報に振り回されると疲れてしまう。ここでは、ひとつの食べ物に期待しすぎず、研究で「どこまで言えて、どこから言えないか」を分けてから選ぶ。',
+      worries: [
+        { id: 'info', worry: '「体にいい」「体に悪い」が多すぎて、何を信じればいいか分からない。',
+          reframe: 'コーヒーにも、ダークチョコにも、ブルーベリーにも、研究を読むと「ここまでは言える、ここからは言えない」という線がある。その線が見えると、極端な情報に振り回されにくくなる。',
+          reads: ['coffee', 'dark-chocolate', 'blueberry', 'olive-oil'] },
+        { id: 'diet', worry: '食事制限を始めても、続かない。',
+          reframe: 'パレオダイエットは、短い試験では良い結果があった一方、2年後には差が縮んでいた。始める前に、それが続く食べ方かどうかを見ておきたい。',
+          reads: ['diet-adherence', 'paleo-diet', 'blood-glucose', 'spinoza'],
+          next: { href: 'paid-spinoza.html', label: 'スピノザ「続かないのは、意志が弱いからではない。」', text: '始めても続かないときに、感情の仕組みから続ける形をつくる。', paid: true } },
+        { id: 'buy', worry: '買うとき、どれを選べばいいか分からない。',
+          reframe: '数字の大きさや宣伝の言葉より、ラベルのどこを見るかを先に決めておくと、選ぶのは早くなる。',
+          reads: ['olive-oil-guide', 'dark-chocolate-guide', 'coffee-guide', 'protein-guide'] },
+      ],
+    },
   },
 ];

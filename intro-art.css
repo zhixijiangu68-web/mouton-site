@@ -36,3 +36,12 @@ html.intro .intro-veil::after{opacity:.07}
 @media(max-aspect-ratio:2/3){
  html.intro .intro-veil::before{background-size:cover;-webkit-mask-image:none;mask-image:none}
 }
+/* PC (901px+): use the homepage background across the full screen. Phones keep the sheep-and-moon art above. */
+@media(min-width:901px){
+ html.intro .intro-veil::before{
+  left:0;right:0;width:auto;transform:none;
+  background-image:linear-gradient(180deg,rgba(4,10,25,.5),rgba(4,10,25,.3) 50%,rgba(4,10,25,.62)),url("images/mouton/gold-laurel-wide.webp");
+  background-size:cover;background-position:center;
+  -webkit-mask-image:none;mask-image:none;
+ }
+}

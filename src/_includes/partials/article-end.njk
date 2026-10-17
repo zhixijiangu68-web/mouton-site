@@ -1,8 +1,15 @@
 {% include "partials/series-box.njk" %}
 <p class="read-mark" data-total="{{ collections.articles.length }}" aria-live="polite"></p>
-{%- if quizzes.length and not noQuiz %}
+{#- 販売ページ（paid）には出さない：買うかどうか考えている人を、別の記事へ連れて行かないため。
+    哲学の記事では、3人の哲学者の入門記事の問題を優先する（答えから入門記事へ、入門記事の最後から有料記事へ進める）。
+    それ以外の記事は、関連記事と「選び方」の問題を優先する。 -#}
+{%- if quizzes.length and not noQuiz and not paid %}
+{%- set qPrefer = [] %}
+{%- for s in related or [] %}{% set qPrefer = (qPrefer.push(s), qPrefer) %}{% endfor %}
+{%- if category == 'philosophy' %}{% for a in collections.articles | paidCards %}{% if a.data.paid.free %}{% set qPrefer = (qPrefer.push(a.data.paid.free), qPrefer) %}{% endif %}{% endfor %}
+{%- else %}{% for g in collections.articles | guideCards %}{% set qPrefer = (qPrefer.push(g.page.fileSlug), qPrefer) %}{% endfor %}{% endif %}
 <section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
-<div class="qloop" data-qloop data-exclude="{{ page.fileSlug }}" data-prefer="{{ (related or []) | join(',') }}{% for g in collections.articles | guideCards %},{{ g.page.fileSlug }}{% endfor %}"></div></section>
+<div class="qloop" data-qloop data-exclude="{{ page.fileSlug }}" data-prefer="{{ qPrefer | join(',') }}"></div></section>
 {%- endif %}
 {%- if health %}
 <aside class="article-note" aria-label="ご注意">

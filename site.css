@@ -84,17 +84,17 @@ body.menu-locked{overflow:hidden}
 .site .section-title em{display:block;font-family:var(--latin);font-style:italic;font-weight:300;font-size:.42em;letter-spacing:.01em;margin-top:.5em;opacity:.75}
 .site .copy{font-family:var(--serif);font-size:1.0625rem;line-height:2.05;color:#45473f}
 
-[class*="ph-"]{--ph:var(--ph-img,none) center/cover no-repeat,var(--ph-grad)}
+[class*="ph-"]{--ph:linear-gradient(180deg,rgba(4,10,25,.72) 0,rgba(4,10,25,.38) 34%,rgba(4,10,25,.12) 62%,rgba(4,10,25,.4) 100%),var(--ph-img,none) var(--ph-pos,center)/cover no-repeat,var(--ph-grad)}
 /* Scenes further down fetch their art only when they come close (see site.js). */
 .js .scene:not(.scene-hero):not(.near) .scene-media{--ph-img:none}
-/* Placeholder art, shown until the matching file in images/ exists: a painted
-   stand-in from images/placeholder/, over a gradient while it loads. */
-.scene-media.is-placeholder::after,.cover.is-placeholder::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.22) 1px,transparent 1.6px) 0 0/7px 7px;mix-blend-mode:soft-light}
-.ph-hero{--ph-img:url("images/placeholder/hero.jpg");--ph-grad:radial-gradient(circle at 74% 30%,rgba(255,236,190,.95) 0 6%,rgba(255,230,180,.35) 16%,transparent 34%),radial-gradient(ellipse 34% 9% at 24% 62%,rgba(255,255,255,.92),transparent 72%),radial-gradient(ellipse 22% 7% at 36% 58%,rgba(255,255,255,.8),transparent 72%),radial-gradient(ellipse 30% 8% at 78% 76%,rgba(255,255,255,.75),transparent 72%),linear-gradient(180deg,#0f3fbf 0%,#2f6ad8 38%,#86aee9 72%,#efe4cf 100%)}
-.ph-think,.ph-philosophy{--ph-img:url("images/placeholder/think.jpg");--ph-grad:radial-gradient(circle at 68% 42%,#f6dc96 0 5%,#c99a3e 10%,rgba(185,138,50,.0) 22%),radial-gradient(ellipse 26% 8% at 22% 80%,rgba(255,255,255,.85),transparent 72%),linear-gradient(165deg,#081f6e 0%,#1442c4 55%,#4f86e0 100%)}
-.ph-body,.ph-making{--ph-img:url("images/placeholder/body.jpg");--ph-grad:radial-gradient(circle at 34% 56%,rgba(185,138,50,.65) 0 9%,rgba(185,138,50,.2) 20%,transparent 32%),radial-gradient(circle at 34% 56%,transparent 0 24%,rgba(120,84,36,.18) 24.3% 24.8%,transparent 25.2%),linear-gradient(135deg,#f4ddc2 0%,#e8c6a1 50%,#f7eadb 100%)}
-.ph-food{--ph-img:url("images/placeholder/food.jpg");--ph-grad:radial-gradient(ellipse 4% 6% at 22% 30%,#d9ae4c 60%,transparent 64%),radial-gradient(ellipse 3.5% 5.5% at 72% 24%,#c99a3e 60%,transparent 64%),radial-gradient(ellipse 4% 6% at 58% 64%,#e0b75a 60%,transparent 64%),radial-gradient(ellipse 3% 4.5% at 86% 70%,#c39438 60%,transparent 64%),radial-gradient(ellipse 3% 5% at 12% 76%,#b98a32 60%,transparent 64%),radial-gradient(ellipse 60% 40% at 50% 50%,#2c63d6 0,transparent 70%),linear-gradient(160deg,#1d2716 0%,#384a26 45%,#1c2a15 100%)}
-.ph-about,.ph-books{--ph-img:url("images/placeholder/about.jpg");--ph-grad:radial-gradient(circle at 70% 38%,rgba(255,240,205,.9) 0 7%,transparent 30%),linear-gradient(180deg,#d9e4f3 0%,#efe8da 60%,#e7dcc8 100%)}
+/* Placeholder dots for scene art that has no file yet (the page bands below use the moonlit art). */
+.scene-media.is-placeholder::after{content:"";position:absolute;inset:0;background:radial-gradient(rgba(255,255,255,.22) 1px,transparent 1.6px) 0 0/7px 7px;mix-blend-mode:soft-light}
+/* 帯（ページ上部の絵）は、トップと同じ月夜の絵でそろえる（2026-10-17、オーナーの判断で B 案）。
+   哲学・案内・本・仕事＝月桂樹と三日月（トップと同じ絵）、身体＝金の球、食事＝満月と木の実。
+   上側を暗くして、ナビの文字を読みやすくする。絵の読み込み前は紺のグラデーション。 */
+.ph-hero,.ph-think,.ph-philosophy,.ph-about,.ph-books,.ph-work{--ph-img:url("images/mouton/gold-laurel-wide.webp");--ph-pos:center 18%;--ph-grad:linear-gradient(180deg,#071324 0%,#0b1a3a 100%)}
+.ph-body,.ph-making{--ph-img:url("images/mouton/orb-dark-wide.webp");--ph-pos:center 45%;--ph-grad:linear-gradient(180deg,#050b18 0%,#0b1a3a 100%)}
+.ph-food{--ph-img:url("images/mouton/moon-botanical-wide.webp");--ph-pos:center 40%;--ph-grad:linear-gradient(180deg,#061024 0%,#0e2048 100%)}
 
 
 /* ---------- Site information: footer links, notes, author ---------- */
@@ -456,7 +456,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .start-path-more{margin-top:auto;padding-top:6px;font-size:.8125rem;color:var(--blue)}
 .start-page .guide-group-title{margin-top:56px}
 /* Footer site map */
-.footer-map{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px 32px;width:min(1040px,100%);margin:0 auto 28px;padding:0 0 28px;border-bottom:1px solid currentColor;border-bottom-color:rgba(127,127,127,.25);text-align:left}
+.footer-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px;width:min(1040px,100%);margin:0 auto 28px;padding:0 0 28px;border-bottom:1px solid currentColor;border-bottom-color:rgba(127,127,127,.25);text-align:left}
 .footer-map-h{margin:0 0 10px;font-family:Inter,sans-serif;font-size:.6875rem;letter-spacing:.18em;text-transform:uppercase;opacity:.65}
 .footer-map ul{margin:0;padding:0;list-style:none}
 .footer-map li{margin:0}
@@ -547,10 +547,10 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 /* Philosophy first: the mindset door on the start page and the articles page. */
 .mind-door{margin:28px 0 48px;padding:clamp(26px,5vw,48px);border-radius:14px;background:#1b1c19;color:#f1ebdf}
 .mind-door-kicker,.doc .mind-door-kicker{color:#e7c983;margin:0 0 14px;font:400 .6875rem/1.8 Inter,sans-serif;letter-spacing:.24em;text-transform:uppercase;opacity:.9}
-.doc .mind-door-title,.mind-door-title{margin:0 0 18px;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.5;color:#f8f5ee}
+.doc .mind-door-title,.mind-door-title{border:0;padding:0;margin:0 0 18px;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.5;color:#f8f5ee}
 .doc .mind-door-text,.mind-door-text{margin:0 0 12px;font-family:var(--serif);font-size:1rem;line-height:2;color:#f1ebdf}
 .mind-door-text strong{font-weight:600;color:#fff}
-.mind-door-reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:26px 0 18px}
+.mind-door-reads{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px;margin:26px 0 18px}
 .doc .mind-door-read,.mind-door-read{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid rgba(241,235,223,.28);border-radius:12px;background:rgba(255,255,255,.06);color:#f8f5ee;text-decoration:none;transition:border-color .3s,background-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
 .mind-door-read:hover{border-color:var(--gold);background:rgba(255,255,255,.1);transform:translateY(-2px)}
 .mind-door-read:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
@@ -560,3 +560,320 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .mind-door-more{margin-top:auto;padding-top:4px;font-size:.8125rem;color:#e7c983}
 .mind-door-all{margin:0;font-size:.875rem}
 .doc .mind-door-all a,.mind-door-all a{color:#f1ebdf;text-decoration:underline;text-underline-offset:4px}
+
+/* ---------- 有料記事（paid-*.html）のペイウォールと、哲学のテーマページ（3人の哲学者） ---------- */
+.paid-badge{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border:1px solid var(--gold,#b98a32);border-radius:999px;color:#7a5a1c;font-family:Inter,sans-serif;font-size:.75rem;letter-spacing:.1em}
+.paid-sub{font-family:"Noto Serif JP",serif;font-size:clamp(1.0625rem,2vw,1.375rem);line-height:1.8;color:#45473f;margin:-30px 0 26px}
+article blockquote{margin:36px 0;padding:6px 0 6px 22px;border-left:2px solid var(--gold,#b98a32)}
+article blockquote p{margin:0;font-size:1rem;line-height:2.1;color:#3a3c36}
+article .paid-preview-list{padding-left:1.3em;margin:0 0 27px}
+article .paid-preview-list li{font-family:"Noto Serif JP",serif;font-size:1rem;line-height:2;margin:4px 0}
+
+/* 無料パートの終わり：本文がフェードして、販売カードへ */
+.paywall-fade{position:relative;height:120px;margin-top:-120px;background:linear-gradient(rgba(244,241,233,0),rgba(244,241,233,.96));pointer-events:none}
+.paywall{margin:24px 0 0;padding:clamp(26px,5vw,48px);border-radius:14px;background:linear-gradient(160deg,#0b2f97,#1442c4 70%,#2559d6);color:#fff;text-align:center}
+.paywall p{color:#fff;margin:0}
+.paywall-eyebrow{font-family:"Cormorant Garamond",serif;font-style:italic;font-size:1.0625rem;opacity:.85}
+.paywall-title{font-family:"Noto Serif JP",serif;font-weight:300;font-size:clamp(1.25rem,2.6vw,1.75rem)!important;line-height:1.6!important;margin:10px 0 6px!important}
+.paywall-price{font-family:"Cormorant Garamond",serif;font-size:clamp(2.25rem,5vw,3rem)!important;line-height:1.3!important;margin:8px 0 4px!important}
+.paywall-note{font-family:Inter,sans-serif;font-size:.8125rem!important;line-height:1.8!important;opacity:.82;margin-top:14px!important}
+.buy-btn{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;margin-top:18px;padding:12px 32px;border-radius:999px;background:#fff;color:#1b1c19;text-decoration:none;font-family:Inter,sans-serif;font-size:1rem;letter-spacing:.04em;transition:transform .3s,background .3s}
+.buy-btn:hover{background:#f8f5ee;transform:translateY(-2px)}
+.buy-btn.is-soon{background:rgba(255,255,255,.18);color:#fff;border:1px dashed rgba(255,255,255,.6);cursor:default;transform:none}
+.buy-btn:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.other-philosophers{margin:56px 0 0;padding-top:32px;border-top:1px solid rgba(37,39,36,.22)}
+.other-philosophers h2{margin:0 0 22px!important;font-size:1.25rem!important}
+
+/* ---------- 哲学LP ---------- */
+.lp-hero-title{word-break:keep-all}
+.lp-lede{font-size:1.0625rem!important;line-height:2.1!important}
+.lp-worries{list-style:none;padding:0!important;margin:28px 0 8px!important;display:grid;gap:10px}
+.lp-worries li{margin:0!important;padding:0;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:1rem;transition:border-color .25s}
+.lp-worries li:hover{border-color:var(--gold)}
+.doc .lp-worries a,.lp-worries a{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 14px;padding:14px 18px;color:var(--ink);text-decoration:none}
+.lp-worries a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:10px}
+.lp-worry-text{font-family:var(--serif);line-height:1.8}
+.lp-worry-to{font-size:.8125rem;color:#7a5a1c;white-space:nowrap}
+.doc .lp-oneline,.lp-oneline{margin:0 0 18px;font-family:var(--serif);font-size:clamp(1.1rem,2.6vw,1.35rem);line-height:1.8;color:#7a5a1c}
+.lp-section{margin-top:72px}
+.lp-section > h2{border-top:0!important;padding-top:0!important;margin-top:0!important}
+
+
+/* 哲学者カード */
+.ph-cards{display:grid;gap:20px}
+.ph-card{display:grid;grid-template-columns:minmax(0,1fr);gap:0;border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line);scroll-margin-top:calc(var(--nav-h) + 16px);transition:box-shadow .4s,transform .4s}
+.ph-card.is-picked{box-shadow:0 0 0 3px var(--blue),0 24px 60px rgba(20,66,196,.18)}
+.ph-card-head{padding:clamp(26px,4vw,40px);color:#fff;background:linear-gradient(160deg,#081f6e,#1442c4 70%,#4f86e0)}
+.ph-card[data-ph="nietzsche"] .ph-card-head{background:linear-gradient(160deg,#2a1a0a,#7a4b16 60%,#b98a32)}
+.ph-card[data-ph="spinoza"] .ph-card-head{background:linear-gradient(160deg,#16261d,#2f5a45 60%,#5f8f74)}
+.ph-card-head p{color:#fff!important;margin:0}
+.ph-name-en{font-family:var(--latin);font-style:italic;font-size:1.125rem!important;opacity:.85}
+.ph-name{font-family:var(--serif);font-weight:300;font-size:clamp(1.75rem,4vw,2.5rem)!important;line-height:1.4!important;margin:4px 0 10px!important;letter-spacing:.06em}
+.ph-for{font-size:.9375rem!important;opacity:.9}
+.ph-card-body{padding:clamp(24px,4vw,40px)}
+.ph-card-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.375rem,3vw,1.875rem);line-height:1.6;margin:0 0 6px;padding:0;border:0}
+.ph-card-sub{color:var(--muted)!important;margin-bottom:18px!important}
+.ph-learn{margin:0 0 22px!important}
+.ph-card-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px}
+.ph-card-foot .btn{color:var(--paper)!important}
+.ph-free{margin:14px 0 0!important;font-size:.9375rem!important}
+.paywall-toc{font-size:.9375rem!important;line-height:1.9!important;opacity:.9}
+.paid-back{margin-top:28px}
+.paid-back a{color:var(--blue,#1442c4);text-underline-offset:4px}
+.lp-series{display:inline-flex;align-items:center;min-height:48px;text-underline-offset:4px}
+.lp-free-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px}
+.ph-meta{font-size:.875rem!important;color:var(--muted)!important;margin:0!important}
+.ph-card.featured .ph-card-head{padding-top:clamp(34px,5vw,56px)}
+.ph-featured{display:inline-block;margin-bottom:12px!important;padding:2px 12px;border:1px solid rgba(255,255,255,.7);border-radius:999px;font-family:Inter,sans-serif;font-size:.75rem!important;letter-spacing:.12em}
+@media(min-width:860px){
+ .ph-card.featured{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+ .ph-cards-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+}
+.ph-cards-pair{display:grid;gap:20px}
+.lp-free{padding-top:32px;border-top:1px solid var(--line)}
+@media(prefers-reduced-motion:reduce){.ph-card{transition:none}}
+.ph-card-head{display:flex;flex-direction:column;align-items:flex-start;gap:20px}
+.ph-portrait{position:relative;flex:0 0 auto;width:132px;aspect-ratio:4/5;margin:0;border-radius:999px 999px 10px 10px;overflow:hidden;background:rgba(255,255,255,.14);box-shadow:0 0 0 1px rgba(255,255,255,.45),0 14px 34px rgba(0,0,0,.28)}
+.ph-portrait img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 22%;filter:grayscale(1) contrast(1.05);mix-blend-mode:luminosity}
+.ph-portrait-mark{position:absolute;inset:0;display:none;place-items:center;font-family:var(--serif);font-weight:200;font-size:2.75rem;color:#fff}
+.ph-portrait.is-missing img{display:none}
+.ph-portrait.is-missing .ph-portrait-mark{display:grid}
+.ph-card.featured .ph-portrait{width:clamp(132px,30vw,176px)}
+.ph-card-id{min-width:0}
+.ph-credit{margin:18px 0 0!important;font-size:.75rem!important;line-height:1.7!important;color:var(--muted)!important}
+
+.mind-act{margin:0 0 56px;padding:clamp(26px,5vw,48px);border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.7)}
+.mind-act .mind-door-kicker{color:#7a5a1c;opacity:1}
+.doc .mind-act-title,.mind-act-title{border:0;padding:0;margin:0 0 16px;font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,3.8vw,2.2rem);line-height:1.6;color:var(--ink)}
+.doc .mind-act-text,.mind-act-text{margin:0 0 22px;font-family:var(--serif);font-size:1.0625rem;line-height:2}
+.mind-act-books{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:0 0 26px}
+.doc .mind-act-book,.mind-act-book{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);text-decoration:none;transition:border-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
+.mind-act-book:hover{border-color:var(--gold);transform:translateY(-2px)}
+.mind-act-book:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.mind-act .mind-door-step{color:#7a5a1c}
+.mind-act-book-title{font-family:var(--serif);font-size:1.1875rem;line-height:1.6}
+.mind-act-book-text{font-size:.875rem;line-height:1.85;color:var(--muted)}
+.mind-act-book-meta{margin-top:auto;padding-top:4px;font-size:.8125rem;color:var(--blue)}
+.doc .mind-act-close,.mind-act-close{margin:0;font-family:var(--serif);font-size:clamp(1.2rem,3vw,1.6rem);line-height:1.8;color:var(--ink)}
+
+.doc .mind-door-text.mind-door-lines,.mind-door-text.mind-door-lines{font-size:1.0625rem}
+.mind-door-rule{margin:26px 0;border:0;border-top:1px solid rgba(241,235,223,.2)}
+
+/* Philosophy LP: why philosophy */
+.lp-why-list{margin:22px 0 18px;padding-left:1.4em}
+.doc .lp-why-list li,.lp-why-list li{margin:0 0 14px;line-height:2}
+.lp-why-list strong{display:block;font-weight:600}
+
+/* Free philosophy articles: the card that leads to the paid article (partials/paid-cta.njk) */
+.paid-cta{margin:56px 0 40px;padding:clamp(24px,5vw,40px);border-radius:14px;background:#1b1c19;color:#f1ebdf;text-align:left}
+article .paid-cta p{margin:0;font-family:var(--serif)}
+.paid-cta .paid-cta-kicker{margin:0 0 12px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.2em;color:#e7c983}
+.paid-cta .paid-cta-title{margin:0 0 6px;font-size:clamp(1.3rem,3.6vw,1.75rem);line-height:1.6;color:#f8f5ee}
+.paid-cta .paid-cta-sub{margin:0 0 16px;font-size:.9375rem;line-height:1.8;color:rgba(241,235,223,.8)}
+.paid-cta .paid-cta-text{margin:0 0 22px;font-size:.9375rem;line-height:2;color:#f1ebdf}
+.paid-cta .paid-cta-action{margin:0 0 12px}
+.paid-cta .paid-cta-btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 22px;border-radius:999px;background:#e7c983;color:#1b1c19;font:600 .9375rem/1.4 var(--gothic);text-decoration:none}
+.paid-cta .paid-cta-btn:hover{background:#f1d79a}
+.paid-cta .paid-cta-btn:focus-visible{outline:2px solid #f8f5ee;outline-offset:3px}
+.paid-cta .paid-cta-meta{font:400 .75rem/1.7 var(--gothic);color:rgba(241,235,223,.65)}
+.paid-cta .paid-cta-all{margin-top:18px;font-size:.8125rem}
+.paid-cta .paid-cta-all a{color:#f1ebdf;text-decoration:underline;text-underline-offset:4px}
+
+/* Paid article product page (partials/paid-lp-*.njk): 悩み → 取り組めること → 見本 → 内容 → 理由 → 向き不向き → 価格 → FAQ */
+body.article-page article .plp-section{margin:64px 0 0}
+body.article-page article .plp-step{margin:0 0 6px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.22em;color:#7a5a1c}
+body.article-page article .plp-section > h2{margin:0 0 22px}
+body.article-page article .plp-small{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+body.article-page article .plp-pains-list{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
+body.article-page article .plp-pains-list li{margin:0;padding:14px 18px 14px 44px;position:relative;background:rgba(255,255,255,.6);border:1px solid var(--line);border-radius:10px;font-family:"Noto Serif JP",serif;font-size:.9375rem;line-height:1.9}
+body.article-page article .plp-pains-list li::before{content:"";position:absolute;left:18px;top:1.35em;width:12px;height:12px;border:1.5px solid #7a5a1c;border-radius:3px}
+body.article-page article .plp-pains-name{margin:0;font-size:clamp(1.05rem,2.4vw,1.3rem);line-height:1.9;font-weight:600}
+body.article-page article .plp-ba{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:stretch;margin:0 0 22px}
+body.article-page article .plp-ba-item{padding:18px 20px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.55)}
+body.article-page article .plp-ba-after{background:#1b1c19;border-color:#1b1c19}
+body.article-page article .plp-ba-after p{color:#f1ebdf}
+body.article-page article .plp-ba-label{margin:0 0 6px!important;font:500 .6875rem/1.6 Inter,sans-serif!important;letter-spacing:.14em;color:#7a5a1c}
+body.article-page article .plp-ba-after .plp-ba-label{color:#e7c983}
+body.article-page article .plp-ba-text{margin:0!important;font-size:.9375rem!important;line-height:1.9!important}
+body.article-page article .plp-ba-arrow{align-self:center;font-size:1.25rem;color:#7a5a1c}
+@media(max-width:640px){body.article-page article .plp-ba{grid-template-columns:1fr}body.article-page article .plp-ba-arrow{justify-self:center;transform:rotate(90deg)}}
+body.article-page article .plp-learn{margin:0 0 14px;padding-left:1.3em}
+body.article-page article .plp-learn li{font-family:"Noto Serif JP",serif;line-height:2;margin:2px 0}
+body.article-page article .plp-sample-body{position:relative;padding:clamp(22px,4vw,36px);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.7)}
+body.article-page article .plp-sample-body h3{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(1.15rem,2.4vw,1.4rem);line-height:1.7;margin:40px 0 18px}
+body.article-page article .plp-sample-cut{margin:28px 0 0!important;text-align:center;font:500 .75rem/1.6 Inter,sans-serif!important;letter-spacing:.2em;color:#7a5a1c}
+body.article-page article .plp-work{margin:18px 0 0;padding:20px 22px;border:1px dashed rgba(122,90,28,.6);border-radius:12px}
+body.article-page article .plp-work-h{margin:0 0 10px!important;font:500 .75rem/1.6 Inter,sans-serif!important;letter-spacing:.12em;color:#7a5a1c}
+body.article-page article .plp-work-list{margin:0;padding-left:1.4em}
+body.article-page article .plp-work-list li{font-family:"Noto Serif JP",serif;line-height:2.1;margin:4px 0}
+body.article-page article .plp-toc{margin:0 0 22px;padding-left:1.5em}
+body.article-page article .plp-toc li{font-family:"Noto Serif JP",serif;line-height:2;margin:2px 0}
+body.article-page article .plp-spec{margin:0 0 24px;display:grid;gap:0;border-top:1px solid var(--line)}
+body.article-page article .plp-spec > div{display:grid;grid-template-columns:5.5em minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+body.article-page article .plp-spec dt{font:500 .8125rem/1.8 Inter,"Noto Sans JP",sans-serif;color:#7a5a1c}
+body.article-page article .plp-spec dd{margin:0;font-size:.9375rem;line-height:1.8}
+body.article-page article .plp-howto{margin:0;padding-left:1.5em}
+body.article-page article .plp-howto li{font-family:"Noto Serif JP",serif;line-height:2;margin:6px 0}
+body.article-page article .plp-fit-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+body.article-page article .plp-fit-col{padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.55)}
+body.article-page article .plp-fit-no{background:transparent}
+body.article-page article .plp-fit-h{margin:0 0 8px!important;font-weight:600}
+body.article-page article .plp-fit-col ul{margin:0;padding-left:1.2em}
+body.article-page article .plp-fit-col li{font-family:"Noto Serif JP",serif;font-size:.9375rem;line-height:1.95;margin:4px 0}
+body.article-page article .plp-buy .paywall{margin-top:0}
+body.article-page article .plp-q{border-bottom:1px solid var(--line)}
+body.article-page article .plp-q summary{cursor:pointer;padding:16px 0;font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.8;list-style:none;position:relative;padding-right:28px}
+body.article-page article .plp-q summary::-webkit-details-marker{display:none}
+body.article-page article .plp-q summary::after{content:"+";position:absolute;right:4px;top:14px;font-size:1.25rem;color:#7a5a1c}
+body.article-page article .plp-q[open] summary::after{content:"−"}
+body.article-page article .plp-q summary:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
+body.article-page article .plp-q p{margin:0 0 18px!important;font-size:.9375rem!important;line-height:2!important}
+body.article-page article .paywall p{color:#fff}
+body.article-page article .paywall .paywall-tax{font-size:.875rem;font-family:Inter,sans-serif;letter-spacing:.06em;opacity:.85}
+body.article-page article .paywall .paywall-note{opacity:.85}
+/* Paid page: first screen and comparison */
+body.article-page article .plp-benefits{list-style:none;margin:0 0 22px;padding:0;display:grid;gap:8px}
+body.article-page article .plp-benefits li{position:relative;margin:0;padding-left:30px;font-family:"Noto Serif JP",serif;font-size:1rem;line-height:1.85}
+body.article-page article .plp-benefits li::before{content:"✓";position:absolute;left:4px;top:0;color:#7a5a1c;font-family:Inter,sans-serif;font-weight:600}
+body.article-page article .plp-hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin:0 0 14px}
+body.article-page article a.plp-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 26px;border-radius:999px;background:#1b1c19;color:#f8f5ee;font:600 .9375rem/1.4 Inter,"Noto Sans JP",sans-serif;text-decoration:none}
+body.article-page article a.plp-btn:hover{background:#33352f}
+body.article-page article a.plp-btn:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
+body.article-page article .plp-hero-more{font-size:.9375rem}
+body.article-page article .plp-product{margin:0 0 22px;font-size:.8125rem;line-height:1.8;color:var(--muted,#666a64)}
+body.article-page article .plp-sub-h{margin:34px 0 14px;font-family:"Noto Serif JP",serif;font-weight:400;font-size:1.125rem;line-height:1.7}
+body.article-page article .plp-compare{margin:0 0 10px;border-top:1px solid var(--line)}
+body.article-page article .plp-compare-row{display:grid;grid-template-columns:1.1fr 1fr 1.4fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.875rem;line-height:1.8}
+body.article-page article .plp-compare-head{font:500 .75rem/1.6 Inter,"Noto Sans JP",sans-serif;color:#7a5a1c;letter-spacing:.06em}
+body.article-page article .plp-compare-row.is-this{background:rgba(185,138,50,.1);padding:12px 10px;margin:0 -10px;border-radius:8px;border-bottom:0;font-weight:600}
+@media(max-width:640px){
+ body.article-page article .plp-compare-head{display:none}
+ body.article-page article .plp-compare-row{grid-template-columns:1fr;gap:2px}
+ body.article-page article .plp-compare-row span:first-child{font-weight:600}
+ body.article-page article .plp-compare-row span:nth-child(2)::before{content:"得られるもの：";color:#7a5a1c}
+ body.article-page article .plp-compare-row span:nth-child(3)::before{content:"残りやすいこと：";color:#7a5a1c}
+}
+body.article-page article .paywall a.plp-light{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+/* Start page: MOUTON's order of change */
+.change-order{margin:0 0 48px}
+.doc .change-order-title,.change-order-title{border:0;padding:0;margin:0 0 12px;font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,3.8vw,2.1rem);line-height:1.6;color:var(--ink)}
+.change-order .mind-door-kicker{color:#7a5a1c;opacity:1}
+.doc .change-order-lead,.change-order-lead{margin:0 0 22px}
+.change-steps{list-style:none;margin:0;padding:0;display:grid;gap:0;border-left:1px solid rgba(122,90,28,.45);margin-left:14px}
+.doc .change-steps li,.change-step{position:relative;margin:0;padding:0 0 26px 30px}
+.change-step-n{position:absolute;left:-15px;top:0;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:#1b1c19;color:#e7c983;font:500 .8125rem/1 Inter,sans-serif}
+.doc .change-step-t,.change-step-t{margin:2px 0 6px;font-family:var(--serif);font-size:1.0625rem;line-height:1.7;font-weight:600;color:var(--ink)}
+.doc .change-step-x,.change-step-x{margin:0 0 8px;font-size:.9375rem;line-height:1.95}
+.doc .change-step-reads,.change-step-reads{margin:0;display:flex;flex-wrap:wrap;gap:0 14px;font-size:.8125rem;line-height:1.7}
+/* 指で押しやすい高さ（32px）。見た目の行間はこれまでとほぼ同じ */
+.doc .change-step-reads a{display:inline-flex;align-items:center;min-height:32px;color:var(--blue);text-underline-offset:3px}
+.change-paid{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--gold);border-radius:999px;font-size:.6875rem;line-height:1.6;color:#7a5a1c;text-decoration:none;vertical-align:1px}
+
+/* Paid page: one line in the reader's own words, above the headline */
+body.article-page article .plp-hook{margin:0 0 18px;padding-left:14px;border-left:2px solid #b98a32;font-family:"Noto Serif JP",serif;font-size:clamp(1.0625rem,2.2vw,1.3rem);line-height:1.8;color:#45473f}
+/* Philosophy page: who it's for, and what is (not) here */
+.doc .lp-for,.lp-for{margin:-6px 0 6px;font-family:var(--serif);font-size:clamp(1rem,2.2vw,1.15rem);line-height:1.8;color:var(--ink)}
+.doc .lp-contrast-h,.lp-contrast-h{margin:30px 0 12px;font-family:var(--serif);font-weight:400;font-size:1.125rem;line-height:1.7;border:0;padding:0}
+.lp-contrast{margin:0 0 10px;border-top:1px solid var(--line)}
+.lp-contrast-row{display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.9375rem;line-height:1.8}
+.lp-contrast dt{color:var(--muted,#666a64)}
+.lp-contrast dd{margin:0;font-weight:600;color:var(--ink)}
+.lp-contrast dd::before{content:"→ ";color:#7a5a1c;font-weight:400}
+.doc .lp-contrast-note,.lp-contrast-note{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+@media(max-width:560px){.lp-contrast-row{grid-template-columns:1fr;gap:0}}
+/* Free articles: a one-minute writing prompt before the paid card (value first, never hidden) */
+body.article-page article .mini-work{margin:56px 0 0;padding:clamp(22px,4.5vw,36px);border:1px dashed rgba(122,90,28,.6);border-radius:12px;background:rgba(255,255,255,.3)}
+body.article-page article .mini-work-kicker{margin:0 0 6px!important;font:500 .6875rem/1.6 Inter,sans-serif!important;letter-spacing:.2em;text-transform:uppercase;color:#7a5a1c}
+body.article-page article .mini-work h2{margin:0 0 14px;font-size:clamp(1.25rem,2.6vw,1.5rem)}
+body.article-page article .mini-work-lines{margin:0 0 14px;padding-left:1.4em}
+body.article-page article .mini-work-lines li{font-family:"Noto Serif JP",serif;line-height:2.1;margin:6px 0}
+body.article-page article .mini-work-note{margin:0!important;font-size:.8125rem!important;line-height:1.9!important;color:var(--muted,#666a64)}
+.paid-cta .paid-cta-bridge{margin:0 0 14px;font-size:.875rem;line-height:1.9;color:#d9d2c3}
+body.article-page article .mw-blank,body.article-page article .plp-work-list .mw-blank{white-space:nowrap}
+
+/* Three paid articles as one path: 選ぶ → 自分の物差しで → 続ける */
+body.article-page article .paid-series-list{list-style:none;margin:22px 0 14px;padding:0;display:grid;gap:10px}
+body.article-page article .paid-series-item{display:grid;grid-template-columns:34px 1fr;gap:12px;margin:0;padding:16px 18px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.35)}
+body.article-page article .paid-series-item.is-here{border-color:rgba(185,138,50,.7);background:rgba(185,138,50,.1)}
+body.article-page article .paid-series-n{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1px solid rgba(122,90,28,.6);font:600 .875rem/1 Inter,sans-serif;color:#7a5a1c}
+body.article-page article .paid-series-body p{margin:0!important}
+body.article-page article .paid-series-role{font:500 .75rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.08em;color:#7a5a1c}
+body.article-page article .paid-series-step{font-size:1rem!important;line-height:1.8!important}
+body.article-page article .paid-series-title{font-size:.875rem!important;line-height:1.8!important;color:var(--muted,#666a64)}
+body.article-page article .paid-series-here{display:inline-block;margin-left:8px;padding:0 10px;border-radius:999px;background:#1b1c19;color:#f8f5ee;font:500 .6875rem/1.8 Inter,"Noto Sans JP",sans-serif}
+body.article-page article .paid-series .paid-back{margin-top:18px}
+body.article-page article a.paid-series-link{color:var(--ink,#252724);text-decoration:underline;text-decoration-color:rgba(122,90,28,.5);text-underline-offset:4px}
+.doc .lp-path,.lp-path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;font-family:var(--serif);font-size:.9375rem;line-height:1.5}
+.lp-path-step{display:inline-flex;flex-direction:column;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+.lp-path-name{font-family:Inter,"Noto Sans JP",sans-serif;font-size:.625rem;letter-spacing:.04em;color:#7a5a1c}
+.lp-path-arrow{color:#7a5a1c;font-size:.875rem}
+.ph-path-step{margin:0 0 6px!important;font-family:Inter,"Noto Sans JP",sans-serif;font-size:.75rem!important;letter-spacing:.12em;opacity:.75}
+
+/* Start page: a place to try, not to believe (BRAND.md「信者をつくらない」) */
+.trust{margin:0 0 48px;padding:clamp(24px,5vw,40px) 0 0;border-top:1px solid var(--line)}
+.trust .mind-door-kicker{color:#7a5a1c;opacity:1}
+.doc .trust-title,.trust-title{border:0;padding:0;margin:0 0 12px;font-family:var(--serif);font-weight:400;font-size:clamp(1.4rem,3.8vw,2.1rem);line-height:1.6;color:var(--ink)}
+.doc .trust-lead,.trust-lead{margin:0 0 18px;line-height:2}
+.trust-list{list-style:none;padding:0!important;margin:0 0 14px!important;display:grid;gap:0;border-top:1px solid var(--line)}
+.doc .trust-list li,.trust-list li{margin:0!important;padding:12px 0;border-bottom:1px solid var(--line);line-height:1.9;font-size:.9375rem}
+.trust-list strong{display:block;font-weight:600;color:var(--ink)}
+.doc .trust-more,.trust-more{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
+
+/* Paid page: scope = one choice, decided and acted on (vs. books) */
+body.article-page article .plp-scope{margin:22px 0 14px;padding:20px 22px;border-radius:12px;background:#1b1c19;color:#f1ebdf}
+body.article-page article .plp-scope p{color:#f1ebdf}
+body.article-page article .plp-scope-h{margin:0 0 8px!important;font-family:"Noto Serif JP",serif;font-size:1.0625rem!important;line-height:1.8!important;color:#f8f5ee!important}
+body.article-page article .plp-scope-target{margin:0 0 10px!important;font-size:.875rem!important;line-height:1.8!important;color:#e7c983!important}
+body.article-page article .plp-scope-steps{margin:0 0 10px;padding-left:1.4em}
+body.article-page article .plp-scope-steps li{margin:4px 0;color:#f1ebdf;line-height:1.85}
+body.article-page article .plp-scope .plp-small{color:rgba(241,235,223,.75)!important;margin:0!important}
+body.article-page article .plp-scope-stop{margin:0 0 12px!important;padding:10px 12px;border:1px dashed rgba(231,201,131,.55);border-radius:8px;font-size:.9375rem!important;line-height:1.85!important;color:#f1ebdf!important}
+body.article-page article .plp-scope-stop-label{display:block;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif;letter-spacing:.12em;color:#e7c983}
+.doc .mind-door .mind-door-ask,.mind-door .mind-door-ask{font-family:var(--serif);font-size:clamp(1.05rem,2.6vw,1.25rem);line-height:2;color:#f8f5ee;padding-left:14px;border-left:2px solid #e7c983}
+
+/* Paid page: value from reading alone, and why it is paid (design, not volume) */
+body.article-page article .plp-read{margin:22px 0 10px;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.4)}
+body.article-page article .plp-read-h{margin:0 0 8px!important;font-family:"Noto Serif JP",serif;font-size:1.0625rem!important;line-height:1.8!important}
+body.article-page article .plp-read-reframe{margin:0 0 14px!important;padding-left:12px;border-left:2px solid #b98a32;font-size:.9375rem!important;line-height:1.95!important;color:#45473f}
+body.article-page article .plp-read-sub{margin:0 0 6px!important;font:500 .75rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.06em;color:#7a5a1c}
+body.article-page article .plp-read-why{list-style:none;margin:0 0 10px;padding:0}
+body.article-page article .plp-read-why li{margin:0;padding:8px 0;border-top:1px solid var(--line);font-size:.9375rem;line-height:1.85}
+body.article-page article .plp-read-why strong{display:block}
+body.article-page article .plp-map summary{cursor:pointer;font-size:.875rem;color:#7a5a1c;padding:6px 0}
+body.article-page article .plp-map-list{list-style:none;margin:6px 0 0;padding:0}
+body.article-page article .plp-map-list li{margin:0;padding:8px 0;border-top:1px dashed var(--line);font-size:.875rem;line-height:1.8}
+body.article-page article .plp-map-state{display:block;font-weight:600}
+body.article-page article .plp-map-read{display:block;color:#45473f}
+body.article-page article .plp-scope-sub{margin:0 0 4px!important;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif!important;letter-spacing:.1em;color:#e7c983!important}
+
+/* Body / Food topic pages: worry → reframe → reads → next (same shape as the philosophy page) */
+.tlp-worry{scroll-margin-top:80px}
+.doc .tlp-n,.tlp-n{margin:0 0 4px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.2em;color:#7a5a1c}
+.doc .tlp-reframe,.tlp-reframe{margin:0 0 16px;padding-left:12px;border-left:2px solid #b98a32;font-family:var(--serif);line-height:2;color:#45473f}
+.tlp-reads{list-style:none;padding:0!important;margin:0 0 14px!important;border-top:1px solid var(--line)}
+.doc .tlp-reads li,.tlp-reads li{margin:0!important;border-bottom:1px solid var(--line)}
+.doc .tlp-reads a,.tlp-reads a{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:12px 2px;color:var(--ink);text-decoration:none}
+.tlp-reads a:hover .tlp-read-title{text-decoration:underline;text-underline-offset:4px}
+.tlp-read-title{font-family:var(--serif);line-height:1.7}
+.tlp-read-time{flex:none;font-size:.75rem;color:var(--muted,#666a64)}
+.doc .tlp-next,.tlp-next{display:block;padding:16px 18px;border-radius:12px;background:#1b1c19;color:#f1ebdf;text-decoration:none}
+.tlp-next-k{display:block;font:500 .6875rem/1.7 Inter,"Noto Sans JP",sans-serif;letter-spacing:.12em;color:#e7c983}
+.tlp-next-t{display:block;font-family:var(--serif);font-size:1.0625rem;line-height:1.7;color:#f8f5ee}
+.tlp-next-x{display:block;font-size:.8125rem;line-height:1.8;color:rgba(241,235,223,.75)}
+.tlp-all{margin:40px 0 0}
+.tlp-all summary{cursor:pointer;font-family:var(--serif);font-size:1.0625rem;padding:12px 0;border-top:1px solid var(--line)}
+
+/* Paid page: real pages of the PDF (cover, map, next step) — removes "what do I actually get?" */
+body.article-page article .plp-look{margin:22px 0 0;padding:20px 22px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.35)}
+body.article-page article .plp-look-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 14px}
+body.article-page article .plp-look figure{margin:0}
+body.article-page article .plp-look img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 18px rgba(25,31,28,.08);background:#fff}
+body.article-page article .plp-look figcaption{margin-top:6px!important;font-size:.75rem!important;line-height:1.7!important;color:var(--muted,#666a64)!important;text-align:left!important}
+
+/* 特定商取引法に基づく表記 */
+.legal-list{margin:0 0 28px;border-top:1px solid var(--line)}
+.legal-list>div{display:grid;grid-template-columns:11em 1fr;gap:4px 16px;padding:12px 0;border-bottom:1px solid var(--line)}
+.legal-list dt{font-weight:600;font-size:.875rem;line-height:1.8}
+.legal-list dd{margin:0;font-size:.9375rem;line-height:1.85;overflow-wrap:anywhere}
+@media(max-width:560px){.legal-list>div{grid-template-columns:1fr;gap:2px}}

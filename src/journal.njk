@@ -2,11 +2,11 @@
 layout: base.njk
 permalink: journal.html
 title: "すべての記事 — ムートン"
-description: "ムートンのすべての記事。まずはキルケゴールとニーチェから、哲学・生き方の記事を。身体、食事と科学、仕事、本、制作の記事も、分類で絞りこんだり本文まで検索したりできます。"
+description: "ムートンのすべての記事。まずはキルケゴール、ニーチェ、スピノザから、哲学・生き方の記事を。身体、食事と科学、仕事、本、制作の記事も、分類で絞りこんだり本文まで検索したりできます。"
 bodyClass: site journal-page
-extraCss: [home.css]
-assetVersion: "20261015-mind"
-mindReads: ["kierkegaard", "nietzsche"]
+extraCss: ["home.css?v=20261017-moon"]
+assetVersion: "20261017-moon"
+mindReads: ["kierkegaard", "nietzsche", "spinoza"]
 ---
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
@@ -24,7 +24,7 @@ mindReads: ["kierkegaard", "nietzsche"]
       <section class="mind-door mind-door--journal" aria-labelledby="mind-door-title">
         <p class="mind-door-kicker">Start with philosophy</p>
         <h2 class="mind-door-title" id="mind-door-title">まず、哲学から。</h2>
-        <p class="mind-door-text">身体も食事も大切だ。けれど、考え方が定まっていなければ、何も始まらない。キルケゴールとニーチェから読んでほしい。</p>
+        <p class="mind-door-text">身体も食事も大切だ。けれど、考え方が定まっていなければ、何も始まらない。キルケゴール、ニーチェ、スピノザから読んでほしい。</p>
         <div class="mind-door-reads">
           {%- for a in collections.articles | bySlugs(mindReads) %}
           <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
@@ -61,7 +61,7 @@ mindReads: ["kierkegaard", "nietzsche"]
         {%- set cat = a.data.journal.category if a.data.journal else a.data.category %}
         <a class="journal-item clickable journal-link{% if cat == 'philosophy' %} is-philosophy{% endif %}" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ cat }}" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body">{% if cat == 'philosophy' %}<span class="journal-tag">哲学・生き方</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-body">{% if cat == 'philosophy' %}<span class="journal-tag">哲学・生き方</span>{% endif %}{% if a.data.paid %}<span class="journal-tag journal-tag--paid">有料・冒頭は無料</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">{% if a.data.paid %}PDF・全文 約{{ a.data.paid.minutes }}分{% else %}約{{ a.data.readMinutes }}分{% endif %}</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endfor %}
@@ -78,7 +78,7 @@ mindReads: ["kierkegaard", "nietzsche"]
 </main>
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   {% include "partials/footer-map.njk" %}
-  <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
+  <div class="footer-row"><span>© 2026 MOUTON — PHILOSOPHY OF LIFE</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 <script>
 'use strict';

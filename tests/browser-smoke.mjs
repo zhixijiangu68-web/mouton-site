@@ -76,19 +76,22 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
-    for (const [i, scene] of ['ocean','moon-botanical','orb-dark','orbit-light'].entries()) {
-      await t.test('still background and immediate intro skip: ' + scene, async () => {
-        await checkPage(browser, 'static-' + scene, {
+    for (const [i, device] of ['desktop','mobile'].entries()) {
+      const scene = 'gold-laurel';
+      const introArt = device === 'desktop' ? 'gold-laurel-wide.webp' : 'intro-sheep-moon.webp';
+      await t.test('fixed background, device intro art and immediate skip: ' + device, async () => {
+        await checkPage(browser, 'static-' + device, {
           reducedMotion: 'no-preference',
-          viewport: i % 2 ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+          viewport: i ? { width: 390, height: 844 } : { width: 1440, height: 900 },
         }, async page => {
           await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
-          await page.addInitScript(value => { Math.random = () => value; }, (i + .1) / 4);
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-          assert.equal(await page.locator('html').getAttribute('data-home-background'), scene);
-          assert.equal(await page.locator('link[rel="preload"][as="image"]').getAttribute('href'), 'images/mouton/intro-sheep-moon.webp');
-          assert(await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage.includes('intro-sheep-moon.webp')));
-          if (i % 2) await page.keyboard.press('Escape');
+          assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/gold-laurel-wide.webp"]').count(), 1);
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/intro-sheep-moon.webp"]').getAttribute('media'), '(max-width: 900px)');
+          const intro = await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage);
+          assert(intro.includes(introArt), device + ' intro art: ' + intro);
+          if (i) await page.keyboard.press('Escape');
           else await page.locator('.intro-veil').click({ force: true });
           const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
             opacity: getComputedStyle(el).opacity,
@@ -108,7 +111,7 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.evaluate(async name => {
             const img = new Image(); img.src = 'images/mouton/' + name + '-wide.webp';
             await img.decode(); return img.naturalWidth;
-          }, scene), 1600);
+          }, scene), 1536);
           await page.mouse.move(200, 300);
           await page.evaluate(() => scrollTo(0, 150));
           await page.waitForTimeout(1100); // Late font preparation must not restart the intro.
@@ -232,8 +235,8 @@ test('MOUTON browser smoke', async t => {
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
           await making.click();
           await page.waitForURL('**/making.html');
-          for (const project of ['KIOKU', 'DIARY', 'MOUTON']) {
-            assert.equal(await page.locator('.mk-card h3').filter({ hasText: project }).count(), 1,
+          for (const project of ['KIOKU', 'DIARY', 'MOUTON・COUNT', 'MOUTON']) {
+            assert.equal(await page.locator('.mk-card h3').filter({ hasText: new RegExp('^' + project + '$') }).count(), 1,
               label + ': missing ' + project + ' project');
           }
         });
@@ -248,8 +251,8 @@ test('MOUTON browser smoke', async t => {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('[aria-labelledby="mk-projects"] details').evaluate(el => el.open), true, 'projects open by default');
-          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
-          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
+          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 4);
+          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['count', 'MOUTON・COUNT'], ['site', 'MOUTON']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
             assert.equal(await card.locator('h3').textContent(), name);
             assert.deepEqual(await card.locator('dl.mk-summary dt').allTextContents(), ['目的', '現在地', '次の一歩']);

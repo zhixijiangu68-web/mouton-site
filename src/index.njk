@@ -1,26 +1,20 @@
 ---
 layout: base.njk
 permalink: index.html
-title: "ムートン — Personal Archive"
-description: "ムートンの個人的な制作と記録の場所。哲学・生き方、身体、食事と科学についての記事と、おすすめの本。"
+title: "ムートン — Philosophy of Life"
+description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。"
 bodyClass: site
-assetVersion: "20261015-intro-art-1"
-extraCss: [home.css, home-static-background.css, intro-art.css]
+assetVersion: "20261016-gold-1"
+extraCss: [home.css, "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
 ---
-<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp">
-<script>
-(()=>{
- const scenes=['ocean','moon-botanical','orb-dark','orbit-light'];
- const scene=scenes[Math.floor(Math.random()*scenes.length)];
- document.documentElement.dataset.homeBackground=scene;
- document.documentElement.style.setProperty('--home-background', 'url("images/mouton/'+scene+'-wide.webp")');
-})();
-</script>
+{#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
+<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp" media="(max-width: 900px)">
+<link rel="preload" as="image" href="images/mouton/gold-laurel-wide.webp">
 {#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
 <script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
 <div class="intro-veil" aria-hidden="true">
   <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
-  <p class="intro-sub">A personal archive — since 2026</p>
+  <p class="intro-sub">Philosophy of life — since 2026</p>
   <span class="intro-skip-hint">タップしてはじめる</span>
   <span class="intro-bar"></span>
 </div>
@@ -32,9 +26,9 @@ extraCss: [home.css, home-static-background.css, intro-art.css]
   <section class="cover cover-choice cover-static" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
-      <p class="cover-kicker">MOUTON / PERSONAL ARCHIVE</p>
+      <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       {#- 見出しは画面に出さない（読み上げ・検索用に h1 だけ残す） #}
-      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 哲学と科学で、日常の見え方を変える</h1>
+      <h1 class="cover-title cover-title--choice visually-hidden">ムートン — 生き方が変われば、行動が変わる。</h1>
       <nav class="cover-choice-grid" aria-label="3つのテーマから読む">
         <a class="cover-choice-card cover-choice-card--think" id="think" href="topic-philosophy.html">
           <span class="cover-choice-art" aria-hidden="true"></span>
@@ -75,7 +69,7 @@ extraCss: [home.css, home-static-background.css, intro-art.css]
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   <p class="quote">千里の道も、一歩から。</p>
   <p class="quote-en">A journey of a thousand miles begins with a single step.</p>
-  <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
+  <div class="footer-row"><span>© 2026 MOUTON — PHILOSOPHY OF LIFE</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
 
 <script src="home.js?v={{ assetVersion }}" defer></script>

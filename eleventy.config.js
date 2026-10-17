@@ -62,7 +62,8 @@ export default function (eleventyConfig) {
     }));
   });
   // Every article for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
-  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.map(a => ({
+  // Paid pages are sales pages, not reads, so "pick one for me" leaves them out.
+  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.filter(a => !a.data.paid).map(a => ({
     s: a.page.fileSlug,
     t: a.data.journal ? a.data.journal.title : a.data.headline,
     m: a.data.readMinutes,
@@ -101,6 +102,9 @@ export default function (eleventyConfig) {
       .replace(/\s+/g, ' ')
       .trim(),
   }))));
+  // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
+  eleventyConfig.addFilter('paidCards', items =>
+    items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
   eleventyConfig.addFilter('findTopic', (topics, key) => topics.find(t => t.key === key) || null);
   eleventyConfig.addFilter('inTopic', (items, key) => items.filter(a => a.data.topic === key));
   // Curated picks first, then the newest articles on the same topic.
