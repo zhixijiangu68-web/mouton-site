@@ -12,7 +12,7 @@
 - **最初の重要な成果は、知人・関係者ではない第三者による自社商品の実決済1件**。購入の有無、対象顧客、価格受容性は必ず検証し、アクセス・フォロワー・クリックと混同しない。
 - サイトはシンプルさと世界観を両立し、哲学商品を主役とする（2026-10-17、オーナー：知識の記事・アプリ紹介・クイズはトップから外した。下の「点と線」）。不要な機能・演出の追加は優先しない。
 - **ブランドメッセージ**は「MOUTON — PHILOSOPHY OF LIFE／生き方が変われば、行動が変わる。…」（全文は `BRAND.md`）。外側から飾るのではなく、内側から自分自身をつくっていくブランド。**読者・顧客に正しい生き方を押しつけない**。コピーは命令調・断定で書かず、ムートンの経験と提案として書く
-- **哲学の有料記事3本は note ではなくこのサイトで販売する**（Stripe → Cloudflare Worker → メールで PDF。2026-10-16）。全文・PDF は公開リポジトリに入れない。購入ボタンは納品の確認と特定商取引法に基づく表記がそろうまで出さない（`npm test` が止める）。段取りは `docs/philosophy-sales-20261016.md`
+- **哲学の有料記事3本は、note で先に販売し、このサイトでも販売する**（2026-10-17、オーナー：両方で売る。note が先、サイトは後から）。note は各 ¥2,980（税込）の有料記事（出品シートは `note/paid-*/listing.md`、アカウントは `note/profile/profile.md`）。サイトは Stripe → Cloudflare Worker → メールで PDF（2026-10-16 の決定のまま、販売準備中）。全文・PDF は公開リポジトリに入れない。サイトの購入ボタンは納品の確認と特定商取引法に基づく表記がそろうまで出さない（`npm test` が止める）。サイトの販売ページから note への案内は、note の URL ができてから足す（そのとき `scripts/check-paid-sales.mjs` の note 購入表記の禁止を直す）。段取りは `docs/philosophy-sales-20261016.md`（サイト）と `docs/note-monetization-20261017.md`（note）
 - 最新の意思決定と検証項目は [docs/product-first-strategy-20261015.md](docs/product-first-strategy-20261015.md)。以下の古いX先行・外見とお金優先の記述に矛盾する場合、この節を優先する。
 
 ## 長期方針：MOUTON Personal Brand Project（2026-10-13決定）
@@ -79,6 +79,6 @@
 ## note
 
 - note 用の記事は `/note <テーマ>` で、5 人のサブエージェント（`.claude/agents/note-*.md`）が リサーチ → 記事作成 → タイトル → 品質チェック → SNS集客 の順に作る。詳しくは `note/README.md`
-- 成果物は `note/<slug>/` に置く。サイトの記事とは別物なので、サイトには載せない。サイトへのリンクには `?utm_source=note&utm_medium=referral&utm_campaign=<slug>` を付ける
+- 成果物は `note/<slug>/` に置く。サイトの記事とは別物なので、サイトには載せない。例外は、サイトの哲学記事を写した `note/start/`・`free-*`・`paid-*`（本文はサイトと同じ。サイトを直したら note も直すかを決める）。サイトへのリンクには `?utm_source=note&utm_medium=referral&utm_campaign=<slug>` を付ける
 - 文章のルールはサイトと同じ。note の記事から広告のある記事へリンクするときは、冒頭に「広告を含みます」の1行を入れる
 - AI は note や SNS に投稿しない。note のユーザー名は `src/_data/site.js` の `author.note`
