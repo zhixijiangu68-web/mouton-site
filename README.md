@@ -56,6 +56,8 @@ npm test         # 生成して、リンク切れ・ID の重複・title や説�
 `src/articles/` に `記事の名前.html` を作ります。ファイル名がそのまま URL（`記事の名前.html`）になります。
 既存の記事をコピーして、先頭の設定と本文を書き換えるのが簡単です。
 
+**2026-10-17 から、記事は「残す記事」と「アーカイブ」に分かれます。** 残す記事は `src/_data/currentArticles.js` に並べたファイル名だけで、記事一覧（`journal.html`）・「次に読む」・トップから行けます。そこにない日本語の記事は自動でアーカイブになり、ページの上に注記が出て `archive.html` に並びます（URL は変わりません）。新しい記事をいまの記事として出すときは、`currentArticles.js` にファイル名を足してください。残す記事には、書き込みワーク・穴埋め（＿＿＿＿）・○×クイズを置きません（`npm test` が確かめます）。
+
 ```yaml
 ---
 title: "記事のタイトル — ムートン"     # ブラウザのタブや共有時に出るタイトル
@@ -63,12 +65,12 @@ headline: "記事のタイトル"              # 検索エンジン向けの見�
 description: "検索結果や共有時に出る説明文（80〜120字くらい）"
 date: 2026-10-06                        # 公開日
 updated: 2026-10-20                     # 内容を直したら追加（任意）
-category: philosophy                    # philosophy / body / food / books（カバー画像の種類）
+category: philosophy                    # philosophy / body / food / books / work（カバー画像の種類）
 health: false                           # 健康の記事なら true（末尾に医療の注意書きが出る）
 back:
-  href: "index.html#journal"
+  href: "journal.html"
   text: "記事一覧へ戻る"
-journal:                                # 書くとトップの記事一覧とテーマ別ページに出る
+journal:                                # 書くと記事一覧・アーカイブ・テーマ別ページに、この題と一言で出る
   category: "philosophy"                # philosophy / body / making
   title: "一覧に出すタイトル"
   excerpt: "一覧に出す一言"
@@ -86,8 +88,8 @@ styles: |
 本文の決まった位置に、次のものが自動で入ります。
 
 - `約{{ readMinutes }}分で読めます`：本文の文字数から計算した読了時間（1分500字）。トップや一覧の分数も同じ値
-- `{% include "partials/article-end.njk" %}`：医療の注意書き・広告枠・メールマガジン登録欄・「この記事を書いた人」
-- `{% include "partials/reading-next.njk" %}`：「次に読む」とテーマ別ページへのリンク
+- `{% include "partials/article-end.njk" %}`：医療の注意書き・広告枠・メールマガジン登録欄・「この記事を書いた人」（アーカイブの記事では○×クイズも）
+- `{% include "partials/reading-next.njk" %}`：「次に読む」（残す記事から選ばれる）と、テーマ別ページかアーカイブへのリンク
 
 見出し（h1〜h3）と記事一覧のタイトルは、生成するときに [BudouX](https://github.com/google/budoux) で文節に区切られ、単語の途中で改行しないようになります。
 Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", "book-buy" %}` と書くと、アフィリエイトの設定に合わせてタグと「PR」表示が自動で付きます。
