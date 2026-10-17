@@ -896,3 +896,23 @@ body.article-page article .plp-look figcaption{margin-top:6px!important;font-siz
 .lp-why-open{flex:none;padding:4px 14px;border:1px solid var(--line);border-radius:999px;font-size:.8125rem;color:var(--muted)}
 .lp-why-more[open] .lp-why-open{display:none}
 .lp-why-more>summary:focus-visible{outline:3px solid var(--gold,#b98a32);outline-offset:4px}
+/* アーカイブ（2026-10-17）：いまの中心から外したページの注記と、記事一覧・アーカイブの一覧 */
+.archive-note{margin:0 0 28px;padding:14px 18px;border:1px solid rgba(122,90,28,.35);border-radius:10px;background:rgba(242,227,189,.32)}
+.archive-note p{margin:0;font-family:var(--gothic,sans-serif);font-size:.8125rem;line-height:1.85;color:var(--ink)}
+.archive-note .archive-note-title{margin:0 0 2px;font-size:.6875rem;letter-spacing:.2em;color:#7a5a1c}
+.archive-note a{color:inherit;text-underline-offset:3px}
+.archive-inline{display:inline-block;margin:0 0 16px;padding:6px 14px;border:1px solid rgba(230,201,138,.6);border-radius:999px;font-size:.75rem;line-height:1.7;color:inherit;background:rgba(230,201,138,.12)}
+.archive-inline a{color:inherit;text-underline-offset:3px}
+main>.archive-inline{margin:96px 16px 0}
+.journal-archive-link{margin:28px 0 0;font-size:.875rem}
+.journal-archive-link a,.archive-now a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-underline-offset:4px}
+.archive-now{display:flex;flex-wrap:wrap;gap:4px 22px;margin:0 0 8px;font-size:.875rem}
+.archive-index{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 12px}
+.archive-index a{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border:1px solid var(--line);border-radius:999px;font-size:.8125rem;color:var(--ink);text-decoration:none}
+.archive-index a span{font-size:.6875rem;opacity:.65}
+.archive-h{margin:48px 0 6px;font-family:var(--serif,serif);font-weight:400;font-size:clamp(1.2rem,2.2vw,1.5rem);scroll-margin-top:84px}
+.archive-h span{font-size:.75rem;opacity:.6;margin-left:6px}
+.archive-pages{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
+.archive-pages li{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;padding:12px 0;border-bottom:1px solid var(--line);font-size:.9375rem}
+.archive-pages li span{font-size:.8125rem;opacity:.7}
+.archive-pages a{color:var(--ink);text-underline-offset:3px}

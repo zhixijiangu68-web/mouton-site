@@ -7,11 +7,11 @@ title: "はじめての方へ — ムートン"
 description: "MOUTON — Philosophy of Life。生き方が変われば、行動が変わる。哲学を知識で終わらせず、自分の人生に落とし込むためのブランドです。外側から飾るのではなく、内側から自分自身をつくっていく。正しい生き方は押しつけず、考えるための問いと試すための方法を置いています。"
 mindReads: ["kierkegaard", "nietzsche", "spinoza"]
 steps:
-  - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["identity", "paid-nietzsche"] }
-  - { t: "「僕は、〜する人間だ」と書く", x: "結果（いくら稼ぐ、何キロ痩せる）ではなく、やり方で書く。「僕は、自分との約束を守る人間だ」のように。その一文が、迷ったときの基準になる。", reads: ["self-image"] }
+  - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["absorption-freedom-action", "paid-nietzsche"] }
+  - { t: "「僕は、〜する人間だ」と書く", x: "結果（いくら稼ぐ、何キロ痩せる）ではなく、やり方で書く。「僕は、自分との約束を守る人間だ」のように。その一文が、迷ったときの基準になる。", reads: ["sartre"] }
   - { t: "考えと感情を、道具として扱う", x: "自分次第のことと、そうでないことを分ける。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみる。役に立たないなら、感じきってから手放す。", reads: ["stoicism", "spinoza", "paid-spinoza"] }
-  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。完璧な計画ができるのを待たなくていい。試して、ずれていたら直せばいい。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、逆から考える。「こうすれば確実にうまくいかない」を書き出すと、やめることが見えてくる。", reads: ["paid-kierkegaard", "fear", "habit-context"] }
-  - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。努力しているのに何も変わらないように見える、冬のような時期がある。その時期を、自分を責めずに過ごせるかどうか。", reads: ["habit-days-decisions", "system-goal"] }
+  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。完璧な計画ができるのを待たなくていい。試して、ずれていたら直せばいい。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、逆から考える。「こうすれば確実にうまくいかない」を書き出すと、やめることが見えてくる。", reads: ["kierkegaard", "paid-kierkegaard"] }
+  - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。努力しているのに何も変わらないように見える、冬のような時期がある。その時期を、自分を責めずに過ごせるかどうか。", reads: ["camus-sisyphus"] }
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
@@ -73,7 +73,6 @@ steps:
   {%- set paidList = collections.articles | paidCards %}
   {%- set ph = site.product.philosophy %}
   {%- set paidLive = false %}{% for a in paidList %}{% if a.data.paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}{% set paidLive = true %}{% endif %}{% endfor %}
-  {%- set cs = site.product.cleanScience %}
   <section class="mind-act" aria-labelledby="mind-act-title">
     <p class="mind-door-kicker">Practice</p>
     <h2 class="mind-act-title" id="mind-act-title">動画を探し回るより、<br>一冊を読んで、試してみる。</h2>
@@ -84,12 +83,6 @@ steps:
         <span class="mind-act-book-title">3人の哲学者に学ぶ</span>
         <span class="mind-act-book-text">{% for a in paidList %}{{ a.data.paid.role }}（{{ a.data.paid.philosopher }}）{% if not loop.last %} → {% endif %}{% endfor %}。一本の道でつながる、悩みから入る有料記事{{ paidList.length }}本。</span>
         <span class=\"mind-act-book-meta\">PDF・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円 / {{ 'このサイトで販売中' if paidLive else 'このサイトで販売準備中' }}</span>
-      </a>
-      <a class="mind-act-book" href="cleanliness-science.html">
-        <span class="mind-door-step">BODY / 外見と日常</span>
-        <span class="mind-act-book-title">清潔感の科学</span>
-        <span class="mind-act-book-text">肌・睡眠・髪とヒゲ・口元・匂い・服。研究から、何をどの順で整えるかを決める一冊。</span>
-        <span class="mind-act-book-meta">PDF・{{ cs.pages }}ページ・{{ cs.priceText }}円（税込）/ {{ 'BOOTHで販売中' if cs.checkoutUrl else '発売準備中' }}</span>
       </a>
     </div>
     <p class="mind-act-close">人生は短い。<br>小さくても、今日から始めてみてほしい。</p>
@@ -110,9 +103,8 @@ steps:
     <p class="trust-more">広告と紹介の決まりは、すぐ下の編集方針と<a href="privacy.html">プライバシーポリシー</a>に書いています。</p>
   </section>
 
-  <p>ムートンは、気になったことを調べ、試し、作り、その過程を記録していく個人のサイトです。哲学や身体、食事と科学についても、研究や公的な情報を確かめながら記事を書いています。記事の作り方は<a href="editorial.html">編集方針</a>にまとめています。</p>
-  <p><strong>作る。記録する。残していく。</strong> KIOKUや日記アプリ、このサイトも、日々の試行錯誤から生まれた制作物です。完成したものだけでなく、制作の途中も残しています。</p>
-  <p><a class="btn btn-dark" href="making.html">作っているものを見る <span aria-hidden="true">→</span></a></p>
+  <p>ムートンは、哲学を一つの行動に結びつけるための個人のサイトです。いまは、読んだあとに書いて試す記事と、有料の3本を置いています。以前の身体・食事と科学・仕事・本の記事、清潔感の科学、制作の記録は、<a href="archive.html">アーカイブ</a>にまとめて残しました。記事の作り方は<a href="editorial.html">編集方針</a>にまとめています。</p>
+  <p><strong>作る。記録する。残していく。</strong> 点を打ち、書き残して線にし、また次の点を打つ。このサイトも、その繰り返しの記録です。</p>
 
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">

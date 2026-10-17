@@ -219,7 +219,7 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
-    await t.test('start page: brand introduction reaches making on desktop and mobile', async () => {
+    await t.test('start page: brand introduction reaches the archive (and making through it) on desktop and mobile', async () => {
       for (const [label, options] of [
         ['start-desktop', { viewport: { width: 1440, height: 900 } }],
         ['start-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
@@ -229,10 +229,16 @@ test('MOUTON browser smoke', async t => {
           const main = page.locator('main.start-page');
           assert.equal(await main.getByText('作る。記録する。残していく。', { exact: true }).count(), 1);
           assert.equal(await main.locator('a[href="editorial.html"]').count(), 1, 'editorial policy link remains');
-          const making = main.getByRole('link', { name: '作っているものを見る' });
-          assert.equal(await making.getAttribute('href'), 'making.html');
+          // 2026-10-17：制作・清潔感の科学・以前の記事はアーカイブへ。はじめての方へからは、アーカイブを通って行ける。
+          const archive = main.getByRole('link', { name: 'アーカイブ', exact: true });
+          assert.equal(await archive.getAttribute('href'), 'archive.html');
           const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
+          await archive.click();
+          await page.waitForURL('**/archive.html');
+          assert.ok(await page.locator('#archive .journal-item').count() > 50, label + ': archived articles listed');
+          const making = page.locator('.archive-pages a[href="making.html"]');
+          assert.equal(await making.count(), 1, label + ': making reachable from the archive');
           await making.click();
           await page.waitForURL('**/making.html');
           for (const project of ['KIOKU', 'DIARY', 'MOUTON・COUNT', 'MOUTON']) {
@@ -362,8 +368,8 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('main').evaluate(el => el.inert), false);
         assert.equal(await menu.evaluate(el => el === document.activeElement), true, 'focus should return to menu button');
         await menu.click();
-        await page.locator('.site-links a[href="making.html"]').first().click();
-        await page.waitForURL('**/making.html');
+        await page.locator('.site-links a[href="journal.html"]').first().click();
+        await page.waitForURL('**/journal.html');
         await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
       });

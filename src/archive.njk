@@ -1,0 +1,70 @@
+---
+layout: base.njk
+permalink: archive.html
+title: "アーカイブ — ムートン"
+description: "いまの MOUTON の中心から外した記事を、ここにまとめて残しています。身体、食事と科学、仕事、本、哲学の記事と、清潔感の科学、制作の記録、○×クイズ。ページはそのまま読めます。"
+bodyClass: site journal-page archive-page
+extraCss: ["home.css?v=20261017-archive"]
+assetVersion: "20261017-archive"
+groups:
+  - { key: "philosophy", label: "哲学・生き方" }
+  - { key: "body", label: "身体" }
+  - { key: "food", label: "食事・科学" }
+  - { key: "work", label: "仕事・働き方" }
+  - { key: "books", label: "本" }
+  - { key: "making", label: "制作" }
+---
+{#- 2026-10-17（オーナー）：「必要な記事だけを残して、あとはアーカイブに移す」。URL は変えずに、ここに一覧を置く。
+    アーカイブの記事は src/_data/currentArticles.js にない日本語の記事（collections.archived）。 #}
+<a class="skip" href="#archive">アーカイブへスキップ</a>
+{% include "partials/nav.njk" %}
+<main>
+  <section class="section" id="archive" data-nav="light" data-nav-solid="light" aria-labelledby="archive-heading">
+    <div class="section-inner">
+      <div class="section-head" data-rise>
+        <div>
+          <p class="eyebrow">Archive</p>
+          <h1 class="section-title" id="archive-heading">アーカイブ<em>— {{ collections.archived.length }} notes</em></h1>
+        </div>
+        <p class="copy">いまの MOUTON の中心から外した記事を、ここに残している。2026年10月、読むだけで終わる記事を中心に置かないことにした。ページは、そのまま読める。</p>
+      </div>
+      <p class="archive-now"><a href="journal.html">いまの記事へ <span aria-hidden="true">→</span></a><a href="topic-philosophy.html">哲学の3本へ <span aria-hidden="true">→</span></a></p>
+      <nav class="archive-index" aria-label="アーカイブの分類">
+        {%- for g in groups %}{% set n = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else a.data.category %}{% if cat == g.key %}{% set n = (n.push(1), n) %}{% endif %}{% endfor %}
+        {%- if n.length %}<a href="#archive-{{ g.key }}">{{ g.label }}<span>{{ n.length }}</span></a>{% endif %}
+        {%- endfor %}
+        <a href="#archive-pages">そのほかのページ</a>
+      </nav>
+      {%- for g in groups %}
+      {%- set list = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else a.data.category %}{% if cat == g.key %}{% set list = (list.push(a), list) %}{% endif %}{% endfor %}
+      {%- if list.length %}
+      <h2 class="archive-h" id="archive-{{ g.key }}">{{ g.label }} <span>{{ list.length }}本</span></h2>
+      <div class="journal-list">
+        {%- for a in list %}
+        {%- set cat = a.data.journal.category if a.data.journal else a.data.category %}
+        <a class="journal-item clickable journal-link{% if cat == 'philosophy' %} is-philosophy{% endif %}" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ cat }}" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
+          <div class="journal-body">{% if a.data.paid %}<span class="journal-tag journal-tag--paid">有料・冒頭は無料</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">{% if a.data.paid %}PDF・全文 約{{ a.data.paid.minutes }}分{% else %}約{{ a.data.readMinutes }}分{% endif %}</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+      {%- endfor %}
+      <h2 class="archive-h" id="archive-pages">そのほかのページ</h2>
+      <ul class="archive-pages">
+        <li><a href="cleanliness-science.html">清潔感の科学</a><span>PDF の本。いまは販売の準備を止めている</span></li>
+        <li><a href="making.html">制作の記録</a><span>アプリ（KIOKU・DIARY）、ゲーム（MOUTON・COUNT）、このサイト</span></li>
+        <li><a href="topic-body.html">身体</a>・<a href="topic-food.html">食事・化学</a>・<a href="topic-work.html">仕事・働き方</a><span>テーマ別のページ</span></li>
+        <li><a href="guides.html">選び方</a><span>商品の選び方の記事</span></li>
+        <li><a href="quiz.html">○×クイズ</a><span>記事から作った問題</span></li>
+        <li><a href="now.html">いま取り組んでいること</a><span>2026年10月なかばまでの記録</span></li>
+        <li><a href="favorites.html">運営者のお気に入り</a></li>
+      </ul>
+    </div>
+  </section>
+</main>
+<footer class="site-footer" data-nav="dark" data-nav-solid="dark">
+  {% include "partials/footer-map.njk" %}
+  <div class="footer-row"><span>© 2026 MOUTON — PHILOSOPHY OF LIFE</span>{% include "partials/footer-links.njk" %}</div>
+</footer>
