@@ -694,3 +694,38 @@ body.journal-page main{padding-top:72px}
  .cover-choice-card--sub .cover-choice-title{font-size:1.02rem}
  .cover-choice-card--sub .cover-choice-description{font-size:.7rem}
 }
+/* トップ（2026-10-17・点と線）：3枚のカードは悩みから選ぶ有料の3本。その下に「点を打ち、線にして、また点を打つ」。どちらも夜の色のまま */
+.cover-choice--cycle .cover-products{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:10px}
+.cover-products-label{margin:clamp(20px,3vh,30px) 0 0;font-size:.8125rem;letter-spacing:.14em;color:#e6c98a}
+.cover-choice--cycle .cover-product .cover-choice-content{gap:8px;height:100%}
+.cover-choice--cycle .cover-product .cover-choice-title{font-size:clamp(1.02rem,1.45vw,1.25rem);line-height:1.6;letter-spacing:.02em;word-break:auto-phrase;text-wrap:pretty}
+.cover-choice--cycle .cover-product .cover-choice-description{font-family:var(--serif);font-weight:400;font-size:clamp(.8rem,1vw,.9rem);line-height:1.7;color:rgba(245,243,238,.82);word-break:auto-phrase}
+.cover-product-meta span{display:inline-block;white-space:nowrap}
+.cover-product-meta{margin-top:auto;padding-top:8px;border-top:1px solid rgba(230,201,138,.24);width:100%;font-size:.6875rem;line-height:1.6;letter-spacing:.04em;color:rgba(245,243,238,.7)}
+.cover-text-link{color:#fbf7ee;font-size:.875rem;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
+.cover-text-link:hover,.cover-text-link:focus-visible{color:#f6dfac}
+.home-cycle{position:relative;background:#0b1329 linear-gradient(180deg,rgba(4,10,25,.4),rgba(11,19,41,0) 40%);color:#ebe5d6;border-top:1px solid rgba(230,201,138,.18)}
+.home-cycle-inner{width:min(1080px,100%);margin:0 auto;padding:clamp(64px,10vw,120px) clamp(20px,5vw,56px)}
+.home-cycle-kicker{margin:0 0 14px;font-family:var(--latin);font-style:italic;font-size:1.0625rem;letter-spacing:.04em;color:#e6c98a}
+.home-cycle-title{margin:0;font-family:var(--serif);font-weight:300;font-size:clamp(1.6rem,3.4vw,2.6rem);line-height:1.6;letter-spacing:.05em;color:#fbf7ee}
+.home-cycle-steps{list-style:none;margin:clamp(32px,5vw,52px) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,24px)}
+.home-cycle-steps li{display:flex;flex-direction:column;gap:8px;padding:clamp(20px,2.4vw,30px);border:1px solid rgba(230,201,138,.3);border-radius:14px;background:rgba(255,255,255,.03)}
+.home-cycle-no{font-family:var(--latin);font-style:italic;font-size:.9375rem;color:#e6c98a}
+.home-cycle-steps strong{font-family:var(--serif);font-weight:400;font-size:clamp(1.15rem,1.7vw,1.4rem);letter-spacing:.04em;color:#fbf7ee}
+.home-cycle-steps li>span:last-child{font-size:.875rem;line-height:1.9;color:rgba(235,229,214,.86)}
+.home-cycle-close{margin:clamp(32px,5vw,48px) 0 0;font-family:var(--serif);font-size:clamp(.95rem,1.4vw,1.125rem);line-height:2;color:#fbf7ee}
+.home-cycle-facts{margin:clamp(28px,4vw,40px) 0 0;padding:clamp(16px,2vw,22px) 0 0;border-top:1px solid rgba(230,201,138,.22);display:grid;gap:10px}
+.home-cycle-facts div{display:grid;grid-template-columns:7.5em 1fr;gap:12px;font-size:.8125rem;line-height:1.8}
+.home-cycle-facts dt{color:#e6c98a;letter-spacing:.08em}
+.home-cycle-facts dd{margin:0;color:rgba(235,229,214,.9)}
+.home-cycle-facts a{color:#fbf7ee;text-underline-offset:3px;display:inline-block;min-height:24px}
+@media(max-width:800px){
+ .cover-choice--cycle .cover-products{grid-template-columns:1fr;gap:8px}
+ .cover-choice--cycle .cover-product .cover-choice-content{padding:14px 16px;gap:4px}
+ .home-cycle-steps{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+ .cover-choice--cycle .cover-actions{flex-wrap:nowrap}
+ .cover-choice--cycle .cover-actions .cover-btn--ghost{flex:0 1 auto}
+ .home-cycle-facts div{grid-template-columns:6.5em 1fr}
+}
