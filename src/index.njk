@@ -22,33 +22,41 @@ extraCss: ["home.css?v=20261017-entry", "home-static-background.css?v=20261016-g
 {% include "partials/nav.njk" %}
 
 <main>
-  {#- 表紙。2026-10-17：オーナーの判断で、ブランドの一文と「悩みから選ぶ」を主な入口に。身体・食事はその下に置く
-      （「まず生き方、その後に身体や日常」という順番を伝えるため）。悩みと哲学者は有料記事の front matter `paid` から。 #}
-  <section class="cover cover-choice cover-choice--worry cover-static" id="top" data-nav="dark" data-nav-solid="dark">
+  {#- 表紙。2026-10-17：オーナーの判断で「ムートンの入口」に。ブランドの一文と短い説明、主なボタン「いまの悩みから選ぶ」と補助「無料の記事を読む」。
+      テーマは順番をつけて並べる：哲学を大きく、その下に「考え方から、日々の暮らしへ」として身体・食事を小さく、アプリは「考えたことを、日々に残す道具」。 #}
+  <section class="cover cover-choice cover-choice--entry cover-static" id="top" data-nav="dark" data-nav-solid="dark">
     <div class="cover-art" aria-hidden="true"></div>
     <div class="cover-inner">
       <p class="cover-kicker">MOUTON — PHILOSOPHY OF LIFE</p>
       <h1 class="cover-title cover-title--choice">哲学を、<br>読むものから使うものへ。</h1>
-      <p class="cover-lede cover-lede--choice">生き方が変われば、行動が変わる。いま近い悩みをひとつ選ぶと、そこに合う哲学者の考えから始められる。</p>
-      <p class="cover-choice-label" id="think">悩みから選ぶ</p>
-      <nav class="cover-choice-grid" aria-labelledby="think">
-        {%- for a in collections.articles | paidCards %}
-        {%- set p = a.data.paid %}
-        <a class="cover-choice-card cover-choice-card--worry" href="topic-philosophy.html#{{ a.page.fileSlug | replace('paid-', '') }}">
+      <p class="cover-lede cover-lede--choice">決められない。人の目が気になる。続けられない。<br>そんな日々に、自分で考え、試すための道具を。</p>
+      <p class="cover-actions"><a class="cover-btn cover-btn--primary" href="topic-philosophy.html">いまの悩みから選ぶ <span aria-hidden="true">→</span></a><a class="cover-btn cover-btn--ghost" href="journal.html">無料の記事を読む</a></p>
+      <nav class="cover-choice-grid cover-themes" aria-label="テーマ">
+        <a class="cover-choice-card cover-choice-card--main" id="think" href="topic-philosophy.html">
           <span class="cover-choice-content">
-            <span class="cover-choice-number">0{{ loop.index }} / {{ p.en.split(' ') | last }}</span>
-            <strong class="cover-choice-title">{{ p.worry.split('。')[0] }}。</strong>
-            <span class="cover-choice-action">{{ p.philosopher }}へ <span aria-hidden="true">→</span></span>
+            <span class="cover-choice-number">01 / Philosophy</span>
+            <strong class="cover-choice-title">考え方から。</strong>
+            <span class="cover-choice-description">{% for a in collections.articles | paidCards %}{{ a.data.paid.philosopher }}{% if not loop.last %}、{% endif %}{% endfor %}。3人の考えを、悩みに当てはめて使う。冒頭は無料で読める。</span>
+            <span class="cover-choice-action">哲学・生き方へ <span aria-hidden="true">→</span></span>
           </span>
         </a>
-        {%- endfor %}
+        <p class="cover-themes-bridge">考え方から、日々の暮らしへ</p>
+        <a class="cover-choice-card cover-choice-card--sub" id="body" href="topic-body.html">
+          <span class="cover-choice-content">
+            <span class="cover-choice-number">02 / Body</span>
+            <strong class="cover-choice-title">身体</strong>
+            <span class="cover-choice-description">睡眠・体力・外見</span>
+          </span>
+        </a>
+        <a class="cover-choice-card cover-choice-card--sub" id="food" href="topic-food.html">
+          <span class="cover-choice-content">
+            <span class="cover-choice-number" id="foodscience">03 / Food &amp; Science</span>
+            <strong class="cover-choice-title">食事・化学</strong>
+            <span class="cover-choice-description">食べ物と栄養のエビデンス</span>
+          </span>
+        </a>
       </nav>
-      <p class="cover-choice-more"><a href="topic-philosophy.html">3人の哲学者を見る</a><a href="start.html">はじめての方へ</a></p>
-      <nav class="cover-next" aria-labelledby="cover-next-label">
-        <p class="cover-next-label" id="cover-next-label">その先に、身体と食事</p>
-        <a class="cover-next-link" id="body" href="topic-body.html"><span class="cover-next-title">身体</span><span class="cover-next-text">睡眠・体力・外見</span></a>
-        <a class="cover-next-link" id="food" href="topic-food.html"><span class="cover-next-title" id="foodscience">食事・化学</span><span class="cover-next-text">食べ物と栄養のエビデンス</span></a>
-      </nav>
+      <a class="cover-app" href="making-diary.html"><span class="cover-app-kind">APP / 試作中</span><span class="cover-app-name">DIARY</span><span class="cover-app-text">考えたことを、日々に残す道具</span></a>
     </div>
   </section>
 

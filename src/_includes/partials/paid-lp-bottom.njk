@@ -1,4 +1,4 @@
-{#- 有料記事の販売ページ（後半）：④内容と使い方 → ⑤ムートンが作る理由 → ⑥向いている人・向いていない人 → ⑦価格と購入 → ⑧FAQ。
+{#- 有料記事の販売ページ（後半）：④内容と使い方 → ⑤ムートンが作る理由 → ⑥あなたに合うかどうか → ⑦価格と購入 → ⑧FAQ。
     文言は各記事の front matter（paid・lp）と、ここに書いた共通の文から。
     販売はこのサイトで（Stripe で支払い → メールで PDF）。購入ボタンは、記事の paid.checkoutUrl と、
     site.product.philosophy の fulfillmentReady（納品の確認済み）・legalUrl（特定商取引法に基づく表記）がそろったときだけ出す。 -#}
@@ -45,10 +45,10 @@
 
 <section class="plp-section plp-fit" aria-labelledby="plp-fit-h">
   <p class="plp-step">06 / Who it's for</p>
-  <h2 id="plp-fit-h">向いている人・向いていない人</h2>
+  <h2 id="plp-fit-h">あなたに合うかどうか</h2>
   <div class="plp-fit-grid">
-    <div class="plp-fit-col plp-fit-yes"><p class="plp-fit-h">向いている人</p><ul>{% for x in lp.fit %}<li>{{ x }}</li>{% endfor %}</ul></div>
-    <div class="plp-fit-col plp-fit-no"><p class="plp-fit-h">向いていない人</p><ul>{% for x in lp.unfit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    <div class="plp-fit-col plp-fit-yes"><p class="plp-fit-h">あなたがいま、こうなら合うかもしれない</p><ul>{% for x in lp.fit %}<li>{{ x }}</li>{% endfor %}</ul></div>
+    <div class="plp-fit-col plp-fit-no"><p class="plp-fit-h">こうなら、ほかを選んだほうがいいかもしれない</p><ul>{% for x in lp.unfit %}<li>{{ x }}</li>{% endfor %}</ul></div>
   </div>
 </section>
 

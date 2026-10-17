@@ -61,8 +61,8 @@ lp:
     - { method: "この記事", gives: "ニーチェの考え方と、5つの書き込みワーク", gap: "ひとつの選択を自分の物差しで選び、今週の一歩が決まる" }
   pains: ["書き終えた投稿を、送信の手前で消してしまう", "気になる求人を見つけても、先に浮かぶのは親や周りの顔", "会議で言いかけた意見を、上司の表情を見て飲みこむ", "自分の人生なのに、自分で決めた気がしない"]
   toc: ["竜の名前は「汝なすべし」", "なぜ、人の目はこんなに重いのか", "自分の物差しは、もう手の中にある", "誰も見ていない場所で、もう一度選びたいか", "今日からの使い方", "書き込みワーク", "おわりに"]
-  fit: ["「どう思われるか」が先に浮かんで、選択がいつも無難になる人", "人の意見は大事にしたいけれど、振り回されたくない人", "反抗するのではなく、静かに自分の基準を持ちたい人"]
-  unfit: ["「人の目なんて気にするな」と言い切ってほしい人", "ニーチェの思想を、学術的に体系立てて学びたい人", "いじめやハラスメントなど、身の安全に関わる状況にいる人（まず周りの人や相談窓口を頼ってほしい）"]
+  fit: ["「どう思われるか」が先に浮かんで、選択がいつも無難になる", "人の意見は大事にしたいけれど、振り回されたくない", "反抗するのではなく、静かに自分の基準を持ちたい"]
+  unfit: ["「人の目なんて気にするな」と言い切ってほしい", "ニーチェの思想を、学術的に体系立てて学びたい", "いじめやハラスメントなど、身の安全に関わる状況にいる（まず周りの人や相談窓口を頼ってほしい）"]
   faq:
     - { q: "人の意見を無視するようになりませんか？", a: "ならない。人の声は「情報」として受け取り、選ぶときの「物差し」は自分のものを使う、という分け方を扱っている。人の意見を前より素直に聞けるようになる、というのが僕の実感だ。" }
     - { q: "「超人」などの難しい話は出てきますか？", a: "ほとんど出てこない。使うのは「三つの変化」（駱駝・獅子・子ども）、「君自身であれ」、永劫回帰の問いなど、悩みに直接使えるものだけに絞っている。" }
@@ -77,9 +77,8 @@ styles: |
 <main data-nav="light" data-nav-solid="light"><article>
         <div class="meta">2026.10.15　/　PHILOSOPHY　/　ニーチェ　<span class="paid-badge">有料記事</span></div>
         {% include "partials/paid-lp-hero.njk" %}<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
-{% include "partials/paid-lp-top.njk" %}
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
-          <p class="plp-step">03 / Sample</p>
+          <p class="plp-step">01 / Sample</p>
           <h2 id="plp-sample-h">実物の見本</h2>
           <p class="plp-small">販売する記事（PDF）の冒頭を、そのまま載せている。</p>
           <div class="plp-sample-body">
@@ -120,6 +119,7 @@ styles: |
           </div>
 {% include "partials/paid-pdf-look.njk" %}
         </section>
+{% include "partials/paid-lp-top.njk" %}
 {% include "partials/paid-lp-bottom.njk" %}
 {% include "partials/paid-series.njk" %}
 {% include "partials/article-end.njk" %}

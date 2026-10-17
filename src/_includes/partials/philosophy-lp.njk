@@ -4,7 +4,7 @@
   <p class="eyebrow">Philosophy — three answers</p>
   <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
   {#- 2026-10-17：オーナーの判断で、悩みの3択 → 商品カード → 詳しい考え方 の順に。ブランドの考え方の全体は「はじめての方へ」に1か所だけ置き、ここでは繰り返さない。 #}
-  <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった人へ。いま近い悩みを、ひとつ選ぶ。</p>
+  <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった。そんなとき、いちばん近い悩みはどれだろう。</p>
   {#- 悩みの一覧が、そのまま各哲学者への入口になる（文言は各記事の paid.worry）。 #}
   <ul class="lp-worries">
     {%- for a in paidList %}
@@ -56,9 +56,10 @@
     </div>
   </section>
 
-  {#- 詳しい考え方は、商品のあとに短く。 #}
+  {#- 詳しい考え方は、商品のあとに。このページは選ぶことに集中させ、ふだんは畳んでおく（2026-10-17）。 #}
   <section class="lp-section lp-why" aria-labelledby="lp-why-heading">
-    <h2 id="lp-why-heading">なぜ、哲学なのか。</h2>
+    <details class="lp-why-more">
+    <summary><h2 id="lp-why-heading">なぜ、哲学なのか。</h2><span class="lp-why-open">読む</span></summary>
     <p>やり方を教えてくれる本や動画は、たくさんある。けれど状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より<strong>「自分は何を基準に選ぶのか」</strong>だと僕は思う。</p>
     <ol class="lp-why-list">
       <li><strong>やり方ではなく、基準をつくる。</strong>やり方は場面ごとに変わる。基準は、どの岐路でも使える。</li>
@@ -79,6 +80,7 @@
       {%- endfor %}
     </dl>
     <p class="lp-contrast-note">ほかのやり方を否定するためではない。ムートンの考え方の全体は、<a href="start.html">はじめての方へ</a>に。</p>
+    </details>
   </section>
 
   <section class="lp-section lp-free" aria-labelledby="lp-free-heading">

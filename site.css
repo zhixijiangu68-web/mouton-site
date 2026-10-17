@@ -739,15 +739,19 @@ body.article-page article .plp-hero-cta{display:flex;flex-wrap:wrap;align-items:
 body.article-page article a.plp-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:10px 26px;border-radius:999px;background:#1b1c19;color:#f8f5ee;font:600 .9375rem/1.4 Inter,"Noto Sans JP",sans-serif;text-decoration:none}
 body.article-page article a.plp-btn:hover{background:#33352f}
 body.article-page article a.plp-btn:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
-body.article-page article .plp-hero-more{font-size:.9375rem}
+body.article-page article .plp-hero-more{display:inline-flex;align-items:center;min-height:44px;font-size:.9375rem;line-height:1.4}
+body.article-page article .plp-hero-cta{margin-bottom:22px}
 body.article-page article .plp-product{margin:0 0 22px;font-size:.8125rem;line-height:1.8;color:var(--muted,#666a64)}
-/* 最初の画面の、商品の全体像（2026-10-17）：何を・いくらで・いま買えるか、と見本・内容・価格へのリンク */
-body.article-page article .plp-glance{margin:-6px 0 24px;padding:10px 16px 6px;border:1px solid var(--line,rgba(37,39,36,.16));border-radius:10px;background:rgba(255,255,255,.4)}
-body.article-page article .plp-glance-facts{margin:0;font-size:.875rem;line-height:1.8;color:var(--ink,#252724)}
-body.article-page article .plp-glance-facts .plp-fact{white-space:nowrap}
-body.article-page article .plp-glance-facts .plp-sep{margin:0 .45em;color:var(--muted,#666a64)}
-body.article-page article .plp-glance-links{display:flex;flex-wrap:wrap;gap:0 20px;margin:4px 0 0;font-size:.875rem}
-body.article-page article .plp-glance-links a{display:inline-flex;align-items:center;min-height:36px;text-underline-offset:4px}
+/* 冒頭の要約（2026-10-17）：どんな悩みに／整理できること／届くもの・価格／いま買えるか */
+body.article-page article .plp-glance{margin:18px 0 22px;padding:4px 18px;border:1px solid var(--line,rgba(37,39,36,.16));border-radius:12px;background:rgba(255,255,255,.42)}
+body.article-page article .plp-glance-row{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 16px;padding:12px 0;border-top:1px solid var(--line,rgba(37,39,36,.12))}
+body.article-page article .plp-glance-row:first-child{border-top:0}
+body.article-page article .plp-glance dt{margin:0;font-size:.75rem;line-height:1.7;letter-spacing:.06em;color:var(--muted,#666a64)}
+body.article-page article .plp-glance dd{margin:0;font-size:.9375rem;line-height:1.8;color:var(--ink,#252724)}
+body.article-page article .plp-glance .plp-benefits{margin:0}
+body.article-page article .plp-glance .plp-fact{white-space:nowrap}
+body.article-page article .plp-glance .plp-price{font-size:1.0625rem}
+@media(max-width:600px){body.article-page article .plp-glance-row{grid-template-columns:1fr;gap:2px}}
 body.article-page article .plp-sub-h{margin:34px 0 14px;font-family:"Noto Serif JP",serif;font-weight:400;font-size:1.125rem;line-height:1.7}
 body.article-page article .plp-compare{margin:0 0 10px;border-top:1px solid var(--line)}
 body.article-page article .plp-compare-row{display:grid;grid-template-columns:1.1fr 1fr 1.4fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.875rem;line-height:1.8}
@@ -884,3 +888,11 @@ body.article-page article .plp-look figcaption{margin-top:6px!important;font-siz
 .legal-list dt{font-weight:600;font-size:.875rem;line-height:1.8}
 .legal-list dd{margin:0;font-size:.9375rem;line-height:1.85;overflow-wrap:anywhere}
 @media(max-width:560px){.legal-list>div{grid-template-columns:1fr;gap:2px}}
+
+/* 哲学のページ：「なぜ、哲学なのか」はふだん畳んでおく（2026-10-17。このページは選ぶことに集中） */
+.lp-why-more>summary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;min-height:48px}
+.lp-why-more>summary::-webkit-details-marker{display:none}
+.lp-why-more>summary h2{margin:0}
+.lp-why-open{flex:none;padding:4px 14px;border:1px solid var(--line);border-radius:999px;font-size:.8125rem;color:var(--muted)}
+.lp-why-more[open] .lp-why-open{display:none}
+.lp-why-more>summary:focus-visible{outline:3px solid var(--gold,#b98a32);outline-offset:4px}
