@@ -12,7 +12,8 @@
   <atom:link href="{{ 'feed.xml' | absoluteUrl(site.url) }}" rel="self" type="application/rss+xml"/>
   <description>{{ site.description }}</description>
   <language>ja</language>
-  {%- for a in collections.articles | head(20) %}
+  {#- 2026-10-17：RSS に出すのは残す記事だけ（アーカイブの記事は出さない）。 #}
+  {%- for a in collections.current | head(20) %}
   <item>
     <title>{{ a.data.headline }}{% if a.data.paid %}（有料・冒頭は無料）{% endif %}</title>
     <link>{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</link>
