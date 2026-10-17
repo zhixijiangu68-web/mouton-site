@@ -8,5 +8,5 @@ export default [
   'paid-kierkegaard', 'paid-nietzsche', 'paid-spinoza',
   'kierkegaard', 'nietzsche', 'spinoza',
   'stoicism', 'camus-sisyphus', 'sartre',
-  'absorption-freedom-action',
+  'absorption-freedom-action', 'social-optics',
 ];
