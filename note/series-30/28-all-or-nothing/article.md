@@ -24,7 +24,7 @@
 
 ## 周りを見ると
 
-アメリカ・カナダ・イギリスの大学生、合わせて8万人あまりの調査（1989〜2024年）をまとめた研究がある。高い基準を目指す傾向も、失敗や人の評価を気にする傾向も、年を追って強くなっていた。2000年代の初めからは、気にするほうが、より速く伸びていた [4]。
+アメリカ・カナダ・イギリスの大学生、合わせて8万人あまりの調査（1989〜2024年）をまとめた研究がある。高い基準を目指す傾向も、失敗や人の評価を気にする傾向も、年を追って強くなっていた。2000年代の初めからは、周りから完璧を求められていると感じる傾向が、とくに速く伸びていた [4]。
 
 テキストを閉じたとき、守っていたのは、基準のほうだったのだろうか。
 
@@ -36,7 +36,7 @@
 
 3. Sirois, F. M., Molnar, D. S., & Hirsch, J. K. (2017). A meta-analytic and conceptual update on the associations between procrastination and multidimensional perfectionism. European Journal of Personality, 31(2), 137–159. DOI: 10.1002/per.2098
 
-4. Curran, T., Hill, A. P., & Pose, P. M. (2026). Perfectionism is accelerating over time: A cross-temporal meta-analytic review of 35 years of college student data. Psychological Bulletin, 152(3), 255–287.
+4. Curran, T., ほか (2026). Perfectionism is accelerating over time: A cross-temporal meta-analytic review of 35 years of college student data. Psychological Bulletin, 152(3), 255–287. DOI: 10.1037/bul0000518
 
 調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
 
