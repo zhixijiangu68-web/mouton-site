@@ -4,7 +4,7 @@ bodyClass: site doc-page
 permalink: series.html
 enPage: en/series.html
 title: "連載の一覧 — ムートン"
-description: "連載「哲学者に聞く」。ストア派、キルケゴール、ニーチェ、カミュ、サルトル。悩みを一つ浮き彫りにして、哲学者の見方を一つ渡す短い記事を、読む順に並べています。"
+description: "連載「哲学者に聞く」。ストア派、キルケゴール、ニーチェ、スピノザ、カミュ、サルトル。悩みを一つ浮き彫りにして、哲学者の見方を一つ渡す短い記事を、読む順に並べています。"
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-think" data-nav="dark"{% bgImage "images/cover-philosophy.jpg" %}></div>
@@ -32,9 +32,10 @@ description: "連載「哲学者に聞く」。ストア派、キルケゴール
     </ol>
   </section>
   {%- endfor %}
-  <nav class="topic-others" aria-label="ほかのテーマ">
-    {%- for o in topics %}<a href="topic-{{ o.key }}.html">{{ o.label }}</a>{% endfor %}
-    <a href="journal.html">すべての記事</a>
+  <nav class="topic-others" aria-label="ほかのページ">
+    <a href="topic-philosophy.html">哲学の3本</a>
+    <a href="journal.html">記事</a>
+    <a href="archive.html">アーカイブ</a>
   </nav>
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">

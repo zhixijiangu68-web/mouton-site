@@ -6,7 +6,7 @@ export default {
   // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
   url: 'https://moutonarchive.com/',
-  description: 'MOUTON — Philosophy of Life。哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。哲学・生き方、身体、食事と科学の記事と、制作の記録。',
+  description: 'MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。',
   author: {
     name: 'ムートン',
     x: 'kodoku__alone',
@@ -15,7 +15,7 @@ export default {
     instagram: '',
     // note のユーザー名（note.com/ の後ろ）。入れるとフッター・運営者情報に出る。
     note: '',
-    bio: '興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。',
+    bio: '迷いながら、哲学を自分の毎日で試し、記録している一人です。先生ではありません。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章を書いています。答えは書かず、原典にあたり、言えないことは言い切らない。それを守っています。',
   },
   // Google Search Console の「HTML タグ」で確認するときの content の値。空なら出さない。
   searchConsole: '',
