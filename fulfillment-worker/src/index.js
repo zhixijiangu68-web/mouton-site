@@ -20,34 +20,84 @@ export async function verifyToken(token,secret,now=Math.floor(Date.now()/1000)){
  }catch{return null}
 }
 function email(s){const e=s.customer_details?.email||s.customer_email||"";return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)&&e.length<=254?e:null}
-export function validPaidSession(s,link){return Boolean(s&&/^cs_[a-zA-Z0-9_]+$/.test(s.id||"")&&s.mode==="payment"&&s.payment_status==="paid"&&s.payment_link===link&&s.currency==="jpy"&&s.amount_total===2980&&typeof s.payment_intent==="string"&&s.payment_intent.startsWith("pi_")&&email(s))}
-async function verifyItems(sid,env){
+
+// ---- 商品カタログ（PRODUCTS。秘密ではない）----
+// 1商品 = {id, paymentLinkId, priceId, amountJPY, objectKey, title, pages, filename}
+// Payment Link で商品を見分けるので、Webhook のエンドポイントは1つのまま。
+const LEGACY_ID="clean_science";
+function legacyProduct(env){
+ if(!env.STRIPE_PRICE_ID||!env.STRIPE_PAYMENT_LINK_ID||!env.PDF_OBJECT_KEY)return null;
+ return [{id:LEGACY_ID,paymentLinkId:env.STRIPE_PAYMENT_LINK_ID,priceId:env.STRIPE_PRICE_ID,amountJPY:2980,objectKey:env.PDF_OBJECT_KEY,title:"清潔感の科学",pages:75,filename:"mouton-clean-science.pdf"}];
+}
+function validProduct(p){
+ return Boolean(p&&typeof p==="object"
+  &&/^[a-z0-9_]{1,40}$/.test(p.id||"")
+  &&/^plink_[A-Za-z0-9]+$/.test(p.paymentLinkId||"")
+  &&/^price_[A-Za-z0-9]+$/.test(p.priceId||"")
+  &&Number.isSafeInteger(p.amountJPY)&&p.amountJPY>0
+  &&typeof p.objectKey==="string"&&p.objectKey.length>0&&p.objectKey.length<=200&&!p.objectKey.includes("/")&&!p.objectKey.includes("..")
+  &&typeof p.title==="string"&&p.title.trim().length>0&&p.title.length<=80
+  &&Number.isSafeInteger(p.pages)&&p.pages>0
+  &&/^[A-Za-z0-9._-]{1,80}$/.test(p.filename||""));
+}
+export function parseProducts(env){
+ let list=env.PRODUCTS;
+ if(list===undefined||list===null||list==="")list=legacyProduct(env);
+ if(typeof list==="string")list=JSON.parse(list);
+ if(!Array.isArray(list)||!list.length)throw Error("no products");
+ const byId=new Map(),links=new Set(),prices=new Set();
+ for(const p of list){
+  if(!validProduct(p))throw Error("invalid product");
+  if(byId.has(p.id)||links.has(p.paymentLinkId)||prices.has(p.priceId))throw Error("duplicate product");
+  byId.set(p.id,p);links.add(p.paymentLinkId);prices.add(p.priceId);
+ }
+ return byId;
+}
+export function productByLink(products,link){
+ if(typeof link!=="string")return null;
+ for(const p of products.values())if(p.paymentLinkId===link)return p;
+ return null;
+}
+export function validPaidSession(s,product){
+ return Boolean(s&&product&&/^cs_[a-zA-Z0-9_]+$/.test(s.id||"")&&s.mode==="payment"&&s.payment_status==="paid"&&s.payment_link===product.paymentLinkId&&s.currency==="jpy"&&s.amount_total===product.amountJPY&&typeof s.payment_intent==="string"&&s.payment_intent.startsWith("pi_")&&email(s));
+}
+async function verifyItems(sid,env,product){
  const url="https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(sid)+"/line_items?limit=2";
  const res=await fetch(url,{headers:{Authorization:"Bearer "+env.STRIPE_SECRET_KEY},redirect:"error"});
  if(!res.ok){console.error("mouton_stripe_http_status",res.status);throw Error("Stripe verification failed");}const data=await res.json(),rows=data.data||[];
- if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==2980||rows[0].currency!=="jpy"){console.error("mouton_stripe_line_items_mismatch");throw Error("wrong item");}
+ if(data.has_more||rows.length!==1||rows[0].price?.id!==product.priceId||rows[0].quantity!==1||rows[0].amount_total!==product.amountJPY||rows[0].currency!=="jpy"){console.error("mouton_stripe_line_items_mismatch");throw Error("wrong item");}
 }
-function ready(env){return Boolean(env.ORDERS&&env.PRIVATE_PDFS&&env.STRIPE_WEBHOOK_SECRET&&env.STRIPE_SECRET_KEY&&env.STRIPE_PRICE_ID&&env.STRIPE_PAYMENT_LINK_ID&&env.DOWNLOAD_SIGNING_SECRET?.length>=32&&env.RESEND_API_KEY&&env.FROM_EMAIL&&env.PDF_OBJECT_KEY==="clean-science-2026-10-75p.pdf"&&/^https:\/\/[^/]+\/?$/.test(env.PUBLIC_BASE_URL||""))}
+function productsOrNull(env){try{return parseProducts(env)}catch{return null}}
+function ready(env){
+ return Boolean(env.ORDERS&&env.PRIVATE_PDFS&&env.STRIPE_WEBHOOK_SECRET&&env.STRIPE_SECRET_KEY&&env.DOWNLOAD_SIGNING_SECRET?.length>=32&&env.RESEND_API_KEY&&env.FROM_EMAIL&&/^https:\/\/[^/]+\/?$/.test(env.PUBLIC_BASE_URL||"")&&productsOrNull(env));
+}
+function mailText(product,url){
+ return "ご購入ありがとうございます。"+product.title+"（PDF "+product.pages+"ページ）をダウンロードできます。\n"
+  +"有効期限7日・最大5回。リンクは共有しないでください。\n"+url+"\n\n"
+  +"リンクが開けない、ファイルが届かないときは、https://moutonarchive.com/contact.html からご連絡ください。";
+}
 async function deliver(session,env){
- let phase="validate_paid_session";
+ let phase="product_lookup";
  try{
- if(!validPaidSession(session,env.STRIPE_PAYMENT_LINK_ID))return response("not matching paid order",422);
+ const product=productByLink(parseProducts(env),session.payment_link);
+ phase="validate_paid_session";
+ if(!product||!validPaidSession(session,product))return response("not matching paid order",422);
  phase="stripe_line_items";
- await verifyItems(session.id,env);phase="d1_insert";const now=Math.floor(Date.now()/1000),expires=now+WEEK,recipient=email(session);
- await env.ORDERS.prepare("INSERT OR IGNORE INTO orders(session_id,payment_intent_id,email,status,expires_at,created_at,updated_at) VALUES (?,?,?,'pending',?,?,?)").bind(session.id,session.payment_intent,recipient,expires,now,now).run();
+ await verifyItems(session.id,env,product);phase="d1_insert";const now=Math.floor(Date.now()/1000),expires=now+WEEK,recipient=email(session);
+ await env.ORDERS.prepare("INSERT OR IGNORE INTO orders(session_id,payment_intent_id,email,product_id,status,expires_at,created_at,updated_at) VALUES (?,?,?,?,'pending',?,?,?)").bind(session.id,session.payment_intent,recipient,product.id,expires,now,now).run();
  phase="d1_read";
- const order=await env.ORDERS.prepare("SELECT status,expires_at FROM orders WHERE session_id=?").bind(session.id).first();
+ const order=await env.ORDERS.prepare("SELECT status,expires_at,product_id FROM orders WHERE session_id=?").bind(session.id).first();
  if(!order||order.status==="revoked")return response("unavailable",409);
  if(order.status==="sent")return response("already delivered");
+ if(order.product_id!==product.id)return response("not matching paid order",422);
  phase="d1_claim";
  const claim=await env.ORDERS.prepare("UPDATE orders SET status='sending',send_claimed_at=?,updated_at=? WHERE session_id=? AND (status IN ('pending','failed') OR (status='sending' AND send_claimed_at<?))").bind(now,now,session.id,now-900).run();
  if(!claim.meta?.changes)return response("in progress");
  try{
    const token=await signToken(session.id,order.expires_at,env.DOWNLOAD_SIGNING_SECRET);
    const url=env.PUBLIC_BASE_URL.replace(/\/$/,"")+"/download/"+token;
-   const message="ご購入ありがとうございます。清潔感の科学（PDF 75ページ）をダウンロードできます。\n有効期限7日・最大5回。リンクは共有しないでください。\n"+url;
    phase="resend_send";
-   const result=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json","Idempotency-Key":"mouton-clean-science-"+session.id},body:JSON.stringify({from:env.FROM_EMAIL,to:[recipient],subject:"【ムートン】清潔感の科学｜PDFダウンロード",text:message})});
+   const result=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json","Idempotency-Key":"mouton-"+product.id+"-"+session.id},body:JSON.stringify({from:env.FROM_EMAIL,to:[recipient],subject:"【ムートン】"+product.title+"｜PDFダウンロード",text:mailText(product,url)})});
    if(!result.ok||!(await result.json()).id)throw Error("email not accepted");
    phase="d1_mark_sent";
    await env.ORDERS.prepare("UPDATE orders SET status='sent',updated_at=? WHERE session_id=? AND status='sending'").bind(now,session.id).run();
@@ -83,13 +133,15 @@ export async function handleDownload(token,env){
  if(!env.ORDERS||!env.PRIVATE_PDFS||!env.DOWNLOAD_SIGNING_SECRET)return response("unavailable",503);
  const now=Math.floor(Date.now()/1000),valid=await verifyToken(token,env.DOWNLOAD_SIGNING_SECRET,now);
  if(!valid)return response("invalid download",403);
- const o=await env.ORDERS.prepare("SELECT status,expires_at,downloads FROM orders WHERE session_id=?").bind(valid.sid).first();
+ const o=await env.ORDERS.prepare("SELECT status,expires_at,downloads,product_id FROM orders WHERE session_id=?").bind(valid.sid).first();
  if(!o||o.status!=="sent"||o.expires_at!==valid.exp||o.expires_at<=now||o.downloads>=5)return response("not available",403);
- const file=await env.PRIVATE_PDFS.get(env.PDF_OBJECT_KEY||"clean-science-2026-10-75p.pdf");
+ const product=productsOrNull(env)?.get(o.product_id||LEGACY_ID)||null;
+ if(!product)return response("product not configured",503);
+ const file=await env.PRIVATE_PDFS.get(product.objectKey);
  if(!file)return response("PDF not uploaded",503);
  const done=await env.ORDERS.prepare("UPDATE orders SET downloads=downloads+1,updated_at=? WHERE session_id=? AND status='sent' AND expires_at>? AND downloads<5").bind(now,valid.sid,now).run();
  if(done.meta?.changes!==1)return response("limit reached",403);
- return new Response(file.body,{headers:{"Content-Type":"application/pdf","Content-Disposition":"attachment; filename=\"mouton-clean-science.pdf\"","Cache-Control":"private, no-store","Referrer-Policy":"no-referrer","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'none'"}});
+ return new Response(file.body,{headers:{"Content-Type":"application/pdf","Content-Disposition":"attachment; filename=\""+product.filename+"\"","Cache-Control":"private, no-store","Referrer-Policy":"no-referrer","X-Content-Type-Options":"nosniff","Content-Security-Policy":"default-src 'none'"}});
 }
 export default {async fetch(req,env){
  const u=new URL(req.url);

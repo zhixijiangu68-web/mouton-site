@@ -24,7 +24,8 @@
 | --- | --- |
 | `mouton_delivery_failure {phase:"stripe_line_items"}` と `mouton_stripe_http_status 401` | Workerに登録した `STRIPE_SECRET_KEY` の認証。Stripeの正しい**ムートンサンドボックス**用秘密鍵であることをStripe管理画面で確認し、CloudflareのSecretへ直接再登録する |
 | `mouton_delivery_failure {phase:"stripe_line_items"}` と `mouton_stripe_http_status 403` | StripeのRestricted APIキー権限またはAPI拒否。Stripe管理画面で読み取り権限とサンドボックスIDを点検 |
-| `mouton_stripe_line_items_mismatch` | Workerの `STRIPE_PRICE_ID` が `price_1UQJ5YCL4xG9rfOJ4FfXx6GW`、Payment Link IDが `plink_1UQJ5iCL4xG9rfOJ45Ebs9tn` に一致するか点検 |
+| `mouton_stripe_line_items_mismatch` | Workerの `STRIPE_PRICE_ID`（複数商品版なら `PRODUCTS` の `clean_science` の `priceId`）が `price_1UQJ5YCL4xG9rfOJ4FfXx6GW`、Payment Link IDが `plink_1UQJ5iCL4xG9rfOJ45Ebs9tn` に一致するか点検 |
+| `mouton_delivery_failure {phase:"product_lookup"}`（複数商品版のみ） | `PRODUCTS` の JSON が壊れているか、形が違う（`/health` も `not configured` になる）。wrangler.example.toml の形に合わせる |
 | `mouton_delivery_failure {phase:"d1_insert"}` | Cloudflare Worker Bindingsの `ORDERS` が `mouton-orders` の正しいDBを指すこと、およびテーブル定義を点検 |
 | `mouton_delivery_failure {phase:"d1_read"}` / `d1_claim` | WorkerのD1接続とSQLエラーを確認 |
 | `mouton_delivery_failure {phase:"resend_send"}` / `d1_mark_sent` | ResendのLogs、送信ドメイン、D1更新を点検（通常Webhook応答本文は `delivery failed; retry`） |

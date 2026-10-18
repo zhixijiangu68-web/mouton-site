@@ -29,9 +29,11 @@
 7. **本番の準備**：Stripe 本番口座で、商品・価格・Payment Link・Webhook の秘密鍵を**サンドボックスとは別に**作る。本番の Worker の設定も別にする。
 8. **公開**：各記事の front matter `paid.checkoutUrl` に本番の Payment Link、`src/_data/site.js` の `product.philosophy` に `legalUrl` を入れ、最後に `fulfillmentReady: true`。`npm test` が通ったときだけ、購入ボタンが出る。
 
-## Worker の変更点（手順 2 で行う。いまは変えない）
+## Worker の変更点（手順 2。2026-10-19 に実装し、PR にした。Cloudflare に載せるのは手順 1 が `delivered` になってから）
 
-いまの Worker は1商品だけを前提にしている（`STRIPE_PRICE_ID`・`STRIPE_PAYMENT_LINK_ID`・`PDF_OBJECT_KEY` が1つずつ）。
+実装：`fulfillment-worker/src/index.js`（商品の一覧 `PRODUCTS`、Payment Link で商品を決める、商品ごとの金額・Price・R2 のファイル・メール）、`migrations/0002_orders_product.sql`、`tests/worker.test.mjs`（14件）、`wrangler.example.toml`。`PRODUCTS` が無いあいだは旧い3変数を清潔感の科学1商品として読むので、手順 1 の診断中の Cloudflare の設定はそのままでよい。
+
+もとの Worker は1商品だけを前提にしていた（`STRIPE_PRICE_ID`・`STRIPE_PAYMENT_LINK_ID`・`PDF_OBJECT_KEY` が1つずつ）。
 
 - 商品の一覧を1つの変数（秘密ではない）にまとめる：商品ID・Payment Link ID・Price ID・金額・R2 のファイル名・メールの件名。
 - Webhook：届いた注文の Payment Link から商品を決め、その商品の Price・金額で照らし合わせる。
@@ -44,13 +46,13 @@
 
 note 用に書いた全文から作った。表紙・「この PDF の使い方」（読むだけでいい、いまの状態 → 読むところの地図。見出しを押すとそのページへ移る）・本文・「最後に、一つだけ」（答えを書かない問いを一つ）・「この PDF について」（個人で読むためのもの、要約と訳、治療の代わりにならない）。A5。2026-10-17：オーナーの判断で、書き込みワーク・書き込み用ページ・「次の一歩（今日やること・やめること）」を外した（安易に与えると、それ自体が受け身になる）。同日、オーナーが共有した資料「意志力に頼らない習慣設計」から、ワークや命令形を除いて材料を足した（スピノザ：どうにでもなれ効果、自分への思いやり、すぐのごほうび、区切りの日、アリストテレス／キルケゴール：『反復』／ニーチェ：運命愛）。
 
-| 記事 | R2 に置くファイル名（案） | ページ | SHA-256 |
-|---|---|---|---|
-| キルケゴール | `mouton-philosophy-01-kierkegaard.pdf` | 21 | `aac13f3de99beba3edf37bef239364ecd61b3f94d0e6ffcfe21e5a4d1afaa766` |
-| ニーチェ | `mouton-philosophy-02-nietzsche.pdf` | 21 | `e9d9e5fb4bd9b870b52383b21a05201e46a4a8ee11964c0fa7f1c9d10f81c0ec` |
-| スピノザ | `mouton-philosophy-03-spinoza.pdf` | 21 | `0abdf4d8bc680ec8da4ac0996b7a74377be10aa2e5f45d5a153bd2b3a5876ba0` |
+| 記事 | Worker の `PRODUCTS` の `id` | R2 に置くファイル名（＝`objectKey`。ダウンロード時の `filename` も同じ） | ページ | SHA-256 |
+|---|---|---|---|---|
+| キルケゴール | `philosophy_kierkegaard` | `mouton-philosophy-01-kierkegaard.pdf` | 21 | `aac13f3de99beba3edf37bef239364ecd61b3f94d0e6ffcfe21e5a4d1afaa766` |
+| ニーチェ | `philosophy_nietzsche` | `mouton-philosophy-02-nietzsche.pdf` | 21 | `e9d9e5fb4bd9b870b52383b21a05201e46a4a8ee11964c0fa7f1c9d10f81c0ec` |
+| スピノザ | `philosophy_spinoza` | `mouton-philosophy-03-spinoza.pdf` | 21 | `0abdf4d8bc680ec8da4ac0996b7a74377be10aa2e5f45d5a153bd2b3a5876ba0` |
 
-本文を直したら PDF を作り直し、この表の SHA-256 も書き換える。
+`PRODUCTS` の `title` は販売ページの `paid.title`（メールの件名と本文に出る）。`amountJPY` は 2980。本文を直したら PDF を作り直し、この表の SHA-256 も書き換える。
 
 ## オーナーが決めること
 
