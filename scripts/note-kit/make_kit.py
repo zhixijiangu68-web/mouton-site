@@ -153,6 +153,7 @@ for k in ('KIERKEGAARD', 'NIETZSCHE', 'SPINOZA'):
                    law='先に「特定商取引法に基づく表記」の記事を出し、この記事の末尾からリンクする（いちばん上のカード）。',
                    work='書き込みワークは入れない。手元の原稿からワークの節を外して貼る。ファイルも添付しない。',
                    fee='カード払いなら、1本の手取りは約2,548円（事務手数料5%＝149円、その残りの10%＝283円）。振込1回ごとに270円。',
+                   ai='「AI学習対価還元プログラム」は初期設定で ON（有料記事も対象）。Claude の案は、公開の設定でこの記事だけ OFF（オーナーが決める）。',
                    closing=_cl.group(1) + '\n',
                    closing_note='手元の原稿の「おわりに」のあと（「参考」の前）に、下の「最後の結びをコピー」で足す。満足して閉じず、次があることを暗示する結び（2026-10-18、オーナーの方針）。'))
 
@@ -173,7 +174,8 @@ add('PAID_CHOICE', 'paid', 'paid', '有料・選べない（16 の続き。note 
                law='先に「特定商取引法に基づく表記」の記事を出し、この記事の末尾からリンクする（このグループのいちばん上のカード）。',
                work='書き込みワークは入れていない。ファイルも添付しない。',
                closing_note='有料の続きの最後に入っている（満足して閉じず、次があることを暗示する結び。2026-10-18、オーナーの方針）。',
-               fee='案の ¥980 をカードで売ると、手取りは約838円（事務手数料5%＝49円、その残りの10%＝93円）。振込1回ごとに270円。'))
+               fee='案の ¥980 をカードで売ると、手取りは約838円（事務手数料5%＝49円、その残りの10%＝93円）。振込1回ごとに270円。',
+               ai='「AI学習対価還元プログラム」は初期設定で ON（有料記事も対象）。Claude の案は、公開の設定でこの記事だけ OFF（オーナーが決める）。'))
 # 16 の末尾に足す、有料記事への案内（有料を出したあと）
 
 # 無料の記事から有料記事への案内（2026-10-18、オーナー：「無料の記事に有料記事のリンクを貼りたい」。note/paid-links.md）
@@ -387,6 +389,11 @@ profile = dict(
 )
 files['img/profile-icon.png'] = 'note/profile/icon.png'
 files['img/profile-header.jpg'] = 'note/profile/header.jpg'
+# マガジン（note/magazines/magazines.json）
+MAGS = json.loads((NOTE / 'magazines' / 'magazines.json').read_text(encoding='utf-8'))
+for _m in MAGS:
+    _m['img'] = f"img/magazine-{_m['id']}.jpg"
+    files[_m['img']] = f"note/magazines/{_m['id']}.jpg"
 
 
 def blob(x):
@@ -395,7 +402,8 @@ def blob(x):
 
 template = (HERE / 'kit_template.html').read_text(encoding='utf-8')
 page = (template.replace('/*KIT_DATA*/[]', blob(data)).replace('/*KIT_PROFILE*/{}', blob(profile))
-        .replace('/*KIT_GROUPS*/[]', blob(GROUPS)).replace('/*KIT_INDEX*/{}', blob(INDEX)))
+        .replace('/*KIT_GROUPS*/[]', blob(GROUPS)).replace('/*KIT_INDEX*/{}', blob(INDEX))
+        .replace('/*KIT_MAGS*/[]', blob(MAGS)))
 assert '/*KIT_' not in page
 (OUT / 'index.html').write_text(page, encoding='utf-8')
 (OUT / 'files.json').write_text(json.dumps(files, ensure_ascii=False, indent=1), encoding='utf-8')

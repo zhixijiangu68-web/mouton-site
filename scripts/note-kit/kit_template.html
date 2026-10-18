@@ -53,6 +53,8 @@ p { margin: 0; }
 .pill { display: inline-flex; gap: 6px; align-items: baseline; padding: 3px 12px; border-radius: 999px; background: var(--chip); font-size: 13px; }
 .pill b { font-size: 15px; }
 .pill.next { background: transparent; border: 1px solid var(--line); }
+.todo li.done { color: var(--muted); text-decoration: line-through; }
+.todo li small { color: var(--muted); }
 .box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
 .box h2, .phase-head h2 { font-family: var(--serif); font-weight: 600; font-size: 19px; }
 .steps { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; }
@@ -127,6 +129,8 @@ button.primary.done { background: var(--ok); border-color: var(--ok); color: var
 .acct-row .k { color: var(--muted); font-size: 13.5px; }
 .acct-row .v { min-width: 0; overflow-wrap: anywhere; }
 .acct-row .v small { color: var(--muted); }
+.mag + .mag { margin-top: 18px; }
+.mag h3 { margin: 6px 0 2px; font-size: 16px; }
 .acct-img { width: 100%; max-width: 240px; border-radius: 8px; border: 1px solid var(--line); }
 .acct-img.icon { max-width: 96px; border-radius: 50%; }
 @media (max-width: 640px) { .acct-row { grid-template-columns: 1fr auto; } .acct-row .k { grid-column: 1 / -1; } }
@@ -166,9 +170,15 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
   <header class="top">
     <p class="brand">Mouton · note</p>
     <h1>note 公開キット</h1>
-    <p class="lead">無料の20本で世界観を伝えてから、有料の3本を出します。公開する順に並べてあり、下書きの URL を入れると、本文の中のリンクが埋まります。</p>
+    <p class="lead">無料の20本で世界観を伝えてから、有料を出します。公開する順に並べてあり、下書きの URL を入れると、本文の中のリンクが埋まります。</p>
     <div class="summary" id="summary"></div>
   </header>
+
+  <section class="box" aria-labelledby="todo-h">
+    <h2 id="todo-h">最初の1件の購入までに、残っていること</h2>
+    <ol class="steps todo" id="todo"></ol>
+    <p class="note-line">「公開」の印と URL から、自動で更新します。</p>
+  </section>
 
   <section class="box" aria-labelledby="howto-h">
     <h2 id="howto-h">使い方</h2>
@@ -192,6 +202,12 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
     <div class="acct" id="acct"></div>
   </section>
 
+  <section class="box" aria-labelledby="mag-h">
+    <h2 id="mag-h">マガジン（記事をまとめる棚）</h2>
+    <p class="note-line">note の「マガジン」は、記事をまとめて並べる棚です。1本読んだ人が、同じ棚のほかの記事に進めます。クリエイターページの「マガジン」→「作成」で、名前・説明・ヘッダー画像を入れて作り、記事のページの「記事を保存」（または「…」）からマガジンに追加します。下書きの記事は追加できません。無料のマガジンに有料記事を入れても、続きは購入した人だけが読めます。</p>
+    <div class="acct" id="mags"></div>
+  </section>
+
   <div id="groups" class="wrap-groups"></div>
 
   <footer>
@@ -203,6 +219,7 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
 
 <script type="application/json" id="kit-data">/*KIT_DATA*/[]</script>
 <script type="application/json" id="kit-profile">/*KIT_PROFILE*/{}</script>
+<script type="application/json" id="kit-mags">/*KIT_MAGS*/[]</script>
 <script type="application/json" id="kit-groups">/*KIT_GROUPS*/[]</script>
 <script type="application/json" id="kit-index">/*KIT_INDEX*/{}</script>
 <script>
@@ -210,6 +227,7 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
   const ITEMS = JSON.parse(document.getElementById('kit-data').textContent);
   const BY_KEY = Object.fromEntries(ITEMS.map(it => [it.key, it]));
   const PROFILE = JSON.parse(document.getElementById('kit-profile').textContent);
+  const MAGS = JSON.parse(document.getElementById('kit-mags').textContent);
   const GROUPS = JSON.parse(document.getElementById('kit-groups').textContent);
   const INDEX = JSON.parse(document.getElementById('kit-index').textContent);
   const LS_KEY = 'mouton-note-kit-v1';
@@ -399,6 +417,7 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
         <dt>特商法</dt><dd>${esc(it.extra.law)}</dd>
         <dt>返金</dt><dd>${esc(it.extra.refund)}</dd>
         <dt>手数料</dt><dd>${esc(it.extra.fee)}</dd>
+        ${it.extra.ai ? `<dt>AI 学習</dt><dd>${esc(it.extra.ai)}</dd>` : ''}
       </dl>
       <div class="actions"><button type="button" data-act="teaser">有料ラインの前の案内をコピー（任意）</button>${it.extra.rest_html ? '<button type="button" class="primary" data-act="rest">有料の続きをコピー</button>' : ''}${it.extra.closing_html ? '<button type="button" data-act="closing">最後の結びをコピー</button>' : ''}</div>` : '';
     const paidLink = it.paid ? `
@@ -529,11 +548,32 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
       ? `目次の「いま読める」に載る記事：${idx.nums.length}本（${idx.nums.map(pad).join('・')}）`
       : '目次の「いま読める」に載る記事：まだありません（30本の記事に URL を入れると載ります）';
     document.querySelectorAll('.index-now').forEach(p => { p.textContent = nowText; });
+    renderTodo();
     $('#summary').innerHTML =
       `<span class="pill">無料 URL <b>${urls}</b>/${free.length}</span>` +
       `<span class="pill">無料 公開 <b>${lives}</b>/${free.length}</span>` +
       `<span class="pill">有料 公開 <b>${paidLive}</b>/${ITEMS.filter(x => x.kind === 'paid').length}</span>` +
       (next ? `<span class="pill next">次に公開：${pad(next.order)} ${esc(next.label)}</span>` : `<span class="pill next">無料の20本と目次を、すべて公開しました</span>`);
+  }
+
+  function renderTodo() {
+    const live = k => !!st(k).live;
+    const twenty = ITEMS.filter(it => ['done', 'day1', 'day2', 'day3', 'day4'].includes(it.group));
+    const restFree = twenty.filter(it => !live(it.key));
+    const paid = ITEMS.filter(it => it.kind === 'paid');
+    const paidLive = paid.filter(it => live(it.key));
+    const paidUrl = paid.filter(it => urlFor(it.key));
+    const liveFree = ITEMS.filter(it => it.paid && live(it.key));
+    const steps = [
+      { done: !restFree.length, text: `無料の20本と目次を出す`, sub: restFree.length ? `あと ${restFree.length} 本：${restFree.map(it => it.label.replace(/^30本・/, '')).join('、')}` : 'すべて公開ずみ' },
+      { done: live('LEGAL'), text: '特定商取引法に基づく表記の記事を出す', sub: '＿＿＿＿ に氏名・メールを入れてから。有料より先に（有料のグループのいちばん上）' },
+      { done: false, text: '有料を出す前に決める', sub: '「選べない」の価格（案 ¥980）／ 有料記事の AI 学習への提供（案：有料だけ OFF）／ 手元の原稿の体験の節（各出品シートの「公開前の確認」）' },
+      { done: paidLive.length === paid.length, text: `有料記事を公開する（${paidLive.length}/${paid.length}）`, sub: '返金は「受け付けない」。公開したら、カードに URL を入れる' },
+      { done: paidUrl.length > 0 && liveFree.every(it => paidReady(it) ? !!st(it.key).paidLinked : true) && paidUrl.length === paid.length, text: '無料の記事に、有料記事への案内を足す', sub: paidUrl.length ? '公開ずみの無料記事は、各カードの「有料記事への案内をコピー」で（これから出す記事は、本文のコピーに入る）' : '有料記事の URL を入れると始められる' },
+      { done: false, text: 'マガジンを作る（上の欄）', sub: '「MOUTON の入口」「30の不安と、30の最初の一歩」はいま。ほかは記事を出したとき' },
+      { done: false, text: '売れたら、件数と日時を Claude に伝える', sub: '閲覧やスキは購入の代わりにしない。週に1回、ダッシュボードのスクリーンショットも' },
+    ];
+    $('#todo').innerHTML = steps.map(s => `<li class="${s.done ? 'done' : ''}"><b>${esc(s.text)}</b><br><small>${esc(s.sub)}</small></li>`).join('');
   }
 
   function saveLocal() {
@@ -573,6 +613,11 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
       row('リンク（X）', P.x) +
       img('アイコン', P.icon, 'icon', 'アイコン：満月の前の羊', 'mouton-note-icon.png') +
       img('ヘッダー画像', P.header, '', 'ヘッダー画像：月桂樹と三日月', 'mouton-note-header.jpg');
+    $('#mags').innerHTML = MAGS.map(m => `<div class="mag">
+      <h3>${esc(m.name)}</h3>
+      <p class="note-line">作るとき：${esc(m.when)}。入れる記事：${esc(m.articles)}。</p>` +
+      row('名前', m.name) + row('説明', m.description, `${[...m.description].length}字`) +
+      img('ヘッダー画像', m.img, '', `マガジンのヘッダー画像：${esc(m.name)}`, `mouton-magazine-${m.id}.jpg`) + '</div>').join('');
   }
 
   function renderGroups() {
@@ -657,6 +702,11 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
         const miss = it.paid.keys.filter(k => !urlFor(k));
         if (miss.length) { toast(`${miss.map(labelOf).join('、')}の URL がまだありません（有料記事のカードに入れます）`); return; }
         const ok = await copyRich(resolvedHtml(it.paid.html, false), resolvedMd(it.paid.md));
+        if (ok && st(it.key).live && !st(it.key).paidLinked) {
+          // 公開ずみの記事に案内を足した印（「残っていること」の数え方に使う）
+          state.status[it.key] = Object.assign({}, st(it.key), { paidLinked: true });
+          renderDynamic(); queueWrite();
+        }
         if (ok) { flash(btn); toast('有料への案内をコピーしました。最後の問いのあとに貼ってください'); } else toast('コピーできませんでした');
       } else if (act === 'teaser') {
         const ok = await copyRich(it.extra.teaser_html, resolvedMd(it.extra.teaser));
