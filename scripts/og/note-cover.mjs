@@ -42,11 +42,12 @@ const SINGLES = [
   { dir: 'free-kierkegaard', big: '決められないのは、弱いからだろうか', small: 'キルケゴールの「自由のめまい」', ...intro },
   { dir: 'free-nietzsche', big: 'その「すべき」は、誰の声なのか', small: 'ニーチェの「汝なすべし」', ...intro },
   { dir: 'free-spinoza', big: '反省するほど、動けなくなるのはなぜだろう', small: 'スピノザ「謙遜は徳ではない」', ...intro },
-  { dir: 'paid-kierkegaard', big: '不安を抱えたまま、選ぶ', small: 'キルケゴールに学ぶ、五つの方法', ...paid },
-  { dir: 'paid-nietzsche', big: '人の物差しから、降りる', small: 'ニーチェに学ぶ、自分の価値をつくる', ...paid },
-  { dir: 'paid-spinoza', big: '感情に振り回されない、続け方', small: 'スピノザ『エチカ』に学ぶ', ...paid },
-  { dir: 'paid-choice', big: '「いちばん」を探さずに選ぶ', small: 'アリストテレスに学ぶ、五つの方法', ...paid },
-  { dir: 'paid-perfect', big: '「ちゃんと」と「ゼロ」のあいだで', small: 'ヴォルテールに学ぶ、五つの方法', ...paid },
+  // 有料は、大きな文字に読む人の悩みの言葉を置く（2026-10-18、オーナー：コピーを先に。題は画像の下に出るので、くり返さない）
+  { dir: 'paid-kierkegaard', big: '考えるほど、決められない', small: 'キルケゴールに学ぶ、不安を抱えたまま選ぶ5つの方法', ...paid },
+  { dir: 'paid-nietzsche', big: 'どう思われるかで、決めてしまう', small: 'ニーチェに学ぶ、自分の物差しで選ぶ方法', ...paid },
+  { dir: 'paid-spinoza', big: '続かない自分を、責めてしまう', small: 'スピノザ『エチカ』に学ぶ、感情に振り回されない続け方', ...paid },
+  { dir: 'paid-choice', big: '比べるほど、選べない', small: 'アリストテレスに学ぶ、「いちばん」を探さずに選ぶ5つの方法', ...paid },
+  { dir: 'paid-perfect', big: '完璧にできないなら、やらない', small: 'ヴォルテールに学ぶ、「ちゃんと」と「ゼロ」のあいだで続ける5つの方法', ...paid },
 ];
 
 const args = process.argv.slice(2);

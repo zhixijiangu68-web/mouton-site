@@ -191,10 +191,14 @@ for _m in re.finditer(r'^\| ([0-9・]+) \| (\S+) \| .+ \|$', (NOTE / 'paid-links
         assert int(_n) not in PAID_OF, _n
         PAID_OF[int(_n)] = _PAID_KEY[_m.group(2)]
 assert set(PAID_OF) == set(range(1, 61)), sorted(set(range(1, 61)) - set(PAID_OF))
-_PAID_TITLE = {}
+_PAID_TITLE, _PAID_HOOK, _PAID_MIN = {}, {}, {}
 for _k, _d in (('PAID_KIERKEGAARD', 'paid-kierkegaard'), ('PAID_NIETZSCHE', 'paid-nietzsche'), ('PAID_SPINOZA', 'paid-spinoza'), ('PAID_CHOICE', 'paid-choice')):
-    _t = re.search(r'^\| タイトル \| (.+?) \|$', (NOTE / _d / 'listing.md').read_text(encoding='utf-8'), re.M).group(1)
-    _PAID_TITLE[_k] = _t.split('——', 1)
+    _l = (NOTE / _d / 'listing.md').read_text(encoding='utf-8')
+    _PAID_TITLE[_k] = re.search(r'^\| タイトル \| (.+?) \|$', _l, re.M).group(1).split('——', 1)
+    # 無料の記事からの案内に入れる一行（2026-10-18、コピーを先に）と、読了時間
+    _PAID_HOOK[_k] = first_line(section(_l, '無料の記事からの案内'))
+    _PAID_MIN[_k] = re.search(r'^\| 読了時間 \| 約(\d+)分 \|$', _l, re.M).group(1)
+    assert _PAID_HOOK[_k], _k
 
 
 def _section_block(path):
@@ -211,7 +215,8 @@ def paid_plan(it):
             block = _section_block(NOTE / 'paid-choice' / 'link-from-16.md').replace('{PAID_URL}', '{URL_PAID_CHOICE}')
         else:
             main, sub = _PAID_TITLE[pk]
-            block = f'この悩みに近い有料記事：\n**{main}**\n{sub}\n{{URL_{pk}}}'
+            block = (f'この悩みの先を、有料の記事に書いた。\n\n**{main}**\n{sub}\n\n{_PAID_HOOK[pk]}\n\n'
+                     f'→ この有料記事を読む（note）\n{{URL_{pk}}}\n全文 約{_PAID_MIN[pk]}分（有料）')
         return dict(block='---\n\n' + block, atMd='## 参考\n', atHtml='<h2>参考</h2>', mode='before', where='最後の問いのあと、「参考」の前')
     if k.startswith('FREE_'):
         return dict(block=_section_block(NOTE / f'free-{SLUG[k[5:]]}' / 'paid-section.md'), atMd='## この悩みの続き\n\n',
