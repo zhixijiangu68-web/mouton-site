@@ -1,0 +1,407 @@
+<!doctype html>
+<!--
+  MOUTON の note コピーライティング・ガイド（2026-10-18）。
+  PDF にするとき：node scripts/note-kit/guide_pdf.mjs（→ docs/note-copywriting-guide.pdf）
+  決まりの元は BRAND.md「コピーを先に」と note/README.md「コピーの決まり」。ここを直したら、そちらもそろえる。
+-->
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>MOUTON の note コピーライティング・ガイド</title>
+<link rel="stylesheet" href="../scripts/og/node_modules/@fontsource/noto-serif-jp/400.css">
+<link rel="stylesheet" href="../scripts/og/node_modules/@fontsource/noto-serif-jp/600.css">
+<link rel="stylesheet" href="../scripts/og/node_modules/@fontsource/noto-serif-jp/700.css">
+<style>
+  @page { size: A4; margin: 15mm 15mm 17mm; }
+  :root {
+    --ink: #1c2133; --sub: #5a5f6e; --line: #d9d3c4; --paper: #f8f5ee;
+    --navy: #0e1730; --gold: #a07a35; --before: #8c4a3c; --after: #2d6449;
+  }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); background: #fff; font-family: "Noto Serif JP", serif; font-size: 10.2pt; line-height: 1.75; }
+  .sans, table, .label, .tag, .num, .kicker, .flow, .check, .status { font-family: "IPAPGothic", "IPAGothic", sans-serif; }
+  h1, h2, h3 { font-weight: 700; line-height: 1.4; margin: 0; }
+  h2 { font-size: 15.5pt; color: var(--navy); border-bottom: 2px solid var(--gold); padding-bottom: 4pt; margin: 0 0 10pt; }
+  h3 { font-size: 11.6pt; color: var(--navy); margin: 14pt 0 5pt; }
+  p { margin: 0 0 7pt; }
+  ul, ol { margin: 0 0 7pt; padding-left: 1.3em; }
+  li { margin: 1.5pt 0; }
+  strong { font-weight: 700; }
+  .page { break-after: page; }
+  .page:last-child { break-after: auto; }
+  .kicker { font-size: 8.6pt; letter-spacing: .12em; color: var(--gold); margin-bottom: 2pt; }
+  .lead { font-size: 10.8pt; }
+  .note { font-size: 8.8pt; color: var(--sub); }
+
+  /* 表紙 */
+  .cover { height: 262mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover-band { background: var(--navy); color: #f4ecd8; padding: 26mm 16mm 22mm; border-radius: 3mm; }
+  .cover-band .kicker { color: #d9b56a; font-size: 9.5pt; }
+  .cover-band h1 { font-size: 25pt; margin: 6mm 0 5mm; letter-spacing: .02em; }
+  .cover-band .tagline { font-size: 13pt; color: #e7dcc2; }
+  .quote { border-left: 3px solid var(--gold); padding: 3mm 0 3mm 5mm; margin: 8mm 0 0; font-size: 11.5pt; }
+  .quote .who { display: block; font-size: 9pt; color: var(--sub); margin-top: 2mm; }
+  .toc { columns: 2; column-gap: 10mm; font-size: 9.6pt; }
+  .toc div { break-inside: avoid; margin: 0 0 2.2mm; }
+  .toc .n { display: inline-block; width: 7mm; color: var(--gold); font-weight: 700; }
+
+  /* 原則 */
+  .rule { display: grid; grid-template-columns: 10mm 1fr; gap: 0 3mm; margin: 0 0 4.2mm; break-inside: avoid; }
+  .rule .num { font-size: 15pt; font-weight: 700; color: var(--gold); line-height: 1.2; }
+  .rule h3 { margin: 0 0 1mm; font-size: 11.2pt; }
+  .rule p { margin: 0; }
+
+  /* 通り道 */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.6mm; margin: 2mm 0 2.4mm; font-size: 8.2pt; line-height: 1.45; }
+  .flow.three { grid-template-columns: repeat(3, 1fr); }
+  .flow .step { border: 1px solid var(--line); background: var(--paper); border-radius: 1.6mm; padding: 1.6mm 2mm; }
+  .flow .step b { display: block; color: var(--navy); font-size: 8.8pt; }
+  .flow .step.paid { background: #f3ecdc; border-color: #d8c49a; }
+  .flow-note { font-size: 8.4pt; color: var(--sub); margin: 0 0 3mm; }
+
+  /* 場所ごとの書き方 */
+  .spot { border: 1px solid var(--line); border-radius: 2.5mm; padding: 3.5mm 4.5mm 2.5mm; margin: 0 0 4.5mm; break-inside: avoid; }
+  .spot h3 { margin: 0 0 2mm; font-size: 12pt; }
+  .spot h3 .no { color: var(--gold); margin-right: 2mm; }
+  .spot .role { font-size: 9.4pt; color: var(--sub); margin: 0 0 2mm; }
+  .spot dl { display: grid; grid-template-columns: 22mm 1fr; gap: 1mm 3mm; margin: 0 0 2mm; }
+  .spot dt { font-family: "IPAPGothic", sans-serif; font-size: 8.8pt; color: var(--navy); font-weight: 700; padding-top: .6mm; }
+  .spot dd { margin: 0; }
+  .ba { display: grid; grid-template-columns: 10mm 1fr; gap: 1mm 2.5mm; background: var(--paper); border-radius: 1.8mm; padding: 2.2mm 3mm; margin: 1.5mm 0 1.8mm; font-size: 9.6pt; break-inside: avoid; }
+  .ba .label { font-size: 8pt; font-weight: 700; text-align: center; border-radius: 1mm; padding: .3mm 0; height: fit-content; margin-top: .6mm; }
+  .ba .b { background: #f1e1dc; color: var(--before); }
+  .ba .a { background: #dcebe2; color: var(--after); }
+  .ba .why { grid-column: 2; font-size: 8.6pt; color: var(--sub); }
+
+  /* 表 */
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; line-height: 1.55; margin: 2mm 0 5mm; }
+  th, td { border: 1px solid var(--line); padding: 1.1mm 2mm; vertical-align: top; text-align: left; }
+  th { background: var(--navy); color: #f4ecd8; font-weight: 700; }
+  tr { break-inside: avoid; }
+  td.ng { color: var(--before); }
+  td.ok { color: var(--after); }
+  .status { font-size: 8pt; font-weight: 700; border-radius: 1mm; padding: .2mm 1.6mm; white-space: nowrap; }
+  .s-done { background: #dcebe2; color: var(--after); }
+  .s-owner { background: #f3ecdc; color: #7a5a1c; }
+  .s-next { background: #e3e6f0; color: #2c3b6b; }
+
+  /* チェック */
+  .check { list-style: none; padding: 0; font-size: 9.6pt; }
+  .check li { padding-left: 7mm; position: relative; margin: 1.6mm 0; break-inside: avoid; }
+  .check li::before { content: ""; position: absolute; left: 0; top: 1.2mm; width: 3.4mm; height: 3.4mm; border: 1.2px solid var(--navy); border-radius: .6mm; }
+  .check .tag { font-size: 7.6pt; color: #7a5a1c; background: #f3ecdc; border-radius: 1mm; padding: 0 1.2mm; margin-left: 1mm; }
+</style>
+</head>
+<body>
+
+<!-- 1. 表紙 -->
+<section class="page cover">
+  <div>
+    <div class="cover-band">
+      <div class="kicker sans">MOUTON — PHILOSOPHY OF LIFE ／ note 事業部</div>
+      <h1>note コピーライティング・ガイド</h1>
+      <div class="tagline">美しさより、コピーを先に。<br>どこを、どう書けば、読まれて、買われるのか。</div>
+    </div>
+    <p class="quote">コピーライティングが非常に重要だ。美しさよりもコピーが大事だ。全てを満たすことはできない。したがって、コピーライティングを重要視する。<span class="who">オーナー（2026-10-18）</span></p>
+  </div>
+  <div>
+    <div class="kicker sans">目次</div>
+    <div class="toc">
+      <div><span class="n">1</span>7つの原則</div>
+      <div><span class="n">2</span>読む人の通り道と、コピーが効く13か所</div>
+      <div><span class="n">3</span>場所ごとの書き方（前 → 後の実例つき）</div>
+      <div><span class="n">4</span>書かないこと（強いコピーと、あおりの違い）</div>
+      <div><span class="n">5</span>公開前の5分チェック</div>
+      <div><span class="n">6</span>どこをどう直したか（2026-10-18）</div>
+      <div><span class="n">7</span>オーナーが note の画面ですること</div>
+    </div>
+    <p class="note">このガイドは、note の無料記事（「気づかせる」形）・有料記事・プロフィール・マガジンのためのもの。決まりの元は <span class="sans">BRAND.md</span>「コピーを先に」「気づかせる」「一人に語りかける」「信者をつくらない」。例は、2026-10-18 に実際に直した文から取った。</p>
+  </div>
+</section>
+
+<!-- 2. 原則 -->
+<section class="page">
+  <div class="kicker">1</div>
+  <h2>7つの原則</h2>
+  <p class="lead">見た目と文章がぶつかったら、文章をとる。そのうえで、次の7つを守る。</p>
+
+  <div class="rule"><div class="num">1</div><div>
+    <h3>最初の数秒で、誰の、どんな場面の話かを分からせる</h3>
+    <p>note の一覧で目に入るのは、見出し画像と題だけ。開いても、最初の一行で読むかどうかが決まる。説明や一般論（「人は〜」）から始めない。時間・場所・ものが分かる場面から入る。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">2</div><div>
+    <h3>同じことを二度言わない（題・画像・説明は、別の役割に）</h3>
+    <p>見出し画像は、題と並んで見られる。画像に題をくり返すと、一枚ぶんの言葉を捨てることになる。画像には題にない一行（場面・問い・数字・哲学者の言葉）を置く。マガジンの画像も、マガジン名をくり返さない。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">3</div><div>
+    <h3>読者の言葉と、具体で書く</h3>
+    <p>「主体性」「価値観」「ルサンチマン」のような抽象語や、比喩だけの一行は、本文の中では使ってよいが、画像・題・案内には使わない。代わりに、読者が頭の中で言っている言葉（「やっぱりダメだ」）と、目に浮かぶもの（財布の中の会員証、開いたままのタブ）を使う。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">4</div><div>
+    <h3>章の名前ではなく、読む人が得るもので書く</h3>
+    <p>有料ラインの前の「この先で読めること」は、買うかどうかを決める直前に読まれる。「竜の名前は「汝なすべし」」のような章の名前では、何が手に入るのか分からない。「頭の中の「すべき」は、誰の声なのか」のように、読むと何が分かるかで書く。方法は名前まで書く。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">5</div><div>
+    <h3>研究より、言い過ぎない（題でも）</h3>
+    <p>強い題は、言い切りたくなる。けれど研究が「平均ではほぼ影響なし。ただし結果は実験ごとに大きく分かれる」なら、「〜からではない」は言い過ぎで、「〜からだけではない」が正しい。言い過ぎた一文は、読んだ人の信頼を一度に削る。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">6</div><div>
+    <h3>強いコピーと、あおりは違う</h3>
+    <p>強くするのは、具体さと、読者の言葉に近いこと。変化を約束しない（「必ず」「変わる」）。押しつけない（「〜しなさい」）。急がせない（「今だけ」）。見下さない。書き手（ムートン）の体験として書かない（場面は読者の仮の場面）。</p>
+  </div></div>
+
+  <div class="rule"><div class="num">7</div><div>
+    <h3>無料は問いで終え、有料で答える。有料も、満足して閉じない</h3>
+    <p>無料の記事は、答えを書かず、具体的な問いを一つ返して終える。答え（考え方と方法）は有料に書く。有料の最後は、読んだあとどうするかを読者に返し（どれも正解。あなたの人生だから）、まだ書いていない次の悩みを暗示して終える。</p>
+  </div></div>
+</section>
+
+<!-- 3. 通り道 -->
+<section class="page">
+  <div class="kicker">2</div>
+  <h2>読む人の通り道と、コピーが効く13か所</h2>
+  <p>読む人は、次の順に進む。それぞれの場所で、次に進むかどうかを決めている。コピーは、その一歩ごとに置く。</p>
+
+  <div class="flow">
+    <div class="step"><b>① 見出し画像</b>一覧で止まるか</div><div class="step"><b>② 題</b>自分のことか</div><div class="step"><b>③ 書き出し</b>読み進めるか</div><div class="step"><b>④ 太字の一行</b>何を持ち帰るか</div><div class="step"><b>⑤ 最後の問い</b>閉じたあとも残るか</div>
+  </div>
+  <div class="flow">
+    <div class="step"><b>⑥ 次に読む</b>もう一本読むか</div><div class="step paid"><b>⑦ 有料への案内</b>答えを見にいくか</div><div class="step paid"><b>⑧ 有料の無料部分</b>見本で信じるか</div><div class="step paid"><b>⑨ 有料ラインの前</b>買うか</div><div class="step paid"><b>⑩ 有料の結び</b>次も読むか</div>
+  </div>
+  <div class="flow three">
+    <div class="step"><b>⑪ プロフィール</b>この書き手を追うか</div>
+    <div class="step"><b>⑫ マガジン</b>棚から選ぶか</div>
+    <div class="step"><b>⑬ 記事の説明</b>SNS・検索で開くか</div>
+  </div>
+  <p class="flow-note">上の2段は左から右へ、①から⑩の順に進む（色の濃い⑦〜⑩が有料）。下の段は、どこからでも入口になる。</p>
+
+  <table>
+    <thead><tr><th style="width:22%">場所</th><th style="width:36%">読む人が決めること</th><th>いちばん大事な書き方</th></tr></thead>
+    <tr><td>① 見出し画像</td><td>一覧で指が止まるか</td><td>題にない一行。16字まで。意味の切れ目で改行して大きく</td></tr>
+    <tr><td>② 題</td><td>自分のことだと思うか</td><td>無料は読者の心の声。有料は「〜のは、〜だけではない。——〇〇に学ぶ、〜」</td></tr>
+    <tr><td>③ 書き出し</td><td>読み進めるか</td><td>一行目で、時間・場所・ものが分かる場面</td></tr>
+    <tr><td>④ 太字の一行</td><td>何を持ち帰るか</td><td>一読で分かる言葉。比喩だけにしない。「〜のかもしれない」</td></tr>
+    <tr><td>⑤ 最後の問い</td><td>閉じたあとも考えるか</td><td>冒頭の場面に戻る、具体的な一問。答えを誘導しない</td></tr>
+    <tr><td>⑥ 次に読む</td><td>もう一本読むか</td><td>題（心の声）だけで足りる。行を足さない</td></tr>
+    <tr><td>⑦ 有料への案内</td><td>答えを見にいくか</td><td>悩みの場面と、読むと何が分かるかの一行。分数と「有料」</td></tr>
+    <tr><td>⑧ 有料の無料部分</td><td>見本で信じるか</td><td>答えの根拠は、有料ラインの後ろに置く</td></tr>
+    <tr><td>⑨ 有料ラインの前</td><td>買うか</td><td>章の名前ではなく、得るもの。方法は名前まで</td></tr>
+    <tr><td>⑩ 有料の結び</td><td>次も読むか</td><td>読んだあとを返す。本文で書いたことを「まだ書いていない」と言わない</td></tr>
+    <tr><td>⑪ プロフィール</td><td>この書き手を追うか</td><td>悩みを先頭に。誰の言葉を手がかりにするかを具体的に</td></tr>
+    <tr><td>⑫ マガジン</td><td>棚から選ぶか</td><td>画像は名前をくり返さず、読む人への一行</td></tr>
+    <tr><td>⑬ 記事の説明</td><td>SNS・検索で開くか</td><td>場面 → 問い → 読むと何が見えるか。出典の名前を並べない</td></tr>
+  </table>
+</section>
+
+<!-- 4. 場所ごとの書き方 -->
+<section>
+  <div class="kicker">3</div>
+  <h2>場所ごとの書き方（前 → 後の実例つき）</h2>
+
+  <div class="spot">
+    <h3><span class="no">①</span>見出し画像</h3>
+    <p class="role">一覧で、題と並んで最初に見られる。スマホの一覧では横400ピクセルほどに縮むので、小さな文字は読めない前提で考える。</p>
+    <dl>
+      <dt>書き方</dt><dd>題にない一行を、大きな文字に。場面・問い・数字・哲学者の言葉。16字まで。意味の切れ目で改行すると、文字が大きくなる（30本・次の30本は <span class="sans">03-titles.md</span> の「大：」に「／」）。</dd>
+      <dt>やらない</dt><dd>題のくり返し。抽象語だけの一行。大事なことを小さな文字に置く。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>「やっぱりダメだ」と思った夜に</div><span class="label a">後</span><div>許したら、緩むのだろうか</div><span class="why">27。題が「また続かなかった。やっぱり自分はダメだ、と思った夜に。」なので、画像は記事の問いに。</span></div>
+    <div class="ba"><span class="label b">前</span><div>小さなイライラが、止まらない</div><span class="label a">後</span><div>怒りは、短い狂気</div><span class="why">52。題のくり返しをやめ、記事が引くセネカ『怒りについて』の言葉を大きく。</span></div>
+    <div class="ba"><span class="label b">前</span><div>気づいたら、スマホを手に取っている</div><span class="label a">後</span><div>ネットに1日181.8分。／1年で、46日ぶん</div><span class="why">09（公開ずみ。差し替えはオーナーが決める）。数字は記事の出典どおり。スマホだけの時間に読まれないよう「ネットに」を付けた。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">②</span>題</h3>
+    <p class="role">「これは自分のことだ」と思わせる。題がいちばん強いコピー。</p>
+    <dl>
+      <dt>無料</dt><dd>読者の心の声（「選択肢が多すぎて、選べない。」）。</dd>
+      <dt>有料</dt><dd>言い換え ＋ 誰に学ぶか ＋ 何が手に入るか（「決められないのは、考えが足りないからではない。——キルケゴールに学ぶ、不安を抱えたまま選ぶ技術」）。</dd>
+      <dt>やらない</dt><dd>研究より強い言い切り。変化の約束。前半で意味が伝わらない長い題。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>選べないのは、選択肢が多いからではない。</div><span class="label a">後</span><div>選べないのは、選択肢が多いからだけではない。</div><span class="why">有料「選べない」。選択肢の数の影響は、まとめると平均ではほぼゼロでも、実験ごとに大きく分かれる。本文でも、条件しだいで重くなると書いている。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">③</span>書き出し（最初の1〜2文）</h3>
+    <dl>
+      <dt>書き方</dt><dd>一行目で、時間・場所・ものが分かる。仮の場面として書く（書き手の体験にしない）。</dd>
+      <dt>見本</dt><dd>「夜の十一時。比較サイトのタブが、二十個ほど開いている。」（16）／「昼休み、コンビニのレジで財布を開く。カードのあいだから、ジムの会員証がのぞく。」（12）</dd>
+      <dt>やらない</dt><dd>「人は〜」「〜は大切だ」から始める。</dd>
+    </dl>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">④</span>太字の一行（本質）</h3>
+    <dl>
+      <dt>書き方</dt><dd>記事を一行で持ち帰れる言葉。一読で何の話か分かる。押しつけず「〜のかもしれない」。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>季節を、一羽のツバメで決めようとしているのかもしれない。</div><span class="label a">後</span><div>一週間で「何も進んでいない」と決めるのは、一羽のツバメで季節を決めるのに似ているのかもしれない。</div><span class="why">30。比喩だけでは、何の話か分からない。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑤</span>最後の問い（無料の記事）</h3>
+    <p class="role">閉じたあとも頭に残り、答えを知りたくさせる。ここが有料への入口になる。</p>
+    <dl>
+      <dt>書き方</dt><dd>冒頭の場面に戻る、具体的な一問。読者が自分で確かめられる問い（数える・思い出す）。</dd>
+      <dt>やらない</dt><dd>答えを誘う問い（「本当に〜だけなのだろうか」）。他人についての問い。問いを二つ並べる。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>ソファの上で夜が過ぎていく理由は、本当に、疲れだけなのだろうか。</div><span class="label a">後</span><div>ソファで「疲れたから」と思った夜は、今週、何日あっただろう。</div><span class="why">06。「本当に〜だけ」は答えを誘う。数えられる問いにした。</span></div>
+    <div class="ba"><span class="label b">前</span><div>続いている人にとって、その三十分は、苦行なのだろうか。</div><span class="label a">後</span><div>財布の会員証が目に入るとき、思い浮かぶのは、どんな三十分だろう。</div><span class="why">12。他人についての問いから、冒頭の場面に戻る問いへ。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑥</span>次に読む</h3>
+    <dl>
+      <dt>書き方</dt><dd>「次に読むなら：<strong>（次の記事の題）</strong>」と URL だけ。題が読者の心の声なので、それで足りる。</dd>
+      <dt>やらない</dt><dd>説明の行を足して、記事の最後を重くする。</dd>
+    </dl>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑦</span>無料の記事から、有料への案内</h3>
+    <p class="role">問いの答えがあることを知らせる。売り込みに見せない。でも、有料であることは隠さない。</p>
+    <dl>
+      <dt>書き方</dt><dd>1記事に1つ。最後の問いのあと（「参考」の前）。題・副題 ＋ 悩みの場面と読むと何が分かるかの一行 ＋ 分数と「有料」。一行は各出品シートの「無料の記事からの案内（一行）」。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>この悩みに近い有料記事：<br><strong>続かないのは、意志が弱いからではない。</strong><br>スピノザ『エチカ』に学ぶ、感情に振り回されない続け方<br>（URL）</div>
+      <span class="label a">後</span><div>この悩みの先を、有料の記事に書いた。<br><strong>続かないのは、意志が弱いからではない。</strong><br>スピノザ『エチカ』に学ぶ、感情に振り回されない続け方<br>やる気がある日は頑張れるのに、落ち込むと全部やめてしまう。感情に振り回されずに続けるための、考え方と今日からの使い方。<br>→ この有料記事を読む（note）<br>（URL）<br>全文 約15分（有料）</div></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑧</span>有料記事の無料部分（冒頭）</h3>
+    <p class="role">買う前の見本。場面 → 悩みの言い換え → 哲学者 →「では、どうすればいいのか。」で有料ラインへ。</p>
+    <dl>
+      <dt>書き方</dt><dd>答えと、その根拠は、有料ラインの後ろに置く。無料の記事の続きなら、無料の記事で何を書いたかを一文で。</dd>
+      <dt>やらない</dt><dd>答えの根拠を冒頭で全部見せる（買う理由が減る）。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>（無料の部分で）完璧主義と先延ばしの研究の中身まで書いていた</div><span class="label a">後</span><div>「完璧主義と先延ばしの研究をまとめた分析も紹介した」までにして、中身と答えは有料の部分へ</div><span class="why">有料の2本目（案）「完璧にできない」。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑨</span>有料ラインの直前の案内（この先で読めること）— いちばん大事</h3>
+    <p class="role">買うかどうかを決める直前に読まれる。必ず貼る（公開キットの「有料ラインの前の案内をコピー」）。</p>
+    <dl>
+      <dt>書き方</dt><dd>章の名前ではなく、読むと何が分かるか。方法は名前まで書く。最初の行に全文の分数。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>竜の名前は「汝なすべし」</div><span class="label a">後</span><div>頭の中の「すべき」は、誰の声なのか（ニーチェが描いた竜「汝なすべし」）</div></div>
+    <div class="ba"><span class="label b">前</span><div>今日からの使い方</div><span class="label a">後</span><div>人の意見は「情報」として聞き、選ぶときは自分の物差しを使う、今日からの使い方</div></div>
+    <div class="ba"><span class="label b">前</span><div>「いちばん」を探さずに選ぶ、五つの方法</div><span class="label a">後</span><div>「いちばん」を探さずに選ぶ5つの方法：見る前に「足りる」の線を引く／比べる数と時間を先に決める／選んだら比べるタブを閉じる／小さな選択は決め方ごと決めておく／選んだあとは自分の線と比べる</div></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑩</span>有料の結び（満足して閉じない）</h3>
+    <dl>
+      <dt>書き方</dt><dd>区切り線のあとに、読んだあとどうするかを三つ返す（終わりにする／何か一つを始める／あと回しにする。どれも正解。あなたの人生だから）。最後は、まだ書いていない次の悩みを暗示する（名前もリンクも出さない）。二つめの選択肢は、記事の場面に合わせる。</dd>
+      <dt>やらない</dt><dd>本文で書いたことを「まだ書いていない」と言う。二重否定（「選ばなかったことにはならない」）。</dd>
+    </dl>
+    <div class="ba"><span class="label b">前</span><div>今夜のうちに、何か一つを始めるのか。／…選んだあとも揺れる気持ちと、どう付き合っていくのか。その話は、まだここには書いていない。</div><span class="label a">後</span><div>今夜のうちに、開いたままのタブを閉じるのか。／…タブを閉じても、「これでよかったのか」という揺れは、すぐには消えないことがある。その揺れを抱えたまま、どう進んでいくのか。その話は、まだここには書いていない。</div><span class="why">「選べない」。揺れへの対処は方法3・5で一部書いていたので、まだ書いていないこと（揺れを抱えたまま進むこと）に絞った。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑪</span>プロフィール（自己紹介）</h3>
+    <div class="ba"><span class="label b">前</span><div>哲学を、読むものから使うものへ。決められない、人の目が気になる、続けられない。そんな悩みから入れる、哲学の記事を書いています。</div><span class="label a">後</span><div>決められない。人の目が気になる。続けられない。そんな悩みから入る、哲学の記事を書いています。キルケゴール、ニーチェ、スピノザの言葉と、研究を手がかりに。</div><span class="why">悩みを先頭に。誰の言葉を手がかりにするかまで具体的に。「哲学を、読むものから使うものへ。」はヘッダー画像にあるので、くり返さない。</span></div>
+  </div>
+
+  <div class="spot">
+    <h3><span class="no">⑫</span>マガジン ／ <span class="no">⑬</span>記事の説明</h3>
+    <div class="ba"><span class="label b">前</span><div>（画像）30の不安と、30の最初の一歩</div><span class="label a">後</span><div>（画像）あなたの不安は、何番目だろう</div><span class="why">マガジン名は画像とは別に出るので、画像は読む人への問いに。</span></div>
+    <dl>
+      <dt>記事の説明</dt><dd>場面 → 問い → 読むと何が見えてくるか。最後の一文に出典の名前を並べない（出すなら一つ、短く）。答えは書かない。</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 5. 書かないこと -->
+<section class="page">
+  <div class="kicker" style="margin-top:6mm">4</div>
+  <h2>書かないこと（強いコピーと、あおりの違い）</h2>
+  <p>コピーを強くするのは、具体さと読者の言葉。次の書き方は、短い目で売れても、ブランドの信頼を削るので使わない（<span class="sans">docs/product-first-strategy-20261015.md</span> の「2.7」、<span class="sans">BRAND.md</span>「信者をつくらない」）。</p>
+  <table>
+    <thead><tr><th style="width:30%">書かないこと</th><th style="width:32%">例</th><th>代わりに</th></tr></thead>
+    <tr><td>変化を約束する</td><td class="ng">「必ず変わる」「これで続く」</td><td class="ok">手に入る考え方・方法・問いを書く（「〜ための考え方と5つの方法」）</td></tr>
+    <tr><td>結果を約束する「読んだあとに」</td><td class="ng">「選べる」「比べ直さずにすむ」</td><td class="ok">「選んだあとに、比べ直しを始めないための方法」</td></tr>
+    <tr><td>押しつける・命令する</td><td class="ng">「〜しなさい」「〜すべきだ」</td><td class="ok">問いと提案（「〜だろうか」「合いそうなものを一つ」）</td></tr>
+    <tr><td>急がせる</td><td class="ng">「今だけ」「残りわずか」</td><td class="ok">書かない。価格と中身を明示する</td></tr>
+    <tr><td>見下す・格づけする</td><td class="ng">「意識している時点で二流」</td><td class="ok">「頑張っていると感じているあいだは、まだ意志で動いている」</td></tr>
+    <tr><td>研究より言い切る</td><td class="ng">「選択肢が多いからではない」</td><td class="ok">「選択肢が多いからだけではない」「〜のかもしれない」</td></tr>
+    <tr><td>確かめられていない話を事実のように</td><td class="ng">「考える力を残しておける」（決断疲れ）</td><td class="ok">「本当に大事な選択に、時間をかけられる」</td></tr>
+    <tr><td>研究を広げすぎる</td><td class="ng">研究者が言った言葉の実験を、自分で決めた一言にもそのまま当てはめる</td><td class="ok">「同じになるかは、この実験からは分からない」と書いたうえで提案する</td></tr>
+    <tr><td>書き手の体験として書く</td><td class="ng">「僕にも覚えがある」「僕は〜して変わった」</td><td class="ok">読者の仮の場面として書く（考えの表明「僕は〜と読んでいる」はよい）</td></tr>
+    <tr><td>無料の記事で答えを書く</td><td class="ng">最後に「だから、〜すればいい」</td><td class="ok">問いを一つ返して終える。答えは有料へ</td></tr>
+    <tr><td>同じ話のくり返し（有料）</td><td class="ng">無料で読んだ研究と結びの一文を、有料でもう一度</td><td class="ok">「無料の記事で書いたように」と一文で呼び戻し、字数はその記事にしかない部分へ</td></tr>
+  </table>
+
+  <div class="kicker" style="break-before:page">5</div>
+  <h2>公開前の5分チェック</h2>
+  <p>貼る前に、上から順に見る。検査（<span class="sans">scripts/note-kit/lint_*.py</span>）が見るものには「検査」と付けた。</p>
+  <ul class="check">
+    <li>見出し画像の大きな文字は、題をくり返していない<span class="tag">検査</span></li>
+    <li>一覧の大きさ（横400ピクセルほど）に縮めても、画像の大きな文字が読める</li>
+    <li>書き出しの一行で、時間・場所・ものが分かる</li>
+    <li>太字の一行は、比喩だけになっていない。一読で何の話か分かる</li>
+    <li>最後の問いは一つ。冒頭の場面に戻っている。答えを誘っていない<span class="tag">検査（問いで終わるか）</span></li>
+    <li>研究より言い過ぎていない（題も、画像の数字も、出典どおり）</li>
+    <li>命令・約束・急がせる言い方がない<span class="tag">検査（一部）</span></li>
+    <li>書き手の体験として書いていない<span class="tag">検査（一部）</span></li>
+    <li>記事の説明は、場面 → 問い → 読むと何が見えるか<span class="tag">検査（字数）</span></li>
+    <li>（有料）有料ラインの直前の案内を貼った。章の名前ではなく、得るもので書いてある</li>
+    <li>（有料）無料の部分に、答えの根拠を出しすぎていない</li>
+    <li>（有料）結びは、本文で書いたことを「まだ書いていない」と言っていない。二重否定がない</li>
+    <li>（有料）無料の記事で読んだ研究や結びの一文を、くり返していない</li>
+  </ul>
+</section>
+
+<!-- 7. どこをどう直したか -->
+<section class="page">
+  <div class="kicker">6</div>
+  <h2>どこをどう直したか（2026-10-18）</h2>
+  <p>このガイドの決まりで、note の記事を直した記録。中身は公開キット（<span class="sans">https://claude.ai/artifact/Gs3AeLZ44JgAd9faz77DAR</span>）に入っている。</p>
+  <table>
+    <thead><tr><th style="width:25%">場所</th><th>何をしたか</th><th style="width:16%">状態</th></tr></thead>
+    <tr><td>有料5本の「有料ラインの前の案内」</td><td>章の名前の並びから、読むと何が分かるかの並びへ。方法の名前と全文の分数を書いた。キットで「任意」を外した</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>無料 → 有料の案内</td><td>悩みの場面と得るものの一行、分数と「有料」を足した（有料の URL を入れると本文に入る）</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>有料5本の見出し画像</td><td>副題の言い換えから、読む人の悩みの言葉へ（「考えるほど、決められない」「比べるほど、選べない」など）。文字を大きく</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>有料「選べない」</td><td>題の言い過ぎ、結びの食い違い、決断疲れの一文、16 と同じ文、方法の見出しの禁止の響き</td><td><span class="status s-done">済（全文を渡した）</span></td></tr>
+    <tr><td>有料の2本目（案）「完璧にできない」</td><td>答えを有料の側へ。「休んでいい日」を研究どおり「予備」に。方法4の言い過ぎ。無料の 27・29 と同じ話を外した</td><td><span class="status s-owner">出すかはオーナー</span></td></tr>
+    <tr><td>入門3本の見出し画像</td><td>サイトのクイズ画像（「○か×か？」）だったので、note 用に。題をくり返さず、記事の要の一行へ</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>未公開の記事の見出し画像</td><td>題のくり返し・抽象語・本文にない飾りをやめた（30本の 05・08・12・14・18・19・24・25・26・27、次の30本の 37・39・45・50・52・53・57、目次）</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>30本の残り14本の言葉</td><td>最後の問い（06・12・13）と太字（30）を直した</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>次の30本の言葉</td><td>問い・書き出し・太字・画像の文字の読み直し</td><td><span class="status s-next">このあと</span></td></tr>
+    <tr><td>未公開48本の記事の説明</td><td>最後の一文を、出典の並びから「読むと何が見えるか」へ</td><td><span class="status s-next">このあと</span></td></tr>
+    <tr><td>マガジンの画像4枚</td><td>マガジン名のくり返しをやめ、読む人への一行へ</td><td><span class="status s-done">済</span></td></tr>
+    <tr><td>自己紹介・はじめての方への説明</td><td>悩みから始める形へ</td><td><span class="status s-owner">貼り替えはオーナー</span></td></tr>
+    <tr><td>公開ずみ5本の画像（01・04・09・21・22）</td><td>題のくり返しをやめた差し替え用を作った</td><td><span class="status s-owner">貼り替えはオーナー</span></td></tr>
+    <tr><td>検査</td><td>画像の大きな文字が題のくり返しに近いと知らせる注意を足した</td><td><span class="status s-done">済</span></td></tr>
+  </table>
+</section>
+
+<!-- 8. オーナーの手順 -->
+<section class="page">
+  <div class="kicker">7</div>
+  <h2>オーナーが note の画面ですること</h2>
+  <p>コピーは、公開キットからコピーして貼るだけで入るようにしてある。順番は、売れるまでの近さの順。</p>
+  <ol>
+    <li><strong>公開ずみ12本の URL を、キットのカードに入れる。</strong>入れないと、記事どうしのリンク・目次・有料への案内が作れない（キットの「残っていること」のいちばん上）。</li>
+    <li><strong>残りの無料9本を出す</strong>（世界観の4本 → 目次 → 15・17・27・29）。見出し画像は、キットのカードの画像を使う（入門3本は、サイトの画像ではなく note 用）。</li>
+    <li><strong>特定商取引法の表記の記事を出す</strong>（空欄に氏名とメール）。</li>
+    <li><strong>有料記事を出す。</strong>有料ラインの直前に「有料ラインの前の案内」を必ず貼る。見出し画像はキットの新しい画像。返金は「受け付けない」。</li>
+    <li><strong>有料の URL をキットに入れ、無料記事に有料への案内を足す。</strong>公開ずみの記事は、同じ編集で「次に読む」も足すと、1本につき編集が1回ですむ。</li>
+    <li>（任意）自己紹介を新しい案に貼り替える。公開ずみ5本（01・04・09・21・22）の見出し画像を、題をくり返さない新しい画像に貼り替える。</li>
+  </ol>
+  <h3>決めてほしいこと</h3>
+  <ul>
+    <li>「選べない」の価格（案 ¥980）／有料記事の AI 学習への提供（案：有料だけ OFF）</li>
+    <li>有料の2本目「完璧にできない」を出すか（出すなら価格も）</li>
+    <li>はじめての方へを、そのまま（A）にするか、note 版だけ問いの形にする（B、<span class="sans">note/start/note-alt.md</span>）か</li>
+    <li>手元の有料3本の原稿を Claude に見せるか（「選べない」と同じ目で、コピーと決まりを読み直せる）</li>
+  </ul>
+  <p class="note">このガイドの元：<span class="sans">docs/note-copywriting-guide.html</span>（PDF は <span class="sans">node scripts/note-kit/guide_pdf.mjs</span> で作り直す）。決まりを変えたら、<span class="sans">BRAND.md</span>「コピーを先に」と <span class="sans">note/README.md</span>「コピーの決まり」もそろえる。</p>
+</section>
+
+</body>
+</html>
