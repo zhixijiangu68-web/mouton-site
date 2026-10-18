@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """note/next-30/NN-slug/ の記事（次の30本）を検査する。使い方: python3 lint_next30.py [番号 ...]"""
+import difflib
 import re
 import sys
 from pathlib import Path
@@ -140,8 +141,10 @@ def lint(n):
         fails.append('見出し画像の大・小がない')
     else:
         info['cover'] = (big.group(1).strip(), small.group(1).strip())
-        if len(big.group(1).strip()) > 16:
-            warns.append(f'大が {len(big.group(1).strip())}字（16字まで）')
+        if len(big.group(1).strip().replace('／', '')) > 16:
+            warns.append(f'大が {len(big.group(1).strip().replace("／", ""))}字（16字まで）')
+        if cover_repeats_title(title, big.group(1).strip()):
+            warns.append(f'見出し画像の大が、題のくり返しに近い：{big.group(1).strip()}')
         if len(small.group(1).strip()) > 20:
             warns.append(f'小が {len(small.group(1).strip())}字（20字まで）')
     m = re.search(r'## 記事の説明[^\n]*\n+([^\n]+)', tt)
@@ -153,6 +156,13 @@ def lint(n):
     if want_ph not in tt:
         warns.append(f'03-titles の「公開するとき」に {want_ph} がない')
     return fails, warns, info
+
+
+def cover_repeats_title(title, big):
+    """見出し画像の大きな文字が、題のくり返しになっていないか（2026-10-18、オーナー：コピーを先に。題は画像の下に出る）"""
+    norm = lambda s: re.sub(r'[。、「」『』？！／\s]', '', s)
+    t, b = norm(title), norm(big)
+    return b in t or difflib.SequenceMatcher(None, t, b).ratio() > 0.6
 
 
 def main():

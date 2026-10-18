@@ -2,6 +2,7 @@
 """note/series-30/NN-slug/ の記事を検査する。使い方: python3 lint_series.py [番号 ...]"""
 import glob
 import html
+import difflib
 import re
 import sys
 from pathlib import Path
@@ -176,6 +177,9 @@ def lint(a):
         m = re.search(r'## タイトル\n+([^\n]+)', tt)
         if m and m.group(1).strip() != title:
             fails.append('03-titles.md のタイトルが article.md の1行目と違う')
+        big = re.search(r'^- 大：(.+)$', tt, re.M)
+        if big and cover_repeats_title(title, big.group(1).strip()):
+            warns.append(f'見出し画像の大が、題のくり返しに近い：{big.group(1).strip()}')
         m = re.search(r'## 記事の説明[^\n]*\n+([^\n]+)', tt)
         if m:
             L = len(m.group(1).strip())
@@ -188,6 +192,13 @@ def lint(a):
             if tags != ['哲学', '哲学入門', '自己啓発', '自己理解']:
                 fails.append(f'ハッシュタグが決まり（#哲学 #哲学入門 #自己啓発 #自己理解）と違う：{tags}')
     return fails, warns, info
+
+
+def cover_repeats_title(title, big):
+    """見出し画像の大きな文字が、題のくり返しになっていないか（2026-10-18、オーナー：コピーを先に。題は画像の下に出る）"""
+    norm = lambda s: re.sub(r'[。、「」『』？！／\s]', '', s)
+    t, b = norm(title), norm(big)
+    return b in t or difflib.SequenceMatcher(None, t, b).ratio() > 0.6
 
 
 def main():

@@ -73,8 +73,10 @@ for (const dir of readdirSync(base).filter(d => /^\d\d-/.test(d)).sort()) {
   const small = t.match(/^- 小：(.+)$/m)?.[1]?.trim();
   if (!big) { console.warn(`skip ${dir}: no 大：`); continue; }
   const p = n === 0 ? { name: '目次', art: 'intro-sheep-moon.webp', pos: 'center 60%' } : pathOf(n);
+  // 「大：」の「／」は改行の位置（自動の折り返しが不自然なときだけ使う）。文字の大きさは、いちばん長い行で決める
+  const lines = big.split('／');
   await page.evaluate(a => window.render(a), {
-    num: n || 0, total: next30 ? 60 : 30, path: p.name, bigHtml: phrased(big), bigLen: big.length, small: small || '',
+    num: n || 0, total: next30 ? 60 : 30, path: p.name, bigHtml: lines.map(phrased).join('<br>'), bigLen: Math.max(...lines.map(l => l.length)), small: small || '',
     art: pathToFileURL(join(root, 'images', 'mouton', p.art)).href, pos: p.pos,
     series: !n ? 'MOUTON — PHILOSOPHY OF LIFE' : next30 ? '自分を動かしているもの' : '30の不安と、30の最初の一歩',
   });
