@@ -564,7 +564,9 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
     const paidLive = paid.filter(it => live(it.key));
     const paidUrl = paid.filter(it => urlFor(it.key));
     const liveFree = ITEMS.filter(it => it.paid && live(it.key));
+    const liveNoUrl = ITEMS.filter(it => live(it.key) && !urlFor(it.key));
     const steps = [
+      { done: !liveNoUrl.length, text: '公開した記事の URL を、カードに入れる', sub: liveNoUrl.length ? `まだ入っていない公開ずみの記事：${liveNoUrl.length} 本（${liveNoUrl.map(it => it.label.replace(/^30本・/, '')).join('、')}）。URL があると、これから出す記事の「次に読む」・目次・有料記事への案内に、その記事へのリンクが入る。公開ずみの記事にも、カードの「「次に読む」をコピー」で足せるようになる` : 'すべて入っている' },
       { done: !restFree.length, text: `無料の20本と目次を出す`, sub: restFree.length ? `あと ${restFree.length} 本：${restFree.map(it => it.label.replace(/^30本・/, '')).join('、')}` : 'すべて公開ずみ' },
       { done: live('LEGAL'), text: '特定商取引法に基づく表記の記事を出す', sub: '＿＿＿＿ に氏名・メールを入れてから。有料より先に（有料のグループのいちばん上）' },
       { done: false, text: '有料を出す前に決める', sub: '「選べない」の価格（案 ¥980）／ 有料記事の AI 学習への提供（案：有料だけ OFF）／ 手元の原稿の体験の節（各出品シートの「公開前の確認」）' },

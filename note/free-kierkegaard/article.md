@@ -48,6 +48,8 @@
 
 1. Kierkegaard, S. (1844). Begrebet Angest（『不安の概念』）. ヴィギリウス・ハウフニエンシスの筆名で刊行。英訳：The Concept of Anxiety, trans. R. Thomte & A. B. Anderson, Princeton University Press, 1980, p. 61. 邦訳に斎藤信治訳（岩波文庫）など。
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## この悩みの続き

@@ -46,6 +46,8 @@
 
 2. Nietzsche F. (1883). Also sprach Zarathustra. Ein Buch für Alle und Keinen（『ツァラトゥストラはこう語った』）第1部. Chemnitz: Ernst Schmeitzner. 「三つの変化」（Von den drei Verwandlungen）.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## この悩みの続き

@@ -56,6 +56,8 @@
 
 2. Nadler, S. (1999). Spinoza: A Life. Cambridge University Press.
 
+調べものや下書きの整理には AI を使っています。数字や研究の内容は出典にあたって確かめ、最後は僕が確認して公開しています。
+
 ---
 
 ## この悩みの続き
