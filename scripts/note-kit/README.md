@@ -38,4 +38,8 @@ python3 scripts/note-kit/lint_series.py [番号 ...]
 python3 scripts/note-kit/lint_next30.py [番号 ...]
 ```
 
-字数・形（「このまま続くと」「周りを見ると」）・禁止の言い方・やり方やワークの言葉・書き手の体験の書き方・注意の一文・「次に読む」・ハッシュタグ・参考の番号を調べる。見出し画像は `scripts/og/note-cover.mjs`。
+字数・形（「このまま続くと」「周りを見ると」）・禁止の言い方・やり方やワークの言葉・書き手の体験の書き方・注意の一文・「次に読む」・ハッシュタグ・参考の番号を調べる。
+
+## 見出し画像
+
+`scripts/og/note-cover.mjs`（1280×670）。30本・次の30本は、各 `03-titles.md` の「大：」「小：」から作る。入門3本と有料記事は、スクリプトの中の表 `SINGLES` から作る（`node note-cover.mjs single`、1本だけなら `node note-cover.mjs paid-choice` のようにフォルダ名で）。サイトのシェア用の画像（`images/og/`）は、クイズや前のデザインのものがあるので、note には使わない（2026-10-18）。キットの画像を変えたら、キットを作り直して、変えた画像も `files` で publish する。

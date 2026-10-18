@@ -571,7 +571,7 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
       { done: live('LEGAL'), text: '特定商取引法に基づく表記の記事を出す', sub: '＿＿＿＿ に氏名・メールを入れてから。有料より先に（有料のグループのいちばん上）' },
       { done: false, text: '有料を出す前に決める', sub: '「選べない」の価格（案 ¥980）／ 有料記事の AI 学習への提供（案：有料だけ OFF）／ 手元の原稿の体験の節（各出品シートの「公開前の確認」）' },
       { done: paidLive.length === paid.length, text: `有料記事を公開する（${paidLive.length}/${paid.length}）`, sub: '返金は「受け付けない」。公開したら、カードに URL を入れる' },
-      { done: paidUrl.length > 0 && liveFree.every(it => paidReady(it) ? !!st(it.key).paidLinked : true) && paidUrl.length === paid.length, text: '無料の記事に、有料記事への案内を足す', sub: paidUrl.length ? '公開ずみの無料記事は、各カードの「有料記事への案内をコピー」で（これから出す記事は、本文のコピーに入る）' : '有料記事の URL を入れると始められる' },
+      { done: paidUrl.length > 0 && liveFree.every(it => paidReady(it) ? !!st(it.key).paidLinked : true) && paidUrl.length === paid.length, text: '無料の記事に、有料記事への案内を足す', sub: paidUrl.length ? '公開ずみの無料記事は、各カードの「有料記事への案内をコピー」で。同じ編集のときに、まだ足していない「次に読む」も「「次に読む」をコピー」で末尾に足すと、1本につき編集が1回ですむ（これから出す記事は、どちらも本文のコピーに入る）' : '有料記事の URL を入れると始められる' },
       { done: false, text: 'マガジンを作る（上の欄）', sub: '「MOUTON の入口」「30の不安と、30の最初の一歩」はいま。ほかは記事を出したとき' },
       { done: false, text: '売れたら、件数と日時を Claude に伝える', sub: '閲覧やスキは購入の代わりにしない。週に1回、ダッシュボードのスクリーンショットも' },
     ];
