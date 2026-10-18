@@ -1,3 +1,4 @@
 node_modules/
 promo/x-videos/.frames-*/
 promo/shorts/.frames-*/
+__pycache__/

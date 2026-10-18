@@ -20,7 +20,9 @@
 
 期限があるのは、たいてい人に頼まれたことだ。自分でやりたいと思ったことには、誰も期限をつけない。
 
-人が抱えている後悔を、六つの研究で調べた論文がある。多かったのは、果たせなかった義務より、なりたかった自分に届かなかったことへの後悔だった。人生でいちばんの後悔を一つ挙げてもらうと、参加者の76%がこちらを挙げた。義務の後悔には早めに手を打つので片づきやすく、なりたい自分の後悔は残りやすい、と著者たちは見ている [2]。
+人が人生でいちばん後悔していることを尋ねた11の研究をまとめた分析がある。上位に来たのは、学びと仕事だった。そして後悔は、まだ変えられる機会があると感じている分野ほど、強かった [2]。
+
+期限のないことは、機会が閉じない。いつでも始められることほど、後悔として残りやすいのかもしれない。
 
 頼まれた仕事は、今夜も片づく。ノートは、来月も最初の一行のままだ。
 
@@ -36,7 +38,7 @@
 
 1. Seneca. De Brevitate Vitae（『人生の短さについて』）第9章. 邦訳に中澤務訳『人生の短さについて 他2篇』（光文社古典新訳文庫）など。
 
-2. Davidai, S., & Gilovich, T. (2018). The ideal road not taken: The self-discrepancies involved in people's most enduring regrets. Emotion, 18(3), 439–452.
+2. Roese, N. J., & Summerville, A. (2005). What we regret most... and why. Personality and Social Psychology Bulletin, 31(9), 1273–1285. PMID: 16055646
 
 3. Ariely, D., & Wertenbroch, K. (2002). Procrastination, deadlines, and performance: Self-control by precommitment. Psychological Science, 13(3), 219–224.（2026年9月2日付で撤回。Retraction Watch の2026年9月3日の記事などで報じられた。本文では根拠として使っていない）
 

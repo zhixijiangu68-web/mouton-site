@@ -1,0 +1,702 @@
+<title>note 公開キット</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Noto+Serif+JP:wght@400;600&display=swap">
+<style>
+/* Layout: one column of cards in the order they are published; the big number on each card is that order. */
+:root {
+  --bg: #f8f5ee;
+  --surface: #fffdf8;
+  --chip: #f1ebdf;
+  --ink: #1b1c19;
+  --muted: #5b5d56;
+  --line: rgba(27, 28, 25, .14);
+  --gold: #8a6420;
+  --blue: #1442c4;
+  --ok: #1f7a4d;
+  --warn: #b4432f;
+  --on-blue: #ffffff;
+  --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --latin: "Cormorant Garamond", "Noto Serif JP", serif;
+  --ui: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", "Yu Gothic UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a1222; --surface: #101b31; --chip: #18263f; --ink: #ece6d8; --muted: #a7acb6;
+    --line: rgba(236, 230, 216, .15); --gold: #d4ab5a; --blue: #8fb0ff; --ok: #6cc59a; --warn: #f08a75;
+    --on-blue: #0a1222; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a1222; --surface: #101b31; --chip: #18263f; --ink: #ece6d8; --muted: #a7acb6;
+  --line: rgba(236, 230, 216, .15); --gold: #d4ab5a; --blue: #8fb0ff; --ok: #6cc59a; --warn: #f08a75;
+  --on-blue: #0a1222; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--ui); font-size: 15px; line-height: 1.7; }
+.wrap {
+  max-width: 920px; margin: 0 auto;
+  padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 28px;
+}
+h1, h2, h3 { text-wrap: balance; word-break: auto-phrase; margin: 0; }
+.preview strong { font-weight: 600; }
+p { margin: 0; }
+.brand { font-family: var(--latin); letter-spacing: .22em; text-transform: uppercase; color: var(--gold); font-size: 14px; font-weight: 600; }
+.top { display: grid; gap: 10px; }
+.top h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(26px, 5vw, 34px); line-height: 1.3; }
+.lead { color: var(--muted); max-width: 40em; }
+.summary { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; margin-top: 6px; font-variant-numeric: tabular-nums; }
+.pill { display: inline-flex; gap: 6px; align-items: baseline; padding: 3px 12px; border-radius: 999px; background: var(--chip); font-size: 13px; }
+.pill b { font-size: 15px; }
+.pill.next { background: transparent; border: 1px solid var(--line); }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px 20px; display: grid; gap: 12px; }
+.box h2, .phase-head h2 { font-family: var(--serif); font-weight: 600; font-size: 19px; }
+.steps { margin: 0; padding-left: 1.4em; display: grid; gap: 10px; }
+.steps b { font-weight: 600; }
+.note-line { color: var(--muted); font-size: 13.5px; }
+.settings { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
+.settings label { font-weight: 600; }
+input[type="text"], input[type="url"] {
+  font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 8px;
+  padding: 7px 10px; min-width: 0;
+}
+input:focus-visible, button:focus-visible, summary:focus-visible, .tag:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+#noteId { width: 14em; max-width: 100%; }
+.save-mode { font-size: 13px; color: var(--muted); }
+.phase { display: grid; gap: 14px; }
+.phase-head { display: grid; gap: 4px; padding-top: 8px; border-top: 1px solid var(--line); }
+.phase-head p { color: var(--muted); font-size: 14px; }
+.items { display: grid; gap: 14px; }
+.wrap-groups { display: grid; gap: 28px; }
+.phase.is-later .phase-head h2 { color: var(--muted); }
+.index-update { border-style: dashed; }
+.index-update .num { font-size: 26px; }
+.index-now { font-size: 13.5px; color: var(--muted); }
+
+.item { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; display: grid; gap: 12px; }
+.item.is-live { border-color: color-mix(in srgb, var(--ok) 55%, var(--line)); }
+.item-head { display: grid; grid-template-columns: auto 1fr auto; gap: 4px 14px; align-items: start; }
+.num { font-family: var(--latin); font-weight: 600; font-size: 34px; line-height: 1; color: var(--gold); font-variant-numeric: tabular-nums; min-width: 1.4em; }
+.item-titles { min-width: 0; display: grid; gap: 2px; }
+.label { font-size: 13px; color: var(--muted); }
+.label code { font-size: 12px; }
+.item-titles h3 { font-family: var(--serif); font-weight: 600; font-size: 17px; line-height: 1.55; overflow-wrap: anywhere; }
+.marks { display: flex; gap: 10px; flex-wrap: wrap; justify-content: flex-end; font-size: 14px; }
+.marks label { display: inline-flex; gap: 5px; align-items: center; cursor: pointer; white-space: nowrap; }
+.marks input { width: 17px; height: 17px; accent-color: var(--ok); }
+.item-body { display: grid; grid-template-columns: 200px 1fr; gap: 16px; align-items: start; }
+.thumb-wrap { display: grid; gap: 6px; }
+.thumb { width: 100%; max-width: 100%; aspect-ratio: 1280 / 670; object-fit: cover; border-radius: 8px; border: 1px solid var(--line); background: var(--chip); }
+.fields { min-width: 0; display: grid; gap: 10px; }
+.url-row { display: grid; gap: 4px; }
+.url-row label { font-size: 13px; font-weight: 600; }
+.url-row input { width: 100%; }
+.url-out { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
+.url-out.ok { color: var(--ok); }
+.url-out.bad { color: var(--warn); }
+.url-out a { color: inherit; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; }
+button {
+  font: inherit; font-size: 14px; cursor: pointer; border-radius: 8px; padding: 6px 12px;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+button:hover { border-color: var(--blue); }
+button.primary { background: var(--blue); border-color: var(--blue); color: var(--on-blue); font-weight: 600; }
+button.done { border-color: var(--ok); color: var(--ok); }
+button.primary.done { background: var(--ok); border-color: var(--ok); color: var(--on-blue); }
+.missing { font-size: 13.5px; }
+.missing.bad { color: var(--warn); }
+.missing.ok { color: var(--ok); }
+.next-line, .link-line { font-size: 13.5px; color: var(--muted); }
+.next-line.ok, .link-line.ok { color: var(--ok); }
+.pending-note { font-size: 14px; color: var(--muted); }
+.item.is-pending { opacity: .78; }
+.item.is-pending .marks, .item.is-pending .thumb-wrap, .item.is-pending .fields > :not(.pending-note) { display: none; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 13px; }
+.tags > span { color: var(--muted); margin-right: 2px; }
+.tag { border: 0; background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: 13px; }
+.meta-row { display: grid; gap: 4px; font-size: 13.5px; }
+.meta-row .k { color: var(--muted); font-size: 12.5px; }
+.meta-row .v { overflow-wrap: anywhere; }
+.acct { display: grid; gap: 10px; }
+.acct-row { display: grid; grid-template-columns: 7em 1fr auto; gap: 4px 12px; align-items: center; padding-top: 10px; border-top: 1px dashed var(--line); }
+.acct-row .k { color: var(--muted); font-size: 13.5px; }
+.acct-row .v { min-width: 0; overflow-wrap: anywhere; }
+.acct-row .v small { color: var(--muted); }
+.acct-img { width: 100%; max-width: 240px; border-radius: 8px; border: 1px solid var(--line); }
+.acct-img.icon { max-width: 96px; border-radius: 50%; }
+@media (max-width: 640px) { .acct-row { grid-template-columns: 1fr auto; } .acct-row .k { grid-column: 1 / -1; } }
+.paid { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 14px; background: var(--chip); border-radius: 8px; padding: 10px 12px; }
+.paid dt { color: var(--muted); }
+.paid dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+details { border-top: 1px dashed var(--line); padding-top: 8px; }
+summary { cursor: pointer; font-size: 14px; color: var(--muted); }
+.preview { margin-top: 10px; font-family: var(--serif); font-size: 15px; line-height: 1.9; max-height: 60vh; overflow: auto; padding-right: 6px; overflow-wrap: anywhere; }
+.preview h2 { font-size: 18px; margin: 1.4em 0 .4em; }
+.preview h3 { font-size: 16px; margin: 1.2em 0 .3em; }
+.preview p, .preview ul, .preview ol, .preview blockquote { margin: 0 0 .9em; }
+.preview blockquote { border-left: 3px solid var(--line); padding-left: 12px; color: var(--muted); margin-left: 0; }
+.preview hr { border: 0; border-top: 1px solid var(--line); margin: 1.4em 0; }
+.preview a { color: var(--blue); }
+.preview .ph-missing { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); border-radius: 4px; padding: 0 4px; font-family: var(--ui); font-size: 13px; }
+footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border-top: 1px solid var(--line); padding-top: 16px; }
+.toast {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  background: var(--ink); color: var(--bg); padding: 8px 16px; border-radius: 999px; font-size: 14px;
+  opacity: 0; pointer-events: none; transition: opacity .2s; max-width: calc(100% - 32px); text-align: center;
+}
+.toast.show { opacity: 1; }
+.copy-fallback { position: fixed; left: -9999px; top: 0; width: 600px; }
+@media (max-width: 640px) {
+  .item-head { grid-template-columns: auto 1fr; }
+  .marks { grid-column: 1 / -1; justify-content: flex-start; }
+  .item-body { grid-template-columns: 1fr; }
+  .thumb-wrap { max-width: 320px; }
+  .num { font-size: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="brand">Mouton · note</p>
+    <h1>note 公開キット</h1>
+    <p class="lead">無料の20本で世界観を伝えてから、有料の3本を出します。公開する順に並べてあり、下書きの URL を入れると、本文の中のリンクが埋まります。</p>
+    <div class="summary" id="summary"></div>
+  </header>
+
+  <section class="box" aria-labelledby="howto-h">
+    <h2 id="howto-h">使い方</h2>
+    <ol class="steps">
+      <li><b>その日に出す記事の下書きを作り、URL を入れる。</b>note で記事を新しく作り、タイトルを貼って下書き保存します。「…」のメニューの「共有用リンクをコピー」で開くページに、公開したときの URL が出ます（下書きを直しても変わりません）。それを「公開時の URL」に貼ります。</li>
+      <li><b>「本文をコピー」を押して、note の本文の欄に貼る。</b>見出し・太字・引用・箇条書き・リンクは、貼るだけでそのまま入ります（書式つきの形と Markdown の形を、一度にコピーしています）。見出し画像を保存して載せ、ハッシュタグを入れます。</li>
+      <li><b>番号の順に公開する。</b>新しい記事が一覧の上に来るので、この順に出すと、見せたい順に並びます。公開したら「公開」に印をつけます。</li>
+    </ol>
+    <p class="note-line">万一、見出しが「##」のような記号のまま出たら、貼った本文を消して、「書式だけでコピー」で貼り直してください。編集画面のアドレスを貼っても、記事の番号（n で始まる13文字）から URL を作ります。最初の1本で、共有用リンクのページの URL と同じになるか確かめてください。</p>
+  </section>
+
+  <section class="box settings" aria-label="設定">
+    <label for="noteId">note ID</label>
+    <input id="noteId" type="text" autocomplete="off" spellcheck="false" value="moutonarchive">
+    <span class="save-mode" id="saveMode">保存先を確かめています…</span>
+  </section>
+
+  <section class="box" aria-labelledby="acct-h">
+    <h2 id="acct-h">はじめに：アカウントの設定</h2>
+    <p class="note-line">一度だけ。note の設定とプロフィールの編集で入れます。note ID は記事の URL に入るので、記事を出す前に決めます（決めたら、上の note ID の欄も合わせます）。</p>
+    <div class="acct" id="acct"></div>
+  </section>
+
+  <div id="groups" class="wrap-groups"></div>
+
+  <footer>
+    <p>入れた URL と印は、このページに保存されます。Claude があとで読み取って、リポジトリの <code>{URL_...}</code> を埋められます。</p>
+    <p>文章のもとは、リポジトリの <code>note/</code> の各フォルダにあります。</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="kit-data">/*KIT_DATA*/[]</script>
+<script type="application/json" id="kit-profile">/*KIT_PROFILE*/{}</script>
+<script type="application/json" id="kit-groups">/*KIT_GROUPS*/[]</script>
+<script type="application/json" id="kit-index">/*KIT_INDEX*/{}</script>
+<script>
+(() => {
+  const ITEMS = JSON.parse(document.getElementById('kit-data').textContent);
+  const BY_KEY = Object.fromEntries(ITEMS.map(it => [it.key, it]));
+  const PROFILE = JSON.parse(document.getElementById('kit-profile').textContent);
+  const GROUPS = JSON.parse(document.getElementById('kit-groups').textContent);
+  const INDEX = JSON.parse(document.getElementById('kit-index').textContent);
+  const LS_KEY = 'mouton-note-kit-v1';
+  let state = { noteId: 'moutonarchive', urls: {}, status: {} };
+  let docRef = null;
+  let writing = false, dirty = false, pending = false, timer = null;
+
+  try {
+    const c = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (c && typeof c === 'object') state = { noteId: c.noteId || state.noteId, urls: c.urls || {}, status: c.status || {} };
+  } catch (e) { /* storage unavailable */ }
+
+  const $ = (sel, el = document) => el.querySelector(sel);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const pad = n => String(n).padStart(2, '0');
+
+  function normalizeUrl(raw) {
+    const s = (raw || '').trim();
+    if (!s) return { url: '', ok: null };
+    let m = s.match(/note\.com\/([A-Za-z0-9_\-]+)\/n\/(n[0-9a-f]{12})(?![0-9a-f])/);
+    if (m && m[1] !== 'notes') return { url: `https://note.com/${m[1]}/n/${m[2]}`, ok: true };
+    m = s.match(/(?:^|[^0-9a-z])(n[0-9a-f]{12})(?![0-9a-f])/);
+    if (m && state.noteId) return { url: `https://note.com/${state.noteId.trim()}/n/${m[1]}`, ok: true };
+    return { url: '', ok: false };
+  }
+  const urlFor = key => normalizeUrl(state.urls[key]).url;
+  const labelOf = key => BY_KEY[key] ? BY_KEY[key].label : key;
+  const st = key => state.status[key] || {};
+
+  // 目次は、URL を入れた記事だけを「いま読める」に載せて、その場で組み立てる
+  function buildIndex() {
+    const now = new Set();
+    for (let n = 1; n <= 30; n++) if (urlFor(`S30_${pad(n)}`)) now.add(n);
+    const fill = s => s.replace('%%NNOW%%', now.size).replace('%%NREST%%', 30 - now.size);
+    let md = fill(INDEX.introMd);
+    let html = fill(INDEX.introHtml);
+    for (const p of INDEX.paths) {
+      md += `\n## ${p.header}\n\n`;
+      html += `<h2>${esc(p.header)}</h2>`;
+      const later = [];
+      for (const n of p.nums) {
+        const e = INDEX.entries[n];
+        if (!now.has(n)) { later.push(e); continue; }
+        md += `**${pad(n)}　${e.title}**\n不安：${e.anxiety}\n{{S30_${pad(n)}}}\n\n`;
+        html += `<p><b>${pad(n)}　${esc(e.title)}</b><br>不安：${esc(e.anxiety)}<br><a class="ph" data-ph="S30_${pad(n)}"></a></p>`;
+      }
+      if (later.length) {
+        md += 'このあと公開する記事：\n\n' + later.map(e => `- ${pad(e.n)}　${e.title}`).join('\n') + '\n\n';
+        html += '<p>このあと公開する記事：</p><ul>' + later.map(e => `<li>${pad(e.n)}　${esc(e.title)}</li>`).join('') + '</ul>';
+      }
+    }
+    md += INDEX.afterMd;
+    html += INDEX.afterHtml;
+    const refs = [...now].map(n => `S30_${pad(n)}`).concat(INDEX.afterRefs);
+    return { md, html, refs, nums: [...now] };
+  }
+  // 有料記事への案内は、案内先の有料記事の URL がそろったときだけ、本文に入る
+  const paidReady = it => !!(it.paid && it.paid.keys.every(k => urlFor(k)));
+  function withPaid(b, p) {
+    const mi = b.md.indexOf(p.atMd), hi = b.html.indexOf(p.atHtml);
+    if (mi < 0 || hi < 0) return b;
+    const ma = p.mode === 'after' ? mi + p.atMd.length : mi;
+    const ha = p.mode === 'after' ? hi + p.atHtml.length : hi;
+    return Object.assign({}, b, { md: b.md.slice(0, ma) + p.md + b.md.slice(ma), html: b.html.slice(0, ha) + p.html + b.html.slice(ha), refs: b.refs.concat(p.keys) });
+  }
+  const bodyOf = it => {
+    let b = it.kind === 'index' ? buildIndex() : { md: it.md, html: it.html, refs: it.refs };
+    if (it.kind !== 'index' && it.nextKey && urlFor(it.nextKey)) b = { md: b.md + '\n' + it.nextMd, html: b.html + it.nextHtml, refs: b.refs.concat([it.nextKey]) };
+    if (paidReady(it)) b = withPaid(b, it.paid);
+    return b;
+  };
+
+  function resolvedHtml(html, forPreview) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    tpl.content.querySelectorAll('a.ph').forEach(a => {
+      const url = urlFor(a.dataset.ph);
+      if (url) {
+        const link = document.createElement('a');
+        link.href = url; link.textContent = url;
+        if (forPreview) { link.target = '_blank'; link.rel = 'noopener'; }
+        a.replaceWith(link);
+      } else if (forPreview) {
+        const mark = document.createElement('span');
+        mark.className = 'ph-missing';
+        mark.textContent = `URL 未入力：${labelOf(a.dataset.ph)}`;
+        a.replaceWith(mark);
+      } else {
+        a.replaceWith(document.createTextNode(`{URL 未入力：${labelOf(a.dataset.ph)}}`));
+      }
+    });
+    return tpl.innerHTML;
+  }
+  const resolvedMd = md => md.replace(/\{\{([A-Z0-9_]+)\}\}/g, (_, k) => urlFor(k) || `{URL 未入力：${labelOf(k)}}`);
+
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => t.classList.remove('show'), 2400);
+  }
+  function flash(btn) {
+    btn.classList.add('done');
+    setTimeout(() => btn.classList.remove('done'), 1600);
+  }
+
+  function selectAndCopy(node) {
+    const sel = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    return ok;
+  }
+  async function copyText(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch (e) { /* fall back */ }
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.className = 'copy-fallback'; ta.setAttribute('readonly', '');
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    return ok;
+  }
+  // 書式つき（HTML）と Markdown を一度にコピーする。貼る側が HTML を読めば書式が、
+  // テキストしか読まなければ Markdown が入る。plain を null にすると HTML だけを入れる。
+  async function copyRich(html, plain) {
+    try {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        const parts = { 'text/html': new Blob([html], { type: 'text/html' }) };
+        if (plain !== null) parts['text/plain'] = new Blob([plain], { type: 'text/plain' });
+        await navigator.clipboard.write([new ClipboardItem(parts)]);
+        return true;
+      }
+    } catch (e) { /* fall back */ }
+    const box = document.createElement('div');
+    box.className = 'copy-fallback';
+    box.innerHTML = html;
+    document.body.appendChild(box);
+    const ok = selectAndCopy(box);
+    window.getSelection().removeAllRanges();
+    box.remove();
+    return ok;
+  }
+  function showForManualCopy(card) {
+    const d = $('details', card);
+    d.open = true;
+    renderPreview(card);
+    const sel = window.getSelection();
+    const range = document.createRange();
+    range.selectNodeContents($('.preview', card));
+    sel.removeAllRanges();
+    sel.addRange(range);
+    toast('自動でコピーできませんでした。選んだ本文を、そのままコピーしてください');
+  }
+
+  async function saveImage(it, btn) {
+    let dl = null;
+    try { dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null; } catch (e) { dl = null; }
+    if (!dl) { toast('画像を長押し（パソコンは右クリック）して保存してください'); return; }
+    try {
+      const blob = await (await fetch(it.img)).blob();
+      await dl.save({ filename: it.imgName, data: blob });
+      flash(btn);
+      toast('見出し画像を保存しました');
+    } catch (e) {
+      if (e && e.code === 'declined') return;
+      toast('保存できませんでした。画像を長押し（右クリック）して保存してください');
+    }
+  }
+
+  function cardHtml(it) {
+    const isPaid = it.kind === 'paid';
+    const isIndex = it.kind === 'index';
+    const tags = it.tags.map(t => `<button class="tag" type="button" data-tag="${esc(t)}">#${esc(t)}</button>`).join('');
+    const paid = isPaid ? `
+      <dl class="paid">
+        <dt>価格</dt><dd>${esc(it.extra.price)}</dd>
+        <dt>有料ライン</dt><dd>${esc(it.extra.line)}</dd>
+        <dt>有料の続き</dt><dd>${it.extra.rest_html ? '下の「有料の続きをコピー」で、無料の冒頭（と案内）のあとに貼る。公開の設定で、有料ラインを「' + esc(it.extra.line.replace(/^無料の最後の段落「|」の直後$/g, '')) + '」のすぐ下に合わせる（公開リポジトリには入れていません）' : '手元の原稿から貼る（公開リポジトリには入れていません）'}</dd>
+        <dt>ワーク</dt><dd>${esc(it.extra.work)}</dd>
+        ${it.extra.closing_note ? `<dt>結び</dt><dd>${esc(it.extra.closing_note)}</dd>` : ''}
+        <dt>特商法</dt><dd>${esc(it.extra.law)}</dd>
+        <dt>返金</dt><dd>${esc(it.extra.refund)}</dd>
+        <dt>手数料</dt><dd>${esc(it.extra.fee)}</dd>
+      </dl>
+      <div class="actions"><button type="button" data-act="teaser">有料ラインの前の案内をコピー（任意）</button>${it.extra.rest_html ? '<button type="button" class="primary" data-act="rest">有料の続きをコピー</button>' : ''}${it.extra.closing_html ? '<button type="button" data-act="closing">最後の結びをコピー</button>' : ''}</div>` : '';
+    const paidLink = it.paid ? `
+      <div class="actions"><button type="button" data-act="paidlink">有料記事への案内をコピー</button></div>
+      <p class="link-line"></p>` : '';
+    return `
+    <article class="item${it.pending ? ' is-pending' : ''}" id="item-${it.key}" data-key="${it.key}">
+      <div class="item-head">
+        <span class="num" aria-label="公開の順番 ${it.order}">${pad(it.order)}</span>
+        <div class="item-titles">
+          <p class="label">${esc(it.label)}　<code>${esc(it.folder)}</code></p>
+          <h3>${esc(it.title)}</h3>
+        </div>
+        <div class="marks">
+          <label><input type="checkbox" id="draft-${it.key}" data-mark="draft"> 下書き</label>
+          <label><input type="checkbox" id="live-${it.key}" data-mark="live"> 公開</label>
+        </div>
+      </div>
+      <div class="item-body">
+        ${it.img ? `<div class="thumb-wrap">
+          <img class="thumb" src="${it.img}" alt="見出し画像：${esc(it.title)}" loading="lazy">
+          <button type="button" data-act="img">見出し画像を保存</button>
+        </div>` : ''}
+        <div class="fields">
+          ${it.pending ? '<p class="pending-note">書き直しを Claude が確かめている途中です。確かめたら、ここに本文と見出し画像が出ます。</p>' : ''}
+          <div class="url-row">
+            <label for="url-${it.key}">公開時の URL</label>
+            <input id="url-${it.key}" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://note.com/${esc(state.noteId)}/n/n…">
+            <p class="url-out" aria-live="polite"></p>
+          </div>
+          <div class="actions">
+            <button type="button" data-act="title">タイトルをコピー</button>
+            <button type="button" class="primary" data-act="rich">${isPaid ? '無料の冒頭をコピー' : isIndex ? '目次の本文をコピー' : '本文をコピー'}</button>
+            <button type="button" data-act="html">書式だけでコピー</button>
+            ${it.nextKey ? '<button type="button" data-act="next">「次に読む」をコピー</button>' : ''}
+          </div>
+          ${isIndex ? '<p class="index-now"></p>' : ''}
+          ${it.kind === 'legal' ? '<p class="note-line">＿＿＿＿ の欄（氏名・運営責任者・メールアドレス）を note の画面で入れてから公開します。住所と電話番号は「請求があれば遅滞なく開示」のままでかまいません。公開したら、プロフィールの紹介文にこの記事の URL を足します。</p>' : ''}
+          <p class="missing"></p>
+          ${it.nextKey ? '<p class="next-line"></p>' : ''}
+          ${paid}
+          ${paidLink}
+          ${it.tags.length ? `<div class="tags"><span>ハッシュタグ</span>${tags}</div>` : ''}
+          ${it.desc ? `<div class="meta-row"><span class="k">記事の説明（設定に欄があれば）</span><span class="v">${esc(it.desc)}</span><div><button type="button" data-act="desc">説明をコピー</button></div></div>` : ''}
+          <details>
+            <summary>${isPaid ? '無料の冒頭を見る' : '本文を見る'}${isIndex ? '' : `（約${it.chars.toLocaleString('ja-JP')}字）`}</summary>
+            <div class="preview"></div>
+          </details>
+          ${isPaid && it.extra.rest_html ? `<details>
+            <summary>有料の続きを見る（約${it.extra.rest_chars.toLocaleString('ja-JP')}字・参考を含む）</summary>
+            <div class="preview rest-preview">${it.extra.rest_html}</div>
+          </details>` : ''}
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function updateCardHtml(group) {
+    return `
+    <article class="item index-update" id="update-${group.id}" data-key="S30_INDEX">
+      <div class="item-head">
+        <span class="num" aria-hidden="true">↻</span>
+        <div class="item-titles">
+          <p class="label">30本・目次を更新する</p>
+          <h3>この日の記事を公開したら、目次を貼り直す</h3>
+        </div>
+      </div>
+      <div class="fields">
+        <p class="note-line">note で目次の記事を開いて「編集」。本文を全部選んで、ここでコピーした目次に貼り替え、「更新」します。URL を入れた記事だけが「いま読める」に載ります。</p>
+        <div class="actions">
+          <button type="button" class="primary" data-act="rich">目次の本文をコピー</button>
+          <button type="button" data-act="html">書式だけでコピー</button>
+        </div>
+        <p class="index-now"></p>
+      </div>
+    </article>`;
+  }
+
+  function renderPreview(card) {
+    const d = $('details', card);
+    if (!d || !d.open) return;
+    const it = BY_KEY[card.dataset.key];
+    $('.preview', card).innerHTML = resolvedHtml(bodyOf(it).html, true);
+  }
+
+  function renderDynamic() {
+    const idx = INDEX.paths ? buildIndex() : { refs: [], nums: [] };
+    const free = ITEMS.filter(it => it.kind !== 'paid' && it.kind !== 'legal');
+    let urls = 0, lives = 0, paidLive = 0, next = null;
+    for (const it of ITEMS) {
+      const card = document.getElementById(`item-${it.key}`);
+      const s = st(it.key);
+      const input = $(`#url-${it.key}`);
+      if (document.activeElement !== input && input.value !== (state.urls[it.key] || '')) input.value = state.urls[it.key] || '';
+      const n = normalizeUrl(state.urls[it.key]);
+      const out = $('.url-out', card);
+      if (n.ok === true) { out.className = 'url-out ok'; out.innerHTML = `→ <a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.url)}</a>`; if (it.kind !== 'paid') urls++; }
+      else if (n.ok === false) { out.className = 'url-out bad'; out.textContent = 'note の記事の URL として読めませんでした（n で始まる13文字が入っているか見てください）'; }
+      else { out.className = 'url-out'; out.textContent = '下書きを作ったら、ここに貼ります'; }
+      $(`#draft-${it.key}`).checked = !!s.draft;
+      $(`#live-${it.key}`).checked = !!s.live;
+      if (it.kind === 'paid' || it.kind === 'legal') { if (it.kind === 'paid' && s.live) paidLive++; }
+      else if (s.live) lives++;
+      else if (!next && !it.pending) next = it;
+      card.classList.toggle('is-live', !!s.live);
+      const refs = it.kind === 'index' ? idx.refs : bodyOf(it).refs;
+      const miss = refs.filter(k => !urlFor(k));
+      const m = $('.missing', card);
+      if (!refs.length) { m.className = 'missing'; m.textContent = ''; }
+      else if (miss.length) { m.className = 'missing bad'; m.textContent = `まだ URL がないリンク（${miss.length}）：${miss.map(labelOf).join('、')}`; }
+      else { m.className = 'missing ok'; m.textContent = `本文のリンク ${refs.length} 件に、URL が入っています`; }
+      const nl = $('.next-line', card);
+      if (nl) {
+        const to = labelOf(it.nextKey);
+        if (urlFor(it.nextKey)) { nl.className = 'next-line ok'; nl.textContent = `末尾の「次に読む」（→ ${to}）も、本文に入ります`; }
+        else { nl.className = 'next-line'; nl.textContent = `末尾の「次に読む」（→ ${to}）は、行き先の URL がまだないので、本文に入りません。行き先を出したら、この記事を note で編集して、末尾に「「次に読む」をコピー」で足します。`; }
+      }
+      const ll = $('.link-line', card);
+      if (ll) {
+        const to = it.paid.keys.length > 1 ? '有料の3本' : labelOf(it.paid.keys[0]).replace(/^有料・/, '有料「') + '」';
+        if (!paidReady(it)) { ll.className = 'link-line'; ll.textContent = `有料記事への案内（→ ${to}）：${to}の URL を入れると、本文のコピーに入ります。公開ずみの記事には、URL を入れたあと、このボタンで足します。`; }
+        else if (s.live) { ll.className = 'link-line ok'; ll.textContent = `有料記事への案内（→ ${to}）：公開ずみなので、note で記事を「編集」し、${it.paid.where}に、このボタンでコピーした案内を貼って「更新」します。`; }
+        else { ll.className = 'link-line ok'; ll.textContent = `有料記事への案内（→ ${to}）も、本文のコピーに入ります（${it.paid.where}）。`; }
+      }
+      renderPreview(card);
+    }
+    const nowText = idx.nums.length
+      ? `目次の「いま読める」に載る記事：${idx.nums.length}本（${idx.nums.map(pad).join('・')}）`
+      : '目次の「いま読める」に載る記事：まだありません（30本の記事に URL を入れると載ります）';
+    document.querySelectorAll('.index-now').forEach(p => { p.textContent = nowText; });
+    $('#summary').innerHTML =
+      `<span class="pill">無料 URL <b>${urls}</b>/${free.length}</span>` +
+      `<span class="pill">無料 公開 <b>${lives}</b>/${free.length}</span>` +
+      `<span class="pill">有料 公開 <b>${paidLive}</b>/${ITEMS.filter(x => x.kind === 'paid').length}</span>` +
+      (next ? `<span class="pill next">次に公開：${pad(next.order)} ${esc(next.label)}</span>` : `<span class="pill next">無料の20本と目次を、すべて公開しました</span>`);
+  }
+
+  function saveLocal() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) { /* storage unavailable */ }
+  }
+  function queueWrite() {
+    saveLocal();
+    if (!docRef) return;
+    pending = true;
+    clearTimeout(timer);
+    timer = setTimeout(flush, 500);
+  }
+  async function flush() {
+    if (!docRef) return;
+    if (writing) { dirty = true; return; }
+    writing = true;
+    try {
+      await docRef.set({ noteId: state.noteId, urls: state.urls, status: state.status, updatedAt: new Date().toISOString() });
+      $('#saveMode').textContent = 'このページに保存しています（Claude も読めます）';
+    } catch (e) {
+      $('#saveMode').textContent = 'このページへの保存に失敗しました。このブラウザには残っています';
+    }
+    writing = false;
+    if (dirty) { dirty = false; flush(); return; }
+    pending = false;
+  }
+
+  function renderAccount() {
+    const P = PROFILE;
+    const row = (k, v, sub) => `<div class="acct-row"><span class="k">${k}</span><span class="v">${esc(v)}${sub ? `<br><small>${esc(sub)}</small>` : ''}</span><button type="button" data-copy="${esc(v)}">コピー</button></div>`;
+    const img = (k, src, cls, alt, name) => `<div class="acct-row"><span class="k">${k}</span><span class="v"><img class="acct-img ${cls}" src="${src}" alt="${alt}"></span><button type="button" data-save="${src}" data-name="${name}">保存</button></div>`;
+    $('#acct').innerHTML =
+      row('名前', P.name) +
+      row('note ID', P.id, `使われていたら ${P.idAlt}`) +
+      row('自己紹介', P.bio, `${[...P.bio].length}字`) +
+      row('リンク（サイト）', P.site, 'プロフィールのリンク欄に。プロフィールから来た人を GA4 で数えます') +
+      row('リンク（X）', P.x) +
+      img('アイコン', P.icon, 'icon', 'アイコン：満月の前の羊', 'mouton-note-icon.png') +
+      img('ヘッダー画像', P.header, '', 'ヘッダー画像：月桂樹と三日月', 'mouton-note-header.jpg');
+  }
+
+  function renderGroups() {
+    $('#groups').innerHTML = GROUPS.map(g => `
+      <section class="phase${g.id === 'paid' ? ' is-later' : ''}" aria-labelledby="h-${g.id}">
+        <div class="phase-head">
+          <h2 id="h-${g.id}">${esc(g.title)}</h2>
+          <p>${esc(g.text)}</p>
+          ${g.id === 'paid' ? '<p>特定商取引法の表記は、note のヘルプでは「販売業者」（利益を目的に、くり返し売る人）に当たる場合に必要です。有料記事を続けて売るので、出しておきます。</p>' : ''}
+        </div>
+        <div class="items">${ITEMS.filter(it => it.group === g.id).map(cardHtml).join('')}${g.indexUpdate ? updateCardHtml(g) : ''}</div>
+      </section>`).join('');
+  }
+
+  function setUp() {
+    renderAccount();
+    renderGroups();
+    $('#noteId').value = state.noteId;
+    $('#noteId').addEventListener('input', e => { state.noteId = e.target.value.trim(); renderDynamic(); queueWrite(); });
+
+    document.addEventListener('input', e => {
+      const card = e.target.closest('.item');
+      if (!card || !e.target.id.startsWith('url-')) return;
+      state.urls[card.dataset.key] = e.target.value.trim();
+      renderDynamic();
+      queueWrite();
+    });
+    document.addEventListener('change', e => {
+      const card = e.target.closest('.item');
+      if (!card || !e.target.dataset.mark) return;
+      const k = card.dataset.key;
+      const mark = e.target.dataset.mark;
+      const extra = mark === 'live' && e.target.checked && !st(k).liveAt ? { liveAt: new Date().toISOString() } : {};
+      state.status[k] = Object.assign({}, st(k), { [mark]: e.target.checked }, extra);
+      renderDynamic();
+      queueWrite();
+    });
+    document.addEventListener('toggle', e => {
+      if (e.target.tagName === 'DETAILS') { const card = e.target.closest('.item'); if (card) renderPreview(card); }
+    }, true);
+
+    document.addEventListener('click', async e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      if (btn.dataset.copy !== undefined) {
+        if (await copyText(btn.dataset.copy)) { flash(btn); toast('コピーしました'); } else toast('コピーできませんでした');
+        return;
+      }
+      if (btn.dataset.save) { saveImage({ img: btn.dataset.save, imgName: btn.dataset.name }, btn); return; }
+      const card = btn.closest('.item');
+      if (!card || card.classList.contains('is-pending')) return;
+      const it = BY_KEY[card.dataset.key];
+      if (btn.dataset.tag) {
+        if (await copyText(btn.dataset.tag)) { flash(btn); toast(`「${btn.dataset.tag}」をコピーしました`); }
+        return;
+      }
+      const act = btn.dataset.act;
+      if (act === 'title') {
+        if (await copyText(it.title)) { flash(btn); toast('タイトルをコピーしました'); } else toast('コピーできませんでした');
+      } else if (act === 'desc') {
+        if (await copyText(it.desc)) { flash(btn); toast('記事の説明をコピーしました'); } else toast('コピーできませんでした');
+      } else if (act === 'rich' || act === 'html') {
+        const b = bodyOf(it);
+        const ok = await copyRich(resolvedHtml(b.html, false), act === 'rich' ? resolvedMd(b.md) : null);
+        if (ok) {
+          flash(btn);
+          const miss = b.refs.filter(k => !urlFor(k)).length;
+          toast(miss ? `コピーしました（URL 未入力のリンクが ${miss} 件あります）` : 'コピーしました。note の本文に貼ってください');
+        } else if ($('details', card)) showForManualCopy(card);
+        else toast('コピーできませんでした');
+      } else if (act === 'next') {
+        if (!urlFor(it.nextKey)) { toast(`行き先（${labelOf(it.nextKey)}）の URL がまだありません`); return; }
+        const ok = await copyRich(resolvedHtml(it.nextHtml, false), resolvedMd(it.nextMd));
+        if (ok) { flash(btn); toast('「次に読む」をコピーしました。記事の末尾に貼ってください'); } else toast('コピーできませんでした');
+      } else if (act === 'rest') {
+        const ok = await copyRich(it.extra.rest_html, it.extra.rest_md);
+        if (ok) { flash(btn); toast('有料の続きをコピーしました。無料の冒頭のあとに貼ってください'); } else toast('コピーできませんでした');
+      } else if (act === 'closing') {
+        const ok = await copyRich(it.extra.closing_html, it.extra.closing_md);
+        if (ok) { flash(btn); toast('結びをコピーしました。「おわりに」のあと、「参考」の前に貼ってください'); } else toast('コピーできませんでした');
+      } else if (act === 'paidlink') {
+        const miss = it.paid.keys.filter(k => !urlFor(k));
+        if (miss.length) { toast(`${miss.map(labelOf).join('、')}の URL がまだありません（有料記事のカードに入れます）`); return; }
+        const ok = await copyRich(resolvedHtml(it.paid.html, false), resolvedMd(it.paid.md));
+        if (ok) { flash(btn); toast('有料への案内をコピーしました。最後の問いのあとに貼ってください'); } else toast('コピーできませんでした');
+      } else if (act === 'teaser') {
+        const ok = await copyRich(it.extra.teaser_html, resolvedMd(it.extra.teaser));
+        if (ok) { flash(btn); toast('案内をコピーしました'); } else toast('コピーできませんでした');
+      } else if (act === 'img') {
+        saveImage(it, btn);
+      }
+    });
+
+    renderDynamic();
+  }
+
+  setUp();
+
+  (async () => {
+    let db = null;
+    try { db = window.claude && window.claude.use ? await window.claude.use('db') : null; } catch (e) { db = null; }
+    if (!db) { $('#saveMode').textContent = 'このブラウザにだけ保存しています'; return; }
+    docRef = db.doc('kit/state');
+    $('#saveMode').textContent = 'このページに保存しています（Claude も読めます）';
+    let first = true;
+    docRef.onSnapshot(snap => {
+      if (snap.metadata.hasPendingWrites) return;
+      const d = snap.exists ? snap.data() : null;
+      if (!d) {
+        if (first && (Object.keys(state.urls).length || Object.keys(state.status).length)) flush();
+        first = false;
+        return;
+      }
+      first = false;
+      if (writing || pending) return;
+      state = {
+        noteId: typeof d.noteId === 'string' && d.noteId ? d.noteId : state.noteId,
+        urls: Object.assign({}, d.urls || {}),
+        status: JSON.parse(JSON.stringify(d.status || {})),
+      };
+      saveLocal();
+      if (document.activeElement !== $('#noteId')) $('#noteId').value = state.noteId;
+      renderDynamic();
+    }, () => { docRef = null; $('#saveMode').textContent = 'このブラウザにだけ保存しています'; });
+  })();
+})();
+</script>
