@@ -69,7 +69,7 @@ test('MOUTON browser smoke', async t => {
     await t.test('desktop: original cover with three theme cards, no tabs', async () => {
       await checkPage(browser, 'desktop-home', { viewport: { width: 1440, height: 900 } }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.intro-veil').count(), 1, 'keep the opening animation markup');
+        assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: the headline is the first thing seen (2026-10-18, copy first)');
         assert.equal(await page.locator('.cover-title').count(), 1);
         assert.equal(await page.locator('.cover-choice-card').count(), 3);
         assert.equal(await page.locator('[data-home-tab]').count(), 0, 'tabs were removed from the homepage');
@@ -78,8 +78,7 @@ test('MOUTON browser smoke', async t => {
 
     for (const [i, device] of ['desktop','mobile'].entries()) {
       const scene = 'gold-laurel';
-      const introArt = device === 'desktop' ? 'gold-laurel-wide.webp' : 'intro-sheep-moon.webp';
-      await t.test('fixed background, device intro art and immediate skip: ' + device, async () => {
+      await t.test('fixed background and the headline visible at once, no opening veil: ' + device, async () => {
         await checkPage(browser, 'static-' + device, {
           reducedMotion: 'no-preference',
           viewport: i ? { width: 390, height: 844 } : { width: 1440, height: 900 },
@@ -88,19 +87,20 @@ test('MOUTON browser smoke', async t => {
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
           assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/gold-laurel-wide.webp"]').count(), 1);
-          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/intro-sheep-moon.webp"]').getAttribute('media'), '(max-width: 900px)');
-          const intro = await page.locator('.intro-veil').evaluate(el => getComputedStyle(el, '::before').backgroundImage);
-          assert(intro.includes(introArt), device + ' intro art: ' + intro);
-          if (i) await page.keyboard.press('Escape');
-          else await page.locator('.intro-veil').click({ force: true });
+          // 2026-10-18（コピーライティング第一）：オープニングの演出は外した。見出しは読み込みと同時に見える
+          assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: words first');
+          assert.equal(await page.locator('link[rel="preload"][href*="intro-sheep-moon"]').count(), 0, 'no intro art preload');
           const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
             opacity: getComputedStyle(el).opacity,
             animation: getComputedStyle(el).animationName,
-            preparing: document.documentElement.classList.contains('intro-preparing'),
+            intro: document.documentElement.classList.contains('intro') || document.documentElement.classList.contains('intro-preparing'),
           }));
-          assert.equal(visibleNow.opacity, '1', 'skip must reveal cards immediately');
-          assert.equal(visibleNow.animation, 'none', 'no delayed arrival animation after skip');
-          assert.equal(visibleNow.preparing, false);
+          assert.equal(visibleNow.opacity, '1', 'the headline must be visible immediately');
+          assert.equal(visibleNow.animation, 'none', 'no delayed arrival animation');
+          assert.equal(visibleNow.intro, false);
+          const h1 = await page.locator('.cover-title').evaluate(el => { const r = el.getBoundingClientRect(); return { top: r.top, text: el.textContent.trim() }; });
+          assert.ok(h1.top >= 0 && h1.top < (i ? 844 : 900), 'the headline is inside the first screen, got top=' + h1.top);
+          assert.ok(h1.text.startsWith('読むだけでは'), 'headline text: ' + h1.text);
           const before = await page.locator('.cover-art').evaluate(el => {
             const s = getComputedStyle(el);
             return { background: s.backgroundImage, transform: s.transform, animation: s.animationName };
@@ -114,7 +114,7 @@ test('MOUTON browser smoke', async t => {
           }, scene), 1536);
           await page.mouse.move(200, 300);
           await page.evaluate(() => scrollTo(0, 150));
-          await page.waitForTimeout(1100); // Late font preparation must not restart the intro.
+          await page.waitForTimeout(1100); // Late font loading must not move or hide the words.
           assert.equal(await page.locator('.cover-inner').evaluate(el => getComputedStyle(el).opacity), '1');
           assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).backgroundImage), before.background);
           assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).transform), 'none');
@@ -391,7 +391,6 @@ test('MOUTON browser smoke', async t => {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        await page.locator('.intro-veil').click({ force: true }).catch(() => {});
         assert.equal(await page.locator('.cover-who .cover-who-row').count(), 3, 'three rows under the headline');
         const bottom = await page.locator('a[data-home-entry="worry"]').evaluate(el => el.getBoundingClientRect().bottom);
         assert.ok(bottom <= 844, 'the worry button must be inside the first screen, got bottom=' + bottom);

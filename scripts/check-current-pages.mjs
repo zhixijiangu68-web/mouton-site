@@ -46,6 +46,9 @@ for (const s of currentArticles) if (!journal.includes(`href="${s}.html"`)) repo
 const archive = read('archive.html');
 for (const s of archived) if (!archive.includes(`href="${s}.html"`)) report('archive.html', `アーカイブの記事 "${s}" が一覧にない`);
 
+// 2026-10-18（コピーライティング第一）：トップに、言葉を隠すオープニングの演出が戻っていないこと
+if (index.includes('intro-veil') || index.includes("classList.add('intro'")) report('index.html', 'オープニングの演出（intro-veil）が戻っている。見出しが最初に見えること');
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
