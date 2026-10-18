@@ -118,7 +118,7 @@ def add_n30(n, group):
 
 # 1日目（公開する順：見せたい順の逆。「はじめての方へ」が最後）
 for k in ('SPINOZA', 'NIETZSCHE', 'KIERKEGAARD'):
-    add_free(f'FREE_{k}', 'day1', f'無料の入門・{NAME[k]}', NOTE / f'free-{SLUG[k]}', f'images/og/{SLUG[k]}.jpg',
+    add_free(f'FREE_{k}', 'day1', f'無料の入門・{NAME[k]}', NOTE / f'free-{SLUG[k]}', f'note/free-{SLUG[k]}/cover.jpg',
              ph_self=f'PAID_{k}')
 add_free('START', 'day1', 'はじめての方へ（世界観）', NOTE / 'start', 'note/profile/header.jpg')
 # 2〜4日目（道の中も、見せたい順の逆）
@@ -152,7 +152,7 @@ for k in ('KIERKEGAARD', 'NIETZSCHE', 'SPINOZA'):
     teaser = section(listing, '有料ラインの直前に置く案内')
     _cl = re.search(r'```text\n(.*?)\n```', section(listing, '最後に足す結び'), re.S)
     add(f'PAID_{k}', 'paid', 'paid', f'有料・{NAME[k]}', f'note/paid-{SLUG[k]}/', title, body_of(free),
-        tags_of(listing), first_line(section(listing, '記事の説明')), f'images/og/paid-{SLUG[k]}.jpg',
+        tags_of(listing), first_line(section(listing, '記事の説明')), f'note/paid-{SLUG[k]}/cover.jpg',
         extra=dict(price=price, line=line, teaser=teaser + '\n',
                    refund='公開の設定で「受け付けない」を選ぶ（決定）。購入ボタンの下に「返金不可」と出る。',
                    law='先に「特定商取引法に基づく表記」の記事を出し、この記事の末尾からリンクする（いちばん上のカード）。',

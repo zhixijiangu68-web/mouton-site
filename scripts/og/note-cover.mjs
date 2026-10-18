@@ -3,7 +3,8 @@
 // each 03-titles.md. The artwork changes with the path (道) the article belongs to.
 // The free article note/free-habit/ gets one in the same style (artwork of the profile header).
 // The next 30 (note/next-30/, 31〜60) use SERIES=next30: three groups, each with its own artwork.
-//   cd scripts/og && npm install && node note-cover.mjs [番号 ... | habit]
+// The single articles (無料の入門3本・有料記事) get theirs from SINGLES below → note/<dir>/cover.jpg.
+//   cd scripts/og && npm install && node note-cover.mjs [番号 ... | habit | single | <dir> ...]
 //   SERIES=next30 node note-cover.mjs [番号 ...]
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -34,10 +35,25 @@ const GROUPS = [
   { to: 60, name: '感情に振り回される', art: 'ocean-wide.webp', pos: 'center 70%' },
 ];
 const pathOf = n => (next30 ? GROUPS : PATHS).find(p => n <= p.to);
+// 1本ずつの記事（無料の入門＝羊と月の絵、有料＝月桂樹の絵。サイトのシェア用の画像は、クイズや古いデザインのため note には使わない）
+const intro = { path: '入門', art: 'intro-sheep-moon.webp', pos: 'center 60%' };
+const paid = { path: '有料', art: 'gold-laurel-wide.webp', pos: 'center 50%' };
+const SINGLES = [
+  { dir: 'free-kierkegaard', big: '決められないのは、弱いからだろうか', small: 'キルケゴールの「自由のめまい」', ...intro },
+  { dir: 'free-nietzsche', big: 'その「すべき」は、誰の声なのか', small: 'ニーチェの「汝なすべし」', ...intro },
+  { dir: 'free-spinoza', big: '反省するほど、動けなくなるのはなぜだろう', small: 'スピノザ「謙遜は徳ではない」', ...intro },
+  { dir: 'paid-kierkegaard', big: '不安を抱えたまま、選ぶ', small: 'キルケゴールに学ぶ、五つの方法', ...paid },
+  { dir: 'paid-nietzsche', big: '人の物差しから、降りる', small: 'ニーチェに学ぶ、自分の価値をつくる', ...paid },
+  { dir: 'paid-spinoza', big: '感情に振り回されない、続け方', small: 'スピノザ『エチカ』に学ぶ', ...paid },
+  { dir: 'paid-choice', big: '「いちばん」を探さずに選ぶ', small: 'アリストテレスに学ぶ、五つの方法', ...paid },
+  { dir: 'paid-perfect', big: '「ちゃんと」と「ゼロ」のあいだで', small: 'ヴォルテールに学ぶ、五つの方法', ...paid },
+];
 
 const args = process.argv.slice(2);
 const only = args.filter(a => /^\d+$/.test(a)).map(Number);
 const habit = !next30 && (!args.length || args.includes('habit'));
+const singleDirs = args.filter(a => SINGLES.some(x => x.dir === a));
+const singles = next30 ? [] : SINGLES.filter(x => !args.length || args.includes('single') || singleDirs.includes(x.dir));
 const browser = await chromium.launch(process.env.CHROME_PATH ? { executablePath: process.env.CHROME_PATH } : {});
 const page = await browser.newPage({ viewport: { width: 1280, height: 670 } });
 await page.goto(pathToFileURL(join(here, 'note-cover.html')).href);
@@ -76,6 +92,16 @@ if (habit) {
   });
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: join(dir, 'cover.jpg'), type: 'jpeg', quality: 86 });
+  count++;
+}
+for (const x of singles) {
+  await page.evaluate(a => window.render(a), {
+    num: 0, total: 30, path: x.path, bigHtml: phrased(x.big), bigLen: x.big.length, small: x.small,
+    art: pathToFileURL(join(root, 'images', 'mouton', x.art)).href, pos: x.pos,
+    series: 'MOUTON — PHILOSOPHY OF LIFE',
+  });
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: join(root, 'note', x.dir, 'cover.jpg'), type: 'jpeg', quality: 86 });
   count++;
 }
 await browser.close();
