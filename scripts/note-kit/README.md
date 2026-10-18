@@ -42,4 +42,4 @@ python3 scripts/note-kit/lint_next30.py [番号 ...]
 
 ## 見出し画像
 
-`scripts/og/note-cover.mjs`（1280×670）。30本・次の30本は、各 `03-titles.md` の「大：」「小：」から作る。入門3本と有料記事は、スクリプトの中の表 `SINGLES` から作る（`node note-cover.mjs single`、1本だけなら `node note-cover.mjs paid-choice` のようにフォルダ名で）。サイトのシェア用の画像（`images/og/`）は、クイズや前のデザインのものがあるので、note には使わない（2026-10-18）。キットの画像を変えたら、キットを作り直して、変えた画像も `files` で publish する。
+`scripts/og/note-cover.mjs`（1280×670）。30本・次の30本は、各 `03-titles.md` の「大：」「小：」から作る。入門3本と有料記事は、スクリプトの中の表 `SINGLES` から作る（`node note-cover.mjs single`、1本だけなら `node note-cover.mjs paid-choice` のようにフォルダ名で）。マガジンのヘッダーは `node note-cover.mjs magazines`（`note/magazines/magazines.json` から）。大きな文字の改行の位置は、30本・次の30本・マガジンは「／」、入門と有料は表の中の `\n`。サイトのシェア用の画像（`images/og/`）は、クイズや前のデザインのものがあるので、note には使わない（2026-10-18）。キットの画像を変えたら、キットを作り直して、変えた画像も `files` で publish する。
