@@ -5,19 +5,11 @@ title: "ムートン — Philosophy of Life"
 description: "MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。"
 bodyClass: site
 assetVersion: "20261017-measure"
-extraCss: ["home.css?v=20261017-who", "home-static-background.css?v=20261016-gold-1", "intro-art.css?v=20261016-gold-1"]
+extraCss: ["home.css?v=20261018-copy", "home-static-background.css?v=20261016-gold-1"]
 ---
-{#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。オープニングはスマホ＝羊と月、PC（901px以上）＝背景と同じ絵。 #}
-<link rel="preload" as="image" href="images/mouton/intro-sheep-moon.webp" media="(max-width: 900px)">
+{#- 背景は「紺の夜空・三日月・金色の葉」の1枚に固定。
+    2026-10-18（オーナー「コピーライティング第一。美しさは二の次」）：オープニングの演出（MOUTON の文字が約6秒、見出しを隠していた）を外した。見出しが最初に見える。 #}
 <link rel="preload" as="image" href="images/mouton/gold-laurel-wide.webp">
-{#- 毎回ホームを開いた時の演出を維持する。タブや記事へのディープリンクは邪魔しない。 #}
-<script>try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches&&(!location.hash||location.hash==='#top'))document.documentElement.classList.add('intro','intro-preparing');setTimeout(()=>{const d=document.documentElement;if(d.classList.contains('intro-preparing')){d.classList.add('intro-fallback-font');d.classList.remove('intro-preparing')}},1200);}catch(e){}</script>
-<div class="intro-veil" aria-hidden="true">
-  <p class="intro-word">{%- for c in "MOUTON" %}<span style="--i:{{ loop.index0 }}">{{ c }}</span>{% endfor %}</p>
-  <p class="intro-sub">Philosophy of life — since 2026</p>
-  <span class="intro-skip-hint">タップしてはじめる</span>
-  <span class="intro-bar"></span>
-</div>
 <a class="skip" href="#top">本文へスキップ</a>
 {% include "partials/nav.njk" %}
 
@@ -59,7 +51,7 @@ extraCss: ["home.css?v=20261017-who", "home-static-background.css?v=20261016-gol
 
   <section class="home-cycle" id="cycle" data-nav="dark" data-nav-solid="dark" aria-labelledby="cycle-h">
     <div class="home-cycle-inner">
-      <p class="home-cycle-kicker">The cycle</p>
+      <p class="home-cycle-kicker">読んだあとの回し方</p>
       <h2 class="home-cycle-title" id="cycle-h">点を打ち、線にして、<br>また点を打つ。</h2>
       <ol class="home-cycle-steps">
         <li><span class="home-cycle-no">01 / 点</span><strong>一つ、打つ</strong><span>悩みに近い哲学者の考えを読む。答えは書いていない。読んでいるうちに、試してみたくなることが一つ出てくるかもしれない。それが最初の点だと思う。</span></li>

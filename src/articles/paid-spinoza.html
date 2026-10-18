@@ -34,10 +34,9 @@ paid:
   # このサイトで販売する：Stripe の本番 Payment Link（https://buy.stripe.com/…）を入れる。空なら「このサイトでの販売準備中」。
   # 購入ボタンは site.product.philosophy の fulfillmentReady・legalUrl もそろったときだけ出る（npm test で確かめる）
   checkoutUrl: ""
-# 販売ページの中身（悩み・見本・目次・向き不向き・この記事だけのFAQ）。2026-10-17：書き込みワークはなくした。共通の文は partials/paid-lp-*.njk
+# 販売ページの中身（悩み・見本・目次・向き不向き・この記事だけのFAQ）。2026-10-17：書き込みワークはなくした。2026-10-18：見出しは paid.title そのもの（lp.headline はやめた）。共通の文は partials/paid-lp-*.njk
 lp:
   hook: "続かなかったことより、そのあと自分を責める夜のほうがつらい。"
-  headline: "気分に左右されずに、続けられる形をつくる。"
   subhead: "気合いにも、一気にやめるデトックスにも頼らずに。スピノザの「感情の仕組み」の考え方を、15分で読める記事にした。"
   benefits: ["止まりそうな日に、それが何の感情なのかを考えられる", "続かなかった自分を責めると、なぜ二度負けることになるのかが見える", "やる気に頼らずに続けることを、感情の仕組みから考え直せる"]
   # 読むだけで得られること（見え方の読み替え）と、有料にしている理由（当てはめやすさ・地図・最後に残す問い）
@@ -78,7 +77,7 @@ styles: |
         <div class="meta">2026.10.15　/　PHILOSOPHY　/　スピノザ　<span class="paid-badge">有料記事</span></div>
         {% include "partials/paid-lp-hero.njk" %}<div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
         <section class="plp-section plp-sample" id="sample" aria-labelledby="plp-sample-h">
-          <p class="plp-step">01 / Sample</p>
+          <p class="plp-step">01 ／ 見本</p>
           <h2 id="plp-sample-h">実物の見本</h2>
           <p class="plp-small">販売する記事（PDF）の冒頭を、そのまま載せている。</p>
           <div class="plp-sample-body">

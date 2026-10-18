@@ -47,7 +47,7 @@ assert(lp.includes('30日間の実践表'), '30 day worksheet missing');
 assert(product.pages === 75, 'product must be the complete 75-page edition');
 assert(lp.includes('参考文献133件'), 'reference count must match the finished PDF');
 assert(lp.includes('<span>14</span>'), 'all 14 chapters must be listed');
-assert(home.includes('intro-veil'), 'homepage intro must be preserved');
+assert(!home.includes('intro-veil'), 'homepage shows its headline first: no opening veil (2026-10-18, copy first)');
 assert(!lp.includes('今すぐ購入'), 'must not imply checkout is live');
 assert.equal(site.prelaunch.ready, waitlistReady(site.prelaunch), 'prelaunch readiness must match validation');
 const privacy = read('privacy.html');
