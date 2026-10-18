@@ -4,7 +4,7 @@
 // The free article note/free-habit/ gets one in the same style (artwork of the profile header).
 // The next 30 (note/next-30/, 31〜60) use SERIES=next30: three groups, each with its own artwork.
 // The single articles (無料の入門3本・有料記事) get theirs from SINGLES below → note/<dir>/cover.jpg.
-//   cd scripts/og && npm install && node note-cover.mjs [番号 ... | habit | single | <dir> ...]
+//   cd scripts/og && npm install && node note-cover.mjs [番号 ... | habit | single | <dir> ... | magazines]
 //   SERIES=next30 node note-cover.mjs [番号 ...]
 import { readdirSync, readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
@@ -110,6 +110,20 @@ for (const x of singles) {
   await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: join(root, 'note', x.dir, 'cover.jpg'), type: 'jpeg', quality: 86 });
   count++;
+}
+// マガジンのヘッダー（note/magazines/magazines.json の big・small → note/magazines/<id>.jpg）。node note-cover.mjs magazines
+if (!next30 && args.includes('magazines')) {
+  const M = JSON.parse(readFileSync(join(root, 'note', 'magazines', 'magazines.json'), 'utf8'));
+  for (const m of M) {
+    const lines = m.big.split('／');
+    await page.evaluate(a => window.render(a), {
+      num: 0, total: 0, path: 'マガジン', bigHtml: lines.map(phrased).join('<br>'), bigLen: Math.max(...lines.map(l => l.length)), small: m.small,
+      art: pathToFileURL(join(root, 'images', 'mouton', m.art)).href, pos: m.pos, series: 'MOUTON — PHILOSOPHY OF LIFE',
+    });
+    await page.evaluate(() => document.fonts.ready);
+    await page.screenshot({ path: join(root, 'note', 'magazines', `${m.id}.jpg`), type: 'jpeg', quality: 86 });
+    count++;
+  }
 }
 await browser.close();
 console.log(`${count} cover(s)`);
