@@ -60,6 +60,14 @@ def section(text, heading_prefix):
     return m.group(1).strip() if m else ''
 
 
+def teaser_of(listing):
+    """出品シートの「有料ラインの直前に置く案内」のうち、貼る部分（「この先で読めること」から）"""
+    t = section(listing, '有料ラインの直前に置く案内')
+    i = t.find('この先で読めること')
+    assert i >= 0, t[:40]
+    return t[i:]
+
+
 def first_line(text):
     return next((l.strip() for l in text.split('\n') if l.strip()), '')
 
@@ -149,7 +157,7 @@ for k in ('KIERKEGAARD', 'NIETZSCHE', 'SPINOZA'):
     price = re.search(r'^\| 価格 \| (.+?) \|$', listing, re.M).group(1)
     line = re.search(r'^\| 有料ライン \| (.+?) \|$', listing, re.M).group(1).replace('**', '')
     free = (d / 'free-part.md').read_text(encoding='utf-8')
-    teaser = section(listing, '有料ラインの直前に置く案内')
+    teaser = teaser_of(listing)
     _cl = re.search(r'```text\n(.*?)\n```', section(listing, '最後に足す結び'), re.S)
     add(f'PAID_{k}', 'paid', 'paid', f'有料・{NAME[k]}', f'note/paid-{SLUG[k]}/', title, body_of(free),
         tags_of(listing), first_line(section(listing, '記事の説明')), f'note/paid-{SLUG[k]}/cover.jpg',
@@ -174,7 +182,7 @@ add('PAID_CHOICE', 'paid', 'paid', '有料・選べない（16 の続き。note 
     tags_of(_pl), first_line(section(_pl, '記事の説明')), 'note/paid-choice/cover.jpg',
     extra=dict(price=re.search(r'^\| 価格 \| (.+?) \|$', _pl, re.M).group(1).replace('下の「価格の案」', '出品シートの「価格の案」'),
                line=re.search(r'^\| 有料ライン \| (.+?) \|$', _pl, re.M).group(1).replace('**', ''),
-               teaser=section(_pl, '有料ラインの直前に置く案内') + '\n', **({'rest': _rest} if _rest else {}),
+               teaser=teaser_of(_pl) + '\n', **({'rest': _rest} if _rest else {}),
                refund='公開の設定で「受け付けない」を選ぶ（3本と同じ）。購入ボタンの下に「返金不可」と出る。',
                law='先に「特定商取引法に基づく表記」の記事を出し、この記事の末尾からリンクする（このグループのいちばん上のカード）。',
                work='書き込みワークは入れていない。ファイルも添付しない。',

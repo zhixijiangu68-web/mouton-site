@@ -419,7 +419,7 @@ footer { color: var(--muted); font-size: 13.5px; display: grid; gap: 6px; border
         <dt>手数料</dt><dd>${esc(it.extra.fee)}</dd>
         ${it.extra.ai ? `<dt>AI 学習</dt><dd>${esc(it.extra.ai)}</dd>` : ''}
       </dl>
-      <div class="actions"><button type="button" data-act="teaser">有料ラインの前の案内をコピー（任意）</button>${it.extra.rest_html ? '<button type="button" class="primary" data-act="rest">有料の続きをコピー</button>' : ''}${it.extra.closing_html ? '<button type="button" data-act="closing">最後の結びをコピー</button>' : ''}</div>` : '';
+      <div class="actions"><button type="button" data-act="teaser">有料ラインの前の案内をコピー</button>${it.extra.rest_html ? '<button type="button" class="primary" data-act="rest">有料の続きをコピー</button>' : ''}${it.extra.closing_html ? '<button type="button" data-act="closing">最後の結びをコピー</button>' : ''}</div>` : '';
     const paidLink = it.paid ? `
       <div class="actions"><button type="button" data-act="paidlink">有料記事への案内をコピー</button></div>
       <p class="link-line"></p>` : '';
