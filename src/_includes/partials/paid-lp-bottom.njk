@@ -5,7 +5,7 @@
 {%- set ph = site.product.philosophy %}
 {%- set live = paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}
 <section class="plp-section plp-contents" aria-labelledby="plp-contents-h">
-  <p class="plp-step">04 / Contents</p>
+  <p class="plp-step">04 ／ 内容</p>
   <h2 id="plp-contents-h">内容と使い方</h2>
   <ol class="plp-toc">
     {%- for t in lp.toc %}<li>{{ t }}</li>{% endfor %}
@@ -24,7 +24,7 @@
 </section>
 
 <section class="plp-section plp-why" aria-labelledby="plp-why-h">
-  <p class="plp-step">05 / Why Mouton</p>
+  <p class="plp-step">05 ／ 作る理由</p>
   <h2 id="plp-why-h">ムートンが、これを作る理由</h2>
   {#- ブランドの考え方の全体は「はじめての方へ」に1か所だけ。ここでは、この記事に関わることだけを書く（2026-10-17）。 #}
   <p>やり方は、状況が変わるとすぐに使えなくなる。岐路で必要なのは、新しいやり方より「自分は何を基準に選ぶのか」だと僕は思う。だからこの記事では、哲学者の考えを、よくある悩みの場面に当てて読めるようにした。答えは書いていない。何を試すかを決めるのは、読んだあなただ。</p>
@@ -42,7 +42,7 @@
 </section>
 
 <section class="plp-section plp-fit" aria-labelledby="plp-fit-h">
-  <p class="plp-step">06 / Who it's for</p>
+  <p class="plp-step">06 ／ 合うかどうか</p>
   <h2 id="plp-fit-h">あなたに合うかどうか</h2>
   <div class="plp-fit-grid">
     <div class="plp-fit-col plp-fit-yes"><p class="plp-fit-h">あなたがいま、こうなら合うかもしれない</p><ul>{% for x in lp.fit %}<li>{{ x }}</li>{% endfor %}</ul></div>
@@ -51,7 +51,7 @@
 </section>
 
 <section class="plp-section plp-buy" id="buy" aria-labelledby="plp-buy-h">
-  <p class="plp-step">07 / Price</p>
+  <p class="plp-step">07 ／ 価格</p>
   <h2 id="plp-buy-h">価格と購入</h2>
   <div class="paywall">
     <p class="paywall-eyebrow">{{ paid.philosopher }} — {{ paid.title }}</p>
@@ -63,7 +63,7 @@
 </section>
 
 <section class="plp-section plp-faq" aria-labelledby="plp-faq-h">
-  <p class="plp-step">08 / FAQ</p>
+  <p class="plp-step">08 ／ 質問</p>
   <h2 id="plp-faq-h">よくある質問</h2>
   {%- for f in lp.faq %}
   <details class="plp-q"><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
