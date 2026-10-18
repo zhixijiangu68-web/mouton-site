@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" data-root="" data-version="original">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,10 +7,10 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <script>document.documentElement.classList.add('js')</script>
 <title>制作 — ムートン</title>
-<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta name="description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <link rel="canonical" href="https://moutonarchive.com/making.html">
 <meta property="og:title" content="制作 — ムートン">
-<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
+<meta property="og:description" content="ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ムートン">
 <meta property="og:locale" content="ja_JP">
@@ -31,9 +31,9 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&amp;family=Inter:wght@300;400;500&amp;family=Noto+Serif+JP:wght@200;300;400;600&amp;display=swap"></noscript>
-<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="site.css?v=20261017-moon">
 <link rel="stylesheet" href="design-version.css">
-<script src="site.js" defer></script>
+<script src="site.js?v=20261017-moon" defer></script>
 <script src="quiz-loop.js" defer></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
@@ -42,102 +42,32 @@
 <body class="site doc-page">
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
-  <label class="version-picker">
-  <span class="version-picker-label" aria-hidden="true">VERSION</span>
-  <select data-version-picker aria-label="デザインのバージョン">
-    <option value="original">01 ORIGINAL</option>
-    <option value="club">02 CLUB</option>
-  </select>
-</label>
-
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
-      <li><a href="journal.html">読む<span class="site-links-en">Read</span></a></li>
-      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
-      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
-      <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
       <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="topic-philosophy.html">哲学の3本<span class="site-links-en">Philosophy</span></a></li>
+      <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
       <li><a href="en/index.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
-      <li class="menu-version"><label class="version-picker">
-  <span class="version-picker-label" aria-hidden="true">VERSION</span>
-  <select data-version-picker aria-label="デザインのバージョン">
-    <option value="original">01 ORIGINAL</option>
-    <option value="club">02 CLUB</option>
-  </select>
-</label>
-</li>
     </ul>
   </nav>
 </div>
 
 <div class="doc-cover ph-hero" data-nav="dark"></div>
 <main class="doc topic making" data-nav="light" data-nav-solid="light">
+<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>
+<p>このページは、いまの MOUTON の中心から外して保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。一覧は<a href="archive.html">アーカイブ</a>。</p></aside>
+
   <header class="mk-head">
     <p class="mk-eyebrow">PROJECTS / MAKING</p>
     <h1 class="doc-title">作っている<wbr>もの。</h1>
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
-  <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
-    <details class="mk-accordion">
-      <summary class="mk-accordion-summary">
-        <h2 id="mk-feature-heading"><span class="mk-accordion-kicker">LATEST EVOLUTION / 2026.10.13<wbr></span><span class="mk-accordion-label">長いトップから、選べるトップへ。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
-      </summary>
-      <div class="mk-accordion-panel">
-    <div class="mk-feature-header">
-      <div>
-        
-        
-        <p>静かな最初の画面から、映画的なオープニング、短いトップ、3つのテーマを選べる画面へ。MOUTON自身の変化を記録しました。</p>
-        <a class="mk-more" href="making-site.html#site-evolution">変化を時系列で見る <span aria-hidden="true">→</span></a>
-      </div>
-      <a class="mk-feature-preview" href="making-site.html#site-compare" aria-label="初期と最新のトップ画面を見比べる">
-        <picture>
-          <source media="(max-width:540px)" srcset="images/making/site-ui-20261013-phone.jpg">
-          <img src="images/making/site-ui-20261013-desktop.jpg" alt="10月13日のMOUTONトップ。哲学、身体、食と科学の3テーマカードが並ぶ" width="1280" height="800" loading="lazy">
-        </picture>
-        <span aria-hidden="true">BEFORE / AFTER <span>↗</span></span>
-      </a>
-    </div>
-  
-      </div>
-    </details>
-  </section>
-  <section class="mk-section mk-studies" id="visual-studies" aria-labelledby="mk-studies-title">
-    <details class="mk-accordion" open>
-      <summary class="mk-accordion-summary">
-        <h2 id="mk-studies-title"><span class="mk-accordion-kicker">01 / VISUAL STUDIES<wbr></span><span class="mk-accordion-label">光と表情の、<wbr>断片。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
-      </summary>
-      <div class="mk-accordion-panel">
-    <p class="mk-studies-intro">言葉にならない空気を、写真に残す。夜の熱、街の光、旅先の一瞬、静かなまなざし。ムートンのビジュアル制作ノート。</p>
-    <div class="mk-studies-grid">
-      <figure class="mk-study mk-study--one">
-        <a class="mk-study-photo" href="images/making/visual-study-after-hours.webp" aria-label="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている。高画質の写真を開く"><img src="images/making/visual-study-after-hours.webp" alt="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている" width="1254" height="1254" loading="lazy" decoding="async"></a>
-        <figcaption><span>01 / AFTER HOURS</span><strong>夜の熱。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--two">
-        <a class="mk-study-photo" href="images/making/visual-study-night-walk.webp" aria-label="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-night-walk.webp" alt="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている" width="508" height="805" loading="lazy" decoding="async"></a>
-        <figcaption><span>02 / NIGHT WALK</span><strong>街の光。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--three">
-        <a class="mk-study-photo" href="images/making/visual-study-small-joy.webp" aria-label="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-small-joy.webp" alt="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている" width="864" height="1536" loading="lazy" decoding="async"></a>
-        <figcaption><span>03 / SMALL JOY</span><strong>旅先の一瞬。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--four">
-        <a class="mk-study-photo" href="images/making/visual-study-window-light.webp" aria-label="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている。高画質の写真を開く"><img src="images/making/visual-study-window-light.webp" alt="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている" width="1122" height="1402" loading="lazy" decoding="async"></a>
-        <figcaption><span>04 / WINDOW LIGHT</span><strong>静かなまなざし。</strong></figcaption>
-      </figure>
-    </div>
-    <p class="mk-studies-note">MOUTON / VISUAL ARCHIVE — 2026.10.14</p>
-  
-      </div>
-    </details>
-  </section>
 
   <section class="mk-section" aria-labelledby="mk-projects">
-    <details class="mk-accordion">
+    <details class="mk-accordion" open>
       <summary class="mk-accordion-summary">
-        <h2 id="mk-projects"><span class="mk-accordion-kicker">02 / いま作っているもの<wbr></span><span class="mk-accordion-label">それぞれの、今の状態。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+        <h2 id="mk-projects"><span class="mk-accordion-kicker">01 / いま作っているもの<wbr></span><span class="mk-accordion-label">それぞれの、今の状態。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
       </summary>
       <div class="mk-accordion-panel">
     
@@ -165,6 +95,17 @@
         </dl>
         <a class="mk-more" href="making-diary.html">DIARY の詳しい記録 <span aria-hidden="true">→</span></a>
       </article>
+      <article class="mk-card" id="count"><a class="mk-thumb" href="making-count.html" tabindex="-1" aria-hidden="true"><img src="images/making/count.jpg" alt="" loading="lazy" width="390" height="844"></a>
+        <div class="mk-top"><span>PROJECT 004 · GAME / 落ちものパズル</span><span class="mk-state">制作中</span></div>
+        <h3>MOUTON・COUNT</h3>
+        <p class="mk-lead">羊を数える、眠れない夜のパズル。</p>
+        <dl class="mk-summary">
+          <dt>目的</dt><dd>眠れない夜に、羊を数えながら遊べるやさしい落ちものパズルを作る。</dd>
+          <dt>現在地</dt><dd>フリープレイ・クエスト15の夜・着せかえまで遊べる。AndroidとiPhoneのアプリが組み上がることを確かめた。</dd>
+          <dt>次の一歩</dt><dd>TestFlightで試し、App StoreとGoogle Playに出す。</dd>
+        </dl>
+        <a class="mk-more" href="making-count.html">MOUTON・COUNT の詳しい記録 <span aria-hidden="true">→</span></a>
+      </article>
       <article class="mk-card" id="site"><a class="mk-thumb" href="making-site.html" tabindex="-1" aria-hidden="true"><img src="images/making/site.jpg" alt="" loading="lazy" width="390" height="844"></a>
         <div class="mk-top"><span>PROJECT 003 · WEB / このサイト</span><span class="mk-state">毎日更新</span></div>
         <h3>MOUTON</h3>
@@ -185,12 +126,16 @@
   <section class="mk-section" aria-labelledby="mk-log">
     <details class="mk-accordion">
       <summary class="mk-accordion-summary">
-        <h2 id="mk-log"><span class="mk-accordion-kicker">03 / 制作の記録<wbr></span><span class="mk-accordion-label">進んだ日のこと。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+        <h2 id="mk-log"><span class="mk-accordion-kicker">02 / 制作の記録<wbr></span><span class="mk-accordion-label">進んだ日のこと。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
       </summary>
       <div class="mk-accordion-panel">
     
     
     <ol class="mk-log" reversed>
+      <li>
+        <time datetime="2026-10-15">2026.10.15</time>
+        <div><a class="mk-tag" href="making-count.html">MOUTON・COUNT</a><h3>羊を<wbr>数える<wbr>落ちもの<wbr>パズルを<wbr>作った。</h3><p>眠れない夜に羊の群れを並べる「MOUTON・COUNT」。ルール・音・クエスト・着せかえまで作り、Android と iPhone のアプリが組み上がることを確かめた。</p></div>
+      </li>
       <li>
         <time datetime="2026-10-13">2026.10.13</time>
         <div><a class="mk-tag" href="making-site.html">MOUTON</a><h3>3枚の<wbr>アートで、<wbr>記事への<wbr>入口が<wbr>できた。</h3><p>Philosophy / Body / Food &amp; Scienceの3テーマを大きく表示。生成したアートをカード用に調整し、「今日は、何が気になる？」の見出しは静止表示にした（PR #110・#112・#113）。</p></div>
@@ -236,6 +181,62 @@
       </div>
     </details>
   </section>
+  <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
+    <details class="mk-accordion">
+      <summary class="mk-accordion-summary">
+        <h2 id="mk-feature-heading"><span class="mk-accordion-kicker">LATEST EVOLUTION / 2026.10.13<wbr></span><span class="mk-accordion-label">長いトップから、選べるトップへ。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+      </summary>
+      <div class="mk-accordion-panel">
+    <div class="mk-feature-header">
+      <div>
+        
+        
+        <p>静かな最初の画面から、映画的なオープニング、短いトップ、3つのテーマを選べる画面へ。MOUTON自身の変化を記録しました。</p>
+        <a class="mk-more" href="making-site.html#site-evolution">変化を時系列で見る <span aria-hidden="true">→</span></a>
+      </div>
+      <a class="mk-feature-preview" href="making-site.html#site-compare" aria-label="初期と最新のトップ画面を見比べる">
+        <picture>
+          <source media="(max-width:540px)" srcset="images/making/site-ui-20261013-phone.jpg">
+          <img src="images/making/site-ui-20261013-desktop.jpg" alt="10月13日のMOUTONトップ。哲学、身体、食と科学の3テーマカードが並ぶ" width="1280" height="800" loading="lazy">
+        </picture>
+        <span aria-hidden="true">BEFORE / AFTER <span>↗</span></span>
+      </a>
+    </div>
+  
+      </div>
+    </details>
+  </section>
+  <section class="mk-section mk-studies mk-studies--quiet" id="visual-studies" aria-labelledby="mk-studies-title">
+    <details class="mk-accordion">
+      <summary class="mk-accordion-summary">
+        <h2 id="mk-studies-title"><span class="mk-accordion-kicker">APPENDIX / VISUAL STUDIES<wbr></span><span class="mk-accordion-label">光と表情の、<wbr>断片。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+      </summary>
+      <div class="mk-accordion-panel">
+    <p class="mk-studies-intro">言葉にならない空気を、写真に残す。夜の熱、街の光、旅先の一瞬、静かなまなざし。ムートンのビジュアル制作ノート。</p>
+    <div class="mk-studies-grid">
+      <figure class="mk-study mk-study--one">
+        <a class="mk-study-photo" href="images/making/visual-study-after-hours.webp" aria-label="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている。高画質の写真を開く"><img src="images/making/visual-study-after-hours.webp" alt="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている" width="1254" height="1254" loading="lazy" decoding="async"></a>
+        <figcaption><span>01 / AFTER HOURS</span><strong>夜の熱。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--two">
+        <a class="mk-study-photo" href="images/making/visual-study-night-walk.webp" aria-label="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-night-walk.webp" alt="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている" width="508" height="805" loading="lazy" decoding="async"></a>
+        <figcaption><span>02 / NIGHT WALK</span><strong>街の光。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--three">
+        <a class="mk-study-photo" href="images/making/visual-study-small-joy.webp" aria-label="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-small-joy.webp" alt="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている" width="864" height="1536" loading="lazy" decoding="async"></a>
+        <figcaption><span>03 / SMALL JOY</span><strong>旅先の一瞬。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--four">
+        <a class="mk-study-photo" href="images/making/visual-study-window-light.webp" aria-label="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている。高画質の写真を開く"><img src="images/making/visual-study-window-light.webp" alt="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている" width="1122" height="1402" loading="lazy" decoding="async"></a>
+        <figcaption><span>04 / WINDOW LIGHT</span><strong>静かなまなざし。</strong></figcaption>
+      </figure>
+    </div>
+    <p class="mk-studies-note">MOUTON / VISUAL ARCHIVE — 2026.10.14</p>
+  
+      </div>
+    </details>
+  </section>
+
 </main>
 <script>
 (function () {
@@ -244,8 +245,10 @@
     var target;
     try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
     catch (_) { return; }
-    var panel = target && target.closest('details.mk-accordion');
-    if (panel) panel.open = true;
+    if (!target) return;
+    // The link may name the section itself (#visual-studies) or something inside a panel (#kioku).
+    var panel = target.closest('details.mk-accordion') || target.querySelector('details.mk-accordion');
+    if (panel && !panel.open) { panel.open = true; target.scrollIntoView(); }
   }
   window.addEventListener('hashchange', openMakingAnchor);
   openMakingAnchor();
@@ -256,28 +259,20 @@
   
 <nav class="footer-map" aria-label="サイトの案内">
   <div class="footer-map-col">
-    <p class="footer-map-h">テーマ</p>
-    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
-      <li><a href="journal.html">すべての記事</a></li>
-    </ul>
-  </div>
-  <div class="footer-map-col">
-    <p class="footer-map-h">連載</p>
-    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
-    </ul>
-  </div>
-  <div class="footer-map-col">
-    <p class="footer-map-h">選び方</p>
-    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
-      <li><a href="guides.html">すべての選び方</a></li>
+    <p class="footer-map-h">読む</p>
+    <ul>
+      <li><a href="topic-philosophy.html">哲学の3本</a></li><li><a href="series.html#thinkers">連載「哲学者に聞く」</a></li>
+      <li><a href="journal.html">記事</a></li>
+      <li><a href="archive.html">アーカイブ</a></li>
     </ul>
   </div>
   <div class="footer-map-col">
     <p class="footer-map-h">このサイト</p>
-    <ul><li><a href="start.html">はじめての方へ</a></li>
-      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+    <ul>
+      <li><a href="start.html">ムートンについて</a></li>
       <li><a href="editorial.html">編集方針</a></li>
-      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
+      <li><a href="operator.html">運営者情報</a></li>
+      <li><a href="feed.xml">RSS</a></li>
     </ul>
   </div>
 </nav>
@@ -291,7 +286,7 @@
 </nav>
 <p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
 
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>
 
 </body>

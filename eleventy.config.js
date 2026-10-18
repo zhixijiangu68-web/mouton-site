@@ -1,6 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { loadDefaultJapaneseParser } from 'budoux';
 import site from './src/_data/site.js';
+import currentArticles from './src/_data/currentArticles.js';
 
 const budoux = loadDefaultJapaneseParser();
 
@@ -61,8 +62,9 @@ export default function (eleventyConfig) {
       return { id: `${q.slug}-${n[q.slug]}`, slug: q.slug, title: titles[q.slug], q: q.q, a: q.a, head: q.head, why: q.why };
     }));
   });
-  // Every article for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
-  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.map(a => ({
+  // Every current article (not archived) for the "pick one for me" button (site.js): slug, title, minutes, a quiz teaser.
+  // Paid pages are sales pages, not reads, so "pick one for me" leaves them out.
+  eleventyConfig.addFilter('picksJson', (items, quizzes = []) => JSON.stringify(items.filter(a => !a.data.paid && currentArticles.includes(a.page.fileSlug)).map(a => ({
     s: a.page.fileSlug,
     t: a.data.journal ? a.data.journal.title : a.data.headline,
     m: a.data.readMinutes,
@@ -81,26 +83,13 @@ export default function (eleventyConfig) {
     const src = paths.find(p => existsSync(p));
     return src ? ` style="--img:url('${src}')"` : '';
   });
-  // Plain text of every article for the journal's full-text search (loaded on demand).
-  eleventyConfig.addFilter('searchIndex', items => JSON.stringify(items.map(a => ({
-    url: `${a.page.fileSlug}.html`,
-    title: a.data.journal?.title || a.data.science?.title || a.data.headline,
-    excerpt: a.data.journal?.excerpt || a.data.science?.text || a.data.description,
-    date: ymd(new Date(a.page.date)).join('.'),
-    minutes: a.data.readMinutes,
-    category: a.data.journal?.category || a.data.topic || a.data.category,
-    text: (a.templateContent || '')
-      .replace(/<(style|script|nav)[^>]*>[\s\S]*?<\/\1>/g, ' ')
-      .replace(/<div class="article-share">[\s\S]*?<\/label><\/div><\/div>/g, ' ')
-      .replace(/<details class="reading-toc">[\s\S]*?<\/details>/g, ' ')
-      .replace(/<p class="reading-time">[\s\S]*?<\/p>/g, ' ')
-      .replace(/リンクを(長押しして)?コピー/g, ' ')
-      .replace(/<aside[\s\S]*?<\/aside>/g, ' ')
-      .replace(/<[^>]+>/g, ' ')
-      .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-      .replace(/\s+/g, ' ')
-      .trim(),
-  }))));
+  // アーカイブに移した記事の上に出す注記。本文はそのまま残し、いまの入口（記事・哲学の3本）を示す。
+  eleventyConfig.addFilter('archiveNote', (html, on) => on ? html.replace(/<article\b[^>]*>/, m => m
+    + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
+    + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。</p></aside>') : html);
+  // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
+  eleventyConfig.addFilter('paidCards', items =>
+    items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
   eleventyConfig.addFilter('findTopic', (topics, key) => topics.find(t => t.key === key) || null);
   eleventyConfig.addFilter('inTopic', (items, key) => items.filter(a => a.data.topic === key));
   // Curated picks first, then the newest articles on the same topic.
@@ -337,6 +326,10 @@ export default function (eleventyConfig) {
 
   const newestFirst = (a, b) => b.date - a.date || (a.data.journal?.order ?? 999) - (b.data.journal?.order ?? 999);
   eleventyConfig.addCollection('articles', api => api.getFilteredByGlob('src/articles/*.html').sort(newestFirst));
+  // いまの中心に置く記事と、アーカイブに移した記事（src/_data/currentArticles.js）。
+  const isCurrent = a => currentArticles.includes(a.page.fileSlug);
+  eleventyConfig.addCollection('current', api => api.getFilteredByGlob('src/articles/*.html').filter(isCurrent).sort(newestFirst));
+  eleventyConfig.addCollection('archived', api => api.getFilteredByGlob('src/articles/*.html').filter(a => !isCurrent(a)).sort(newestFirst));
   eleventyConfig.addCollection('articlesEn', api => api.getFilteredByGlob('src/en/articles/*.html').sort(newestFirst));
 
   return {

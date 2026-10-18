@@ -69,12 +69,59 @@ test('MOUTON browser smoke', async t => {
     await t.test('desktop: original cover with three theme cards, no tabs', async () => {
       await checkPage(browser, 'desktop-home', { viewport: { width: 1440, height: 900 } }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.intro-veil').count(), 1, 'keep the opening animation markup');
+        assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: the headline is the first thing seen (2026-10-18, copy first)');
         assert.equal(await page.locator('.cover-title').count(), 1);
         assert.equal(await page.locator('.cover-choice-card').count(), 3);
         assert.equal(await page.locator('[data-home-tab]').count(), 0, 'tabs were removed from the homepage');
       });
     });
+
+    for (const [i, device] of ['desktop','mobile'].entries()) {
+      const scene = 'gold-laurel';
+      await t.test('fixed background and the headline visible at once, no opening veil: ' + device, async () => {
+        await checkPage(browser, 'static-' + device, {
+          reducedMotion: 'no-preference',
+          viewport: i ? { width: 390, height: 844 } : { width: 1440, height: 900 },
+        }, async page => {
+          await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
+          await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
+          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/gold-laurel-wide.webp"]').count(), 1);
+          // 2026-10-18（コピーライティング第一）：オープニングの演出は外した。見出しは読み込みと同時に見える
+          assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: words first');
+          assert.equal(await page.locator('link[rel="preload"][href*="intro-sheep-moon"]').count(), 0, 'no intro art preload');
+          const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
+            opacity: getComputedStyle(el).opacity,
+            animation: getComputedStyle(el).animationName,
+            intro: document.documentElement.classList.contains('intro') || document.documentElement.classList.contains('intro-preparing'),
+          }));
+          assert.equal(visibleNow.opacity, '1', 'the headline must be visible immediately');
+          assert.equal(visibleNow.animation, 'none', 'no delayed arrival animation');
+          assert.equal(visibleNow.intro, false);
+          const h1 = await page.locator('.cover-title').evaluate(el => { const r = el.getBoundingClientRect(); return { top: r.top, text: el.textContent.trim() }; });
+          assert.ok(h1.top >= 0 && h1.top < (i ? 844 : 900), 'the headline is inside the first screen, got top=' + h1.top);
+          assert.ok(h1.text.startsWith('読むだけでは'), 'headline text: ' + h1.text);
+          const before = await page.locator('.cover-art').evaluate(el => {
+            const s = getComputedStyle(el);
+            return { background: s.backgroundImage, transform: s.transform, animation: s.animationName };
+          });
+          assert(before.background.includes(scene + '-wide.webp'));
+          assert.equal(before.transform, 'none');
+          assert.equal(before.animation, 'none');
+          assert.equal(await page.evaluate(async name => {
+            const img = new Image(); img.src = 'images/mouton/' + name + '-wide.webp';
+            await img.decode(); return img.naturalWidth;
+          }, scene), 1536);
+          await page.mouse.move(200, 300);
+          await page.evaluate(() => scrollTo(0, 150));
+          await page.waitForTimeout(1100); // Late font loading must not move or hide the words.
+          assert.equal(await page.locator('.cover-inner').evaluate(el => getComputedStyle(el).opacity), '1');
+          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).backgroundImage), before.background);
+          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).transform), 'none');
+          assert.equal(await page.locator('.hero-light,.cover-light,.hero-word').count(), 0);
+        });
+      });
+    }
 
     await t.test('mobile: menu opens and closes with Escape', async () => {
       await checkPage(browser, 'mobile-menu', {
@@ -92,16 +139,19 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
-    await t.test('mobile journal: title stays readable at 320px and 390px in both editions', async () => {
+    await t.test('mobile journal: title stays readable at 320px and 390px including retired edition links', async () => {
       for (const [label, width, version] of [
         ['journal-320-original', 320, 'original'],
         ['journal-390-original', 390, 'original'],
-        ['journal-390-club', 390, 'club'],
+        ['journal-390-retired-link', 390, 'club'],
       ]) {
         await checkPage(browser, label, {
           viewport: { width, height: 844 }, isMobile: true, hasTouch: true,
         }, async page => {
           await page.goto(origin + '/journal.html?version=' + version, { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('[data-version-picker], [data-cover-toggle], .club-signature').count(), 0);
+          assert.equal(await page.locator('html').getAttribute('data-version'), null);
+          assert.equal(new URL(page.url()).searchParams.has('version'), false);
           const entry = page.locator('#journal .journal-item:not(.is-hidden):not(.is-collapsed)').first();
           assert.equal(await entry.count(), 1, label + ': journal entry missing');
           const rects = await entry.evaluate(el => {
@@ -148,12 +198,16 @@ test('MOUTON browser smoke', async t => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
           const panels = page.locator('main.making details.mk-accordion');
           assert.equal(await panels.count(), 4, 'every major section has a disclosure control');
-          assert.equal(await panels.nth(1).evaluate(el => el.open), true, 'photo gallery is initially visible');
-          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'production log initially collapsed');
+          assert.equal(await panels.nth(0).evaluate(el => el.closest('section').getAttribute('aria-labelledby')), 'mk-projects', 'apps (KIOKU, diary) come first');
+          assert.equal(await panels.nth(0).evaluate(el => el.open), true, 'apps are initially visible');
+          assert.equal(await panels.nth(3).evaluate(el => el.closest('section').id), 'visual-studies', 'visual studies sit last');
+          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'visual studies initially collapsed');
+          assert.equal(await panels.nth(1).evaluate(el => el.open), false, 'production log initially collapsed');
+          await panels.nth(1).locator('summary').click();
+          assert.equal(await panels.nth(1).evaluate(el => el.open), true, 'tap expands the production log');
+          await panels.nth(1).locator('summary').click();
+          assert.equal(await panels.nth(1).evaluate(el => el.open), false, 'tap collapses the production log');
           await panels.nth(3).locator('summary').click();
-          assert.equal(await panels.nth(3).evaluate(el => el.open), true, 'tap expands the production log');
-          await panels.nth(3).locator('summary').click();
-          assert.equal(await panels.nth(3).evaluate(el => el.open), false, 'tap collapses the production log');
           const image = page.locator('.mk-study--two img');
           assert.equal(await image.getAttribute('width'), '508', 'keep the original image dimensions');
           const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
@@ -165,7 +219,7 @@ test('MOUTON browser smoke', async t => {
       }
     });
 
-    await t.test('start page: brand introduction reaches making on desktop and mobile', async () => {
+    await t.test('start page: brand introduction reaches the archive (and making through it) on desktop and mobile', async () => {
       for (const [label, options] of [
         ['start-desktop', { viewport: { width: 1440, height: 900 } }],
         ['start-mobile', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }],
@@ -175,14 +229,20 @@ test('MOUTON browser smoke', async t => {
           const main = page.locator('main.start-page');
           assert.equal(await main.getByText('作る。記録する。残していく。', { exact: true }).count(), 1);
           assert.equal(await main.locator('a[href="editorial.html"]').count(), 1, 'editorial policy link remains');
-          const making = main.getByRole('link', { name: '作っているものを見る' });
-          assert.equal(await making.getAttribute('href'), 'making.html');
+          // 2026-10-17：制作・清潔感の科学・以前の記事はアーカイブへ。はじめての方へからは、アーカイブを通って行ける。
+          const archive = main.getByRole('link', { name: 'アーカイブ', exact: true });
+          assert.equal(await archive.getAttribute('href'), 'archive.html');
           const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
           assert.ok(sizes.page <= sizes.viewport + 2, label + ': horizontal overflow');
+          await archive.click();
+          await page.waitForURL('**/archive.html');
+          assert.ok(await page.locator('#archive .journal-item').count() > 50, label + ': archived articles listed');
+          const making = page.locator('.archive-pages a[href="making.html"]');
+          assert.equal(await making.count(), 1, label + ': making reachable from the archive');
           await making.click();
           await page.waitForURL('**/making.html');
-          for (const project of ['KIOKU', 'DIARY', 'MOUTON']) {
-            assert.equal(await page.locator('.mk-card h3').filter({ hasText: project }).count(), 1,
+          for (const project of ['KIOKU', 'DIARY', 'MOUTON・COUNT', 'MOUTON']) {
+            assert.equal(await page.locator('.mk-card h3').filter({ hasText: new RegExp('^' + project + '$') }).count(), 1,
               label + ': missing ' + project + ' project');
           }
         });
@@ -196,9 +256,9 @@ test('MOUTON browser smoke', async t => {
       ]) {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/making.html', { waitUntil: 'domcontentloaded' });
-          await page.locator('[aria-labelledby="mk-projects"] .mk-accordion-summary').click();
-          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 3);
-          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['site', 'MOUTON']]) {
+          assert.equal(await page.locator('[aria-labelledby="mk-projects"] details').evaluate(el => el.open), true, 'projects open by default');
+          assert.equal(await page.locator('.mk-grid > .mk-card').count(), 4);
+          for (const [slug, name] of [['kioku', 'KIOKU'], ['diary', 'DIARY'], ['count', 'MOUTON・COUNT'], ['site', 'MOUTON']]) {
             const card = page.locator('.mk-grid > .mk-card#' + slug);
             assert.equal(await card.locator('h3').textContent(), name);
             assert.deepEqual(await card.locator('dl.mk-summary dt').allTextContents(), ['目的', '現在地', '次の一歩']);
@@ -271,6 +331,29 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    await t.test('legacy migration preserves campaign queries, reading data and history state', async () => {
+      await checkPage(browser, 'legacy-migration', { viewport: { width: 390, height: 844 } }, async page => {
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        await page.evaluate(() => {
+          localStorage.setItem('mouton.cover', 'day');
+          localStorage.setItem('mouton.designVersion', 'club');
+          localStorage.setItem('mouton.read', '{"nietzsche":true}');
+        });
+        await page.addInitScript(() => {
+          if (location.pathname.endsWith('/index.html')) history.replaceState({ preserved: true }, '', location.href);
+        });
+        for (const [hash, path] of [['journal', 'journal.html'], ['article-nietzsche', 'nietzsche.html'], ['now', 'index.html']]) {
+          await page.goto(origin + '/index.html?version=club&utm_source=smoke#' + hash, { waitUntil: 'domcontentloaded' });
+          await page.waitForURL(url => url.pathname.endsWith('/' + path) && !url.searchParams.has('version') && (hash !== 'now' || url.hash === '#top'));
+          assert.equal(new URL(page.url()).searchParams.get('utm_source'), 'smoke');
+          assert.deepEqual(await page.evaluate(() => history.state), { preserved: true });
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.cover')), null);
+          assert.equal(await page.evaluate(() => localStorage.getItem('mouton.designVersion')), null);
+          assert.ok(await page.evaluate(() => JSON.parse(localStorage.getItem('mouton.read')).nietzsche));
+        }
+      });
+    });
+
     await t.test('mobile menu: concealed panel anchors and focus recovery', async () => {
       await checkPage(browser, 'menu-anchors', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
@@ -285,8 +368,8 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('main').evaluate(el => el.inert), false);
         assert.equal(await menu.evaluate(el => el === document.activeElement), true, 'focus should return to menu button');
         await menu.click();
-        await page.locator('.site-links a[href="making.html"]').first().click();
-        await page.waitForURL('**/making.html');
+        await page.locator('.site-links a[href="journal.html"]').first().click();
+        await page.waitForURL('**/journal.html');
         await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
       });
@@ -300,6 +383,30 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('a[href="topic-philosophy.html"]').count() > 0, true);
         await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
         assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal must be readable without scripts');
+      });
+    });
+
+    await t.test('first view: who / what / for-you rows and the worry button fit the first screen on a phone', async () => {
+      await checkPage(browser, 'first-view-mobile', {
+        viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
+      }, async page => {
+        await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('.cover-who .cover-who-row').count(), 3, 'three rows under the headline');
+        const bottom = await page.locator('a[data-home-entry="worry"]').evaluate(el => el.getBoundingClientRect().bottom);
+        assert.ok(bottom <= 844, 'the worry button must be inside the first screen, got bottom=' + bottom);
+      });
+    });
+
+    await t.test('archive: an archived article carries the note, a current one has no quiz', async () => {
+      await checkPage(browser, 'archive-note', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
+        await page.goto(origin + '/coffee.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('article .archive-note').count(), 1, 'archived article shows the archive note');
+        assert.equal(await page.locator('.archive-note a[href="journal.html"]').count(), 1);
+        await page.goto(origin + '/kierkegaard.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
+        assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work').count(), 0, 'current article has no quiz or work');
+        await page.goto(origin + '/archive.html', { waitUntil: 'domcontentloaded' });
+        assert.ok((await page.locator('#archive .journal-item').count()) > 50, 'archive lists the archived articles');
       });
     });
 

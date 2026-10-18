@@ -1,0 +1,23 @@
+/* One fixed still artwork: gold botanical leaves and a crescent moon. */
+html .cover.cover-static .cover-art{
+ background-color:#071324;
+ background-image:linear-gradient(180deg,rgba(4,10,25,.20),rgba(4,10,25,.06) 55%,rgba(4,10,25,.28)),url("images/mouton/gold-laurel-wide.webp");
+ background-size:cover;
+ background-position:center;
+ background-repeat:no-repeat;
+ animation:none;
+ transition:none;
+ transform:none;
+ translate:none;
+ scale:none;
+ opacity:1;
+ will-change:auto;
+}
+.cover-static .cover-choice-card,
+.cover-static .cover-choice-card:hover,
+.cover-static .cover-choice-card:focus-visible,
+.cover-static .cover-choice-art,
+.cover-static .cover-choice-card:hover .cover-choice-art,
+.cover-static .cover-choice-card:focus-visible .cover-choice-art{
+ animation:none;transition:none;transform:none;
+}

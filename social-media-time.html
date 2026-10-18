@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ja" data-root="" data-version="original">
+<html lang="ja" data-root="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -69,31 +69,13 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <body class="article-page">
 <div class="site-nav" role="banner" data-theme="dark">
   <a class="site-brand" href="index.html#top">ムートン</a>
-  <label class="version-picker">
-  <span class="version-picker-label" aria-hidden="true">VERSION</span>
-  <select data-version-picker aria-label="デザインのバージョン">
-    <option value="original">01 ORIGINAL</option>
-    <option value="club">02 CLUB</option>
-  </select>
-</label>
-
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
-      <li><a href="journal.html">読む<span class="site-links-en">Read</span></a></li>
-      <li><a href="quiz.html">○×クイズ<span class="site-links-en">Quiz</span></a></li>
-      <li><a href="guides.html">選び方<span class="site-links-en">Guides</span></a></li>
-      <li><a href="making.html">制作<span class="site-links-en">Projects</span></a></li>
       <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="topic-philosophy.html">哲学の3本<span class="site-links-en">Philosophy</span></a></li>
+      <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
       <li><a href="en/social-media-time.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
-      <li class="menu-version"><label class="version-picker">
-  <span class="version-picker-label" aria-hidden="true">VERSION</span>
-  <select data-version-picker aria-label="デザインのバージョン">
-    <option value="original">01 ORIGINAL</option>
-    <option value="club">02 CLUB</option>
-  </select>
-</label>
-</li>
     </ul>
   </nav>
 </div>
@@ -108,7 +90,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <div class="hero-line"></div>
 
-<article>
+<article><aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p><p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。</p></aside>
 <p class="lead"><strong>電車を待つ数分、寝る前の数分。気づくと、指がSNSを開いている。</strong></p><details class="quiz" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">SNSを各10分までに制限した大学生は、3週間後に孤独感と抑うつが下がっていた。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。下がっていた。</p><p class="quiz-why">143人の実験。ただし大学生だけが対象で期間も3週間と短く、誰にでも同じ変化が起きるとは言い切れない。</p></div></details>
 
 <p>見終わったあとに残るのは、少しの疲れと、少しの焦りだ。<a href="comparison.html">「人と比べるのを、やめることはできるのか」</a>では、SNSは「上ばかりが見える場所」だと書いた。</p>
@@ -165,9 +147,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 <div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span></div>
 
 
-<p class="read-mark" data-total="100" aria-live="polite"></p>
+<p class="read-mark" data-total="11" aria-live="polite"></p>
 <section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
-<div class="qloop" data-qloop data-exclude="social-media-time" data-prefer="comparison,doing-nothing,olive-oil-guide,dark-chocolate-guide,coffee-guide,protein-guide,oral-care-guide,deodorant-guide,books-habits,books-career,books-philosophy,mini-trampoline-guide,earplug-eyemask-guide,sunscreen-guide,books-money,xmax-vs-rebel250-qa"></div></section>
+<div class="qloop" data-qloop data-exclude="social-media-time" data-prefer="comparison,doing-nothing,kierkegaard,nietzsche,spinoza"></div></section>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -175,16 +157,16 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
   <div>
     <p class="author-label">この記事を書いた人</p>
     <p class="author-name" id="author-box-name">ムートン</p>
-    <p class="author-bio">興味を持ったことを試し、作り、その過程を残しています。哲学や生き方のこと、身体と食事のことを、論文やデータにあたりながら書いています。</p>
+    <p class="author-bio">迷いながら、哲学を自分の毎日で試し、記録している一人です。先生ではありません。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章を書いています。答えは書かず、原典にあたり、言えないことは言い切らない。それを守っています。</p>
     <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/kodoku__alone" target="_blank" rel="noopener noreferrer">X / @kodoku__alone <span aria-hidden="true">↗</span></a></p>
     <p class="author-dates">公開 2026.10.06</p>
   </div>
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="comparison.html" data-slug="comparison"><span class="reading-card-title">人と比べるのを、やめることはできるのか</span><span class="reading-card-q"><b>Q.</b> 人がつい他人と比べてしまうのは、はっきりした基準がないときだ、という理論がある。<em>○か×か？</em></span></a><a class="reading-card has-q" href="doing-nothing.html" data-slug="doing-nothing"><span class="reading-card-title">何もしない時間は、本当に無駄なのか</span><span class="reading-card-q"><b>Q.</b> 物語を覚えた直後に10分休んだ高齢者は、7日後の記憶成績も高かった。<em>○か×か？</em></span></a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card has-q" href="absorption-freedom-action.html" data-slug="absorption-freedom-action"><span class="reading-card-title">「このままで終わりたくない」と思ったら</span><span class="reading-card-q"><b>Q.</b> 目立つTシャツを着て部屋に入った学生は、気づいた人の数を、実際より少なく見積もった。<em>○か×か？</em></span></a><a class="reading-card" href="action-bias.html" data-slug="action-bias"><span class="reading-card-title">完璧な計画を待たないほうがいい理由</span></a></div>
 <div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
-<p class="reading-returns"><a class="reading-return" href="journal.html">記事一覧へ戻る</a><a class="reading-return" href="topic-philosophy.html">「哲学・生き方」の記事をすべて見る</a></p></nav>
+<p class="reading-returns"><a class="reading-return" href="journal.html">記事一覧へ戻る</a><a class="reading-return" href="archive.html">アーカイブの一覧へ</a></p></nav>
 
 </article>
 </main>
@@ -193,28 +175,20 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
   
 <nav class="footer-map" aria-label="サイトの案内">
   <div class="footer-map-col">
-    <p class="footer-map-h">テーマ</p>
-    <ul><li><a href="topic-philosophy.html">哲学・生き方</a></li><li><a href="topic-body.html">身体</a></li><li><a href="topic-work.html">仕事・働き方</a></li><li><a href="topic-food.html">食事・化学</a></li>
-      <li><a href="journal.html">すべての記事</a></li>
-    </ul>
-  </div>
-  <div class="footer-map-col">
-    <p class="footer-map-h">連載</p>
-    <ul><li><a href="series.html#job">転職を考える</a></li><li><a href="series.html#clean">清潔感を、確かめる</a></li><li><a href="series.html#thinkers">哲学者に聞く</a></li><li><a href="series.html#sleep">眠りを確かめる</a></li><li><a href="series.html#food-check">その健康法、本当？</a></li><li><a href="series.html#habits">自分を変える仕組み</a></li>
-    </ul>
-  </div>
-  <div class="footer-map-col">
-    <p class="footer-map-h">選び方</p>
-    <ul><li><a href="olive-oil-guide.html">オリーブオイルの選び方</a></li><li><a href="dark-chocolate-guide.html">ダークチョコの選び方</a></li><li><a href="coffee-guide.html">コーヒーの選び方と淹れ方</a></li><li><a href="protein-guide.html">プロテインの選び方</a></li><li><a href="oral-care-guide.html">口臭ケアの道具の選び方</a></li><li><a href="deodorant-guide.html">制汗剤とデオドラントの選び方</a></li>
-      <li><a href="guides.html">すべての選び方</a></li>
+    <p class="footer-map-h">読む</p>
+    <ul>
+      <li><a href="topic-philosophy.html">哲学の3本</a></li><li><a href="series.html#thinkers">連載「哲学者に聞く」</a></li>
+      <li><a href="journal.html">記事</a></li>
+      <li><a href="archive.html">アーカイブ</a></li>
     </ul>
   </div>
   <div class="footer-map-col">
     <p class="footer-map-h">このサイト</p>
-    <ul><li><a href="start.html">はじめての方へ</a></li>
-      <li><a href="quiz.html">○×クイズ</a></li><li><a href="now.html">いま取り組んでいること</a></li>
+    <ul>
+      <li><a href="start.html">ムートンについて</a></li>
       <li><a href="editorial.html">編集方針</a></li>
-      <li><a href="operator.html">運営者情報</a></li><li><a href="favorites.html">運営者のお気に入り</a></li><li><a href="feed.xml">RSS</a></li>
+      <li><a href="operator.html">運営者情報</a></li>
+      <li><a href="feed.xml">RSS</a></li>
     </ul>
   </div>
 </nav>
@@ -228,7 +202,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </nav>
 <p class="footer-note">当サイトは広告（アフィリエイトプログラム）を利用しています。Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
 
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>
 
 </body>

@@ -4,7 +4,7 @@
 {%- set items = (collections.articlesEn if en else collections.articles) | bySlugs(mySeries.slugs) %}
 {%- set ns = items | seriesNav(page.fileSlug) %}
 <nav class="series-box" id="series" aria-labelledby="series-box-title">
-  <p class="series-label">{{ 'Series' if en else '連載' }} <span>{{ ns.cur }} / {{ mySeries.slugs.length }}</span></p>
+  <p class="series-label">{{ 'Series' if en else '連載' }} <span>{{ ns.cur }} / {{ items.length }}</span></p>
   <p class="series-title" id="series-box-title"><a href="series.html#{{ mySeries.key }}">{{ mySeries.en if en else mySeries.title }}</a></p>
   <p class="series-intro">{{ mySeries.enIntro if en else mySeries.intro }}</p>
   <ol class="series-list">

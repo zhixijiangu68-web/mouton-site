@@ -1,82 +1,25 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+assetVersion: "20261017-moon"
 permalink: making.html
 title: "制作 — ムートン"
-description: "ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
+description: "ムートンが作っているもの。観たアニメを記録するアプリ KIOKU、AI と一日を振り返る日記アプリ、羊を数える落ちものパズル MOUTON・COUNT、このサイト。それぞれの今の状態と、これまでの制作の記録を日付順に残していくページ。"
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
 <main class="doc topic making" data-nav="light" data-nav-solid="light">
+{% include "partials/archive-hub.njk" %}
   <header class="mk-head">
     <p class="mk-eyebrow">PROJECTS / MAKING</p>
     <h1 class="doc-title">作っているもの。</h1>
     <p>点のような小さな試みも、つなげればいつか形になる。完成したものだけでなく、途中の状態と、進んだ日の記録を残していく。</p>
   </header>
 
-  {#- サイトの最近の大きな変化を、制作一覧でも短く見せる。 #}
-  <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
-    <details class="mk-accordion">
-      <summary class="mk-accordion-summary">
-        <h2 id="mk-feature-heading"><span class="mk-accordion-kicker">LATEST EVOLUTION / 2026.10.13<wbr></span><span class="mk-accordion-label">{{ siteEvolution.title }}</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
-      </summary>
-      <div class="mk-accordion-panel">
-    <div class="mk-feature-header">
-      <div>
-        
-        
-        <p>静かな最初の画面から、映画的なオープニング、短いトップ、3つのテーマを選べる画面へ。MOUTON自身の変化を記録しました。</p>
-        <a class="mk-more" href="making-site.html#site-evolution">変化を時系列で見る <span aria-hidden="true">→</span></a>
-      </div>
-      <a class="mk-feature-preview" href="making-site.html#site-compare" aria-label="初期と最新のトップ画面を見比べる">
-        <picture>
-          <source media="(max-width:540px)" srcset="images/making/site-ui-20261013-phone.jpg">
-          <img src="images/making/site-ui-20261013-desktop.jpg" alt="10月13日のMOUTONトップ。哲学、身体、食と科学の3テーマカードが並ぶ" width="1280" height="800" loading="lazy">
-        </picture>
-        <span aria-hidden="true">BEFORE / AFTER <span>↗</span></span>
-      </a>
-    </div>
-  
-      </div>
-    </details>
-  </section>
-
-  {#- Four individually optimized high-resolution images; lazy-loaded with native-image links. #}
-  <section class="mk-section mk-studies" id="visual-studies" aria-labelledby="mk-studies-title">
+  <section class="mk-section" aria-labelledby="mk-projects">
     <details class="mk-accordion" open>
       <summary class="mk-accordion-summary">
-        <h2 id="mk-studies-title"><span class="mk-accordion-kicker">01 / VISUAL STUDIES<wbr></span><span class="mk-accordion-label">光と表情の、<wbr>断片。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
-      </summary>
-      <div class="mk-accordion-panel">
-    <p class="mk-studies-intro">言葉にならない空気を、写真に残す。夜の熱、街の光、旅先の一瞬、静かなまなざし。ムートンのビジュアル制作ノート。</p>
-    <div class="mk-studies-grid">
-      <figure class="mk-study mk-study--one">
-        <a class="mk-study-photo" href="images/making/visual-study-after-hours.webp" aria-label="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている。高画質の写真を開く"><img src="images/making/visual-study-after-hours.webp" alt="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている" width="1254" height="1254" loading="lazy" decoding="async"></a>
-        <figcaption><span>01 / AFTER HOURS</span><strong>夜の熱。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--two">
-        <a class="mk-study-photo" href="images/making/visual-study-night-walk.webp" aria-label="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-night-walk.webp" alt="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている" width="508" height="805" loading="lazy" decoding="async"></a>
-        <figcaption><span>02 / NIGHT WALK</span><strong>街の光。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--three">
-        <a class="mk-study-photo" href="images/making/visual-study-small-joy.webp" aria-label="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-small-joy.webp" alt="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている" width="864" height="1536" loading="lazy" decoding="async"></a>
-        <figcaption><span>03 / SMALL JOY</span><strong>旅先の一瞬。</strong></figcaption>
-      </figure>
-      <figure class="mk-study mk-study--four">
-        <a class="mk-study-photo" href="images/making/visual-study-window-light.webp" aria-label="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている。高画質の写真を開く"><img src="images/making/visual-study-window-light.webp" alt="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている" width="1122" height="1402" loading="lazy" decoding="async"></a>
-        <figcaption><span>04 / WINDOW LIGHT</span><strong>静かなまなざし。</strong></figcaption>
-      </figure>
-    </div>
-    <p class="mk-studies-note">MOUTON / VISUAL ARCHIVE — 2026.10.14</p>
-  
-      </div>
-    </details>
-  </section>
-
-  <section class="mk-section" aria-labelledby="mk-projects">
-    <details class="mk-accordion">
-      <summary class="mk-accordion-summary">
-        <h2 id="mk-projects"><span class="mk-accordion-kicker">02 / いま作っているもの<wbr></span><span class="mk-accordion-label">それぞれの、今の状態。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+        <h2 id="mk-projects"><span class="mk-accordion-kicker">01 / いま作っているもの<wbr></span><span class="mk-accordion-label">それぞれの、今の状態。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
       </summary>
       <div class="mk-accordion-panel">
     
@@ -105,7 +48,7 @@ description: "ムートンが作っているもの。観たアニメを記録す
   <section class="mk-section" aria-labelledby="mk-log">
     <details class="mk-accordion">
       <summary class="mk-accordion-summary">
-        <h2 id="mk-log"><span class="mk-accordion-kicker">03 / 制作の記録<wbr></span><span class="mk-accordion-label">進んだ日のこと。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+        <h2 id="mk-log"><span class="mk-accordion-kicker">02 / 制作の記録<wbr></span><span class="mk-accordion-label">進んだ日のこと。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
       </summary>
       <div class="mk-accordion-panel">
     
@@ -122,6 +65,66 @@ description: "ムートンが作っているもの。観たアニメを記録す
       </div>
     </details>
   </section>
+
+  {#- サイトの最近の大きな変化を、制作一覧でも短く見せる。 #}
+  <section class="mk-section mk-feature" aria-labelledby="mk-feature-heading">
+    <details class="mk-accordion">
+      <summary class="mk-accordion-summary">
+        <h2 id="mk-feature-heading"><span class="mk-accordion-kicker">LATEST EVOLUTION / 2026.10.13<wbr></span><span class="mk-accordion-label">{{ siteEvolution.title }}</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+      </summary>
+      <div class="mk-accordion-panel">
+    <div class="mk-feature-header">
+      <div>
+        
+        
+        <p>静かな最初の画面から、映画的なオープニング、短いトップ、3つのテーマを選べる画面へ。MOUTON自身の変化を記録しました。</p>
+        <a class="mk-more" href="making-site.html#site-evolution">変化を時系列で見る <span aria-hidden="true">→</span></a>
+      </div>
+      <a class="mk-feature-preview" href="making-site.html#site-compare" aria-label="初期と最新のトップ画面を見比べる">
+        <picture>
+          <source media="(max-width:540px)" srcset="images/making/site-ui-20261013-phone.jpg">
+          <img src="images/making/site-ui-20261013-desktop.jpg" alt="10月13日のMOUTONトップ。哲学、身体、食と科学の3テーマカードが並ぶ" width="1280" height="800" loading="lazy">
+        </picture>
+        <span aria-hidden="true">BEFORE / AFTER <span>↗</span></span>
+      </a>
+    </div>
+  
+      </div>
+    </details>
+  </section>
+
+  {#- 画像の習作は目立たせず、ページの最後に閉じた状態で置く。 #}
+  <section class="mk-section mk-studies mk-studies--quiet" id="visual-studies" aria-labelledby="mk-studies-title">
+    <details class="mk-accordion">
+      <summary class="mk-accordion-summary">
+        <h2 id="mk-studies-title"><span class="mk-accordion-kicker">APPENDIX / VISUAL STUDIES<wbr></span><span class="mk-accordion-label">光と表情の、<wbr>断片。</span><span class="mk-accordion-symbol" aria-hidden="true"></span></h2>
+      </summary>
+      <div class="mk-accordion-panel">
+    <p class="mk-studies-intro">言葉にならない空気を、写真に残す。夜の熱、街の光、旅先の一瞬、静かなまなざし。ムートンのビジュアル制作ノート。</p>
+    <div class="mk-studies-grid">
+      <figure class="mk-study mk-study--one">
+        <a class="mk-study-photo" href="images/making/visual-study-after-hours.webp" aria-label="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている。高画質の写真を開く"><img src="images/making/visual-study-after-hours.webp" alt="暗いクラブの会場で、黒い服を着た女性が笑顔でポーズをとっている" width="1254" height="1254" loading="lazy" decoding="async"></a>
+        <figcaption><span>01 / AFTER HOURS</span><strong>夜の熱。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--two">
+        <a class="mk-study-photo" href="images/making/visual-study-night-walk.webp" aria-label="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-night-walk.webp" alt="夜の街で、黒い衣装の女性がカメラに向かってウィンクしている" width="508" height="805" loading="lazy" decoding="async"></a>
+        <figcaption><span>02 / NIGHT WALK</span><strong>街の光。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--three">
+        <a class="mk-study-photo" href="images/making/visual-study-small-joy.webp" aria-label="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている。高画質の写真を開く"><img src="images/making/visual-study-small-joy.webp" alt="にぎわう門前の通りで、ソフトクリームを持った女性がウィンクしている" width="864" height="1536" loading="lazy" decoding="async"></a>
+        <figcaption><span>03 / SMALL JOY</span><strong>旅先の一瞬。</strong></figcaption>
+      </figure>
+      <figure class="mk-study mk-study--four">
+        <a class="mk-study-photo" href="images/making/visual-study-window-light.webp" aria-label="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている。高画質の写真を開く"><img src="images/making/visual-study-window-light.webp" alt="窓際の柔らかい光の中で、黒いレースの服を着た女性がこちらを見つめている" width="1122" height="1402" loading="lazy" decoding="async"></a>
+        <figcaption><span>04 / WINDOW LIGHT</span><strong>静かなまなざし。</strong></figcaption>
+      </figure>
+    </div>
+    <p class="mk-studies-note">MOUTON / VISUAL ARCHIVE — 2026.10.14</p>
+  
+      </div>
+    </details>
+  </section>
+
 </main>
 <script>
 (function () {
@@ -130,8 +133,10 @@ description: "ムートンが作っているもの。観たアニメを記録す
     var target;
     try { target = document.getElementById(decodeURIComponent(location.hash.slice(1))); }
     catch (_) { return; }
-    var panel = target && target.closest('details.mk-accordion');
-    if (panel) panel.open = true;
+    if (!target) return;
+    // The link may name the section itself (#visual-studies) or something inside a panel (#kioku).
+    var panel = target.closest('details.mk-accordion') || target.querySelector('details.mk-accordion');
+    if (panel && !panel.open) { panel.open = true; target.scrollIntoView(); }
   }
   window.addEventListener('hashchange', openMakingAnchor);
   openMakingAnchor();
@@ -141,5 +146,5 @@ description: "ムートンが作っているもの。観たアニメを記録す
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-map.njk" %}
   {% include "partials/footer-links.njk" %}
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>

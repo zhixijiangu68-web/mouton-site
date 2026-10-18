@@ -1,0 +1,98 @@
+{#- 哲学のテーマページ（topic-philosophy.html）。記事一覧の代わりに、3人の哲学者の有料記事へ案内する。
+    カードは front matter に `paid` がある記事から作られる（並び順は paid.order）。 -#}
+{%- set paidList = collections.articles | paidCards %}
+{%- set ph = site.product.philosophy %}
+  <p class="eyebrow">悩みから選ぶ、有料の3本（PDF・冒頭は無料）</p>
+  <h1 class="doc-title lp-hero-title">その悩み、どの哲学者に聞くか。</h1>
+  {#- 2026-10-17：オーナーの判断で、悩みの3択 → 商品カード → 詳しい考え方 の順に。ブランドの考え方の全体は「はじめての方へ」に1か所だけ置き、ここでは繰り返さない。 #}
+  <p class="lp-for">やる気の動画や本を見ても、行動が変わらなかった。そんなとき、いちばん近い悩みはどれだろう。</p>
+  {#- 悩みの一覧が、そのまま各哲学者への入口になる（文言は各記事の paid.worry）。 #}
+  <ul class="lp-worries">
+    {%- for a in paidList %}
+    <li><a href="#{{ a.page.fileSlug | replace('paid-', '') }}"><span class="lp-worry-text">{{ a.data.paid.worry }}</span><span class="lp-worry-to">{{ a.data.paid.philosopher }}へ <span aria-hidden="true">↓</span></span></a></li>
+    {%- endfor %}
+  </ul>
+
+  <section class="lp-section" aria-labelledby="lp-cards-heading">
+    <h2 id="lp-cards-heading">3人の哲学者</h2>
+    {#- 3本を一本の道として見せる（paid.role）。どこからでも読める。 #}
+    <p class="lp-path">{% for a in paidList %}<span class="lp-path-step">{{ a.data.paid.role }}<span class="lp-path-name">{{ a.data.paid.philosopher }}</span></span>{% if not loop.last %}<span class="lp-path-arrow" aria-hidden="true">→</span>{% endif %}{% endfor %}</p>
+    <p>選ぶ、自分の物差しで決める、続ける。3人は一本の道につながっているが、どこからでも読める。</p>
+    <div class="ph-cards">
+    {%- for a in paidList %}
+    {%- set p = a.data.paid %}
+    {%- set slug = p.free if p.free else a.page.fileSlug %}
+    {%- if loop.first %}{% else %}{% if loop.index == 2 %}<div class="ph-cards-pair">{% endif %}{% endif %}
+      {%- set key = a.page.fileSlug | replace('paid-', '') %}
+      <article class="ph-card{{ ' featured' if loop.first }}" id="{{ key }}" data-ph="{{ key }}" data-title="{{ p.title }}" data-name="{{ p.philosopher }}" data-rise>
+        <div class="ph-card-head">
+          {%- set localImg = ["images/portraits/" + key + ".jpg"] | firstImage %}
+          <figure class="ph-portrait">
+            <img src="{{ localImg if localImg else 'https://commons.wikimedia.org/wiki/Special:FilePath/' + p.portrait.commons + '?width=480' }}" alt="{{ p.philosopher }}の肖像" width="240" height="300" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+            <span class="ph-portrait-mark" aria-hidden="true">{{ p.philosopher | first }}</span>
+          </figure>
+          <div class="ph-card-id">
+          {% if loop.first %}<p class="ph-featured">まずはここから</p>{% endif %}
+          <p class="ph-path-step">STEP {{ loop.index }}・{{ p.role }}</p>
+          <p class="ph-name-en">{{ p.en }}</p>
+          <p class="ph-name">{{ p.philosopher }}</p>
+          <p class="ph-for">{{ p.years }}<br>こんな人に：{{ p.worry }}</p>
+          </div>
+        </div>
+        <div class="ph-card-body">
+          <h3 class="ph-card-title">{{ p.title }}</h3>
+          <p class="ph-card-sub">{{ p.subtitle }}</p>
+          <p>{{ p.excerpt }}</p>
+          <ul class="ph-learn">{% for l in p.learn %}<li>{{ l }}</li>{% endfor %}</ul>
+          <div class="ph-card-foot">
+            <a class="btn btn-dark" href="{{ a.page.fileSlug }}.html">冒頭を無料で読む <span aria-hidden="true">→</span></a>
+            <p class="ph-meta">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if (p.checkoutUrl and ph.fulfillmentReady and ph.legalUrl) else '・販売準備中' }}</p>
+          </div>
+          <p class="ph-credit">肖像：{{ p.portrait.credit }}。パブリックドメイン（Wikimedia Commons）</p>
+          {%- if p.free %}<p class="ph-free"><a href="{{ p.free }}.html">先に無料の入門記事を読む</a></p>{% endif %}
+        </div>
+      </article>
+    {%- if loop.last and loop.length > 1 %}</div>{% endif %}
+    {%- endfor %}
+    </div>
+  </section>
+
+  {#- 詳しい考え方は、商品のあとに。このページは選ぶことに集中させ、ふだんは畳んでおく（2026-10-17）。 #}
+  <section class="lp-section lp-why" aria-labelledby="lp-why-heading">
+    <details class="lp-why-more">
+    <summary><h2 id="lp-why-heading">なぜ、哲学なのか。</h2><span class="lp-why-open">読む</span></summary>
+    <p>やり方を教えてくれる本や動画は、たくさんある。けれど状況が変わると、やり方はすぐに使えなくなる。転職か、残るか。人にどう思われても、やるか。岐路で必要なのは、新しいやり方より<strong>「自分は何を基準に選ぶのか」</strong>だと僕は思う。</p>
+    <ol class="lp-why-list">
+      <li><strong>やり方ではなく、基準をつくる。</strong>やり方は場面ごとに変わる。基準は、どの岐路でも使える。</li>
+      <li><strong>同じ悩みを、何百年も考え抜いた人たちがいる。</strong>流行りの方法が入れ替わっても残ってきた考えには、それだけの理由がある。</li>
+      <li><strong>答えではなく、考える材料を置いた。</strong>学術的な解説や精神論ではなく、よくある悩みの場面に、哲学者の考えを当てて読める形に。</li>
+    </ol>
+    {#- よくある自己啓発の逆側を引き受ける。ほかを否定する言い方はしない（BRAND.md「目立ち方」）。 #}
+    <h3 class="lp-contrast-h">ここには、ないもの。代わりに、あるもの。</h3>
+    <dl class="lp-contrast">
+      {%- for c in [
+        ["気持ちを上げる言葉", "考えが動きだす、哲学者の言葉"],
+        ["「これで人生が変わる」という約束", "答えの代わりに、持ち帰る問い"],
+        ["成功した人の型", "自分の基準をつくる問い"],
+        ["次々に流れてくる、たくさんの方法", "一つの悩みに、一人の哲学者"],
+        ["「今だけ」「残りわずか」", "買う前に読める、冒頭の無料公開"]
+      ] %}
+      <div class="lp-contrast-row"><dt>{{ c[0] }}</dt><dd>{{ c[1] }}</dd></div>
+      {%- endfor %}
+    </dl>
+    <p class="lp-contrast-note">ほかのやり方を否定するためではない。ムートンの考え方の全体は、<a href="start.html">「ムートンについて」</a>に。</p>
+    </details>
+  </section>
+
+  <section class="lp-section lp-free" aria-labelledby="lp-free-heading">
+    <h2 id="lp-free-heading">まずは無料で</h2>
+    <p>買う前に、文章が自分に合うかを確かめたい人へ。3人それぞれに無料の入門記事があり、連載「哲学者に聞く」として読む順に並べている。</p>
+    <p class="lp-free-links"><a class="btn btn-dark" href="journal.html">無料の記事を読む <span aria-hidden="true">→</span></a> <a class="lp-series" href="series.html">連載「哲学者に聞く」</a></p>
+  </section>
+  <script>
+  // 顔写真が読み込めないときは、名前の頭文字に切り替える
+  document.querySelectorAll('.ph-portrait img').forEach(img=>{
+   const fail=()=>img.closest('.ph-portrait').classList.add('is-missing');
+   if(img.complete&&img.naturalWidth===0)fail();else img.addEventListener('error',fail,{once:true});
+  });
+  </script>

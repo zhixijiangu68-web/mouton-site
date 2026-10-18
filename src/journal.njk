@@ -1,11 +1,14 @@
 ---
 layout: base.njk
 permalink: journal.html
-title: "すべての記事 — ムートン"
-description: "ムートンの記事の一覧。哲学・生き方、身体、仕事、制作の記事を、カテゴリーで絞りこんだり、本文まで検索したりできます。"
+title: "記事 — ムートン"
+description: "答えを渡す記事ではなく、考えが動きだす記事だけを残した。キルケゴール、ニーチェ、スピノザ、ストア派、カミュ、サルトルの連載と、没頭・行動優先の記事、有料の3本。以前の記事はアーカイブに。"
 bodyClass: site journal-page
-extraCss: [home.css]
+extraCss: ["home.css?v=20261017-archive"]
+assetVersion: "20261017-archive"
 ---
+{#- 2026-10-17（オーナー）：必要な記事だけを残し、あとはアーカイブ（archive.html）へ。残す記事は src/_data/currentArticles.js。
+    10本なので、分類・検索・おまかせは外し、3つの組に分けて並べる。 #}
 <a class="skip" href="#journal">記事一覧へスキップ</a>
 {% include "partials/nav.njk" %}
 <main>
@@ -13,160 +16,50 @@ extraCss: [home.css]
     <div class="section-inner">
       <div class="section-head" data-rise>
         <div>
-          <p class="eyebrow">Journal</p>
-          <h1 class="section-title" id="journal-heading">記事<em>— notes in progress</em></h1>
+          <p class="eyebrow">読んで、試すための記事</p>
+          <h1 class="section-title" id="journal-heading">記事</h1>
         </div>
-        <p class="copy">哲学と科学で確かめたこと。分類で絞るか、言葉で探す。</p>
+        <p class="copy">答えを渡す記事ではなく、考えが動きだす記事だけを、ここに残した。何を試すかは、読んだあなたが決める。</p>
       </div>
-      <div class="journal-tools">
-        <div class="journal-filters" role="group" aria-label="記事のカテゴリー">
-          <button class="journal-filter active" type="button" data-journal-filter="all">すべて</button>
-          <button class="journal-filter" type="button" data-journal-filter="body">身体</button>
-          <button class="journal-filter" type="button" data-journal-filter="philosophy">哲学・生き方</button>
-          <button class="journal-filter" type="button" data-journal-filter="work">仕事・働き方</button>
-          <button class="journal-filter" type="button" data-journal-filter="making">制作</button>
-        </div>
-        <div class="journal-search">
-          <label for="journal-search-input">記事を検索</label>
-          <input id="journal-search-input" type="search" placeholder="記事を検索（例：血糖、自由、匂い）" autocomplete="off" enterkeyhint="search">
-        </div>
+      {#- 3つの組に分けて並べる：悩みから選ぶ有料の3本 → 連載「哲学者に聞く」（読む順）→ 3つの姿勢（残り）。 #}
+      {%- set paidList = collections.current | paidCards %}
+      {%- set ph = site.product.philosophy %}
+      {%- set thinkerSlugs = series[0].slugs %}
+      <h2 class="journal-h" id="journal-paid">悩みから選ぶ <span>有料・冒頭は無料</span></h2>
+      <div class="journal-list" id="journal-list">
+        {%- for a in paidList %}{% set p = a.data.paid %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">{{ p.role }}</div><div class="journal-dot"></div>
+          <div class="journal-body"><span class="journal-tag journal-tag--paid">{{ p.philosopher }}</span><div class="journal-title">{{ p.title }}</div><div class="journal-excerpt">{{ p.worry }}</div><span class="journal-read-time">PDF・全文 約{{ p.minutes }}分・{{ p.price.toLocaleString("ja-JP") }}円（税込）{{ '' if (p.checkoutUrl and ph.fulfillmentReady and ph.legalUrl) else '・販売準備中' }}</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        {%- endfor %}
       </div>
-      <p class="journal-search-status" role="status" aria-live="polite"></p>
-      <p class="read-progress" data-total="{{ collections.articles.length }}" hidden><span class="read-progress-bar" aria-hidden="true"><i></i></span><span class="read-progress-text"></span></p>
-      <div class="lucky" data-lucky><button class="lucky-btn" type="button">どれを読むか迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+      <h2 class="journal-h" id="journal-series">連載「哲学者に聞く」 <span>無料・読む順</span></h2>
       <div class="journal-list">
-        {%- for a in collections.articles %}{% if a.data.journal %}
-        <a class="journal-item clickable journal-link" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ a.data.journal.category }}" data-date="{{ a.page.date | dotDate }}">
+        {%- for a in collections.current | bySlugs(thinkerSlugs) %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
+          <div class="journal-date">第{{ loop.index }}回</div><div class="journal-dot"></div>
+          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-arrow">→</div>
+        </a>
+        {%- endfor %}
+      </div>
+      <h2 class="journal-h" id="journal-rest">3つの姿勢 <span>無料・没頭、自由、行動</span></h2>
+      <div class="journal-list">
+        {%- for a in collections.current %}{% if not a.data.paid and not (a.page.fileSlug in thinkerSlugs) %}
+        <a class="journal-item clickable journal-link is-philosophy" data-rise href="{{ a.page.fileSlug }}.html" data-category="philosophy" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
+          <div class="journal-body"><div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">約{{ a.data.readMinutes }}分</span></div>
           <div class="journal-arrow">→</div>
         </a>
         {%- endif %}{% endfor %}
-        {%- for n in notes %}
-        <div class="journal-item is-note" data-rise data-category="{{ n.category }}">
-          <div class="journal-date">{{ n.date | dotDate }}</div><div class="journal-dot"></div>
-          <div class="journal-body"><div class="journal-title">{{ n.title }}</div><div class="journal-excerpt">{{ n.excerpt }}</div></div>
-          <div class="journal-arrow">—</div>
-        </div>
-        {%- endfor %}
       </div>
+      <p class="journal-archive-link"><a href="archive.html">以前の記事（アーカイブ・{{ collections.archived.length }}本） <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 </main>
 <footer class="site-footer" data-nav="dark" data-nav-solid="dark">
   {% include "partials/footer-map.njk" %}
-  <div class="footer-row"><span>© 2026 MOUTON — SOMEWHERE IN JAPAN</span>{% include "partials/footer-links.njk" %}</div>
+  <div class="footer-row"><span>© 2026 MOUTON — PHILOSOPHY OF LIFE</span>{% include "partials/footer-links.njk" %}</div>
 </footer>
-<script>
-'use strict';
-// Journal: newest first, category filters, search.
-const journalList=document.querySelector('.journal-list');
-[...journalList.children].sort((a,b)=>{
- const date=node=>node.querySelector('.journal-date')?.textContent.trim()||'';
- return date(b).localeCompare(date(a));
-}).forEach(item=>journalList.appendChild(item));
-const items=[...journalList.querySelectorAll('.journal-item')];
-const filters=[...document.querySelectorAll('[data-journal-filter]')];
-const searchInput=document.getElementById('journal-search-input');
-const searchStatus=document.querySelector('.journal-search-status');
-const normalize=text=>text.normalize('NFKC').toLowerCase().replace(/\s+/g,'');
-const storageKey='mouton-journal-filter-v2';
-items.forEach(item=>{item.dataset.search=normalize(item.querySelector('.journal-body').textContent);});
-filters.forEach(b=>{const v=b.dataset.journalFilter;const c=document.createElement('span');c.className='count';c.textContent=items.filter(i=>v==='all'||i.dataset.category===v).length;b.appendChild(c);});
-let filter='all';
-try{const v=sessionStorage.getItem(storageKey);if(filters.some(b=>b.dataset.journalFilter===v))filter=v;}catch{}
-// Full-text search: the article text is fetched the first time someone searches.
-let fullText=null,loadingText=null;
-const loadText=()=>loadingText||(loadingText=fetch('search.json').then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{
- fullText=new Map(d.map(e=>[e.url,{...e,norm:normalize(e.text)}]));
- if(searchInput.value)applyFilter(filter);
-}));
-// Only the newest entries show until the reader asks for the rest.
-const COLLAPSED_COUNT=4;
-const expandKey='mouton-journal-expanded-v2';
-let expanded=false;
-try{expanded=sessionStorage.getItem(expandKey)==='1';}catch{}
-const more=document.createElement('button');
-more.type='button';
-more.className='journal-more';
-more.setAttribute('aria-controls','journal-list');
-journalList.id='journal-list';
-more.addEventListener('click',()=>{
- expanded=true;
- try{sessionStorage.setItem(expandKey,'1');}catch{}
- const first=items.find(i=>i.classList.contains('is-collapsed'));
- applyFilter(filter);
- if(first)first.focus({preventScroll:true});
-});
-const extra=document.createElement('div');
-extra.className='journal-extra';
-journalList.after(extra);
-extra.after(more);
-function snippet(entry,raw){
- const text=entry.text,i=text.toLowerCase().indexOf(raw.toLowerCase());
- if(i<0)return null;
- const p=document.createElement('span');
- p.className='journal-snippet';
- const start=Math.max(0,i-36),end=Math.min(text.length,i+raw.length+60);
- const mark=document.createElement('mark');
- mark.textContent=text.slice(i,i+raw.length);
- p.append((start>0?'…':'')+text.slice(start,i),mark,text.slice(i+raw.length,end)+(end<text.length?'…':''));
- return p;
-}
-function applyFilter(value){
- filter=value;
- try{sessionStorage.setItem(storageKey,filter);}catch{}
- filters.forEach(b=>{const selected=b.dataset.journalFilter===filter;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});
- const raw=searchInput.value.trim();
- const query=normalize(raw);
- let shown=0;
- const listed=new Set();
- items.forEach(item=>{
-  const href=item.getAttribute('href');
-  if(href)listed.add(href);
-  item.querySelector('.journal-snippet')?.remove();
-  const entry=href&&fullText?fullText.get(href):null;
-  const inList=query===''||item.dataset.search.includes(query);
-  const inBody=!inList&&entry&&entry.norm.includes(query);
-  const hidden=(filter!=='all'&&item.dataset.category!==filter)||!(inList||inBody);
-  item.classList.toggle('is-hidden',hidden);
-  item.classList.remove('is-collapsed');
-  if(!hidden){shown++;if(inBody){const s=snippet(entry,raw);if(s)item.querySelector('.journal-body').append(s);}}
- });
- // Articles that are not in the journal list (food & science, books) still turn up in a search.
- extra.replaceChildren();
- if(query!==''&&fullText&&filter==='all'){
-  for(const entry of fullText.values()){
-   if(listed.has(entry.url)||!entry.norm.includes(query))continue;
-   const a=document.createElement('a');
-   a.className='journal-item clickable journal-link';
-   a.href=entry.url;
-   const date=document.createElement('div');date.className='journal-date';date.textContent=entry.date;
-   const body=document.createElement('div');body.className='journal-body';
-   const title=document.createElement('div');title.className='journal-title';title.textContent=entry.title;
-   const ex=document.createElement('div');ex.className='journal-excerpt';ex.textContent=entry.excerpt;
-   const time=document.createElement('span');time.className='journal-read-time';time.textContent='約'+entry.minutes+'分';
-   body.append(title,ex,time);
-   const s=snippet(entry,raw);if(s)body.append(s);
-   const arrow=document.createElement('div');arrow.className='journal-arrow';arrow.textContent='→';
-   a.append(date,body,arrow);
-   extra.append(a);shown++;
-  }
- }
- // Collapse the full, unfiltered list to its newest entries.
- const browsing=query===''&&filter==='all';
- if(browsing&&!expanded){
-  items.filter(i=>!i.classList.contains('is-hidden')).slice(COLLAPSED_COUNT).forEach(i=>i.classList.add('is-collapsed'));
- }
- const rest=items.filter(i=>i.classList.contains('is-collapsed')).length;
- more.hidden=rest===0;
- more.textContent='すべての記事を見る（あと'+rest+'件）';
- searchStatus.textContent=query===''?'':shown?shown+'件の記事が見つかりました'+(fullText?'（本文も検索しています）':''):'該当する記事はありませんでした';
-}
-filters.forEach(b=>b.addEventListener('click',()=>applyFilter(b.dataset.journalFilter)));
-searchInput.addEventListener('input',()=>{loadText();applyFilter(filter);});
-searchInput.addEventListener('focus',loadText,{once:true});
-document.querySelectorAll('[data-filter-link]').forEach(a=>a.addEventListener('click',()=>{searchInput.value='';applyFilter(a.dataset.filterLink);}));
-applyFilter(filter);
-
-</script>

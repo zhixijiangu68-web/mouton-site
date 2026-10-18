@@ -1,0 +1,25 @@
+{#- 有料記事3本を一本の道としてつなぐ（販売ページの最後）。順番は paid.order、文言は各記事の paid.role・paid.step。
+    どこからでも読めることを先に書く（3本まとめて買わせない）。 -#}
+{%- set seriesList = collections.articles | paidCards %}
+<section class="plp-section paid-series" aria-labelledby="paid-series-h">
+  <p class="plp-step">3本の流れ</p>
+  <h2 id="paid-series-h">3本は、一本の道でつながっている。</h2>
+  <p>決められない。人の目が気になる。続かない。別々の悩みに見えて、僕には一本の道に見える。選ぼうとすると、誰の物差しで選ぶのかが問われる。選んだあとには、続けられるかが問われる。</p>
+  <ol class="paid-series-list">
+    {%- for a in seriesList %}
+    {%- set p = a.data.paid %}
+    {%- set here = a.page.fileSlug == page.fileSlug %}
+    <li class="paid-series-item{{ ' is-here' if here }}"{% if here %} aria-current="page"{% endif %}>
+      <span class="paid-series-n">{{ loop.index }}</span>
+      <div class="paid-series-body">
+        <p class="paid-series-role">{{ p.role }} — {{ p.philosopher }}</p>
+        <p class="paid-series-step">{{ p.step }}</p>
+        {%- if here %}<p class="paid-series-title">「{{ p.title }}」<span class="paid-series-here">この記事</span></p>
+        {%- else %}<p class="paid-series-title"><a class="paid-series-link" href="{{ a.page.fileSlug }}.html">「{{ p.title }}」 <span aria-hidden="true">→</span></a></p>{% endif %}
+      </div>
+    </li>
+    {%- endfor %}
+  </ol>
+  <p class="plp-small">どこからでも読める。順番どおりでなくていいし、3本そろえる必要もない。いまいちばん近い悩みの1本からでいい。</p>
+  <p class="paid-back"><a href="topic-philosophy.html">3人の哲学者を、悩みからくらべる →</a></p>
+</section>

@@ -1,6 +1,6 @@
 <!doctype html>
 {%- set root = root or "" %}
-<html lang="{{ lang or 'ja' }}" data-root="{{ root }}" data-version="original">
+<html lang="{{ lang or 'ja' }}" data-root="{{ root }}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -60,7 +60,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="{{ root }}apple-touch-icon.png">
 <link rel="manifest" href="{{ root }}site.webmanifest">
 {%- if preloadHero %}
-<link rel="preload" as="image" href="{{ root }}{{ (['images/hero.jpg'] | firstImage) or 'images/placeholder/hero.jpg' }}" fetchpriority="high">
+<link rel="preload" as="image" href="{{ root }}{{ (['images/hero.jpg'] | firstImage) or 'images/mouton/gold-laurel-wide.webp' }}" fetchpriority="high">
 {%- endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,12 +79,12 @@
 <link rel="preload" as="style" href="{{ fontsUrl }}">
 <link rel="stylesheet" href="{{ fontsUrl }}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="{{ fontsUrl }}"></noscript>
-<link rel="stylesheet" href="{{ root }}site.css">
+<link rel="stylesheet" href="{{ root }}site.css{% if assetVersion %}?v={{ assetVersion }}{% endif %}">
 {%- for css in extraCss %}
 <link rel="stylesheet" href="{{ root }}{{ css }}">
 {%- endfor %}
 <link rel="stylesheet" href="{{ root }}design-version.css">
-<script src="{{ root }}site.js" defer></script>
+<script src="{{ root }}site.js{% if assetVersion %}?v={{ assetVersion }}{% endif %}" defer></script>
 <script src="{{ root }}quiz-loop.js" defer></script>
 {%- if isArticle %}
 <script src="{{ root }}article-share.js" defer></script>

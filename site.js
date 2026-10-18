@@ -21,23 +21,38 @@
   risers.forEach(r=>rise.observe(r));
  }else risers.forEach(r=>r.classList.add('risen'));
 
- // Menu (small screens)
+ // Shared menu on desktop and small screens.
  if(nav){
   const toggle=nav.querySelector('.menu-toggle');
   const links=nav.querySelector('.site-links');
   // While the full-screen menu is open, the page behind it is inert so focus stays in the menu.
   const behind=[...document.body.children].filter(el=>el!==nav&&el.tagName!=='SCRIPT');
+  const isJapanese=document.documentElement.lang==='ja';
+  const label=open=>isJapanese?(open?'閉じる':'メニュー'):(open?'Close':'Menu');
+  toggle.textContent=label(false);
   const setOpen=open=>{
    nav.classList.toggle('menu-open',open);
    document.body.classList.toggle('menu-locked',open);
    behind.forEach(el=>{el.inert=open;});
    toggle.setAttribute('aria-expanded',String(open));
-   toggle.textContent=open?'Close':'Menu';
+   toggle.textContent=label(open);
   };
-  window.matchMedia('(max-width: 1180px)').addEventListener('change',e=>{if(!e.matches)setOpen(false);});
+  window.matchMedia('(max-width: 1180px)').addEventListener('change',()=>setOpen(false));
   toggle.addEventListener('click',()=>setOpen(!nav.classList.contains('menu-open')));
   links.addEventListener('click',e=>{if(e.target.closest('a'))setOpen(false);});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&nav.classList.contains('menu-open')){setOpen(false);toggle.focus();}});
+  document.addEventListener('click',e=>{
+   if(nav.classList.contains('menu-open')&&!toggle.contains(e.target)&&!links.contains(e.target))setOpen(false);
+  });
+  document.addEventListener('keydown',e=>{
+   if(!nav.classList.contains('menu-open'))return;
+   if(e.key==='Escape'){setOpen(false);toggle.focus();}
+   if(e.key==='Tab'){
+    const focusable=[...nav.querySelectorAll('a[href],button')];
+    const first=focusable[0],last=focusable[focusable.length-1];
+    if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+   }
+  });
  }
 
  const zones=[...document.querySelectorAll('[data-nav]')];
@@ -142,7 +157,6 @@
  const remeasure=()=>{dirty=true;request();};
  window.addEventListener('scroll',request,{passive:true});
  window.addEventListener('resize',remeasure);
- document.addEventListener('mouton:versionchange',remeasure);
  if('ResizeObserver' in window)new ResizeObserver(remeasure).observe(document.body);
  if(document.fonts)document.fonts.ready.then(remeasure);
  if(reduce.matches)scenes.forEach(s=>{s.style.setProperty('--t',1);s.style.setProperty('--t2',1);s.classList.add('revealed');});
@@ -317,18 +331,6 @@ document.querySelectorAll('details.quiz[data-a]').forEach(d=>{
 })();
 // Before/after slider (making-*.html): the range input moves the divider.
 document.querySelectorAll('.mk-cmp').forEach(c=>{const r=c.querySelector('.mk-cmp-range');if(r)r.addEventListener('input',()=>c.style.setProperty('--pos',r.value+'%'));});
-// Cover: Night (default) or Day, kept in this browser.
-document.querySelectorAll('[data-cover-toggle]').forEach(b=>{
- const sync=()=>b.setAttribute('aria-pressed',String(document.documentElement.dataset.cover==='day'));
- sync();
- b.addEventListener('click',()=>{
-  const day=document.documentElement.dataset.cover!=='day';
-  if(day)document.documentElement.dataset.cover='day';else delete document.documentElement.dataset.cover;
-  try{localStorage.setItem('mouton.cover',day?'day':'night');}catch{}
-  sync();
- });
-});
-
 // MOUTON RESEARCH: clicks into the cleanliness-science prelaunch LP.
 // Keep this separate from paid-order conversion events; no sale is possible yet.
 document.addEventListener('click',e=>{
@@ -341,3 +343,28 @@ document.addEventListener('click',e=>{
   transport_type:'beacon'
  });
 });
+// トップの入口：どのボタンから入ったかを数える（2026-10-17。出して、測って、直すため）。どのボタンかだけを送る。
+document.addEventListener('click',e=>{
+ const a=e.target.closest&&e.target.closest('a[data-home-entry]');
+ if(!a||typeof window.gtag!=='function')return;
+ window.gtag('event','home_entry_click',{entry:a.dataset.homeEntry,transport_type:'beacon'});
+});
+// 哲学の有料記事：どこで流れが細くなっているかを見るための計測（無料の記事 → 販売ページ → 冒頭を読み終える → 購入ボタン）。
+// 購入そのものは Stripe の売上で確かめる。クリックを購入と数えない。メールアドレスや書いた文字は送らない。
+(()=>{
+ const send=(name,params)=>{if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({transport_type:'beacon'},params));};
+ const page=(location.pathname.replace(/^.*\//,'').replace(/\.html$/,''))||'index';
+ const where=a=>{for(const c of ['paid-cta','paid-series','ph-card','lp-worries','change-step','mind-act','reading-next','paid-back']){if(a.closest('.'+c))return c;}return 'link';};
+ document.addEventListener('click',e=>{
+  const a=e.target.closest&&e.target.closest('a[href]');
+  if(!a)return;
+  const m=(a.getAttribute('href')||'').match(/^(paid-[a-z-]+)\.html(?:#.*)?$/);
+  if(m&&m[1]!==page)send('paid_cta_click',{product_id:m[1],source_page:page,placement:where(a)});
+  if(a.classList.contains('buy-btn')&&/^paid-/.test(page))send('paid_buy_click',{product_id:page,source_page:page});
+ });
+ const cut=/^paid-/.test(page)&&document.querySelector('.plp-sample-cut');
+ if(cut&&'IntersectionObserver' in window){
+  const io=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)){io.disconnect();send('paid_sample_read',{product_id:page});}});
+  io.observe(cut);
+ }
+})();

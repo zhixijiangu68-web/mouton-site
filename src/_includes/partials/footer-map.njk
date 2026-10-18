@@ -1,35 +1,40 @@
 {%- set en = lang == 'en' %}
+{#- 2026-10-17（オーナー）：日本語は、いまの記事・哲学の3本・アーカイブだけを案内する（テーマ別・クイズ・制作・いま取り組んでいること・お気に入りはアーカイブへ）。英語は後回しなので、もとのまま。 #}
 <nav class="footer-map" aria-label="{{ 'Site map' if en else 'サイトの案内' }}">
+{%- if en %}
   <div class="footer-map-col">
-    <p class="footer-map-h">{{ 'Topics' if en else 'テーマ' }}</p>
+    <p class="footer-map-h">Topics</p>
     <ul>
-      {%- for t in topics %}<li><a href="{{ ('index.html#' + t.key) if en else ('topic-' + t.key + '.html') }}">{{ t.en if en else t.label }}</a></li>{% endfor %}
-      <li><a href="{{ 'index.html#journal' if en else 'journal.html' }}">{{ 'All articles' if en else 'すべての記事' }}</a></li>
+      {%- for t in topics %}<li><a href="index.html#{{ t.key }}">{{ t.en }}</a></li>{% endfor %}
+      {%- for sr in series %}<li><a href="series.html#{{ sr.key }}">{{ sr.en }}</a></li>{% endfor %}
+      <li><a href="index.html#journal">All articles</a></li>
     </ul>
   </div>
   <div class="footer-map-col">
-    <p class="footer-map-h">{{ 'Series' if en else '連載' }}</p>
+    <p class="footer-map-h">About</p>
     <ul>
-      {%- for s in series %}<li><a href="series.html#{{ s.key }}">{{ s.en if en else s.title }}</a></li>{% endfor %}
+      <li><a href="quiz.html">True-or-false quiz</a></li>
+      <li><a href="operator.html">About the operator</a></li>
+    </ul>
+  </div>
+{%- else %}
+  <div class="footer-map-col">
+    <p class="footer-map-h">読む</p>
+    <ul>
+      <li><a href="topic-philosophy.html">哲学の3本</a></li>
+      {%- for sr in series %}<li><a href="series.html#{{ sr.key }}">連載「{{ sr.title }}」</a></li>{% endfor %}
+      <li><a href="journal.html">記事</a></li>
+      <li><a href="archive.html">アーカイブ</a></li>
     </ul>
   </div>
   <div class="footer-map-col">
-    <p class="footer-map-h">{{ 'Guides' if en else '選び方' }}</p>
+    <p class="footer-map-h">このサイト</p>
     <ul>
-      {%- for a in (collections.articles | guideCards | head(6)) %}{% if not en or a.page.fileSlug in enSlugs %}<li><a href="{{ a.page.fileSlug }}.html">{{ ((collections.articlesEn | bySlugs([a.page.fileSlug]))[0].data.journal.title or (collections.articlesEn | bySlugs([a.page.fileSlug]))[0].data.headline) if en else a.data.guide.title }}</a></li>{% endif %}{% endfor %}
-      <li><a href="guides.html">{{ 'All guides' if en else 'すべての選び方' }}</a></li>
+      <li><a href="start.html">ムートンについて</a></li>
+      <li><a href="editorial.html">編集方針</a></li>
+      <li><a href="operator.html">運営者情報</a></li>
+      <li><a href="feed.xml">RSS</a></li>
     </ul>
   </div>
-  <div class="footer-map-col">
-    <p class="footer-map-h">{{ 'About' if en else 'このサイト' }}</p>
-    <ul>
-      {%- if not en %}<li><a href="start.html">はじめての方へ</a></li>{% endif %}
-      <li><a href="quiz.html">{{ 'True-or-false quiz' if en else '○×クイズ' }}</a></li>
-      {%- if not en %}<li><a href="now.html">いま取り組んでいること</a></li>
-      <li><a href="editorial.html">編集方針</a></li>{% endif %}
-      <li><a href="operator.html">{{ 'About the operator' if en else '運営者情報' }}</a></li>
-      {%- if not en %}<li><a href="favorites.html">運営者のお気に入り</a></li>{% endif %}
-      {%- if not en %}<li><a href="feed.xml">RSS</a></li>{% endif %}
-    </ul>
-  </div>
+{%- endif %}
 </nav>

@@ -1,0 +1,46 @@
+---
+layout: page.njk
+title: "特定商取引法に基づく表記 — ムートン"
+description: "ムートン（moutonarchive.com）で販売する PDF の、特定商取引法に基づく表記、返品・返金の条件、購入についてのお問い合わせ先。"
+eyebrow: Legal
+heading: 特定商取引法に基づく表記
+---
+{%- set L = legal %}
+{%- set disclose = "請求があった場合は、遅滞なく開示します。下のメールアドレスまでご連絡ください。" %}
+<dl class="legal-list">
+  <div><dt>販売事業者</dt><dd>{{ L.seller }}</dd></div>
+  <div><dt>運営責任者</dt><dd>{{ L.manager }}</dd></div>
+  <div><dt>所在地</dt><dd>{{ disclose if L.discloseOnRequest else L.address }}</dd></div>
+  <div><dt>電話番号</dt><dd>{{ disclose if L.discloseOnRequest else L.phone }}</dd></div>
+  <div><dt>メールアドレス</dt><dd><a href="mailto:{{ L.email }}">{{ L.email }}</a>（{{ L.hours }}）</dd></div>
+  <div><dt>販売価格</dt><dd>各商品ページに税込で表示しています。哲学の有料記事（PDF）各{{ site.product.philosophy.priceJPY.toLocaleString("ja-JP") }}円、清潔感の科学（PDF）{{ site.product.cleanScience.priceText }}円。</dd></div>
+  <div><dt>商品代金以外の必要料金</dt><dd>なし。ダウンロードにかかるインターネットの通信料金は、お客様のご負担です。</dd></div>
+  <div><dt>お支払い方法</dt><dd>{{ L.payMethods }}（Stripe の決済画面）</dd></div>
+  <div><dt>お支払いの時期</dt><dd>ご注文時に、お支払いが確定します。</dd></div>
+  <div><dt>商品の引き渡し時期・方法</dt><dd>お支払いの確定後、ご入力のメールアドレスに、PDF のダウンロード用リンクをお送りします（通常は数分以内）。リンクの有効期限は7日、ダウンロードは最大5回です。期限内に保存してください。</dd></div>
+  <div><dt>動作環境</dt><dd>PDF を開ける端末（スマートフォン・タブレット・パソコン）とアプリ。</dd></div>
+  <div><dt>販売数量</dt><dd>1回のご注文につき、1点です。</dd></div>
+  <div><dt>返品・キャンセル</dt><dd>下の「返品・返金について」をご覧ください。</dd></div>
+</dl>
+
+<h2 id="refund">返品・返金について</h2>
+{%- if L.refund.policy == "days" %}
+<p>ご購入から{{ L.refund.days }}日以内であれば、理由を問わず全額を返金します。下のメールアドレスに、購入した日と商品名をお知らせください。返金のあとは、ダウンロード用リンクを無効にします。</p>
+{%- else %}
+<p>デジタル商品（PDF）の性質上、お支払い後の返品・返金・キャンセルはお受けしていません。ご購入の前に、各商品ページの無料の冒頭・見本で、内容が合うかをお確かめください。</p>
+{%- endif %}
+<p>ただし、次の場合は対応します。ご購入から{{ L.refund.contactDays }}日以内に、下のメールアドレスまでご連絡ください。</p>
+<ul>
+  <li>同じ商品を重複して購入した場合：重複分を返金します。</li>
+  <li>メールが届かない、またはファイルが開けない場合：リンクを再送します。それでも解決できない場合は返金します。</li>
+</ul>
+
+<h2 id="contact">購入についてのお問い合わせ</h2>
+<p>メール：<a href="mailto:{{ L.email }}">{{ L.email }}</a>（{{ L.hours }}）</p>
+<p>お問い合わせのときは、次をお知らせください。</p>
+<ul>
+  <li>購入した日と、商品名</li>
+  <li>購入のときに入力したメールアドレス</li>
+  <li>困っていること（例：メールが届かない、ファイルが開けない）</li>
+</ul>
+<p class="doc-small">カード番号などのお支払い情報は、メールに書かないでください。メールが届かないときは、先に迷惑メールのフォルダをご確認ください。いただいた情報の取り扱いは<a href="privacy.html">プライバシーポリシー</a>のとおりです。</p>

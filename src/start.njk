@@ -1,55 +1,125 @@
 ---
 layout: base.njk
 bodyClass: site doc-page
+assetVersion: "20261017-about"
 permalink: start.html
-title: "はじめての方へ — ムートン"
-description: "ムートンをはじめて読む人のための案内です。どんなサイトか、気になることから選べる入り口、最初に読んでほしい5本、買う前に読む選び方、○×クイズへの近道をまとめています。"
-paths:
-  - { title: "見た目の清潔感を整えたい", text: "第一印象、匂い、口臭、日焼け。", href: "series.html#clean", label: "連載「清潔感を、確かめる」" }
-  - { title: "仕事やお金で迷っている", text: "辞めたい、転職、年収、お金の本。", href: "series.html#job", label: "連載「転職を考える」" }
-  - { title: "生き方について考えたい", text: "ストア派、ニーチェ、カミュ、サルトル。", href: "series.html#thinkers", label: "連載「哲学者に聞く」" }
-  - { title: "健康の「本当？」を知りたい", text: "コーヒー、ダークチョコ、オリーブ油。", href: "series.html#food-check", label: "連載「その健康法、本当？」" }
-  - { title: "よく眠りたい", text: "昼寝、寝だめ、朝型と夜型、寝室。", href: "series.html#sleep", label: "連載「眠りを確かめる」" }
-  - { title: "変わりたい、続けたい", text: "セルフイメージ、目標と仕組み、恐怖。", href: "series.html#habits", label: "連載「自分を変える仕組み」" }
-firstReads: ["first-impression-sleep", "halitosis", "stoicism", "salary-change", "nap"]
+title: "ムートンについて — ムートン"
+description: "ムートンは、迷いながら哲学を自分の毎日で試し、記録している一人。先生ではない。生き方が変われば、行動が変わる。答えではなく考える材料と問いを置く理由、変わる順番、点と線、お金の出どころを、ここに一か所だけ書いている。"
+mindReads: ["kierkegaard", "nietzsche", "spinoza"]
+steps:
+  - { t: "どんな人間でありたいかを、先に決める", x: "お金も、評価も、誰かに見られることもなかったら、どんな人間でありたいか。持っているものではなく、在り方から考える。", reads: ["absorption-freedom-action", "paid-nietzsche"] }
+  - { t: "結果ではなく、やり方で自分を言い表す", x: "僕は、いくら稼ぐ、何キロ痩せる、という結果ではなく、「自分との約束を守る人間だ」のように、やり方で自分を言い表すようにしている。その一文が、迷ったときの基準になる。", reads: ["sartre"] }
+  - { t: "考えと感情を、道具として扱う", x: "僕は、自分次第のことと、そうでないことを分けて考える。湧いてきた感情には「これは、いまの自分の役に立つか」と聞いてみて、役に立たないなら、感じきってから手放す。", reads: ["stoicism", "spinoza", "paid-spinoza"] }
+  - { t: "小さく、引き算で動く", x: "不安が消えるのを待たずに、いちばん小さな一歩を踏む。完璧な計画ができるのを待たず、試して、ずれていたら直す。何かを足すより、邪魔をしているものを一つ外す。外すものが分からないときは、「こうすれば確実にうまくいかない」から逆に考える。僕は、そうしている。", reads: ["kierkegaard", "paid-kierkegaard"] }
+  - { t: "結果は、遅れてやってくる", x: "行動は今日から変えられる。けれど、結果と自己像は遅れて追いついてくる。努力しているのに何も変わらないように見える、冬のような時期がある。その時期を、自分を責めずに過ごせるかどうか。", reads: ["camus-sisyphus"] }
 ---
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-hero" data-nav="dark"{% bgImage "images/hero.jpg" %}></div>
 <main class="doc topic start-page" data-nav="light" data-nav-solid="light">
-  <p class="eyebrow">Start here</p>
-  <h1 class="doc-title">はじめての方へ</h1>
-  <p>ムートンは、気になったことを調べ、試し、作り、その過程を記録していく個人のサイトです。哲学や身体、食事と科学についても、研究や公的な情報を確かめながら記事を書いています。記事の作り方は<a href="editorial.html">編集方針</a>にまとめています。</p>
-  <p><strong>作る。記録する。残していく。</strong> KIOKUや日記アプリ、このサイトも、日々の試行錯誤から生まれた制作物です。完成したものだけでなく、制作の途中も残しています。</p>
-  <p><a class="btn btn-dark" href="making.html">作っているものを見る <span aria-hidden="true">→</span></a></p>
+  <p class="eyebrow">書いている人と、考え方</p>
+  <h1 class="doc-title">ムートンについて</h1>
 
-  <section class="quiz-more doc-quiz" aria-labelledby="start-quiz"><p class="quiz-more-title" id="start-quiz">まずは1問 <span>○×クイズ</span></p>
-  <div class="qloop" data-qloop data-prefer="{% for s in firstReads %}{{ s }},{% endfor %}"></div></section>
+  {#- ブランドメッセージと、書いている人。正しい生き方を押しつけず、考える材料と問いを置く（BRAND.md）。ブランドの考え方の説明は、サイトでここ1か所だけ。 #}
+  <section class="mind-door" aria-labelledby="mind-door-title">
+    <p class="mind-door-kicker">MOUTON — Philosophy of Life</p>
+    <h2 class="mind-door-title" id="mind-door-title">生き方が変われば、<br>行動が変わる。</h2>
+    <p class="mind-door-text mind-door-lines">行動が変われば、習慣が変わる。<br>習慣が変われば、やがて外見や日常にも変化が表れる。</p>
+    <p class="mind-door-text">MOUTONは、哲学を知識で終わらせず、自分の人生に落とし込むためのブランド。人を外側から飾るのではなく、内側から自分自身をつくっていく。</p>
+    <p class="mind-door-text mind-door-ask">何を始めればいいか、だけでなく、<br>何をやめれば、本当に大切なことに向き合えるか。<br>その二つを、一緒に問いたい。</p>
+    <p class="mind-door-text">正しい生き方を、押しつけることはしない。考えるための材料と、問いを置いておく。どう生きるかを選ぶのは、いつも自分自身だ。</p>
+    <hr class="mind-door-rule">
+    <p class="mind-door-text">書いているのは、ムートン。迷いながら、哲学を自分の毎日で試し、記録している一人だ。先生ではない。決められずに先延ばしにした夜も、人の目で選んでしまった仕事も、三日で止まった早起きも、僕のものだ。だから、読む人の上に立って答えを渡すことはしない。</p>
+    <p class="mind-door-text">身体も食事も大切だ。でも僕は、その前に考え方を整えることから始めた。<strong>入口に選ぶなら、キルケゴール、ニーチェ、スピノザ。</strong>選ぶ、自分の物差しで決める、続ける。3人は一本の道につながっているが、どこからでも読める。</p>
+    <div class="mind-door-reads">
+      {%- for a in collections.articles | bySlugs(mindReads) %}
+      <a class="mind-door-read" href="{{ a.page.fileSlug }}.html">
+        <span class="mind-door-step">無料・{{ loop.index }}本目</span>
+        <span class="mind-door-read-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
+        <span class="mind-door-read-text">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
+        <span class="mind-door-more">読む・約{{ a.data.readMinutes }}分 <span aria-hidden="true">→</span></span>
+      </a>
+      {%- endfor %}
+    </div>
+    <p class="mind-door-all"><a href="topic-philosophy.html">3人の哲学者を、悩みからくらべる <span aria-hidden="true">→</span></a></p>
+  </section>
 
-  <h2 class="guide-group-title">気になることから選ぶ</h2>
-  <div class="start-paths">
-    {%- for p in paths %}
-    <a class="start-path" href="{{ p.href }}"><span class="start-path-title">{{ p.title }}</span><span class="start-path-text">{{ p.text }}</span><span class="start-path-more">{{ p.label }} <span aria-hidden="true">→</span></span></a>
-    {%- endfor %}
-  </div>
+  {#- MOUTON の考える「変わる順番」。在り方 → 信念 → 考えと感情 → 行動 → 結果（遅れて来る）。 #}
+  <section class="change-order" aria-labelledby="change-order-title">
+    <p class="mind-door-kicker">変わる順番</p>
+    <h2 class="change-order-title" id="change-order-title">変わるには、順番がある。</h2>
+    <p class="change-order-lead">行動から変えようとして、続かなかったことはないだろうか。僕は、変わるには順番があると思っている。あなたがいまどこでつまずいているかで、読むものも変わる。</p>
+    <ol class="change-steps">
+      {%- for st in steps %}
+      <li class="change-step">
+        <span class="change-step-n">{{ loop.index }}</span>
+        <div class="change-step-body">
+          <p class="change-step-t">{{ st.t }}</p>
+          <p class="change-step-x">{{ st.x }}</p>
+          <p class="change-step-reads">{% for a in collections.articles | bySlugs(st.reads) %}<a href="{{ a.page.fileSlug }}.html">{{ a.data.paid.title if a.data.paid else (a.data.journal.title if a.data.journal else a.data.headline) }}{% if a.data.paid %}<span class="change-paid">有料</span>{% endif %}</a>{% endfor %}</p>
+        </div>
+      </li>
+      {%- endfor %}
+    </ol>
+  </section>
 
-  <h2 class="guide-group-title">最初に読んでほしい5本</h2>
-  <div class="topic-list">
-    {%- for a in collections.articles | bySlugs(firstReads) %}
-    <a class="topic-item" href="{{ a.page.fileSlug }}.html">
-      <span class="topic-date">{{ loop.index }}</span>
-      <span class="topic-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</span>
-      <span class="topic-excerpt">{{ a.data.journal.excerpt if a.data.journal else a.data.description }}</span>
-      <span class="topic-time">約{{ a.data.readMinutes }}分</span>
-    </a>
-    {%- endfor %}
-  </div>
+  {#- 点と線（2026-10-17、オーナー）と、安易に与えない（同日）。サイトでこの説明を置くのは、ここだけ。 #}
+  <section class="mind-door" aria-labelledby="dots-title">
+    <p class="mind-door-kicker">点と線</p>
+    <h2 class="mind-door-title" id="dots-title">答えではなく、<br>材料を置く。</h2>
+    <p class="mind-door-text">記事を読んだところで、人生は何一つ変わらない。僕はそう思っている。だから、読んだことを一つの行動に結びつける。点を打ち、点と点を線にして、また次の点を打つ。</p>
+    <p class="mind-door-text">以前は、記事の終わりに、空欄を埋める「ワーク」を置いていた。やめた。考える型や答えの形を先に渡すと、読む人は「埋める人」になる。与えられたものを受け取るだけの、受け身の行為になってしまう。</p>
+    <p class="mind-door-text">いま置いているのは、考える材料だけだ。哲学者の言葉、よくある悩みの場面、僕自身の迷いと試したこと。そして最後に、答えを書かない問いを一つ。何を試すか、書くかどうかは、読んだ人が決める。</p>
+    <p class="mind-door-all"><a href="index.html#cycle">点と線の回し方 <span aria-hidden="true">→</span></a></p>
+  </section>
 
-  <h2 class="guide-group-title">買う前に読む</h2>
-  <p>食べ物、身体のケア、本について、選ぶときに何を見ればいいかをまとめた「選び方」の記事があります。</p>
-  <p><a class="btn btn-dark" href="guides.html">選び方の記事を見る <span aria-hidden="true">→</span></a> <a class="btn btn-outline" href="quiz.html">○×クイズ10問 <span aria-hidden="true">→</span></a></p>
+  {#- 動画を探し回るより、一本を読んで試す。販売状態は site.js と記事の front matter から出す。 #}
+  {%- set paidList = collections.articles | paidCards %}
+  {%- set ph = site.product.philosophy %}
+  {%- set paidLive = false %}{% for a in paidList %}{% if a.data.paid.checkoutUrl and ph.fulfillmentReady and ph.legalUrl %}{% set paidLive = true %}{% endif %}{% endfor %}
+  <section class="mind-act" aria-labelledby="mind-act-title">
+    <p class="mind-door-kicker">読んで、試す</p>
+    <h2 class="mind-act-title" id="mind-act-title">動画を探し回るより、<br>一本を読んで、試してみる。</h2>
+    <p class="mind-act-text">僕の文章は、そのための道具だ。</p>
+    <div class="mind-act-books">
+      <a class="mind-act-book" href="topic-philosophy.html">
+        <span class="mind-door-step">有料の3本（PDF）／悩みから選ぶ</span>
+        <span class="mind-act-book-title">3人の哲学者に学ぶ</span>
+        <span class="mind-act-book-text">{% for a in paidList %}{{ a.data.paid.role }}（{{ a.data.paid.philosopher }}）{% if not loop.last %} → {% endif %}{% endfor %}。一本の道でつながる、悩みから入る有料記事{{ paidList.length }}本。冒頭は無料で読める。</span>
+        <span class="mind-act-book-meta">PDF・各{{ paidList[0].data.paid.price.toLocaleString("ja-JP") if paidList.length else "2,980" }}円（税込） / {{ 'このサイトで販売中' if paidLive else 'このサイトで販売準備中' }}</span>
+      </a>
+    </div>
+    <p class="mind-act-close">人生は、思っているより短い。<br>だから僕は、小さくても今日から始めている。</p>
+  </section>
+
+  {#- 人が何かを信じたくなる気持ちを、利用しない（BRAND.md「信者をつくらない」）。 #}
+  <section class="trust" aria-labelledby="trust-title">
+    <p class="mind-door-kicker">このサイトの使い方</p>
+    <h2 class="trust-title" id="trust-title">信じる場所ではなく、<br>試す場所。</h2>
+    <p class="trust-lead">何かを信じたくなるときは、誰にでもあると思う。だからこそ、ここは信じてもらう場所ではなく、あなたが自分で試して確かめる場所にしたい。</p>
+    <ul class="trust-list">
+      <li><strong>合わなければ、使わなくていい。</strong>読んで合わなかった考えは、そのまま置いていっていい。</li>
+      <li><strong>同じ悩みを試している一人として書く。</strong>先生としてではなく、経験と提案を書いている。</li>
+      <li><strong>敵をつくらない。</strong>ほかのやり方にも、合う人と合う時期がある。</li>
+      <li><strong>お金の出どころを隠さない。</strong>収入は、有料の記事（PDF）から。以前の記事（アーカイブ）には、本などの紹介（アフィリエイト。リンクに「PR」と表示）と Google の広告が残っている。</li>
+      <li><strong>いつでも離れていい。</strong>会員制も定期購読もなく、休んでも失うものはない。</li>
+    </ul>
+    <p class="trust-more">広告と紹介の決まりは、<a href="privacy.html">プライバシーポリシー</a>と、このページの終わりにある編集方針に書いている。</p>
+  </section>
+
+  <section class="mind-door" aria-label="人の助けと自分の選択">
+    <p class="mind-door-kicker">人に頼ることについて</p>
+    <p class="mind-door-text mind-door-ask"><strong>人は、あなたが最も助けを必要としているときに、必ず助けてくれるとは限らない。あなたを助けることが自分の利益になるときに、手を差し伸べることもある。</strong></p>
+    <p class="mind-door-text">これは、人の善意を疑えという話ではない。人にはそれぞれ事情があり、できることにも限りがある。「利益」はお金だけでなく、信頼や相手を大切に思う気持ちにつながることもある。</p>
+    <p class="mind-door-text">だから、助けを求めるときは、何に困っていて、何を手伝ってほしいのかを言葉にしてみる。それでも返事が来ないことはある。そんなとき、相手の選択は変えられなくても、自分が次にできることは探せる。</p>
+    <p class="mind-door-text"><strong>誰かに頼ることと、自分の人生の舵を手放さないことは、両立できる。</strong></p>
+  </section>
+
+  <p>ムートンは、哲学を一つの行動に結びつけるための個人のサイトだ。いまは、悩みから選ぶ有料の3本と、読んだあとに自分で考えるための無料の記事を置いている。以前の身体・食事と科学・仕事・本の記事、清潔感の科学、制作の記録は、<a href="archive.html">アーカイブ</a>にまとめて残した。文章の書き方は<a href="editorial.html">編集方針</a>に、運営者のことは<a href="operator.html">運営者情報</a>に。</p>
+  <p><strong>作る。記録する。残していく。</strong> 点を打ち、書き残して線にし、また次の点を打つ。このサイトも、その繰り返しの記録だ。</p>
+
 </main>
 <footer class="mini-footer" data-nav="light" data-nav-solid="light">
   {% include "partials/footer-map.njk" %}
   {% include "partials/footer-links.njk" %}
-  <p class="mini-footer-copy">© 2026 MOUTON — PERSONAL ARCHIVE</p>
+  <p class="mini-footer-copy">© 2026 MOUTON — PHILOSOPHY OF LIFE</p>
 </footer>

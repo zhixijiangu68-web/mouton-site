@@ -12,6 +12,7 @@
 本サイトは **MOUTON Personal Brand Project** として、ムートンという名前・思想・作品群の長期的なブランド価値向上を目指します。
 
 - [ブランド方針（BRAND.md）](BRAND.md) — 世界観・表現・判断基準
+- [商品起点の事業方針（2026-10-15）](docs/product-first-strategy-20261015.md) — 誰の悩みを何円で解決するか、初回有料購入の検証、商品完成→販売準備→集客の順序
 - [プロジェクト定義書（docs/project-charter.md）](docs/project-charter.md) — 目的・成果物・開発優先順位・品質管理・成功指標
 - [要件定義書（REQUIREMENTS.md）](REQUIREMENTS.md) — 必要ページ、機能、計測、非機能、除外項目、受け入れ条件
 - [基本設計書（DESIGN.md）](DESIGN.md) — 情報構造、画面設計、デザインルール、利用者導線、計測データの流れ
@@ -36,8 +37,8 @@ npm test         # 生成して、リンク切れ・ID の重複・title や説�
 | 場所 | 中身 |
 |---|---|
 | `src/_data/site.js` | サイト全体の設定（ドメイン、アクセス解析、広告、問い合わせ先、書き手の紹介） |
-| `src/_data/projects.json` | トップの「制作」に出すもの。`url` を入れるとカードがリンクになる |
-| `src/_data/notes.json` | 記事一覧に出す、ページのない短いメモ |
+| `src/_data/projects.json` | 制作のページ（`making.html`。2026-10-17 からアーカイブ）に出すもの。`url` を入れるとカードがリンクになる |
+| `src/_data/notes.json` | ページのない短いメモ（2026-10-17 から記事一覧には出していない） |
 | `src/_data/topics.js` | テーマ別ページ（`topic-philosophy.html` など）の名前と紹介文 |
 | `src/articles/*.html` | 記事。1ファイル = 1ページ |
 | `src/index.njk` | トップページ |
@@ -47,13 +48,14 @@ npm test         # 生成して、リンク切れ・ID の重複・title や説�
 | `home.css` | トップページのデザイン |
 | `article-base.css` / `reading.css` / `article-share.js` | 記事ページの共通スタイルと読書補助 |
 | `images/` | 画像。置き場所と名前は `images/README.md` |
-| `search.json` | 記事一覧の本文検索に使うデータ（生成される。検索欄を使ったときだけ読み込む） |
 | `scripts/check-site.mjs` | 生成したページの自動チェック |
 
 ## 記事を追加する
 
 `src/articles/` に `記事の名前.html` を作ります。ファイル名がそのまま URL（`記事の名前.html`）になります。
 既存の記事をコピーして、先頭の設定と本文を書き換えるのが簡単です。
+
+**2026-10-17 から、記事は「残す記事」と「アーカイブ」に分かれます。** 残す記事は `src/_data/currentArticles.js` に並べたファイル名だけで、記事一覧（`journal.html`）・「次に読む」・トップから行けます。そこにない日本語の記事は自動でアーカイブになり、ページの上に注記が出て `archive.html` に並びます（URL は変わりません）。新しい記事をいまの記事として出すときは、`currentArticles.js` にファイル名を足してください。残す記事には、書き込みワーク・穴埋め（＿＿＿＿）・○×クイズを置きません（`npm test` が確かめます）。
 
 ```yaml
 ---
@@ -62,12 +64,12 @@ headline: "記事のタイトル"              # 検索エンジン向けの見�
 description: "検索結果や共有時に出る説明文（80〜120字くらい）"
 date: 2026-10-06                        # 公開日
 updated: 2026-10-20                     # 内容を直したら追加（任意）
-category: philosophy                    # philosophy / body / food / books（カバー画像の種類）
+category: philosophy                    # philosophy / body / food / books / work（カバー画像の種類）
 health: false                           # 健康の記事なら true（末尾に医療の注意書きが出る）
 back:
-  href: "index.html#journal"
+  href: "journal.html"
   text: "記事一覧へ戻る"
-journal:                                # 書くとトップの記事一覧とテーマ別ページに出る
+journal:                                # 書くと記事一覧・アーカイブ・テーマ別ページに、この題と一言で出る
   category: "philosophy"                # philosophy / body / making
   title: "一覧に出すタイトル"
   excerpt: "一覧に出す一言"
@@ -85,8 +87,8 @@ styles: |
 本文の決まった位置に、次のものが自動で入ります。
 
 - `約{{ readMinutes }}分で読めます`：本文の文字数から計算した読了時間（1分500字）。トップや一覧の分数も同じ値
-- `{% include "partials/article-end.njk" %}`：医療の注意書き・広告枠・メールマガジン登録欄・「この記事を書いた人」
-- `{% include "partials/reading-next.njk" %}`：「次に読む」とテーマ別ページへのリンク
+- `{% include "partials/article-end.njk" %}`：医療の注意書き・広告枠・メールマガジン登録欄・「この記事を書いた人」（アーカイブの記事では○×クイズも）
+- `{% include "partials/reading-next.njk" %}`：「次に読む」（残す記事から選ばれる）と、テーマ別ページかアーカイブへのリンク
 
 見出し（h1〜h3）と記事一覧のタイトルは、生成するときに [BudouX](https://github.com/google/budoux) で文節に区切られ、単語の途中で改行しないようになります。
 Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", "book-buy" %}` と書くと、アフィリエイトの設定に合わせてタグと「PR」表示が自動で付きます。
@@ -119,8 +121,7 @@ Amazon へのリンクは `{% amazonLink "ASIN", "Amazonでこの本を見る", 
 
 ## サイトの動き
 
-- トップの記事一覧は新しい8本だけを表示し、「すべての記事を見る」で残りを開きます。カテゴリーや検索で絞り込んだときは全件が対象です。
-- 記事一覧の検索は、タイトルだけでなく本文も対象です。
+- 記事一覧（`journal.html`）は、残す記事を「悩みから選ぶ（有料）」「連載『哲学者に聞く』」「3つの姿勢」の3つの組で並べます。以前の記事は `archive.html` に分類ごとに並びます（2026-10-17 から。分類の絞り込みと本文検索はなくしました）。
 - 記事の本文中の `[1]` のような出典番号は、`id="ref-1"` の参考文献へリンクします（新しい記事でも同じ書き方にすると揃います）。
 - 画面の広いパソコン（1400px 以上）では、目次が本文の右に表示されます。
 - 「動きを減らす」設定の人には、スクロールの演出・浮かび上がり・ページの切り替え効果を出しません。
