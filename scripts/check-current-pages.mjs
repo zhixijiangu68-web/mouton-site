@@ -3,6 +3,10 @@
 // - それ以外の日本語の記事（アーカイブ）には、上に「アーカイブ」の注記が出る
 // - トップの最初の画面に、ムートン／つくるもの／あなたに の3行と「いまの悩みから選ぶ」がある
 // - 記事一覧は残す記事だけ、アーカイブの一覧はアーカイブの記事をすべて載せる
+// 2026-10-18（オーナー「コピーライティング第一」）に足したこと：
+// - トップにオープニングの演出（intro-veil）がない（見出しが最初に見える）
+// - home.css に文章を行数や「…」で切る CSS（line-clamp / text-overflow）がない
+// - 残すページの小見出し（eyebrow・kicker・plp-step）は日本語（ブランド名「MOUTON — PHILOSOPHY OF LIFE」だけ英語）
 import { readdirSync, readFileSync } from 'node:fs';
 import currentArticles from '../src/_data/currentArticles.js';
 
@@ -46,8 +50,19 @@ for (const s of currentArticles) if (!journal.includes(`href="${s}.html"`)) repo
 const archive = read('archive.html');
 for (const s of archived) if (!archive.includes(`href="${s}.html"`)) report('archive.html', `アーカイブの記事 "${s}" が一覧にない`);
 
-// 2026-10-18（コピーライティング第一）：トップに、言葉を隠すオープニングの演出が戻っていないこと
+// 2026-10-18（コピーライティング第一）：言葉を隠す・切る・英語の飾りで置き換える見た目がないことを確かめる
 if (index.includes('intro-veil') || index.includes("classList.add('intro'")) report('index.html', 'オープニングの演出（intro-veil）が戻っている。見出しが最初に見えること');
+const homeCss = read('home.css');
+if (/line-clamp|text-overflow\s*:\s*ellipsis/.test(homeCss)) report('home.css', '文章を行数や「…」で切る CSS（line-clamp / text-overflow）がある。言葉を見た目に合わせて削らない');
+const jp = /[\u3040-\u30ff\u4e00-\u9fff]/;
+for (const p of ['index.html', 'start.html', 'journal.html', 'topic-philosophy.html', 'series.html', ...currentArticles.map(s => `${s}.html`)]) {
+  const html = read(p);
+  for (const m of html.matchAll(/<p class="(eyebrow|mind-door-kicker|home-cycle-kicker|plp-step|cover-kicker|cover-themes-bridge[^"]*)">([^<]*)<\/p>/g)) {
+    const text = m[2].trim();
+    if (/^MOUTON — P/i.test(text)) continue;
+    if (!jp.test(text)) report(p, `英語だけの小見出し「${text}」（${m[1]}）。日本語にする（コピーライティング第一）`);
+  }
+}
 
 if (problems.length) {
   console.error(problems.join('\n'));
