@@ -34,6 +34,7 @@ description: X（@kodoku__alone）とムートンのサイトで、10月の初�
 
 - サイトのページは `src/` を直して `npm run build` → `npm test`。生成物も一緒にコミットする（CLAUDE.md）
 - 公開前に必ず S3 チェックを通す。健康の言い切り・出典のない数字・PR 表示の抜けは、その場で止めて直す
+- 記事を書く・直す・点検する物差しは `docs/content-quality.md`（2026-10-17）。GitHub の Issue から AI社員（ai.shain）に頼むときの段取りは `.github/ai-shain.md`
 - X への投稿・返信・DM、ASP の登録や ID の取得は人が行う。AI社員は下書き・設定の反映・記録まで
 - 分からないこと、決められないことは、作る前にオーナーに聞く
 - 仕事を1つ終えるたびに、`promo/log/YYYY-MM-DD.md` に作業ログを書き、その仕事のコミットに含める（書き方は `promo/log/README.md`）

@@ -10,7 +10,7 @@
 | 3 | ブラウザ操作テスト | tests/browser-smoke.mjs | Chromiumでトップの3テーマ、記事一覧（journal.html）、モバイルメニュー、ディープリンク、記事を操作して成功 |
 | 4 | 自動実行環境 | .github/workflows/build-check.yml、browser-smoke.yml | PR作成・更新時にチェックが実行される |
 | 5 | セキュリティ | .github/workflows/security-scan.yml、Dependabot | CodeQL、npm audit（読者に届く依存関係＝`--omit=dev` で High 以上 0 件）、PRの依存関係レビュー（重大以上）が成功。ビルド用ツールの audit は報告のみ |
-| 6 | AI修正ループ | .github/workflows/ci-failure-triage.yml、既存ai-shain.yml | 失敗時にIssueで再現と原因を記録し、人間の判断でAI修正を依頼できる |
+| 6 | AI修正ループ | .github/workflows/ci-failure-triage.yml、既存ai-shain.yml、.github/ai-shain.md（AI社員の業務マニュアル、2026-10-17） | 失敗時にIssueで再現と原因を記録し、人間の判断でAI修正を依頼できる。AI社員は担当→チェック担当の2段階で下書きPRを出す |
 | 7 | マージ制御 | GitHubのmain Ruleset（管理画面で要設定） | PR・必須チェック・人間のレビューを通過しない変更はmainへ入らない |
 
 ## 日常の開発フロー

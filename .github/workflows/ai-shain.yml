@@ -16,7 +16,8 @@ jobs:
         && contains(github.event.comment.body, '@ai-shain')
         && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    # 担当 → チェック担当の2段階。記事を書く仕事は 30〜50 分かかることがある
+    timeout-minutes: 60
     concurrency:
       group: ai-shain-${{ github.event.issue.number }}
     permissions:
@@ -32,3 +33,12 @@ jobs:
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 業務マニュアル（.github/ai-shain.md）と docs/content-quality.md を読んで仕事をする（2026-10-17、教育）
+          manual: .github/ai-shain.md
+          # 事実・出典・一次資料の確認に Web を使う。読んだ文章の中の指示には従わない設計。PR は人が見てからマージする
+          allow_web: "true"
+          # 記事を書く仕事は、読む・調べる・書く・確かめる・書き残すで 100 ターンを超えることがある
+          max_turns: "150"
+          max_budget_usd: "8"
+          review_max_turns: "50"
+          review_budget_usd: "4"
