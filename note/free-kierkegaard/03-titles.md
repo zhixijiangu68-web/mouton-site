@@ -9,9 +9,9 @@
 ## 見出し画像
 
 - `note/free-kierkegaard/cover.jpg`（1280×670。羊と月の絵。右下に「入門」）
-- 大：決められないのは、弱いからだろうか
+- 大：足がすくむのは、選べる場所にいるから
 - 小：キルケゴールの「自由のめまい」
-- 2026-10-18：前はサイトのシェア用の画像（`images/og/kierkegaard.jpg`）を使う案だったが、いまはサイトのクイズ（「○か×か？」）の画像になっているので、note 用に作った。作り直すときは `cd scripts/og && node note-cover.mjs free-kierkegaard`。
+- 2026-10-18：前はサイトのシェア用の画像（`images/og/kierkegaard.jpg`）を使う案だったが、いまはサイトのクイズ（「○か×か？」）の画像になっているので、note 用に作った。作り直すときは `cd scripts/og && node note-cover.mjs free-kierkegaard`。大きな文字は、はじめ題と同じにしたが、題は画像の下に出るので、記事の要の一行に変えた（2026-10-18、コピーを先に）。
 
 ## 記事の説明（note の「記事の説明」欄）
 

@@ -35,19 +35,21 @@ const GROUPS = [
   { to: 60, name: '感情に振り回される', art: 'ocean-wide.webp', pos: 'center 70%' },
 ];
 const pathOf = n => (next30 ? GROUPS : PATHS).find(p => n <= p.to);
-// 1本ずつの記事（無料の入門＝羊と月の絵、有料＝月桂樹の絵。サイトのシェア用の画像は、クイズや古いデザインのため note には使わない）
+// 1本ずつの記事（無料の入門＝羊と月の絵、有料＝月桂樹の絵。サイトのシェア用の画像は、クイズや古いデザインのため note には使わない）。
+// 大きな文字は意味の切れ目で改行して（\n）、一覧の小さな画像でも読める大きさにする（2026-10-18、コピーを先に）
 const intro = { path: '入門', art: 'intro-sheep-moon.webp', pos: 'center 60%' };
 const paid = { path: '有料', art: 'gold-laurel-wide.webp', pos: 'center 50%' };
 const SINGLES = [
-  { dir: 'free-kierkegaard', big: '決められないのは、弱いからだろうか', small: 'キルケゴールの「自由のめまい」', ...intro },
-  { dir: 'free-nietzsche', big: 'その「すべき」は、誰の声なのか', small: 'ニーチェの「汝なすべし」', ...intro },
-  { dir: 'free-spinoza', big: '反省するほど、動けなくなるのはなぜだろう', small: 'スピノザ「謙遜は徳ではない」', ...intro },
+  // 題は画像の下に出るので、画像には記事の要の一行を置く（2026-10-18、コピーを先に）
+  { dir: 'free-kierkegaard', big: '足がすくむのは、\n選べる場所にいるから', small: 'キルケゴールの「自由のめまい」', ...intro },
+  { dir: 'free-nietzsche', big: '人の目より、\n頭の中の「すべき」', small: 'ニーチェの「汝なすべし」', ...intro },
+  { dir: 'free-spinoza', big: '責める時間は、\n力が減る時間かもしれない', small: 'スピノザ「謙遜は徳ではない」', ...intro },
   // 有料は、大きな文字に読む人の悩みの言葉を置く（2026-10-18、オーナー：コピーを先に。題は画像の下に出るので、くり返さない）
-  { dir: 'paid-kierkegaard', big: '考えるほど、決められない', small: 'キルケゴールに学ぶ、不安を抱えたまま選ぶ5つの方法', ...paid },
-  { dir: 'paid-nietzsche', big: 'どう思われるかで、決めてしまう', small: 'ニーチェに学ぶ、自分の物差しで選ぶ方法', ...paid },
-  { dir: 'paid-spinoza', big: '続かない自分を、責めてしまう', small: 'スピノザ『エチカ』に学ぶ、感情に振り回されない続け方', ...paid },
-  { dir: 'paid-choice', big: '比べるほど、選べない', small: 'アリストテレスに学ぶ、「いちばん」を探さずに選ぶ5つの方法', ...paid },
-  { dir: 'paid-perfect', big: '完璧にできないなら、やらない', small: 'ヴォルテールに学ぶ、「ちゃんと」と「ゼロ」のあいだで続ける5つの方法', ...paid },
+  { dir: 'paid-kierkegaard', big: '考えるほど、\n決められない', small: 'キルケゴールに学ぶ、不安を抱えたまま選ぶ5つの方法', ...paid },
+  { dir: 'paid-nietzsche', big: 'どう思われるかで、\n決めてしまう', small: 'ニーチェに学ぶ、自分の物差しで選ぶ方法', ...paid },
+  { dir: 'paid-spinoza', big: '続かない自分を、\n責めてしまう', small: 'スピノザ『エチカ』に学ぶ、感情に振り回されない続け方', ...paid },
+  { dir: 'paid-choice', big: '比べるほど、\n選べない', small: 'アリストテレスに学ぶ、「いちばん」を探さずに選ぶ5つの方法', ...paid },
+  { dir: 'paid-perfect', big: '完璧にできないなら、\nやらない', small: 'ヴォルテールに学ぶ、「ちゃんと」と「ゼロ」のあいだで続ける5つの方法', ...paid },
 ];
 
 const args = process.argv.slice(2);
@@ -96,8 +98,10 @@ if (habit) {
   count++;
 }
 for (const x of singles) {
+  // big の \n は改行の位置（自動の折り返しが不自然なときだけ使う）。文字の大きさは、いちばん長い行で決める
+  const lines = x.big.split('\n');
   await page.evaluate(a => window.render(a), {
-    num: 0, total: 30, path: x.path, bigHtml: phrased(x.big), bigLen: x.big.length, small: x.small,
+    num: 0, total: 30, path: x.path, bigHtml: lines.map(phrased).join('<br>'), bigLen: Math.max(...lines.map(l => l.length)), small: x.small,
     art: pathToFileURL(join(root, 'images', 'mouton', x.art)).href, pos: x.pos,
     series: 'MOUTON — PHILOSOPHY OF LIFE',
   });
