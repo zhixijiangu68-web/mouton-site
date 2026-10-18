@@ -14,6 +14,7 @@ note に記事を貼るための「公開キット」（claude.ai の非公開�
 | `index-anxiety.json` | 目次の各記事の「不安」の一行（はじめの目次記事から写したもの） |
 | `lint_series.py` | 30本（`note/series-30/`）の検査。`plan_data.py` の設計データを使う |
 | `lint_next30.py` | 次の30本（`note/next-30/`）の検査。`note/next-30/plan.md` を読む |
+| `make_plan.py` | 30本の計画書 `note/series-30/plan.md` を作り直す（記事の `03-titles.md` と、確かめた記事の番号 `REVIEWED` から）。plan.md を手で直したら、ここにも同じ直しを入れる |
 
 ## キットを作り直す
 
