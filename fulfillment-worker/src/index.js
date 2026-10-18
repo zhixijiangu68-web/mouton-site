@@ -24,30 +24,42 @@ export function validPaidSession(s,link){return Boolean(s&&/^cs_[a-zA-Z0-9_]+$/.
 async function verifyItems(sid,env){
  const url="https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(sid)+"/line_items?limit=2";
  const res=await fetch(url,{headers:{Authorization:"Bearer "+env.STRIPE_SECRET_KEY},redirect:"error"});
- if(!res.ok)throw Error("Stripe verification failed");const data=await res.json(),rows=data.data||[];
- if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==2980||rows[0].currency!=="jpy")throw Error("wrong item");
+ if(!res.ok){console.error("mouton_stripe_http_status",res.status);throw Error("Stripe verification failed");}const data=await res.json(),rows=data.data||[];
+ if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==2980||rows[0].currency!=="jpy"){console.error("mouton_stripe_line_items_mismatch");throw Error("wrong item");}
 }
 function ready(env){return Boolean(env.ORDERS&&env.PRIVATE_PDFS&&env.STRIPE_WEBHOOK_SECRET&&env.STRIPE_SECRET_KEY&&env.STRIPE_PRICE_ID&&env.STRIPE_PAYMENT_LINK_ID&&env.DOWNLOAD_SIGNING_SECRET?.length>=32&&env.RESEND_API_KEY&&env.FROM_EMAIL&&env.PDF_OBJECT_KEY==="clean-science-2026-10-75p.pdf"&&/^https:\/\/[^/]+\/?$/.test(env.PUBLIC_BASE_URL||""))}
 async function deliver(session,env){
+ let phase="validate_paid_session";
+ try{
  if(!validPaidSession(session,env.STRIPE_PAYMENT_LINK_ID))return response("not matching paid order",422);
- await verifyItems(session.id,env);const now=Math.floor(Date.now()/1000),expires=now+WEEK,recipient=email(session);
+ phase="stripe_line_items";
+ await verifyItems(session.id,env);phase="d1_insert";const now=Math.floor(Date.now()/1000),expires=now+WEEK,recipient=email(session);
  await env.ORDERS.prepare("INSERT OR IGNORE INTO orders(session_id,payment_intent_id,email,status,expires_at,created_at,updated_at) VALUES (?,?,?,'pending',?,?,?)").bind(session.id,session.payment_intent,recipient,expires,now,now).run();
+ phase="d1_read";
  const order=await env.ORDERS.prepare("SELECT status,expires_at FROM orders WHERE session_id=?").bind(session.id).first();
  if(!order||order.status==="revoked")return response("unavailable",409);
  if(order.status==="sent")return response("already delivered");
+ phase="d1_claim";
  const claim=await env.ORDERS.prepare("UPDATE orders SET status='sending',send_claimed_at=?,updated_at=? WHERE session_id=? AND (status IN ('pending','failed') OR (status='sending' AND send_claimed_at<?))").bind(now,now,session.id,now-900).run();
  if(!claim.meta?.changes)return response("in progress");
  try{
    const token=await signToken(session.id,order.expires_at,env.DOWNLOAD_SIGNING_SECRET);
    const url=env.PUBLIC_BASE_URL.replace(/\/$/,"")+"/download/"+token;
    const message="ご購入ありがとうございます。清潔感の科学（PDF 75ページ）をダウンロードできます。\n有効期限7日・最大5回。リンクは共有しないでください。\n"+url;
+   phase="resend_send";
    const result=await fetch("https://api.resend.com/emails",{method:"POST",headers:{"Authorization":"Bearer "+env.RESEND_API_KEY,"Content-Type":"application/json","Idempotency-Key":"mouton-clean-science-"+session.id},body:JSON.stringify({from:env.FROM_EMAIL,to:[recipient],subject:"【ムートン】清潔感の科学｜PDFダウンロード",text:message})});
    if(!result.ok||!(await result.json()).id)throw Error("email not accepted");
+   phase="d1_mark_sent";
    await env.ORDERS.prepare("UPDATE orders SET status='sent',updated_at=? WHERE session_id=? AND status='sending'").bind(now,session.id).run();
    return response("delivered");
  }catch{
+   console.error("mouton_delivery_failure",{phase});
    await env.ORDERS.prepare("UPDATE orders SET status='failed',updated_at=? WHERE session_id=? AND status='sending'").bind(now,session.id).run();
    return response("delivery failed; retry",503);
+ }
+ }catch{
+   console.error("mouton_delivery_failure",{phase});
+   throw Error("delivery processing failed");
  }
 }
 export async function handleWebhook(req,env){
