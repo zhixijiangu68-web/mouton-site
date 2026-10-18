@@ -1,7 +1,7 @@
 {#- 有料記事の販売ページ（見本のあと）：②具体的な悩み → ③この記事で取り組めること。
     文言は各記事の front matter（paid・lp）から。 -#}
 <section class="plp-section plp-pains" aria-labelledby="plp-pains-h">
-  <p class="plp-step">02 / Worries</p>
+  <p class="plp-step">02 ／ 悩み</p>
   <h2 id="plp-pains-h">いま、こんな夜が続いていませんか。</h2>
   <ul class="plp-pains-list">
     {%- for x in lp.pains %}<li>{{ x }}</li>{% endfor %}
@@ -10,7 +10,7 @@
 </section>
 
 <section class="plp-section plp-can" aria-labelledby="plp-can-h">
-  <p class="plp-step">03 / What you can do</p>
+  <p class="plp-step">03 ／ できること</p>
   <h2 id="plp-can-h">読んだあとに</h2>
   <div class="plp-ba">
     <div class="plp-ba-item"><p class="plp-ba-label">いま</p><p class="plp-ba-text">{{ paid.before }}</p></div>

@@ -79,7 +79,7 @@ body.menu-locked{overflow:hidden}
 .btn:focus-visible{outline:2px solid currentColor;outline-offset:4px}
 
 /* Shared headings */
-.site .eyebrow{font-family:var(--latin);font-style:italic;font-weight:400;font-size:1.0625rem;letter-spacing:.04em;margin:0 0 18px;opacity:.9}
+.site .eyebrow{font-family:var(--gothic);font-weight:500;font-size:.875rem;letter-spacing:.12em;margin:0 0 18px;opacity:.9}
 .site .section-title{font-family:var(--serif);font-weight:200;font-size:clamp(2.5rem,6vw,5rem);line-height:1.2;letter-spacing:.04em;margin:0}
 .site .section-title em{display:block;font-family:var(--latin);font-style:italic;font-weight:300;font-size:.42em;letter-spacing:.01em;margin-top:.5em;opacity:.75}
 .site .copy{font-family:var(--serif);font-size:1.0625rem;line-height:2.05;color:#45473f}
@@ -546,7 +546,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 
 /* Philosophy first: the mindset door on the start page and the articles page. */
 .mind-door{margin:28px 0 48px;padding:clamp(26px,5vw,48px);border-radius:14px;background:#1b1c19;color:#f1ebdf}
-.mind-door-kicker,.doc .mind-door-kicker{color:#e7c983;margin:0 0 14px;font:400 .6875rem/1.8 Inter,sans-serif;letter-spacing:.24em;text-transform:uppercase;opacity:.9}
+.mind-door-kicker,.doc .mind-door-kicker{color:#e7c983;margin:0 0 14px;font:500 .8125rem/1.8 var(--gothic);letter-spacing:.14em;opacity:.9}
 .doc .mind-door-title,.mind-door-title{border:0;padding:0;margin:0 0 18px;font-family:var(--serif);font-weight:400;font-size:clamp(1.6rem,4.4vw,2.6rem);line-height:1.5;color:#f8f5ee}
 .doc .mind-door-text,.mind-door-text{margin:0 0 12px;font-family:var(--serif);font-size:1rem;line-height:2;color:#f1ebdf}
 .mind-door-text strong{font-weight:600;color:#fff}
@@ -554,7 +554,7 @@ html[lang="en"] .journal-item.is-read .journal-title::after,html[lang="en"] .gui
 .doc .mind-door-read,.mind-door-read{display:flex;flex-direction:column;gap:8px;padding:20px 22px;border:1px solid rgba(241,235,223,.28);border-radius:12px;background:rgba(255,255,255,.06);color:#f8f5ee;text-decoration:none;transition:border-color .3s,background-color .3s,transform .4s cubic-bezier(.2,.7,.2,1)}
 .mind-door-read:hover{border-color:var(--gold);background:rgba(255,255,255,.1);transform:translateY(-2px)}
 .mind-door-read:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-.mind-door-step{font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.2em;color:var(--gold)}
+.mind-door-step{font:500 .75rem/1.6 var(--gothic);letter-spacing:.14em;color:var(--gold)}
 .mind-door-read-title{font-family:var(--serif);font-size:1.125rem;line-height:1.65}
 .mind-door-read-text{font-size:.875rem;line-height:1.85;opacity:.78}
 .mind-door-more{margin-top:auto;padding-top:4px;font-size:.8125rem;color:#e7c983}
@@ -681,7 +681,7 @@ article .paid-cta p{margin:0;font-family:var(--serif)}
 
 /* Paid article product page (partials/paid-lp-*.njk): 悩み → 取り組めること → 見本 → 内容 → 理由 → 向き不向き → 価格 → FAQ */
 body.article-page article .plp-section{margin:64px 0 0}
-body.article-page article .plp-step{margin:0 0 6px;font:500 .6875rem/1.6 Inter,sans-serif;letter-spacing:.22em;color:#7a5a1c}
+body.article-page article .plp-step{margin:0 0 6px;font:500 .8125rem/1.6 var(--gothic);letter-spacing:.14em;color:#7a5a1c}
 body.article-page article .plp-section > h2{margin:0 0 22px}
 body.article-page article .plp-small{font-size:.8125rem;line-height:1.9;color:var(--muted,#666a64)}
 body.article-page article .plp-pains-list{list-style:none;margin:0 0 20px;padding:0;display:grid;gap:10px}
@@ -741,7 +741,7 @@ body.article-page article a.plp-btn:hover{background:#33352f}
 body.article-page article a.plp-btn:focus-visible{outline:2px solid var(--blue,#1442c4);outline-offset:3px}
 body.article-page article .plp-hero-more{display:inline-flex;align-items:center;min-height:44px;font-size:.9375rem;line-height:1.4}
 body.article-page article .plp-hero-cta{margin-bottom:22px}
-body.article-page article .plp-product{margin:0 0 22px;font-size:.8125rem;line-height:1.8;color:var(--muted,#666a64)}
+body.article-page article .plp-product{margin:-32px 0 26px;font-size:.9375rem;line-height:1.8;color:var(--muted,#666a64)}
 /* 冒頭の要約（2026-10-17）：どんな悩みに／整理できること／届くもの・価格／いま買えるか */
 body.article-page article .plp-glance{margin:18px 0 22px;padding:4px 18px;border:1px solid var(--line,rgba(37,39,36,.16));border-radius:12px;background:rgba(255,255,255,.42)}
 body.article-page article .plp-glance-row{display:grid;grid-template-columns:9.5em minmax(0,1fr);gap:4px 16px;padding:12px 0;border-top:1px solid var(--line,rgba(37,39,36,.12))}
@@ -817,7 +817,7 @@ body.article-page article .paid-series .paid-back{margin-top:18px}
 body.article-page article a.paid-series-link{color:var(--ink,#252724);text-decoration:underline;text-decoration-color:rgba(122,90,28,.5);text-underline-offset:4px}
 .doc .lp-path,.lp-path{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 14px;font-family:var(--serif);font-size:.9375rem;line-height:1.5}
 .lp-path-step{display:inline-flex;flex-direction:column;padding:6px 10px;border:1px solid var(--line);border-radius:10px;background:#fff}
-.lp-path-name{font-family:Inter,"Noto Sans JP",sans-serif;font-size:.625rem;letter-spacing:.04em;color:#7a5a1c}
+.lp-path-name{font-family:Inter,"Noto Sans JP",sans-serif;font-size:.75rem;letter-spacing:.04em;color:#7a5a1c}
 .lp-path-arrow{color:#7a5a1c;font-size:.875rem}
 .ph-path-step{margin:0 0 6px!important;font-family:Inter,"Noto Sans JP",sans-serif;font-size:.75rem!important;letter-spacing:.12em;opacity:.75}
 
