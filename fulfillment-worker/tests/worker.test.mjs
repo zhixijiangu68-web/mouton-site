@@ -66,16 +66,17 @@ function withFetch(impl,fn){
 function stripeAndResend({priceId="price_kierkegaard",amount=2980,stripeStatus=200,resendStatus=200}={}){
  const calls=[];
  const impl=async(url,init={})=>{
-  calls.push({url:String(url),init});
-  if(String(url).includes("/line_items")){
+  const u=new URL(String(url));
+  calls.push({url:u.href,host:u.hostname,init});
+  if(u.hostname==="api.stripe.com"&&u.pathname.endsWith("/line_items")){
    if(stripeStatus!==200)return new Response("{}",{status:stripeStatus});
    return new Response(JSON.stringify({data:[{price:{id:priceId},quantity:1,amount_total:amount,currency:"jpy"}],has_more:false}),{status:200});
   }
-  if(String(url).includes("api.resend.com/emails")){
+  if(u.hostname==="api.resend.com"&&u.pathname==="/emails"){
    if(resendStatus!==200)return new Response("{}",{status:resendStatus});
    return new Response(JSON.stringify({id:"em_1"}),{status:200});
   }
-  throw Error("unexpected fetch: "+url);
+  throw Error("unexpected fetch: "+u.href);
  };
  return {impl,calls};
 }
@@ -155,7 +156,8 @@ test("delivers the product that matches the Payment Link, records product_id, em
  const row=rows.get(sid);
  assert.equal(row.status,"sent");assert.equal(row.product_id,"philosophy_kierkegaard");assert.equal(row.email,"buyer@example.com");
  assert.equal(f.calls.length,2);
- assert.ok(f.calls[0].url.includes("/checkout/sessions/"+sid+"/line_items"));
+ assert.equal(f.calls[0].host,"api.stripe.com");
+ assert.ok(new URL(f.calls[0].url).pathname.endsWith("/checkout/sessions/"+sid+"/line_items"));
  const mail=JSON.parse(f.calls[1].init.body);
  assert.deepEqual(mail.to,["buyer@example.com"]);
  assert.ok(mail.subject.includes(KIERKEGAARD.title));
@@ -205,7 +207,7 @@ test("redelivery of a sent order does not email twice; in-progress claims are re
  await withFetch(f.impl,()=>webhook(env,completed()));
  const again=await withFetch(f.impl,()=>webhook(env,completed()));
  assert.equal(await again.text(),"already delivered");
- assert.equal(f.calls.filter(c=>c.url.includes("resend")).length,1);
+ assert.equal(f.calls.filter(c=>c.host==="api.resend.com").length,1);
  rows.get(sid).status="sending";rows.get(sid).send_claimed_at=now;
  assert.equal(await (await withFetch(f.impl,()=>webhook(env,completed()))).text(),"in progress");
  rows.get(sid).send_claimed_at=now-1000;

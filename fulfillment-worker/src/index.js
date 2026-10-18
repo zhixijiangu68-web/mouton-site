@@ -19,7 +19,15 @@ export async function verifyToken(token,secret,now=Math.floor(Date.now()/1000)){
  const v=JSON.parse(dec.decode(unb64(p[0])));return /^cs_[a-zA-Z0-9_]+$/.test(v.sid)&&Number.isSafeInteger(v.exp)&&v.exp>now?v:null
  }catch{return null}
 }
-function email(s){const e=s.customer_details?.email||s.customer_email||"";return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)&&e.length<=254?e:null}
+// メールアドレスの形の検査。長さを先に見て、正規表現の繰り返し（ReDoS）に頼らない。
+function email(s){
+ const e=s.customer_details?.email||s.customer_email||"";
+ if(typeof e!=="string"||e.length<3||e.length>254||/\s/.test(e))return null;
+ const at=e.indexOf("@");if(at<1||at!==e.lastIndexOf("@"))return null;
+ const domain=e.slice(at+1),dot=domain.indexOf(".");
+ if(dot<1||domain.endsWith(".")||domain.includes(".."))return null;
+ return e;
+}
 
 // ---- 商品カタログ（PRODUCTS。秘密ではない）----
 // 1商品 = {id, paymentLinkId, priceId, amountJPY, objectKey, title, pages, filename}
