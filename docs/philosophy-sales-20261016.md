@@ -29,6 +29,31 @@
 7. **本番の準備**：Stripe 本番口座で、商品・価格・Payment Link・Webhook の秘密鍵を**サンドボックスとは別に**作る。本番の Worker の設定も別にする。
 8. **公開**：各記事の front matter `paid.checkoutUrl` に本番の Payment Link、`src/_data/site.js` の `product.philosophy` に `legalUrl` を入れ、最後に `fulfillmentReady: true`。`npm test` が通ったときだけ、購入ボタンが出る。
 
+## 本番切り替えのチェックリスト（手順 7〜8 の中身。2026-10-19）
+
+サンドボックスと本番は、鍵も Worker も分ける。混ぜると、本番の購入者にサンドボックスの設定で返事をすることになる。
+
+1. **本番の Worker を別名で作る**（例 `mouton-delivery-live`）。D1 も本番用に別に作り（例 `mouton-orders-live`）、`0001`・`0002` のマイグレーションを `--remote` で適用。R2 のバケットは同じでよい（PDF は同じ）。
+2. **Secrets を本番口座の鍵で登録**：`STRIPE_SECRET_KEY`（本番の秘密鍵）、`STRIPE_WEBHOOK_SECRET`（本番の Webhook の署名シークレット）、`RESEND_API_KEY`、`DOWNLOAD_SIGNING_SECRET`（サンドボックスとは別の32文字以上）。
+3. **変数**：`PRODUCTS` に本番の Payment Link ID・Price ID、`PUBLIC_BASE_URL` に本番 Worker の URL、`FROM_EMAIL` は認証済みのドメイン。
+4. **Stripe 本番**：3商品・価格（2,980円 JPY・税込）・Payment Link（数量は変更不可、支払い後の文言に「数分以内にメールで PDF のリンクが届く」）。Webhook エンドポイント `https://<本番 Worker>/stripe/webhook` に4イベント（`checkout.session.completed`・`checkout.session.async_payment_succeeded`・`charge.refunded`・`charge.dispute.created`）。
+5. `/health` が `configured`。**自分のカードで1件テスト購入** → メールが受信トレイに届く（迷惑メールに入らないか）→ PDF が開く → 同じイベントを再送して `already delivered` → 返金 → `revoked`、リンクが 403。手数料が返金で戻るかは確かめられず（Stripe の料金ページで見る）。
+6. 特定商取引法の表記（`src/_data/legal.js`）を埋め、`npm run build` → `npm test`。`legal.html` が出ることを確かめる。
+7. 各販売ページの front matter `paid.checkoutUrl` に本番の Payment Link、`src/_data/site.js` の `product.philosophy.legalUrl`、最後に `fulfillmentReady: true`。`npm test` が緑のときだけ公開。
+8. 公開後、最初の実決済は Stripe の支払い記録と D1 の注文で確かめる（GA4 では数えない）。不審請求の申し立てが来たら、Stripe の期限内に D1 の記録（送信・ダウンロード回数）を証拠として出す。
+
+## 購入者から「届かない」と言われたとき（オーナーの手順。2026-10-19）
+
+鍵・購入者のアドレス・ダウンロードの URL は、Issue・ログ・チャットに貼らない。D1 の操作は Cloudflare のコンソールで。
+
+1. **探す**：D1 で `SELECT session_id, status, expires_at, downloads, created_at FROM orders WHERE email = '購入時のアドレス';`
+2. **行が無い**：Webhook が届いていない。Stripe の Workbench → Webhooks → Event deliveries で、その支払いの `checkout.session.completed` が失敗していれば Resend（再送）。成功になっているのに行が無ければ、Worker のバインディング先の D1 が別物。
+3. **`pending` か `failed`**：メールを送れていない。同じイベントを Resend すれば送られる（Worker は `pending`/`failed` を拾い直す）。
+4. **`sent` で期限内（`expires_at` が未来、`downloads` が 5 未満）**：Resend は受け付けている。Resend の Logs で delivered か bounced かを見る。delivered なら迷惑メールのフォルダを確かめてもらう。bounced ならアドレスの誤り。Stripe の Customer に別のアドレスがあれば、そちらに送り直す（下の5）。
+5. **期限切れ・5回使い切り・別のアドレスに送り直す**：`UPDATE orders SET status = 'pending', expires_at = strftime('%s','now') + 604800, downloads = 0, updated_at = strftime('%s','now') WHERE session_id = 'cs_…';` のあと、同じイベントを Resend。期限が変わるとリンクも新しくなる。注意（確かめられず）：Resend の Idempotency-Key は一定時間（24時間と言われる）同じ応答を返すので、前回の送信から24時間以内の再送は届かないことがある。急ぐときは、Resend の Logs にある前回のメール本文のリンクを、手で送る。
+6. **`revoked`**：返金か異議申し立て済み。再送しない。
+7. それでも届かなければ、返金で対応（特定商取引法の表記の「メールが届かない・ファイルが開けない場合」のとおり）。
+
 ## Worker の変更点（手順 2。2026-10-19 に実装し、PR にした。Cloudflare に載せるのは手順 1 が `delivered` になってから）
 
 実装：`fulfillment-worker/src/index.js`（商品の一覧 `PRODUCTS`、Payment Link で商品を決める、商品ごとの金額・Price・R2 のファイル・メール）、`migrations/0002_orders_product.sql`、`tests/worker.test.mjs`（14件）、`wrangler.example.toml`。`PRODUCTS` が無いあいだは旧い3変数を清潔感の科学1商品として読むので、手順 1 の診断中の Cloudflare の設定はそのままでよい。
