@@ -29,7 +29,7 @@ const PATHS = [
 ];
 // 次の30本「自分を動かしているもの」（31〜40＝選べない、41〜50＝誰かの物差し、51〜60＝感情に振り回される）
 const GROUPS = [
-  { to: 40, name: '選べない', art: 'orbit-light-wide.webp', pos: 'center' },
+  { to: 40, name: '選べない', art: 'orb-dark-wide.webp', pos: 'center 40%' },
   { to: 50, name: '誰かの物差し', art: 'moon-botanical-wide.webp', pos: 'center 30%' },
   { to: 60, name: '感情に振り回される', art: 'ocean-wide.webp', pos: 'center 70%' },
 ];
