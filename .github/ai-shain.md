@@ -56,14 +56,14 @@ AI社員（ai.shain：担当とチェック担当）が、GitHub の Issue を�
 ### E. X の投稿の下書き（`ai-task:x`）
 
 1. `.claude/skills/x-staff/rules.md` の「2026-10-18 の決まり」（コピー第一から）と `promo/x-posts.md` のいちばん新しい節（「2026-10-18 版」）を読み、同じ形で書く。1行目は、いちばん強い一文（自分のことだと思う場面・常識の反対・意外な数字）。材料は残す記事と「ムートンについて」だけ。事実・数字・哲学者の言葉は、その記事に出典つきで書いてあるものだけ
-2. 本文は 140 字以内（URL を除く）、リプリンク（リプライの1行に `utm_source=x&utm_medium=social&utm_campaign=<slug>&utm_content=reply`）。○×クイズ・投票・ワークは使わない。命令・断定・約束・あおりも使わない
+2. **三つの長さ**（2026-10-19）：X は同じ題材のいちばん短い版。サイトの長い版の1行目と問いをそのまま使い、長い版にない事実・数字は入れない（`docs/content-quality.md` の 7）。本文は 140 字以内（URL を除く）、リプリンク（リプライの1行に `utm_source=x&utm_medium=social&utm_campaign=<slug>&utm_content=reply`）。○×クイズ・投票・ワークは使わない。命令・断定・約束・あおりも使わない
 3. `node scripts/x-check.mjs promo/x-posts.md --section "<節の見出し>"` を通す（問題 0 件）
 4. 順番表に入れるのは人の承認が要るので、入れずに PR 本文に「候補と、入れる枠の案」の表を書く。投稿はしない
 
 ### F. note の記事（`ai-task:note`）
 
 1. `.claude/skills/note/SKILL.md`・`note/README.md`・`.claude/agents/note-*.md` を読み、5段階（リサーチ → 本文 → タイトル → チェック → 告知）を1人で順に行う。成果物は `note/<slug>/`（`01-research.md`〜`05-sns.md`、`article.md`）
-2. テーマは Issue のとおり。有料の3本の悩みか3つの姿勢に結びつけ、サイトの入口（無料の入門記事・3つの姿勢・ムートンについて）へ `?utm_source=note&utm_medium=referral&utm_campaign=<slug>` でつなぐ。アーカイブの記事には案内しない
+2. **三つの長さ**（2026-10-19）：note の記事はサイトの残す記事の約1,500字の短い版（`docs/content-quality.md` の 7。見本 `note/keep-or-change/`）。テーマは Issue のとおり（残す記事の slug で受け取るのが基本）。リサーチはその記事と参考文献を読んでまとめ、新しい研究を足さない。有料の3本の悩みか3つの姿勢に結びつけ、サイトの入口（無料の入門記事・3つの姿勢・ムートンについて）へ `?utm_source=note&utm_medium=referral&utm_campaign=<slug>` でつなぐ。アーカイブの記事には案内しない
 3. 文章は `docs/content-quality.md`。最後に問いを一つ。ワーク・手順なし。販売が始まるまで値段・購入の案内は書かない。新しい研究は一次資料で確かめ、確かめられないものは書かない
 4. note への投稿はしない。PR 本文に、最終タイトル・`04-review.md` の判定・人が確認すべきことを書く
 
