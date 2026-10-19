@@ -23,7 +23,14 @@ function email(s){const e=s.customer_details?.email||s.customer_email||"";return
 export function validPaidSession(s,link){return Boolean(s&&/^cs_[a-zA-Z0-9_]+$/.test(s.id||"")&&s.mode==="payment"&&s.payment_status==="paid"&&s.payment_link===link&&s.currency==="jpy"&&s.amount_total===2980&&typeof s.payment_intent==="string"&&s.payment_intent.startsWith("pi_")&&email(s))}
 async function verifyItems(sid,env){
  const url="https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(sid)+"/line_items?limit=2";
- const res=await fetch(url,{headers:{Authorization:"Bearer "+env.STRIPE_SECRET_KEY},redirect:"error"});
+ let res;
+ try{res=await fetch(url,{headers:{Authorization:"Bearer "+env.STRIPE_SECRET_KEY},redirect:"error"});}
+ catch(e){
+  const k=String(env.STRIPE_SECRET_KEY||"");
+  console.error("mouton_stripe_fetch_error",{name:e&&e.name,msg:String(e&&e.message).split(k).join("***").slice(0,120)});
+  console.error("mouton_key_shape",{prefix:k.slice(0,8),len:k.length,plainAscii:/^[\x21-\x7e]+$/.test(k)});
+  throw e;
+ }
  if(!res.ok){console.error("mouton_stripe_http_status",res.status);throw Error("Stripe verification failed");}const data=await res.json(),rows=data.data||[];
  if(data.has_more||rows.length!==1||rows[0].price?.id!==env.STRIPE_PRICE_ID||rows[0].quantity!==1||rows[0].amount_total!==2980||rows[0].currency!=="jpy"){console.error("mouton_stripe_line_items_mismatch");throw Error("wrong item");}
 }
