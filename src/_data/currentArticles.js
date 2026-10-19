@@ -4,10 +4,11 @@
 // 2026-10-17 同日、オーナーの判断で「1分ワーク」はなくした（安易に与えると受け身になる。読者に考えてほしい）。
 // ここにない日本語の記事はアーカイブになる：記事一覧・次に読む・おまかせから外れ、archive.html に並び、
 // ページの上に「アーカイブ」の注記が出る。URL はそのまま（外からのリンクと検索を切らないため）。
+// 2026-10-19、先延ばしと時間的非整合性の記事 keep-or-change を追加（オーナー「コピーライティングを用いて、質の高い記事を作成できると思う」）。
 // 英語版は後回し（2026-10-17、オーナー）なので、src/en/ には使わない。
 export default [
   'paid-kierkegaard', 'paid-nietzsche', 'paid-spinoza',
   'kierkegaard', 'nietzsche', 'spinoza',
   'stoicism', 'camus-sisyphus', 'sartre',
-  'absorption-freedom-action', 'action-bias',
+  'absorption-freedom-action', 'action-bias', 'keep-or-change',
 ];
