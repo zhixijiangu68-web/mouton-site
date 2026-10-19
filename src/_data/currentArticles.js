@@ -10,4 +10,6 @@ export default [
   'kierkegaard', 'nietzsche', 'spinoza',
   'stoicism', 'camus-sisyphus', 'sartre',
   'absorption-freedom-action', 'action-bias',
+  // 2026-10-19：オーナーの依頼「習慣形成の記事を、コピーライティング第一で」。状況を変える戦略・同じ場面でのくり返し・ナッジの論争。続かない悩み（スピノザ）につなぐ。
+  'habit-stop-and-start',
 ];
