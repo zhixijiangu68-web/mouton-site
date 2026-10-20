@@ -1,0 +1,34 @@
+---
+layout: base.njk
+renewal: true
+bodyClass: rn
+---
+{#- 2026-10-21 作り直し（docs/site-renewal-20261021.md）。新しいページの枠：ヘッダー、本文、フッターだけ。演出は入れない。 #}
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="journal.html"{% if page.url == '/journal.html' %} aria-current="page"{% endif %}>記事</a>
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+{{ content | safe }}
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X</a>
+      {%- if site.author.note %}
+      <a href="https://note.com/{{ site.author.note }}" target="_blank" rel="noopener noreferrer">note</a>
+      {%- endif %}
+    </nav>
+  </div>
+</footer>

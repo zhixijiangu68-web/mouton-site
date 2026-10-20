@@ -1,0 +1,13 @@
+{#- 2026-10-21 作り直し：今の記事の一覧（トップと記事一覧で同じもの）。題・一行の要約・柱と読む時間だけ。 #}
+{%- set pillarLabels = { food: '食', body: '身体', money: 'お金', life: '生き方' } %}
+<ul class="rn-list">
+  {%- for a in collections.current %}
+  <li class="rn-item">
+    <a class="rn-list-title" href="{{ a.page.fileSlug }}.html">{{ a.data.headline }}</a>
+    {%- if a.data.excerpt %}
+    <p class="rn-list-summary">{{ a.data.excerpt }}</p>
+    {%- endif %}
+    <p class="rn-list-meta">{{ pillarLabels[a.data.pillar] or '記事' }}・約{{ a.data.readMinutes }}分</p>
+  </li>
+  {%- endfor %}
+</ul>

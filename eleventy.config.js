@@ -46,6 +46,35 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter('isoDate', d => ymd(new Date(d)).join('-'));
   eleventyConfig.addFilter('dotDate', d => ymd(new Date(d)).join('.'));
+  eleventyConfig.addFilter('jaDate', d => { const [y, m, day] = ymd(new Date(d)); return `${y}年${Number(m)}月${Number(day)}日`; });
+
+  // 2026-10-21 作り直し：記事の判定表。front matter の claims（claim・verdict・certainty・basis・refs）から作る。
+  // 判定は記号と文字で示し、色だけに頼らない（○ 支持＝藍、× 否定＝朱、△ 弱い・― 証拠なし＝灰）。
+  const verdicts = {
+    support: ['○', '支持', 'is-support'],
+    refute: ['×', '否定', 'is-refute'],
+    weak: ['△', '弱い', 'is-weak'],
+    none: ['―', '証拠なし', 'is-none'],
+  };
+  eleventyConfig.addShortcode('verdictTable', (claims = []) => {
+    const esc = x => String(x ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const rows = claims.map(c => {
+      const [mark, label, cls] = verdicts[c.verdict] || verdicts.none;
+      const refs = (c.refs || []).map(n => `<a href="#ref-${Number(n)}">[${Number(n)}]</a>`).join('');
+      return `<tr><th scope="row">${esc(c.claim)}</th>`
+        + `<td class="rn-verdict ${cls}" data-label="判定"><span aria-hidden="true">${mark}</span> ${label}</td>`
+        + `<td data-label="確かさ">${esc(c.certainty) || '―'}</td>`
+        + `<td data-label="根拠">${esc(c.basis)}${refs ? ` ${refs}` : ''}</td></tr>`;
+    }).join('');
+    return `<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  });
+  // 健康の記事の注意書きは、参考文献の前に置く（参考文献が無ければ本文の最後）。
+  eleventyConfig.addFilter('withHealthNote', (html, on) => {
+    if (!on) return html;
+    const note = '<p class="rn-health" role="note">この記事は、研究の結果を紹介するもので、医療の助言ではありません。体の不調や性の悩みは、医師に相談してください。</p>';
+    const at = html.indexOf('<section class="rn-refs"');
+    return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
+  });
   // Pages with affiliate links say so near the top, not only at the end
   // (Japan's stealth-marketing rules): right after the reading time line.
   eleventyConfig.addFilter('prNotice', (html, show) => {
@@ -83,10 +112,10 @@ export default function (eleventyConfig) {
     const src = paths.find(p => existsSync(p));
     return src ? ` style="--img:url('${src}')"` : '';
   });
-  // アーカイブに移した記事の上に出す注記。本文はそのまま残し、いまの入口（記事・哲学の3本）を示す。
+  // アーカイブに移した記事の上に出す注記。本文はそのまま残し、今の入口（トップ）を示す（2026-10-21 作り直し）。
   eleventyConfig.addFilter('archiveNote', (html, on) => on ? html.replace(/<article\b[^>]*>/, m => m
     + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
-    + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。</p></aside>') : html);
+    + '<p>この記事は、サイトを作り直す前（2026年10月まで）のものです。<a href="index.html">今の記事へ</a></p></aside>') : html);
   // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
   eleventyConfig.addFilter('paidCards', items =>
     items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));

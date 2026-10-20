@@ -14,7 +14,7 @@
 <title>{{ title }}</title>
 {%- set pageUrl = page.url | absoluteUrl(site.url) %}
 <meta name="description" content="{{ description }}">
-{%- if noindex %}
+{%- if noindex or checking %}
 <meta name="robots" content="noindex">
 {%- elif site.url %}
 <link rel="canonical" href="{{ pageUrl }}">
@@ -49,7 +49,7 @@
 <meta name="twitter:card" content="summary">
 {%- endif %}
 <meta name="twitter:site" content="@{{ site.author.x }}">
-<meta name="theme-color" content="#f8f5ee">
+<meta name="theme-color" content="{{ '#FAF8F3' if renewal else '#f8f5ee' }}">
 <script src="{{ root }}design-version.js"></script>
 {%- if site.searchConsole and page.url == "/" %}
 <meta name="google-site-verification" content="{{ site.searchConsole }}">
@@ -64,7 +64,7 @@
 {%- endif %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-{%- if isArticle %}
+{%- if isArticle and not renewal %}
 <link rel="stylesheet" href="{{ root }}article-base.css">
 {%- endif %}
 {%- if styles %}
@@ -72,13 +72,21 @@
 {{ styles | safe }}
 </style>
 {%- endif %}
-{%- if isArticle %}
+{%- if isArticle and not renewal %}
 <link rel="stylesheet" href="{{ root }}reading.css">
 {%- endif %}
+{#- 2026-10-21 作り直し：新しいページ（renewal: true）は Noto Sans JP と renewal.css だけを読む。今までのページ（アーカイブ）は今のまま。 #}
+{%- if renewal %}
+{%- set fontsUrl = "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" %}
+{%- else %}
 {%- set fontsUrl = "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;600&display=swap" %}
+{%- endif %}
 <link rel="preload" as="style" href="{{ fontsUrl }}">
 <link rel="stylesheet" href="{{ fontsUrl }}" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="{{ fontsUrl }}"></noscript>
+{%- if renewal %}
+<link rel="stylesheet" href="{{ root }}renewal.css{% if assetVersion %}?v={{ assetVersion }}{% endif %}">
+{%- else %}
 <link rel="stylesheet" href="{{ root }}site.css{% if assetVersion %}?v={{ assetVersion }}{% endif %}">
 {%- for css in extraCss %}
 <link rel="stylesheet" href="{{ root }}{{ css }}">
@@ -86,8 +94,11 @@
 <link rel="stylesheet" href="{{ root }}design-version.css">
 <script src="{{ root }}site.js{% if assetVersion %}?v={{ assetVersion }}{% endif %}" defer></script>
 <script src="{{ root }}quiz-loop.js" defer></script>
+{%- endif %}
 {%- if isArticle %}
+{%- if not renewal %}
 <script src="{{ root }}article-share.js" defer></script>
+{%- endif %}
 <script type="application/ld+json">{% articleLd headline, description, page.date, updated, pageUrl, site, lang or 'ja' %}</script>
 {%- set crumbs %}{% if lang != 'en' %}{% breadcrumbLd site, topics | findTopic(topic), headline, pageUrl %}{% endif %}{% endset %}
 {%- if crumbs | trim %}

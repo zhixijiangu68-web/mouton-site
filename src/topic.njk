@@ -15,7 +15,8 @@ eleventyComputed:
 {% include "partials/nav.njk" %}
 <div class="doc-cover ph-{{ t.ph }}" data-nav="dark"{% bgImage "images/cover-" + t.ph + ".jpg" %}></div>
 <main class="doc topic" data-nav="light" data-nav-solid="light">
-{%- if t.key != "philosophy" %}{% include "partials/archive-hub.njk" %}{% endif %}
+{#- 2026-10-21 作り直し：テーマ別のページは、哲学の3本も含めてすべてアーカイブ。 #}
+{%- include "partials/archive-hub.njk" %}
 {%- if t.key == "philosophy" %}
   {% include "partials/philosophy-lp.njk" %}
 {%- elif t.lp %}
