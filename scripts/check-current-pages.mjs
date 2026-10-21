@@ -58,6 +58,14 @@ for (const p of ['index.html', 'journal.html']) {
   if (items(html) !== currentArticles.length) report(p, `記事一覧が ${items(html)} 本（今の記事は ${currentArticles.length} 本）`);
   for (const s of currentArticles) if (!html.includes(`href="${s}.html"`)) report(p, `今の記事 "${s}" が一覧にない`);
 }
+// 2026-10-21（オーナー「新しい順、おすすめ、人気順くらいにする。あとは検索機能をつける」）：一覧には検索と3つの並び順がある
+if (!existsSync('renewal.js')) report('renewal.js', '検索と並び替えのスクリプトがない');
+for (const p of ['index.html', 'journal.html']) {
+  const html = read(p);
+  if (!html.includes('id="rn-q"')) report(p, '記事の検索欄がない');
+  for (const label of ['新しい順', 'おすすめ', '人気順']) if (!html.includes(`role="tab"`) || !html.includes(`>${label}</button>`)) report(p, `並び順「${label}」がない`);
+  if (!html.includes('id="rn-archive"')) report(p, '検索に使うアーカイブの一覧がない');
+}
 const archive = read('archive.html');
 for (const s of archived) if (!archive.includes(`href="${s}.html"`)) report('archive.html', `アーカイブの記事 "${s}" が一覧にない`);
 

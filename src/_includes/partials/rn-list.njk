@@ -1,13 +1,38 @@
-{#- 2026-10-21 作り直し：今の記事の一覧（トップと記事一覧で同じもの）。題・一行の要約・柱と読む時間だけ。 #}
+{#- 2026-10-21 作り直し：今の記事の一覧（トップと journal.html で同じもの）。オーナー「新しい順、おすすめ、人気順くらいにする。あとは検索機能をつける。それだけのシンプルなサイトでいい」。
+    - 新しい順：collections.current の順（公開日の新しい順）。JS が無くてもこの順で読める
+    - おすすめ：記事の front matter の pick（1 が先頭）。無い記事は最後
+    - 人気順：src/_data/popular.json の views（過去4週間の閲覧数、ファイル名ごと）。空のあいだは新しい順と同じ
+    - 検索：今の記事は題・要約・副題・見出し・柱から、アーカイブは題から。外のサービスは使わない（renewal.js）
+    検索と並び替えは JS があるときだけ出す（html.js）。 #}
 {%- set pillarLabels = { food: '食', body: '身体', money: 'お金', life: '生き方' } %}
-<ul class="rn-list">
+<div class="rn-find" aria-label="記事を探す" role="search">
+  <label class="rn-vh" for="rn-q">記事を探す</label>
+  <input class="rn-q" id="rn-q" type="search" placeholder="記事を探す（例：睡眠、肉、うつ）" autocomplete="off" enterkeyhint="search">
+  <div class="rn-tabs" role="tablist" aria-label="並び順">
+    <button type="button" role="tab" aria-selected="true" data-sort="new">新しい順</button>
+    <button type="button" role="tab" aria-selected="false" data-sort="pick">おすすめ</button>
+    <button type="button" role="tab" aria-selected="false" data-sort="pop">人気順</button>
+  </div>
+  <p class="rn-how" data-how-new="公開日の新しい順。" data-how-pick="ムートンが「まずこれを」と選んだ順。" data-how-pop="{% if popular.period %}過去4週間（{{ popular.period }}）に読まれた数の順。毎週月曜に更新。{% else %}過去4週間に読まれた数の順。閲覧数がたまるまでは、新しい順と同じ。{% endif %}">公開日の新しい順。</p>
+</div>
+<p class="rn-count" hidden></p>
+<ul class="rn-list rn-current">
   {%- for a in collections.current %}
-  <li class="rn-item">
+  {%- set pillar = pillarLabels[a.data.pillar] or '記事' %}
+  <li class="rn-item" data-new="{{ loop.index0 }}" data-pick="{{ a.data.pick or 999 }}" data-views="{{ popular.views[a.page.fileSlug] or 0 }}" data-text="{{ [a.data.headline, a.data.excerpt, a.data.subtitle, a.data.headings | join(' '), pillar] | join(' ') }}">
     <a class="rn-list-title" href="{{ a.page.fileSlug }}.html">{{ a.data.headline }}</a>
     {%- if a.data.excerpt %}
     <p class="rn-list-summary">{{ a.data.excerpt }}</p>
     {%- endif %}
-    <p class="rn-list-meta">{{ pillarLabels[a.data.pillar] or '記事' }}・約{{ a.data.readMinutes }}分</p>
+    <p class="rn-list-meta">{{ pillar }}・約{{ a.data.readMinutes }}分・{{ a.date | jaDate }}</p>
   </li>
   {%- endfor %}
 </ul>
+<p class="rn-empty" hidden>見つかりませんでした。言葉を短くするか、別の言い方で探してください。</p>
+<div class="rn-arc" hidden>
+  <p class="rn-sub">これまでの記事（アーカイブ）</p>
+  <ul class="rn-list"></ul>
+</div>
+{%- set arc = [] %}{% for a in collections.archived %}{% set arc = (arc.push({ h: a.page.fileSlug + '.html', t: a.data.headline or a.data.title }), arc) %}{% endfor %}
+<script type="application/json" id="rn-archive">{{ arc | json | safe }}</script>
+<script src="renewal.js" defer></script>

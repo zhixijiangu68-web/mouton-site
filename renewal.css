@@ -9,6 +9,7 @@
   --line: #DDD8CC;
   --ai: #165E83;
   --ai-hover: #0F4763;
+  --ai-soft: #DCE9F0;
   --shu: #C8361B;
   --mark: #5E5E5E;
   --sans: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
@@ -17,13 +18,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #16171A; --surface: #202226; --ink: #ECEAE4; --text2: #D2CEC5; --text3: #BDB8AE; --line: #3A3D44;
-    --ai: #7DB8DB; --ai-hover: #A6D0EA; --shu: #F08A6E; --mark: #A9A49A;
+    --ai: #7DB8DB; --ai-hover: #A6D0EA; --ai-soft: #22394A; --shu: #F08A6E; --mark: #A9A49A;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --paper: #16171A; --surface: #202226; --ink: #ECEAE4; --text2: #D2CEC5; --text3: #BDB8AE; --line: #3A3D44;
-  --ai: #7DB8DB; --ai-hover: #A6D0EA; --shu: #F08A6E; --mark: #A9A49A;
+  --ai: #7DB8DB; --ai-hover: #A6D0EA; --ai-soft: #22394A; --shu: #F08A6E; --mark: #A9A49A;
   color-scheme: dark;
 }
 
@@ -54,12 +55,29 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-list-h { margin: 56px 0 8px; font-size: 15px; font-weight: 700; color: var(--text3); }
 .rn-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .rn-list li { padding: 20px 0; border-bottom: 1px solid var(--line); }
-.rn .rn-list-title { font-size: 20px; line-height: 1.55; font-weight: 700; color: var(--ink); text-decoration-color: var(--line); word-break: keep-all; overflow-wrap: anywhere; }
+.rn .rn-list-title { font-size: 20px; line-height: 1.55; font-weight: 700; color: var(--ink); text-decoration-color: var(--line); word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
 .rn .rn-list-title:hover { color: var(--ai); text-decoration-color: currentColor; }
 .rn-list-summary { margin: 6px 0 0; color: var(--text2); line-height: 1.8; }
 .rn-list-meta { margin: 6px 0 0; font-size: 14px; color: var(--text3); }
 .rn-archive-link { margin: 28px 0 0; font-size: 15px; }
 .rn-page-title { margin: 0; font-size: clamp(26px, 5vw, 36px); line-height: 1.4; font-weight: 900; }
+
+/* 検索と並び替え（JS があるときだけ出す。無いときは新しい順の一覧だけ） */
+.rn-vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rn-find { display: none; }
+.js .rn-find { display: flex; flex-direction: column; gap: 12px; margin: 40px 0 16px; }
+.rn .rn-q { box-sizing: border-box; width: 100%; min-height: 52px; padding: 0 16px; font: inherit; font-size: 17px; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; }
+.rn .rn-q::placeholder { color: var(--text3); }
+.rn .rn-q:focus { outline: none; border-color: var(--ai); box-shadow: 0 0 0 3px var(--ai-soft); }
+.rn-tabs { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--line); }
+.rn-tabs button { appearance: none; margin-bottom: -1px; padding: 0 14px; min-height: 44px; font: inherit; font-size: 16px; color: var(--text3); background: transparent; border: 0; border-bottom: 3px solid transparent; cursor: pointer; }
+.rn-tabs button[aria-selected="true"] { color: var(--ink); font-weight: 700; border-bottom-color: var(--ai); }
+.rn-tabs button:focus-visible { outline: 2px solid var(--ai); outline-offset: 2px; }
+.rn-how { margin: 0; font-size: 14px; color: var(--text3); }
+.rn-count { margin: 0 0 8px; font-size: 15px; color: var(--text2); }
+.rn-empty { margin: 0; padding: 24px 0; color: var(--text2); }
+.rn-sub { margin: 32px 0 8px; font-size: 16px; font-weight: 700; }
+.rn mark { color: inherit; background: var(--ai-soft); border-radius: 2px; padding: 0 1px; }
 
 /* 記事 */
 .rn-article { padding-block: 40px 72px; }

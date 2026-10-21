@@ -3,13 +3,13 @@ layout: base.njk
 renewal: true
 bodyClass: rn
 ---
-{#- 2026-10-21 作り直し（docs/site-renewal-20261021.md）。新しいページの枠：ヘッダー、本文、フッターだけ。演出は入れない。 #}
+{#- 2026-10-21 作り直し（docs/site-renewal-20261021.md）。新しいページの枠：ヘッダー、本文、フッターだけ。演出は入れない。
+    メニューは2つ。記事の一覧と検索はトップにある（journal.html も同じ一覧を出す）。 #}
 <a class="rn-skip" href="#main">本文へスキップ</a>
 <header class="rn-header">
   <div class="rn-wrap rn-header-in">
     <a class="rn-brand" href="index.html">MOUTON</a>
     <nav class="rn-nav" aria-label="メニュー">
-      <a href="journal.html"{% if page.url == '/journal.html' %} aria-current="page"{% endif %}>記事</a>
       <a href="start.html">ムートンについて</a>
       <a href="archive.html">アーカイブ</a>
     </nav>
