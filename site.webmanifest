@@ -1,12 +1,12 @@
 {
   "name": "ムートン — MOUTON",
   "short_name": "MOUTON",
-  "description": "作る。記録する。残していく。",
+  "description": "よく言われていることを、出典まで遡って確かめる。",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#07152b",
-  "theme_color": "#07152b",
+  "background_color": "#FAF8F3",
+  "theme_color": "#FAF8F3",
   "icons": [
     {
       "src": "/icon-192.png",
