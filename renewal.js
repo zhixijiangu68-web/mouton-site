@@ -21,11 +21,13 @@
 
   const norm = s => String(s).normalize('NFKC').toLowerCase()
     .replace(/[ぁ-ゖ]/g, c => String.fromCharCode(c.charCodeAt(0) + 0x60));
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // ページ内の記事へのリンクだけを許す（例：sleep.html）
+  const safeHref = h => (/^[a-z0-9][a-z0-9-]*\.html$/.test(h) ? h : '#');
 
-  // 見つかった言葉に印を付ける（題と要約だけ。元の文字は data に残す）
-  function mark(text, terms) {
-    if (!terms.length) return esc(text);
+  // 見つかった言葉に印を付ける（題と要約だけ）。文字は textContent で入れ、HTML として解釈しない
+  function mark(el, text, terms) {
+    el.textContent = '';
+    if (!terms.length) { el.textContent = text; return; }
     const n = norm(text);
     const on = new Array(text.length).fill(false);
     for (const t of terms) {
@@ -33,13 +35,20 @@
         for (let k = i; k < i + t.length && k < text.length; k++) on[k] = true;
       }
     }
-    let out = '';
-    let open = false;
-    for (let i = 0; i < text.length; i++) {
-      if (on[i] !== open) { out += on[i] ? '<mark>' : '</mark>'; open = on[i]; }
-      out += esc(text[i]);
+    let i = 0;
+    while (i < text.length) {
+      let j = i;
+      while (j < text.length && on[j] === on[i]) j++;
+      const part = text.slice(i, j);
+      if (on[i]) {
+        const m = document.createElement('mark');
+        m.textContent = part;
+        el.appendChild(m);
+      } else {
+        el.appendChild(document.createTextNode(part));
+      }
+      i = j;
     }
-    return out + (open ? '</mark>' : '');
   }
   for (const li of items) {
     for (const el of li.querySelectorAll('.rn-list-title, .rn-list-summary')) el.dataset.plain = el.textContent;
@@ -61,14 +70,23 @@
     for (const li of [...items].sort(sorters[sort])) {
       const hit = terms.every(t => li.dataset.hay.includes(t));
       li.hidden = !hit;
-      for (const el of li.querySelectorAll('[data-plain]')) el.innerHTML = mark(el.dataset.plain, hit ? terms : []);
+      for (const el of li.querySelectorAll('[data-plain]')) mark(el, el.dataset.plain, hit ? terms : []);
       list.appendChild(li);
       if (hit) shown.push(li);
     }
     const arcHits = terms.length ? archive.filter(a => terms.every(t => norm(a.t).includes(t))) : [];
     if (arcBox) {
       arcBox.hidden = !arcHits.length;
-      arcList.innerHTML = arcHits.map(a => `<li class="rn-item"><a class="rn-list-title" href="${esc(a.h)}">${mark(a.t, terms)}</a></li>`).join('');
+      arcList.replaceChildren(...arcHits.map(a => {
+        const li = document.createElement('li');
+        li.className = 'rn-item';
+        const link = document.createElement('a');
+        link.className = 'rn-list-title';
+        link.href = safeHref(a.h);
+        mark(link, a.t, terms);
+        li.appendChild(link);
+        return li;
+      }));
     }
     if (count) {
       count.hidden = !terms.length;

@@ -66,80 +66,67 @@ test('MOUTON browser smoke', async t => {
   let browser;
   try {
     browser = await chromium.launch({ headless: true });
-    await t.test('desktop: original cover with three theme cards, no tabs', async () => {
+    // 2026-10-21〜22 サイトの作り直し（docs/site-renewal-20261021.md）：トップは見出し・短い文・検索・3つの並び順・記事の一覧だけ。
+    const headline = ['君はどういう人間として生きたいのか？', '答えられないのなら知識が足りていない。'];
+    await t.test('desktop: the decided headline, search, three orders and the current articles', async () => {
       await checkPage(browser, 'desktop-home', { viewport: { width: 1440, height: 900 } }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: the headline is the first thing seen (2026-10-18, copy first)');
-        assert.equal(await page.locator('.cover-title').count(), 1);
-        assert.equal(await page.locator('.cover-choice-card').count(), 3);
-        assert.equal(await page.locator('[data-home-tab]').count(), 0, 'tabs were removed from the homepage');
+        const h1 = (await page.locator('h1').innerText()).replace(/\s+/g, '');
+        for (const line of headline) assert.ok(h1.includes(line), 'headline must include ' + line + ', got ' + h1);
+        assert.equal(await page.locator('#rn-q').isVisible(), true, 'search box');
+        assert.deepEqual(await page.locator('.rn-tabs [role="tab"]').allInnerTexts(), ['新しい順', 'おすすめ', '人気順']);
+        const items = page.locator('.rn-current .rn-item');
+        assert.ok(await items.count() > 0, 'current articles listed');
+        assert.equal(await items.first().isVisible(), true);
+        assert.equal(await page.locator('[data-home-tab], .cover-choice-card').count(), 0, 'old homepage parts are gone');
       });
     });
 
     for (const [i, device] of ['desktop','mobile'].entries()) {
-      const scene = 'gold-laurel';
-      await t.test('fixed background and the headline visible at once, no opening veil: ' + device, async () => {
+      await t.test('the headline visible at once, no opening veil: ' + device, async () => {
         await checkPage(browser, 'static-' + device, {
           reducedMotion: 'no-preference',
           viewport: i ? { width: 390, height: 844 } : { width: 1440, height: 900 },
         }, async page => {
           await page.route(/fonts\.googleapis\.com|fonts\.gstatic\.com/, route => route.abort());
           await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-          assert.equal(await page.locator('html').getAttribute('data-home-background'), null, 'no random background any more');
-          assert.equal(await page.locator('link[rel="preload"][as="image"][href="images/mouton/gold-laurel-wide.webp"]').count(), 1);
           // 2026-10-18（コピーライティング第一）：オープニングの演出は外した。見出しは読み込みと同時に見える
           assert.equal(await page.locator('.intro-veil').count(), 0, 'no opening veil: words first');
-          assert.equal(await page.locator('link[rel="preload"][href*="intro-sheep-moon"]').count(), 0, 'no intro art preload');
-          const visibleNow = await page.locator('.cover-inner').evaluate(el => ({
-            opacity: getComputedStyle(el).opacity,
-            animation: getComputedStyle(el).animationName,
-            intro: document.documentElement.classList.contains('intro') || document.documentElement.classList.contains('intro-preparing'),
-          }));
-          assert.equal(visibleNow.opacity, '1', 'the headline must be visible immediately');
-          assert.equal(visibleNow.animation, 'none', 'no delayed arrival animation');
-          assert.equal(visibleNow.intro, false);
-          const h1 = await page.locator('.cover-title').evaluate(el => { const r = el.getBoundingClientRect(); return { top: r.top, text: el.textContent.trim() }; });
-          assert.ok(h1.top >= 0 && h1.top < (i ? 844 : 900), 'the headline is inside the first screen, got top=' + h1.top);
-          assert.ok(h1.text.startsWith('読むだけでは'), 'headline text: ' + h1.text);
-          const before = await page.locator('.cover-art').evaluate(el => {
+          const state = () => page.locator('h1').evaluate(el => {
             const s = getComputedStyle(el);
-            return { background: s.backgroundImage, transform: s.transform, animation: s.animationName };
+            const r = el.getBoundingClientRect();
+            return { opacity: s.opacity, animation: s.animationName, top: r.top, bottom: r.bottom };
           });
-          assert(before.background.includes(scene + '-wide.webp'));
-          assert.equal(before.transform, 'none');
-          assert.equal(before.animation, 'none');
-          assert.equal(await page.evaluate(async name => {
-            const img = new Image(); img.src = 'images/mouton/' + name + '-wide.webp';
-            await img.decode(); return img.naturalWidth;
-          }, scene), 1536);
-          await page.mouse.move(200, 300);
+          const now = await state();
+          assert.equal(now.opacity, '1', 'the headline must be visible immediately');
+          assert.equal(now.animation, 'none', 'no delayed arrival animation');
+          assert.ok(now.top >= 0 && now.bottom <= (i ? 844 : 900), 'the headline is inside the first screen: ' + JSON.stringify(now));
           await page.evaluate(() => scrollTo(0, 150));
-          await page.waitForTimeout(1100); // Late font loading must not move or hide the words.
-          assert.equal(await page.locator('.cover-inner').evaluate(el => getComputedStyle(el).opacity), '1');
-          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).backgroundImage), before.background);
-          assert.equal(await page.locator('.cover-art').evaluate(el => getComputedStyle(el).transform), 'none');
-          assert.equal(await page.locator('.hero-light,.cover-light,.hero-word').count(), 0);
+          await page.waitForTimeout(1100); // Late font loading must not hide the words.
+          assert.equal((await state()).opacity, '1');
         });
       });
     }
 
-    await t.test('mobile: menu opens and closes with Escape', async () => {
+    await t.test('mobile: menu links are visible without a toggle, tappable, and nothing overflows', async () => {
       await checkPage(browser, 'mobile-menu', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        const menu = page.locator('.menu-toggle');
-        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
-        await menu.click();
-        assert.equal(await menu.getAttribute('aria-expanded'), 'true');
-        await page.keyboard.press('Escape');
-        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
+        assert.equal(await page.locator('.menu-toggle').count(), 0, 'no hidden menu on the new pages');
+        const links = page.locator('.rn-nav a');
+        assert.deepEqual(await links.allInnerTexts(), ['理解度テスト', 'ムートンについて', 'アーカイブ']);
+        for (const box of await links.evaluateAll(els => els.map(el => el.getBoundingClientRect().toJSON()))) {
+          assert.ok(box.height >= 44, 'menu link must be at least 44px tall: ' + JSON.stringify(box));
+          assert.ok(box.right <= 390 + 1, 'menu link must stay on screen: ' + JSON.stringify(box));
+        }
         const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
         assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow on mobile');
       });
     });
 
-    await t.test('mobile journal: title stays readable at 320px and 390px including retired edition links', async () => {
+    await t.test('mobile journal: titles stay readable at 320px and 390px including retired edition links', async () => {
       for (const [label, width, version] of [
         ['journal-320-original', 320, 'original'],
         ['journal-390-original', 390, 'original'],
@@ -152,42 +139,19 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.locator('[data-version-picker], [data-cover-toggle], .club-signature').count(), 0);
           assert.equal(await page.locator('html').getAttribute('data-version'), null);
           assert.equal(new URL(page.url()).searchParams.has('version'), false);
-          const entry = page.locator('#journal .journal-item:not(.is-hidden):not(.is-collapsed)').first();
-          assert.equal(await entry.count(), 1, label + ': journal entry missing');
-          const rects = await entry.evaluate(el => {
-            const rect = selector => el.querySelector(selector).getBoundingClientRect();
-            const outer = el.getBoundingClientRect();
-            const date = rect('.journal-date');
-            const body = rect('.journal-body');
-            const title = rect('.journal-title');
-            const arrow = rect('.journal-arrow');
-            return {
-              outerWidth: outer.width,
-              bodyWidth: body.width,
-              dateLeft: date.left,
-              dateBottom: date.bottom,
-              bodyLeft: body.left,
-              titleTop: title.top,
-              bodyRight: body.right,
-              arrowLeft: arrow.left,
-              documentWidth: document.documentElement.scrollWidth,
-              viewportWidth: innerWidth,
-            };
-          });
-          assert.ok(rects.bodyWidth >= rects.outerWidth * .67,
-            label + ': article text is squeezed into a narrow grid column: ' + JSON.stringify(rects));
-          assert.ok(Math.abs(rects.dateLeft - rects.bodyLeft) < 2,
-            label + ': date and article text should align');
-          assert.ok(rects.dateBottom <= rects.titleTop + 2,
-            label + ': date should appear above the title');
-          assert.ok(rects.arrowLeft >= rects.bodyRight - 2,
-            label + ': arrow should be to the right of the article text');
-          assert.ok(rects.documentWidth <= rects.viewportWidth + 2,
-            label + ': page overflows horizontally');
+          const entry = page.locator('.rn-current .rn-item').first();
+          assert.equal(await entry.isVisible(), true, label + ': journal entry missing');
+          const rects = await entry.evaluate(el => ({
+            item: el.getBoundingClientRect().width,
+            title: el.querySelector('.rn-list-title').getBoundingClientRect().width,
+            documentWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+          }));
+          assert.ok(rects.title >= rects.item * .67, label + ': title is squeezed: ' + JSON.stringify(rects));
+          assert.ok(rects.documentWidth <= rects.viewportWidth + 2, label + ': page overflows horizontally');
         });
       }
     });
-
 
     await t.test('making sections: open and close on desktop and phone; anchors expand', async () => {
       for (const [label, options] of [
@@ -325,7 +289,7 @@ test('MOUTON browser smoke', async t => {
       await checkPage(browser, 'journal-redirect', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
         await page.waitForURL(/journal\.html/);
-        assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal list missing');
+        assert.ok((await page.locator('.rn-current .rn-item').count()) > 0, 'journal list missing');
         const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
         assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
       });
@@ -354,59 +318,101 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
-    await t.test('mobile menu: concealed panel anchors and focus recovery', async () => {
-      await checkPage(browser, 'menu-anchors', {
-        viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
-      }, async page => {
+    // 2026-10-21（オーナー「新しい順、おすすめ、人気順くらいにする。あとは検索機能をつける」）
+    await t.test('search and orders: tabs reorder, search filters and finds archive titles, Escape clears', async () => {
+      await checkPage(browser, 'search-orders', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        const menu = page.locator('.menu-toggle');
-        await menu.click();
-        assert.equal(await menu.getAttribute('aria-expanded'), 'true');
-        assert.equal(await page.locator('main').evaluate(el => el.inert), true, 'background should be inert');
-        await page.keyboard.press('Escape');
-        assert.equal(await menu.getAttribute('aria-expanded'), 'false');
-        assert.equal(await page.locator('main').evaluate(el => el.inert), false);
-        assert.equal(await menu.evaluate(el => el === document.activeElement), true, 'focus should return to menu button');
-        await menu.click();
-        await page.locator('.site-links a[href="journal.html"]').first().click();
-        await page.waitForURL('**/journal.html');
-        await page.goto(origin + '/index.html#think', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('#think').count(), 1, 'cover anchor must remain');
+        const order = key => page.locator('.rn-current .rn-item:not([hidden])').evaluateAll((els, k) => els.map(el => Number(el.dataset[k])), key);
+        const isSorted = list => list.every((v, i) => i === 0 || list[i - 1] <= v);
+        assert.ok(isSorted(await order('new')), 'newest first by default');
+        await page.getByRole('tab', { name: 'おすすめ' }).click();
+        assert.equal(await page.getByRole('tab', { name: 'おすすめ' }).getAttribute('aria-selected'), 'true');
+        assert.ok(isSorted(await order('pick')), 'recommended order follows pick');
+        await page.keyboard.press('ArrowRight');
+        assert.equal(await page.getByRole('tab', { name: '人気順' }).getAttribute('aria-selected'), 'true', 'arrow keys move between orders');
+        await page.getByRole('tab', { name: '新しい順' }).click();
+        const all = await page.locator('.rn-current .rn-item').count();
+        await page.fill('#rn-q', '睡眠');
+        assert.equal(await page.locator('.rn-count').isVisible(), true, 'result count is shown');
+        assert.ok(await page.locator('.rn-current .rn-item:not([hidden])').count() < all, 'search narrows the list');
+        assert.ok(await page.locator('.rn-arc .rn-item').count() > 0, 'archive titles are searched too');
+        assert.ok(await page.locator('.rn-current mark, .rn-arc mark').count() > 0, 'matched words are marked');
+        assert.match(await page.locator('.rn-arc .rn-item a').first().getAttribute('href'), /^[a-z0-9-]+\.html$/);
+        await page.fill('#rn-q', 'zzzzzz');
+        assert.equal(await page.locator('.rn-empty').isVisible(), true, 'nothing found message');
+        await page.locator('#rn-q').press('Escape');
+        assert.equal(await page.locator('.rn-count').isVisible(), false);
+        assert.equal(await page.locator('.rn-current .rn-item:not([hidden])').count(), all, 'Escape restores the list');
+        const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
       });
     });
 
-    await t.test('no JavaScript: theme cards and journal remain readable', async () => {
+    await t.test('no JavaScript: the article list and the test answers remain readable', async () => {
       await checkPage(browser, 'no-js-home', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, javaScriptEnabled: false,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('a[href="topic-philosophy.html"]').count() > 0, true);
+        assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'list must be readable without scripts');
+        assert.equal(await page.locator('.rn-find').isVisible(), false, 'search and orders need scripts, so they stay hidden');
         await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
-        assert.ok((await page.locator('#journal .journal-item').count()) > 0, 'journal must be readable without scripts');
+        assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'journal must be readable without scripts');
+        await page.goto(origin + '/test.html', { waitUntil: 'domcontentloaded' });
+        assert.ok(await page.locator('details.rn-test-a').count() > 0, 'questions with answers inside details');
       });
     });
 
-    await t.test('first view: who / what / for-you rows and the worry button fit the first screen on a phone', async () => {
+    await t.test('first view: the headline and the lead fit the first screen on a phone', async () => {
       await checkPage(browser, 'first-view-mobile', {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.cover-who .cover-who-row').count(), 3, 'three rows under the headline');
-        const bottom = await page.locator('a[data-home-entry="worry"]').evaluate(el => el.getBoundingClientRect().bottom);
-        assert.ok(bottom <= 844, 'the worry button must be inside the first screen, got bottom=' + bottom);
+        const h1 = await page.locator('h1').evaluate(el => el.getBoundingClientRect().bottom);
+        assert.ok(h1 <= 844, 'the headline must be inside the first screen, got bottom=' + h1);
+        const lead = await page.locator('.rn-lead').evaluate(el => el.getBoundingClientRect().top);
+        assert.ok(lead < 844, 'the lead starts inside the first screen, got top=' + lead);
       });
     });
 
-    await t.test('archive: an archived article carries the note, a current one has no quiz', async () => {
+    await t.test('archive: an archived article carries the note, a current one has a verdict table and no quiz', async () => {
       await checkPage(browser, 'archive-note', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/coffee.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('article .archive-note').count(), 1, 'archived article shows the archive note');
-        assert.equal(await page.locator('.archive-note a[href="journal.html"]').count(), 1);
-        await page.goto(origin + '/kierkegaard.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('.archive-note a[href="index.html"]').count(), 1, 'the note leads to the current articles');
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        const current = await page.locator('.rn-current .rn-item a.rn-list-title').first().getAttribute('href');
+        await page.goto(origin + '/' + current, { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
-        assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work').count(), 0, 'current article has no quiz or work');
+        assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work, .rn-quiz').count(), 0, 'current article has no quiz or work (tests live on test.html)');
+        assert.equal(await page.locator('.rn-verdicts').count(), 1, 'current article has a verdict table');
         await page.goto(origin + '/archive.html', { waitUntil: 'domcontentloaded' });
         assert.ok((await page.locator('#archive .journal-item').count()) > 50, 'archive lists the archived articles');
+      });
+    });
+
+    // 2026-10-22（オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」。記事とは切り離す）
+    await t.test('understanding test: answer every question, see the score and links to the article sections', async () => {
+      await checkPage(browser, 'understanding-test', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
+        await page.goto(origin + '/test.html', { waitUntil: 'domcontentloaded' });
+        await page.locator('.rn-test-start').first().click();
+        const total = Number((await page.locator('.rn-quiz-step').innerText()).match(/(\d+)問中/)[1]);
+        assert.ok(total >= 8 && total <= 10, 'each test has 8 to 10 questions, got ' + total);
+        for (let n = 0; n < total; n++) {
+          assert.equal(await page.locator('.rn-choice').count(), 4, 'four choices');
+          await page.locator('.rn-choice').nth(n % 4).click();
+          assert.match(await page.locator('.rn-judge').innerText(), /^[○×] /, 'right or wrong is shown in words, not colour alone');
+          assert.match(await page.locator('.rn-feedback .rn-sec a').getAttribute('href'), /^[a-z0-9-]+\.html#s-\d+$/);
+          await page.locator('[data-act="next"]').click();
+        }
+        assert.match(await page.locator('.rn-quiz-score').innerText(), new RegExp('^理解度 \\d+ / ' + total + '$'));
+        const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
+        const missed = page.locator('.rn-quiz-missed .rn-sec a');
+        if (await missed.count()) {
+          const [file, id] = (await missed.first().getAttribute('href')).split('#');
+          await page.goto(origin + '/' + file, { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('#' + id).count(), 1, 'the section link points at a real heading');
+        }
       });
     });
 

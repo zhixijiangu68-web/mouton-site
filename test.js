@@ -25,7 +25,22 @@
   const score = $('.rn-quiz-score');
   const missedBox = $('.rn-quiz-missed');
   const bySlug = new Map(tests.map(t => [t.slug, t]));
-  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  // 要素は文字を textContent で入れて作る（HTML として解釈しない）
+  const el = (tag, cls, text) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  };
+  // 記事のその節へのリンクだけを許す（例：prolactin.html#s-3）
+  const safeHref = h => (/^[a-z0-9][a-z0-9-]*\.html(#[A-Za-z0-9_-]+)?$/.test(h) ? h : '#');
+  const secLink = q => {
+    const p = el('p', 'rn-sec');
+    const a = el('a', null, '記事のこの節を読む');
+    a.href = safeHref(q.href);
+    p.appendChild(a);
+    return p;
+  };
 
   let test = null;
   let at = 0;
@@ -52,8 +67,13 @@
     answered = false;
     step.textContent = `${test.questions.length}問中 ${at + 1}問目`;
     question.textContent = q.q;
-    choices.innerHTML = q.choices.map((c, k) => `<button type="button" class="rn-choice" data-k="${k}">${esc(c)}</button>`).join('');
-    feedback.innerHTML = '';
+    choices.replaceChildren(...q.choices.map((c, k) => {
+      const b = el('button', 'rn-choice', c);
+      b.type = 'button';
+      b.dataset.k = String(k);
+      return b;
+    }));
+    feedback.replaceChildren();
     next.hidden = true;
     next.textContent = at === test.questions.length - 1 ? '結果を見る' : '次へ';
     question.focus();
@@ -69,16 +89,18 @@
       b.setAttribute('aria-disabled', 'true');
       if (j === q.answer) {
         b.classList.add('is-answer');
-        b.insertAdjacentHTML('beforeend', '<span class="rn-choice-tag">○ 正解</span>');
+        b.appendChild(el('span', 'rn-choice-tag', '○ 正解'));
       } else if (j === k) {
         b.classList.add('is-chosen');
-        b.insertAdjacentHTML('beforeend', '<span class="rn-choice-tag">× 選んだ答え</span>');
+        b.appendChild(el('span', 'rn-choice-tag', '× 選んだ答え'));
       }
     });
-    feedback.innerHTML = `<p class="rn-judge ${ok ? 'is-right' : 'is-wrong'}">${ok ? '○ 正解' : '× 不正解'}</p>`
-      + (ok ? '' : `<p class="rn-judge-answer">正解は「${esc(q.choices[q.answer])}」。</p>`)
-      + `<p class="rn-why">${esc(q.why)}</p>`
-      + `<p class="rn-sec"><a href="${esc(q.href)}">記事のこの節を読む</a></p>`;
+    feedback.replaceChildren(
+      el('p', `rn-judge ${ok ? 'is-right' : 'is-wrong'}`, ok ? '○ 正解' : '× 不正解'),
+      ...(ok ? [] : [el('p', 'rn-judge-answer', `正解は「${q.choices[q.answer]}」。`)]),
+      el('p', 'rn-why', q.why),
+      secLink(q),
+    );
     next.hidden = false;
   }
 
@@ -86,12 +108,17 @@
     ask.hidden = true;
     end.hidden = false;
     score.textContent = `理解度 ${right} / ${test.questions.length}`;
-    missedBox.innerHTML = missed.length
-      ? '<h3 class="rn-sub">間違えた問題</h3><ol class="rn-missed">' + missed.map(q => '<li>'
-        + `<p class="rn-missed-q">${esc(q.q)}</p>`
-        + `<p class="rn-missed-a">正解：${esc(q.choices[q.answer])}</p>`
-        + `<p class="rn-sec"><a href="${esc(q.href)}">記事のこの節を読む</a></p></li>`).join('') + '</ol>'
-      : '<p class="rn-missed-none">間違えた問題は、ありませんでした。</p>';
+    if (missed.length) {
+      const ol = el('ol', 'rn-missed');
+      for (const q of missed) {
+        const li = el('li');
+        li.append(el('p', 'rn-missed-q', q.q), el('p', 'rn-missed-a', `正解：${q.choices[q.answer]}`), secLink(q));
+        ol.appendChild(li);
+      }
+      missedBox.replaceChildren(el('h3', 'rn-sub', '間違えた問題'), ol);
+    } else {
+      missedBox.replaceChildren(el('p', 'rn-missed-none', '間違えた問題は、ありませんでした。'));
+    }
     score.focus();
   }
 
