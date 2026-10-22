@@ -71,7 +71,7 @@ export default function (eleventyConfig) {
   // 健康の記事の注意書きは、参考文献の前に置く（参考文献が無ければ本文の最後）。
   eleventyConfig.addFilter('withHealthNote', (html, on) => {
     if (!on) return html;
-    const note = '<p class="rn-health" role="note">この記事は、研究の結果を紹介するもので、医療の助言ではありません。体の不調や性の悩みは、医師に相談してください。</p>';
+    const note = '<p class="rn-health" role="note">この記事は、研究の結果を紹介するもので、医療の助言ではありません。体や心の不調は、医師に相談してください。</p>';
     const at = html.indexOf('<section class="rn-refs"');
     return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
   });
