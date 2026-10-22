@@ -9,6 +9,7 @@
 // - 残すページの小見出し（eyebrow など）は日本語
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
 // - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
+// - 新しい型の今の記事は、本文が1万〜2万字（2026-10-22、オーナー「サイトは決定版だから重厚にして欲しい」）
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import currentArticles from '../src/_data/currentArticles.js';
 
@@ -27,6 +28,37 @@ const stripTags = s => {
   return out;
 };
 const text = html => stripTags(html);
+// 2026-10-22（オーナー「サイトは決定版だから重厚にして欲しい」「サイトは1万~2万文字にする」「これからも同じです」）：
+// 新しい型の今の記事は、本文が 10,000〜20,000 字。数えないもの：front matter、参考文献（class="rn-refs" の要素から後ろ）、
+// テンプレートのタグ（{% %} と {{ }}）、HTML のタグ、空白と改行。数え方は記事を書くときの道具（count.mjs）と同じ。
+// タグは stripTags と同じく1文字ずつ読んで外す（正規表現の置き換えで外さない）
+const BODY_MIN = 10000;
+const BODY_MAX = 20000;
+const bodyLength = src => {
+  let body = src.split('\n---\n').slice(1).join('\n---\n');
+  const refs = body.indexOf('class="rn-refs"');
+  if (refs > 0) body = body.slice(0, body.lastIndexOf('<', refs));
+  let n = 0;
+  let i = 0;
+  while (i < body.length) {
+    const two = body.slice(i, i + 2);
+    if (two === '{%' || two === '{{') {
+      const end = body.indexOf(two === '{%' ? '%}' : '}}', i + 2);
+      if (end < 0) break;
+      i = end + 2;
+      continue;
+    }
+    if (body[i] === '<') {
+      const end = body.indexOf('>', i);
+      if (end < 0) break;
+      i = end + 1;
+      continue;
+    }
+    if (!/\s/.test(body[i])) n += 1;
+    i += 1;
+  }
+  return n;
+};
 const slugs = readdirSync('src/articles').filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, ''));
 const archived = slugs.filter(s => !currentArticles.includes(s));
 
@@ -43,6 +75,10 @@ for (const s of currentArticles) {
     if (!html.includes('class="rn-checking"')) report(`${s}.html`, '公開前の下書きなのに、その注記がない');
   }
   if (/^health:\s*true/m.test(src) && !html.includes('class="rn-health"')) report(`${s}.html`, '健康の記事に注意書きがない');
+  if (/^layout:\s*renewal-article\.njk\s*$/m.test(src)) {
+    const n = bodyLength(src);
+    if (n < BODY_MIN || n > BODY_MAX) report(`src/articles/${s}.html`, `本文が ${n.toLocaleString('en-US')} 字。サイトの記事は1万〜2万字（オーナー、2026-10-22「サイトは決定版だから重厚にして欲しい」）`);
+  }
 }
 for (const s of archived) {
   const html = read(`${s}.html`);

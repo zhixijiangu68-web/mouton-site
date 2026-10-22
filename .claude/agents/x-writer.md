@@ -19,7 +19,7 @@ tools: Read, Grep, Glob, Write, Edit, Bash
 - 1行目は、いちばん強い一文：読んでいる一人が「自分のことだ」と思う場面か、常識の反対の一文か、意外な数字。まだ何も起きていない場面（「朝、いつもの電車に乗る」）で始めない
 - 2段落目に場面か根拠、最後の一文は記事を開く理由か、問い。余韻のための改行・詩的な一文・雰囲気のための一文は削る
 - 命令・断定・約束・あおり・見下しを使わない。ムートンの経験と提案として、一人称「僕」で書く。有料記事・値段・購入のことは書かない
-- 本文は140字以内（URL を除く）。型はリプリンク：本文にリンクを入れず、リプライの1行に `https://moutonarchive.com/<slug>.html?utm_source=x&utm_medium=social&utm_campaign=<slug>&utm_content=reply`
+- 本文は140字以内（URL を除く）のまま、枠はぎりぎりまで使う。目安は120〜140字（2026-10-22、オーナー「xがポストできるぎりぎりだ」）。型はリプリンク：本文にリンクを入れず、リプライの1行に `https://moutonarchive.com/<slug>.html?utm_source=x&utm_medium=social&utm_campaign=<slug>&utm_content=reply`
 
 ## 形式（既存の案と同じ）
 ```
