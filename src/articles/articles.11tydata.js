@@ -42,7 +42,10 @@ function headings(inputPath) {
 }
 
 function readMinutes(inputPath) {
-  const body = readFileSync(inputPath, 'utf8').split('\n---\n').slice(1).join('\n---\n');
+  let body = readFileSync(inputPath, 'utf8').split('\n---\n').slice(1).join('\n---\n');
+  // 参考文献の一覧は読む時間に入れない（2026-10-22、記事を1万〜2万字にして、文献が100件を超えたため）
+  const refs = body.indexOf('class="rn-refs"');
+  if (refs > 0) body = body.slice(0, body.lastIndexOf('<', refs));
   const text = body
     .replace(/<(style|script)[^>]*>[\s\S]*?<\/\1>/g, '')
     .replace(/<nav class="reading-next"[\s\S]*?<\/nav>/g, '')
