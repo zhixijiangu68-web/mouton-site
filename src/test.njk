@@ -1,0 +1,77 @@
+---
+layout: renewal.njk
+permalink: test.html
+title: "理解度テスト — ムートン"
+description: "ムートンの記事をどれだけ理解できたかを、問題に答えて確かめるページ。記事ごとに4択の問題があり、答えるたびに正解と解説、記事のどの節に書いてあるかを示す。"
+eleventyImport:
+  collections: ["current"]
+---
+{#- 2026-10-22 理解度テスト。オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」「クイズはクイズとしてページを作成する。知識をアウトプットするためのページ。記事とクイズは切り離す」「焦らずに、コツコツ記事を溜めていきたい。奇抜なことをせずに、シンプルに積み重ねていく」。
+    - 問題：src/_data/understanding/<記事のファイル名>.json（8〜10問、4択、answer は 0〜3、why は解説、section は答えが書いてある記事の h2 の文字）
+    - 一覧：今の記事（collections.current）のうち、問題がある記事だけ。記事の側には、テストの印もリンクも置かない
+    - JS があるとき（test.js）：一覧から選んで、1問ずつ答える。答えると 正解／不正解 と解説、記事の節へのリンク。最後に「理解度 X / N」と、間違えた問題
+    - JS が無いとき：問題と選択肢を並べ、答えと解説は <details> の中に置く
+    - 演出・時間制限・点数の記録（保存）はしない。外のサービスは使わない #}
+{%- set tests = collections.current | understandingTests(understanding) %}
+<section class="rn-wrap rn-home rn-test">
+  <h1 class="rn-page-title">理解度テスト</h1>
+  <p class="rn-lead">記事をどれだけ理解できたかを、問題に答えて確かめる。</p>
+
+  <div class="rn-test-pick">
+    <ul class="rn-list rn-tests">
+      {%- for t in tests %}
+      <li class="rn-test-item">
+        <h2 class="rn-test-name" id="t-{{ t.slug }}-title">{{ t.title }}</h2>
+        <p class="rn-list-meta">{{ t.questions.length }}問・<a href="{{ t.slug }}.html">記事を読む</a></p>
+        <p class="rn-test-go">
+          <button type="button" class="rn-btn rn-test-start" data-test="{{ t.slug }}" aria-describedby="t-{{ t.slug }}-title">始める</button>
+          <a class="rn-test-nojs" href="#t-{{ t.slug }}">問題を見る</a>
+        </p>
+      </li>
+      {%- endfor %}
+    </ul>
+  </div>
+
+  <div class="rn-quiz" hidden>
+    <h2 class="rn-quiz-name"></h2>
+    <div class="rn-quiz-ask">
+      <p class="rn-quiz-step"></p>
+      <p class="rn-quiz-q" id="rn-quiz-q" tabindex="-1"></p>
+      <div class="rn-choices" role="group" aria-labelledby="rn-quiz-q"></div>
+      <div class="rn-feedback" aria-live="polite"></div>
+      <p class="rn-quiz-actions"><button type="button" class="rn-btn" data-act="next" hidden>次へ</button></p>
+    </div>
+    <div class="rn-quiz-end" hidden>
+      <p class="rn-quiz-score" tabindex="-1"></p>
+      <div class="rn-quiz-missed"></div>
+      <p class="rn-quiz-actions"><button type="button" class="rn-btn" data-act="again">もう一度</button></p>
+    </div>
+    <p class="rn-quiz-actions"><button type="button" class="rn-btn rn-btn--sub" data-act="list">ほかの記事を選ぶ</button></p>
+  </div>
+
+  {%- for t in tests %}
+  <section class="rn-test-all" id="t-{{ t.slug }}" aria-labelledby="t-{{ t.slug }}-name">
+    <h2 class="rn-test-all-name" id="t-{{ t.slug }}-name">{{ t.title }}</h2>
+    <ol class="rn-test-qs">
+      {%- for q in t.questions %}
+      <li>
+        <p class="rn-test-q">{{ q.q }}</p>
+        <ol class="rn-test-choices">
+          {%- for c in q.choices %}
+          <li>{{ c }}</li>
+          {%- endfor %}
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：{{ q.choices[q.answer] }}（{{ q.answer + 1 }}）</p>
+          <p>{{ q.why }}</p>
+          <p><a href="{{ q.href }}">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      {%- endfor %}
+    </ol>
+  </section>
+  {%- endfor %}
+</section>
+<script type="application/json" id="rn-tests-data">{{ tests | json | safe }}</script>
+<script src="test.js" defer></script>

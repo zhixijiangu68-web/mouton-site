@@ -2,6 +2,7 @@
 layout: renewal.njk
 ---
 {#- 2026-10-21 作り直し：記事の型。柱 → 題 → 副題 → 読む時間・更新日 → 本文（判定表は front matter の claims から verdictTable で作る）→ 健康の注意（参考文献の前）。
+    本文の見出し（h2）には、上から順に id（s-1, s-2, …）が付く（sectionIds。理解度テストの「記事のこの節を読む」の行き先。2026-10-22）。
     更新履歴（changes）は front matter に残すが、表示は更新日だけ（2026-10-21、オーナー「余計なものはいらない」）。 #}
 {%- set pillarLabels = { food: '食', body: '身体', money: 'お金', life: '生き方' } %}
 <article class="rn-wrap rn-article">
@@ -15,7 +16,7 @@ layout: renewal.njk
   {%- endif %}
   <p class="rn-meta"><span>約{{ readMinutes }}分</span><span>更新日 <time datetime="{{ (updated or page.date) | isoDate }}">{{ (updated or page.date) | jaDate }}</time></span></p>
   <div class="rn-body">
-{{ content | withHealthNote(health) | safe }}
+{{ content | sectionIds | withHealthNote(health) | safe }}
   </div>
   <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
 </article>

@@ -8,6 +8,7 @@
 // - 記事一覧は今の記事だけ、アーカイブの一覧はアーカイブの記事をすべて載せる
 // - 残すページの小見出し（eyebrow など）は日本語
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
+// - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import currentArticles from '../src/_data/currentArticles.js';
 
@@ -82,8 +83,61 @@ for (const p of ['index.html', 'journal.html', 'archive.html', ...currentArticle
   }
 }
 
+// 2026-10-22 理解度テスト（オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」「記事とクイズは切り離す」「奇抜なことをせずに、シンプルに積み重ねていく」）
+// - test.html があり、問題のある今の記事をすべて載せる。メニューに「理解度テスト」がある
+// - src/_data/understanding/<記事>.json：8〜10問、選択肢は4つ、answer は 0〜3、解説（why）がある、
+//   section は記事の見出し（h2）と同じ文字で、生成された記事のその見出しに id があり、test.html からその id へリンクしている
+// - 今の記事には、テストの印もテストへのリンクも出さない（メニューの「理解度テスト」は除く）
+// - test.js は保存（localStorage など）も時間制限（タイマー）も使わない。renewal.css に動きの演出がない
+const udir = 'src/_data/understanding';
+const tested = existsSync(udir) ? readdirSync(udir).filter(f => f.endsWith('.json')).map(f => f.replace(/\.json$/, '')) : [];
+const testPage = existsSync('test.html') ? read('test.html') : '';
+if (!testPage) report('test.html', '理解度テストのページがない');
+if (!existsSync('test.js')) report('test.js', '理解度テストのスクリプトがない');
+else if (/localStorage|sessionStorage|indexedDB|document\.cookie|setTimeout|setInterval|requestAnimationFrame/.test(read('test.js'))) report('test.js', '保存やタイマー・動きの演出を使っている（オーナー：シンプルに。保存・時間制限・演出はしない）');
+if (/@keyframes|\banimation\s*:|\btransition\s*:/.test(read('renewal.css'))) report('renewal.css', '動きの演出（animation / transition）がある。演出は足さない');
+if (testPage && (!/<h1\b[^>]*>理解度テスト<\/h1>/.test(testPage) || !testPage.includes('src="test.js"'))) report('test.html', '見出し「理解度テスト」か test.js がない');
+if (!/<nav class="rn-nav"[^>]*>\s*<a href="test.html">理解度テスト<\/a>/.test(index)) report('index.html', 'メニューの最初に「理解度テスト」（test.html）がない');
+const unescape = s => s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+for (const s of tested) {
+  const file = `${udir}/${s}.json`;
+  let data;
+  try { data = JSON.parse(read(file)); } catch (e) { report(file, `JSON として読めない（${e.message}）`); continue; }
+  if (!slugs.includes(s)) { report(file, `記事 "${s}" がない（ファイル名は記事と同じにする）`); continue; }
+  if (data.slug !== undefined && data.slug !== s) report(file, `slug "${data.slug}" がファイル名と違う`);
+  const qs = Array.isArray(data.questions) ? data.questions : [];
+  if (qs.length < 8 || qs.length > 10) report(file, `問題が ${qs.length} 問（8〜10問にする）`);
+  const page = existsSync(`${s}.html`) ? read(`${s}.html`) : '';
+  const ids = new Set([...page.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
+  const h2s = [...page.matchAll(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g)].map(m => ({ id: (m[1].match(/\sid="([^"]*)"/) || [])[1] || '', text: unescape(text(m[2])).trim() }));
+  const listed = currentArticles.includes(s);
+  if (listed && testPage && !testPage.includes(`data-test="${s}"`)) report('test.html', `今の記事 "${s}" のテストが一覧にない`);
+  qs.forEach((q, i) => {
+    const at = `${file} ${i + 1}問目`;
+    if (!q || typeof q.q !== 'string' || !q.q.trim()) report(at, '問題文（q）がない');
+    if (!Array.isArray(q?.choices) || q.choices.length !== 4 || q.choices.some(c => typeof c !== 'string' || !c.trim())) report(at, '選択肢（choices）が4つない');
+    else if (new Set(q.choices.map(c => c.trim())).size !== 4) report(at, '同じ選択肢がある');
+    if (!Number.isInteger(q?.answer) || q.answer < 0 || q.answer > 3) report(at, `answer が 0〜3 ではない（${q?.answer}）`);
+    if (typeof q?.why !== 'string' || !q.why.trim()) report(at, '解説（why）がない');
+    const want = String(q?.section ?? '').trim();
+    const h = h2s.find(x => x.text === want);
+    if (!want || !h) report(at, `section「${want}」が記事 ${s}.html の見出し（h2）にない`);
+    else if (!h.id || !ids.has(h.id)) report(at, `section「${want}」の見出しに id がない`);
+    else if (listed && testPage && !testPage.includes(`href="${s}.html#${h.id}"`)) report('test.html', `"${s}" の${i + 1}問目に、記事の節（${s}.html#${h.id}）へのリンクがない`);
+  });
+}
+for (const s of currentArticles) {
+  if (!slugs.includes(s)) continue;
+  const html = read(`${s}.html`);
+  for (const needle of ['test.js', 'class="rn-test', 'class="rn-quiz', 'class="rn-choice', 'rn-tests-data', 'data-test=']) {
+    if (html.includes(needle)) report(`${s}.html`, `今の記事に理解度テストの部品が出ている（${needle}）。記事とテストは切り離す`);
+  }
+  const article = (html.match(/<article\b[\s\S]*?<\/article>/) || [''])[0];
+  if (/href="test\.html|理解度テスト/.test(article)) report(`${s}.html`, '記事の本文に理解度テストへのリンクがある。記事とテストは切り離す（入口はメニューだけ）');
+}
+
 if (problems.length) {
   console.error(problems.join('\n'));
   process.exit(1);
 }
-console.log(`Current pages checks passed (${currentArticles.length} current, ${archived.length} archived).`);
+console.log(`Current pages checks passed (${currentArticles.length} current, ${archived.length} archived, ${tested.length} tests).`);

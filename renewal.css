@@ -123,6 +123,66 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-refs li { margin: 0 0 8px; overflow-wrap: anywhere; }
 .rn-back { margin: 40px 0 0; font-size: 15px; }
 
+/* 理解度テスト（test.html、2026-10-22）。1問ずつ、4択。答えは ○／× の文字でも示す（色だけに頼らない）。演出は入れない。
+   JS が無いときは、問題と <details> の答えを並べる。test.js が動いたら（.is-ready）「始める」を出し、その一覧をしまう。 */
+.rn-tests { margin-top: 40px; }
+.rn-test-name { margin: 0; font-size: 20px; line-height: 1.55; font-weight: 700; word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+.rn-test-go { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 12px 0 0; }
+.rn .rn-btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; min-height: 48px; padding: 8px 22px; font: inherit; font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--paper); background: var(--ai); border: 1.5px solid var(--ai); border-radius: 10px; cursor: pointer; text-decoration: none; }
+.rn .rn-btn:hover { background: var(--ai-hover); border-color: var(--ai-hover); }
+.rn .rn-btn--sub { color: var(--ai); background: transparent; }
+.rn .rn-btn--sub:hover { color: var(--ai-hover); background: var(--ai-soft); }
+.rn .rn-btn:focus-visible, .rn .rn-choice:focus-visible { outline: 3px solid var(--ai); outline-offset: 3px; }
+.rn .rn-btn[hidden], .rn .rn-test-start { display: none; }
+.rn .rn-test.is-ready .rn-test-start { display: inline-flex; }
+.rn .rn-test-nojs { display: inline-flex; align-items: center; min-height: 44px; }
+.rn-test.is-ready .rn-test-nojs, .rn-test.is-ready .rn-test-all { display: none; }
+
+.rn-quiz { margin-top: 40px; }
+.rn-quiz-name { margin: 0; font-size: 17px; line-height: 1.6; font-weight: 700; color: var(--text2); word-break: keep-all; overflow-wrap: anywhere; }
+.rn-quiz-step { margin: 4px 0 0; font-size: 15px; color: var(--text3); }
+.rn-quiz-q { margin: 20px 0 0; font-size: clamp(19px, 2.6vw, 22px); line-height: 1.75; font-weight: 700; }
+.rn-quiz-q:focus { outline: none; } /* 新しい問題に移したフォーカス。押せる部品ではないので枠は出さない */
+.rn-choices { display: flex; flex-direction: column; gap: 10px; margin: 20px 0 0; }
+.rn .rn-choice { appearance: none; display: block; box-sizing: border-box; width: 100%; min-height: 52px; padding: 12px 16px; font: inherit; font-size: 17px; line-height: 1.65; text-align: left; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 10px; cursor: pointer; overflow-wrap: anywhere; }
+.rn .rn-choice:hover { border-color: var(--ai); }
+.rn .rn-choice[aria-disabled="true"] { cursor: default; }
+.rn .rn-choice[aria-disabled="true"]:hover { border-color: var(--line); }
+.rn .rn-choice.is-answer, .rn .rn-choice.is-answer:hover { border: 2px solid var(--ai); background: var(--ai-soft); }
+.rn .rn-choice.is-chosen, .rn .rn-choice.is-chosen:hover { border: 2px solid var(--shu); }
+.rn-choice-tag { display: block; margin-top: 4px; font-size: 15px; font-weight: 700; }
+.is-answer .rn-choice-tag { color: var(--ai); }
+.is-chosen .rn-choice-tag { color: var(--shu); }
+.rn-feedback:not(:empty) { margin: 20px 0 0; padding: 16px 18px; background: var(--surface); border-radius: 12px; }
+.rn-feedback p { margin: 0 0 .6em; }
+.rn-feedback p:last-child { margin-bottom: 0; }
+.rn-judge { font-size: 20px; font-weight: 900; }
+.rn-judge.is-right { color: var(--ai); }
+.rn-judge.is-wrong { color: var(--shu); }
+.rn-judge-answer { font-weight: 700; }
+.rn-sec { font-size: 15px; }
+.rn-quiz-actions { margin: 20px 0 0; }
+.rn-quiz-actions:has(> [hidden]:only-child) { display: none; }
+.rn-quiz-score { margin: 20px 0 0; font-size: clamp(26px, 5vw, 32px); font-weight: 900; }
+.rn-quiz-score:focus { outline: none; }
+.rn-missed { margin: 0; padding-left: 1.6em; }
+.rn-missed li { margin: 0 0 16px; }
+.rn-missed p { margin: 0; }
+.rn-missed-q { font-weight: 700; }
+.rn-missed-a { color: var(--text2); }
+.rn-missed-none { margin: 16px 0 0; }
+
+.rn-test-all { margin-top: 56px; }
+.rn-test-all-name { margin: 0 0 16px; font-size: clamp(21px, 3.4vw, 25px); line-height: 1.5; font-weight: 900; word-break: keep-all; overflow-wrap: anywhere; }
+.rn-test-qs { margin: 0; padding-left: 1.6em; }
+.rn-test-qs > li { margin: 0 0 28px; }
+.rn-test-q { margin: 0; font-weight: 700; }
+.rn-test-choices { margin: 6px 0 0; padding-left: 1.6em; color: var(--text2); }
+.rn-test-a { margin: 8px 0 0; }
+.rn-test-a summary { padding: 8px 0; color: var(--ai); cursor: pointer; } /* 三角の印は残す（display を変えない）。高さは 44px 以上 */
+.rn-test-a p { margin: 0 0 .6em; }
+.rn-test-right { font-weight: 700; }
+
 /* フッター */
 .rn-footer { border-top: 1px solid var(--line); }
 .rn-footer-in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 20px; padding-block: 24px 40px; }

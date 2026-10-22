@@ -75,6 +75,27 @@ export default function (eleventyConfig) {
     const at = html.indexOf('<section class="rn-refs"');
     return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
   });
+  // 2026-10-22 理解度テスト（test.html）：記事の見出し（h2）に、上から順に id（s-1, s-2, …）を付ける。
+  // テストの「記事のこの節を読む」が、この id に飛ぶ。番号は記事の中で何番目の h2 か。すでに id のある見出し（参考文献の refs-h）はそのまま。
+  // 記事の側には、テストの印もリンクも置かない（オーナー「記事とクイズは切り離す」）。
+  const eachH2 = (html, fn) => { let n = 0; return String(html).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => fn(m, attrs, inner, ++n)); };
+  const h2Text = inner => inner.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+  eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
+  // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
+  // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
+  eleventyConfig.addFilter('understandingTests', (items, data = {}) => items.filter(a => data[a.page.fileSlug]?.questions?.length).map(a => {
+    const slug = a.page.fileSlug;
+    const ids = {};
+    eachH2(a.content, (m, attrs, inner, n) => { ids[h2Text(inner)] ??= (attrs.match(/\sid="([^"]*)"/) || [])[1] || `s-${n}`; return m; });
+    return {
+      slug,
+      title: a.data.headline,
+      questions: data[slug].questions.map(q => ({
+        q: q.q, choices: q.choices, answer: q.answer, why: q.why,
+        href: `${slug}.html${ids[String(q.section).trim()] ? `#${ids[String(q.section).trim()]}` : ''}`,
+      })),
+    };
+  }));
   // Pages with affiliate links say so near the top, not only at the end
   // (Japan's stealth-marketing rules): right after the reading time line.
   eleventyConfig.addFilter('prNotice', (html, show) => {
