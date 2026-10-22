@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: archive.html
 title: "アーカイブ — ムートン"
-description: "いまの MOUTON の中心から外した記事を、ここにまとめて残しています。身体、食事と科学、仕事、本、哲学の記事と、清潔感の科学、制作の記録、○×クイズ。ページはそのまま読めます。"
+description: "サイトを作り直す前（2026年10月まで）の記事を、ここにまとめて残しています。哲学、身体、食事と科学、仕事、本の記事と、清潔感の科学、制作の記録、○×クイズ。ページはそのまま読めます。"
 bodyClass: site journal-page archive-page
 extraCss: ["home.css?v=20261017-archive"]
 assetVersion: "20261017-archive"
@@ -23,12 +23,12 @@ groups:
     <div class="section-inner">
       <div class="section-head" data-rise>
         <div>
-          <p class="eyebrow">Archive</p>
-          <h1 class="section-title" id="archive-heading">アーカイブ<em>— {{ collections.archived.length }} notes</em></h1>
+          <p class="eyebrow">これまでの記事</p>
+          <h1 class="section-title" id="archive-heading">アーカイブ<em>{{ collections.archived.length }}本</em></h1>
         </div>
-        <p class="copy">いまの MOUTON の中心から外した記事を、ここに残している。2026年10月、読むだけで終わる記事を中心に置かないことにした。ページは、そのまま読める。</p>
+        <p class="copy">サイトを作り直す前（2026年10月まで）の記事を、ここに残している。ページは、そのまま読める。</p>
       </div>
-      <p class="archive-now"><a href="journal.html">いまの記事へ <span aria-hidden="true">→</span></a><a href="topic-philosophy.html">哲学の3本へ <span aria-hidden="true">→</span></a></p>
+      <p class="archive-now"><a href="index.html">今の記事へ <span aria-hidden="true">→</span></a></p>
       <nav class="archive-index" aria-label="アーカイブの分類">
         {%- for g in groups %}{% set n = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else a.data.category %}{% if cat == g.key %}{% set n = (n.push(1), n) %}{% endif %}{% endfor %}
         {%- if n.length %}<a href="#archive-{{ g.key }}">{{ g.label }}<span>{{ n.length }}</span></a>{% endif %}

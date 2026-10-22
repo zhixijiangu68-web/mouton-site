@@ -72,9 +72,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
   <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-links">Menu</button>
   <nav aria-label="メインナビゲーション">
     <ul class="site-links" id="site-links">
-      <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
-      <li><a href="topic-philosophy.html">哲学の3本<span class="site-links-en">Philosophy</span></a></li>
       <li><a href="journal.html">記事<span class="site-links-en">Articles</span></a></li>
+      <li><a href="start.html">ムートンについて<span class="site-links-en">About</span></a></li>
+      <li><a href="archive.html">アーカイブ<span class="site-links-en">Archive</span></a></li>
       <li><a href="en/camus-sisyphus.html" hreflang="en" lang="en">English<span class="site-links-en">英語版</span></a></li>
     </ul>
   </nav>
@@ -90,8 +90,8 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <div class="hero-line"></div>
 
-<article>
-<p class="lead">朝、アラームを止める。同じ電車に乗って、同じような仕事をして、同じ道を帰る。夜、布団の中でスマホを眺めていて、ふと指が止まる。これを、あと何十年続けるんだろう。</p>
+<article><aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p><p>この記事は、サイトを作り直す前（2026年10月まで）のものです。<a href="index.html">今の記事へ</a></p></aside>
+<p class="lead">朝、アラームを止める。同じ電車に乗って、同じような仕事をして、同じ道を帰る。夜、布団の中でスマホを眺めていて、ふと指が止まる。これを、あと何十年続けるんだろう。</p><details class="quiz" data-a="0"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">カミュの「不条理」とは、世界そのものが不条理だという意味だ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">×。人と世界の食い違いのこと。</p><p class="quiz-why">意味を求める人間と、何も答えない世界。その二つが向き合ったところに不条理が生まれる。</p></div></details>
 
 <p>何か嫌なことがあったわけではない。仕事が特別につらいわけでもない。ただ、月曜が来て、金曜が来て、また月曜が来る。その途中で、ときどき足元が抜けたような気持ちになる。</p>
 
@@ -130,7 +130,7 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 
 <p>見えたあとで、その岩を押し続けるのか、別の岩に手をかけるのか。カミュはどちらとも言っていない。<strong>毎日の繰り返しに意味が用意されていないことと、その毎日を自分のものとして生きられないことは、同じではない。</strong>僕はこの本から、そう受け取った。</p>
 
-<h2 id="section-3">岩が<wbr>見えた<wbr>あとで</h2>
+<details class="quiz quiz-mid" data-a="1"><summary><span class="quiz-label">QUIZ</span><span class="quiz-q">カミュは、意味がないと知ったまま生き続けることを「反抗」と呼んだ。</span><span class="quiz-tap">答えを見る</span></summary><div class="quiz-a"><p class="quiz-answer">○。それを「反抗」と呼んだ。</p><p class="quiz-why">意味があるはずだという希望に飛びつかず、意味がないことを知ったまま、それでも生き続けること。それが「反抗」。</p></div></details><h2 id="section-3">岩が<wbr>見えた<wbr>あとで</h2>
 
 <p>あなたの岩は、何だろう。見えたあとも、押し続けたいと思えるだろうか。</p>
         <p>では、岩が見えたあと、どうすればいいのか。</p>
@@ -168,7 +168,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
   </p>
 </nav>
 
-<p class="read-mark" data-total="11" aria-live="polite"></p>
+<p class="read-mark" data-total="6" aria-live="polite"></p>
+<section class="quiz-more" aria-labelledby="quiz-more-heading"><p class="quiz-more-title" id="quiz-more-heading">もう1問 <span>○×クイズ</span></p>
+<div class="qloop" data-qloop data-exclude="camus-sisyphus" data-prefer="nietzsche,system-goal,freedom,kierkegaard,nietzsche,spinoza"></div></section>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -183,9 +185,9 @@ h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,31
 </aside>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="nietzsche.html" data-slug="nietzsche"><span class="reading-card-title">その「すべき」は、誰の声なのか</span></a><a class="reading-card" href="absorption-freedom-action.html" data-slug="absorption-freedom-action"><span class="reading-card-title">「このままで終わりたくない」と思ったら</span></a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2>
 <div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
-<p class="reading-returns"><a class="reading-return" href="journal.html">記事一覧へ戻る</a><a class="reading-return" href="journal.html">いまの記事をすべて見る</a></p></nav>
+<p class="reading-returns"><a class="reading-return" href="journal.html">記事一覧へ戻る</a><a class="reading-return" href="archive.html">アーカイブの一覧へ</a></p></nav>
 
 </article>
 </main>

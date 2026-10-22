@@ -46,6 +46,67 @@ export default function (eleventyConfig) {
 
   eleventyConfig.addFilter('isoDate', d => ymd(new Date(d)).join('-'));
   eleventyConfig.addFilter('dotDate', d => ymd(new Date(d)).join('.'));
+  eleventyConfig.addFilter('jaDate', d => { const [y, m, day] = ymd(new Date(d)); return `${y}年${Number(m)}月${Number(day)}日`; });
+
+  // 2026-10-21 作り直し：記事の判定表。front matter の claims（claim・verdict・certainty・basis・refs）から作る。
+  // 判定は記号と文字で示し、色だけに頼らない（○ 支持＝藍、× 否定＝朱、△ 弱い・― 証拠なし＝灰）。
+  const verdicts = {
+    support: ['○', '支持', 'is-support'],
+    refute: ['×', '否定', 'is-refute'],
+    weak: ['△', '弱い', 'is-weak'],
+    none: ['―', '証拠なし', 'is-none'],
+  };
+  eleventyConfig.addShortcode('verdictTable', (claims = []) => {
+    const esc = x => String(x ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const rows = claims.map(c => {
+      const [mark, label, cls] = verdicts[c.verdict] || verdicts.none;
+      const refs = (c.refs || []).map(n => `<a href="#ref-${Number(n)}">[${Number(n)}]</a>`).join('');
+      return `<tr><th scope="row">${esc(c.claim)}</th>`
+        + `<td class="rn-verdict ${cls}" data-label="判定"><span aria-hidden="true">${mark}</span> ${label}</td>`
+        + `<td data-label="確かさ">${esc(c.certainty) || '―'}</td>`
+        + `<td data-label="根拠">${esc(c.basis)}${refs ? ` ${refs}` : ''}</td></tr>`;
+    }).join('');
+    return `<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  });
+  // 健康の記事の注意書きは、参考文献の前に置く（参考文献が無ければ本文の最後）。
+  eleventyConfig.addFilter('withHealthNote', (html, on) => {
+    if (!on) return html;
+    const note = '<p class="rn-health" role="note">この記事は、研究の結果を紹介するもので、医療の助言ではありません。体の不調や性の悩みは、医師に相談してください。</p>';
+    const at = html.indexOf('<section class="rn-refs"');
+    return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
+  });
+  // 2026-10-22 理解度テスト（test.html）：記事の見出し（h2）に、上から順に id（s-1, s-2, …）を付ける。
+  // テストの「記事のこの節を読む」が、この id に飛ぶ。番号は記事の中で何番目の h2 か。すでに id のある見出し（参考文献の refs-h）はそのまま。
+  // 記事の側には、テストの印もリンクも置かない（オーナー「記事とクイズは切り離す」）。
+  const eachH2 = (html, fn) => { let n = 0; return String(html).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => fn(m, attrs, inner, ++n)); };
+  // タグを1文字ずつ読んで取り除く（正規表現の置き換えで外すと、CodeQL が「不完全な複数文字の除去」と判定するため）
+  const stripTags = s => {
+    let out = '';
+    let inTag = false;
+    for (const ch of String(s)) {
+      if (ch === '<') inTag = true;
+      else if (ch === '>' && inTag) inTag = false;
+      else if (!inTag) out += ch;
+    }
+    return out;
+  };
+  const h2Text = inner => stripTags(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+  eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
+  // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
+  // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
+  eleventyConfig.addFilter('understandingTests', (items, data = {}) => items.filter(a => data[a.page.fileSlug]?.questions?.length).map(a => {
+    const slug = a.page.fileSlug;
+    const ids = {};
+    eachH2(a.content, (m, attrs, inner, n) => { ids[h2Text(inner)] ??= (attrs.match(/\sid="([^"]*)"/) || [])[1] || `s-${n}`; return m; });
+    return {
+      slug,
+      title: a.data.headline,
+      questions: data[slug].questions.map(q => ({
+        q: q.q, choices: q.choices, answer: q.answer, why: q.why,
+        href: `${slug}.html${ids[String(q.section).trim()] ? `#${ids[String(q.section).trim()]}` : ''}`,
+      })),
+    };
+  }));
   // Pages with affiliate links say so near the top, not only at the end
   // (Japan's stealth-marketing rules): right after the reading time line.
   eleventyConfig.addFilter('prNotice', (html, show) => {
@@ -83,10 +144,10 @@ export default function (eleventyConfig) {
     const src = paths.find(p => existsSync(p));
     return src ? ` style="--img:url('${src}')"` : '';
   });
-  // アーカイブに移した記事の上に出す注記。本文はそのまま残し、いまの入口（記事・哲学の3本）を示す。
+  // アーカイブに移した記事の上に出す注記。本文はそのまま残し、今の入口（トップ）を示す（2026-10-21 作り直し）。
   eleventyConfig.addFilter('archiveNote', (html, on) => on ? html.replace(/<article\b[^>]*>/, m => m
     + '<aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>'
-    + '<p>この記事は、いまの MOUTON の中心から外して、ここに保管しています（2026年10月）。いまの記事は<a href="journal.html">記事</a>に、悩みから選ぶ哲学の3本は<a href="topic-philosophy.html">こちら</a>に。</p></aside>') : html);
+    + '<p>この記事は、サイトを作り直す前（2026年10月まで）のものです。<a href="index.html">今の記事へ</a></p></aside>') : html);
   // Paid articles (front matter `paid`), in the order shown on the philosophy landing page.
   eleventyConfig.addFilter('paidCards', items =>
     items.filter(a => a.data.paid).sort((a, b) => a.data.paid.order - b.data.paid.order));
