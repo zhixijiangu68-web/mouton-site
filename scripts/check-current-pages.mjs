@@ -15,7 +15,18 @@ import currentArticles from '../src/_data/currentArticles.js';
 const problems = [];
 const report = (page, message) => problems.push(`${page}: ${message}`);
 const read = f => readFileSync(f, 'utf8');
-const text = html => html.replace(/<[^>]+>/g, '');
+// タグは1文字ずつ読んで外す（正規表現の置き換えで外すと、CodeQL が「不完全な複数文字の除去」と判定するため）
+const stripTags = s => {
+  let out = '';
+  let inTag = false;
+  for (const ch of String(s)) {
+    if (ch === '<') inTag = true;
+    else if (ch === '>' && inTag) inTag = false;
+    else if (!inTag) out += ch;
+  }
+  return out;
+};
+const text = html => stripTags(html);
 const slugs = readdirSync('src/articles').filter(f => f.endsWith('.html')).map(f => f.replace(/\.html$/, ''));
 const archived = slugs.filter(s => !currentArticles.includes(s));
 

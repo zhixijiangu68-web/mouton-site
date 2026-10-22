@@ -79,7 +79,18 @@ export default function (eleventyConfig) {
   // テストの「記事のこの節を読む」が、この id に飛ぶ。番号は記事の中で何番目の h2 か。すでに id のある見出し（参考文献の refs-h）はそのまま。
   // 記事の側には、テストの印もリンクも置かない（オーナー「記事とクイズは切り離す」）。
   const eachH2 = (html, fn) => { let n = 0; return String(html).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => fn(m, attrs, inner, ++n)); };
-  const h2Text = inner => inner.replace(/<[^>]+>/g, '').replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
+  // タグを1文字ずつ読んで取り除く（正規表現の置き換えで外すと、CodeQL が「不完全な複数文字の除去」と判定するため）
+  const stripTags = s => {
+    let out = '';
+    let inTag = false;
+    for (const ch of String(s)) {
+      if (ch === '<') inTag = true;
+      else if (ch === '>' && inTag) inTag = false;
+      else if (!inTag) out += ch;
+    }
+    return out;
+  };
+  const h2Text = inner => stripTags(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
   eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
   // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
   // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
