@@ -8,5 +8,6 @@ export default [
   'meat-and-libido', 'libido-and-food', 'libido-what-moves-it',
   'prolactin', // 2026-10-22 追加（オーナーの原稿「プロラクチンの作用と低値を証拠で仕分ける」）
   'habit-design', 'color-impression', // 2026-10-22 追加（オーナー「この2つも追加したい」。習慣設計の PDF と、色の印象の調査資料から）
+  'sleep-evidence', 'before-sleep-hour', // 2026-10-23 追加（オーナー「ムートンサイトに載せたい」。睡眠の調査レポート2本から）
   'patience', // 2026-10-22 追加（オーナー「この記事をサイト用に編集して掲載してください。」待つ力・マシュマロ・テストの研究から）
 ];
