@@ -20,7 +20,7 @@ labels: ["ai-task", "ai-task:article"]
 ## 形
 
 - `src/articles/<slug>.html`（category: philosophy、常体・一人称「僕」）。`src/_data/currentArticles.js` に登録
-- 長さの目安：入門 2,500〜4,000字／掘り下げ 5,000〜7,500字。参考文献は番号付き
+- 長さ：新しい型のサイトの記事は本文1万〜2万字（2026-10-22、オーナー「サイトは決定版だから重厚にして欲しい」。`npm test` が数える）。参考文献は番号付き
 - 最後に問いを一つだけ。手順・ワーク・穴埋め・「今日やること」は置かない（`docs/content-quality.md`）
 - 作業ログ（`promo/log/`）、シェア用の画像（`images/og/<slug>.jpg`）、`npm run build` → `npm test`
 - 段取りは `.github/ai-shain.md`

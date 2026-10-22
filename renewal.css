@@ -94,6 +94,25 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-note { font-size: .9em; color: var(--text2); }
 .rn-placeholder { color: var(--text3); }
 .rn-question { margin: 1.6em 0; padding: 20px 22px; font-size: clamp(19px, 2.6vw, 22px); line-height: 1.75; font-weight: 700; background: var(--surface); border-radius: 12px; }
+/* 決定版の記事（2026-10-22、本文1万〜2万字）：節の中の小見出しと、本文の表 */
+.rn-body h3 { margin: 2em 0 .6em; font-size: clamp(18px, 2.6vw, 20px); line-height: 1.6; font-weight: 700; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
+.rn-body h2 + h3 { margin-top: 1.2em; }
+/* 表は枠（.rn-scroll）の中でだけ横に動く。ページは横にはみ出さない。列が細くなりすぎないよう、1列に最低の幅を持たせる（390px の画面で4列までは枠に収まる） */
+.rn-scroll { max-width: 100%; overflow-x: auto; margin: 1.4em 0 2em; container-type: inline-size; }
+/* 枠の外に列が続くときだけ、その側の端に薄い影が出る（動かない。続きがあると分かるための印） */
+.rn-scroll {
+  background:
+    linear-gradient(to right, var(--paper) 40%, transparent) left / 28px 100% no-repeat local,
+    linear-gradient(to left, var(--paper) 40%, transparent) right / 28px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, color-mix(in srgb, var(--ink) 22%, transparent), transparent) left / 12px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, color-mix(in srgb, var(--ink) 22%, transparent), transparent) right / 12px 100% no-repeat scroll;
+}
+.rn-data { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.7; font-variant-numeric: tabular-nums; }
+/* 表の題は、表が横に動いても枠の幅で折り返し、左に残る（題の言葉を隠さない） */
+.rn-data caption { caption-side: top; position: sticky; left: 0; max-width: 100cqw; box-sizing: border-box; padding: 0 0 8px; background: var(--paper); text-align: left; font-size: 15px; font-weight: 700; line-height: 1.6; color: var(--text2); }
+.rn-data th, .rn-data td { min-width: 4.5em; padding: 10px 10px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); overflow-wrap: anywhere; }
+.rn-data thead th { font-size: 14px; font-weight: 700; color: var(--text3); background: var(--surface); border-bottom: 2px solid var(--ink); }
+.rn-data tbody th { font-weight: 700; }
 
 /* 判定表：広い画面では表、600px 以下では1件ずつのカード */
 .rn-table-wrap { margin: 1.2em 0 2.2em; }
