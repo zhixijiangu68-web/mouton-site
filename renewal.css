@@ -55,7 +55,7 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-list-h { margin: 56px 0 8px; font-size: 15px; font-weight: 700; color: var(--text3); }
 .rn-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .rn-list li { padding: 20px 0; border-bottom: 1px solid var(--line); }
-.rn .rn-list-title { font-size: 20px; line-height: 1.55; font-weight: 700; color: var(--ink); text-decoration-color: var(--line); word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+.rn .rn-list-title { display: block; font-size: 20px; line-height: 1.55; font-weight: 700; color: var(--ink); text-decoration-color: var(--line); word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
 .rn .rn-list-title:hover { color: var(--ai); text-decoration-color: currentColor; }
 .rn-list-summary { margin: 6px 0 0; color: var(--text2); line-height: 1.8; }
 .rn-list-meta { margin: 6px 0 0; font-size: 14px; color: var(--text3); }
