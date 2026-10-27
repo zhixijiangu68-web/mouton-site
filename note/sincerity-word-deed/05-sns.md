@@ -1,4 +1,4 @@
-# 05-sns：有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた（slug: sincerity-word-deed）
+# 05-sns：言ったことを守る人と、嘘をつかない人は、同じ人なのか（slug: sincerity-word-deed）
 
 作成：note-sns（SNS集客）／2026-10-26
 対象記事：`note/sincerity-word-deed/article.md`（サイトの決定版 `sincerity-word-deed.html` の note 版）
@@ -19,7 +19,7 @@
 
 リプライの1行（3案共通）：
 ```
-「有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた」の記事（note）はこちら → 【noteのURL】
+「言ったことを守る人と、嘘をつかない人は、同じ人なのか」の記事（note）はこちら → 【noteのURL】
 ```
 
 ### SW-1 ｜常識の反対：有言実行は、昔からの教えではなかった（公開当日）
@@ -34,7 +34,7 @@
 
 リプライ（自分の投稿に返信）：
 ```
-「有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+「言ったことを守る人と、嘘をつかない人は、同じ人なのか」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
 ```
 本文 約136字（重み 約253）。根拠：記事の1行目「有言実行は、昔からの教えではなかった」、見出し「『有言実行』は、『不言実行』をもじった近代の言葉だった」、冒頭の「いま確かめられる最も古い用例は、1924年の新聞だ。ただし Wiktionary の記載によるもので、元の紙面は僕も見ていない」。答え（三番目）は本文に書かず、タイトルと記事に任せた。
 
@@ -50,7 +50,7 @@
 
 リプライ（自分の投稿に返信）：
 ```
-「有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+「言ったことを守る人と、嘘をつかない人は、同じ人なのか」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
 ```
 本文 約135字（重み 約258）。根拠：「『誠実性』という名前の特性が、不正をほとんど予測しなかったことになる」、「16研究（4,855人）をまとめ直した分析…1段階（1標準偏差）高いごとに、不正をする見込み（オッズ）をほぼ半分にした」[10]、小見出し「『誠実性』が測っていたのは、やり遂げる力だった」、「有言実行の実績だけで人を見ると、この人を見分けられない」。「誠実性の高い人は不正をする」と読める書き方はしていない（記事も「とは言えない」と断っている）。
 
@@ -66,7 +66,7 @@
 
 リプライ（自分の投稿に返信）：
 ```
-「有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+「言ったことを守る人と、嘘をつかない人は、同じ人なのか」の記事（note）はこちら → 【noteのURL】?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
 ```
 本文 約135字（重み 約262）。根拠：「言ったのに守れなかった人は、不誠実なのか」、信頼ゲームの段落[15]（「裏切る行いだけで損なわれた信頼は、その後に信頼に足る行いを続ければ戻りうる」を「その後の行いで戻りうる」に縮めた）、「『やります』と言って果たせないことと、果たせないと知りながら『やります』と言うことは、別の重さを持っていた」。
 
@@ -218,7 +218,7 @@ Instagram は休止中（`instagram/README.md`）。再開したときのため�
 
 1. **サイトの決定版 `sincerity-word-deed.html` と（SW-2 か SW-3 の日）**：リプライを2行にする。1行目は note、2行目はサイト。note が「8つの説の判定表・ずれの六つの形・参考文献98本はサイトに」と送っているので、X → note → サイトと、X → サイトの2本の道になる（CLAUDE.md「X → note（一部）→ サイト」）。
    ```
-   「有言実行できる人が、誠実とは限らなかった——孔子は三番目に置いた」の記事（note）はこちら → 【noteのURL】
+   「言ったことを守る人と、嘘をつかない人は、同じ人なのか」の記事（note）はこちら → 【noteのURL】
    ```
    ```
    8つの説の判定表と参考文献98本は、サイトの決定版に → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
