@@ -10,15 +10,29 @@
   {%- for a in collections.articles %}
   <url><loc>{{ (a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</loc><lastmod>{{ (a.data.updated or a.page.date) | isoDate }}</lastmod></url>
   {%- endfor %}
+  {%- if site.english %}
   <url><loc>{{ 'en/' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
+  {%- if site.english %}
   {%- for a in collections.articlesEn %}
   <url><loc>{{ ('en/' + a.page.fileSlug + '.html') | absoluteUrl(site.url) }}</loc><lastmod>{{ (a.data.updated or a.page.date) | isoDate }}</lastmod></url>
   {%- endfor %}
+  {%- endif %}
+  {%- if site.english %}
   <url><loc>{{ 'en/guides.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
+  {%- if site.english %}
   <url><loc>{{ 'en/quiz.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
+  {%- if site.english %}
   <url><loc>{{ 'en/operator.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
+  {%- if site.english %}
   <url><loc>{{ 'en/privacy.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
+  {%- if site.english %}
   <url><loc>{{ 'en/contact.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
   <url><loc>{{ 'guides.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'quiz.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'series.html' | absoluteUrl(site.url) }}</loc></url>
@@ -27,7 +41,9 @@
   <url><loc>{{ 'test.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'archive.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'editorial.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- if site.english %}
   <url><loc>{{ 'en/series.html' | absoluteUrl(site.url) }}</loc></url>
+  {%- endif %}
   <url><loc>{{ 'now.html' | absoluteUrl(site.url) }}</loc></url>
   <url><loc>{{ 'making.html' | absoluteUrl(site.url) }}</loc></url>
   {%- for p in projects %}{% if not p.placeholder %}

@@ -3,6 +3,10 @@ import { waitlistReady } from '../../scripts/waitlist-readiness.mjs';
 // サイト全体の設定。ここを書き換えて `npm run build` すると全ページに反映される。
 export default {
   name: 'ムートン',
+  // 英語版（/en/）。2026-10-27 オーナー「英語版は一度廃止する。まずは日本語の記事を溜める」。
+  // false のあいだは、日本語のページから英語版への入口（メニュー・フッター・記事の言語の切り替え・hreflang・サイトマップ）を出さず、
+  // 英語版のページは noindex にする。ページと URL は残す（外からのリンクを切らないため）。再開するときは true に戻す。
+  english: false,
   // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
   url: 'https://moutonarchive.com/',

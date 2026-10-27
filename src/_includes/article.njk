@@ -6,7 +6,7 @@ bodyClass: article-page
 {%- set coverImg = ["images/articles/" + page.fileSlug + ".jpg", "images/cover-" + category + ".jpg"] | firstImage %}
 <div class="cover ph-{{ category }}{{ '' if coverImg else ' is-placeholder' }}" data-nav="dark"{% if coverImg %} style="--img:url('{{ root }}{{ coverImg }}')"{% endif %}><nav aria-label="{{ 'Back' if lang == 'en' else '戻る' }}"><a class="cover-back" href="{{ back.href }}"><span aria-hidden="true">←</span> {{ back.text }}</a>
 {%- if lang == 'en' and not enOnly %}<a class="cover-lang" href="../{{ page.fileSlug }}.html" hreflang="ja" lang="ja">日本語</a>
-{%- elif lang != 'en' and page.fileSlug in enSlugs %}<a class="cover-lang" href="en/{{ page.fileSlug }}.html" hreflang="en" lang="en">English</a>{% endif %}</nav></div>
+{%- elif lang != 'en' and site.english and page.fileSlug in enSlugs %}<a class="cover-lang" href="en/{{ page.fileSlug }}.html" hreflang="en" lang="en">English</a>{% endif %}</nav></div>
 {#- ○×クイズは、アーカイブの記事にだけ残す（2026-10-17、オーナー「クイズも必要ない」）。英語版は後回しなので、そのまま。 #}
 {%- set qbank = quizzesEn if lang == 'en' else (quizzes if archived else []) %}
 {%- set mySeries = series | seriesOf(page.fileSlug) %}
