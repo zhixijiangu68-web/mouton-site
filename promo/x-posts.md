@@ -5791,3 +5791,91 @@ SPFは肌1cm²に2mg塗って測った数字。海辺で実際に塗ってもら
 ```
 記事はこちら → https://moutonarchive.com/sunscreen-guide.html?utm_source=x&utm_medium=social&utm_campaign=sunscreen-guide&utm_content=reply
 ```
+
+## 誠実と有言実行の投稿（sincerity-word-deed。2026-10-27 版）
+
+材料はサイトの記事 `sincerity-word-deed.html`（残す記事）だけ。数字・引用はその記事の本文と参考文献のとおり。型はすべてリプリンク。どれも問いで終える。
+
+### SD-1 ｜常識の反対：有言実行できる人が、正直とは限らない
+型：**リプリンク**
+```
+有言実行できる人が、正直とは限らない。
+
+16研究の再分析で、不正を予測したのは「正直さ–謙虚さ」だった。日本で「誠実性」と訳される性格特性は、正直さをそろえると、不正をほとんど予測しなかった。中身はやり遂げる力に近い。
+
+言ったことを守る人と、嘘をつかない人は、同じ人なのか。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
+
+### SD-2 ｜古典：孔子は「言ったことを守り通す人」を三番目に置いた
+型：**リプリンク**
+```
+言ったことは守り通し、始めたことはやり遂げる。
+
+孔子はそういう人を「融通のきかない小人物」と呼び、士の三番目に置いた（『論語』子路）。孟子はさらに、立派な人は言ったことを守るとは限らない、ただ義に従う、と言った（『孟子』離婁下）。
+
+守ることより重いものは、何だったのか。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
+
+### SD-3 ｜言葉の歴史：「有言実行」は昔からの言葉ではなかった
+型：**リプリンク**
+```
+「有言実行」は、昔からの言葉ではなかった。
+
+先にあったのは「不言実行」。有言実行はそのもじりで、確かめられる最古の用例は1924年の新聞だ（元の紙面は未確認）。1965年には首相が国会で、有言実行に民主主義のルールがある、と答えた。
+
+なぜ、言うことに値打ちが生まれたのだろう。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
+
+### SD-4 ｜意外な結果：期待以上に届けても、評価はほとんど上がらなかった
+型：**リプリンク**
+```
+期待以上に届けても、評価はほとんど上がらなかった。
+
+約束を破ると、守った場合より低く評価された。ところが約束を上回っても、約束どおりの場合より、ほとんど高く評価されなかった（Gneezy・Epley 2014）。
+
+「控えめに約束して、期待を超える」は、何を守っているのだろう。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
+
+### SD-5 ｜数字：会社の52%が「誠実」を掲げていた
+型：**リプリンク**
+```
+S&P500の会社の約52%が「誠実」を価値に掲げていた。
+
+ところが掲げた価値と業績には、はっきりした関係がなかった。関係があったのは、従業員が「経営陣の行動は、言葉と一致している」と見ているかどうかだった。
+
+言葉を掲げることと、言葉どおりに見えること。違いはどこから生まれるのか。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
+
+### SD-6 ｜常識の反対：「目標は人に言うな」の土台は小さかった
+型：**リプリンク**
+```
+「目標は人に言うと、かなわなくなる」。この話の土台は、約160人の4研究で、追試は見つかっていない。
+
+1,035人を追った研究では、目標を人に話すと、受ける支えと努力が少し増えた。自分より目上の相手に伝えると、成績も上がった。
+
+目標を話す相手は、誰がいいのだろう。
+```
+リプライ（自分の投稿に返信）：
+```
+「有言実行できる人が、誠実とは限らなかった。」の記事はこちら → https://moutonarchive.com/sincerity-word-deed.html?utm_source=x&utm_medium=social&utm_campaign=sincerity-word-deed&utm_content=reply
+```
