@@ -1,6 +1,6 @@
 ---
 name: AI社員に X の下書きを頼む
-about: X（@kodoku__alone）の投稿の下書きを AI社員（ai.shain）に頼む。投稿はオーナー
+about: X（@moutonarchive）の投稿の下書きを AI社員（ai.shain）に頼む。投稿はオーナー
 title: "X の下書き：<記事名か切り口>（<本数>本）"
 labels: ["ai-task", "ai-task:x"]
 ---

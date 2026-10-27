@@ -6,7 +6,7 @@ document.querySelectorAll('.article-share').forEach(group=>{
  // Post to X, and on phones offer the system share sheet.
  const post=document.createElement('a');
  post.className='copy-link share-x';
- post.href='https://x.com/intent/post?'+new URLSearchParams({text:shareTitle,url:shareUrl(),via:'kodoku__alone'});
+ post.href='https://x.com/intent/post?'+new URLSearchParams({text:shareTitle,url:shareUrl(),via:'moutonarchive'});
  post.target='_blank';
  post.rel='noopener noreferrer';
  post.textContent=isEn?'Post on X':'Xでポスト';

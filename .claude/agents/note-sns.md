@@ -10,7 +10,7 @@ tools: Read, Grep, Glob, Write
 `note/<slug>/article.md` を読み、`note/<slug>/05-sns.md` に告知文の下書きを作る。実際の投稿はしない。
 
 ## 出力の形式（05-sns.md）
-### X（@kodoku__alone）
+### X（@moutonarchive）
 - 単発ポスト 3 案（140 字以内、URL を除く。場面か意外な一文から始める。○×クイズ・投票の形は使わない。記事の URL はリプライの1行に置く形：「〜」の記事はこちら → {URL}）
 - スレッド案 1 本（4〜6 ポスト。最後のポストに記事 URL を貼る場所 `{URL}` を置く）
 

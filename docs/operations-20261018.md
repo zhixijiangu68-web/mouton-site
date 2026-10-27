@@ -9,7 +9,7 @@
 
 | 運用 | 役割 | 作るのは | 出すのは | 置き場所 |
 |---|---|---|---|---|
-| X（@kodoku__alone） | 見つけてもらう。毎日の「点」 | AI（x-staff の5担当） | オーナー（投稿・リプライ・返信） | `promo/x-posts.md`（投稿文と順番表）、`promo/x-analysis/` |
+| X（@moutonarchive） | 見つけてもらう。毎日の「点」 | AI（x-staff の5担当） | オーナー（投稿・リプライ・返信） | `promo/x-posts.md`（投稿文と順番表）、`promo/x-analysis/` |
 | note | サイトの外から、長い文章で入口へ | AI（note事業部の5担当） | オーナー（公開） | `note/<slug>/article.md`・`05-sns.md` |
 | サイト | 商品と入口を磨く（記事・点検・直し） | AI社員（ai.shain。Issue → draft PR） | オーナー（確認してマージ） | GitHub の Issue と PR |
 

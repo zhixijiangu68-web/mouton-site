@@ -31,7 +31,7 @@ https://moutonarchive.com/?utm_source=x&utm_medium=social&utm_campaign=home&utm_
 
 ---
 
-@kodoku__alone のプロフィールと固定ポストの下書きです。設定・投稿はオーナーが行います。2026-10-07 作成（指揮役の依頼：10月の収益化を最優先）。
+@moutonarchive のプロフィールと固定ポストの下書きです。設定・投稿はオーナーが行います。2026-10-07 作成（指揮役の依頼：10月の収益化を最優先）。
 
 ねらい：プロフィールを見に来た人を、選び方の一覧（https://moutonarchive.com/guides.html）へ案内する。リンクには `utm_campaign` で「固定ポスト（pinned）」と「プロフィール（profile）」を分けて、GA4 でどちらから来たかを見る。
 
