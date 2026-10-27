@@ -9,7 +9,8 @@ export default {
   description: 'MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。',
   author: {
     name: 'ムートン',
-    x: 'kodoku__alone',
+    // X のユーザー名（@ なし）。2026-10-27 オーナー「このアカウントをサイトに紐づけしてほしい」で Ever7tt に変えた（前は kodoku__alone）
+    x: 'Ever7tt',
     // Instagram のユーザー名（@ なし）。フッター・運営者情報・links.html に出る。
     // 休止中（2026-10-06〜）は空。再開するときは 'art.gagaga' に戻す。
     instagram: '',
@@ -63,7 +64,7 @@ export default {
     philosophy: { priceJPY: 2980, checkoutProvider: 'stripe', legalUrl: '', fulfillmentReady: false },
   },
   // お問い合わせ先。空でないものだけページに表示する。
-  contact: { formUrl: '', email: '', x: 'kodoku__alone' },
+  contact: { formUrl: '', email: '', x: 'Ever7tt' },
   // 運営者情報・プライバシーポリシーの制定日
   policyDate: '2026-10-05',
 };
