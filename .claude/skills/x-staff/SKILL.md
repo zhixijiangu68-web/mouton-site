@@ -1,6 +1,6 @@
 ---
 name: x-staff
-description: X（@kodoku__alone）の運用を、ムートンの記事から回す AI社員チーム（5担当）の進め方。「今日の2本」「X のリサーチ」「投稿されたか確認」「X の数字を分析して」「このリプに返信案」などの依頼で使う。運用ルールは rules.md、担当の定義は team.md、投稿文と順番表は promo/x-posts.md。
+description: X（@moutonarchive）の運用を、ムートンの記事から回す AI社員チーム（5担当）の進め方。「今日の2本」「X のリサーチ」「投稿されたか確認」「X の数字を分析して」「このリプに返信案」などの依頼で使う。運用ルールは rules.md、担当の定義は team.md、投稿文と順番表は promo/x-posts.md。
 ---
 
 # X 運用（AI社員チーム）

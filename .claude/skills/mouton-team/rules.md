@@ -14,7 +14,7 @@
 
 ## アカウントとサイト
 
-- X：`@kodoku__alone`（日本語）。英語の投稿は `promo/x-posts-en.md`（出す場所は未定）
+- X：`@moutonarchive`（日本語）。英語の投稿は `promo/x-posts-en.md`（出す場所は未定）
 - サイト：https://moutonarchive.com/ 。収益につながるのは front matter に `guide` がある「選び方」の記事
 - X のリンクには必ず `?utm_source=x&utm_medium=social&utm_campaign=<記事のファイル名>`
 
