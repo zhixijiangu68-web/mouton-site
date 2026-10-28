@@ -141,6 +141,36 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
   .rn-verdicts td:nth-child(3) { white-space: normal; }
   .rn-verdicts td::before { content: attr(data-label) "："; font-size: 13px; font-weight: 700; color: var(--text3); }
 }
+/* 記事の型の段階2（2026-10-28。docs/article-type-20261028.md の 6-3）：front matter に results・claims[].section がある記事だけに出る部品。動きはつけない */
+/* 結果の3行：署名の行のすぐ下、本文の前。見出し（h2・h3）にはしない */
+.rn-results { margin: 20px 0 0; padding: 16px 20px; background: var(--surface); border-radius: 10px; }
+.rn-results dl { margin: 0; }
+.rn-results dl > div + div { margin-top: 12px; }
+.rn-results dt { font-size: 14px; font-weight: 700; line-height: 1.6; color: var(--text3); }
+.rn-results dd { margin: 2px 0 0; font-size: 17px; line-height: 1.8; }
+/* 表の上の一行（内訳・凡例・判定の決まりへのリンク。自動）。表に寄せて置く。
+   内訳の一つずつ（「△ 弱い 9」）とリンク（「判定の決まり」）は途中で折り返さない。一行と結果の3行は、最後の行に1〜2字だけが残りにくい折り返しにする（対応していないブラウザでは今のまま）。2026-10-28 の点検で足した */
+.rn-body > .rn-table-lead { margin: 0 0 .5em; font-size: 15px; line-height: 1.8; color: var(--text2); }
+.rn-table-lead .rn-nowrap, .rn-table-lead a { white-space: nowrap; }
+.rn-results dd, .rn-table-lead { text-wrap: pretty; }
+.rn-table-lead + .rn-table-wrap { margin-top: .5em; }
+/* 表の行のリンク（行き先の節へ）：文字は墨のまま（藍は ○ 支持の色なので、× の行の主張が藍で「支持」に見えないように）、下線を藍にしてリンクと分かるようにする。
+   藍にするのは、マウスを乗せられる端末だけ（hover: hover）。タッチの端末では、押して節へ移り「戻る」で表に戻ると :hover が残り、× の行の主張が藍のままになるため（2026-10-28 の点検で直した）。
+   押せる高さは、続きの口と同じく上下の余白14pxで足す（行の高さは変えない。Web フォントで約52px、代わりの字体で約45px）。
+   スマホでは表がカードになり、カードの見出しのリンクになる。カードでは、見出しの下の余白をリンクの余白と同じ14pxにする。6px のままだと、リンクの下の余白がすぐ下の「判定：」の行に重なり、
+   押せる帯が5〜6px低くなり、キーボードで来たときの枠が「判定」の字にかかるため（2026-10-28 の点検で直した。カードは1枚につき8px高くなる） */
+.rn .rn-verdicts .rn-claim { padding-block: 14px; color: var(--ink); text-decoration-color: var(--ai); }
+@media (hover: hover) { .rn .rn-verdicts .rn-claim:hover { color: var(--ai); } }
+/* × の種類（差がない・主張と逆）。記号と朱は今のまま。広い画面の表では2行目に置く（スマホのカードでは同じ行）。
+   判定の列は折り返さない（.rn-verdict の nowrap）ので、列は種類の文字の幅まで広がる：段階1の表で約68px、種類のある表で約110px（今の記事でも「― 証拠なし」のある表は約98px）。
+   そのぶん「主な根拠」の列が狭まり、色気の記事の表は 1280px で約50px、768px で約120px、601px で約220px 高くなる（2026-10-28 に Chromium で測った。スマホのカードの高さは、種類の文字では変わらない）。
+   列の幅を決めると種類の文字が「（差が／ない）」と割れるので、決めていない */
+.rn-refute-kind { font-weight: 700; }
+@media (min-width: 601px) { .rn-refute-kind { display: block; } }
+@media (max-width: 600px) {
+  .rn-results dd { font-size: 16px; }
+  .rn-verdicts tbody th:has(.rn-claim) { padding-bottom: 14px; }
+}
 
 .rn-health { margin: 2.2em 0; padding: 14px 16px; font-size: 14px; line-height: 1.8; color: var(--text2); border: 1px solid var(--line); border-radius: 10px; }
 .rn-refs h2 { font-size: 18px; }

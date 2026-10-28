@@ -12,7 +12,11 @@ layout: renewal.njk
     - 「次に読む」のすぐ下に、続きの口（新しい記事を X と RSS で知らせていること）。メールと問いの受け付けは、オーナーが決めてから
     下の順は、問い → 次に読む → 続きの口 → 健康の注意 → 参考文献 → 記事の一覧へ（npm test が確かめる）。
     折り返し（2026-10-28 の点検で直した）：署名の行は「判定の決まり」と「AI の使い方」を一組にし（rn-byline-policy）、スマホでは2行目に二つ並べる。
-    続きの口は「RSSで知らせている。」を一続きにし（rn-nowrap）、「知らせている」の途中で折り返さない。 #}
+    続きの口は「RSSで知らせている。」を一続きにし（rn-nowrap）、「知らせている」の途中で折り返さない。
+    2026-10-28 記事の型の段階2（docs/article-type-20261028.md の 6-3。PR のマージで承認。まず色気の記事で試す）。front matter に新しい欄がある記事だけに効き、ない記事の出力は変えない：
+    - results（yes・no・open）があれば、署名の行のすぐ下・本文の前に、結果の3行（resultsBox。支持されたこと／支持されなかったこと／分かっていないこと）
+    - results か claims[].section があれば、h3 にも id（s-N-M）を付ける（sectionIds に true を渡す）
+    - claims[].section があれば、判定表の行を節へのリンクにする（verdictTable が目印を出し、claimLinks が h2・h3 の id に結ぶ。結べなければビルドが止まる） #}
 {%- set pillarLabels = { food: '食', body: '身体', money: 'お金', life: '生き方' } %}
 {%- set refN = content | refCount %}
 <article class="rn-wrap rn-article">
@@ -26,11 +30,14 @@ layout: renewal.njk
   {%- endif %}
   <p class="rn-meta"><span>約{{ readMinutes }}分</span><span>更新日 <time datetime="{{ (updated or page.date) | isoDate }}">{{ (updated or page.date) | jaDate }}</time></span></p>
   <p class="rn-byline"><span>書いた人 <a href="start.html">{{ site.author.name }}</a></span>{% if refN %}<span>参考文献 {{ refN }}本</span>{% endif %}<span class="rn-byline-policy"><a href="editorial.html#verdicts">判定の決まり</a><a href="editorial.html#ai">AI の使い方</a></span></p>
+  {%- if results %}
+  {{ results | resultsBox | safe }}
+  {%- endif %}
   <div class="rn-body">
 {%- set nexts = collections.current | nextReads(page.fileSlug, related, pillar) %}
 {%- set nextHtml %}{% if nexts.length %}<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list">{% for a in nexts %}<li class="rn-item"><a class="rn-list-title" href="{{ a.page.fileSlug }}.html">{{ a.data.headline }}</a>{% if a.data.excerpt %}<p class="rn-list-summary">{{ a.data.excerpt }}</p>{% endif %}</li>{% endfor %}</ul></nav>{% endif %}
 {%- if site.author.x or site.url %}<p class="rn-follow">{% if site.url %}新しい記事は、<a href="feed.xml">RSS</a>で知らせている。{% endif %}{% if site.author.x %}<span class="rn-nowrap"><a href="https://x.com/{{ site.author.x }}" target="_blank" rel="noopener noreferrer">X（@{{ site.author.x }}）</a>{% if site.url %}にも{% else %}に{% endif %}書いている。</span>{% endif %}</p>{% endif %}{% endset %}
-{{ content | sectionIds | withToc | withOwner(owner) | beforeRefs(nextHtml) | withHealthNote(health) | foldRefs | safe }}
+{{ content | sectionIds(results or (claims | hasSections)) | claimLinks | withToc | withOwner(owner) | beforeRefs(nextHtml) | withHealthNote(health) | foldRefs | safe }}
   </div>
   <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
 </article>

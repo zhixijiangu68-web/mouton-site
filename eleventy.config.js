@@ -56,17 +56,51 @@ export default function (eleventyConfig) {
     weak: ['△', '弱い', 'is-weak'],
     none: ['―', '証拠なし', 'is-none'],
   };
-  eleventyConfig.addShortcode('verdictTable', (claims = []) => {
+  const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  // 2026-10-28 記事の型の段階2（docs/article-type-20261028.md の 6-3。色気の記事で試す。PR のマージで承認）：
+  // front matter の claims のどれかに section（行き先の見出しの文字）がある記事だけ、新しい表にする。ない記事は今の表のまま（出力も一字も変えない）。
+  // 新しい表では、
+  // - 「よく言われること」を、行き先の節へのリンクにする。ここでは id がまだ決まっていないので、目印（data-section）だけを出し、
+  //   sectionIds のあとの claimLinks が、h2・h3 の文字を id（s-N・s-N-M）に結んで href にする
+  // - × の行に種類を付ける（refute が nodiff なら「否定（差がない）」、opposite なら「否定（主張と逆）」。★5）。記号と朱は今のまま
+  // - 表のすぐ上に、内訳と凡例の一行を出す（数は claims から数え、0の印は出さない。健康の記事には「医療の助言ではない」を足す）
+  const refuteKinds = { nodiff: '差がない', opposite: '主張と逆' };
+  const hasSections = claims => Array.isArray(claims) && claims.some(c => c && c.section);
+  eleventyConfig.addFilter('hasSections', hasSections);
+  eleventyConfig.addShortcode('verdictTable', function (claims = []) {
     const esc = x => String(x ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const linked = hasSections(claims);
     const rows = claims.map(c => {
       const [mark, label, cls] = verdicts[c.verdict] || verdicts.none;
       const refs = (c.refs || []).map(n => `<a href="#ref-${Number(n)}">[${Number(n)}]</a>`).join('');
-      return `<tr><th scope="row">${esc(c.claim)}</th>`
-        + `<td class="rn-verdict ${cls}" data-label="判定"><span aria-hidden="true">${mark}</span> ${label}</td>`
+      const claim = linked ? `<a class="rn-claim" data-section="${escapeHtml(String(c.section ?? '').trim())}">${esc(c.claim)}</a>` : esc(c.claim);
+      const kind = linked && c.verdict === 'refute' && refuteKinds[c.refute] ? `<span class="rn-refute-kind">（${refuteKinds[c.refute]}）</span>` : '';
+      return `<tr><th scope="row">${claim}</th>`
+        + `<td class="rn-verdict ${cls}" data-label="判定"><span aria-hidden="true">${mark}</span> ${label}${kind}</td>`
         + `<td data-label="確かさ">${esc(c.certainty) || '―'}</td>`
         + `<td data-label="根拠">${esc(c.basis)}${refs ? ` ${refs}` : ''}</td></tr>`;
     }).join('');
-    return `<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    const table = `<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    if (!linked) return table;
+    // 表の上の一行：「17のうち、○ 支持 4・× 否定 4・△ 弱い 9。…」。判定の名前が分からない行は、表と同じく「― 証拠なし」に数える。
+    // 内訳の一つずつ（「△ 弱い 9」）は、印と数が別の行に分かれないよう、折り返さない span で包む（文字は変えない。2026-10-28 の点検で足した）
+    const tally = Object.keys(verdicts)
+      .map(k => [k, claims.filter(c => (verdicts[c.verdict] ? c.verdict : 'none') === k).length])
+      .filter(([, n]) => n)
+      .map(([k, n]) => `<span class="rn-nowrap">${verdicts[k][0]} ${verdicts[k][1]} ${n}</span>`)
+      .join('・');
+    const health = this?.ctx?.health ? 'この表は、医療の助言ではない。' : '';
+    return `<p class="rn-table-lead">${claims.length}のうち、${tally}。確かさは、研究の数・大きさ・質から付けた目安。決め方は<a href="editorial.html#verdicts">判定の決まり</a>に書いた。${health}</p>${table}`;
+  });
+  // 結果の3行（段階2）：front matter の results（yes・no・open）。署名の行のすぐ下・本文の前に、テンプレートが出す。
+  // 見出しは「支持されたこと」「支持されなかったこと」「分かっていないこと」。h2・h3 にはしない（h2 の id s-N をずらさないため）。文はエスケープする。
+  // results がない（または形がちがう）ときは何も出さない。空の行は出さない（npm test が「3つの見出しがそろっていない」で止める）
+  const resultHeads = [['yes', '支持されたこと'], ['no', '支持されなかったこと'], ['open', '分かっていないこと']];
+  eleventyConfig.addFilter('resultsBox', results => {
+    if (!results || typeof results !== 'object') return '';
+    const rows = resultHeads.map(([key, head]) => [head, String(results[key] ?? '').trim()]).filter(([, t]) => t);
+    if (!rows.length) return '';
+    return `<section class="rn-results" aria-label="この記事の結果"><dl>${rows.map(([head, t]) => `<div><dt>${head}</dt><dd>${escapeHtml(t)}</dd></div>`).join('')}</dl></section>`;
   });
   // 健康の記事の注意書きは、参考文献の前に置く（参考文献が無ければ本文の最後）。
   eleventyConfig.addFilter('withHealthNote', (html, on) => {
@@ -122,10 +156,55 @@ export default function (eleventyConfig) {
     return out;
   };
   const h2Text = inner => stripTags(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
-  eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
+  // 2026-10-28 記事の型の段階2：h3 にも id（s-N-M。N は直前の h2 の番号、M はその h2 の中で何番目の h3 か）を付ける。
+  // 判定表の行の行き先（claimLinks）と、ほかの記事からのリンクに使う。すでに id のある h3 はそのまま。h2 の番号（s-N）と目次（h2 だけ）は変えない。
+  // 付けるのは、新しい欄（results か claims[].section）がある記事だけ（テンプレートが h3 に true を渡す）。今の16本の生成物は一字も変えない。
+  // h2 より前の h3 は N を 0 にする（s-0-M）
+  eleventyConfig.addFilter('sectionIds', (html, h3 = false) => {
+    if (!h3) return eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`));
+    let n = 0;
+    let k = 0;
+    return String(html).replace(/<(h2|h3)\b([^>]*)>([\s\S]*?)<\/\1>/g, (m, tag, attrs, inner) => {
+      if (tag === 'h2') {
+        n += 1;
+        k = 0;
+        return /\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`;
+      }
+      k += 1;
+      return /\sid=/.test(attrs) ? m : `<h3 id="s-${n}-${k}"${attrs}>${inner}</h3>`;
+    });
+  });
+  // 2026-10-28 記事の型の段階2：判定表の行（verdictTable の目印 data-section）を、行き先の節へのリンクにする。sectionIds のあとに使う。
+  // section の文字を、本文の h2・h3 の文字（h2Text と同じ正規化：タグを外し、文字参照を戻し、前後の空白を除く）と照らし、その見出しの id へ結ぶ。
+  // 結べない行があれば、ビルドを止める（行き先のないリンクを出さない。npm test も行のリンクを確かめる）。
+  // section と同じ文字の見出しが二つ以上あるときも、どれへ結ぶか決められないので止める（黙って先のほうへ結ぶと、違う節へ飛んでも npm test は通るため。2026-10-28 の点検で直した）
+  eleventyConfig.addFilter('claimLinks', html => {
+    html = String(html);
+    if (!html.includes('<a class="rn-claim" data-section="')) return html;
+    const marker = /<a class="rn-claim" data-section="([^"]*)">([\s\S]*?)<\/a>/g;
+    const ids = new Map(); // 見出しの文字 → その文字の見出しの id（ページの上から順）
+    html.replace(/<(h2|h3)\b([^>]*)>([\s\S]*?)<\/\1>/g, (m, tag, attrs, inner) => {
+      const id = (attrs.match(/\sid="([^"]*)"/) || [])[1];
+      if (id) ids.set(h2Text(inner), [...(ids.get(h2Text(inner)) || []), id]);
+      return m;
+    });
+    const missing = [];
+    const twice = [];
+    const out = html.replace(marker, (m, section, inner) => {
+      const found = ids.get(h2Text(section)) || [];
+      if (found.length === 1) return `<a class="rn-claim" href="#${escapeHtml(found[0])}">${inner}</a>`;
+      if (found.length > 1) twice.push(`「${h2Text(inner)}」の section「${h2Text(section)}」と同じ文字の見出しが${found.length}つある（${found.map(id => `#${id}`).join('・')}）`);
+      else missing.push(`「${h2Text(inner)}」の section ${section ? `「${h2Text(section)}」` : 'がない'}`);
+      return m;
+    });
+    const errors = [];
+    if (missing.length) errors.push(`判定表の行の行き先（front matter の claims[].section）が、記事の見出し（h2・h3）の文字と一致しない：${missing.join('、')}。section には、行き先の h2 か h3 の文字をそのまま書く`);
+    if (twice.length) errors.push(`判定表の行の行き先が一つに決まらない：${twice.join('、')}。どの見出しへ結ぶか決められないので、どれかの見出しの文字を変える`);
+    if (errors.length) throw new Error(errors.join('\n'));
+    return out;
+  });
   // 2026-10-28 目次（オーナー「1だけ」：判定表の下に、見出しの一覧を折りたたんで置く）。sectionIds のあとに使う（h2 の id へ飛ぶ）。
   // 判定表がない記事では、最初の h2 の前に置く。見出しが3つ未満なら出さない。動きは足さない（<details> だけ）。
-  const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   eleventyConfig.addFilter('withToc', html => {
     html = String(html);
     // 置く場所：判定表のすぐ下。判定表がなければ最初の h2 の前。目次には、その場所より下の h2 だけを並べる
