@@ -138,6 +138,13 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 
 .rn-health { margin: 2.2em 0; padding: 14px 16px; font-size: 14px; line-height: 1.8; color: var(--text2); border: 1px solid var(--line); border-radius: 10px; }
 .rn-refs h2 { font-size: 18px; }
+/* 目次（2026-10-28）：判定表の下に折りたたんで置く。開くと見出しの一覧。動きは足さない */
+.rn-toc { margin: 1.6em 0 2em; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.rn-toc summary { display: list-item; box-sizing: border-box; min-height: 44px; padding: 10px 16px; font-size: 16px; font-weight: 700; line-height: 1.6; cursor: pointer; }
+.rn-toc ol { margin: 0; padding: 0 16px 14px 2.6em; font-size: 15px; line-height: 1.7; }
+.rn-toc li { margin: 0 0 6px; overflow-wrap: anywhere; }
+.rn-toc a { color: var(--ai); }
+.rn-toc a:hover { color: var(--ai-hover); }
 .rn-refs ol { margin: 0; padding-left: 1.8em; font-size: 14px; line-height: 1.75; color: var(--text2); }
 .rn-refs li { margin: 0 0 8px; overflow-wrap: anywhere; }
 .rn-back { margin: 40px 0 0; font-size: 15px; }

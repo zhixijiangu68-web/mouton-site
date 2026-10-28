@@ -92,6 +92,24 @@ export default function (eleventyConfig) {
   };
   const h2Text = inner => stripTags(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
   eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
+  // 2026-10-28 目次（オーナー「1だけ」：判定表の下に、見出しの一覧を折りたたんで置く）。sectionIds のあとに使う（h2 の id へ飛ぶ）。
+  // 判定表がない記事では、最初の h2 の前に置く。見出しが3つ未満なら出さない。動きは足さない（<details> だけ）。
+  const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  eleventyConfig.addFilter('withToc', html => {
+    html = String(html);
+    // 置く場所：判定表のすぐ下。判定表がなければ最初の h2 の前。目次には、その場所より下の h2 だけを並べる
+    const table = html.indexOf('<div class="rn-table-wrap"><table class="rn-verdicts">');
+    const at = table >= 0 ? html.indexOf('</table></div>', table) + '</table></div>'.length : html.search(/<h2\b/);
+    if (at < 0) return html;
+    const items = [];
+    html.slice(at).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => {
+      const id = (attrs.match(/\sid="([^"]*)"/) || [])[1];
+      if (id) items.push(`<li><a href="#${escapeHtml(id)}">${escapeHtml(h2Text(inner))}</a></li>`);
+      return m;
+    });
+    if (items.length < 3) return html;
+    return `${html.slice(0, at)}<details class="rn-toc"><summary>目次（${items.length}）</summary><ol>${items.join('')}</ol></details>${html.slice(at)}`;
+  });
   // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
   // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
   eleventyConfig.addFilter('understandingTests', (items, data = {}) => items.filter(a => data[a.page.fileSlug]?.questions?.length).map(a => {
