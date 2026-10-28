@@ -44,8 +44,15 @@
 | `waitlist_submit` | フォーム送信試行（現在無効） | `placement` | **登録成功ではない** |
 | `begin_checkout` | 外部販売ページへのリンク（現在無効） | `items`、`currency`、`value` | **購入確定ではない** |
 | `affiliate_click` | Amazon・楽天リンククリック | `shop`、`product`、`placement` | アフィリエイトの報酬確定ではない |
+| `rn_table_view` | 今の記事の判定表の半分が見えた（画面より高い表は、画面の半分を占めた）。1ページ1回 | なし | 表に届いた。読んだかどうかではない |
+| `rn_row_click` | 判定表の行の中のリンクを押した | `row`（上から何行目か、1から）、`kind`（`ref`＝参考文献へ／`section`＝本文の節へ） | 行から根拠を見に行った試行 |
+| `rn_question_view` | 最後の問い（`.rn-question`）の半分が見えた。1ページ1回 | なし | 問いに届いた。読了ではない |
+| `rn_next_click` | 「次に読む」のリンクを押した | `position`（1か2） | 次の記事への遷移の試行 |
+| `rn_follow_click` | 続きの口のリンクを押した | `target`（`x`か`rss`） | 外への遷移の試行。フォロー・購読の完了ではない |
 
-GA4の「カスタム定義」で、まず**イベントスコープのカスタムディメンション**として `placement`、`cta_target`、`source_article`、`product_id` を必要に応じ登録する。標準の既存ディメンションは無理に重複登録しない。登録は**GA4管理権限があるアカウント側の操作**であり、コード変更だけでは完了しない。
+`rn_` の5つは、記事の型の段階1（2026-10-28、`docs/article-type-20261028.md` の「7. 測り方」）で足した。送るのは `renewal-article.js` で、gtag があるときだけ。記事の名前や個人を見分ける値は送らない（ページの場所は GA4 が自分で付ける）。
+
+GA4の「カスタム定義」で、まず**イベントスコープのカスタムディメンション**として `placement`、`cta_target`、`source_article`、`product_id` を必要に応じ登録する。`rn_` のイベントの `row`、`kind`、`position`、`target` も同じく登録する（登録しないと、レポートで行ごと・種類ごとの内訳が見られず、「7. 測り方」の「行から節へ飛んだ割合」が出せない）。登録より前に届いた値は、あとから内訳にできないので、基準を取り始める前に登録する。標準の既存ディメンションは無理に重複登録しない。登録は**GA4管理権限があるアカウント側の操作**であり、コード変更だけでは完了しない。
 
 ### 手動チェックシート（証拠が得られたら更新）
 
@@ -57,6 +64,9 @@ GA4の「カスタム定義」で、まず**イベントスコープのカスタ
 | DebugViewで`view_item`の実受信 | 未確認 | — |
 | サンプルクリック各種の1回発火 | **Chromium自動テストのみ** | 自動テスト結果はGitHub Actionsを参照 |
 | カスタムディメンション登録 | 未確認 | — |
+| `rn_`の5つ（`rn_table_view`・`rn_row_click`・`rn_question_view`・`rn_next_click`・`rn_follow_click`）の1回発火 | **Chromium自動テストのみ**（`tests/browser-smoke.mjs`） | 自動テスト結果はGitHub Actionsを参照 |
+| DebugViewで`rn_`の5つの実受信 | 未確認 | — |
+| `row`・`kind`・`position`・`target`のカスタムディメンション登録 | 未確認 | — |
 | 流入元`x / organic_social`の記録 | 未確認 | — |
 
 ## 3. Google Search Consoleの導入

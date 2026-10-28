@@ -3,6 +3,7 @@
     - おすすめ：記事の front matter の pick（1 が先頭）。無い記事は最後
     - 人気順：src/_data/popular.json の views（過去4週間の閲覧数、ファイル名ごと）。空のあいだは新しい順と同じ
     - 検索：今の記事は題・要約・副題・見出し・柱から、アーカイブは題から。外のサービスは使わない（renewal.js）
+      2026-10-28（記事の型の段階1）：今の記事は、判定表の「よく言われること」（front matter の claims の claim）でも探せる
     検索と並び替えは JS があるときだけ出す（html.js）。 #}
 {%- set pillarLabels = { food: '食', body: '身体', money: 'お金', life: '生き方' } %}
 <div class="rn-find" aria-label="記事を探す" role="search">
@@ -19,7 +20,7 @@
 <ul class="rn-list rn-current">
   {%- for a in collections.current %}
   {%- set pillar = pillarLabels[a.data.pillar] or '記事' %}
-  <li class="rn-item" data-new="{{ loop.index0 }}" data-pick="{{ a.data.pick or 999 }}" data-views="{{ popular.views[a.page.fileSlug] or 0 }}" data-text="{{ [a.data.headline, a.data.excerpt, a.data.subtitle, a.data.headings | join(' '), pillar] | join(' ') }}">
+  <li class="rn-item" data-new="{{ loop.index0 }}" data-pick="{{ a.data.pick or 999 }}" data-views="{{ popular.views[a.page.fileSlug] or 0 }}" data-text="{{ [a.data.headline, a.data.excerpt, a.data.subtitle, a.data.headings | join(' '), (a.data.claims or []) | join(' ', 'claim'), pillar] | join(' ') }}">
     <a class="rn-list-title" href="{{ a.page.fileSlug }}.html">{{ a.data.headline }}</a>
     {%- if a.data.excerpt %}
     <p class="rn-list-summary">{{ a.data.excerpt }}</p>

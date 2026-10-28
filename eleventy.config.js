@@ -141,6 +141,35 @@ export default function (eleventyConfig) {
     if (items.length < 3) return html;
     return `${html.slice(0, at)}<details class="rn-toc"><summary>目次（${items.length}）</summary><ol>${items.join('')}</ol></details>${html.slice(at)}`;
   });
+  // 2026-10-28 署名の行（docs/article-type-20261028.md の段階1）：「参考文献 N本」の N。
+  // 本文の参考文献の <li id="ref-…"> を数える（foldRefs の「参考文献（N）」と同じ数）。0 ならテンプレートが出さない。
+  eleventyConfig.addFilter('refCount', html => (String(html).match(/<li id="ref-/g) || []).length);
+  // 2026-10-28 僕の体験の欄（段階1）：front matter の owner.note（文字列。改行で段落）。オーナーだけが書く欄で、AI は書かない。空なら何も出さない。
+  // 研究と混ざらないよう「僕の体験（研究ではない）」の見出しの文字を付け、文字はエスケープする。
+  // 置き場所は目次（.rn-toc）のすぐ下。目次がなければ判定表のすぐ下、判定表もなければ最初の h2 の前。withToc のあとに使う。
+  // 最初の h2 は、参考文献の節（<section class="rn-refs">）より前から探す（参考文献の見出しの前に入れると、欄が「次に読む」より後ろに出るため。
+  // 2026-10-28 の点検で直した）。本文に h2 がなければ参考文献の節の前、参考文献もなければ本文の終わりに置く。
+  // 見出し（h2・h3）にはしない：h2 にすると後ろの節の id（s-N）がずれ、理解度テストやほかの記事からの #s-N が別の節を指すため。
+  eleventyConfig.addFilter('withOwner', (html, owner) => {
+    html = String(html);
+    const note = String(owner?.note ?? '').trim();
+    if (!note) return html;
+    const paras = note.split(/\n+/).map(p => p.trim()).filter(Boolean).map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    const box = `<aside class="rn-owner" aria-label="僕の体験"><p class="rn-owner-h">僕の体験（研究ではない）</p>${paras}</aside>`;
+    const after = (open, close) => {
+      const start = html.indexOf(open);
+      const end = start < 0 ? -1 : html.indexOf(close, start);
+      return end < 0 ? -1 : end + close.length;
+    };
+    let at = after('<details class="rn-toc">', '</details>');
+    if (at < 0) at = after('<div class="rn-table-wrap"><table class="rn-verdicts">', '</table></div>');
+    if (at < 0) {
+      const refs = html.indexOf('<section class="rn-refs"');
+      const h2 = (refs < 0 ? html : html.slice(0, refs)).search(/<h2\b/);
+      at = h2 >= 0 ? h2 : refs >= 0 ? refs : html.length;
+    }
+    return html.slice(0, at) + box + html.slice(at);
+  });
   // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
   // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
   eleventyConfig.addFilter('understandingTests', (items, data = {}) => items.filter(a => data[a.page.fileSlug]?.questions?.length).map(a => {
