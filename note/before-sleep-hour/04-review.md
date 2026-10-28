@@ -1,4 +1,4 @@
-# 04-review：布団でスマホを見てしまう夜に。害を大きい順に4つ並べると、画面の光は4番目だった（slug: before-sleep-hour）
+# 04-review：布団でスマホを見てしまう夜に。害の本体は、ブルーライトではなかった（slug: before-sleep-hour）
 
 作成：note-editor（品質チェック）／2026-10-28
 物差し：`.claude/agents/note-editor.md`（2026-10-28「サイトへ行く理由」を含む）、`.claude/skills/note/SKILL.md`（本文 2,000〜4,000字、2026-10-28 の引きの決まり）、`docs/copywriting-20261018.md`（5. 形、6. チェックリスト10）、`docs/content-quality.md` の 0、`docs/site-renewal-20261021.md`（判定の印の意味）、本部の分け方（note に書くこと／サイトに残すこと）
