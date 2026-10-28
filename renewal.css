@@ -86,6 +86,12 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-title { margin: 0; font-size: clamp(28px, 5.4vw, 42px); line-height: 1.4; font-weight: 900; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
 .rn-subtitle { margin: 12px 0 0; font-size: clamp(17px, 2.4vw, 20px); line-height: 1.65; font-weight: 700; color: var(--text2); }
 .rn-meta { display: flex; flex-wrap: wrap; gap: 0 16px; margin: 14px 0 0; font-size: 14px; color: var(--text3); }
+/* 署名の行（2026-10-28 段階1）：読む時間・更新日のすぐ下。書いた人・参考文献の数・判定の決まり・AI の使い方。
+   区切りは .rn-meta と同じ（間をあけて並べ、狭い画面では折り返す）。リンクは押せる高さ44px以上（目次と同じ）。動きはつけない */
+.rn-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; margin: 2px 0 0; font-size: 14px; line-height: 1.6; color: var(--text3); }
+.rn .rn-byline a { display: inline-flex; align-items: center; min-height: 44px; }
+/* 判定の決まりと AI の使い方は一組（どちらも編集方針へのリンク）。スマホでは2行目に二つ並び、一つだけ離れて残らない（2026-10-28 の点検） */
+.rn-byline-policy { display: inline-flex; flex-wrap: wrap; gap: 0 16px; }
 
 .rn-body { margin-top: 36px; font-size: 18px; line-height: 1.95; }
 .rn-body > p, .rn-body > section > p { margin: 0 0 1.2em; }
@@ -155,6 +161,18 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-refs ol { margin: 0; padding-left: 1.8em; font-size: 14px; line-height: 1.75; color: var(--text2); }
 .rn-refs li { margin: 0 0 8px; overflow-wrap: anywhere; }
 .rn-back { margin: 40px 0 0; font-size: 15px; }
+/* 続きの口（2026-10-28 段階1）：「次に読む」のすぐ下に1行。リンクは文の中のまま、上下に余白を足して押しやすくする（行の高さは変えない）。
+   余白14pxで、字体によらず押せる高さは44px以上（Web フォントで52px、代わりの字体で45px。2026-10-28 の点検で測った）。
+   「RSSで知らせている。」は一続きにし、「知らせている」の途中で折り返さない（狭い画面では「…と」のあとで折り返す） */
+.rn-body > .rn-follow { margin: 0 0 2em; font-size: 16px; line-height: 1.9; color: var(--text2); }
+.rn-next + .rn-follow { margin-top: -1em; }
+.rn .rn-follow a { padding-block: 14px; }
+.rn-follow .rn-nowrap { white-space: nowrap; }
+/* 僕の体験（2026-10-28 段階1）：オーナーだけが書く欄。見出しの文字で、研究ではないことを示す。見出し（h2・h3）にはしない */
+.rn-owner { margin: 1.6em 0 2em; padding: 16px 20px; background: var(--surface); border-left: 4px solid var(--ai); border-radius: 0 10px 10px 0; }
+.rn-owner p { margin: 0 0 .8em; }
+.rn-owner p:last-child { margin-bottom: 0; }
+.rn-owner .rn-owner-h { font-size: 15px; font-weight: 700; color: var(--ai); }
 
 /* 理解度テスト（test.html、2026-10-22）。1問ずつ、4択。答えは ○／× の文字でも示す（色だけに頼らない）。演出は入れない。
    JS が無いときは、問題と <details> の答えを並べる。test.js が動いたら（.is-ready）「始める」を出し、その一覧をしまう。 */

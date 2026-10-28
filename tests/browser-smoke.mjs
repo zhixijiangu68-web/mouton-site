@@ -390,6 +390,75 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    // 2026-10-28 記事の型の段階1（docs/article-type-20261028.md）：署名の行・続きの口と、読まれ方のイベント。
+    // イベントは gtag があるときだけ、1回ずつ。送る値は決まった名前と番号・種類だけ。IntersectionObserver が無くても例外を出さない。
+    await t.test('current article: byline, follow line and one GA4 event per reading step', async () => {
+      const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+      let article = '';
+      await checkPage(browser, 'article-type-step1', phone, async page => {
+        await page.route('**/www.googletagmanager.com/**', route => route.abort());
+        const events = () => page.evaluate(() => (window.dataLayer || [])
+          .filter(entry => entry[0] === 'event' && /^rn_/.test(entry[1]))
+          .map(entry => ({ name: entry[1], params: entry[2] })));
+        const count = async name => (await events()).filter(event => event.name === name).length;
+        const waitFor = name => page.waitForFunction(n => (window.dataLayer || []).some(entry => entry[0] === 'event' && entry[1] === n), name);
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        article = await page.locator('.rn-current .rn-item a.rn-list-title').first().getAttribute('href');
+        await page.goto(origin + '/' + article, { waitUntil: 'domcontentloaded' });
+
+        const byline = page.locator('.rn-byline');
+        assert.equal(await byline.count(), 1, 'one byline under the reading time');
+        for (const href of ['start.html', 'editorial.html#verdicts', 'editorial.html#ai']) {
+          assert.equal(await byline.locator(`a[href="${href}"]`).count(), 1, 'byline links to ' + href);
+        }
+        assert.ok((await byline.locator('a').first().boundingBox()).height >= 44, 'byline links are at least 44px tall');
+        assert.equal(await page.locator('.rn-owner').count(), 0, 'no owner box while owner.note is empty');
+        assert.match(await page.locator('.rn-follow').innerText(), /新しい記事は、\s*RSS\s*で知らせている。\s*X（@[^）]+）にも書いている。/);
+        const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.width <= sizes.viewport + 2, 'horizontal overflow');
+
+        // 押したリンクで、ページを移らない（イベントだけを見る）
+        await page.evaluate(() => document.addEventListener('click', event => {
+          if (event.target.closest('.rn-next a, .rn-follow a')) event.preventDefault();
+        }, true));
+        await page.evaluate(() => document.querySelector('.rn-verdicts').scrollIntoView({ block: 'start' }));
+        await waitFor('rn_table_view');
+        const row = await page.evaluate(() => [...document.querySelectorAll('.rn-verdicts tbody tr')].findIndex(tr => tr.querySelector('a[href^="#ref-"]')));
+        assert.ok(row >= 0, 'a verdict row links to a reference');
+        await page.locator('.rn-verdicts tbody tr').nth(row).locator('a[href^="#ref-"]').first().click();
+        await page.evaluate(() => document.querySelector('.rn-question').scrollIntoView({ block: 'center' }));
+        await waitFor('rn_question_view');
+        await page.locator('.rn-next a.rn-list-title').nth(1).click();
+        await page.locator('.rn-follow a[href="feed.xml"]').click();
+        await page.locator('.rn-follow a[href^="https://x.com/"]').click();
+        // もう一度見えても、見えたイベントは増えない
+        await page.evaluate(() => document.querySelector('.rn-verdicts').scrollIntoView({ block: 'start' }));
+        await page.evaluate(() => document.querySelector('.rn-question').scrollIntoView({ block: 'center' }));
+        await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+        assert.equal(await count('rn_table_view'), 1, 'the table view is sent once');
+        assert.equal(await count('rn_question_view'), 1, 'the question view is sent once');
+        const sent = await events();
+        const one = name => sent.filter(event => event.name === name).map(event => event.params);
+        assert.deepEqual(one('rn_row_click'), [{ row: row + 1, kind: 'ref' }]);
+        assert.deepEqual(one('rn_next_click'), [{ position: 2 }]);
+        assert.deepEqual(one('rn_follow_click'), [{ target: 'rss' }, { target: 'x' }]);
+        assert.deepEqual(one('rn_table_view'), [{}]);
+        assert.deepEqual(one('rn_question_view'), [{}]);
+      });
+      await checkPage(browser, 'article-type-step1-no-io', phone, async page => {
+        await page.route('**/www.googletagmanager.com/**', route => route.abort());
+        await page.addInitScript(() => { delete window.IntersectionObserver; });
+        await page.goto(origin + '/' + article, { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.evaluate(() => 'IntersectionObserver' in window), false);
+        await page.evaluate(() => document.addEventListener('click', event => {
+          if (event.target.closest('.rn-next a')) event.preventDefault();
+        }, true));
+        await page.locator('.rn-next a.rn-list-title').first().click();
+        const sent = await page.evaluate(() => (window.dataLayer || []).filter(entry => entry[0] === 'event' && /^rn_/.test(entry[1])).map(entry => entry[1]));
+        assert.deepEqual(sent, ['rn_next_click'], 'clicks are still counted without IntersectionObserver');
+      });
+    });
+
     // 2026-10-22（オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」。記事とは切り離す）
     await t.test('understanding test: answer every question, see the score and links to the article sections', async () => {
       await checkPage(browser, 'understanding-test', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
