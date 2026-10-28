@@ -75,6 +75,37 @@ export default function (eleventyConfig) {
     const at = html.indexOf('<section class="rn-refs"');
     return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
   });
+  // 2026-10-28 次に読む（オーナー「参考文献の上に次の記事へのリンクを置くのはどうか」）：今の記事から2本。
+  // front matter の related を先に、次に同じ柱、残りは新しい順（collections.current の順）。自分は除く。
+  eleventyConfig.addFilter('nextReads', (current = [], slug, related = [], pillar) => {
+    const others = current.filter(a => a.page.fileSlug !== slug);
+    const picked = [];
+    const add = a => { if (a && !picked.includes(a) && picked.length < 2) picked.push(a); };
+    for (const r of related || []) add(others.find(a => a.page.fileSlug === r));
+    for (const a of others) if (a.data.pillar === pillar) add(a);
+    for (const a of others) add(a);
+    return picked;
+  });
+  // 参考文献の前に差し込む（参考文献がない記事では末尾）
+  eleventyConfig.addFilter('beforeRefs', (html, extra) => {
+    html = String(html);
+    const at = html.indexOf('<section class="rn-refs"');
+    return at < 0 ? html + extra : html.slice(0, at) + extra + html.slice(at);
+  });
+  // 2026-10-28 参考文献を折りたたむ（オーナー「どちらも必要」）。「参考文献（N）」の1行にして、押すと開く。
+  // 本文の [N] を押したときは renewal-article.js が開く。見出しの id（refs-h）は目次の飛び先なので残す。
+  eleventyConfig.addFilter('foldRefs', html => {
+    html = String(html);
+    const at = html.indexOf('<section class="rn-refs"');
+    if (at < 0) return html;
+    const h = '<h2 id="refs-h">参考文献</h2>';
+    const hAt = html.indexOf(h, at);
+    const end = html.indexOf('</section>', at);
+    if (hAt < 0 || end < 0 || hAt > end) return html;
+    const n = (html.slice(at, end).match(/<li id="ref-/g) || []).length;
+    return html.slice(0, hAt) + `<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献（${n}）</h2></summary>`
+      + html.slice(hAt + h.length, end) + '</details>' + html.slice(end);
+  });
   // 2026-10-22 理解度テスト（test.html）：記事の見出し（h2）に、上から順に id（s-1, s-2, …）を付ける。
   // テストの「記事のこの節を読む」が、この id に飛ぶ。番号は記事の中で何番目の h2 か。すでに id のある見出し（参考文献の refs-h）はそのまま。
   // 記事の側には、テストの印もリンクも置かない（オーナー「記事とクイズは切り離す」）。
