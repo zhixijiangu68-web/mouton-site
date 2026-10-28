@@ -10,7 +10,9 @@
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
 // - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
 // - 新しい型の今の記事は、本文が1万〜2万字（2026-10-22、オーナー「サイトは決定版だから重厚にして欲しい」）
+// - 記事の型の段階1（2026-10-28、docs/article-type-20261028.md）：署名の行・僕の体験の欄・続きの口・問いは一つ・記事の下の順（ファイルの終わりの節）
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import matter from 'gray-matter';
 import currentArticles from '../src/_data/currentArticles.js';
 
 const problems = [];
@@ -181,6 +183,75 @@ for (const s of currentArticles) {
   }
   const article = (html.match(/<article\b[\s\S]*?<\/article>/) || [''])[0];
   if (/href="test\.html|理解度テスト/.test(article)) report(`${s}.html`, '記事の本文に理解度テストへのリンクがある。記事とテストは切り離す（入口はメニューだけ）');
+}
+
+// 2026-10-28 記事の型の段階1（docs/article-type-20261028.md。PR のマージで承認）：
+// - 新しい型の今の記事には、署名の行（.rn-byline）があり、書いた人（start.html）・判定の決まり（editorial.html#verdicts）・AI の使い方（editorial.html#ai）へのリンクがある。
+//   編集方針（editorial.html）には、その2つの id がある
+// - 最後の問い（.rn-question）がちょうど一つ。「【本人が書く」の文字が残っていない。文字が「僕の結論」で始まる h2 がない（2026-10-22、オーナー：結論は読む人が考える）
+// - 僕の体験の欄（front matter の owner.note。オーナーだけが書く）：書いてあれば .rn-owner に見出しの文字つきで一つだけ出ていて、400字まで（空白と改行は数えない）。書いてなければ .rn-owner がない
+//   書いてあるときは、note の段落（改行で分けた一つずつ）がすべて欄の中に出ていて、欄が目次のすぐ下（目次がなければ判定表のすぐ下）にあり、あいだに h2 を挟まない（2026-10-28 の点検で足した）
+// - 記事の下の順は「問い → 次に読む → 続きの口（.rn-follow）→ 健康の注意 → 参考文献 → 記事の一覧へ」
+// - renewal-article.js（読まれ方の計測）は、保存（localStorage など・Cookie）もタイマーも使わず、gtag のほかへは送らない（fetch・sendBeacon・XMLHttpRequest・WebSocket・EventSource・画像のビーコンなど。2026-10-28 の点検で足した）
+const editorialPage = existsSync('editorial.html') ? read('editorial.html') : '';
+for (const [id, name] of [['verdicts', '判定の決まり'], ['ai', '記事の作り方と AI の使い方']]) {
+  if (!editorialPage.includes(`id="${id}"`)) report('editorial.html', `「${name}」の節（id="${id}"）がない。記事の署名の行から飛ぶ先`);
+}
+if (/localStorage|sessionStorage|indexedDB|document\.cookie|setTimeout|setInterval|requestAnimationFrame|fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|new\s+Image\b|createElement\s*\(\s*['"`](?:img|script|iframe)/.test(read('renewal-article.js'))) {
+  report('renewal-article.js', '保存（localStorage など・Cookie）・タイマー・gtag のほかへの送信（fetch・sendBeacon・XMLHttpRequest・WebSocket・EventSource・画像のビーコンなど）を使っている。読まれ方の計測は、gtag に送るだけにする');
+}
+// 開始と終わりの印で挟まれた部分の、終わりの位置（見つからなければ -1）。withOwner の置き場所と同じ探し方
+const endOf = (html, open, close) => {
+  const start = html.indexOf(open);
+  const end = start < 0 ? -1 : html.indexOf(close, start);
+  return end < 0 ? -1 : end + close.length;
+};
+const OWNER_MAX = 400;
+const bottomOrder = [['class="rn-question"', '問い'], ['class="rn-next"', '次に読む'], ['class="rn-follow"', '続きの口'], ['class="rn-health"', '健康の注意'], ['class="rn-refs"', '参考文献'], ['class="rn-back"', '記事の一覧へ']];
+for (const s of currentArticles) {
+  if (!slugs.includes(s)) continue;
+  const html = read(`${s}.html`);
+  const src = read(`src/articles/${s}.html`);
+  if (html.includes('【本人が書く')) report(`${s}.html`, '「【本人が書く】」の欄が、埋まらないまま出ている（オーナーが書くか、欄ごと消す）');
+  if (!/^layout:\s*renewal-article\.njk\s*$/m.test(src)) continue;
+  const byline = (html.match(/<p class="rn-byline">([\s\S]*?)<\/p>/) || [])[1];
+  if (byline === undefined) report(`${s}.html`, '署名の行（.rn-byline：書いた人・参考文献の数・判定の決まり・AI の使い方）がない');
+  else {
+    for (const [href, name] of [['start.html', '書いた人'], ['editorial.html#verdicts', '判定の決まり'], ['editorial.html#ai', 'AI の使い方']]) {
+      if (!byline.includes(`href="${href}"`)) report(`${s}.html`, `署名の行に「${name}」（${href}）へのリンクがない`);
+    }
+  }
+  const questions = (html.match(/class="rn-question"/g) || []).length;
+  if (questions !== 1) report(`${s}.html`, `最後の問い（.rn-question）が ${questions} つ。読む人への問いは最後に一つだけ`);
+  for (const m of html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)) {
+    const h = text(m[1]).trim();
+    if (h.startsWith('僕の結論')) report(`${s}.html`, `「僕の結論」の見出しがある（${h.slice(0, 30)}）。結論は置かない（結論は読む人が考える）`);
+  }
+  let note = '';
+  try { note = String(matter(src).data.owner?.note ?? '').trim(); } catch (e) { report(`src/articles/${s}.html`, `front matter が読めない（${e.message}）`); }
+  const owners = (html.match(/class="rn-owner"/g) || []).length;
+  if (note) {
+    const m = html.match(/<aside class="rn-owner"[^>]*>([\s\S]*?)<\/aside>/);
+    const boxText = unescape(text(m ? m[1] : '')).replace(/\s+/g, ' ');
+    if (owners !== 1 || !boxText.includes('僕の体験（研究ではない）')) report(`${s}.html`, '僕の体験（owner.note）が、見出し「僕の体験（研究ではない）」つきの欄（.rn-owner）に一つだけ出ていない');
+    else {
+      const missing = note.split(/\n+/).map(p => p.replace(/\s+/g, ' ').trim()).filter(p => p && !boxText.includes(p));
+      if (missing.length) report(`${s}.html`, `僕の体験（owner.note）の文が、欄（.rn-owner）に出ていない（「${[...missing[0]].slice(0, 20).join('')}」から始まる段落）`);
+      const tocEnd = endOf(html, '<details class="rn-toc">', '</details>');
+      const anchor = tocEnd >= 0 ? tocEnd : endOf(html, '<div class="rn-table-wrap"><table class="rn-verdicts">', '</table></div>');
+      if (anchor < 0 || m.index < anchor || /<h2\b/.test(html.slice(anchor, m.index))) report(`${s}.html`, '僕の体験の欄（.rn-owner）が、目次のすぐ下（目次がなければ判定表のすぐ下）にない。あいだに見出しを挟まない');
+    }
+    const n = [...note.replace(/\s/g, '')].length;
+    if (n > OWNER_MAX) report(`src/articles/${s}.html`, `僕の体験（owner.note）が ${n} 字。${OWNER_MAX}字まで`);
+  } else if (owners) report(`${s}.html`, '僕の体験（owner.note）が空なのに、その欄（.rn-owner）が出ている');
+  if (!html.includes('class="rn-follow"')) report(`${s}.html`, '続きの口（.rn-follow：新しい記事を RSS で知らせていることと、X の案内）がない');
+  const found = bottomOrder.map(([needle, name]) => [html.indexOf(needle), name]).filter(([at]) => at >= 0);
+  for (let i = 1; i < found.length; i++) {
+    if (found[i][0] < found[i - 1][0]) {
+      report(`${s}.html`, `記事の下の順がちがう（「${found[i - 1][1]}」が「${found[i][1]}」より後ろにある）。問い → 次に読む → 続きの口 → 健康の注意 → 参考文献 → 記事の一覧へ`);
+      break;
+    }
+  }
 }
 
 if (problems.length) {
