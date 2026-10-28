@@ -10,7 +10,10 @@
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
 // - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
 // - 新しい型の今の記事は、本文が1万〜2万字（2026-10-22、オーナー「サイトは決定版だから重厚にして欲しい」）
+// - 記事の型の段階1（2026-10-28、docs/article-type-20261028.md）：署名の行・僕の体験の欄・続きの口・問いは一つ・記事の下の順（ファイルの終わりの節）
+// - 記事の型の段階2（2026-10-28、同じ文書の 6-3）：結果の3行と、判定表の行の行き先・× の種類・根拠の長さ・表の上の一行（新しい欄がある記事だけ。ファイルの終わりの節）
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import matter from 'gray-matter';
 import currentArticles from '../src/_data/currentArticles.js';
 
 const problems = [];
@@ -181,6 +184,205 @@ for (const s of currentArticles) {
   }
   const article = (html.match(/<article\b[\s\S]*?<\/article>/) || [''])[0];
   if (/href="test\.html|理解度テスト/.test(article)) report(`${s}.html`, '記事の本文に理解度テストへのリンクがある。記事とテストは切り離す（入口はメニューだけ）');
+}
+
+// 2026-10-28 記事の型の段階1（docs/article-type-20261028.md。PR のマージで承認）：
+// - 新しい型の今の記事には、署名の行（.rn-byline）があり、書いた人（start.html）・判定の決まり（editorial.html#verdicts）・AI の使い方（editorial.html#ai）へのリンクがある。
+//   編集方針（editorial.html）には、その2つの id がある
+// - 最後の問い（.rn-question）がちょうど一つ。「【本人が書く」の文字が残っていない。文字が「僕の結論」で始まる h2 がない（2026-10-22、オーナー：結論は読む人が考える）
+// - 僕の体験の欄（front matter の owner.note。オーナーだけが書く）：書いてあれば .rn-owner に見出しの文字つきで一つだけ出ていて、400字まで（空白と改行は数えない）。書いてなければ .rn-owner がない
+//   書いてあるときは、note の段落（改行で分けた一つずつ）がすべて欄の中に出ていて、欄が目次のすぐ下（目次がなければ判定表のすぐ下）にあり、あいだに h2 を挟まない（2026-10-28 の点検で足した）
+// - 記事の下の順は「問い → 次に読む → 続きの口（.rn-follow）→ 健康の注意 → 参考文献 → 記事の一覧へ」
+// - renewal-article.js（読まれ方の計測）は、保存（localStorage など・Cookie）もタイマーも使わず、gtag のほかへは送らない（fetch・sendBeacon・XMLHttpRequest・WebSocket・EventSource・画像のビーコンなど。2026-10-28 の点検で足した）
+const editorialPage = existsSync('editorial.html') ? read('editorial.html') : '';
+for (const [id, name] of [['verdicts', '判定の決まり'], ['ai', '記事の作り方と AI の使い方']]) {
+  if (!editorialPage.includes(`id="${id}"`)) report('editorial.html', `「${name}」の節（id="${id}"）がない。記事の署名の行から飛ぶ先`);
+}
+if (/localStorage|sessionStorage|indexedDB|document\.cookie|setTimeout|setInterval|requestAnimationFrame|fetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|EventSource|new\s+Image\b|createElement\s*\(\s*['"`](?:img|script|iframe)/.test(read('renewal-article.js'))) {
+  report('renewal-article.js', '保存（localStorage など・Cookie）・タイマー・gtag のほかへの送信（fetch・sendBeacon・XMLHttpRequest・WebSocket・EventSource・画像のビーコンなど）を使っている。読まれ方の計測は、gtag に送るだけにする');
+}
+// 開始と終わりの印で挟まれた部分の、終わりの位置（見つからなければ -1）。withOwner の置き場所と同じ探し方
+const endOf = (html, open, close) => {
+  const start = html.indexOf(open);
+  const end = start < 0 ? -1 : html.indexOf(close, start);
+  return end < 0 ? -1 : end + close.length;
+};
+const OWNER_MAX = 400;
+const bottomOrder = [['class="rn-question"', '問い'], ['class="rn-next"', '次に読む'], ['class="rn-follow"', '続きの口'], ['class="rn-health"', '健康の注意'], ['class="rn-refs"', '参考文献'], ['class="rn-back"', '記事の一覧へ']];
+for (const s of currentArticles) {
+  if (!slugs.includes(s)) continue;
+  const html = read(`${s}.html`);
+  const src = read(`src/articles/${s}.html`);
+  if (html.includes('【本人が書く')) report(`${s}.html`, '「【本人が書く】」の欄が、埋まらないまま出ている（オーナーが書くか、欄ごと消す）');
+  if (!/^layout:\s*renewal-article\.njk\s*$/m.test(src)) continue;
+  const byline = (html.match(/<p class="rn-byline">([\s\S]*?)<\/p>/) || [])[1];
+  if (byline === undefined) report(`${s}.html`, '署名の行（.rn-byline：書いた人・参考文献の数・判定の決まり・AI の使い方）がない');
+  else {
+    for (const [href, name] of [['start.html', '書いた人'], ['editorial.html#verdicts', '判定の決まり'], ['editorial.html#ai', 'AI の使い方']]) {
+      if (!byline.includes(`href="${href}"`)) report(`${s}.html`, `署名の行に「${name}」（${href}）へのリンクがない`);
+    }
+  }
+  const questions = (html.match(/class="rn-question"/g) || []).length;
+  if (questions !== 1) report(`${s}.html`, `最後の問い（.rn-question）が ${questions} つ。読む人への問いは最後に一つだけ`);
+  for (const m of html.matchAll(/<h2\b[^>]*>([\s\S]*?)<\/h2>/g)) {
+    const h = text(m[1]).trim();
+    if (h.startsWith('僕の結論')) report(`${s}.html`, `「僕の結論」の見出しがある（${h.slice(0, 30)}）。結論は置かない（結論は読む人が考える）`);
+  }
+  let note = '';
+  try { note = String(matter(src).data.owner?.note ?? '').trim(); } catch (e) { report(`src/articles/${s}.html`, `front matter が読めない（${e.message}）`); }
+  const owners = (html.match(/class="rn-owner"/g) || []).length;
+  if (note) {
+    const m = html.match(/<aside class="rn-owner"[^>]*>([\s\S]*?)<\/aside>/);
+    const boxText = unescape(text(m ? m[1] : '')).replace(/\s+/g, ' ');
+    if (owners !== 1 || !boxText.includes('僕の体験（研究ではない）')) report(`${s}.html`, '僕の体験（owner.note）が、見出し「僕の体験（研究ではない）」つきの欄（.rn-owner）に一つだけ出ていない');
+    else {
+      const missing = note.split(/\n+/).map(p => p.replace(/\s+/g, ' ').trim()).filter(p => p && !boxText.includes(p));
+      if (missing.length) report(`${s}.html`, `僕の体験（owner.note）の文が、欄（.rn-owner）に出ていない（「${[...missing[0]].slice(0, 20).join('')}」から始まる段落）`);
+      const tocEnd = endOf(html, '<details class="rn-toc">', '</details>');
+      const anchor = tocEnd >= 0 ? tocEnd : endOf(html, '<div class="rn-table-wrap"><table class="rn-verdicts">', '</table></div>');
+      if (anchor < 0 || m.index < anchor || /<h2\b/.test(html.slice(anchor, m.index))) report(`${s}.html`, '僕の体験の欄（.rn-owner）が、目次のすぐ下（目次がなければ判定表のすぐ下）にない。あいだに見出しを挟まない');
+    }
+    const n = [...note.replace(/\s/g, '')].length;
+    if (n > OWNER_MAX) report(`src/articles/${s}.html`, `僕の体験（owner.note）が ${n} 字。${OWNER_MAX}字まで`);
+  } else if (owners) report(`${s}.html`, '僕の体験（owner.note）が空なのに、その欄（.rn-owner）が出ている');
+  if (!html.includes('class="rn-follow"')) report(`${s}.html`, '続きの口（.rn-follow：新しい記事を RSS で知らせていることと、X の案内）がない');
+  const found = bottomOrder.map(([needle, name]) => [html.indexOf(needle), name]).filter(([at]) => at >= 0);
+  for (let i = 1; i < found.length; i++) {
+    if (found[i][0] < found[i - 1][0]) {
+      report(`${s}.html`, `記事の下の順がちがう（「${found[i - 1][1]}」が「${found[i][1]}」より後ろにある）。問い → 次に読む → 続きの口 → 健康の注意 → 参考文献 → 記事の一覧へ`);
+      break;
+    }
+  }
+}
+
+// 2026-10-28 記事の型の段階2（docs/article-type-20261028.md の 6-3。PR のマージで承認。まず色気の記事で試す）。front matter に新しい欄がある記事だけに当てる。
+// results（yes・no・open）がある記事：
+// - 結果の3行（.rn-results）の見出しが「支持されたこと／支持されなかったこと／分かっていないこと」の順にある
+// - 各行120字まで・3つで300字まで（空白と改行は数えない。本文の字数と同じ流儀）
+// - 3行に出る数字（算用数字）が、すべて本文にもある（本文は front matter と参考文献を除いたもの。出典の番号 [N] は数えない。桁の「,」は外して比べる）
+// - 順番：署名の行 → 結果の3行（署名の行のすぐ下）→ 判定表 → 最初の根拠の節（s-2）
+// claims のどれかに section がある記事：
+// - 表のすべての行が、ページの中の見出し（h2 の s-N か h3 の s-N-M）へのリンクで、その見出しの文字が section と同じ
+// - × の行（verdict: refute）にはすべて refute（nodiff＝差がない／opposite＝主張と逆）があり、表に「否定（差がない）」「否定（主張と逆）」が出ている。× でない行に refute はない
+// - basis が一文（文の途中に「。」がない）で、80字まで（空白は数えない）
+// - 表の上の一行（.rn-table-lead）が表のすぐ上にあり、内訳が claims と合い、判定の決まりへのリンクがある。健康の記事（health: true）には「医療の助言ではない」がある
+const RESULT_HEADS = ['支持されたこと', '支持されなかったこと', '分かっていないこと'];
+const RESULT_MAX = 120;
+const RESULTS_MAX = 300;
+const BASIS_MAX = 80;
+const REFUTE_KINDS = { nodiff: '差がない', opposite: '主張と逆' };
+const VERDICT_LABELS = { support: '○ 支持', refute: '× 否定', weak: '△ 弱い', none: '― 証拠なし' };
+const charCount = s => [...String(s).replace(/\s/g, '')].length;
+// 算用数字（全角は半角にそろえる）。桁区切りの「,」は外し、終わりの「.」は数字に入れない
+const numbersIn = s => [...String(s).replace(/[０-９]/g, d => String.fromCharCode(d.charCodeAt(0) - 0xFEE0)).matchAll(/\d[\d,.]*/g)]
+  .map(m => m[0].replace(/,/g, '').replace(/\.+$/, ''));
+// 本文の文字：bodyLength と同じく front matter と参考文献を除き、テンプレートのタグ（{% %}・{{ }}）と HTML のタグを外す。出典の番号 [N] は除く。
+// ページに出ない Nunjucks のコメント（{# #}）も外す（コメントの中の数字を「本文にある」と数えないため。2026-10-28 の点検で足した）。
+// bodyLength（本文の字数）は、書くときの道具（count.mjs）と同じ数え方のままにしている（今の記事に {# は0本）
+const bodyTextOf = src => {
+  let body = src.split('\n---\n').slice(1).join('\n---\n');
+  const refs = body.indexOf('class="rn-refs"');
+  if (refs > 0) body = body.slice(0, body.lastIndexOf('<', refs));
+  body = body.replace(/<a href="#ref-\d+">\[\d+\]<\/a>/g, '').replace(/\{%[\s\S]*?%\}|\{\{[\s\S]*?\}\}|\{#[\s\S]*?#\}/g, '');
+  return unescape(text(body));
+};
+for (const s of currentArticles) {
+  if (!slugs.includes(s)) continue;
+  const srcFile = `src/articles/${s}.html`;
+  const src = read(srcFile);
+  if (!/^layout:\s*renewal-article\.njk\s*$/m.test(src)) continue;
+  let fm;
+  try { fm = matter(src).data; } catch { continue; } // 読めないことは、上の段階1の節で知らせている
+  const page = `${s}.html`;
+  const html = read(page);
+
+  if (fm.results !== undefined && fm.results !== null) {
+    const box = html.match(/<section class="rn-results"[^>]*>([\s\S]*?)<\/section>/);
+    const rows = box ? [...box[1].matchAll(/<dt>([\s\S]*?)<\/dt>\s*<dd>([\s\S]*?)<\/dd>/g)].map(m => [unescape(text(m[1])).trim(), unescape(text(m[2])).trim()]) : [];
+    const heads = rows.map(([head]) => head);
+    if (heads.join('／') !== RESULT_HEADS.join('／')) {
+      report(page, `結果の3行の見出しが「${RESULT_HEADS.join('／')}」の順になっていない（${box ? `いまは「${heads.join('／')}」` : '結果の3行（.rn-results）がない'}）。front matter の results に yes・no・open の3つを書く`);
+    }
+    for (const [head, t] of rows) {
+      const n = charCount(t);
+      if (n > RESULT_MAX) report(page, `結果の3行の「${head}」が ${n} 字。各行${RESULT_MAX}字まで（空白は数えない）`);
+    }
+    const total = rows.reduce((sum, [, t]) => sum + charCount(t), 0);
+    if (total > RESULTS_MAX) report(page, `結果の3行が合わせて ${total} 字。3つで${RESULTS_MAX}字まで（空白は数えない）`);
+    const known = new Set(numbersIn(bodyTextOf(src)));
+    for (const [head, t] of rows) {
+      for (const n of new Set(numbersIn(t))) {
+        if (!known.has(n)) report(page, `結果の3行の「${head}」の数字「${n}」が、本文にない。3行の数字は、本文にあるものだけを使う`);
+      }
+    }
+    const bylineAt = html.indexOf('<p class="rn-byline">');
+    const bylineEnd = bylineAt < 0 ? -1 : html.indexOf('</p>', bylineAt) + '</p>'.length;
+    const resultsAt = html.indexOf('<section class="rn-results"');
+    const tableAt = html.indexOf('<table class="rn-verdicts">');
+    const firstAt = html.indexOf('id="s-2"');
+    if (!(bylineAt >= 0 && resultsAt > bylineAt && tableAt > resultsAt && firstAt > tableAt)) {
+      report(page, '並びがちがう。署名の行 → 結果の3行 → 判定表 → 最初の根拠の節（s-2）の順にする');
+    } else if (html.slice(bylineEnd, resultsAt).trim()) {
+      report(page, '結果の3行が、署名の行のすぐ下にない（あいだに別のものがある）');
+    }
+  }
+
+  const claims = Array.isArray(fm.claims) ? fm.claims : [];
+  if (claims.some(c => c && c.section)) {
+    const table = (html.match(/<table class="rn-verdicts">[\s\S]*?<\/table>/) || [''])[0];
+    const rows = [...table.matchAll(/<tr><th scope="row">([\s\S]*?)<\/th>([\s\S]*?)<\/tr>/g)];
+    if (rows.length !== claims.length) report(page, `判定表の行が ${rows.length} 行（front matter の claims は ${claims.length} 行）`);
+    // ページの中の見出し（h2・h3）の id と文字
+    const headings = new Map();
+    for (const m of html.matchAll(/<(h2|h3)\b([^>]*)>([\s\S]*?)<\/\1>/g)) {
+      const id = (m[2].match(/\sid="([^"]*)"/) || [])[1];
+      if (id && !headings.has(id)) headings.set(id, unescape(text(m[3])).trim());
+    }
+    rows.forEach(([, th, cells], i) => {
+      const c = claims[i] || {};
+      const name = String(c.claim ?? unescape(text(th)).trim());
+      const href = (th.match(/<a\b[^>]*\shref="#([^"]*)"/) || [])[1];
+      if (href === undefined || !headings.has(href)) {
+        report(page, `判定表の${i + 1}行目「${name}」が、ページの中の見出し（h2 の s-N か h3 の s-N-M）へのリンクになっていない${href === undefined ? '' : `（#${href} の見出しがない）`}`);
+      } else if (headings.get(href) !== String(c.section ?? '').trim()) {
+        report(page, `判定表の${i + 1}行目「${name}」の行き先「${headings.get(href)}」（#${href}）が、front matter の section「${c.section ?? ''}」と違う`);
+      }
+      if (c.verdict === 'refute' && REFUTE_KINDS[c.refute]) {
+        const cell = (cells.match(/<td class="rn-verdict[^"]*"[^>]*>([\s\S]*?)<\/td>/) || [])[1] || '';
+        const shown = unescape(text(cell)).replace(/\s+/g, ' ').trim();
+        if (!shown.includes(`否定（${REFUTE_KINDS[c.refute]}）`)) report(page, `× の行「${name}」の判定に「否定（${REFUTE_KINDS[c.refute]}）」が出ていない（いまは「${shown}」）`);
+      }
+    });
+    claims.forEach((c, i) => {
+      const name = String(c?.claim ?? `${i + 1}行目`);
+      if (c?.verdict === 'refute' && !REFUTE_KINDS[c.refute]) report(srcFile, `× の行「${name}」に refute（nodiff＝差がない／opposite＝主張と逆）がない（いまは「${c.refute ?? ''}」）`);
+      if (c?.verdict !== 'refute' && c?.refute !== undefined) report(srcFile, `× でない行「${name}」に refute がある。refute は verdict: refute の行だけに書く`);
+      const basis = String(c?.basis ?? '').trim();
+      if (!basis) report(srcFile, `「${name}」の根拠（basis）がない`);
+      if (/。\s*\S/.test(basis)) report(srcFile, `「${name}」の根拠（basis）が一文ではない（文の途中に「。」がある）。根拠は一文にする`);
+      const n = charCount(basis);
+      if (n > BASIS_MAX) report(srcFile, `「${name}」の根拠（basis）が ${n} 字。一文で${BASIS_MAX}字まで（60字がめやす。空白は数えない）`);
+    });
+    // 一行の中身は「</p>」をまたがない（またぐと、一行と表のあいだに別の段落があっても合ってしまう。2026-10-28 の点検で直した）
+    const lead = html.match(/<p class="rn-table-lead">((?:(?!<\/p>)[\s\S])*)<\/p>\s*<div class="rn-table-wrap"><table class="rn-verdicts">/);
+    if (!lead) {
+      report(page, html.includes('<p class="rn-table-lead">')
+        ? '表の上の一行（.rn-table-lead）が、判定表のすぐ上にない（あいだに別のものがあるか、表の後ろにある）'
+        : '表の上の一行（.rn-table-lead：内訳・凡例・判定の決まりへのリンク）がない');
+    }
+    else {
+      const leadText = unescape(text(lead[1])).trim();
+      const tally = Object.keys(VERDICT_LABELS)
+        .map(k => [k, claims.filter(c => (VERDICT_LABELS[c?.verdict] ? c.verdict : 'none') === k).length])
+        .filter(([, n]) => n)
+        .map(([k, n]) => `${VERDICT_LABELS[k]} ${n}`)
+        .join('・');
+      const want = `${claims.length}のうち、${tally}。`;
+      if (!leadText.startsWith(want)) report(page, `表の上の一行の内訳が、front matter の claims と合わない（いまは「${leadText.slice(0, want.length + 10)}」、合うのは「${want}」）`);
+      if (!lead[1].includes('href="editorial.html#verdicts"')) report(page, '表の上の一行に「判定の決まり」（editorial.html#verdicts）へのリンクがない');
+      if (fm.health === true && !leadText.includes('医療の助言ではない')) report(page, '健康の記事なのに、表の上の一行に「この表は、医療の助言ではない。」がない');
+    }
+  }
 }
 
 if (problems.length) {

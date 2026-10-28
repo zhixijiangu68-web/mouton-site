@@ -10,7 +10,9 @@
   <title>{{ site.name }}</title>
   <link>{{ '' | absoluteUrl(site.url) }}</link>
   <atom:link href="{{ 'feed.xml' | absoluteUrl(site.url) }}" rel="self" type="application/rss+xml"/>
-  <description>{{ site.description }}</description>
+  {#- 2026-10-28 記事の型の段階1：チャンネルの説明は今のサイト（作り直したあとの記事）に合わせた一文。site.description（哲学の PDF のころの説明）は変えていない。
+       「出典をすべて載せた」は言いすぎなので（出典の番号のない数字があり、辞書や成分表で判定した行もある）、2026-10-28 の点検で「研究や資料と照らして」「出典つき」に直した。 #}
+  <description>食・身体・お金・生き方について、よく言われていることを、研究や資料と照らして一つずつ判定した記事。出典つき。</description>
   <language>ja</language>
   {#- 2026-10-17：RSS に出すのは残す記事だけ（アーカイブの記事は出さない）。 #}
   {%- for a in collections.current | head(20) %}

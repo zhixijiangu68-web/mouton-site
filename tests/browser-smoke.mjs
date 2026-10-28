@@ -390,6 +390,150 @@ test('MOUTON browser smoke', async t => {
       });
     });
 
+    // 2026-10-28 記事の型の段階1（docs/article-type-20261028.md）：署名の行・続きの口と、読まれ方のイベント。
+    // イベントは gtag があるときだけ、1回ずつ。送る値は決まった名前と番号・種類だけ。IntersectionObserver が無くても例外を出さない。
+    await t.test('current article: byline, follow line and one GA4 event per reading step', async () => {
+      const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+      let article = '';
+      await checkPage(browser, 'article-type-step1', phone, async page => {
+        await page.route('**/www.googletagmanager.com/**', route => route.abort());
+        const events = () => page.evaluate(() => (window.dataLayer || [])
+          .filter(entry => entry[0] === 'event' && /^rn_/.test(entry[1]))
+          .map(entry => ({ name: entry[1], params: entry[2] })));
+        const count = async name => (await events()).filter(event => event.name === name).length;
+        const waitFor = name => page.waitForFunction(n => (window.dataLayer || []).some(entry => entry[0] === 'event' && entry[1] === n), name);
+        await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
+        article = await page.locator('.rn-current .rn-item a.rn-list-title').first().getAttribute('href');
+        await page.goto(origin + '/' + article, { waitUntil: 'domcontentloaded' });
+
+        const byline = page.locator('.rn-byline');
+        assert.equal(await byline.count(), 1, 'one byline under the reading time');
+        for (const href of ['start.html', 'editorial.html#verdicts', 'editorial.html#ai']) {
+          assert.equal(await byline.locator(`a[href="${href}"]`).count(), 1, 'byline links to ' + href);
+        }
+        assert.ok((await byline.locator('a').first().boundingBox()).height >= 44, 'byline links are at least 44px tall');
+        assert.equal(await page.locator('.rn-owner').count(), 0, 'no owner box while owner.note is empty');
+        assert.match(await page.locator('.rn-follow').innerText(), /新しい記事は、\s*RSS\s*で知らせている。\s*X（@[^）]+）にも書いている。/);
+        const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.width <= sizes.viewport + 2, 'horizontal overflow');
+
+        // 押したリンクで、ページを移らない（イベントだけを見る）
+        await page.evaluate(() => document.addEventListener('click', event => {
+          if (event.target.closest('.rn-next a, .rn-follow a')) event.preventDefault();
+        }, true));
+        await page.evaluate(() => document.querySelector('.rn-verdicts').scrollIntoView({ block: 'start' }));
+        await waitFor('rn_table_view');
+        const row = await page.evaluate(() => [...document.querySelectorAll('.rn-verdicts tbody tr')].findIndex(tr => tr.querySelector('a[href^="#ref-"]')));
+        assert.ok(row >= 0, 'a verdict row links to a reference');
+        await page.locator('.rn-verdicts tbody tr').nth(row).locator('a[href^="#ref-"]').first().click();
+        await page.evaluate(() => document.querySelector('.rn-question').scrollIntoView({ block: 'center' }));
+        await waitFor('rn_question_view');
+        await page.locator('.rn-next a.rn-list-title').nth(1).click();
+        await page.locator('.rn-follow a[href="feed.xml"]').click();
+        await page.locator('.rn-follow a[href^="https://x.com/"]').click();
+        // もう一度見えても、見えたイベントは増えない
+        await page.evaluate(() => document.querySelector('.rn-verdicts').scrollIntoView({ block: 'start' }));
+        await page.evaluate(() => document.querySelector('.rn-question').scrollIntoView({ block: 'center' }));
+        await page.evaluate(() => new Promise(done => requestAnimationFrame(() => requestAnimationFrame(done))));
+        assert.equal(await count('rn_table_view'), 1, 'the table view is sent once');
+        assert.equal(await count('rn_question_view'), 1, 'the question view is sent once');
+        const sent = await events();
+        const one = name => sent.filter(event => event.name === name).map(event => event.params);
+        assert.deepEqual(one('rn_row_click'), [{ row: row + 1, kind: 'ref' }]);
+        assert.deepEqual(one('rn_next_click'), [{ position: 2 }]);
+        assert.deepEqual(one('rn_follow_click'), [{ target: 'rss' }, { target: 'x' }]);
+        assert.deepEqual(one('rn_table_view'), [{}]);
+        assert.deepEqual(one('rn_question_view'), [{}]);
+      });
+      await checkPage(browser, 'article-type-step1-no-io', phone, async page => {
+        await page.route('**/www.googletagmanager.com/**', route => route.abort());
+        await page.addInitScript(() => { delete window.IntersectionObserver; });
+        await page.goto(origin + '/' + article, { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.evaluate(() => 'IntersectionObserver' in window), false);
+        await page.evaluate(() => document.addEventListener('click', event => {
+          if (event.target.closest('.rn-next a')) event.preventDefault();
+        }, true));
+        await page.locator('.rn-next a.rn-list-title').first().click();
+        const sent = await page.evaluate(() => (window.dataLayer || []).filter(entry => entry[0] === 'event' && /^rn_/.test(entry[1])).map(entry => entry[1]));
+        assert.deepEqual(sent, ['rn_next_click'], 'clicks are still counted without IntersectionObserver');
+      });
+    });
+
+    // 2026-10-28 記事の型の段階2（docs/article-type-20261028.md の 6-3。色気の記事で試す）：署名の行のすぐ下の結果の3行、表の上の一行、× の種類、
+    // 表の行から行き先の節（h2 と h3）へのリンク。押すとその節へ移り、rn_row_click が kind 'section' で1回ずつ送られる。新しい欄のない記事は今のまま
+    await t.test('article type step 2: results under the byline, the table lead, refute kinds and row links to h2 and h3 sections', async () => {
+      await checkPage(browser, 'article-type-step2', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
+        await page.route('**/www.googletagmanager.com/**', route => route.abort());
+        await page.goto(origin + '/iroke-evidence.html', { waitUntil: 'domcontentloaded' });
+        const results = page.locator('.rn-results');
+        assert.equal(await results.count(), 1, 'one results box');
+        assert.deepEqual(await results.locator('dt').allInnerTexts(), ['支持されたこと', '支持されなかったこと', '分かっていないこと']);
+        assert.deepEqual(await page.evaluate(() => {
+          const box = document.querySelector('.rn-results');
+          return [box.previousElementSibling.className, box.nextElementSibling.className];
+        }), ['rn-byline', 'rn-body'], 'right under the byline, before the body');
+        assert.equal(await page.locator('.rn-results :is(h1, h2, h3, h4)').count(), 0, 'the results are not headings');
+        assert.match(await page.locator('.rn-table-lead').innerText(), /^\d+のうち、○ 支持 \d+・× 否定 \d+・△ 弱い \d+。確かさは、/);
+        assert.equal(await page.evaluate(() => document.querySelector('.rn-table-lead').nextElementSibling.className), 'rn-table-wrap', 'the lead sits right above the table');
+        // 内訳の一つずつ（「△ 弱い 9」）と「判定の決まり」のリンクは、途中で折り返さない（印と数が別の行に分かれない）
+        assert.ok(await page.locator('.rn-table-lead .rn-nowrap, .rn-table-lead a').evaluateAll(els => els.length >= 4 && els.every(el => el.getClientRects().length === 1)), 'tally items and the link in the lead stay on one line');
+        const refutes = (await page.locator('.rn-verdicts .is-refute').allInnerTexts()).map(s => s.replace(/\s+/g, ' ').trim());
+        assert.ok(refutes.length && refutes.every(s => /^× 否定（(差がない|主張と逆)）$/.test(s)), 'every × shows its kind: ' + JSON.stringify(refutes));
+
+        const rows = page.locator('.rn-verdicts tbody tr');
+        const targets = await rows.evaluateAll(trs => trs.map(tr => {
+          const a = tr.querySelector('th a.rn-claim');
+          const id = a ? a.getAttribute('href').slice(1) : '';
+          const el = id ? document.getElementById(id) : null;
+          return { id, tag: el ? el.tagName : '' };
+        }));
+        assert.ok(targets.length > 0 && targets.every(x => /^s-\d+(-\d+)?$/.test(x.id) && /^H[23]$/.test(x.tag)), 'every row links to an h2 or h3: ' + JSON.stringify(targets));
+        assert.ok(targets.some(x => x.tag === 'H3'), 'some rows lead to an h3 (s-N-M)');
+        // 押せる高さ：カードの見出しのリンクを、指で押せる帯（その点でいちばん上にあるのがリンク）で測る。どの行の、どの折り返しの行でも44px以上。
+        // 箱の高さ（getClientRects）だけでは、すぐ下の「判定：」の行に取られる分を見落とす（2026-10-28 の点検で直した）
+        const bands = await rows.locator('th a.rn-claim').evaluateAll(as => as.map(a => {
+          a.scrollIntoView({ block: 'center' });
+          return [...a.getClientRects()].map(r => {
+            const x = r.left + r.width / 2;
+            const hit = y => { const el = document.elementFromPoint(x, y); return !!el && (el === a || a.contains(el)); };
+            const mid = Math.round(r.top + r.height / 2);
+            if (!hit(mid)) return 0;
+            let top = mid;
+            while (hit(top - 1) && top - 1 > r.top - 40) top -= 1;
+            let bottom = mid;
+            while (hit(bottom + 1) && bottom + 1 < r.bottom + 40) bottom += 1;
+            return bottom - top + 1;
+          });
+        }));
+        assert.ok(bands.flat().every(h => h >= 44), 'the tappable band of every row link is at least 44px: ' + JSON.stringify(bands));
+        const sizes = await page.evaluate(() => ({ width: document.documentElement.scrollWidth, viewport: innerWidth }));
+        assert.ok(sizes.width <= sizes.viewport + 2, 'horizontal overflow');
+
+        for (const [i, { id }] of targets.entries()) {
+          await rows.nth(i).locator('th a.rn-claim').click();
+          await page.waitForFunction(want => location.hash === '#' + want, id);
+          const top = await page.evaluate(want => document.getElementById(want).getBoundingClientRect().top, id);
+          assert.ok(top >= -1 && top < 844 / 2, `row ${i + 1} → #${id}: the heading comes to the top of the screen (top ${top})`);
+        }
+        const sent = await page.evaluate(() => (window.dataLayer || []).filter(entry => entry[0] === 'event' && entry[1] === 'rn_row_click').map(entry => entry[2]));
+        assert.deepEqual(sent, targets.map((x, i) => ({ row: i + 1, kind: 'section' })), 'one rn_row_click per row, kind section');
+
+        // 行のリンクを藍にするのは、マウスを乗せられる端末だけ。タッチの端末では、押して節へ移り「戻る」で表に戻ると :hover が残るが、
+        // そのときも主張は墨のまま（藍は ○ 支持の色なので、× の行が「支持」に見えないように。2026-10-28 の点検で直した）
+        const first = rows.first().locator('th a.rn-claim');
+        await first.evaluate(a => a.scrollIntoView({ block: 'center' }));
+        const ink = await first.evaluate(a => getComputedStyle(a).color);
+        await first.hover();
+        assert.equal(await first.evaluate(a => a.matches(':hover')), true, 'the row link is under :hover');
+        assert.equal(await first.evaluate(a => getComputedStyle(a).color), ink, 'on a touch screen, a row link keeps the ink color under :hover');
+
+        // 新しい欄のない記事は、今の表のまま
+        await page.goto(origin + '/meat-and-libido.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('.rn-verdicts').count(), 1);
+        assert.equal(await page.locator('.rn-results, .rn-table-lead, .rn-claim, .rn-refute-kind, h3[id]').count(), 0, 'articles without the new fields keep the step-1 table');
+      });
+    });
+
     // 2026-10-22（オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」。記事とは切り離す）
     await t.test('understanding test: answer every question, see the score and links to the article sections', async () => {
       await checkPage(browser, 'understanding-test', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {

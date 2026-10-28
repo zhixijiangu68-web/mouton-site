@@ -86,6 +86,12 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-title { margin: 0; font-size: clamp(28px, 5.4vw, 42px); line-height: 1.4; font-weight: 900; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
 .rn-subtitle { margin: 12px 0 0; font-size: clamp(17px, 2.4vw, 20px); line-height: 1.65; font-weight: 700; color: var(--text2); }
 .rn-meta { display: flex; flex-wrap: wrap; gap: 0 16px; margin: 14px 0 0; font-size: 14px; color: var(--text3); }
+/* 署名の行（2026-10-28 段階1）：読む時間・更新日のすぐ下。書いた人・参考文献の数・判定の決まり・AI の使い方。
+   区切りは .rn-meta と同じ（間をあけて並べ、狭い画面では折り返す）。リンクは押せる高さ44px以上（目次と同じ）。動きはつけない */
+.rn-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; margin: 2px 0 0; font-size: 14px; line-height: 1.6; color: var(--text3); }
+.rn .rn-byline a { display: inline-flex; align-items: center; min-height: 44px; }
+/* 判定の決まりと AI の使い方は一組（どちらも編集方針へのリンク）。スマホでは2行目に二つ並び、一つだけ離れて残らない（2026-10-28 の点検） */
+.rn-byline-policy { display: inline-flex; flex-wrap: wrap; gap: 0 16px; }
 
 .rn-body { margin-top: 36px; font-size: 18px; line-height: 1.95; }
 .rn-body > p, .rn-body > section > p { margin: 0 0 1.2em; }
@@ -135,6 +141,36 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
   .rn-verdicts td:nth-child(3) { white-space: normal; }
   .rn-verdicts td::before { content: attr(data-label) "："; font-size: 13px; font-weight: 700; color: var(--text3); }
 }
+/* 記事の型の段階2（2026-10-28。docs/article-type-20261028.md の 6-3）：front matter に results・claims[].section がある記事だけに出る部品。動きはつけない */
+/* 結果の3行：署名の行のすぐ下、本文の前。見出し（h2・h3）にはしない */
+.rn-results { margin: 20px 0 0; padding: 16px 20px; background: var(--surface); border-radius: 10px; }
+.rn-results dl { margin: 0; }
+.rn-results dl > div + div { margin-top: 12px; }
+.rn-results dt { font-size: 14px; font-weight: 700; line-height: 1.6; color: var(--text3); }
+.rn-results dd { margin: 2px 0 0; font-size: 17px; line-height: 1.8; }
+/* 表の上の一行（内訳・凡例・判定の決まりへのリンク。自動）。表に寄せて置く。
+   内訳の一つずつ（「△ 弱い 9」）とリンク（「判定の決まり」）は途中で折り返さない。一行と結果の3行は、最後の行に1〜2字だけが残りにくい折り返しにする（対応していないブラウザでは今のまま）。2026-10-28 の点検で足した */
+.rn-body > .rn-table-lead { margin: 0 0 .5em; font-size: 15px; line-height: 1.8; color: var(--text2); }
+.rn-table-lead .rn-nowrap, .rn-table-lead a { white-space: nowrap; }
+.rn-results dd, .rn-table-lead { text-wrap: pretty; }
+.rn-table-lead + .rn-table-wrap { margin-top: .5em; }
+/* 表の行のリンク（行き先の節へ）：文字は墨のまま（藍は ○ 支持の色なので、× の行の主張が藍で「支持」に見えないように）、下線を藍にしてリンクと分かるようにする。
+   藍にするのは、マウスを乗せられる端末だけ（hover: hover）。タッチの端末では、押して節へ移り「戻る」で表に戻ると :hover が残り、× の行の主張が藍のままになるため（2026-10-28 の点検で直した）。
+   押せる高さは、続きの口と同じく上下の余白14pxで足す（行の高さは変えない。Web フォントで約52px、代わりの字体で約45px）。
+   スマホでは表がカードになり、カードの見出しのリンクになる。カードでは、見出しの下の余白をリンクの余白と同じ14pxにする。6px のままだと、リンクの下の余白がすぐ下の「判定：」の行に重なり、
+   押せる帯が5〜6px低くなり、キーボードで来たときの枠が「判定」の字にかかるため（2026-10-28 の点検で直した。カードは1枚につき8px高くなる） */
+.rn .rn-verdicts .rn-claim { padding-block: 14px; color: var(--ink); text-decoration-color: var(--ai); }
+@media (hover: hover) { .rn .rn-verdicts .rn-claim:hover { color: var(--ai); } }
+/* × の種類（差がない・主張と逆）。記号と朱は今のまま。広い画面の表では2行目に置く（スマホのカードでは同じ行）。
+   判定の列は折り返さない（.rn-verdict の nowrap）ので、列は種類の文字の幅まで広がる：段階1の表で約68px、種類のある表で約110px（今の記事でも「― 証拠なし」のある表は約98px）。
+   そのぶん「主な根拠」の列が狭まり、色気の記事の表は 1280px で約50px、768px で約120px、601px で約220px 高くなる（2026-10-28 に Chromium で測った。スマホのカードの高さは、種類の文字では変わらない）。
+   列の幅を決めると種類の文字が「（差が／ない）」と割れるので、決めていない */
+.rn-refute-kind { font-weight: 700; }
+@media (min-width: 601px) { .rn-refute-kind { display: block; } }
+@media (max-width: 600px) {
+  .rn-results dd { font-size: 16px; }
+  .rn-verdicts tbody th:has(.rn-claim) { padding-bottom: 14px; }
+}
 
 .rn-health { margin: 2.2em 0; padding: 14px 16px; font-size: 14px; line-height: 1.8; color: var(--text2); border: 1px solid var(--line); border-radius: 10px; }
 .rn-refs h2 { font-size: 18px; }
@@ -155,6 +191,18 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-refs ol { margin: 0; padding-left: 1.8em; font-size: 14px; line-height: 1.75; color: var(--text2); }
 .rn-refs li { margin: 0 0 8px; overflow-wrap: anywhere; }
 .rn-back { margin: 40px 0 0; font-size: 15px; }
+/* 続きの口（2026-10-28 段階1）：「次に読む」のすぐ下に1行。リンクは文の中のまま、上下に余白を足して押しやすくする（行の高さは変えない）。
+   余白14pxで、字体によらず押せる高さは44px以上（Web フォントで52px、代わりの字体で45px。2026-10-28 の点検で測った）。
+   「RSSで知らせている。」は一続きにし、「知らせている」の途中で折り返さない（狭い画面では「…と」のあとで折り返す） */
+.rn-body > .rn-follow { margin: 0 0 2em; font-size: 16px; line-height: 1.9; color: var(--text2); }
+.rn-next + .rn-follow { margin-top: -1em; }
+.rn .rn-follow a { padding-block: 14px; }
+.rn-follow .rn-nowrap { white-space: nowrap; }
+/* 僕の体験（2026-10-28 段階1）：オーナーだけが書く欄。見出しの文字で、研究ではないことを示す。見出し（h2・h3）にはしない */
+.rn-owner { margin: 1.6em 0 2em; padding: 16px 20px; background: var(--surface); border-left: 4px solid var(--ai); border-radius: 0 10px 10px 0; }
+.rn-owner p { margin: 0 0 .8em; }
+.rn-owner p:last-child { margin-bottom: 0; }
+.rn-owner .rn-owner-h { font-size: 15px; font-weight: 700; color: var(--ai); }
 
 /* 理解度テスト（test.html、2026-10-22）。1問ずつ、4択。答えは ○／× の文字でも示す（色だけに頼らない）。演出は入れない。
    JS が無いときは、問題と <details> の答えを並べる。test.js が動いたら（.is-ready）「始める」を出し、その一覧をしまう。 */
