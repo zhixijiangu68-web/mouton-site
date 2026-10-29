@@ -3,13 +3,18 @@ import { waitlistReady } from '../../scripts/waitlist-readiness.mjs';
 // サイト全体の設定。ここを書き換えて `npm run build` すると全ページに反映される。
 export default {
   name: 'ムートン',
+  // 英語版（/en/）。2026-10-27 オーナー「英語版は一度廃止する。まずは日本語の記事を溜める」。
+  // false のあいだは、日本語のページから英語版への入口（メニュー・フッター・記事の言語の切り替え・hreflang・サイトマップ）を出さず、
+  // 英語版のページは noindex にする。ページと URL は残す（外からのリンクを切らないため）。再開するときは true に戻す。
+  english: false,
   // 公開しているアドレス。独自ドメインが決まったら置き換える（例: 'https://mouton.example'）。
   // 入れると canonical / og:url / sitemap.xml / robots.txt が出力される。
   url: 'https://moutonarchive.com/',
   description: 'MOUTON — Philosophy of Life。迷いながら哲学を自分の毎日で試している、ムートンの個人ブランド。キルケゴール、ニーチェ、スピノザの考えを、いまの悩みに当てて読む文章（PDF）。答えではなく、自分で考えて選ぶための材料を。',
   author: {
     name: 'ムートン',
-    x: 'kodoku__alone',
+    // X のユーザー名（@ なし）。2026-10-27 オーナー「このアカウントをサイトに紐づけしてほしい」で紐づけ、同日ユーザー名を moutonarchive に変えた（前は kodoku__alone → Ever7tt）
+    x: 'moutonarchive',
     // Instagram のユーザー名（@ なし）。フッター・運営者情報・links.html に出る。
     // 休止中（2026-10-06〜）は空。再開するときは 'art.gagaga' に戻す。
     instagram: '',
@@ -63,7 +68,7 @@ export default {
     philosophy: { priceJPY: 2980, checkoutProvider: 'stripe', legalUrl: '', fulfillmentReady: false },
   },
   // お問い合わせ先。空でないものだけページに表示する。
-  contact: { formUrl: '', email: '', x: 'kodoku__alone' },
+  contact: { formUrl: '', email: '', x: 'moutonarchive' },
   // 運営者情報・プライバシーポリシーの制定日
   policyDate: '2026-10-05',
 };

@@ -75,6 +75,37 @@ export default function (eleventyConfig) {
     const at = html.indexOf('<section class="rn-refs"');
     return at < 0 ? html + note : html.slice(0, at) + note + html.slice(at);
   });
+  // 2026-10-28 次に読む（オーナー「参考文献の上に次の記事へのリンクを置くのはどうか」）：今の記事から2本。
+  // front matter の related を先に、次に同じ柱、残りは新しい順（collections.current の順）。自分は除く。
+  eleventyConfig.addFilter('nextReads', (current = [], slug, related = [], pillar) => {
+    const others = current.filter(a => a.page.fileSlug !== slug);
+    const picked = [];
+    const add = a => { if (a && !picked.includes(a) && picked.length < 2) picked.push(a); };
+    for (const r of related || []) add(others.find(a => a.page.fileSlug === r));
+    for (const a of others) if (a.data.pillar === pillar) add(a);
+    for (const a of others) add(a);
+    return picked;
+  });
+  // 参考文献の前に差し込む（参考文献がない記事では末尾）
+  eleventyConfig.addFilter('beforeRefs', (html, extra) => {
+    html = String(html);
+    const at = html.indexOf('<section class="rn-refs"');
+    return at < 0 ? html + extra : html.slice(0, at) + extra + html.slice(at);
+  });
+  // 2026-10-28 参考文献を折りたたむ（オーナー「どちらも必要」）。「参考文献（N）」の1行にして、押すと開く。
+  // 本文の [N] を押したときは renewal-article.js が開く。見出しの id（refs-h）は目次の飛び先なので残す。
+  eleventyConfig.addFilter('foldRefs', html => {
+    html = String(html);
+    const at = html.indexOf('<section class="rn-refs"');
+    if (at < 0) return html;
+    const h = '<h2 id="refs-h">参考文献</h2>';
+    const hAt = html.indexOf(h, at);
+    const end = html.indexOf('</section>', at);
+    if (hAt < 0 || end < 0 || hAt > end) return html;
+    const n = (html.slice(at, end).match(/<li id="ref-/g) || []).length;
+    return html.slice(0, hAt) + `<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献（${n}）</h2></summary>`
+      + html.slice(hAt + h.length, end) + '</details>' + html.slice(end);
+  });
   // 2026-10-22 理解度テスト（test.html）：記事の見出し（h2）に、上から順に id（s-1, s-2, …）を付ける。
   // テストの「記事のこの節を読む」が、この id に飛ぶ。番号は記事の中で何番目の h2 か。すでに id のある見出し（参考文献の refs-h）はそのまま。
   // 記事の側には、テストの印もリンクも置かない（オーナー「記事とクイズは切り離す」）。
@@ -92,6 +123,24 @@ export default function (eleventyConfig) {
   };
   const h2Text = inner => stripTags(inner).replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').trim();
   eleventyConfig.addFilter('sectionIds', html => eachH2(html, (m, attrs, inner, n) => (/\sid=/.test(attrs) ? m : `<h2 id="s-${n}"${attrs}>${inner}</h2>`)));
+  // 2026-10-28 目次（オーナー「1だけ」：判定表の下に、見出しの一覧を折りたたんで置く）。sectionIds のあとに使う（h2 の id へ飛ぶ）。
+  // 判定表がない記事では、最初の h2 の前に置く。見出しが3つ未満なら出さない。動きは足さない（<details> だけ）。
+  const escapeHtml = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  eleventyConfig.addFilter('withToc', html => {
+    html = String(html);
+    // 置く場所：判定表のすぐ下。判定表がなければ最初の h2 の前。目次には、その場所より下の h2 だけを並べる
+    const table = html.indexOf('<div class="rn-table-wrap"><table class="rn-verdicts">');
+    const at = table >= 0 ? html.indexOf('</table></div>', table) + '</table></div>'.length : html.search(/<h2\b/);
+    if (at < 0) return html;
+    const items = [];
+    html.slice(at).replace(/<h2\b([^>]*)>([\s\S]*?)<\/h2>/g, (m, attrs, inner) => {
+      const id = (attrs.match(/\sid="([^"]*)"/) || [])[1];
+      if (id) items.push(`<li><a href="#${escapeHtml(id)}">${escapeHtml(h2Text(inner))}</a></li>`);
+      return m;
+    });
+    if (items.length < 3) return html;
+    return `${html.slice(0, at)}<details class="rn-toc"><summary>目次（${items.length}）</summary><ol>${items.join('')}</ol></details>${html.slice(at)}`;
+  });
   // 問題のある今の記事（src/_data/understanding/<ファイル名>.json）を、collections.current の順に。
   // 各問の section（記事の h2 と同じ文字）を、記事の節へのリンク（<ファイル名>.html#s-N）にする。見出しは記事の本文（layout の前）から sectionIds と同じ数え方で探す。
   eleventyConfig.addFilter('understandingTests', (items, data = {}) => items.filter(a => data[a.page.fileSlug]?.questions?.length).map(a => {
