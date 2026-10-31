@@ -61,7 +61,7 @@ Claude Code でこのリポジトリを開いて：
 
 「〇〇の有料記事を作って」「note の有料記事を作って」「/note-paid 〇〇」でも動く。無料の note は上の `/note`、サイトの記事は「サイトに載せて」「掲載して」「サイトの〇〇の記事を作って」。
 
-- 作るもの：無料部分・有料ライン・有料部分の本文、題・記事の説明・ハッシュタグ、見出し画像（1280×670）、X の告知文の下書き、価格は 490円（固定。有料部分は 3,000字。2026-10-31 オーナー）
+- 作るもの：無料部分・有料ライン・有料部分の本文、題・記事の説明・ハッシュタグ、見出し画像（1280×670）、X の告知文の下書き、価格は 290円・490円・980円から（既定 490円）、有料部分は 3,000字（2026-10-31 オーナー）
 - 型と根拠：`structure.md`（構成）・`style.md`（文体）・`funnel.md`（有料記事への導線と価格）・`titles.md`（題）・`hashtags.md`・`thumbnail.md`（見出し画像）・`checklist.md`（公開前の点検）。根拠は `analysis.md`（note で稼いでいる哲学の記事と、ネットの哲学の有料記事の調査。2026-10-30）。売れた数は1件も見えておらず、note の仕様・手数料もどれも未確認なので、型は「売れる型」ではない
 - 置き場所：公開してよいもの（`00-brief.md`・`03-titles.md`・`thumb.json`・`thumbnail.png`・`05-sns.md`・`results.md`）は `note/<slug>/`。有料部分を含むもの（完成稿 `paid/article.md`・品質チェック `paid/04-review.md` など）は `note/<slug>/paid/` にだけ置き、コミットしない（このリポジトリは公開。`paid/` は `.gitignore` で外してある）
 - 見出し画像：`node scripts/note-thumb/make.mjs note/<slug>/thumb.json --preview`（初回だけ `(cd scripts/note-thumb && npm ci)`。サイトのビルドには関係しない）
