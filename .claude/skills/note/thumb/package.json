@@ -1,0 +1,8 @@
+{
+  "name": "note-thumb",
+  "private": true,
+  "description": "note の見出し画像（1280×670）を描く道具。フォントだけを入れる。Playwright は全体に入っているものを使う。",
+  "dependencies": {
+    "@fontsource/noto-sans-jp": "5.1.1"
+  }
+}
