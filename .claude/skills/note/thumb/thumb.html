@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-sans-jp/400.css">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-sans-jp/700.css">
+<link rel="stylesheet" href="./node_modules/@fontsource/noto-sans-jp/900.css">
+<style>
+  /* note の見出し画像（1280×670）。サイトの作り直し（renewal.css）と同じ色：紙・墨・藍。朱は「×」だけ。 */
+  :root{--paper:#FAF8F3;--surface:#F1EDE4;--ink:#1A1A1A;--text2:#3E3C38;--line:#DDD8CC;--ai:#165E83;--shu:#C8361B;--mark:#5E5E5E}
+  html,body{margin:0;width:1280px;height:670px;overflow:hidden}
+  body{background:var(--paper);color:var(--ink);font-family:"Noto Sans JP",sans-serif;position:relative}
+  .wrap{position:absolute;inset:var(--pad,64px 96px);display:flex;flex-direction:column}
+  .brand{font-size:28px;font-weight:900;letter-spacing:.18em}
+  .kicker{margin-top:auto;font-size:var(--kfs,36px);font-weight:700;color:var(--text2);letter-spacing:.02em}
+  h1{margin:.18em 0 0;font-size:var(--fs,120px);font-weight:900;line-height:1.28;letter-spacing:.01em;word-break:keep-all;overflow-wrap:anywhere}
+  h1 .v{display:inline-block}
+  .sub{margin-top:28px;font-size:var(--sfs,32px);font-weight:400;color:var(--text2);line-height:1.6}
+  .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;font-size:24px;color:var(--text2)}
+  .rule{position:absolute;left:0;right:0;top:0;height:12px;background:var(--ai)}
+  .none{color:var(--mark)} .refute{color:var(--shu)} .support{color:var(--ai)} .weak{color:var(--mark)}
+  .chip{display:inline-flex;align-items:center;gap:.3em;padding:.04em .45em .08em;border:.07em solid currentColor;border-radius:.22em;line-height:1.2}
+  /* 判定表の1行に見せる形 */
+  .row{margin-top:auto;border-top:3px solid var(--ink);border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;align-items:center;gap:40px;padding:34px 0}
+  .row .claim{font-size:var(--fs,84px);font-weight:900;line-height:1.3;word-break:keep-all}
+  .row .verdict{font-size:var(--vfs,72px);font-weight:900;white-space:nowrap}
+  .row-head{display:grid;grid-template-columns:1fr auto;font-size:24px;font-weight:700;color:var(--text2);margin-top:auto;padding-bottom:10px}
+  body.center .wrap{align-items:center;text-align:center}
+  body.center .foot{width:100%}
+  /* 2026-10-22 追加（spec で指定したときだけ効く。ほかの案は変わらない）
+     tight:true … 見出しの括弧「」の空きを詰める（行頭の「が字下げに見えないように）
+     hvfs … 見出しの中の判定（verdict）だけの大きさ。rhfs … 判定表の見出し（よく言われること／判定）の大きさ */
+  body.tight h1, body.tight .row .claim, body.tight .kicker{font-feature-settings:"palt"}
+  h1 .v{font-size:var(--hvfs,1em)}
+  .row-head{font-size:var(--rhfs,24px)}
+</style></head>
+<body><div class="rule" id="rule"></div><div class="wrap" id="wrap"></div>
+<script>
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+// spec: { layout: 'left'|'center'|'row', kicker, lines:[...], verdict:{mark,text,cls}, sub, foot, fs, kfs, sfs, vfs, rule:true|false }
+window.render = (s) => {
+  document.body.className = [s.layout === 'center' ? 'center' : '', s.tight ? 'tight' : ''].filter(Boolean).join(' ');
+  document.getElementById('rule').style.display = s.rule === false ? 'none' : '';
+  const r = document.documentElement.style;
+  for (const k of ['fs','kfs','sfs','vfs','hvfs','rhfs']) r.setProperty('--'+k, s[k] ? s[k]+'px' : '');
+  r.setProperty('--pad', s.pad || '');
+  const v = s.verdict ? `<span class="v ${esc(s.verdict.cls)}${s.verdict.chip ? ' chip' : ''}">${esc(s.verdict.mark)}${s.verdict.mark ? ' ' : ''}${esc(s.verdict.text)}</span>` : '';
+  let html = `<div class="brand">MOUTON</div>`;
+  if (s.layout === 'row') {
+    html += `<div class="row-head"><span>よく言われること</span><span>判定</span></div>`
+         + `<div class="row" style="margin-top:0"><div class="claim">${(s.lines||[]).map(esc).join('<br>')}</div><div class="verdict">${v}</div></div>`;
+  } else {
+    html += s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : `<div style="margin-top:auto"></div>`;
+    html += `<h1>${(s.lines||[]).map(esc).join('<br>')}${v ? (s.verdictNewLine === false ? '' : '<br>') + v : ''}</h1>`;
+  }
+  if (s.sub) html += `<div class="sub">${esc(s.sub)}</div>`;
+  html += `<div class="foot"><span>${esc(s.foot || '')}</span><span>moutonarchive.com</span></div>`;
+  document.getElementById('wrap').innerHTML = html;
+};
+</script></body></html>
