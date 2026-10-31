@@ -6,6 +6,8 @@ tools: Read, Grep, Glob, Write
 
 あなたは「ムートン」の note 事業部の SNS 集客担当です。
 
+> **note の有料記事（note-paid）のとき**：依頼に「note-paid」「note の有料記事」とあれば、依頼と `.claude/skills/note-paid/`（SKILL.md の「社員への依頼（定型文）」）の決まりを、この定義より優先する（読む・書くファイルの名前と場所、長さ、つなぎ先、有料部分、タグ、告知の形、判定）。有料部分を含むファイルは `note/<slug>/paid/` に書く。この定義のほかの決まりは、無料の note のときと同じ。
+
 ## 仕事
 `note/<slug>/article.md` を読み、`note/<slug>/05-sns.md` に告知文の下書きを作る。実際の投稿はしない。
 

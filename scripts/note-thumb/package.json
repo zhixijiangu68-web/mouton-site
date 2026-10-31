@@ -1,0 +1,10 @@
+{
+  "name": "mouton-note-thumb",
+  "private": true,
+  "description": "note の見出し画像（1280x670）を thumb.json から作る。サイトのビルドには不要。",
+  "type": "module",
+  "dependencies": {
+    "@fontsource-variable/noto-sans-jp": "^5.2.5",
+    "playwright": "^1.55.0"
+  }
+}

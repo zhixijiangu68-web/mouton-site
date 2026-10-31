@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<title>note 見出し画像</title>
+<style>
+  /* note の見出し画像（1280×670、約 1.91:1）。make.mjs が window.render() を呼んでから撮る。
+     色は renewal.css と同じ紙・墨・藍。朱は判定の「×」だけに使う決まりなので、ここでは使わない。 */
+  :root {
+    --paper: #FAF8F3; --ink: #1A1A1A; --ai: #165E83; --ai-soft: #DCE9F0; --ai-light: #7DB8DB; --text2: #3E3C38;
+    /* Noto Sans JP（make.mjs が npm の @fontsource-variable/noto-sans-jp を読み込む）→ 各 OS の日本語ゴシック。
+       IPA を最後の sans-serif より前に置くのは、字形の違う中国語の書体に落ちないようにするため。 */
+    --sans: "Noto Sans JP Variable", "Noto Sans JP", "Noto Sans CJK JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+            "Yu Gothic", YuGothic, Meiryo, "IPAexGothic", "IPAPGothic", "IPAGothic", sans-serif;
+  }
+  html, body { margin: 0; width: 1280px; height: 670px; overflow: hidden; }
+  body { position: relative; background: var(--bg); color: var(--fg); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+  body.paper { --bg: var(--paper); --fg: var(--ink); --accent: var(--ai); --muted: var(--text2); }
+  body.ink { --bg: var(--ink); --fg: var(--paper); --accent: var(--ai-light); --muted: #D2CEC5; }
+  body.ai { --bg: var(--ai); --fg: #FFFFFF; --accent: var(--ai-soft); --muted: var(--ai-soft); }
+
+  /* 安全な余白：文字はすべて .frame の中（上下 52px・左右 120px）。これで守れるのは、中央を残して 2:1（上下 15px）や
+     16:9（左右 約44px）に切られたときだけ。3:2（左右 約138px）・4:3（約193px）・正方形（305px）に切られると、
+     横に長い見出しの端は欠ける（note がそう切るかは未確認）。見出しとサブは真ん中に置き、どこまで残るかは
+     make.mjs が「中央で切ったとき」として出す。ラベル（左上）と名前（右下）は小さな目印なので、大きく切られたら消えてよい。 */
+  .frame { position: absolute; inset: 52px 120px; display: grid; grid-template-rows: 56px minmax(0, 1fr) 56px; row-gap: 22px; }
+  .top, .bottom { display: flex; align-items: center; min-width: 0; }
+  .top { justify-content: flex-start; }
+  .bottom { justify-content: flex-end; }
+  .middle { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; min-height: 0; text-align: center; }
+
+  .label { font-size: var(--label, 30px); font-weight: 700; line-height: 1; letter-spacing: .14em; color: var(--accent);
+           border: 2px solid currentColor; border-radius: 999px; padding: .32em .5em .32em .64em; white-space: nowrap; font-feature-settings: "palt"; }
+
+  /* 見出し：太く大きく。行は書いたとおり（\n）。入らないときだけ、文節（phrase）→ どこでも（anywhere）で折り返す。 */
+  h1, .sub { margin: 0; max-width: 100%; font-feature-settings: "palt"; line-break: strict; }
+  h1 { font-size: var(--title, 120px); font-weight: 700; line-height: 1.28; letter-spacing: .02em; }
+  .sub { margin-top: 26px; font-size: var(--sub, 44px); font-weight: 500; line-height: 1.4; letter-spacing: .04em; color: var(--muted); }
+  .line { display: block; white-space: nowrap; }
+  .phrase .line { white-space: normal; word-break: auto-phrase; text-wrap: balance; }
+  .anywhere .line { white-space: normal; word-break: normal; overflow-wrap: anywhere; text-wrap: balance; }
+
+  /* 名前と「まる。」（藍の地に白い ○ と点。favicon.svg と同じ形）。 */
+  .brand { display: inline-flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 500; letter-spacing: .24em; color: var(--muted); white-space: nowrap; }
+  .brand svg { flex: none; width: 40px; height: 40px; }
+  .brand .ground { fill: var(--ai); }
+  .brand .mark { fill: #FFFFFF; }
+  /* 藍の地では四角が背景に溶けるので、薄い線で形だけ残す。 */
+  .ai .brand svg { overflow: visible; }
+  .ai .brand .ground { stroke: var(--ai-soft); stroke-width: 5; }
+  [hidden] { display: none !important; }
+</style></head>
+<body class="paper">
+<div class="frame" id="frame">
+  <div class="top" id="top"><span class="label" id="label" hidden></span></div>
+  <div class="middle" id="middle">
+    <h1 id="title"></h1>
+    <p class="sub" id="sub" hidden></p>
+  </div>
+  <div class="bottom"><span class="brand" id="brand"><svg viewBox="0 0 128 128" aria-hidden="true"><rect class="ground" width="128" height="128" rx="24"/><path class="mark" fill-rule="evenodd" d="M48 32a32 32 0 1 0 0 64a32 32 0 1 0 0-64zM48 46a18 18 0 1 0 0 36a18 18 0 1 0 0-36z"/><circle class="mark" cx="99" cy="84" r="12"/></svg><span>ムートン</span></span></div>
+</div>
+<script>
+// 大きさの上限と下限（px）。見出しの下限 64px は「スマホで横いっぱい（幅 343px）に出て約 17px」。
+// これより小さくしないと入らない文言は、画像にせずに止める（make.mjs が字数を減らすよう伝える）。
+const LIMITS = { title: [148, 64], sub: [44, 30], label: [30, 22] };
+// 見出しがこれ以上なら、一覧の小さな表示（幅 160px）でも 12.8px（サイトの本文の下限 0.8rem）以上。
+// 103 = 12.8 × 1280 ÷ 160 の切り上げ（analysis.md 10-5 の表と同じ）。これ未満なら make.mjs が「注意」を出す。
+const READABLE = 103;
+const $ = id => document.getElementById(id);
+const failed = what => ({ ok: false, failed: what, readable: READABLE, limits: LIMITS });
+
+// 横は実際の文字の幅（行ごとの四角）で、縦は行の箱（line-height）で測る。
+// 書体の上下の余白（Noto Sans JP は 1.448em）は行の箱からはみ出すが、日本語の字そのものは行の箱の中に描かれる。
+function textRects(el) {
+  const rects = [], range = document.createRange();
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    if (!node.nodeValue.trim()) continue;
+    range.selectNodeContents(node);
+    for (const r of range.getClientRects()) if (r.width > 0 && r.height > 0) rects.push(r);
+  }
+  return rects;
+}
+const shown = els => els.filter(el => !el.hidden && el.getClientRects().length);
+const union = rects => ({ left: Math.min(...rects.map(r => r.left)), right: Math.max(...rects.map(r => r.right)), top: Math.min(...rects.map(r => r.top)), bottom: Math.max(...rects.map(r => r.bottom)) });
+const within = (r, box) => r.left >= box.left - .5 && r.right <= box.right + .5 && r.top >= box.top - .5 && r.bottom <= box.bottom + .5;
+const across = (els, box) => els.flatMap(textRects).every(r => r.left >= box.left - .5 && r.right <= box.right + .5);
+const lineCount = el => new Set(textRects(el).map(r => Math.round(r.top))).size;
+
+// 大きい方から 1px ずつ下げて、fits() が通る最初の大きさ。どこでも通らなければ null。
+function largest(apply, fits, [max, min]) {
+  for (let px = max; px >= min; px--) { apply(px); if (fits()) return px; }
+  return null;
+}
+
+function setLines(el, lines) {
+  el.replaceChildren(...lines.map(text => Object.assign(document.createElement('span'), { className: 'line', textContent: text })));
+}
+
+// 書いたとおりの行（asis）→ 文節で折り返す（phrase）→ どこでも折り返す（anywhere）の順に試す。
+// 書いたとおりの行が keepAt 以上で入れば、そのまま。足りないときだけ、15% 以上大きくなるなら文節で折り返す。
+function fitBlock(el, name, fits, limits, keepAt) {
+  const apply = mode => px => { el.classList.toggle('phrase', mode === 'phrase'); el.classList.toggle('anywhere', mode === 'anywhere'); el.style.setProperty(`--${name}`, px + 'px'); };
+  let mode = 'asis', px = largest(apply('asis'), fits, limits);
+  if (px === null || px < keepAt) {
+    const phrased = largest(apply('phrase'), fits, limits);
+    if (phrased !== null && (px === null || phrased >= px * 1.15)) { mode = 'phrase'; px = phrased; }
+  }
+  if (px === null) { mode = 'anywhere'; px = largest(apply('anywhere'), fits, limits); }
+  if (px !== null) apply(mode)(px);
+  return { px, mode, lines: px === null ? 0 : lineCount(el) };
+}
+
+window.render = async ({ title, sub = [], label = '', variant = 'paper' }) => {
+  document.body.className = variant;
+  const h1 = $('title'), subEl = $('sub'), labelEl = $('label'), brand = $('brand'), middle = $('middle');
+  setLines(h1, title);
+  setLines(subEl, sub);
+  subEl.hidden = !sub.length;
+  labelEl.textContent = label;
+  labelEl.hidden = !label;
+
+  // Noto Sans JP は文字の範囲ごとのファイルに分かれている。使う字を読み込んでから測る。
+  const text = [...title, ...sub, label, 'ムートン'].join('');
+  await Promise.all(['700 100px', '500 100px'].map(f => document.fonts.load(`${f} "Noto Sans JP Variable"`, text))).catch(() => {});
+  await document.fonts.ready;
+
+  const out = { title: null, sub: null, label: null };
+  const box = middle.getBoundingClientRect();
+
+  // 1. ラベル：1 行。入らなければ小さく。
+  if (label) {
+    const top = $('top').getBoundingClientRect();
+    const px = largest(v => labelEl.style.setProperty('--label', v + 'px'), () => within(labelEl.getBoundingClientRect(), top), LIMITS.label);
+    if (px === null) return failed('label');
+    out.label = { px };
+  }
+  // 2. サブ：横幅に入り、2 行まで。
+  if (sub.length) {
+    out.sub = fitBlock(subEl, 'sub', () => across([subEl], box) && lineCount(subEl) <= 2, LIMITS.sub, LIMITS.sub[1]);
+    if (out.sub.px === null) return failed('sub');
+  }
+  // 3. 見出し：見出しとサブがまとめて真ん中の枠に入る、いちばん大きな文字。
+  const stack = () => union(shown([h1, subEl]).map(el => el.getBoundingClientRect()));
+  out.title = fitBlock(h1, 'title', () => across([h1, subEl], box) && within(stack(), box), LIMITS.title, READABLE);
+  if (out.title.px === null) return failed('title');
+
+  // 4. 最後に、どこも切れていないかを確かめる：文字の幅と行の箱は安全な枠の中、書体の上下の余白まで含めても画像の中。
+  const frame = $('frame').getBoundingClientRect();
+  const boxes = shown([labelEl, h1, subEl, brand]).map(el => el.getBoundingClientRect());
+  const glyphs = [h1, subEl, labelEl, brand].flatMap(textRects);
+  const ok = across([h1, subEl, labelEl, brand], frame) && boxes.every(r => within(r, frame))
+    && glyphs.every(r => within(r, { left: 0, top: 0, right: 1280, bottom: 670 }));
+  if (!ok) return failed('frame');
+  const ink = union(glyphs), rows = union(boxes);
+  const edge = { top: rows.top, bottom: 670 - rows.bottom, left: ink.left, right: 1280 - ink.right };
+  // 見出しとサブの字の範囲（中央で切ったときに残るかを make.mjs が計算する）。
+  const c = union(shown([h1, subEl]).flatMap(textRects));
+  const core = { left: c.left, right: c.right, top: c.top, bottom: c.bottom };
+  return { ok: true, ...out, edge, core, readable: READABLE, limits: LIMITS };
+};
+</script></body></html>
