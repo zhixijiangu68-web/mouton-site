@@ -14,8 +14,8 @@
     "lint:writing": "node scripts/lint-writing.mjs"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.6",
-    "budoux": "^0.9.3"
+    "@11ty/eleventy": "^3.1.7",
+    "budoux": "^0.10.2"
   },
   "type": "module"
 }
