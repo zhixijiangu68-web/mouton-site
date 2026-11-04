@@ -2,10 +2,9 @@
 # リポジトリの変数 AI_SHAIN_SCHEDULE を on にしたときだけ動く（Settings → Secrets and variables → Actions → Variables）。
 name: AI社員（定期）
 
+# 2026-11-04 オーナー：セキュリティの個人研究サイトに変え、AI 社員の定期の仕事を止めた（docs/security-renewal-20261104.md）。
+# 定時の起動（毎日 05:27 の X、毎週火曜 04:11 の note）を外した。手で動かす workflow_dispatch だけ残す。
 on:
-  schedule:
-    - cron: "27 20 * * *"    # 毎日 05:27 JST：X の今日の3本（報告だけ。変更なし）
-    - cron: "11 19 * * 1"    # 毎週火曜 04:11 JST：note を1本
   workflow_dispatch:
     inputs:
       job:

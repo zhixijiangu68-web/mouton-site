@@ -1,6 +1,7 @@
 // オーナーが決めたことを、生成されたページで確かめる。
 // 2026-10-21 作り直し（docs/site-renewal-20261021.md）で、トップと記事の型を新しくした：
-// - トップの h1 は、オーナーが決めた見出し（君はどういう人間として生きたいのか？／答えられないのなら知識が足りていない。）
+// - トップの h1 は「セキュリティを、手を動かして学ぶ。」（2026-11-04、オーナー「セキュリティの個人研究サイト、勉強用にしたい」。見出しはオーナーが決めるまでの仮）
+// - 今の記事がまだないときは、トップに「最初の記事を準備している」の一文が出る
 // - トップにオープニングの演出（intro-veil）がない（見出しが最初に見える。2026-10-18 コピーライティング第一）
 // - 今の記事（src/_data/currentArticles.js）は新しい型：判定表があり、書き込みワーク・穴埋め・○×クイズ・アーカイブの注記が出ない
 // - 公開前の下書き（checking: true）は noindex で、上に「公開前の下書き」の注記が出る
@@ -96,9 +97,10 @@ for (const p of ['topic-philosophy.html', 'topic-body.html', 'topic-work.html', 
 }
 const index = read('index.html');
 const h1 = index.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/);
-if (!h1 || !text(h1[1]).includes('君はどういう人間として生きたいのか？') || !text(h1[1]).includes('答えられないのなら知識が足りていない。')) {
-  report('index.html', 'h1 がオーナーの決めた見出し（君はどういう人間として生きたいのか？／答えられないのなら知識が足りていない。）になっていない');
+if (!h1 || !text(h1[1]).includes('セキュリティを、手を動かして学ぶ。')) {
+  report('index.html', 'h1 が「セキュリティを、手を動かして学ぶ。」になっていない');
 }
+if (!currentArticles.length && !/<p class="rn-none">[^<]*最初の記事を準備している/.test(index)) report('index.html', '今の記事がないのに「最初の記事を準備している」の一文がない');
 if (index.includes('intro-veil') || index.includes("classList.add('intro'")) report('index.html', 'オープニングの演出（intro-veil）が戻っている。見出しが最初に見えること');
 const items = html => (html.match(/class="rn-item"/g) || []).length;
 for (const p of ['index.html', 'journal.html']) {
@@ -131,7 +133,7 @@ for (const p of ['index.html', 'journal.html', 'archive.html', ...currentArticle
 }
 
 // 2026-10-22 理解度テスト（オーナー「記事について、どれくらいの理解度があるのかを測るテストも作成したい」「記事とクイズは切り離す」「奇抜なことをせずに、シンプルに積み重ねていく」）
-// - test.html があり、問題のある今の記事をすべて載せる。メニューに「理解度テスト」がある
+// - test.html があり、問題のある今の記事をすべて載せる（メニューからは 2026-11-04 に外した）
 // - src/_data/understanding/<記事>.json：8〜10問、選択肢は4つ、answer は 0〜3、解説（why）がある、
 //   section は記事の見出し（h2）と同じ文字で、生成された記事のその見出しに id があり、test.html からその id へリンクしている
 // - 今の記事には、テストの印もテストへのリンクも出さない（メニューの「理解度テスト」は除く）
@@ -144,7 +146,8 @@ if (!existsSync('test.js')) report('test.js', '理解度テストのスクリプ
 else if (/localStorage|sessionStorage|indexedDB|document\.cookie|setTimeout|setInterval|requestAnimationFrame/.test(read('test.js'))) report('test.js', '保存やタイマー・動きの演出を使っている（オーナー：シンプルに。保存・時間制限・演出はしない）');
 if (/@keyframes|\banimation\s*:|\btransition\s*:/.test(read('renewal.css'))) report('renewal.css', '動きの演出（animation / transition）がある。演出は足さない');
 if (testPage && (!/<h1\b[^>]*>理解度テスト<\/h1>/.test(testPage) || !testPage.includes('src="test.js"'))) report('test.html', '見出し「理解度テスト」か test.js がない');
-if (!/<nav class="rn-nav"[^>]*>\s*<a href="test.html">理解度テスト<\/a>/.test(index)) report('index.html', 'メニューの最初に「理解度テスト」（test.html）がない');
+// 2026-11-04：メニューは「ムートンについて」と「アーカイブ」の2つ（理解度テストは外した。test.html は残す）
+if (!/<nav class="rn-nav"[^>]*>\s*<a href="start.html">ムートンについて<\/a>\s*<a href="archive.html">アーカイブ<\/a>\s*<\/nav>/.test(index)) report('index.html', 'メニューが「ムートンについて」「アーカイブ」の2つになっていない');
 const unescape = s => s.replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 for (const s of tested) {
   const file = `${udir}/${s}.json`;

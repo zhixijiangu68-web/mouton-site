@@ -18,6 +18,7 @@ eleventyImport:
   <p class="rn-lead">記事をどれだけ理解できたかを、問題に答えて確かめる。</p>
 
   <div class="rn-test-pick">
+    {%- if not tests.length %}<p class="rn-none">いまは問題がない。記事を書いたら、ここに問題を置く。</p>{% endif %}
     <ul class="rn-list rn-tests">
       {%- for t in tests %}
       <li class="rn-test-item">

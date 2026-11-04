@@ -67,7 +67,13 @@ test('MOUTON browser smoke', async t => {
   try {
     browser = await chromium.launch({ headless: true });
     // 2026-10-21〜22 サイトの作り直し（docs/site-renewal-20261021.md）：トップは見出し・短い文・検索・3つの並び順・記事の一覧だけ。
-    const headline = ['君はどういう人間として生きたいのか？', '答えられないのなら知識が足りていない。'];
+    // 2026-11-04 セキュリティの個人研究サイトに変えた（docs/security-renewal-20261104.md）。今の記事がまだない間は、一覧の代わりに「最初の記事を準備している」の一文が出る。
+    // 今の記事があるときの確かめ（並び順・検索・記事の型・理解度テスト）は、記事が1本入ると、そのまま動く。
+    const headline = ['セキュリティを、手を動かして学ぶ。'];
+    const noneYet = async page => {
+      assert.equal(await page.locator('.rn-none').isVisible(), true, 'no current article yet: the "preparing" line is shown');
+      assert.equal(await page.locator('.rn-none a[href="archive.html"]').count(), 1, 'the line leads to the archive');
+    };
     await t.test('desktop: the decided headline, search, three orders and the current articles', async () => {
       await checkPage(browser, 'desktop-home', { viewport: { width: 1440, height: 900 } }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
@@ -77,8 +83,8 @@ test('MOUTON browser smoke', async t => {
         assert.equal(await page.locator('#rn-q').isVisible(), true, 'search box');
         assert.deepEqual(await page.locator('.rn-tabs [role="tab"]').allInnerTexts(), ['新しい順', 'おすすめ', '人気順']);
         const items = page.locator('.rn-current .rn-item');
-        assert.ok(await items.count() > 0, 'current articles listed');
-        assert.equal(await items.first().isVisible(), true);
+        if (await items.count()) assert.equal(await items.first().isVisible(), true);
+        else await noneYet(page);
         assert.equal(await page.locator('[data-home-tab], .cover-choice-card').count(), 0, 'old homepage parts are gone');
       });
     });
@@ -116,7 +122,7 @@ test('MOUTON browser smoke', async t => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('.menu-toggle').count(), 0, 'no hidden menu on the new pages');
         const links = page.locator('.rn-nav a');
-        assert.deepEqual(await links.allInnerTexts(), ['理解度テスト', 'ムートンについて', 'アーカイブ']);
+        assert.deepEqual(await links.allInnerTexts(), ['ムートンについて', 'アーカイブ']);
         for (const box of await links.evaluateAll(els => els.map(el => el.getBoundingClientRect().toJSON()))) {
           assert.ok(box.height >= 44, 'menu link must be at least 44px tall: ' + JSON.stringify(box));
           assert.ok(box.right <= 390 + 1, 'menu link must stay on screen: ' + JSON.stringify(box));
@@ -140,6 +146,12 @@ test('MOUTON browser smoke', async t => {
           assert.equal(await page.locator('html').getAttribute('data-version'), null);
           assert.equal(new URL(page.url()).searchParams.has('version'), false);
           const entry = page.locator('.rn-current .rn-item').first();
+          if (!(await entry.count())) {
+            await noneYet(page);
+            const w = await page.evaluate(() => ({ documentWidth: document.documentElement.scrollWidth, viewportWidth: innerWidth }));
+            assert.ok(w.documentWidth <= w.viewportWidth + 2, label + ': page overflows horizontally');
+            return;
+          }
           assert.equal(await entry.isVisible(), true, label + ': journal entry missing');
           const rects = await entry.evaluate(el => ({
             item: el.getBoundingClientRect().width,
@@ -190,10 +202,10 @@ test('MOUTON browser smoke', async t => {
       ]) {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/start.html', { waitUntil: 'domcontentloaded' });
-          const main = page.locator('main.start-page');
-          assert.equal(await main.getByText('作る。記録する。残していく。', { exact: true }).count(), 1);
-          assert.equal(await main.locator('a[href="editorial.html"]').count(), 1, 'editorial policy link remains');
-          // 2026-10-17：制作・清潔感の科学・以前の記事はアーカイブへ。はじめての方へからは、アーカイブを通って行ける。
+          // 2026-11-04：セキュリティの個人研究サイトの「ムートンについて」。置くもの・攻撃の技術を試すときの決まり・アーカイブへの道
+          const main = page.locator('main article.rn-article');
+          assert.equal(await main.locator('h1').innerText(), 'ムートンについて');
+          assert.equal(await main.getByRole('heading', { name: '攻撃の技術を試すときの決まり' }).count(), 1, 'the rules for trying attack techniques are on the page');
           const archive = main.getByRole('link', { name: 'アーカイブ', exact: true });
           assert.equal(await archive.getAttribute('href'), 'archive.html');
           const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
@@ -289,7 +301,7 @@ test('MOUTON browser smoke', async t => {
       await checkPage(browser, 'journal-redirect', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/index.html#journal', { waitUntil: 'domcontentloaded' });
         await page.waitForURL(/journal\.html/);
-        assert.ok((await page.locator('.rn-current .rn-item').count()) > 0, 'journal list missing');
+        if (!(await page.locator('.rn-current .rn-item').count())) await noneYet(page);
         const sizes = await page.evaluate(() => ({ page: document.documentElement.scrollWidth, viewport: innerWidth }));
         assert.ok(sizes.page <= sizes.viewport + 2, 'horizontal overflow');
       });
@@ -322,6 +334,17 @@ test('MOUTON browser smoke', async t => {
     await t.test('search and orders: tabs reorder, search filters and finds archive titles, Escape clears', async () => {
       await checkPage(browser, 'search-orders', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
+        if (!(await page.locator('.rn-current .rn-item').count())) {
+          // 今の記事がない間：検索はアーカイブの題を探し、見つからなければその一文、Escape で戻る
+          await page.fill('#rn-q', '睡眠');
+          assert.ok(await page.locator('.rn-arc .rn-item').count() > 0, 'archive titles are searched');
+          assert.ok(await page.locator('.rn-arc mark').count() > 0, 'matched words are marked');
+          await page.fill('#rn-q', 'zzzzzz');
+          assert.equal(await page.locator('.rn-empty').isVisible(), true, 'nothing found message');
+          await page.locator('#rn-q').press('Escape');
+          assert.equal(await page.locator('.rn-arc').isVisible(), false, 'Escape clears the search');
+          return;
+        }
         const order = key => page.locator('.rn-current .rn-item:not([hidden])').evaluateAll((els, k) => els.map(el => Number(el.dataset[k])), key);
         const isSorted = list => list.every((v, i) => i === 0 || list[i - 1] <= v);
         assert.ok(isSorted(await order('new')), 'newest first by default');
@@ -353,12 +376,16 @@ test('MOUTON browser smoke', async t => {
         viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, javaScriptEnabled: false,
       }, async page => {
         await page.goto(origin + '/index.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'list must be readable without scripts');
+        const hasCurrent = (await page.locator('.rn-current .rn-item').count()) > 0;
+        if (hasCurrent) assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'list must be readable without scripts');
+        else await noneYet(page);
         assert.equal(await page.locator('.rn-find').isVisible(), false, 'search and orders need scripts, so they stay hidden');
         await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'journal must be readable without scripts');
+        if (hasCurrent) assert.equal(await page.locator('.rn-current .rn-item').first().isVisible(), true, 'journal must be readable without scripts');
+        else await noneYet(page);
         await page.goto(origin + '/test.html', { waitUntil: 'domcontentloaded' });
-        assert.ok(await page.locator('details.rn-test-a').count() > 0, 'questions with answers inside details');
+        if (hasCurrent) assert.ok(await page.locator('details.rn-test-a').count() > 0, 'questions with answers inside details');
+        else assert.equal(await page.locator('.rn-none').isVisible(), true, 'test page says there are no questions yet');
       });
     });
 
@@ -379,12 +406,18 @@ test('MOUTON browser smoke', async t => {
         await page.goto(origin + '/coffee.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('article .archive-note').count(), 1, 'archived article shows the archive note');
         assert.equal(await page.locator('.archive-note a[href="index.html"]').count(), 1, 'the note leads to the current articles');
+        // 2026-11-04：判定表の型の記事（2026年10月）もアーカイブに移った。上に注記が出る
+        await page.goto(origin + '/habit-design.html', { waitUntil: 'domcontentloaded' });
+        assert.equal(await page.locator('article .archive-note').count(), 1, 'an archived verdict-table article shows the archive note');
+        assert.equal(await page.locator('.rn-verdicts').count(), 1, 'it keeps its verdict table');
         await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
-        const current = await page.locator('.rn-current .rn-item a.rn-list-title').first().getAttribute('href');
-        await page.goto(origin + '/' + current, { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
-        assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work, .rn-quiz').count(), 0, 'current article has no quiz or work (tests live on test.html)');
-        assert.equal(await page.locator('.rn-verdicts').count(), 1, 'current article has a verdict table');
+        const first = page.locator('.rn-current .rn-item a.rn-list-title').first();
+        if (await first.count()) {
+          await page.goto(origin + '/' + await first.getAttribute('href'), { waitUntil: 'domcontentloaded' });
+          assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
+          assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work, .rn-quiz').count(), 0, 'current article has no quiz or work (tests live on test.html)');
+          assert.equal(await page.locator('.rn-verdicts').count(), 1, 'current article has a verdict table');
+        }
         await page.goto(origin + '/archive.html', { waitUntil: 'domcontentloaded' });
         assert.ok((await page.locator('#archive .journal-item').count()) > 50, 'archive lists the archived articles');
       });
@@ -394,6 +427,10 @@ test('MOUTON browser smoke', async t => {
     await t.test('understanding test: answer every question, see the score and links to the article sections', async () => {
       await checkPage(browser, 'understanding-test', { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true }, async page => {
         await page.goto(origin + '/test.html', { waitUntil: 'domcontentloaded' });
+        if (!(await page.locator('.rn-test-start').count())) {
+          assert.equal(await page.locator('.rn-none').isVisible(), true, 'no questions yet: the page says so');
+          return;
+        }
         await page.locator('.rn-test-start').first().click();
         const total = Number((await page.locator('.rn-quiz-step').innerText()).match(/(\d+)問中/)[1]);
         assert.ok(total >= 8 && total <= 10, 'each test has 8 to 10 questions, got ' + total);

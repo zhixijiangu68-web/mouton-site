@@ -222,3 +222,9 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn .rn-brand--small { font-size: 16px; }
 .rn-footer-links { display: flex; flex-wrap: wrap; gap: 0 4px; margin-left: -8px; }
 .rn .rn-footer-links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; font-size: 14px; color: var(--text2); }
+/* 2026-11-04：今の記事がまだないとき（セキュリティの個人研究サイトに変えた直後） */
+.rn-none { margin: 0; padding: 24px 0; color: var(--text2); }
+.rn-article .archive-note { margin: 0 0 28px; padding: 12px 16px; font-size: 15px; line-height: 1.7; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+.rn-article .archive-note p { margin: 0; }
+.rn-article .archive-note .archive-note-title { font-weight: 700; color: var(--text2); }
+.rn-article .archive-note a { color: var(--ai); }

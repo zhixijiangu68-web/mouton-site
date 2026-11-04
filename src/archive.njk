@@ -2,11 +2,12 @@
 layout: base.njk
 permalink: archive.html
 title: "アーカイブ — ムートン"
-description: "サイトを作り直す前（2026年10月まで）の記事を、ここにまとめて残しています。哲学、身体、食事と科学、仕事、本の記事と、清潔感の科学、制作の記録、○×クイズ。ページはそのまま読めます。"
+description: "セキュリティの個人研究サイトに変える前（2026年10月まで）の記事を、ここにまとめて残しています。哲学、身体、食事と科学、仕事、本の記事と、清潔感の科学、制作の記録、○×クイズ。ページはそのまま読めます。"
 bodyClass: site journal-page archive-page
 extraCss: ["home.css?v=20261017-archive"]
 assetVersion: "20261017-archive"
 groups:
+  - { key: "renewal", label: "2026年10月の記事（判定表つき）" }
   - { key: "philosophy", label: "哲学・生き方" }
   - { key: "body", label: "身体" }
   - { key: "food", label: "食事・科学" }
@@ -26,22 +27,22 @@ groups:
           <p class="eyebrow">これまでの記事</p>
           <h1 class="section-title" id="archive-heading">アーカイブ<em>{{ collections.archived.length }}本</em></h1>
         </div>
-        <p class="copy">サイトを作り直す前（2026年10月まで）の記事を、ここに残している。ページは、そのまま読める。</p>
+        <p class="copy">2026年11月に、このサイトをセキュリティの個人研究サイトに変えた。それまで（2026年10月まで）の記事を、ここに残している。ページは、そのまま読める。</p>
       </div>
       <p class="archive-now"><a href="index.html">今の記事へ <span aria-hidden="true">→</span></a></p>
       <nav class="archive-index" aria-label="アーカイブの分類">
-        {%- for g in groups %}{% set n = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else a.data.category %}{% if cat == g.key %}{% set n = (n.push(1), n) %}{% endif %}{% endfor %}
+        {%- for g in groups %}{% set n = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else (a.data.category or ('renewal' if a.data.pillar else '')) %}{% if cat == g.key %}{% set n = (n.push(1), n) %}{% endif %}{% endfor %}
         {%- if n.length %}<a href="#archive-{{ g.key }}">{{ g.label }}<span>{{ n.length }}</span></a>{% endif %}
         {%- endfor %}
         <a href="#archive-pages">そのほかのページ</a>
       </nav>
       {%- for g in groups %}
-      {%- set list = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else a.data.category %}{% if cat == g.key %}{% set list = (list.push(a), list) %}{% endif %}{% endfor %}
+      {%- set list = [] %}{% for a in collections.archived %}{% set cat = a.data.journal.category if a.data.journal else (a.data.category or ('renewal' if a.data.pillar else '')) %}{% if cat == g.key %}{% set list = (list.push(a), list) %}{% endif %}{% endfor %}
       {%- if list.length %}
       <h2 class="archive-h" id="archive-{{ g.key }}">{{ g.label }} <span>{{ list.length }}本</span></h2>
       <div class="journal-list">
         {%- for a in list %}
-        {%- set cat = a.data.journal.category if a.data.journal else a.data.category %}
+        {%- set cat = a.data.journal.category if a.data.journal else (a.data.category or ('renewal' if a.data.pillar else '')) %}
         <a class="journal-item clickable journal-link{% if cat == 'philosophy' %} is-philosophy{% endif %}" data-rise href="{{ a.page.fileSlug }}.html" data-category="{{ cat }}" data-date="{{ a.page.date | dotDate }}">
           <div class="journal-date">{{ a.page.date | dotDate }}</div><div class="journal-dot"></div>
           <div class="journal-body">{% if a.data.paid %}<span class="journal-tag journal-tag--paid">有料・冒頭は無料</span>{% endif %}<div class="journal-title">{{ a.data.journal.title if a.data.journal else a.data.headline }}</div><div class="journal-excerpt">{{ a.data.journal.excerpt if a.data.journal else (a.data.description | truncate(64)) }}</div><span class="journal-read-time">{% if a.data.paid %}PDF・全文 約{{ a.data.paid.minutes }}分{% else %}約{{ a.data.readMinutes }}分{% endif %}</span></div>
