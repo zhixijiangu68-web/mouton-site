@@ -1,0 +1,215 @@
+---
+layout: renewal-article.njk
+title: "侵入に自分で気づけた組織は52%だった。IDSは、選ぶ前に「どこを見るか」を決める道具だった。 — ムートン"
+headline: "侵入に自分で気づけた組織は52%だった。IDSは、選ぶ前に「どこを見るか」を決める道具だった。"
+subtitle: "IDS と IPS の違い、なぜ大事か、無料・商用・クラウドの製品の比べ方、選ぶときと運用するときに見るところ"
+description: "侵入に自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった。IDS（侵入検知システム）とは何か、IPS との違い、無料・商用・クラウドの製品の比べ方、選ぶときと運用するときに見るところをまとめる。"
+excerpt: "侵入に自分で気づけたのは52%。IDS は置けば守る箱ではなく、どこを見て、誰が警告を読むかを決めて使う道具だった。"
+date: 2026-11-04T12:00:00Z
+updated: 2026-11-04
+pillar: defense
+checking: true
+related: []
+claims:
+  - claim: IDS を入れれば、攻撃を止められる
+    verdict: refute
+    certainty: 中
+    basis: IDS は見つけて知らせる仕組みで、止めるのは通り道に入る IPS の役目。Google Cloud IDS は、検知と警告だけで止めないと説明している
+    refs: [2, 3]
+  - claim: 暗号化された通信でも、IDS は中身まで見られる
+    verdict: refute
+    certainty: 中
+    basis: 復号しない限り中身は見えない。Cloud IDS は暗号化された中身を復号できないと明記し、TLS 1.3 では証明書も暗号化される
+    refs: [4, 5]
+  - claim: 古い解説のとおり、Snort 2 で始めればよい
+    verdict: refute
+    certainty: 中
+    basis: オープンソースの Snort 2 は2026年10月21日にすべての版のサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった
+    refs: [6]
+  - claim: 第三者の試験で推奨された製品なら、どの版でも同じように守れる
+    verdict: refute
+    certainty: 中
+    basis: 2025年の比較試験では、回避の手口で抜けられた2製品が、直した版で再試験して評価が上がった。結果は版に結びついている
+    refs: [7, 8]
+  - claim: Gartner の Leader は、検知の性能が高い製品のことだ
+    verdict: refute
+    certainty: 中
+    basis: Magic Quadrant は、実行能力とビジョンの2軸でベンダーを置くもので、検知率を測る試験ではない
+    refs: [9]
+  - claim: ネットワーク型の IDS があれば、端末の中は見なくてよい
+    verdict: refute
+    certainty: 低
+    basis: 暗号化で見えなくなる部分は、端末からの記録で埋めると Security Onion の文書は書いている。CIS もホスト型とネットワーク型を別の項目にしている
+    refs: [10, 11]
+---
+<p>侵入されたことに、自分で最初に気づけた組織は52%だった。Mandiant が2025年に対応した事案のまとめ（M-Trends 2026）の数字だ。残りは、外から知らされて初めて気づいている。侵入から見つかるまでの日数の中央値は14日で、前の年の11日より延びた<a href="#ref-1">[1]</a>。</p>
+<p>中から気づくための道具の一つが、IDS（侵入検知システム。通信やログを見て、攻撃らしいものを知らせる仕組み）だ。僕は専門家ではなく、セキュリティを勉強している一人として、IDS を調べ直した。何を見て、何を見られないのか。無料の道具と商用の製品は何が違うのか。選ぶときと、置いたあとに、どこを見ればいいのか。</p>
+<p>先に言うと、IDS は置けば守ってくれる箱ではなかった。どこに置き、何を見せ、警告を誰が読むかを決めて、初めて働く道具だった。製品の比較はそのあとに来る。</p>
+
+<h2>よく言われることの判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。この記事の事実は、公式の資料を検索で確かめたもので、原典のページを開いて確かめ直している途中なので、どれも「中」より上にしていない。</p>
+{% verdictTable claims %}
+
+<h2>IDS は見つけて知らせる仕組みで、止めるのは IPS の役目だった</h2>
+<p>IDS の基本の文書は、米国の NIST（国立標準技術研究所）の SP 800-94 だ。いま有効なのは2007年2月の版で、IDS と IPS（侵入防止システム。通信の通り道に入って、攻撃らしいものを止める仕組み）をまとめて IDPS と呼んでいる<a href="#ref-2">[2]</a>。2012年に改訂の案が出たが、最終版にならず、2022年7月に取り下げられた<a href="#ref-12">[12]</a>。IPA が日本語訳を出している<a href="#ref-13">[13]</a>。</p>
+<p>この文書は、IDPS を見る場所で4つに分けている。ネットワークの通信を見るネットワーク型、無線、ネットワークの振る舞いの分析、1台の機械の中を見るホスト型だ。検知の方式は3つに分けている<a href="#ref-2">[2]</a>。シグネチャ型（知られた攻撃の型と照らす）、アノマリー型（ふだんからのずれを見る）、ステートフルプロトコル解析（通信の決まりに合っているかを見る）だ。</p>
+<p>IPA の制御システム向けの手引書は、方式を5つに分けている。シグネチャ型・ルールベース・ステートフルプロトコル解析・振る舞い検知型・サンドボックス型（怪しいファイルを隔離した環境で動かして確かめる）だ<a href="#ref-14">[14]</a>。分け方は文書によって違う。それぞれの方式が何を得意とし、何を見逃しやすいかは、SP 800-94 の本文で確かめてから書き足す。</p>
+<p>大事なのは、IDS と IPS の違いが、製品の名前ではなく置き方で決まることだ。通信のコピーを受け取って見るなら、知らせることしかできない。通信の通り道に入るなら、止められる。Google Cloud IDS は、通信のコピーを作って調べる仕組みで、検知と警告だけを行い、止めるには別の製品を使うと説明している<a href="#ref-3">[3]</a>。</p>
+<p>近い道具との違いを、言い切れる範囲で並べると次のようになる。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>IDS と近い道具（この記事での使い分け）</caption><thead><tr><th scope="col">道具</th><th scope="col">見るもの</th><th scope="col">止めるか</th></tr></thead><tbody>
+<tr><th scope="row">ファイアウォール</th><td>決めた規則（宛先・ポートなど）</td><td>規則で通す・通さないを決める</td></tr>
+<tr><th scope="row">IDS（ネットワーク型）</th><td>通信の中身や手順の怪しさ</td><td>止めない。知らせる</td></tr>
+<tr><th scope="row">IPS</th><td>IDS と同じ</td><td>通り道にいて止める</td></tr>
+<tr><th scope="row">IDS（ホスト型）</th><td>1台の機械のログ・ファイル・設定</td><td>製品によって、その機械で対処する</td></tr>
+<tr><th scope="row">NDR</th><td>内側の通信の振る舞い（多くは通信のコピー）</td><td>ほかの仕組みと連携して対処する</td></tr>
+<tr><th scope="row">SIEM</th><td>IDS を含む色々なログ</td><td>止めない。集めて突き合わせる</td></tr>
+</tbody></table></div>
+<p>NDR（ネットワークの検知と対応）や SIEM（ログを集めて分析する仕組み）の定義は、メーカーによって少しずつ違う。この表は、この記事を読むための目安だ。</p>
+
+<h2>侵入に自分で気づけた組織は52%で、気づくまでの中央値は14日だった</h2>
+<p>冒頭の数字をもう少し見る。M-Trends 2026 では、自分で最初に気づけた割合は52%で、前の年の43%から増えた。それでも、半分近くは外からの知らせで気づいている。気づくまでの日数の中央値は14日で、中央値なので、半分はそれより長い<a href="#ref-1">[1]</a>。</p>
+<p>IBM の Cost of a Data Breach の2026年版では、侵害を特定して封じ込めるまでの平均は247日だったと報じられている<a href="#ref-15">[15]</a>。14日と247日は、矛盾ではない。M-Trends は Mandiant が対応した事案の中央値で、IBM は調査した組織のデータ侵害の平均だ。数え方も対象も違うので、「調べ方によって、数週間から8か月」と幅で受け取るのが正確だと思う。</p>
+<p>日本の数字も見ておく。IPA の「情報セキュリティ10大脅威 2026」の組織編の1位は、ランサム攻撃による被害だった<a href="#ref-16">[16]</a>。警察庁によると、2025年上半期のランサムウェアの被害の報告は116件だった。感染経路が分かったもののうち、VPN（外から社内のネットワークに安全につなぐ仕組み）の機器が62.2%だった。リモートデスクトップと合わせると8割を超える<a href="#ref-17">[17]</a>。入口の多くは、VPN の機器やリモートデスクトップのような、外とつながる境目だった。境目を通る通信を見ることと、入られたあと中で広がる動きを見ることの両方に、IDS の出番がある。ただし、これは感染経路の統計で、IDS があれば防げたと言える数字ではない。</p>
+<p>基準の中での位置も確かめた。CIS Controls v8.1 の Control 13 は、ネットワークの監視と防御の項目だ。侵入検知はホスト型（13.2）とネットワーク型（13.3）、侵入防止は 13.7 と 13.8 と、別々に置いている。13.3 は、最低限の対策の次の段階（実装グループ2）に入っている<a href="#ref-11">[11]</a>。NIST の Cybersecurity Framework 2.0 では、検知（DE）が2つに分かれている。継続的な監視（DE.CM）と、見つけたものの分析（DE.AE）だ<a href="#ref-18">[18]</a>。見張ることと、見つけたものを分析して判断することが、別の項目として並んでいる。</p>
+
+<h2>無料で使える IDS は、Suricata・Snort 3・Zeek と、ホスト型の Wazuh・OSSEC だった</h2>
+<p>ここからは製品を見る。版や日付は、2026年11月4日時点で、公式の発表を検索で確かめたものだ。古くなりやすいので、使う前に公式のページを見てほしい。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>無料で使える主な IDS（2026年11月4日時点）</caption><thead><tr><th scope="col">名前</th><th scope="col">見る場所と方式</th><th scope="col">止めるか</th><th scope="col">向いている使い方</th></tr></thead><tbody>
+<tr><th scope="row">Suricata 8</th><td>ネットワーク。シグネチャとプロトコル解析</td><td>IPS モードで止められる</td><td>検知も遮断も一つで。記録を SIEM に流したいとき</td></tr>
+<tr><th scope="row">Snort 3</th><td>ネットワーク。シグネチャが中心</td><td>IPS として使える</td><td>Talos のルールに合わせたいとき。Snort 2 からの移行</td></tr>
+<tr><th scope="row">Zeek 9</th><td>ネットワーク。プロトコル解析とスクリプト</td><td>記録と分析が中心（止める機能は確かめていない）</td><td>何が起きたかを細かく残して、あとから調べる</td></tr>
+<tr><th scope="row">Security Onion 3</th><td>Suricata・Zeek・Elastic をまとめた配布</td><td>確かめていない（中の Suricata の設定による）</td><td>学ぶ。小さな組織で一式をそろえる</td></tr>
+<tr><th scope="row">Wazuh 4.14</th><td>機械の中。ログ分析と改ざんの検知</td><td>その機械で対処できる</td><td>サーバーや PC の中の変化を見る</td></tr>
+<tr><th scope="row">OSSEC</th><td>機械の中。ログ分析と改ざんの検知</td><td>その機械で対処できる</td><td>小さく、軽く、ホスト型を始める</td></tr>
+</tbody></table></div>
+<p>表の「止めるか」は、置き方と設定によって変わる。ネットワーク型の道具でも、通信のコピーを受け取る置き方なら知らせることしかできない。</p>
+<h3>Suricata：検知も遮断も一つでできる</h3>
+<p>Suricata は、OISF（Open Information Security Foundation）が作るネットワーク型の IDS/IPS で、ライセンスは GPL v2 だ。8系の最初の版 8.0.0 は2025年7月に出た<a href="#ref-19">[19]</a>。シグネチャ（ルール）での検知に加えて、通信のプロトコルを解析し、その結果を EVE JSON という1行1件の JSON で記録する。SIEM に流しやすい形だ。</p>
+<p>遮断もできる。Linux では、NFQUEUE（通信を Suricata に回す仕組み）を使う。または、2枚の NIC（ネットワークにつなぐ部品）を橋渡しする AF_PACKET の IPS モードを使う。IPS モードのときだけ、drop のルールで実際に通信が落ちる<a href="#ref-20">[20]</a>。2026年9月の 8.0.7 は、AI を使った解析によるものとして、これまでで最も多い脆弱性の報告を直した版だった<a href="#ref-21">[21]</a>。守る道具そのものも、更新し続けるものだ。</p>
+<p>ルールは、何を見つけたら、どう扱うかを1行で書いたものだ。考え方を見るために、演習用の例を一つ置く。自分の環境で、example.com という名前を DNS で引いたら知らせる、というだけのルールだ。</p>
+<pre><code>alert dns any any -&gt; any any (msg:"演習: example.com の名前を引いた"; dns.query; content:"example.com"; nocase; sid:1000001; rev:1;)</code></pre>
+<p>先頭の alert が扱い方（知らせる）、dns が見るプロトコル、any any -&gt; any any が送り元と宛先（どこでも）、かっこの中が条件と記録の文言だ。sid はルールの番号で、自分で作るルールには、配布されるルールとぶつからない番号を使う。IPS モードでは、先頭を drop にすると止める扱いになる。この1行は書き方の例で、僕はまだ自分の環境で動かして確かめていない。書き方の細部は、使う版の Suricata の文書で確かめてほしい。</p>
+<p>暗号化された通信では、中身の代わりに、JA3・JA4 と呼ばれる「話し方の指紋」（TLS ＝ 通信を暗号化する決まりの、始めのあいさつの特徴）を記録できる<a href="#ref-22">[22]</a>。</p>
+<h3>Snort 3：Snort 2 は終わった</h3>
+<p>Snort は、Cisco の Talos が作る IDS/IPS で、エンジンは GPL v2 だ。2026年10月21日、オープンソースの Snort 2 は、すべての版のサポートが終わった。Talos も Snort 2 向けのルールを出さなくなり、設定を Snort 3 の書き方に変える snort2lua という道具を案内している<a href="#ref-6">[6]</a>。古い解説記事の多くは Snort 2 が前提なので、これから学ぶなら Snort 3 から始めるのがよさそうだ。</p>
+<p>Snort 3 は、1つのプロセスでいくつものスレッドを動かせ、設定は Lua というプログラムの言葉で書く。Snort 2 の設定はそのままでは動かない<a href="#ref-23">[23]</a>。ルールは、無料で登録も要らない Community、無料の登録で使える Registered、有料の Subscriber の3つがある。Registered の新しいルールは、Subscriber より30日遅れて届くと説明されている。2014年の説明で、いまも同じかは確かめていない<a href="#ref-24">[24]</a>。Suricata と Snort には、Proofpoint の ET Open（無料）と ET Pro（有料）のルールもある。ET Pro は ET Open を丸ごと含むので、同時には入れない<a href="#ref-25">[25]</a>。</p>
+<h3>Zeek：記録して、あとから調べる</h3>
+<p>Zeek（旧名 Bro）は、通信をプロトコルごとのログ（接続・DNS・HTTP・TLS など）に書き出し、専用のスクリプトで監視の方針を書く道具だ。公式の説明は、よくある IDS とはまったく違い、特定の検知の方式に縛られないとしている。ライセンスは BSD だ<a href="#ref-26">[26]</a>。2026年9月に 9.0.0（長期サポートの版）が出て<a href="#ref-27">[27]</a>、10月には 8.0.11 と 9.0.1 が「これまでで最大のセキュリティリリース」として出た<a href="#ref-28">[28]</a>。</p>
+<p>TLS のやりとりは ssl.log に、証明書は x509.log に残る。ただし TLS 1.3 では証明書が暗号化されるので、x509.log は出ない<a href="#ref-5">[5]</a>。何が起きたかを細かく残すのが得意だ。Security Onion や Corelight は、Zeek と Suricata を組み合わせている<a href="#ref-29">[29]</a><a href="#ref-30">[30]</a>。</p>
+<h3>Security Onion：まとめて試せる配布</h3>
+<p>Security Onion は、Suricata・Zeek・Elastic（検索と可視化）をまとめて入れられる配布だ。2026年3月に 3.0.0 が出て、パケットの保存も Suricata が担うようになった。対応する OS は Oracle Linux 9 だけだ<a href="#ref-29">[29]</a>。2.4 系は2026年10月1日でサポートが終わった<a href="#ref-31">[31]</a>。これも、古い手順書に注意が要る。</p>
+<h3>Wazuh と OSSEC：機械の中を見る</h3>
+<p>ホスト型の代表が Wazuh と OSSEC だ。どちらも、サーバーや PC のログを分析し、ファイルの改ざんを見つける。変化を見つけたときに、その機械でスクリプトを動かして対処する active response の仕組みもある<a href="#ref-32">[32]</a><a href="#ref-33">[33]</a>。ネットワーク型と、見る場所が違う。どちらか一つではなく、組み合わせるものだ。</p>
+
+<h2>商用の多くは次世代ファイアウォールの機能で、NDR は内側の通信の振る舞いを見る</h2>
+<p>商用の製品は、大きく3つに分かれた。次世代ファイアウォール（NGFW）の中の IPS、専用の IPS、NDR だ。ここに書く性能の数字は、すべてメーカーの発表で、第三者が確かめたものではない。</p>
+<p>次世代ファイアウォールの IPS は、境目に置く機器の機能の一つだ。Cisco Secure Firewall は Snort 3 のエンジンを使う。復号せずに通信の特徴から脅威を見分ける、Encrypted Visibility Engine も持つ<a href="#ref-34">[34]</a>。Palo Alto Networks の Advanced Threat Prevention は、シグネチャに、通り道での深層学習を足した追加のサブスクリプションだ。メーカーの発表では、従来の IPS より、ゼロデイ（直し方がまだ出ていない弱点）を狙うインジェクション攻撃を60%多く防ぐ<a href="#ref-35">[35]</a>。インジェクション攻撃は、入力に命令を混ぜて相手に実行させる攻撃だ。Fortinet の FortiGate は、通信を復号するディープインスペクションで中身を IPS に見せる。証明書だけを見る方式では、中身が要る IPS は働かないと説明している<a href="#ref-36">[36]</a><a href="#ref-37">[37]</a>。Check Point は、HTTPS Inspection で復号してから検査する<a href="#ref-38">[38]</a>。</p>
+<p>専用の IPS では、Trend Micro の TippingPoint がある。Digital Vaccine と呼ぶフィルターを配り、脆弱性を狙う通信を止める「仮想パッチ」が中心だ<a href="#ref-39">[39]</a>。</p>
+<p>NDR は、ミラーポート（スイッチが通信のコピーを出す口）やタップ（回線から通信のコピーを取り出す機器）から通信のコピーを受け取り、内側の通信の振る舞いを見る。Darktrace は、組織ごとの「ふだん」を学び、そこからのずれを見つけると説明している<a href="#ref-40">[40]</a>。Vectra AI は、通信のメタデータ（宛先・時刻・量など、中身以外の情報）と、Active Directory などの ID の動きから攻撃者の振る舞いを見る<a href="#ref-41">[41]</a>。ExtraHop の RevealX は、TLS 1.3 を含めて通信を復号できる、とメーカーは説明している<a href="#ref-42">[42]</a>。Corelight は、オープンソースの Zeek と Suricata を土台にした NDR だ<a href="#ref-30">[30]</a>。</p>
+<p>暗号化された通信の扱いは、3通りに分かれた。復号して中身を見る（NGFW の検査、ExtraHop）。復号せずに通信の特徴で見る（Cisco の Encrypted Visibility Engine、Corelight、Vectra、Darktrace）。中身は見えない（Google Cloud IDS）<a href="#ref-4">[4]</a>。復号するには、検査する機器の証明書を端末に信頼させる手間と、処理の重さがついてくる<a href="#ref-36">[36]</a><a href="#ref-43">[43]</a>。</p>
+
+<h2>クラウドでは、止められるものと、知らせるだけのものがあった</h2>
+<p>クラウドの主な3つは、置き方が違った。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>クラウドの IDS/IPS（2026年11月4日時点。公式の資料を検索で確認）</caption><thead><tr><th scope="col">サービス</th><th scope="col">止めるか</th><th scope="col">検知のもと</th><th scope="col">暗号化</th><th scope="col">料金の形</th></tr></thead><tbody>
+<tr><th scope="row">AWS Network Firewall</th><td>止められる（警告だけにもできる）</td><td>Suricata 互換のルールと、AWS が管理するルール</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+<tr><th scope="row">Google Cloud IDS</th><td>止めない（検知と警告）</td><td>Palo Alto Networks の脅威のシグネチャ</td><td>復号しない</td><td>時間＋検査した量</td></tr>
+<tr><th scope="row">Azure Firewall Premium</th><td>止められる（シグネチャごとに選ぶ）</td><td>Microsoft が管理するシグネチャ</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+</tbody></table></div>
+<p>AWS Network Firewall は、Suricata 互換のルールで止められる。TLS インスペクションでは、証明書を AWS Certificate Manager で用意する<a href="#ref-44">[44]</a>。公式の料金のページでは、米国東部で、1時間あたり0.395ドルと、処理した1GBあたり0.065ドルだった。TLS インスペクションを使うと、時間あたりの料金が加わる<a href="#ref-45">[45]</a>。Google Cloud IDS は、通信のコピーを調べて知らせるだけで、料金のページでは1時間あたり1.50ドルと、検査した1GBあたり0.07ドルだった<a href="#ref-46">[46]</a>。Azure Firewall Premium は、シグネチャごとに「無効」「警告」「警告して拒否」を選べる<a href="#ref-43">[43]</a>。値段は変わりやすく、地域でも違うので、使う前に料金のページで確かめてほしい。</p>
+
+<h2>第三者の評価は版によって変わり、Gartner の Leader は性能の試験ではなかった</h2>
+<p>製品を比べるとき、第三者の評価は役に立つ。ただ、読み方には注意が要る。</p>
+<p>CyberRatings.org の2025年のエンタープライズ・ファイアウォールの比較試験では、7製品のうち3つが「Recommended」だった<a href="#ref-7">[7]</a>。Fortinet と Palo Alto Networks の2製品は、IP や TCP の回避の手口で抜けられて「Caution」だった。そのあと、直した版で再試験し、「Recommended」に上がった<a href="#ref-8">[8]</a>。試験の結果は、試した版に結びついている。そして、回避の手口に弱いと、シグネチャがあっても抜けられる。</p>
+<p>Gartner の Magic Quadrant は、ベンダーを「実行能力」と「ビジョンの完全性」の2軸に置くもので、検知率を測る試験ではない。2025年の Hybrid Mesh Firewall の Leaders は、Check Point・Fortinet・Palo Alto Networks だった<a href="#ref-9">[9]</a>。初めての NDR の Leaders は、Vectra AI・Darktrace・ExtraHop・Corelight だった<a href="#ref-47">[47]</a>。どちらも、名前が挙がったことを、そのまま検知の強さと読まないほうがいい。</p>
+
+<h2>選ぶときに見るのは、置き場所・止めるか・暗号化・処理能力・ルール・連携・人手だった</h2>
+<p>調べたことから、選ぶときの問いを7つに絞った。製品のカタログを開く前に、紙に書いて答えておくと迷いにくい。</p>
+<ol>
+<li><strong>どこを見たいか</strong>：境目を通る通信か、内側どうしの通信か、機械の中か。Security Onion の文書は、通信を取り出すのにスイッチのミラーポートか専用のタップ（TAP）を使い、できればタップを勧めている。NAT（社内のアドレスを外向けの一つのアドレスに置き換える仕組み）がある環境では、本当の社内のアドレスが見えるように内側で取るとしている<a href="#ref-48">[48]</a></li>
+<li><strong>止めたいのか、知らせてほしいのか</strong>：止めるなら通り道に入る置き方になり、誤って止めたときの影響も背負う</li>
+<li><strong>暗号化された通信をどうするか</strong>：復号するか、特徴だけで見るか、端末の記録で埋めるか<a href="#ref-10">[10]</a></li>
+<li><strong>どれだけの量を流すか</strong>：カタログの処理能力は、機能を全部有効にすると下がることがある。Corelight の発表では、AP 620 という機器は、通信の分析だけなら最大10Gbps、Zeek・Suricata・パケットの保存を全部使うと最大5Gbpsだ<a href="#ref-49">[49]</a></li>
+<li><strong>ルールや脅威の情報は、どこから、どれくらいの遅れで届くか</strong>：無料のルールは遅れがあるものもある<a href="#ref-24">[24]</a></li>
+<li><strong>警告をどこに集めるか</strong>：EVE JSON のような形で SIEM に流せるか</li>
+<li><strong>誰が、いつ、警告を読むか</strong>：これに答えられないなら、製品を選ぶ前に決めることがある</li>
+</ol>
+<p>費用の見方にも、気をつけるところがある。無料の道具は、ソフトの代金はかからない。その代わり、機器を用意し、更新を当て、ルールを調整し、警告を読む人の時間がかかる。商用の製品は、機器やサブスクリプションの代金がかかる。その代わり、ルールや脅威の情報の更新は、メーカーが用意する。どちらが安いかは、環境と、使える人手で変わる。カタログの値段だけで比べると、置いたあとの手間を見落とす。</p>
+<p>もう一つは、試してから決めることだ。管理者として許可を得た範囲で、自分の環境の通信を保存しておく。それを候補の道具に読ませると、どれだけ知らせてきて、そのうちどれだけが本当に気にすべきものかが分かる。後で書く Security Onion の Import の構成は、この試し方に使える<a href="#ref-50">[50]</a>。</p>
+
+<h2>運用で見るのは、取りこぼし・誤検知の調整・警告を読む人だった</h2>
+<p>置いたあとにも、見るところがある。一つ目は取りこぼしだ。Security Onion は、Zeek が報告する取りこぼしの割合を画面に出す。値が高いほど、見えていない通信が多い。Zeek に取りこぼしがあるのにパケットの欠落がないときは、手前のタップやミラーポートで落ちている可能性が高いとしている<a href="#ref-51">[51]</a>。</p>
+<p>二つ目は、いきなり止めない段取りだ。IPA の制御システム向けの手引書は、導入を「導入検討 → 構築 → 試験運用 → 本格運用」の4段階に分けている<a href="#ref-14">[14]</a>。制御システム向けの文書だが、試験運用で誤検知を見てから本番に移る考え方は、ほかの環境でも使える。</p>
+<p>三つ目は、警告を読む人だ。NIST の CSF 2.0 は、見張ること（DE.CM）と、見つけたものを分析して判断すること（DE.AE）を、別の項目として並べていた<a href="#ref-18">[18]</a>。警告が多すぎて読まれなければ、IDS はないのに近くなると僕は思う。ルールの調整は、置いたあとにずっと続く仕事だ。</p>
+
+<h2>学ぶなら、自分の PC の仮想環境と公開された PCAP から始められる</h2>
+<p>手を動かして学ぶ入口もある。<strong>試すのは、自分の機械と、許可された演習の環境の中だけにしてほしい。</strong>人のネットワークを許可なく監視したり、調べたりすることはしない。</p>
+<p>僕が調べた中でいちばん軽そうだったのは、自分の PC の仮想環境に Security Onion を入れる始め方だ。保存した通信（PCAP）を読み込むだけの Import という構成は、2コア・メモリ4GB・ディスク100GB・NIC 1枚が最低限とされている<a href="#ref-50">[50]</a>。</p>
+<p>読み込む通信は、公開された練習用の PCAP が使える。Brad Duncan が運営する malware-traffic-analysis.net には、分析の練習問題と PCAP がある。ただし本人が書いているとおり、PCAP の中に本物のマルウェアが入っていることがあり、取り出して動かすと感染しうる。本人は、Linux や macOS などで見ることを勧めている<a href="#ref-52">[52]</a>。僕は、ネットにつながない仮想環境で、ファイルを取り出さずに読むことにしている。</p>
+<p>決まった道筋で学ぶなら、TryHackMe の Snort の部屋がある。IDS/IPS の概要からルールの書き方までを扱う<a href="#ref-53">[53]</a>。Hack The Box Academy の Working with IDS/IPS は、Suricata・Snort・Zeek を扱う<a href="#ref-54">[54]</a>。</p>
+<p>学ぶうちに、製品や公開されているサービスの弱点に気づくことがあるかもしれない。そのときは公開せず、作った会社か、IPA の届け出の窓口に知らせる。</p>
+
+<h2>IDS は、どこを見るかと、誰が読むかを決めて初めて働く道具だった</h2>
+<p>調べて分かったことをまとめる。IDS は見つけて知らせる仕組みで、止めるのは IPS だ。その違いは、製品の名前より置き方で決まる。侵入に自分で気づけた組織は52%で、外から知らされて気づく組織もまだ多い。無料の道具では Suricata・Snort 3・Zeek が中心で、Snort 2 と Security Onion 2.4 は2026年にサポートが終わった。商用は次世代ファイアウォールの IPS と NDR に分かれ、暗号化された通信の扱いが製品ごとに大きく違った。第三者の評価は版に結びつき、Gartner の Leader は性能の試験ではなかった。</p>
+<p>分かっていないこともある。この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。版・料金・提供の状況は変わりやすく、日本で使えるかどうか（地域や販売）は、ほとんどの製品で確かめられていない。製品の検知の強さを、同じ条件で比べた公開の試験も、ここではファイアウォールの試験しか見つけられなかった。</p>
+<p>この記事の下書きと資料の照らし合わせには AI を使った。公開の前に、ムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。選ぶのは、自分の環境を知っている人だ。</p>
+<p class="rn-question">自分の環境で、IDS の警告を最初に読むのは誰で、それはいつだろうか。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Mandiant（Google Cloud）（2026）M-Trends 2026。2025年に対応した事案のまとめ。<a href="https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026?hl=en">Google Cloud</a></li>
+<li id="ref-2">NIST（2007）SP 800-94 Guide to Intrusion Detection and Prevention Systems (IDPS)。<a href="https://csrc.nist.gov/pubs/sp/800/94/final">NIST</a></li>
+<li id="ref-3">Google Cloud、Cloud IDS の概要。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/overview">Google Cloud</a></li>
+<li id="ref-4">Google Cloud、Cloud IDS のトラブルシューティング（暗号化された通信は復号できない）。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/troubleshooting">Google Cloud</a></li>
+<li id="ref-5">Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。<a href="https://docs.zeek.org/en/master/logs/x509.html">Zeek</a></li>
+<li id="ref-6">Snort ブログ（2026-10-21）オープンソースの Snort 2 のサポート終了の告知。<a href="https://blog.snort.org/2026/10/end-of-life-announcement-for-open.html">Snort Blog</a></li>
+<li id="ref-7">CyberRatings.org（2025）エンタープライズ・ファイアウォールの比較試験の結果の発表。<a href="https://prnewswire.com/news-releases/cyberratingsorg-announces-enterprise-firewall-test-results-302184011.html">PR Newswire</a></li>
+<li id="ref-8">CyberRatings.org・NSS Labs（2025-11-25）エンタープライズ・ファイアウォールの再試験の結果の発表（転載）。<a href="https://www.finanzen.net/nachricht/aktien/cyberratings-org-and-nss-labs-announce-follow-on-enterprise-firewall-results-15311424">finanzen.net</a></li>
+<li id="ref-9">Gartner（2025）Magic Quadrant for Hybrid Mesh Firewall の案内（Palo Alto Networks の掲載）。<a href="https://www.paloaltonetworks.com/network-security/gartner-hybrid-mesh-firewalls-mq-2025">Palo Alto Networks</a></li>
+<li id="ref-10">Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。<a href="https://docs.securityonion.net/en/3/main/use-cases/">Security Onion</a></li>
+<li id="ref-11">CIS Controls v8.1 Guide（2024）。Control 13 Network Monitoring and Defense。<a href="https://researchsoc.iu.edu/resources/crosswalks/cis_controls__v8.1_guide__2024_0801.pdf">PDF</a></li>
+<li id="ref-12">NIST（2012年案・2022年取り下げ）SP 800-94 Rev.1 の案。<a href="https://csrc.nist.gov/pubs/sp/800/94/r1/ipd">NIST</a></li>
+<li id="ref-13">IPA、SP 800-94 の日本語訳「侵入検知および侵入防止システム（IDPS）に関するガイド」。<a href="https://www.ipa.go.jp/security/reports/oversea/nist/ug65p90000019cp4-att/begoj9000000bfom.pdf">IPA（PDF）</a></li>
+<li id="ref-14">IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。<a href="https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html">IPA</a></li>
+<li id="ref-15">IBM Cost of a Data Breach 2026 の報道（Help Net Security、2026-07-30）。<a href="https://www.helpnetsecurity.com/2026/07/30/ibm-cost-of-a-data-breach-2026/">Help Net Security</a></li>
+<li id="ref-16">IPA「情報セキュリティ10大脅威 2026」。<a href="https://www.ipa.go.jp/security/10threats/10threats2026.html">IPA</a></li>
+<li id="ref-17">警察庁「令和7年上半期におけるサイバー空間をめぐる脅威の情勢等について」。<a href="https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7kami/R07_kami_cyber_jyosei.pdf">警察庁（PDF）</a></li>
+<li id="ref-18">NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。<a href="https://doi.org/10.6028/NIST.CSWP.29">DOI</a></li>
+<li id="ref-19">Suricata（2025-07-08）Suricata 8.0.0 の公開。<a href="https://suricata.io/2025/07/08/suricata-8-0-0-released/">suricata.io</a></li>
+<li id="ref-20">Suricata の文書、Linux でのインラインの IPS の設定。<a href="https://docs.suricata.io/en/latest/ips/setting-up-ipsinline-for-linux.html">Suricata Docs</a></li>
+<li id="ref-21">Suricata 8.0.7 の公開（公式フォーラム）。<a href="https://forum.suricata.io/t/suricata-8-0-7-released/6467">Suricata Forum</a></li>
+<li id="ref-22">Suricata の文書、JA3・JA4 のキーワード。<a href="https://docs.suricata.io/en/latest/rules/ja-keywords.html">Suricata Docs</a></li>
+<li id="ref-23">Snort ブログ（2020）Snort 2 と Snort 3 の違い。<a href="https://blog.snort.org/2020/08/snort-3-2-differences.html">Snort Blog</a></li>
+<li id="ref-24">Snort、ルールセットの違い（Community・Registered・Subscriber）。<a href="https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets">snort.org</a></li>
+<li id="ref-25">Proofpoint、ET Pro ルールセットのデータシート（ET Open は rules.emergingthreats.net）。<a href="https://www.proofpoint.com/us/resources/data-sheets/et-pro-ruleset">Proofpoint</a></li>
+<li id="ref-26">Zeek の公式リポジトリ（README）。<a href="https://github.com/zeek/zeek">GitHub</a></li>
+<li id="ref-27">Zeek（2026-09）Zeek 9 の紹介。<a href="https://zeek.org/2026/09/introducing-zeek-9/">zeek.org</a></li>
+<li id="ref-28">Zeek 8.0.11・9.0.1 のセキュリティリリース（2026-10-26）。<a href="https://community.zeek.org/t/zeek-bugfix-security-releases-8-0-11-and-9-0-1/8088">Zeek Community</a></li>
+<li id="ref-29">Security Onion ブログ（2026-03）Security Onion 3.0.0 の公開。<a href="https://blog.securityonion.net/2026/03/security-onion-300-now-available-with.html">Security Onion Blog</a></li>
+<li id="ref-30">Corelight、Open NDR とセンサーの仕様。<a href="https://corelight.com/products/open-ndr/">Corelight</a></li>
+<li id="ref-31">Security Onion の文書、サポート終了（2.4 は 2026-10-01）。<a href="https://docs.securityonion.net/en/3/main/eol/">Security Onion</a></li>
+<li id="ref-32">Wazuh の文書、ファイルの改ざん検知。<a href="https://documentation.wazuh.com/current/getting-started/use-cases/file-integrity.html">Wazuh</a></li>
+<li id="ref-33">OSSEC の文書、OSSEC について。<a href="https://www.ossec.net/docs/about.html">ossec.net</a></li>
+<li id="ref-34">Cisco、Secure Firewall の Encrypted Visibility Engine。<a href="https://secure.cisco.com/secure-firewall/docs/encrypted-visibility-engine">Cisco</a></li>
+<li id="ref-35">Palo Alto Networks、Advanced Threat Prevention のデータシート。<a href="https://paloaltonetworks.com/resources/datasheets/advanced-threat-prevention">Palo Alto Networks</a></li>
+<li id="ref-36">Fortinet、FortiGate のディープインスペクション（7.6.5 管理ガイド）。<a href="https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/122078/deep-inspection">Fortinet</a></li>
+<li id="ref-37">Fortinet コミュニティ、Technical Tip：SSL の Certificate Inspection と Deep Inspection の違い。<a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-SSL-Certificate-Inspection-and/ta-p/192301">Fortinet Community</a></li>
+<li id="ref-38">Check Point、R81.10 Security Gateway の HTTPS Inspection。<a href="https://sc1.checkpoint.com/documents/R81.10/WebAdminGuides/EN/CP_R81.10_Quantum_SecurityGateway_Guide/Topics-FWG/HTTPS-Inspection.htm">Check Point</a></li>
+<li id="ref-39">Trend Micro、TippingPoint の製品ページ。<a href="https://www.trendmicro.com/en_us/business/products/network/tipping-point.html">Trend Micro</a></li>
+<li id="ref-40">Darktrace、Darktrace / NETWORK。<a href="https://darktrace.com/ja/products/network">Darktrace</a></li>
+<li id="ref-41">Vectra AI、Vectra AI Platform。<a href="https://www.vectra.ai/platform">Vectra AI</a></li>
+<li id="ref-42">ExtraHop、RevealX の復号。<a href="https://www.extrahop.com/resources/security/secure-decryption">ExtraHop</a></li>
+<li id="ref-43">Microsoft、Azure Firewall Premium の機能。<a href="https://learn.microsoft.com/azure/firewall/premium-features">Microsoft Learn</a></li>
+<li id="ref-44">AWS ブログ、Network Firewall の TLS インスペクション。<a href="https://aws.amazon.com/blogs/security/tls-inspection-configuration-for-encrypted-egress-traffic-and-aws-network-firewall">AWS</a></li>
+<li id="ref-45">AWS Network Firewall の料金。<a href="https://aws.amazon.com/network-firewall/pricing/">AWS</a></li>
+<li id="ref-46">Google Cloud IDS の料金。<a href="https://cloud.google.com/intrusion-detection-system/pricing">Google Cloud</a></li>
+<li id="ref-47">Gartner（2025）Magic Quadrant for Network Detection and Response の案内（Darktrace の掲載）。<a href="https://www.darktrace.com/resources/gartner-ndr-magic-quadrant-2025">Darktrace</a></li>
+<li id="ref-48">Security Onion の文書、構成（SPAN・TAP、NAT の内側で取る）。<a href="https://docs.securityonion.net/en/2.4/architecture.html">Security Onion</a></li>
+<li id="ref-49">Corelight、センサーの仕様（メーカーの発表）。<a href="https://corelight.com/platform/sensor-specifications">Corelight</a></li>
+<li id="ref-50">Security Onion の文書、必要な機械（Import・Eval）。<a href="https://docs.securityonion.net/en/3/main/hardware/">Security Onion</a></li>
+<li id="ref-51">Security Onion の文書、Grid（Zeek の取りこぼし）。<a href="https://docs.securityonion.net/en/2.4/grid.html">Security Onion</a></li>
+<li id="ref-52">SANS Internet Storm Center、Brad Duncan の日誌（練習用の PCAP の扱いの注意）。<a href="https://isc.sans.edu/diary/27228">SANS ISC</a></li>
+<li id="ref-53">TryHackMe、Snort の部屋。<a href="https://tryhackme.com/room/snort">TryHackMe</a></li>
+<li id="ref-54">Hack The Box Academy、Working with IDS/IPS。<a href="https://academy.hackthebox.com/course/preview/working-with-idsips">HTB Academy</a></li>
+</ol>
+</section>

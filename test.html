@@ -54,8 +54,16 @@
   <h1 class="rn-page-title">理解度テスト</h1>
   <p class="rn-lead">記事をどれだけ理解できたかを、問題に答えて確かめる。</p>
 
-  <div class="rn-test-pick"><p class="rn-none">いまは問題がない。記事を書いたら、ここに問題を置く。</p>
+  <div class="rn-test-pick">
     <ul class="rn-list rn-tests">
+      <li class="rn-test-item">
+        <h2 class="rn-test-name" id="t-ids-title">侵入に<wbr>自分で<wbr>気づけた<wbr>組織は<wbr>52%だった。<wbr>IDSは、<wbr>選ぶ前に<wbr>「どこを<wbr>見るか」を<wbr>決める<wbr>道具だった。</h2>
+        <p class="rn-list-meta">9問・<a href="ids.html">記事を読む</a></p>
+        <p class="rn-test-go">
+          <button type="button" class="rn-btn rn-test-start" data-test="ids" aria-describedby="t-ids-title">始める</button>
+          <a class="rn-test-nojs" href="#t-ids">問題を見る</a>
+        </p>
+      </li>
     </ul>
   </div>
 
@@ -75,8 +83,148 @@
     </div>
     <p class="rn-quiz-actions"><button type="button" class="rn-btn rn-btn--sub" data-act="list">ほかの記事を選ぶ</button></p>
   </div>
+  <section class="rn-test-all" id="t-ids" aria-labelledby="t-ids-name">
+    <h2 class="rn-test-all-name" id="t-ids-name">侵入に<wbr>自分で<wbr>気づけた<wbr>組織は<wbr>52%だった。<wbr>IDSは、<wbr>選ぶ前に<wbr>「どこを<wbr>見るか」を<wbr>決める<wbr>道具だった。</h2>
+    <ol class="rn-test-qs">
+      <li>
+        <p class="rn-test-q">IDS と IPS の違いについて、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>IDS は機械の中だけを見て、IPS はネットワークだけを見る。</li>
+          <li>違いは置き方で決まり、通信のコピーを見るなら知らせることしかできない。</li>
+          <li>IDS はシグネチャ型、IPS はアノマリー型の検知を使う。</li>
+          <li>IPS は IDS の古い呼び方で、いまはほぼ同じものを指す。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：違いは置き方で決まり、通信のコピーを見るなら知らせることしかできない。（2）</p>
+          <p>IDS は見つけて知らせる仕組みで、通信の通り道に入って止めるのが IPS。通信のコピーを受け取って見る置き方なら、知らせることしかできない。Google Cloud IDS は検知と警告だけで、止めないと説明している。</p>
+          <p><a href="ids.html#s-2">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">NIST SP 800-94 が挙げる検知の方式のうち、「ふだんからのずれを見る」ものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>シグネチャ型</li>
+          <li>ステートフルプロトコル解析</li>
+          <li>アノマリー型</li>
+          <li>サンドボックス型</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：アノマリー型（3）</p>
+          <p>SP 800-94 は、シグネチャ型（知られた攻撃の型と照らす）、アノマリー型（ふだんからのずれを見る）、ステートフルプロトコル解析（通信の決まりに合っているかを見る）の3つに分けている。サンドボックス型は IPA の手引書の5つの分け方に入っているもの。</p>
+          <p><a href="ids.html#s-2">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">M-Trends 2026 の数字について、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>侵入に自分で最初に気づけた組織は52%で、前の年より増えた。</li>
+          <li>気づくまでの日数の中央値は14日で、前の年より短くなった。</li>
+          <li>侵入に自分で最初に気づけた組織は90%を超えていた。</li>
+          <li>気づくまでの平均は247日だった。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：侵入に自分で最初に気づけた組織は52%で、前の年より増えた。（1）</p>
+          <p>自分で最初に気づけた割合は52%で、前の年の43%から増えた。中央値は14日で、前の年の11日より延びた。247日は IBM の調査の平均で、数え方も対象も違う。</p>
+          <p><a href="ids.html#s-3">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">警察庁の2025年上半期のランサムウェアの被害について、記事が書いていることはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>感染経路の多くはメールの添付ファイルだった。</li>
+          <li>IDS があれば、ほとんどの被害は防げたと分かった。</li>
+          <li>報告は1,000件を超えていた。</li>
+          <li>分かった感染経路のうち VPN 機器が62.2%で、リモートデスクトップと合わせると8割を超えた。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：分かった感染経路のうち VPN 機器が62.2%で、リモートデスクトップと合わせると8割を超えた。（4）</p>
+          <p>報告は116件で、感染経路が分かったもののうち VPN 機器が62.2%、リモートデスクトップと合わせると8割を超える。記事は、これは感染経路の統計で、IDS があれば防げたと言える数字ではないと断っている。</p>
+          <p><a href="ids.html#s-3">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">Snort について、2026年11月時点の記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>Snort 2 は2026年10月21日にサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった。</li>
+          <li>Snort 3 は Snort 2 の設定ファイルをそのまま読み込める。</li>
+          <li>Snort のルールは、どれも有料の契約が要る。</li>
+          <li>Snort 2 と Snort 3 は、これからも並んでサポートされる。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：Snort 2 は2026年10月21日にサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった。（1）</p>
+          <p>オープンソースの Snort 2 は2026年10月21日にすべての版のサポートが終わった。Snort 3 の設定は Lua で書き、Snort 2 の設定はそのままでは動かないので、snort2lua という道具が案内されている。ルールには無料の Community と Registered もある。</p>
+          <p><a href="ids.html#s-4">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">Zeek について、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>TLS 1.3 でも、証明書は x509.log に必ず残る。</li>
+          <li>通信を止めることが主な役目の IPS である。</li>
+          <li>通信をプロトコルごとのログに書き出し、何が起きたかを細かく残すのが得意だ。</li>
+          <li>ライセンスは GPL v2 で、Snort と同じものを使う。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：通信をプロトコルごとのログに書き出し、何が起きたかを細かく残すのが得意だ。（3）</p>
+          <p>Zeek は通信をプロトコルごとのログ（接続・DNS・HTTP・TLS など）に書き出し、スクリプトで監視の方針を書く。ライセンスは BSD。TLS 1.3 では証明書が暗号化されるので、x509.log は出ない。</p>
+          <p><a href="ids.html#s-4">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">暗号化された通信の扱いについて、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>どの製品も、設定しなくても中身まで見られる。</li>
+          <li>Google Cloud IDS は、暗号化された中身を復号して調べる。</li>
+          <li>復号しない製品は、暗号化された通信について何も分からない。</li>
+          <li>復号する、復号せずに通信の特徴で見る、中身は見えない、の3通りに分かれた。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：復号する、復号せずに通信の特徴で見る、中身は見えない、の3通りに分かれた。（4）</p>
+          <p>NGFW の検査や ExtraHop は復号して見る。Cisco の EVE や Corelight などは復号せずに通信の特徴で見る。Google Cloud IDS は中身が見えない。復号するには、検査する機器の証明書を端末に信頼させる手間と、処理の重さがついてくる。</p>
+          <p><a href="ids.html#s-5">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">第三者の評価の読み方について、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>Gartner の Leader は、検知率の試験で上位だった製品のことだ。</li>
+          <li>CyberRatings の再試験では、直した版で評価が上がった製品があり、結果は版に結びついている。</li>
+          <li>一度 Recommended になった製品は、どの版でも同じ結果になる。</li>
+          <li>第三者の試験は、IDS を選ぶときには役に立たない。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：CyberRatings の再試験では、直した版で評価が上がった製品があり、結果は版に結びついている。（2）</p>
+          <p>2025年の比較試験で回避の手口に抜けられて Caution だった2製品が、直した版で再試験して Recommended に上がった。Gartner の Magic Quadrant は実行能力とビジョンの2軸でベンダーを置くもので、検知率を測る試験ではない。</p>
+          <p><a href="ids.html#s-7">記事のこの節を読む</a></p>
+        </details>
+      </li>
+      <li>
+        <p class="rn-test-q">Security Onion の文書が、通信を取り出すときと運用で勧めていることとして、記事の内容と合うものはどれか。</p>
+        <ol class="rn-test-choices">
+          <li>NAT がある環境では、本当の社内のアドレスが見えるよう内側で取る。</li>
+          <li>ミラーポートよりタップを避けるほうがよい。</li>
+          <li>Zeek の取りこぼしは気にしなくてよい。</li>
+          <li>取りこぼしがあるときは、必ず Zeek の設定の誤りが原因だ。</li>
+        </ol>
+        <details class="rn-test-a">
+          <summary>答えと解説</summary>
+          <p class="rn-test-right">正解：NAT がある環境では、本当の社内のアドレスが見えるよう内側で取る。（1）</p>
+          <p>Security Onion の文書は、ミラーポートかタップを使い、できればタップを勧め、NAT がある環境では内側で取るとしている。Zeek に取りこぼしがあるのにパケットの欠落がないときは、手前のタップやミラーポートで落ちている可能性が高いとしている。</p>
+          <p><a href="ids.html#s-8">記事のこの節を読む</a></p>
+        </details>
+      </li>
+    </ol>
+  </section>
 </section>
-<script type="application/json" id="rn-tests-data">[]</script>
+<script type="application/json" id="rn-tests-data">[{"slug":"ids","title":"侵入に自分で気づけた組織は52%だった。IDSは、選ぶ前に「どこを見るか」を決める道具だった。","questions":[{"q":"IDS と IPS の違いについて、記事の内容と合うものはどれか。","choices":["IDS は機械の中だけを見て、IPS はネットワークだけを見る。","違いは置き方で決まり、通信のコピーを見るなら知らせることしかできない。","IDS はシグネチャ型、IPS はアノマリー型の検知を使う。","IPS は IDS の古い呼び方で、いまはほぼ同じものを指す。"],"answer":1,"why":"IDS は見つけて知らせる仕組みで、通信の通り道に入って止めるのが IPS。通信のコピーを受け取って見る置き方なら、知らせることしかできない。Google Cloud IDS は検知と警告だけで、止めないと説明している。","href":"ids.html#s-2"},{"q":"NIST SP 800-94 が挙げる検知の方式のうち、「ふだんからのずれを見る」ものはどれか。","choices":["シグネチャ型","ステートフルプロトコル解析","アノマリー型","サンドボックス型"],"answer":2,"why":"SP 800-94 は、シグネチャ型（知られた攻撃の型と照らす）、アノマリー型（ふだんからのずれを見る）、ステートフルプロトコル解析（通信の決まりに合っているかを見る）の3つに分けている。サンドボックス型は IPA の手引書の5つの分け方に入っているもの。","href":"ids.html#s-2"},{"q":"M-Trends 2026 の数字について、記事の内容と合うものはどれか。","choices":["侵入に自分で最初に気づけた組織は52%で、前の年より増えた。","気づくまでの日数の中央値は14日で、前の年より短くなった。","侵入に自分で最初に気づけた組織は90%を超えていた。","気づくまでの平均は247日だった。"],"answer":0,"why":"自分で最初に気づけた割合は52%で、前の年の43%から増えた。中央値は14日で、前の年の11日より延びた。247日は IBM の調査の平均で、数え方も対象も違う。","href":"ids.html#s-3"},{"q":"警察庁の2025年上半期のランサムウェアの被害について、記事が書いていることはどれか。","choices":["感染経路の多くはメールの添付ファイルだった。","IDS があれば、ほとんどの被害は防げたと分かった。","報告は1,000件を超えていた。","分かった感染経路のうち VPN 機器が62.2%で、リモートデスクトップと合わせると8割を超えた。"],"answer":3,"why":"報告は116件で、感染経路が分かったもののうち VPN 機器が62.2%、リモートデスクトップと合わせると8割を超える。記事は、これは感染経路の統計で、IDS があれば防げたと言える数字ではないと断っている。","href":"ids.html#s-3"},{"q":"Snort について、2026年11月時点の記事の内容と合うものはどれか。","choices":["Snort 2 は2026年10月21日にサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった。","Snort 3 は Snort 2 の設定ファイルをそのまま読み込める。","Snort のルールは、どれも有料の契約が要る。","Snort 2 と Snort 3 は、これからも並んでサポートされる。"],"answer":0,"why":"オープンソースの Snort 2 は2026年10月21日にすべての版のサポートが終わった。Snort 3 の設定は Lua で書き、Snort 2 の設定はそのままでは動かないので、snort2lua という道具が案内されている。ルールには無料の Community と Registered もある。","href":"ids.html#s-4"},{"q":"Zeek について、記事の内容と合うものはどれか。","choices":["TLS 1.3 でも、証明書は x509.log に必ず残る。","通信を止めることが主な役目の IPS である。","通信をプロトコルごとのログに書き出し、何が起きたかを細かく残すのが得意だ。","ライセンスは GPL v2 で、Snort と同じものを使う。"],"answer":2,"why":"Zeek は通信をプロトコルごとのログ（接続・DNS・HTTP・TLS など）に書き出し、スクリプトで監視の方針を書く。ライセンスは BSD。TLS 1.3 では証明書が暗号化されるので、x509.log は出ない。","href":"ids.html#s-4"},{"q":"暗号化された通信の扱いについて、記事の内容と合うものはどれか。","choices":["どの製品も、設定しなくても中身まで見られる。","Google Cloud IDS は、暗号化された中身を復号して調べる。","復号しない製品は、暗号化された通信について何も分からない。","復号する、復号せずに通信の特徴で見る、中身は見えない、の3通りに分かれた。"],"answer":3,"why":"NGFW の検査や ExtraHop は復号して見る。Cisco の EVE や Corelight などは復号せずに通信の特徴で見る。Google Cloud IDS は中身が見えない。復号するには、検査する機器の証明書を端末に信頼させる手間と、処理の重さがついてくる。","href":"ids.html#s-5"},{"q":"第三者の評価の読み方について、記事の内容と合うものはどれか。","choices":["Gartner の Leader は、検知率の試験で上位だった製品のことだ。","CyberRatings の再試験では、直した版で評価が上がった製品があり、結果は版に結びついている。","一度 Recommended になった製品は、どの版でも同じ結果になる。","第三者の試験は、IDS を選ぶときには役に立たない。"],"answer":1,"why":"2025年の比較試験で回避の手口に抜けられて Caution だった2製品が、直した版で再試験して Recommended に上がった。Gartner の Magic Quadrant は実行能力とビジョンの2軸でベンダーを置くもので、検知率を測る試験ではない。","href":"ids.html#s-7"},{"q":"Security Onion の文書が、通信を取り出すときと運用で勧めていることとして、記事の内容と合うものはどれか。","choices":["NAT がある環境では、本当の社内のアドレスが見えるよう内側で取る。","ミラーポートよりタップを避けるほうがよい。","Zeek の取りこぼしは気にしなくてよい。","取りこぼしがあるときは、必ず Zeek の設定の誤りが原因だ。"],"answer":0,"why":"Security Onion の文書は、ミラーポートかタップを使い、できればタップを勧め、NAT がある環境では内側で取るとしている。Zeek に取りこぼしがあるのにパケットの欠落がないときは、手前のタップやミラーポートで落ちている可能性が高いとしている。","href":"ids.html#s-8"}]}]</script>
 <script src="test.js" defer></script>
 
 </main>
