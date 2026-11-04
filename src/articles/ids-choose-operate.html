@@ -1,0 +1,85 @@
+---
+layout: renewal-article.njk
+title: "IDSを選ぶ前に、誰が警告を読むかを決める。 — ムートン"
+headline: "IDSを選ぶ前に、誰が警告を読むかを決める。"
+subtitle: "IDS 4/4：選ぶとき・運用するときに見るところと、学び方"
+description: "IDS を選ぶ前に答えておく7つの問い（どこを見るか・止めるか・暗号化・量・ルール・集め先・読む人）と、置いたあとに見る取りこぼし・誤検知・警告を読む人、合法な学び方をまとめる。4本のうちの4本目。"
+excerpt: "製品のカタログを開く前に、紙に7つの問いを書く。最後の問いは、誰が警告を読むかだった。"
+date: 2026-11-04T12:00:00Z
+updated: 2026-11-04
+pillar: defense
+checking: true
+related: ["ids", "ids-free-tools", "ids-commercial-cloud"]
+claims:
+  - claim: カタログの最大の処理能力は、機能を全部使っても出る
+    verdict: refute
+    certainty: 低
+    basis: Corelight の発表では、ある機器は通信の分析だけなら最大10Gbpsで、Zeek・Suricata・パケットの保存を全部使うと最大5Gbpsだった（メーカーの数字）
+    refs: [1]
+  - claim: IDS は、置いたらすぐに止める設定で本番に入れてよい
+    verdict: refute
+    certainty: 低
+    basis: IPA の制御システム向けの手引書は、導入を「導入検討 → 構築 → 試験運用 → 本格運用」に分けている。制御システム向けの文書で、ほかの環境にそのまま当てはまるかは確かめていない
+    refs: [2]
+---
+<p>IDS の製品を比べ始めると、カタログの数字と機能の一覧に目が行く。調べ終えてみると、先に決めておくことのほうが多かった。どこを見るのか、止めたいのか、警告を誰が読むのか。</p>
+<p>この4本目では、選ぶときと、置いたあとに見るところを書く。最後に、自分の手元で学ぶ入口を置いた。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2>よく言われることの判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。ここに置いた2つは、メーカーの数字や、別の分野の手引書がもとなので、「低」にしている。</p>
+{% verdictTable claims %}
+<h2>選ぶときに見るのは、置き場所・止めるか・暗号化・処理能力・ルール・連携・人手だった</h2>
+<p>調べたことから、選ぶときの問いを7つに絞った。製品のカタログを開く前に、紙に書いて答えておくと迷いにくい。</p>
+<ol>
+<li><strong>どこを見たいか</strong>：境目を通る通信か、内側どうしの通信か、機械の中か</li>
+<li><strong>止めたいのか、知らせてほしいのか</strong>：止めるなら通り道に入る置き方になる。誤って止めたときの影響も背負う</li>
+<li><strong>暗号化された通信をどうするか</strong>：復号するか、特徴だけで見るか、端末の記録で埋めるか<a href="#ref-3">[3]</a></li>
+<li><strong>どれだけの量を流すか</strong>：カタログの処理能力は、機能を全部有効にすると下がることがある</li>
+<li><strong>ルールや脅威の情報は、どこから、どれくらいの遅れで届くか</strong>：無料のルールには遅れがあるものもある<a href="#ref-4">[4]</a></li>
+<li><strong>警告をどこに集めるか</strong>：EVE JSON のような形で、SIEM（ログを集めて分析する仕組み）に流せるか</li>
+<li><strong>誰が、いつ、警告を読むか</strong>：これに答えられないなら、製品を選ぶ前に決めることがある</li>
+</ol>
+<h3>誰が読むかは、名前と時間まで決める</h3>
+<p>7つ目の問いは、いちばん後回しにされやすいと僕は思う。「担当の部署」ではなく、誰が、どの時間に、1日に何件まで読めるかまで決めておく。読める件数より多く知らせる設定なら、知らせは読まれずに積もる。読んだあと、誰に知らせ、何を止めるかも、置く前に決めておきたい。</p>
+<h3>通信の取り出し方は、タップか、ミラーポートか</h3>
+<p>1つ目の問いには、通信をどこから取り出すかも入る。Security Onion の文書は、2つの取り出し口を挙げている。スイッチのミラーポート（通信のコピーを出す口）と、専用のタップ（回線から通信のコピーを取り出す機器）だ。できればタップを勧めている<a href="#ref-5">[5]</a>。</p>
+<p>NAT（社内のアドレスを外向けの一つのアドレスに置き換える仕組み）がある環境では、内側で取るとしている。本当の社内のアドレスが見えるようにするためだ<a href="#ref-5">[5]</a>。</p>
+<h3>処理能力は、使う機能を全部入れた数字で見る</h3>
+<p>4つ目の問いの例として、Corelight の発表を見る。AP 620 という機器は、通信の分析だけなら最大10Gbpsだ。Zeek・Suricata・パケットの保存を全部使うと、最大5Gbpsになる<a href="#ref-1">[1]</a>。カタログの一番大きな数字ではなく、自分が使う機能を全部入れたときの数字を見る。</p>
+<h3>費用は、代金と人の時間の両方で見る</h3>
+<p>無料の道具は、ソフトの代金はかからない。その代わり、機器を用意し、更新を当て、ルールを調整し、警告を読む人の時間がかかる。商用の製品は、機器やサブスクリプションの代金がかかる。その代わり、ルールや脅威の情報の更新は、メーカーが用意する。どちらが安いかは、環境と、使える人手で変わる。</p>
+<h3>試してから決める</h3>
+<p>管理者として許可を得た範囲で、自分の環境の通信を保存しておく。それを候補の道具に読ませると、どれだけ知らせてくるかが分かる。そのうちどれだけが、本当に気にすべきものかも分かる。Security Onion の Import という構成は、保存した通信を読み込むためのもので、この試し方に使える<a href="#ref-6">[6]</a>。</p>
+<h2>運用で見るのは、取りこぼし・誤検知の調整・警告を読む人だった</h2>
+<p>置いたあとにも、見るところが3つある。</p>
+<p><strong>一つ目は取りこぼしだ。</strong>Security Onion は、Zeek が報告する取りこぼしの割合を画面に出す。値が高いほど、見えていない通信が多い。Zeek に取りこぼしがあるのにパケットの欠落がないときは、手前のタップやミラーポートで落ちている可能性が高いとしている<a href="#ref-7">[7]</a>。</p>
+<p><strong>二つ目は、いきなり止めない段取りだ。</strong>IPA の制御システム向けの手引書は、導入を4段階に分けている。「導入検討 → 構築 → 試験運用 → 本格運用」だ<a href="#ref-2">[2]</a>。制御システム向けの文書だが、試験運用で誤検知（攻撃ではないものを攻撃として知らせること）を見てから本番に移る考え方は、ほかの環境でも使えると僕は思う。</p>
+<p><strong>三つ目は、警告を読む人だ。</strong>NIST の CSF 2.0 は、見張ること（DE.CM）と、見つけたものを分析して判断すること（DE.AE）を、別の項目として並べている<a href="#ref-8">[8]</a>。警告が多すぎて読まれなければ、IDS はないのに近くなると僕は思う。ルールの調整は、置いたあとにずっと続く仕事だ。</p>
+<h2>学ぶなら、自分の PC の仮想環境と公開された PCAP から始められる</h2>
+<p>手を動かして学ぶ入口もある。<strong>試すのは、自分の機械と、許可された演習の環境の中だけにしてほしい。</strong>人のネットワークを許可なく監視したり、調べたりすることはしない。</p>
+<p>僕が調べた中でいちばん軽そうだったのは、自分の PC の仮想環境に Security Onion を入れる始め方だ。Import は、保存した通信（PCAP）を読み込むだけの構成だ。2コア・メモリ4GB・ディスク100GB・NIC（ネットワークにつなぐ部品）1枚が最低限とされている<a href="#ref-6">[6]</a>。Suricata や Zeek が通信を実際に見るところまで試す Eval という構成は、4コア・メモリ8GB・ディスク200GB・NIC 2枚とされている<a href="#ref-6">[6]</a>。</p>
+<p>読み込む通信は、公開された練習用の PCAP が使える。Brad Duncan が運営する malware-traffic-analysis.net には、分析の練習問題と PCAP がある。ただし本人が書いているとおり、PCAP の中に本物のマルウェアが入っていることがある。取り出して動かすと感染しうる。本人は、Linux や macOS などで見ることを勧めている<a href="#ref-9">[9]</a>。僕は、ネットにつながない仮想環境で、ファイルを取り出さずに読むことにしている。</p>
+<p>決まった道筋で学ぶなら、TryHackMe の Snort の部屋がある。IDS/IPS の概要からルールの書き方までを扱う<a href="#ref-10">[10]</a>。Hack The Box Academy の Working with IDS/IPS は、Suricata・Snort・Zeek を扱う<a href="#ref-11">[11]</a>。</p>
+<p>学ぶうちに、製品や公開されているサービスの弱点に気づくことがあるかもしれない。そのときは公開せず、作った会社か、IPA の届け出の窓口に知らせる。</p>
+<h2>IDS は、どこを見るかと、誰が読むかを決めて初めて働く</h2>
+<p>まとめると、選ぶ前に7つの問いに答えておく。どこを見るか、止めるか、暗号化をどうするか、量、ルール、集め先、そして読む人だ。置いたあとは、取りこぼしを見て、試験運用で誤検知を減らし、警告を読む人と時間を回し続ける。</p>
+<p>4本を通して、IDS は置けば守ってくれる箱ではなかった。選ぶのは、自分の環境を知っている人だ。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分の環境で、IDS の警告を最初に読むのは誰で、それはいつだろうか。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Corelight、センサーの仕様（メーカーの発表）。<a href="https://corelight.com/platform/sensor-specifications">Corelight</a></li>
+<li id="ref-2">IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。<a href="https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html">IPA</a></li>
+<li id="ref-3">Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。<a href="https://docs.securityonion.net/en/3/main/use-cases/">Security Onion</a></li>
+<li id="ref-4">Snort、ルールセットの違い（Community・Registered・Subscriber）。<a href="https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets">snort.org</a></li>
+<li id="ref-5">Security Onion の文書、構成（SPAN・TAP、NAT の内側で取る）。<a href="https://docs.securityonion.net/en/2.4/architecture.html">Security Onion</a></li>
+<li id="ref-6">Security Onion の文書、必要な機械（Import・Eval）。<a href="https://docs.securityonion.net/en/3/main/hardware/">Security Onion</a></li>
+<li id="ref-7">Security Onion の文書、Grid（Zeek の取りこぼし）。<a href="https://docs.securityonion.net/en/2.4/grid.html">Security Onion</a></li>
+<li id="ref-8">NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。<a href="https://doi.org/10.6028/NIST.CSWP.29">DOI</a></li>
+<li id="ref-9">SANS Internet Storm Center、Brad Duncan の日誌（練習用の PCAP の扱いの注意）。<a href="https://isc.sans.edu/diary/27228">SANS ISC</a></li>
+<li id="ref-10">TryHackMe、Snort の部屋。<a href="https://tryhackme.com/room/snort">TryHackMe</a></li>
+<li id="ref-11">Hack The Box Academy、Working with IDS/IPS。<a href="https://academy.hackthebox.com/course/preview/working-with-idsips">HTB Academy</a></li>
+</ol>
+</section>

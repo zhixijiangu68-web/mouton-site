@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。 — ムートン</title>
+<meta name="description" content="商用の IDS は、次世代ファイアウォールの IPS・専用の IPS・NDR に分かれ、暗号化された通信の扱いが大きく違った。クラウドの3つの違いと、第三者の評価の読み方もまとめる。4本のうちの3本目。">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。 — ムートン">
+<meta property="og:description" content="商用の IDS は、次世代ファイアウォールの IPS・専用の IPS・NDR に分かれ、暗号化された通信の扱いが大きく違った。クラウドの3つの違いと、第三者の評価の読み方もまとめる。4本のうちの3本目。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/ids-commercial-cloud.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/ids-commercial-cloud.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。","description":"商用の IDS は、次世代ファイアウォールの IPS・専用の IPS・NDR に分かれ、暗号化された通信の扱いが大きく違った。クラウドの3つの違いと、第三者の評価の読み方もまとめる。4本のうちの3本目。","inLanguage":"ja","datePublished":"2026-11-04","dateModified":"2026-11-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/ids-commercial-cloud.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。","item":"https://moutonarchive.com/ids-commercial-cloud.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-checking" role="note">公開前の下書きです。数字と参考文献を、原典で確かめている途中です。</p>
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">商用と<wbr>クラウドの<wbr>IDSは、<wbr>暗号化された<wbr>通信の<wbr>扱いで<wbr>分かれていた。</h1>
+  <p class="rn-subtitle">IDS 3/4：商用・クラウドの製品と、第三者の評価の読み方</p>
+  <p class="rn-meta"><span>約7分</span><span>更新日 <time datetime="2026-11-04">2026年11月4日</time></span></p>
+  <div class="rn-body">
+<p>いまの通信の多くは暗号化されている。中身が見えなければ、中身と照らす IDS は働かない。商用とクラウドの製品を並べると、この暗号化された通信をどう扱うかで、はっきり分かれていた。</p>
+<p>この3本目では、商用とクラウドの製品の違いと、第三者の評価の読み方を書く。ここに書く性能の数字は、すべてメーカーの発表で、第三者が確かめたものではない。特定の製品を勧めるものでもない。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2 id="s-1">よく<wbr>言われる<wbr>ことの<wbr>判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。事実は公式の資料を検索で確かめたもので、原典を開いて確かめ直している途中なので、「中」より上にしていない。</p>
+<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody><tr><th scope="row">暗号化された通信でも、IDS は中身まで見られる</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">中</td><td data-label="根拠">復号しない限り中身は見えない。Cloud IDS は暗号化された中身を復号できないと明記している。TLS 1.3 では証明書も暗号化される <a href="#ref-1">[1]</a><a href="#ref-2">[2]</a></td></tr><tr><th scope="row">第三者の試験で推奨された製品なら、どの版でも同じように守れる</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">中</td><td data-label="根拠">2025年の比較試験では、回避の手口で抜けられた2製品が、直した版で再試験して評価が上がった。結果は版に結びついている <a href="#ref-3">[3]</a><a href="#ref-4">[4]</a></td></tr><tr><th scope="row">Gartner の Leader は、検知の性能が高い製品のことだ</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">中</td><td data-label="根拠">Magic Quadrant は、実行能力とビジョンの2軸でベンダーを置くもので、検知率を測る試験ではない <a href="#ref-5">[5]</a></td></tr></tbody></table></div><details class="rn-toc"><summary>目次（6）</summary><ol><li><a href="#s-2">商用の多くは次世代ファイアウォールの機能で、NDR は内側の通信の振る舞いを見る</a></li><li><a href="#s-3">暗号化された通信は、復号する・特徴で見る・見えない、の3通りだった</a></li><li><a href="#s-4">クラウドでは、止められるものと、知らせるだけのものがあった</a></li><li><a href="#s-5">第三者の評価は版によって変わり、Gartner の Leader は性能の試験ではなかった</a></li><li><a href="#s-6">商用とクラウドは、暗号化の扱いと置き方から比べる</a></li><li><a href="#refs-h">参考文献</a></li></ol></details>
+<h2 id="s-2">商用の<wbr>多くは<wbr>次世代ファイアウォールの<wbr>機能で、<wbr>NDR は<wbr>内側の<wbr>通信の<wbr>振る<wbr>舞いを<wbr>見る</h2>
+<p>商用の製品は、大きく3つに分かれた。次世代ファイアウォール（NGFW）の中の IPS、専用の IPS、NDR（ネットワークの検知と対応）だ。</p>
+<h3>次世代ファイアウォールの<wbr> IPS は、<wbr>境目に<wbr>置く機器の<wbr>機能の<wbr>一つ</h3>
+<ul>
+<li>Cisco Secure Firewall：Snort 3 のエンジンを使う。復号せずに通信の特徴から脅威を見分ける、Encrypted Visibility Engine も持つ<a href="#ref-6">[6]</a></li>
+<li>Palo Alto Networks Advanced Threat Prevention：シグネチャに、通り道での深層学習を足した追加のサブスクリプション。メーカーの発表では、従来の IPS より60%多く、ゼロデイ（直し方がまだ出ていない弱点）を狙うインジェクション攻撃を防ぐ<a href="#ref-7">[7]</a></li>
+<li>Fortinet FortiGate：通信を復号するディープインスペクションで、中身を IPS に見せる。証明書だけを見る方式では、中身が要る IPS は働かないと説明している<a href="#ref-8">[8]</a><a href="#ref-9">[9]</a></li>
+<li>Check Point：HTTPS Inspection で復号してから検査する<a href="#ref-10">[10]</a></li>
+</ul>
+<p>インジェクション攻撃は、入力に命令を混ぜて相手に実行させる攻撃だ。</p>
+<h3>専用の<wbr> IPS は、<wbr>仮想パッチが<wbr>中心</h3>
+<p>Trend Micro の TippingPoint は、Digital Vaccine と呼ぶフィルターを配る。脆弱性を狙う通信を止める「仮想パッチ」が中心だ<a href="#ref-11">[11]</a>。仮想パッチは、脆弱性を直す前に、それを狙う通信を通り道で止めることだ。</p>
+<h3>NDR は、<wbr>通信の<wbr>コピーから<wbr>内側の<wbr>振る<wbr>舞いを<wbr>見る</h3>
+<p>NDR は、通信のコピーを受け取り、内側の通信の振る舞いを見る。コピーの取り出し口は、ミラーポート（スイッチが通信のコピーを出す口）やタップ（回線から通信のコピーを取り出す機器）だ。</p>
+<ul>
+<li>Darktrace：組織ごとの「ふだん」を学び、そこからのずれを見つけると説明している<a href="#ref-12">[12]</a></li>
+<li>Vectra AI：通信のメタデータ（宛先・時刻・量など、中身以外の情報）と、Active Directory などの ID の動きから、攻撃者の振る舞いを見る<a href="#ref-13">[13]</a></li>
+<li>ExtraHop RevealX：TLS 1.3 を含めて通信を復号できる、とメーカーは説明している<a href="#ref-14">[14]</a></li>
+<li>Corelight：オープンソースの Zeek と Suricata を土台にした NDR<a href="#ref-15">[15]</a></li>
+</ul>
+<h2 id="s-3">暗号化された<wbr>通信は、<wbr>復号する<wbr>・<wbr>特徴で<wbr>見る・<wbr>見えない、の<wbr>3通りだった</h2>
+<p>並べてみると、暗号化された通信の扱いは3通りに分かれた。</p>
+<ul>
+<li>復号して中身を見る：NGFW の検査、ExtraHop</li>
+<li>復号せずに通信の特徴で見る：Cisco の Encrypted Visibility Engine、Corelight、Vectra、Darktrace</li>
+<li>中身は見えない：Google Cloud IDS<a href="#ref-1">[1]</a></li>
+</ul>
+<p>TLS 1.3 では証明書も暗号化されるので、復号しなければ、相手の証明書の情報も見えなくなる<a href="#ref-2">[2]</a>。</p>
+<p>復号するには、検査する機器の証明書を端末に信頼させる手間がかかる。処理も重くなる<a href="#ref-8">[8]</a><a href="#ref-16">[16]</a>。復号しない方式は、その手間がない代わりに、見えるのは通信の特徴までだ。どちらを取るかは、守りたいものと、誰がどこまで中身を見てよいかで決まる。</p>
+<h2 id="s-4">クラウドでは、<wbr>止められる<wbr>ものと、<wbr>知らせるだけの<wbr>ものが<wbr>あった</h2>
+<p>クラウドの主な3つは、置き方が違った。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>クラウドの IDS/IPS（2026年11月4日時点。公式の資料を検索で確認）</caption><thead><tr><th scope="col">サービス</th><th scope="col">止めるか</th><th scope="col">検知のもと</th><th scope="col">暗号化</th><th scope="col">料金の形</th></tr></thead><tbody>
+<tr><th scope="row">AWS Network Firewall</th><td>止められる（警告だけにもできる）</td><td>Suricata 互換のルールと、AWS が管理するルール</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+<tr><th scope="row">Google Cloud IDS</th><td>止めない（検知と警告）</td><td>Palo Alto Networks の脅威のシグネチャ</td><td>復号しない</td><td>時間＋検査した量</td></tr>
+<tr><th scope="row">Azure Firewall Premium</th><td>止められる（シグネチャごとに選ぶ）</td><td>Microsoft が管理するシグネチャ</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+</tbody></table></div>
+<p>AWS Network Firewall は、Suricata 互換のルールで止められる。TLS インスペクションでは、証明書を AWS Certificate Manager で用意する<a href="#ref-17">[17]</a>。公式の料金のページでは、米国東部で、1時間あたり0.395ドルと、処理した1GBあたり0.065ドルだった。TLS インスペクションを使うと、時間あたりの料金が加わる<a href="#ref-18">[18]</a>。</p>
+<p>Google Cloud IDS は、通信のコピーを調べて知らせるだけだ<a href="#ref-19">[19]</a>。料金のページでは、1時間あたり1.50ドルと、検査した1GBあたり0.07ドルだった<a href="#ref-20">[20]</a>。</p>
+<p>Azure Firewall Premium は、シグネチャごとに「無効」「警告」「警告して拒否」を選べる<a href="#ref-16">[16]</a>。</p>
+<p>値段は変わりやすく、地域でも違うので、使う前に料金のページで確かめてほしい。</p>
+<h2 id="s-5">第三者の<wbr>評価は<wbr>版に<wbr>よって<wbr>変わり、<wbr>Gartner の<wbr> Leader は<wbr>性能の<wbr>試験ではなかった</h2>
+<p>製品を比べるとき、第三者の評価は役に立つ。ただ、読み方には注意が要る。</p>
+<p>CyberRatings.org は、2025年にエンタープライズ向けファイアウォールの比較試験を行った。7製品のうち3つが「Recommended」だった<a href="#ref-3">[3]</a>。Fortinet と Palo Alto Networks の2製品は、IP や TCP の回避の手口で抜けられて「Caution」だった。そのあと、直した版で再試験し、「Recommended」に上がった<a href="#ref-4">[4]</a>。試験の結果は、試した版に結びついている。そして、回避の手口に弱いと、シグネチャがあっても抜けられる。</p>
+<p>Gartner の Magic Quadrant は、ベンダーを「実行能力」と「ビジョンの完全性」の2軸に置くものだ。検知率を測る試験ではない。2025年の Hybrid Mesh Firewall の Leaders は、Check Point・Fortinet・Palo Alto Networks だった<a href="#ref-5">[5]</a>。初めての NDR の Leaders は、Vectra AI・Darktrace・ExtraHop・Corelight だった<a href="#ref-21">[21]</a>。どちらも、名前が挙がったことを、そのまま検知の強さと読まないほうがいい。</p>
+<h2 id="s-6">商用と<wbr>クラウドは、<wbr>暗号化の<wbr>扱いと<wbr>置き方から<wbr>比べる</h2>
+<p>まとめると、商用は次世代ファイアウォールの IPS・専用の IPS・NDR に分かれた。暗号化された通信は、復号する・特徴で見る・見えない、の3通りだった。クラウドでは、止められるものと、知らせるだけのものがあった。第三者の評価は、版と年をつけて読む。</p>
+<p>日本で使えるかどうか（地域や販売）は、ほとんどの製品で確かめられていない。同じ条件で検知の強さを比べた公開の試験も、ファイアウォールの試験しか見つけられなかった。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分の環境の暗号化された通信は、誰が、どこまで見てよいものだろうか。</p>
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ids.html">侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。</a><p class="rn-list-summary">侵入に自分で気づけたのは52%。IDS は止める箱ではなく、見つけて知らせる道具だった。</p></li><li class="rn-item"><a class="rn-list-title" href="ids-free-tools.html">無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。</a><p class="rn-list-summary">Snort 2 は2026年10月に終わった。無料の IDS は、知らせる道具と記録する道具で役目が違った。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（21）</h2></summary>
+<ol>
+<li id="ref-1">Google Cloud、Cloud IDS のトラブルシューティング（暗号化された通信は復号できない）。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/troubleshooting">Google Cloud</a></li>
+<li id="ref-2">Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。<a href="https://docs.zeek.org/en/master/logs/x509.html">Zeek</a></li>
+<li id="ref-3">CyberRatings.org（2025）エンタープライズ・ファイアウォールの比較試験の結果の発表。<a href="https://prnewswire.com/news-releases/cyberratingsorg-announces-enterprise-firewall-test-results-302184011.html">PR Newswire</a></li>
+<li id="ref-4">CyberRatings.org・NSS Labs（2025-11-25）エンタープライズ・ファイアウォールの再試験の結果の発表（転載）。<a href="https://www.finanzen.net/nachricht/aktien/cyberratings-org-and-nss-labs-announce-follow-on-enterprise-firewall-results-15311424">finanzen.net</a></li>
+<li id="ref-5">Gartner（2025）Magic Quadrant for Hybrid Mesh Firewall の案内（Palo Alto Networks の掲載）。<a href="https://www.paloaltonetworks.com/network-security/gartner-hybrid-mesh-firewalls-mq-2025">Palo Alto Networks</a></li>
+<li id="ref-6">Cisco、Secure Firewall の Encrypted Visibility Engine。<a href="https://secure.cisco.com/secure-firewall/docs/encrypted-visibility-engine">Cisco</a></li>
+<li id="ref-7">Palo Alto Networks、Advanced Threat Prevention のデータシート。<a href="https://paloaltonetworks.com/resources/datasheets/advanced-threat-prevention">Palo Alto Networks</a></li>
+<li id="ref-8">Fortinet、FortiGate のディープインスペクション（7.6.5 管理ガイド）。<a href="https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/122078/deep-inspection">Fortinet</a></li>
+<li id="ref-9">Fortinet コミュニティ、Technical Tip：SSL の Certificate Inspection と Deep Inspection の違い。<a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-SSL-Certificate-Inspection-and/ta-p/192301">Fortinet Community</a></li>
+<li id="ref-10">Check Point、R81.10 Security Gateway の HTTPS Inspection。<a href="https://sc1.checkpoint.com/documents/R81.10/WebAdminGuides/EN/CP_R81.10_Quantum_SecurityGateway_Guide/Topics-FWG/HTTPS-Inspection.htm">Check Point</a></li>
+<li id="ref-11">Trend Micro、TippingPoint の製品ページ。<a href="https://www.trendmicro.com/en_us/business/products/network/tipping-point.html">Trend Micro</a></li>
+<li id="ref-12">Darktrace、Darktrace / NETWORK。<a href="https://darktrace.com/ja/products/network">Darktrace</a></li>
+<li id="ref-13">Vectra AI、Vectra AI Platform。<a href="https://www.vectra.ai/platform">Vectra AI</a></li>
+<li id="ref-14">ExtraHop、RevealX の復号。<a href="https://www.extrahop.com/resources/security/secure-decryption">ExtraHop</a></li>
+<li id="ref-15">Corelight、Open NDR とセンサーの仕様。<a href="https://corelight.com/products/open-ndr/">Corelight</a></li>
+<li id="ref-16">Microsoft、Azure Firewall Premium の機能。<a href="https://learn.microsoft.com/azure/firewall/premium-features">Microsoft Learn</a></li>
+<li id="ref-17">AWS ブログ、Network Firewall の TLS インスペクション。<a href="https://aws.amazon.com/blogs/security/tls-inspection-configuration-for-encrypted-egress-traffic-and-aws-network-firewall">AWS</a></li>
+<li id="ref-18">AWS Network Firewall の料金。<a href="https://aws.amazon.com/network-firewall/pricing/">AWS</a></li>
+<li id="ref-19">Google Cloud、Cloud IDS の概要。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/overview">Google Cloud</a></li>
+<li id="ref-20">Google Cloud IDS の料金。<a href="https://cloud.google.com/intrusion-detection-system/pricing">Google Cloud</a></li>
+<li id="ref-21">Gartner（2025）Magic Quadrant for Network Detection and Response の案内（Darktrace の掲載）。<a href="https://www.darktrace.com/resources/gartner-ndr-magic-quadrant-2025">Darktrace</a></li>
+</ol>
+</details></section>
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

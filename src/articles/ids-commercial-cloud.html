@@ -1,0 +1,111 @@
+---
+layout: renewal-article.njk
+title: "商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。 — ムートン"
+headline: "商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。"
+subtitle: "IDS 3/4：商用・クラウドの製品と、第三者の評価の読み方"
+description: "商用の IDS は、次世代ファイアウォールの IPS・専用の IPS・NDR に分かれ、暗号化された通信の扱いが大きく違った。クラウドの3つの違いと、第三者の評価の読み方もまとめる。4本のうちの3本目。"
+excerpt: "復号して見るか、特徴で見るか、見えないか。商用とクラウドの IDS は、暗号化の扱いで分かれていた。"
+date: 2026-11-04T12:01:00Z
+updated: 2026-11-04
+pillar: defense
+checking: true
+related: ["ids", "ids-free-tools", "ids-choose-operate"]
+claims:
+  - claim: 暗号化された通信でも、IDS は中身まで見られる
+    verdict: refute
+    certainty: 中
+    basis: 復号しない限り中身は見えない。Cloud IDS は暗号化された中身を復号できないと明記している。TLS 1.3 では証明書も暗号化される
+    refs: [1, 2]
+  - claim: 第三者の試験で推奨された製品なら、どの版でも同じように守れる
+    verdict: refute
+    certainty: 中
+    basis: 2025年の比較試験では、回避の手口で抜けられた2製品が、直した版で再試験して評価が上がった。結果は版に結びついている
+    refs: [3, 4]
+  - claim: Gartner の Leader は、検知の性能が高い製品のことだ
+    verdict: refute
+    certainty: 中
+    basis: Magic Quadrant は、実行能力とビジョンの2軸でベンダーを置くもので、検知率を測る試験ではない
+    refs: [5]
+---
+<p>いまの通信の多くは暗号化されている。中身が見えなければ、中身と照らす IDS は働かない。商用とクラウドの製品を並べると、この暗号化された通信をどう扱うかで、はっきり分かれていた。</p>
+<p>この3本目では、商用とクラウドの製品の違いと、第三者の評価の読み方を書く。ここに書く性能の数字は、すべてメーカーの発表で、第三者が確かめたものではない。特定の製品を勧めるものでもない。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2>よく言われることの判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。事実は公式の資料を検索で確かめたもので、原典を開いて確かめ直している途中なので、「中」より上にしていない。</p>
+{% verdictTable claims %}
+<h2>商用の多くは次世代ファイアウォールの機能で、NDR は内側の通信の振る舞いを見る</h2>
+<p>商用の製品は、大きく3つに分かれた。次世代ファイアウォール（NGFW）の中の IPS、専用の IPS、NDR（ネットワークの検知と対応）だ。</p>
+<h3>次世代ファイアウォールの IPS は、境目に置く機器の機能の一つ</h3>
+<ul>
+<li>Cisco Secure Firewall：Snort 3 のエンジンを使う。復号せずに通信の特徴から脅威を見分ける、Encrypted Visibility Engine も持つ<a href="#ref-6">[6]</a></li>
+<li>Palo Alto Networks Advanced Threat Prevention：シグネチャに、通り道での深層学習を足した追加のサブスクリプション。メーカーの発表では、従来の IPS より60%多く、ゼロデイ（直し方がまだ出ていない弱点）を狙うインジェクション攻撃を防ぐ<a href="#ref-7">[7]</a></li>
+<li>Fortinet FortiGate：通信を復号するディープインスペクションで、中身を IPS に見せる。証明書だけを見る方式では、中身が要る IPS は働かないと説明している<a href="#ref-8">[8]</a><a href="#ref-9">[9]</a></li>
+<li>Check Point：HTTPS Inspection で復号してから検査する<a href="#ref-10">[10]</a></li>
+</ul>
+<p>インジェクション攻撃は、入力に命令を混ぜて相手に実行させる攻撃だ。</p>
+<h3>専用の IPS は、仮想パッチが中心</h3>
+<p>Trend Micro の TippingPoint は、Digital Vaccine と呼ぶフィルターを配る。脆弱性を狙う通信を止める「仮想パッチ」が中心だ<a href="#ref-11">[11]</a>。仮想パッチは、脆弱性を直す前に、それを狙う通信を通り道で止めることだ。</p>
+<h3>NDR は、通信のコピーから内側の振る舞いを見る</h3>
+<p>NDR は、通信のコピーを受け取り、内側の通信の振る舞いを見る。コピーの取り出し口は、ミラーポート（スイッチが通信のコピーを出す口）やタップ（回線から通信のコピーを取り出す機器）だ。</p>
+<ul>
+<li>Darktrace：組織ごとの「ふだん」を学び、そこからのずれを見つけると説明している<a href="#ref-12">[12]</a></li>
+<li>Vectra AI：通信のメタデータ（宛先・時刻・量など、中身以外の情報）と、Active Directory などの ID の動きから、攻撃者の振る舞いを見る<a href="#ref-13">[13]</a></li>
+<li>ExtraHop RevealX：TLS 1.3 を含めて通信を復号できる、とメーカーは説明している<a href="#ref-14">[14]</a></li>
+<li>Corelight：オープンソースの Zeek と Suricata を土台にした NDR<a href="#ref-15">[15]</a></li>
+</ul>
+<h2>暗号化された通信は、復号する・特徴で見る・見えない、の3通りだった</h2>
+<p>並べてみると、暗号化された通信の扱いは3通りに分かれた。</p>
+<ul>
+<li>復号して中身を見る：NGFW の検査、ExtraHop</li>
+<li>復号せずに通信の特徴で見る：Cisco の Encrypted Visibility Engine、Corelight、Vectra、Darktrace</li>
+<li>中身は見えない：Google Cloud IDS<a href="#ref-1">[1]</a></li>
+</ul>
+<p>TLS 1.3 では証明書も暗号化されるので、復号しなければ、相手の証明書の情報も見えなくなる<a href="#ref-2">[2]</a>。</p>
+<p>復号するには、検査する機器の証明書を端末に信頼させる手間がかかる。処理も重くなる<a href="#ref-8">[8]</a><a href="#ref-16">[16]</a>。復号しない方式は、その手間がない代わりに、見えるのは通信の特徴までだ。どちらを取るかは、守りたいものと、誰がどこまで中身を見てよいかで決まる。</p>
+<h2>クラウドでは、止められるものと、知らせるだけのものがあった</h2>
+<p>クラウドの主な3つは、置き方が違った。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>クラウドの IDS/IPS（2026年11月4日時点。公式の資料を検索で確認）</caption><thead><tr><th scope="col">サービス</th><th scope="col">止めるか</th><th scope="col">検知のもと</th><th scope="col">暗号化</th><th scope="col">料金の形</th></tr></thead><tbody>
+<tr><th scope="row">AWS Network Firewall</th><td>止められる（警告だけにもできる）</td><td>Suricata 互換のルールと、AWS が管理するルール</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+<tr><th scope="row">Google Cloud IDS</th><td>止めない（検知と警告）</td><td>Palo Alto Networks の脅威のシグネチャ</td><td>復号しない</td><td>時間＋検査した量</td></tr>
+<tr><th scope="row">Azure Firewall Premium</th><td>止められる（シグネチャごとに選ぶ）</td><td>Microsoft が管理するシグネチャ</td><td>TLS インスペクションで復号できる</td><td>時間＋処理した量</td></tr>
+</tbody></table></div>
+<p>AWS Network Firewall は、Suricata 互換のルールで止められる。TLS インスペクションでは、証明書を AWS Certificate Manager で用意する<a href="#ref-17">[17]</a>。公式の料金のページでは、米国東部で、1時間あたり0.395ドルと、処理した1GBあたり0.065ドルだった。TLS インスペクションを使うと、時間あたりの料金が加わる<a href="#ref-18">[18]</a>。</p>
+<p>Google Cloud IDS は、通信のコピーを調べて知らせるだけだ<a href="#ref-19">[19]</a>。料金のページでは、1時間あたり1.50ドルと、検査した1GBあたり0.07ドルだった<a href="#ref-20">[20]</a>。</p>
+<p>Azure Firewall Premium は、シグネチャごとに「無効」「警告」「警告して拒否」を選べる<a href="#ref-16">[16]</a>。</p>
+<p>値段は変わりやすく、地域でも違うので、使う前に料金のページで確かめてほしい。</p>
+<h2>第三者の評価は版によって変わり、Gartner の Leader は性能の試験ではなかった</h2>
+<p>製品を比べるとき、第三者の評価は役に立つ。ただ、読み方には注意が要る。</p>
+<p>CyberRatings.org は、2025年にエンタープライズ向けファイアウォールの比較試験を行った。7製品のうち3つが「Recommended」だった<a href="#ref-3">[3]</a>。Fortinet と Palo Alto Networks の2製品は、IP や TCP の回避の手口で抜けられて「Caution」だった。そのあと、直した版で再試験し、「Recommended」に上がった<a href="#ref-4">[4]</a>。試験の結果は、試した版に結びついている。そして、回避の手口に弱いと、シグネチャがあっても抜けられる。</p>
+<p>Gartner の Magic Quadrant は、ベンダーを「実行能力」と「ビジョンの完全性」の2軸に置くものだ。検知率を測る試験ではない。2025年の Hybrid Mesh Firewall の Leaders は、Check Point・Fortinet・Palo Alto Networks だった<a href="#ref-5">[5]</a>。初めての NDR の Leaders は、Vectra AI・Darktrace・ExtraHop・Corelight だった<a href="#ref-21">[21]</a>。どちらも、名前が挙がったことを、そのまま検知の強さと読まないほうがいい。</p>
+<h2>商用とクラウドは、暗号化の扱いと置き方から比べる</h2>
+<p>まとめると、商用は次世代ファイアウォールの IPS・専用の IPS・NDR に分かれた。暗号化された通信は、復号する・特徴で見る・見えない、の3通りだった。クラウドでは、止められるものと、知らせるだけのものがあった。第三者の評価は、版と年をつけて読む。</p>
+<p>日本で使えるかどうか（地域や販売）は、ほとんどの製品で確かめられていない。同じ条件で検知の強さを比べた公開の試験も、ファイアウォールの試験しか見つけられなかった。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分の環境の暗号化された通信は、誰が、どこまで見てよいものだろうか。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Google Cloud、Cloud IDS のトラブルシューティング（暗号化された通信は復号できない）。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/troubleshooting">Google Cloud</a></li>
+<li id="ref-2">Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。<a href="https://docs.zeek.org/en/master/logs/x509.html">Zeek</a></li>
+<li id="ref-3">CyberRatings.org（2025）エンタープライズ・ファイアウォールの比較試験の結果の発表。<a href="https://prnewswire.com/news-releases/cyberratingsorg-announces-enterprise-firewall-test-results-302184011.html">PR Newswire</a></li>
+<li id="ref-4">CyberRatings.org・NSS Labs（2025-11-25）エンタープライズ・ファイアウォールの再試験の結果の発表（転載）。<a href="https://www.finanzen.net/nachricht/aktien/cyberratings-org-and-nss-labs-announce-follow-on-enterprise-firewall-results-15311424">finanzen.net</a></li>
+<li id="ref-5">Gartner（2025）Magic Quadrant for Hybrid Mesh Firewall の案内（Palo Alto Networks の掲載）。<a href="https://www.paloaltonetworks.com/network-security/gartner-hybrid-mesh-firewalls-mq-2025">Palo Alto Networks</a></li>
+<li id="ref-6">Cisco、Secure Firewall の Encrypted Visibility Engine。<a href="https://secure.cisco.com/secure-firewall/docs/encrypted-visibility-engine">Cisco</a></li>
+<li id="ref-7">Palo Alto Networks、Advanced Threat Prevention のデータシート。<a href="https://paloaltonetworks.com/resources/datasheets/advanced-threat-prevention">Palo Alto Networks</a></li>
+<li id="ref-8">Fortinet、FortiGate のディープインスペクション（7.6.5 管理ガイド）。<a href="https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/122078/deep-inspection">Fortinet</a></li>
+<li id="ref-9">Fortinet コミュニティ、Technical Tip：SSL の Certificate Inspection と Deep Inspection の違い。<a href="https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-SSL-Certificate-Inspection-and/ta-p/192301">Fortinet Community</a></li>
+<li id="ref-10">Check Point、R81.10 Security Gateway の HTTPS Inspection。<a href="https://sc1.checkpoint.com/documents/R81.10/WebAdminGuides/EN/CP_R81.10_Quantum_SecurityGateway_Guide/Topics-FWG/HTTPS-Inspection.htm">Check Point</a></li>
+<li id="ref-11">Trend Micro、TippingPoint の製品ページ。<a href="https://www.trendmicro.com/en_us/business/products/network/tipping-point.html">Trend Micro</a></li>
+<li id="ref-12">Darktrace、Darktrace / NETWORK。<a href="https://darktrace.com/ja/products/network">Darktrace</a></li>
+<li id="ref-13">Vectra AI、Vectra AI Platform。<a href="https://www.vectra.ai/platform">Vectra AI</a></li>
+<li id="ref-14">ExtraHop、RevealX の復号。<a href="https://www.extrahop.com/resources/security/secure-decryption">ExtraHop</a></li>
+<li id="ref-15">Corelight、Open NDR とセンサーの仕様。<a href="https://corelight.com/products/open-ndr/">Corelight</a></li>
+<li id="ref-16">Microsoft、Azure Firewall Premium の機能。<a href="https://learn.microsoft.com/azure/firewall/premium-features">Microsoft Learn</a></li>
+<li id="ref-17">AWS ブログ、Network Firewall の TLS インスペクション。<a href="https://aws.amazon.com/blogs/security/tls-inspection-configuration-for-encrypted-egress-traffic-and-aws-network-firewall">AWS</a></li>
+<li id="ref-18">AWS Network Firewall の料金。<a href="https://aws.amazon.com/network-firewall/pricing/">AWS</a></li>
+<li id="ref-19">Google Cloud、Cloud IDS の概要。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/overview">Google Cloud</a></li>
+<li id="ref-20">Google Cloud IDS の料金。<a href="https://cloud.google.com/intrusion-detection-system/pricing">Google Cloud</a></li>
+<li id="ref-21">Gartner（2025）Magic Quadrant for Network Detection and Response の案内（Darktrace の掲載）。<a href="https://www.darktrace.com/resources/gartner-ndr-magic-quadrant-2025">Darktrace</a></li>
+</ol>
+</section>

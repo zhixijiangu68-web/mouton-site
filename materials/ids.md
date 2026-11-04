@@ -1,16 +1,20 @@
 # IDS（侵入検知システム）：手元に置く資料（2026-11-04 時点）
 
-記事：https://moutonarchive.com/ids.html
+記事（4本）：
+1. IDS とは何か、なぜ大事か https://moutonarchive.com/ids.html
+2. 無料の道具 https://moutonarchive.com/ids-free-tools.html
+3. 商用とクラウドの製品 https://moutonarchive.com/ids-commercial-cloud.html
+4. 選ぶとき・運用するとき https://moutonarchive.com/ids-choose-operate.html
 
 この資料の版・料金・日付は、2026年11月4日に公式の資料を検索で確かめたもの。原典のページを開いて確かめ直している途中で、変わりやすい。使う前に、出典の公式ページを見る。特定の製品を勧めるものではない。
 
 ## 要点（5つ）
 
-1. IDS は見つけて知らせる仕組み、IPS は通り道に入って止める仕組み。違いは製品の名前より置き方で決まる（通信のコピーを見るなら知らせるだけ）[2][3]
-2. 侵入に自分で最初に気づけた組織は52%、気づくまでの中央値は14日（M-Trends 2026。2025年の事案）[1]
-3. 無料の中心は Suricata・Snort 3・Zeek。Snort 2 は2026年10月21日、Security Onion 2.4 は2026年10月1日にサポートが終わった [6][31]
-4. 暗号化された通信は、復号する／復号せず特徴で見る／見えない、の3通り。どれを取るかで製品が分かれる [4][36][42]
-5. 第三者の試験は版に結びつき、Gartner の Leader は検知性能の試験ではない。選ぶ前に「どこを見るか」「誰が警告を読むか」を決める [7][8][9]
+1. IDS は見つけて知らせる仕組み、IPS は通り道に入って止める仕組み。違いは製品の名前より置き方で決まる（通信のコピーを見るなら知らせるだけ）（記事1）
+2. 侵入に自分で最初に気づけた組織は52%、気づくまでの中央値は14日（M-Trends 2026。2025年の事案）（記事1）
+3. 無料の中心は Suricata・Snort 3・Zeek。Snort 2 は2026年10月21日、Security Onion 2.4 は2026年10月1日にサポートが終わった（記事2）
+4. 暗号化された通信は、復号する／復号せず特徴で見る／見えない、の3通り。どれを取るかで製品が分かれる（記事3）
+5. 第三者の試験は版に結びつき、Gartner の Leader は検知性能の試験ではない。選ぶ前に「どこを見るか」「誰が警告を読むか」を決める（記事3・4）
 
 ## 比較表
 
@@ -96,64 +100,81 @@
 - 仮想パッチ：脆弱性を直す前に、それを狙う通信を IPS で止めること
 - 誤検知：攻撃ではないものを攻撃として知らせること
 
-## 出典（記事と同じ番号）
+## 出典（記事ごと。番号はそれぞれの記事の参考文献と同じ）
 
-番号は記事の参考文献と同じ。
+### 1. IDS とは何か、なぜ大事か
 
 1. Mandiant（Google Cloud）（2026）M-Trends 2026。2025年に対応した事案のまとめ。 https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026?hl=en
 2. NIST（2007）SP 800-94 Guide to Intrusion Detection and Prevention Systems (IDPS)。 https://csrc.nist.gov/pubs/sp/800/94/final
 3. Google Cloud、Cloud IDS の概要。 https://docs.cloud.google.com/intrusion-detection-system/docs/overview
-4. Google Cloud、Cloud IDS のトラブルシューティング（暗号化された通信は復号できない）。 https://docs.cloud.google.com/intrusion-detection-system/docs/troubleshooting
-5. Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。 https://docs.zeek.org/en/master/logs/x509.html
-6. Snort ブログ（2026-10-21）オープンソースの Snort 2 のサポート終了の告知。 https://blog.snort.org/2026/10/end-of-life-announcement-for-open.html
-7. CyberRatings.org（2025）エンタープライズ・ファイアウォールの比較試験の結果の発表。 https://prnewswire.com/news-releases/cyberratingsorg-announces-enterprise-firewall-test-results-302184011.html
-8. CyberRatings.org・NSS Labs（2025-11-25）エンタープライズ・ファイアウォールの再試験の結果の発表（転載）。 https://www.finanzen.net/nachricht/aktien/cyberratings-org-and-nss-labs-announce-follow-on-enterprise-firewall-results-15311424
-9. Gartner（2025）Magic Quadrant for Hybrid Mesh Firewall の案内（Palo Alto Networks の掲載）。 https://www.paloaltonetworks.com/network-security/gartner-hybrid-mesh-firewalls-mq-2025
-10. Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。 https://docs.securityonion.net/en/3/main/use-cases/
-11. CIS Controls v8.1 Guide（2024）。Control 13 Network Monitoring and Defense。 https://researchsoc.iu.edu/resources/crosswalks/cis_controls__v8.1_guide__2024_0801.pdf
-12. NIST（2012年案・2022年取り下げ）SP 800-94 Rev.1 の案。 https://csrc.nist.gov/pubs/sp/800/94/r1/ipd
-13. IPA、SP 800-94 の日本語訳「侵入検知および侵入防止システム（IDPS）に関するガイド」。 https://www.ipa.go.jp/security/reports/oversea/nist/ug65p90000019cp4-att/begoj9000000bfom.pdf
-14. IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。 https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html
-15. IBM Cost of a Data Breach 2026 の報道（Help Net Security、2026-07-30）。 https://www.helpnetsecurity.com/2026/07/30/ibm-cost-of-a-data-breach-2026/
-16. IPA「情報セキュリティ10大脅威 2026」。 https://www.ipa.go.jp/security/10threats/10threats2026.html
-17. 警察庁「令和7年上半期におけるサイバー空間をめぐる脅威の情勢等について」。 https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7kami/R07_kami_cyber_jyosei.pdf
-18. NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。 https://doi.org/10.6028/NIST.CSWP.29
-19. Suricata（2025-07-08）Suricata 8.0.0 の公開。 https://suricata.io/2025/07/08/suricata-8-0-0-released/
-20. Suricata の文書、Linux でのインラインの IPS の設定。 https://docs.suricata.io/en/latest/ips/setting-up-ipsinline-for-linux.html
-21. Suricata 8.0.7 の公開（公式フォーラム）。 https://forum.suricata.io/t/suricata-8-0-7-released/6467
-22. Suricata の文書、JA3・JA4 のキーワード。 https://docs.suricata.io/en/latest/rules/ja-keywords.html
-23. Snort ブログ（2020）Snort 2 と Snort 3 の違い。 https://blog.snort.org/2020/08/snort-3-2-differences.html
-24. Snort、ルールセットの違い（Community・Registered・Subscriber）。 https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets
-25. Proofpoint、ET Pro ルールセットのデータシート（ET Open は rules.emergingthreats.net）。 https://www.proofpoint.com/us/resources/data-sheets/et-pro-ruleset
-26. Zeek の公式リポジトリ（README）。 https://github.com/zeek/zeek
-27. Zeek（2026-09）Zeek 9 の紹介。 https://zeek.org/2026/09/introducing-zeek-9/
-28. Zeek 8.0.11・9.0.1 のセキュリティリリース（2026-10-26）。 https://community.zeek.org/t/zeek-bugfix-security-releases-8-0-11-and-9-0-1/8088
-29. Security Onion ブログ（2026-03）Security Onion 3.0.0 の公開。 https://blog.securityonion.net/2026/03/security-onion-300-now-available-with.html
-30. Corelight、Open NDR とセンサーの仕様。 https://corelight.com/products/open-ndr/
-31. Security Onion の文書、サポート終了（2.4 は 2026-10-01）。 https://docs.securityonion.net/en/3/main/eol/
-32. Wazuh の文書、ファイルの改ざん検知。 https://documentation.wazuh.com/current/getting-started/use-cases/file-integrity.html
-33. OSSEC の文書、OSSEC について。 https://www.ossec.net/docs/about.html
-34. Cisco、Secure Firewall の Encrypted Visibility Engine。 https://secure.cisco.com/secure-firewall/docs/encrypted-visibility-engine
-35. Palo Alto Networks、Advanced Threat Prevention のデータシート。 https://paloaltonetworks.com/resources/datasheets/advanced-threat-prevention
-36. Fortinet、FortiGate のディープインスペクション（7.6.5 管理ガイド）。 https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/122078/deep-inspection
-37. Fortinet コミュニティ、Technical Tip：SSL の Certificate Inspection と Deep Inspection の違い。 https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-SSL-Certificate-Inspection-and/ta-p/192301
-38. Check Point、R81.10 Security Gateway の HTTPS Inspection。 https://sc1.checkpoint.com/documents/R81.10/WebAdminGuides/EN/CP_R81.10_Quantum_SecurityGateway_Guide/Topics-FWG/HTTPS-Inspection.htm
-39. Trend Micro、TippingPoint の製品ページ。 https://www.trendmicro.com/en_us/business/products/network/tipping-point.html
-40. Darktrace、Darktrace / NETWORK。 https://darktrace.com/ja/products/network
-41. Vectra AI、Vectra AI Platform。 https://www.vectra.ai/platform
-42. ExtraHop、RevealX の復号。 https://www.extrahop.com/resources/security/secure-decryption
-43. Microsoft、Azure Firewall Premium の機能。 https://learn.microsoft.com/azure/firewall/premium-features
-44. AWS ブログ、Network Firewall の TLS インスペクション。 https://aws.amazon.com/blogs/security/tls-inspection-configuration-for-encrypted-egress-traffic-and-aws-network-firewall
-45. AWS Network Firewall の料金。 https://aws.amazon.com/network-firewall/pricing/
-46. Google Cloud IDS の料金。 https://cloud.google.com/intrusion-detection-system/pricing
-47. Gartner（2025）Magic Quadrant for Network Detection and Response の案内（Darktrace の掲載）。 https://www.darktrace.com/resources/gartner-ndr-magic-quadrant-2025
-48. Security Onion の文書、構成（SPAN・TAP、NAT の内側で取る）。 https://docs.securityonion.net/en/2.4/architecture.html
-49. Corelight、センサーの仕様（メーカーの発表）。 https://corelight.com/platform/sensor-specifications
-50. Security Onion の文書、必要な機械（Import・Eval）。 https://docs.securityonion.net/en/3/main/hardware/
-51. Security Onion の文書、Grid（Zeek の取りこぼし）。 https://docs.securityonion.net/en/2.4/grid.html
-52. SANS Internet Storm Center、Brad Duncan の日誌（練習用の PCAP の扱いの注意）。 https://isc.sans.edu/diary/27228
-53. TryHackMe、Snort の部屋。 https://tryhackme.com/room/snort
-54. Hack The Box Academy、Working with IDS/IPS。 https://academy.hackthebox.com/course/preview/working-with-idsips
+4. Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。 https://docs.securityonion.net/en/3/main/use-cases/
+5. CIS Controls v8.1 Guide（2024）。Control 13 Network Monitoring and Defense。 https://researchsoc.iu.edu/resources/crosswalks/cis_controls__v8.1_guide__2024_0801.pdf
+6. NIST（2012年案・2022年取り下げ）SP 800-94 Rev.1 の案。 https://csrc.nist.gov/pubs/sp/800/94/r1/ipd
+7. IPA、SP 800-94 の日本語訳「侵入検知および侵入防止システム（IDPS）に関するガイド」。 https://www.ipa.go.jp/security/reports/oversea/nist/ug65p90000019cp4-att/begoj9000000bfom.pdf
+8. IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。 https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html
+9. IBM Cost of a Data Breach 2026 の報道（Help Net Security、2026-07-30）。 https://www.helpnetsecurity.com/2026/07/30/ibm-cost-of-a-data-breach-2026/
+10. IPA「情報セキュリティ10大脅威 2026」。 https://www.ipa.go.jp/security/10threats/10threats2026.html
+11. 警察庁「令和7年上半期におけるサイバー空間をめぐる脅威の情勢等について」。 https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7kami/R07_kami_cyber_jyosei.pdf
+12. NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。 https://doi.org/10.6028/NIST.CSWP.29
+
+### 2. 無料の道具
+
+1. Snort ブログ（2026-10-21）オープンソースの Snort 2 のサポート終了の告知。 https://blog.snort.org/2026/10/end-of-life-announcement-for-open.html
+2. Zeek の公式リポジトリ（README）。 https://github.com/zeek/zeek
+3. Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。 https://docs.securityonion.net/en/3/main/use-cases/
+4. Suricata（2025-07-08）Suricata 8.0.0 の公開。 https://suricata.io/2025/07/08/suricata-8-0-0-released/
+5. Suricata の文書、Linux でのインラインの IPS の設定。 https://docs.suricata.io/en/latest/ips/setting-up-ipsinline-for-linux.html
+6. Suricata 8.0.7 の公開（公式フォーラム）。 https://forum.suricata.io/t/suricata-8-0-7-released/6467
+7. Suricata の文書、JA3・JA4 のキーワード。 https://docs.suricata.io/en/latest/rules/ja-keywords.html
+8. Snort ブログ（2020）Snort 2 と Snort 3 の違い。 https://blog.snort.org/2020/08/snort-3-2-differences.html
+9. Snort、ルールセットの違い（Community・Registered・Subscriber）。 https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets
+10. Proofpoint、ET Pro ルールセットのデータシート（ET Open は rules.emergingthreats.net）。 https://www.proofpoint.com/us/resources/data-sheets/et-pro-ruleset
+11. Zeek（2026-09）Zeek 9 の紹介。 https://zeek.org/2026/09/introducing-zeek-9/
+12. Zeek 8.0.11・9.0.1 のセキュリティリリース（2026-10-26）。 https://community.zeek.org/t/zeek-bugfix-security-releases-8-0-11-and-9-0-1/8088
+13. Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。 https://docs.zeek.org/en/master/logs/x509.html
+14. Security Onion ブログ（2026-03）Security Onion 3.0.0 の公開。 https://blog.securityonion.net/2026/03/security-onion-300-now-available-with.html
+15. Corelight、Open NDR とセンサーの仕様。 https://corelight.com/products/open-ndr/
+16. Security Onion の文書、サポート終了（2.4 は 2026-10-01）。 https://docs.securityonion.net/en/3/main/eol/
+17. Wazuh の文書、ファイルの改ざん検知。 https://documentation.wazuh.com/current/getting-started/use-cases/file-integrity.html
+18. OSSEC の文書、OSSEC について。 https://www.ossec.net/docs/about.html
+
+### 3. 商用とクラウドの製品
+
+1. Google Cloud、Cloud IDS のトラブルシューティング（暗号化された通信は復号できない）。 https://docs.cloud.google.com/intrusion-detection-system/docs/troubleshooting
+2. Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。 https://docs.zeek.org/en/master/logs/x509.html
+3. CyberRatings.org（2025）エンタープライズ・ファイアウォールの比較試験の結果の発表。 https://prnewswire.com/news-releases/cyberratingsorg-announces-enterprise-firewall-test-results-302184011.html
+4. CyberRatings.org・NSS Labs（2025-11-25）エンタープライズ・ファイアウォールの再試験の結果の発表（転載）。 https://www.finanzen.net/nachricht/aktien/cyberratings-org-and-nss-labs-announce-follow-on-enterprise-firewall-results-15311424
+5. Gartner（2025）Magic Quadrant for Hybrid Mesh Firewall の案内（Palo Alto Networks の掲載）。 https://www.paloaltonetworks.com/network-security/gartner-hybrid-mesh-firewalls-mq-2025
+6. Cisco、Secure Firewall の Encrypted Visibility Engine。 https://secure.cisco.com/secure-firewall/docs/encrypted-visibility-engine
+7. Palo Alto Networks、Advanced Threat Prevention のデータシート。 https://paloaltonetworks.com/resources/datasheets/advanced-threat-prevention
+8. Fortinet、FortiGate のディープインスペクション（7.6.5 管理ガイド）。 https://docs.fortinet.com/document/fortigate/7.6.5/administration-guide/122078/deep-inspection
+9. Fortinet コミュニティ、Technical Tip：SSL の Certificate Inspection と Deep Inspection の違い。 https://community.fortinet.com/t5/FortiGate/Technical-Tip-Differences-between-SSL-Certificate-Inspection-and/ta-p/192301
+10. Check Point、R81.10 Security Gateway の HTTPS Inspection。 https://sc1.checkpoint.com/documents/R81.10/WebAdminGuides/EN/CP_R81.10_Quantum_SecurityGateway_Guide/Topics-FWG/HTTPS-Inspection.htm
+11. Trend Micro、TippingPoint の製品ページ。 https://www.trendmicro.com/en_us/business/products/network/tipping-point.html
+12. Darktrace、Darktrace / NETWORK。 https://darktrace.com/ja/products/network
+13. Vectra AI、Vectra AI Platform。 https://www.vectra.ai/platform
+14. ExtraHop、RevealX の復号。 https://www.extrahop.com/resources/security/secure-decryption
+15. Corelight、Open NDR とセンサーの仕様。 https://corelight.com/products/open-ndr/
+16. Microsoft、Azure Firewall Premium の機能。 https://learn.microsoft.com/azure/firewall/premium-features
+17. AWS ブログ、Network Firewall の TLS インスペクション。 https://aws.amazon.com/blogs/security/tls-inspection-configuration-for-encrypted-egress-traffic-and-aws-network-firewall
+18. AWS Network Firewall の料金。 https://aws.amazon.com/network-firewall/pricing/
+19. Google Cloud、Cloud IDS の概要。 https://docs.cloud.google.com/intrusion-detection-system/docs/overview
+20. Google Cloud IDS の料金。 https://cloud.google.com/intrusion-detection-system/pricing
+21. Gartner（2025）Magic Quadrant for Network Detection and Response の案内（Darktrace の掲載）。 https://www.darktrace.com/resources/gartner-ndr-magic-quadrant-2025
+
+### 4. 選ぶとき・運用するとき
+
+1. Corelight、センサーの仕様（メーカーの発表）。 https://corelight.com/platform/sensor-specifications
+2. IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。 https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html
+3. Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。 https://docs.securityonion.net/en/3/main/use-cases/
+4. Snort、ルールセットの違い（Community・Registered・Subscriber）。 https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets
+5. Security Onion の文書、構成（SPAN・TAP、NAT の内側で取る）。 https://docs.securityonion.net/en/2.4/architecture.html
+6. Security Onion の文書、必要な機械（Import・Eval）。 https://docs.securityonion.net/en/3/main/hardware/
+7. Security Onion の文書、Grid（Zeek の取りこぼし）。 https://docs.securityonion.net/en/2.4/grid.html
+8. NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。 https://doi.org/10.6028/NIST.CSWP.29
+9. SANS Internet Storm Center、Brad Duncan の日誌（練習用の PCAP の扱いの注意）。 https://isc.sans.edu/diary/27228
+10. TryHackMe、Snort の部屋。 https://tryhackme.com/room/snort
+11. Hack The Box Academy、Working with IDS/IPS。 https://academy.hackthebox.com/course/preview/working-with-idsips
 
 ## 試すときの決まり
 

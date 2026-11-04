@@ -1,0 +1,106 @@
+---
+layout: renewal-article.njk
+title: "無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。 — ムートン"
+headline: "無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。"
+subtitle: "IDS 2/4：無料で使える道具の違いと、ルールの読み方"
+description: "Snort 2 は2026年10月21日にサポートが終わった。無料で使える IDS の Suricata・Snort 3・Zeek・Security Onion・Wazuh・OSSEC の違いと、ルールの読み方をまとめる。4本のうちの2本目。"
+excerpt: "Snort 2 は2026年10月に終わった。無料の IDS は、知らせる道具と記録する道具で役目が違った。"
+date: 2026-11-04T12:02:00Z
+updated: 2026-11-04
+pillar: defense
+checking: true
+related: ["ids", "ids-commercial-cloud", "ids-choose-operate"]
+claims:
+  - claim: 古い解説のとおり、Snort 2 で始めればよい
+    verdict: refute
+    certainty: 中
+    basis: オープンソースの Snort 2 は2026年10月21日にすべての版のサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった
+    refs: [1]
+  - claim: Zeek は、Snort や Suricata と同じ型の IDS だ
+    verdict: refute
+    certainty: 中
+    basis: Zeek の公式の説明は、よくある IDS とはまったく違い、特定の検知の方式に縛られないとしている。通信をプロトコルごとのログに書き出し、スクリプトで監視の方針を書く
+    refs: [2]
+  - claim: ホスト型とネットワーク型は、どちらか一つあればよい
+    verdict: refute
+    certainty: 低
+    basis: 見る場所が違う。暗号化で見えない部分は端末の記録で埋めると Security Onion の文書は書いている
+    refs: [3]
+---
+<p>2026年10月21日、オープンソースの Snort 2 は、すべての版のサポートが終わった<a href="#ref-1">[1]</a>。ネットで見つかる IDS の解説の多くは、まだ Snort 2 が前提だ。この2本目では、いま無料で使える IDS を並べて、何が違うかを書く。</p>
+<p>版や日付は、2026年11月4日時点で、公式の発表を検索で確かめたものだ。古くなりやすいので、使う前に公式のページを見てほしい。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2>よく言われることの判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。事実は公式の資料を検索で確かめたもので、原典を開いて確かめ直している途中なので、「中」より上にしていない。</p>
+{% verdictTable claims %}
+<h2>無料の道具は、知らせるもの・記録するもの・機械の中を見るものに分かれた</h2>
+<div class="rn-scroll"><table class="rn-data"><caption>無料で使える主な IDS（2026年11月4日時点）</caption><thead><tr><th scope="col">名前</th><th scope="col">見る場所と方式</th><th scope="col">止めるか</th><th scope="col">向いている使い方</th></tr></thead><tbody>
+<tr><th scope="row">Suricata 8</th><td>ネットワーク。シグネチャとプロトコル解析</td><td>IPS モードで止められる</td><td>検知も遮断も一つで。記録を SIEM に流したいとき</td></tr>
+<tr><th scope="row">Snort 3</th><td>ネットワーク。シグネチャが中心</td><td>IPS として使える</td><td>Talos のルールに合わせたいとき。Snort 2 からの移行</td></tr>
+<tr><th scope="row">Zeek 9</th><td>ネットワーク。プロトコル解析とスクリプト</td><td>記録と分析が中心（止める機能は確かめていない）</td><td>何が起きたかを細かく残して、あとから調べる</td></tr>
+<tr><th scope="row">Security Onion 3</th><td>Suricata・Zeek・Elastic をまとめた配布</td><td>確かめていない（中の Suricata の設定による）</td><td>学ぶ。小さな組織で一式をそろえる</td></tr>
+<tr><th scope="row">Wazuh 4.14</th><td>機械の中。ログ分析と改ざんの検知</td><td>その機械で対処できる</td><td>サーバーや PC の中の変化を見る</td></tr>
+<tr><th scope="row">OSSEC</th><td>機械の中。ログ分析と改ざんの検知</td><td>その機械で対処できる</td><td>小さく、軽く、ホスト型を始める</td></tr>
+</tbody></table></div>
+<p>表の「止めるか」は、置き方と設定によって変わる。ネットワーク型の道具でも、通信のコピーを受け取る置き方なら、知らせることしかできない。SIEM は、ログを集めて分析する仕組みのことだ。</p>
+<h2>Suricata は、検知も遮断も一つでできる</h2>
+<p>Suricata は、OISF（Open Information Security Foundation）が作るネットワーク型の IDS/IPS だ。ライセンスは GPL v2 だ。8系の最初の版 8.0.0 は2025年7月に出た<a href="#ref-4">[4]</a>。シグネチャ（ルール）での検知に加えて、通信のプロトコルを解析する。その結果を、EVE JSON という1行1件の JSON で記録する。SIEM に流しやすい形だ。</p>
+<p>遮断もできる。Linux では、NFQUEUE（通信を Suricata に回す仕組み）を使う。または、2枚の NIC（ネットワークにつなぐ部品）を橋渡しする AF_PACKET の IPS モードを使う。IPS モードのときだけ、drop のルールで実際に通信が落ちる<a href="#ref-5">[5]</a>。</p>
+<p>2026年9月の 8.0.7 は、これまでで最も多い脆弱性の報告を直した版だった。報告は AI を使った解析によるものとされる<a href="#ref-6">[6]</a>。守る道具そのものも、更新し続けるものだ。</p>
+<p>暗号化された通信では、中身の代わりに、JA3・JA4 と呼ばれる「話し方の指紋」を記録できる<a href="#ref-7">[7]</a>。TLS（通信を暗号化する決まり）の始めのあいさつの特徴だ。</p>
+<h3>ルールは、何を見つけたらどう扱うかを1行で書いたもの</h3>
+<p>考え方を見るために、演習用の例を一つ置く。自分の環境で、example.com という名前を DNS で引いたら知らせる、というだけのルールだ。</p>
+<pre><code>alert dns any any -&gt; any any (msg:"演習: example.com の名前を引いた"; dns.query; content:"example.com"; nocase; sid:1000001; rev:1;)</code></pre>
+<ul>
+<li>先頭の alert：扱い方（知らせる）</li>
+<li>dns：見るプロトコル</li>
+<li>any any -&gt; any any：送り元と宛先（どこでも）</li>
+<li>かっこの中：条件と、記録に残す文言</li>
+</ul>
+<p>sid はルールの番号だ。自分で作るルールには、配布されるルールとぶつからない番号を使う。IPS モードでは、先頭を drop にすると止める扱いになる。この1行は書き方の例で、僕はまだ自分の環境で動かして確かめていない。書き方の細部は、使う版の Suricata の文書で確かめてほしい。</p>
+<h2>Snort は、これから学ぶなら Snort 3 から始める</h2>
+<p>Snort は、Cisco の Talos が作る IDS/IPS で、エンジンは GPL v2 だ。Snort 2 のサポートが終わり、Talos も Snort 2 向けのルールを出さなくなった。設定を Snort 3 の書き方に変える、snort2lua という道具を案内している<a href="#ref-1">[1]</a>。</p>
+<p>Snort 3 は、1つのプロセスでいくつものスレッドを動かせる。設定は Lua というプログラムの言葉で書き、Snort 2 の設定はそのままでは動かない<a href="#ref-8">[8]</a>。</p>
+<p>ルールは3つある<a href="#ref-9">[9]</a>。</p>
+<ul>
+<li>Community：無料で、登録も要らない</li>
+<li>Registered：無料の登録で使える。新しいルールは Subscriber より30日遅れて届くと説明されている（2014年の説明で、いまも同じかは確かめていない）</li>
+<li>Subscriber：有料</li>
+</ul>
+<p>Suricata と Snort には、Proofpoint の ET Open（無料）と ET Pro（有料）のルールもある。ET Pro は ET Open を丸ごと含むので、同時には入れない<a href="#ref-10">[10]</a>。</p>
+<h2>Zeek は、知らせるより、記録してあとから調べる道具だった</h2>
+<p>Zeek（旧名 Bro）は、通信をプロトコルごとのログ（接続・DNS・HTTP・TLS など）に書き出す道具だ。監視の方針は、専用のスクリプトで書く。ライセンスは BSD だ<a href="#ref-2">[2]</a>。2026年9月に 9.0.0（長期サポートの版）が出た<a href="#ref-11">[11]</a>。10月には 8.0.11 と 9.0.1 が、「これまでで最大のセキュリティリリース」として出た<a href="#ref-12">[12]</a>。</p>
+<p>TLS のやりとりは ssl.log に、証明書は x509.log に残る。ただし TLS 1.3 では証明書が暗号化されるので、x509.log は出ない<a href="#ref-13">[13]</a>。Security Onion や Corelight は、Zeek と Suricata を組み合わせている<a href="#ref-14">[14]</a><a href="#ref-15">[15]</a>。</p>
+<h2>Security Onion は一式をまとめて試せ、Wazuh と OSSEC は機械の中を見る</h2>
+<p>Security Onion は、Suricata・Zeek・Elastic（検索と可視化）をまとめて入れられる配布だ。2026年3月に 3.0.0 が出て、パケットの保存も Suricata が担うようになった。対応する OS は Oracle Linux 9 だけだ<a href="#ref-14">[14]</a>。2.4 系は2026年10月1日でサポートが終わった<a href="#ref-16">[16]</a>。これも、古い手順書に注意が要る。</p>
+<p>ホスト型の代表が Wazuh と OSSEC だ。どちらも、サーバーや PC のログを分析し、ファイルの改ざんを見つける。active response という仕組みもある。変化を見つけたときに、その機械でスクリプトを動かして対処する<a href="#ref-17">[17]</a><a href="#ref-18">[18]</a>。</p>
+<p>ネットワーク型とは、見る場所が違う。暗号化で見えなくなる部分は、端末の記録で埋めると Security Onion の文書は書いている<a href="#ref-3">[3]</a>。どちらか一つではなく、組み合わせるものだ。</p>
+<h2>無料の道具は、役目の違うものを組み合わせて使う</h2>
+<p>まとめると、無料の中心は Suricata・Snort 3・Zeek だ。Suricata と Snort は知らせて止める道具、Zeek は記録してあとから調べる道具だった。Snort 2 と Security Onion 2.4 は、2026年にサポートが終わった。機械の中は、Wazuh や OSSEC のようなホスト型が見る。</p>
+<p>無料の道具はソフトの代金がかからない。その代わり、更新とルールの調整と、警告を読む人の時間がかかる。そのことは4本目に書いた。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分が最初に触るなら、知らせる道具と、記録する道具の、どちらから始めたいだろうか。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Snort ブログ（2026-10-21）オープンソースの Snort 2 のサポート終了の告知。<a href="https://blog.snort.org/2026/10/end-of-life-announcement-for-open.html">Snort Blog</a></li>
+<li id="ref-2">Zeek の公式リポジトリ（README）。<a href="https://github.com/zeek/zeek">GitHub</a></li>
+<li id="ref-3">Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。<a href="https://docs.securityonion.net/en/3/main/use-cases/">Security Onion</a></li>
+<li id="ref-4">Suricata（2025-07-08）Suricata 8.0.0 の公開。<a href="https://suricata.io/2025/07/08/suricata-8-0-0-released/">suricata.io</a></li>
+<li id="ref-5">Suricata の文書、Linux でのインラインの IPS の設定。<a href="https://docs.suricata.io/en/latest/ips/setting-up-ipsinline-for-linux.html">Suricata Docs</a></li>
+<li id="ref-6">Suricata 8.0.7 の公開（公式フォーラム）。<a href="https://forum.suricata.io/t/suricata-8-0-7-released/6467">Suricata Forum</a></li>
+<li id="ref-7">Suricata の文書、JA3・JA4 のキーワード。<a href="https://docs.suricata.io/en/latest/rules/ja-keywords.html">Suricata Docs</a></li>
+<li id="ref-8">Snort ブログ（2020）Snort 2 と Snort 3 の違い。<a href="https://blog.snort.org/2020/08/snort-3-2-differences.html">Snort Blog</a></li>
+<li id="ref-9">Snort、ルールセットの違い（Community・Registered・Subscriber）。<a href="https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets">snort.org</a></li>
+<li id="ref-10">Proofpoint、ET Pro ルールセットのデータシート（ET Open は rules.emergingthreats.net）。<a href="https://www.proofpoint.com/us/resources/data-sheets/et-pro-ruleset">Proofpoint</a></li>
+<li id="ref-11">Zeek（2026-09）Zeek 9 の紹介。<a href="https://zeek.org/2026/09/introducing-zeek-9/">zeek.org</a></li>
+<li id="ref-12">Zeek 8.0.11・9.0.1 のセキュリティリリース（2026-10-26）。<a href="https://community.zeek.org/t/zeek-bugfix-security-releases-8-0-11-and-9-0-1/8088">Zeek Community</a></li>
+<li id="ref-13">Zeek の文書、x509.log（TLS 1.3 では証明書が暗号化される）。<a href="https://docs.zeek.org/en/master/logs/x509.html">Zeek</a></li>
+<li id="ref-14">Security Onion ブログ（2026-03）Security Onion 3.0.0 の公開。<a href="https://blog.securityonion.net/2026/03/security-onion-300-now-available-with.html">Security Onion Blog</a></li>
+<li id="ref-15">Corelight、Open NDR とセンサーの仕様。<a href="https://corelight.com/products/open-ndr/">Corelight</a></li>
+<li id="ref-16">Security Onion の文書、サポート終了（2.4 は 2026-10-01）。<a href="https://docs.securityonion.net/en/3/main/eol/">Security Onion</a></li>
+<li id="ref-17">Wazuh の文書、ファイルの改ざん検知。<a href="https://documentation.wazuh.com/current/getting-started/use-cases/file-integrity.html">Wazuh</a></li>
+<li id="ref-18">OSSEC の文書、OSSEC について。<a href="https://www.ossec.net/docs/about.html">ossec.net</a></li>
+</ol>
+</section>

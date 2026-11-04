@@ -9,4 +9,7 @@
 // セキュリティの記事を書いたら、ここにファイル名を足す（docs/security-renewal-20261104.md）。
 export default [
   'ids',
+  'ids-free-tools',
+  'ids-commercial-cloud',
+  'ids-choose-operate',
 ];
