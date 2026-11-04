@@ -1,4 +1,5 @@
 # Copy to wrangler.toml, insert the real D1 ID and verify the sender domain.
+# Worker の name は変えない（workers.dev の URL＝PUBLIC_BASE_URL と Stripe の Webhook の宛先が変わるため）。
 name = "mouton-clean-science-delivery"
 main = "src/index.js"
 compatibility_date = "2026-10-13"
@@ -6,9 +7,17 @@ workers_dev = true
 [vars]
 PUBLIC_BASE_URL = "https://REPLACE_SUBDOMAIN.workers.dev"
 FROM_EMAIL = "MOUTON <downloads@REPLACE_DOMAIN>"
-PDF_OBJECT_KEY = "clean-science-2026-10-75p.pdf"
-STRIPE_PRICE_ID = "price_REPLACE"
-STRIPE_PAYMENT_LINK_ID = "plink_REPLACE"
+# 商品の一覧（秘密ではない）。Payment Link ID で商品を見分ける。
+# id は英小文字・数字・_ のみ。objectKey は非公開 R2 のファイル名。filename はダウンロード時のファイル名（ASCII）。
+# 旧い3変数（STRIPE_PRICE_ID・STRIPE_PAYMENT_LINK_ID・PDF_OBJECT_KEY）は、PRODUCTS が無いときだけ清潔感の科学1商品として読まれる（移行のあいだの互換）。
+PRODUCTS = '''
+[
+ {"id":"clean_science","paymentLinkId":"plink_REPLACE","priceId":"price_REPLACE","amountJPY":2980,"objectKey":"clean-science-2026-10-75p.pdf","title":"清潔感の科学","pages":75,"filename":"mouton-clean-science.pdf"},
+ {"id":"philosophy_kierkegaard","paymentLinkId":"plink_REPLACE","priceId":"price_REPLACE","amountJPY":2980,"objectKey":"mouton-philosophy-01-kierkegaard.pdf","title":"決められないのは、考えが足りないからではない。","pages":21,"filename":"mouton-philosophy-01-kierkegaard.pdf"},
+ {"id":"philosophy_nietzsche","paymentLinkId":"plink_REPLACE","priceId":"price_REPLACE","amountJPY":2980,"objectKey":"mouton-philosophy-02-nietzsche.pdf","title":"その選択は、誰の物差しで決めたのか。","pages":21,"filename":"mouton-philosophy-02-nietzsche.pdf"},
+ {"id":"philosophy_spinoza","paymentLinkId":"plink_REPLACE","priceId":"price_REPLACE","amountJPY":2980,"objectKey":"mouton-philosophy-03-spinoza.pdf","title":"続かないのは、意志が弱いからではない。","pages":21,"filename":"mouton-philosophy-03-spinoza.pdf"}
+]
+'''
 [[d1_databases]]
 binding = "ORDERS"
 database_name = "mouton-orders"
