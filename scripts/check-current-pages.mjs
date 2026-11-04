@@ -10,7 +10,7 @@
 // - 残すページの小見出し（eyebrow など）は日本語
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
 // - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
-// - 新しい型の今の記事は、本文が1万〜2万字（2026-10-22、オーナー「サイトは決定版だから重厚にして欲しい」）
+// - 新しい型の今の記事は、本文が5,000〜6,000字（2026-11-04、オーナー「記事が長い。分割を求める」。それまでは2026-10-22 の1万〜2万字）
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import currentArticles from '../src/_data/currentArticles.js';
 
@@ -29,12 +29,13 @@ const stripTags = s => {
   return out;
 };
 const text = html => stripTags(html);
-// 2026-10-22（オーナー「サイトは決定版だから重厚にして欲しい」「サイトは1万~2万文字にする」「これからも同じです」）：
-// 新しい型の今の記事は、本文が 10,000〜20,000 字。数えないもの：front matter、参考文献（class="rn-refs" の要素から後ろ）、
+// 2026-11-04、オーナー『記事が長い。分割を求める』、3本・各5,000〜6,000字を選んだ。これからのセキュリティの記事もこの長さ。
+// （それまでは 2026-10-22 の「サイトは1万~2万文字にする」で 10,000〜20,000 字だった）
+// 新しい型の今の記事は、本文が 5,000〜6,000 字。数えないもの：front matter、参考文献（class="rn-refs" の要素から後ろ）、
 // テンプレートのタグ（{% %} と {{ }}）、HTML のタグ、空白と改行。数え方は記事を書くときの道具（count.mjs）と同じ。
 // タグは stripTags と同じく1文字ずつ読んで外す（正規表現の置き換えで外さない）
-const BODY_MIN = 10000;
-const BODY_MAX = 20000;
+const BODY_MIN = 5000;
+const BODY_MAX = 6000;
 const bodyLength = src => {
   let body = src.split('\n---\n').slice(1).join('\n---\n');
   const refs = body.indexOf('class="rn-refs"');
@@ -78,7 +79,7 @@ for (const s of currentArticles) {
   if (/^health:\s*true/m.test(src) && !html.includes('class="rn-health"')) report(`${s}.html`, '健康の記事に注意書きがない');
   if (/^layout:\s*renewal-article\.njk\s*$/m.test(src)) {
     const n = bodyLength(src);
-    if (n < BODY_MIN || n > BODY_MAX) report(`src/articles/${s}.html`, `本文が ${n.toLocaleString('en-US')} 字。サイトの記事は1万〜2万字（オーナー、2026-10-22「サイトは決定版だから重厚にして欲しい」）`);
+    if (n < BODY_MIN || n > BODY_MAX) report(`src/articles/${s}.html`, `本文が ${n.toLocaleString('en-US')} 字。サイトの記事は5,000〜6,000字（オーナー、2026-11-04「記事が長い。分割を求める」。長いテーマは分けて書く）`);
   }
 }
 for (const s of archived) {
