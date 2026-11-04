@@ -1,0 +1,307 @@
+---
+layout: renewal-article.njk
+title: "SIEM とは何か。攻撃を止める道具ではなかった — ムートン"
+headline: "SIEM とは何か。攻撃を止める道具ではなかった"
+subtitle: "ログを集め、つなげ、人に知らせる仕組みを、公的な手引きと製品の公式の資料で確かめた"
+description: "SIEM は、ログを1か所に集めて形をそろえ、つなげて読み、怪しい動きを人に知らせる仕組みで、攻撃を止める道具ではない。定義、ログの種類、検知ルール、SOC での使われ方、SOAR・XDR との違い、ラボでの触れ方を一次資料で確かめた。"
+excerpt: "SIEM がするのは、集める・そろえる・つなげる・知らせるまで。止めるのは別の仕組みと人だ。「ログイン失敗が続いたあとの成功」を、ルールがどう見ているかまで確かめた。"
+date: 2026-11-04T12:00:00Z
+updated: 2026-11-04
+pillar: defense
+pick: 1            # おすすめの順（1が先頭）。仮の順。ムートンが決めたら直す
+claims:
+  - claim: SIEM を入れれば、攻撃を防げる
+    verdict: refute
+    certainty: 中
+    basis: 公的な定義での SIEM の役目は、ログを集めて分析し、異常に印を付けて人に示すこと。遮断は SOAR のプレイブックや別の機器の側にある。手引きは「入れたら終わり」の道具ではないと書く
+    refs: [3, 7]
+  - claim: SIEM は、ログを集めるだけの箱だ
+    verdict: refute
+    certainty: 中
+    basis: 定義には、ふだんの動きの基準とルールを当てはめた相関分析と、利用者・資産・脅威などの文脈との組み合わせが入っている。ただしルールと人がいなければ、集めて貯めるだけになりうる
+    refs: [2, 3]
+  - claim: ログは、多く集めるほどよい
+    verdict: refute
+    certainty: 中
+    basis: 共同の手引きは、ログの源に優先の順を付け、高いものから入れるよう勧める。ファイアウォールや DNS のログは量が多く、大切な情報を覆い隠すことがある。料金は取り込む量で決まる仕組みが多い
+    refs: [13, 7]
+  - claim: 製品に入っている検知ルールを有効にすれば、そのまま使える
+    verdict: refute
+    certainty: 中
+    basis: Elastic の手引きは、ルールの調整と雑音の削減は終わりのない作業だと書く。ATT&CK の検知の例も、しきい値や時間の幅を環境に合わせて変える前提になっている
+    refs: [23, 16]
+  - claim: アラートの大半は誤検知だ
+    verdict: weak
+    certainty: 低
+    basis: SOC の実務者への調査と聞き取りでは、「誤検知」と呼ばれるものの多くは、ルールどおりに鳴ったが、その環境では正当な動き（benign trigger）だった。割合は職場で違い、確かな数字はない
+    refs: [26]
+  - claim: 総当たりのログインは、失敗の回数を数えれば見つかる
+    verdict: weak
+    certainty: 中
+    basis: ATT&CK の検知の例は、失敗のあとの成功を組み合わせて見る。パスワードスプレーは1つのアカウントあたりの失敗が少なく、アカウントをまたいで数えないと見えない
+    refs: [16, 19]
+  - claim: AI があれば、SOC アナリストは要らない
+    verdict: refute
+    certainty: 低
+    basis: 公的な手引きは、技能を持つ人による監視と改善を前提にしている。Gartner は2024年12月の予測で、自律した SOC はできないとした。どちらも見通しで、長い期間のデータではない
+    refs: [3, 27]
+  - claim: SIEM は、XDR に置き換わった
+    verdict: none
+    certainty: ―
+    basis: 置き換わったことを示す公的な調査は、探した範囲では見つからなかった。XDR と SIEM の両方の機能を持つと説明する製品や、SIEM と SOAR を一つにした製品があり、境目は重なっている
+    refs: [6, 28]
+  - claim: SIEM を学ぶには、高い製品を買う必要がある
+    verdict: refute
+    certainty: 高
+    basis: Wazuh は無料のオープンソース。Splunk には1日500MBまで取り込める無料の版があり、Elastic にも無料で使える機能がある。学習用の公開のデータもある
+    refs: [6, 32, 31, 33]
+changes:
+  - date: 2026-11-04
+    note: 下書き
+---
+<p>SIEM を入れても、それだけでは攻撃は止まらない。SIEM がしているのは、あちこちの機器に散らばったログを1か所に集め、形をそろえ、つなげて読み、怪しい動きを人に知らせるところまでだ。止めるかどうか、どう止めるかは、多くの場合、別の仕組みと人が決めている。</p>
+<p>SOC（セキュリティの監視と対応をする部署）の仕事を学び始めると、早いうちに SIEM という言葉に出会う。けれど、何をする道具なのかを一文で言おうとすると、意外にむずかしい。「ログを集める箱」と言われることもあれば、「入れれば守れる」と受け取られることもある。どちらも半分だけ当たっていて、半分は外れている。</p>
+<p>この記事は、SOC アナリストを目指して勉強している僕が、SIEM について公的な手引きと製品の公式の資料で確かめたことをまとめたものだ。米国の NIST、オーストラリアの ASD と米国の CISA が中心になった共同の手引き、MITRE ATT&amp;CK、そして Wazuh・Elastic・Splunk・Microsoft・IBM の公式の資料を読んだ。製品は名前と種類だけを書き、比べて勧めることはしない。</p>
+<p>検知のルールの例は出すが、攻撃の手順は書かない。ルールが何を見ているのか、なぜその形なのかまでを扱う。例に出す IP アドレスやドメインは、文書のために取ってある 192.0.2.0/24 や 198.51.100.0/24、example.com を使う。</p>
+
+<h2>よく言われることの判定</h2>
+<p class="rn-note">確かさは、資料が公的な手引きか、公式の説明か、調査か、予測かと、資料の数から付けた目安。</p>
+{% verdictTable claims %}
+
+<h2>SIEM は、ログを集めて、つなげて、人に知らせる仕組みだ</h2>
+<h3>公的な定義は、どれも「集める」と「分析して示す」を含んでいる</h3>
+<p>NIST の用語集は、SIEM のツールを「情報システムの構成要素からセキュリティのデータを集め、それを一つの画面で、行動につなげられる情報として示す機能を持つアプリケーション」と定義している。出どころは NIST の SP 800-128 だ<a href="#ref-1">[1]</a>。</p>
+<p>Gartner の用語集は、もう少し踏み込んでいる。SIEM の市場を、イベントのデータをリアルタイムで分析して標的型の攻撃や侵害を早く見つけたい、そしてインシデント対応・フォレンジック（事後の調べ）・コンプライアンスのためにログを集め、保存し、調べ、報告したい、という利用者の必要で定義している。主なデータはログで、イベントのデータは、利用者・資産・脅威・脆弱性についての文脈と組み合わされる<a href="#ref-2">[2]</a>。</p>
+<p>2025年5月に ASD の ACSC（オーストラリアのサイバーセキュリティの機関）が CISA などと出した実務者向けの手引きでは、SIEM は、ネットワーク全体からログを集めて1か所にまとめ、セキュリティのために分析するソフトウェアまたは機器とされる。よく設定された SIEM は、ふだんのネットワークの動きの基準（ベースライン）と、ルールやフィルターを当てはめてログを分析し、つなげ、異常な動きに印を付ける<a href="#ref-3">[3]</a>。</p>
+<p>三つの定義に共通するのは、集めることと、分析して人に示すことだ。逆に、どの定義にも「攻撃を遮断する」は入っていない。</p>
+
+<h3>名前は、SIM と SEM を合わせたものだった</h3>
+<p>SIEM は Security Information and Event Management の頭文字で、二つの製品の流れを合わせた言葉だとされる。一つは SIM（Security Information Management）で、ログを長く保存し、あとから分析して報告するほうに重心がある。もう一つは SEM（Security Event Management）で、イベントをリアルタイムで見張り、つなげて、知らせるほうに重心がある<a href="#ref-4">[4]</a>。</p>
+<p>SIEM という言葉は、2005年に Gartner のアナリスト、マーク・ニコレットとアムリット・ウィリアムズが使い始めたとされる<a href="#ref-4">[4]</a>。ただ、僕が確かめられたのは、これを伝える解説と二次資料までで、最初の文書そのものは読めていない。名前の由来は、その程度の確かさの話として置いておく。</p>
+<p>いまの SIEM は、二つの役目を一つの製品で持っている。リアルタイムの監視（SEM の側）と、過去にさかのぼる検索と分析（SIM の側）だ。Gartner の定義も、リアルタイムのイベントの分析と、過去のデータへの問い合わせや長い期間の分析の両方を挙げている<a href="#ref-2">[2]</a>。</p>
+
+<h3>止めるのは、別の仕組みと人のほうにある</h3>
+<p>止める動きを受け持つのは、たとえば SOAR だ。同じ手引きは SOAR を、SIEM と同じようにログを集めて分析したうえで、あらかじめ決めた「プレイブック」（対応の手順書）を当てはめて対応を自動にする仕組みだと説明している。特定のイベントが起きたら、影響を受けた端末をネットワークから切り離す、といった動きだ<a href="#ref-3">[3]</a>。</p>
+<p>製品によっては、SIEM の画面から遮断まで動かせるものもある。無料のオープンソースの Wazuh の手引きには、総当たりのログインを見つけたときに、その送り元の IP アドレスを止める「Active Response」の設定が紹介されている<a href="#ref-5">[5]</a>。ただ、これは SIEM の定義の外にある機能で、Wazuh 自身も、自分を XDR と SIEM の機能を一つにした基盤だと説明している<a href="#ref-6">[6]</a>。</p>
+<p>経営層向けの手引きは、SIEM も SOAR も「入れたら終わり（set and forget）」の道具ではないと書く。入れて動かすことは、高い技能を持つ人を必要とする、手間のかかる、終わりのない作業だという<a href="#ref-7">[7]</a>。SIEM が鳴らしたアラートを読み、本物かどうかを決め、次に何をするかを決めているのは、いまのところ人だ。</p>
+
+<h2>SIEM の中では、集める・そろえる・つなげる・知らせる・残すが起きている</h2>
+<h3>集める：ログは、もともとばらばらの場所にある</h3>
+<p>ファイアウォールのログはファイアウォールの中に、Windows のログオンの記録はそれぞれのパソコンやサーバーの中に、クラウドの操作の記録はクラウドの管理の画面の中にある。攻撃は、入り込む、権限を手に入れる、ほかの端末へ移る、と段階を踏んで進むことがある。MITRE ATT&amp;CK は、この段階を「戦術」として、偵察から影響まで並べている<a href="#ref-8">[8]</a>。段階ごとに痕跡が残る場所は違うので、1か所だけを見ていても、流れは見えにくい。</p>
+<p>NIST の SP 800-92（2006年）は、ログの管理を、ログを作る・送る・保存する・分析する・捨てる、という一続きの流れとして扱い、ログを1か所に集める基盤をつくることを勧めている<a href="#ref-9">[9]</a>。SIEM は、この「1か所に集める」の上に立つ代表的な道具だ。</p>
+<p>集め方には、見張る機器に小さなプログラム（エージェント）を入れて送らせる方法と、機器が自分で送り出すログ（syslog など）を受け取る方法がある。Wazuh の場合、パソコンやサーバーにはエージェントを入れ、エージェントを入れられないファイアウォール・スイッチ・ルーターなどからは syslog を受け取る<a href="#ref-6">[6]</a>。</p>
+
+<h3>そろえる：同じ出来事でも、機器ごとに書き方が違う</h3>
+<p>集めただけのログは、そのままではつなげて読めない。この点は、Wazuh の説明がいちばん分かりやすかった。ファイアウォールのログ、Windows のログオンのイベント、Web サーバーのアクセスログは、どれもネットワークの動きを表しているのに、項目の名前も並びも違う。そこで Wazuh は、それぞれのログを読み解いて、送り元の IP アドレス・宛先の IP アドレス・ユーザー名・プロセス・イベントの種類といった共通の項目に当てはめ直す。同じ検索やルールを、ログの出どころを気にせずに使えるようにするためだ<a href="#ref-10">[10]</a>。</p>
+<p>これが正規化（ノーマライゼーション）だ。Elastic Security は ECS（Elastic Common Schema）という共通の項目の決まりを使い、ほかの道具で集めたデータも ECS に合わせることを求めている<a href="#ref-11">[11]</a>。正規化が雑だと、片方のログでは「user」、もう片方では「account_name」と書かれたユーザー名を、ルールが同じ人だと分からない。SIEM の質は、地味なこの段階にかなり左右される、と僕は読んでいる。</p>
+
+<h3>つなげる：1件では普通でも、並べると怪しいものがある</h3>
+<p>相関分析は、別々のログを、時間・ユーザー・端末・IP アドレスといった共通の手がかりでつなげて読むことだ。ログイン失敗の1件は、パスワードを打ち間違えた人の記録かもしれない。同じ送り元から数分のうちに何十件も失敗が続き、その直後に成功があれば、話が変わる。1件ずつでは普通の出来事が、並べると一つの筋になる。具体的なルールの形は、あとの節で見る。</p>
+<p>Gartner の定義にあった「文脈との組み合わせ」も、つなげる仕事の一つだ<a href="#ref-2">[2]</a>。同じログイン失敗でも、相手がふつうの社員のアカウントか、管理者のアカウントか、重要なデータのあるサーバーか、試験用の端末かで、重さは変わる。資産の一覧や利用者の情報を SIEM が持っていれば、アラートにその文脈を添えられる。</p>
+
+<h3>知らせる：アラートと、調べるための画面</h3>
+<p>ルールの条件に合うと、SIEM はアラートを出す。アラートには重さ（重大度）が付き、担当者の画面に並ぶ。製品の多くには、関係するアラートをまとめて一つの事案として扱う画面や、関係するログをさかのぼって検索する画面がある。Splunk Enterprise Security の説明では、事案の管理と、アラートのトリアージ（ふるい分け）・調査・対応が、一つの流れとしてつながっている<a href="#ref-12">[12]</a>。</p>
+
+<h3>残す：あとから調べるために、ログを保存する</h3>
+<p>SIEM は、アラートを出したあとも、ログを残しておく。侵入に気づくのが、侵入からしばらくたってからのこともあるからだ。あとから「あの日、このアカウントは何をしていたか」をさかのぼれるかは、どれだけの期間、どの形で残しているかで決まる。何日分を残すかは、法律や業界の決まり、組織の方針で変わり、一つの正解はない。</p>
+<p>ダッシュボードやレポートも、この保存されたデータから作られる。Gartner の定義が挙げるように、ネットワークの監視、利用者の動きの監視、コンプライアンスの報告にも、同じデータが使われる<a href="#ref-2">[2]</a>。</p>
+
+<h2>どのログを入れるかで、見えるものが決まる</h2>
+<h3>共同の手引きは、ログの源に優先の順を付けている</h3>
+<p>2025年5月の共同の手引き「Priority logs for SIEM ingestion」は、SIEM に入れるログの源を、おおよそ優先の高い順に並べている。最初が EDR（端末での検知と対応の道具）のログで、ネットワーク機器のログ、Microsoft のドメインコントローラーのログ、Active Directory などのディレクトリーのセキュリティのログ、Windows の端末のログと続く。そのあとに、仮想化の基盤、制御システム（OT）、クラウド、コンテナ、データベース、モバイル端末の管理、Windows の DNS サーバー、Linux の端末、macOS の端末が並ぶ<a href="#ref-13">[13]</a>。</p>
+<p>手引きは、この順番を、ふつうの企業のネットワークで始めるための出発点だとしている。新しく SIEM を入れるときは、優先の高いものから先に入れ、それぞれの取り込みが正しく続いているかを、定期的に確かめることを勧めている<a href="#ref-13">[13]</a>。</p>
+
+<h3>ログの種類ごとに、答えられる問いが違う</h3>
+<p>ログの種類は、それぞれ違う問いに答える。勉強のために、僕は次のように整理している。例のアドレスはすべて文書用のものだ。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>ログの種類と、答えられる問いの例</caption><thead><tr><th scope="col">ログ</th><th scope="col">主に分かること</th><th scope="col">問いの例</th></tr></thead><tbody>
+<tr><th scope="row">ファイアウォール</th><td>どこからどこへ、どのポートで通信し、通したか止めたか</td><td>社内の端末 192.0.2.15 が、ふだん話さない外の宛先 198.51.100.7 へ、夜中に通信していないか</td></tr>
+<tr><th scope="row">Web プロキシ</th><td>社内の端末が、どの URL やドメインへ、どれだけのデータを送り、受け取ったか</td><td>ある端末だけが、見慣れないドメインへ大きなデータを送っていないか</td></tr>
+<tr><th scope="row">DNS</th><td>どの端末が、どのドメイン名を問い合わせたか</td><td>example.com の下に、意味の読めない長い名前の問い合わせが続いていないか</td></tr>
+<tr><th scope="row">認証（ログオン）</th><td>誰が、いつ、どこから、成功したか失敗したか</td><td>同じアカウントへの失敗が続いたあとに、成功していないか</td></tr>
+<tr><th scope="row">端末（EDR・OS）</th><td>どのプログラムが、どの親のプログラムから起動し、何をしたか</td><td>文書を開くソフトから、コマンドの実行が始まっていないか</td></tr>
+<tr><th scope="row">クラウド</th><td>誰が、どの設定を変え、どの権限やアカウントを作ったか</td><td>ふだん使わない場所から、管理者の権限が作られていないか</td></tr>
+</tbody></table></div>
+<p>Windows の認証のログでは、イベントの番号（イベント ID）が手がかりになる。JPCERT/CC が公開している調査の道具 LogonTracer の説明には、ログオンの成功が 4624、失敗が 4625、ユーザーのアカウントが作られたのが 4720、セキュリティのグループにメンバーが足されたのが 4728・4732・4756、NTLM の認証が 4776、Kerberos の認証が 4768・4769、と並んでいる<a href="#ref-14">[14]</a>。SIEM のルールの多くは、こうした番号の組み合わせで書かれている。</p>
+
+<h3>多く集めれば、よく見えるわけではない</h3>
+<p>ログは多いほど安心に思える。けれど同じ手引きは、ファイアウォールや DNS のログはとても量が多く、その量が、中に含まれる情報の大切さを覆い隠してしまうことがある、と書いている<a href="#ref-13">[13]</a>。量の多いログを全部入れれば、検索は重くなり、ルールの雑音も増える。</p>
+<p>お金の面もある。経営層向けの手引きによると、SIEM の料金は取り込むデータの量で決まる仕組みが多く、取り込みを管理しないと、払いすぎる危険がある<a href="#ref-7">[7]</a>。</p>
+<p>2024年8月に ASD の ACSC が中心になり、CISA・FBI・NSA などが加わって出した「Best practices for event logging and threat detection」は、組織として承認したログの方針を持つことを、四つの柱の最初に置いている。残りの三つは、ログを1か所で見て相関できること、ログを安全に保存して改ざんされていないと言えること、自分たちに関係のある脅威に合わせた検知の戦略を持つことだ<a href="#ref-15">[15]</a>。何を、なぜ集めるかを先に決めておく、という順番になっている。</p>
+<p>逆に、少なすぎても見えない。同じ2024年の手引きは、OS に元からある正規の道具を悪用して目立たずに動く「環境寄生型（living off the land）」の手口を事例として取り上げている<a href="#ref-15">[15]</a>。正規の道具の動きは、1件ずつ見ればふつうの操作と区別しにくい。ふだんの動きと比べて違いを見つけるには、ふだんの動きが分かるだけの記録が、前もって残っている必要がある。量の問題は「多いか少ないか」ではなく、「その問いに答えるログが入っているか」なのだと、僕は読んだ。</p>
+
+<h2>「ログイン失敗が続いたあとの成功」を、ルールはこう見ている</h2>
+<h3>MITRE ATT&amp;CK の検知の例は、失敗と成功を組み合わせている</h3>
+<p>相関ルールの例として、いちばんよく挙がるのが総当たり（ブルートフォース）だ。ATT&amp;CK では「Brute Force」（T1110）という技術にあたり、パスワードが分からないときに、繰り返し推測してアカウントに入ろうとする手口とされる<a href="#ref-16">[16]</a>。</p>
+<p>ATT&amp;CK は、技術ごとに「検知の戦略」と「分析」の例を載せている。総当たりの検知の戦略（DET0463）には、Windows での分析の例として、大量のログオンの失敗のあとに、怪しい利用者・端末・時間帯からの成功が続くことを見るものがある。使うログは Windows のセキュリティのログで、イベント ID の 4625 と 4776 を挙げている。Linux では、同じ IP アドレスや利用者で認証の失敗が続いたあとの成功を、auditd の記録で見る例がある<a href="#ref-16">[16]</a>。</p>
+<p>大事なのは、失敗の回数だけを見ていないことだ。失敗が続くだけなら、推測が外れ続けているか、誰かがパスワードを忘れているだけかもしれない。失敗のあとに成功があると、推測が当たった可能性が出てくる。1件ずつのログでは分からないことが、順番をつなげると見えてくる。これが相関分析の考え方だと思う。</p>
+
+<h3>三つのルールを並べると、時間の幅も回数も違っていた</h3>
+<p>同じ「失敗のあとの成功」を、三つの資料がどう書いているかを並べてみた。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>「失敗のあとの成功」を見るルールの比較</caption><thead><tr><th scope="col">出どころ</th><th scope="col">何をつなげるか</th><th scope="col">時間の幅</th><th scope="col">失敗の数</th></tr></thead><tbody>
+<tr><th scope="row">MITRE ATT&amp;CK（DET0463 の Windows の例）</th><td>ログオンの失敗のあとの成功</td><td>環境に合わせて変える（例として5〜10分）</td><td>環境に合わせて変える（例として10〜15回）</td></tr>
+<tr><th scope="row">Wazuh のルール 40112</th><td>同じ送り元の IP アドレスで、「認証の失敗が続いた」のアラートのあとの成功</td><td>240秒</td><td>前のアラートの条件による（ルール 40111 は160秒に12回、SSH のルール 5763 は120秒に8回）</td></tr>
+<tr><th scope="row">Elastic「Potential Successful SSH Brute Force Attack」</th><td>同じ端末・送り元の IP アドレス・ユーザー名で、SSH の失敗のあとの成功</td><td>15秒</td><td>25回</td></tr>
+</tbody></table></div>
+<p>表のもとは、ATT&amp;CK の公開のデータ<a href="#ref-16">[16]</a>、Wazuh の 4.14.0 の版のルールのファイル<a href="#ref-17">[17]</a>、Elastic の公開の検知ルール<a href="#ref-18">[18]</a>だ。Wazuh のルール 40112 は、重さが12で、ATT&amp;CK の T1078（正規のアカウントの悪用）と T1110 の番号が付いている<a href="#ref-17">[17]</a>。</p>
+<p>同じ考え方のルールでも、時間の幅は15秒から数分まで、失敗の数は8回から25回まで開いている。どれが正しいという話ではない。ATT&amp;CK は、時間の幅、見張る利用者の範囲、アラートを出すまでの失敗の数を、環境に合わせて変える項目としてはっきり書いている<a href="#ref-16">[16]</a>。ルールは、置かれる場所に合わせて形を変える前提で作られている。</p>
+
+<h3>パスワードスプレーは、アカウントをまたいで数えないと見えない</h3>
+<p>回数で見るルールには、すり抜ける形もある。ATT&amp;CK の「Password Spraying」（T1110.003）は、よく使われるパスワードを一つか少しだけ用意し、それを多くの違うアカウントに試す手口だ。一つのアカウントに何度も失敗するとロックがかかるので、それを避けるためだとされる<a href="#ref-19">[19]</a>。</p>
+<p>この場合、一つのアカウントあたりの失敗は1回か2回しかない。アカウントごとに数えるルールでは、しきい値に届かない。ATT&amp;CK の検知の例は、決めた時間の幅（例として10分）の中で、多くの違うアカウントにわたって認証の失敗が出ていることを見る。調整する項目も、いくつのアカウントにわたったらアラートを出すかや、利用者全体のうち失敗したアカウントの割合になっている<a href="#ref-19">[19]</a>。数える単位を、一つのアカウントから、送り元や時間の幅に移しているわけだ。</p>
+<p>総当たりのルールを一つ持っているから、パスワードを当てようとする手口はすべて見える、とは言えない。手口の形が変われば、数える単位も変える必要がある。</p>
+
+<h3>ログインのほかにも、つなげて見る例がある</h3>
+<p>相関は、ログインだけの話ではない。ATT&amp;CK には、ほかにもログをつなげて見る検知の例が並んでいる。</p>
+<p>一つは、端末の中にローカルのアカウントが作られたこと（T1136.001）だ。Windows では、アカウントが作られたイベント（4720）が、PowerShell や net.exe のようなプログラムの起動の直後に起きていないかを見る。プログラムの起動とアカウントの作成のあいだの時間の幅（例として5秒〜2分）や、どの権限で動いたかを、調整する項目にしている<a href="#ref-20">[20]</a>。</p>
+<p>もう一つは、イベントログが消されたこと（Clear Windows Event Logs）だ。Windows のセキュリティのログに残るイベント 1102 と、ログを消すプログラムの起動や、ログのファイルの削除の記録を、ひと続きの動きとして見る<a href="#ref-21">[21]</a>。痕跡を消す動きそのものが、痕跡になる。消される前に SIEM へ送ってあれば、記録は SIEM の側に残る。ログを1か所に集めることには、こういう意味もある。</p>
+
+<h3>ルールを、製品に頼らない形で書く取り組みもある</h3>
+<p>ルールの書き方は、製品ごとに違う。そこで、ルールを製品に頼らない形で書く「Sigma」という取り組みがある。Sigma は、ログの中の出来事を書き表すための、汎用でオープンなシグネチャの形式で、公開のリポジトリには3,000を超える検知ルールがある。ルールは、それぞれの SIEM の問い合わせの言葉に変換して使う<a href="#ref-22">[22]</a>。一つのルールを読めば、どの製品でも同じ考え方が使えるので、勉強の材料としても読みやすい。</p>
+
+<h2>ルールは、入れたときが始まりだった</h2>
+<h3>調整と雑音の削減は、終わりのない作業とされている</h3>
+<p>製品には、最初から多くの検知ルールが入っている。Elastic の手引きは、検知の仕組みを育てる流れを七つの段階で示し、Elastic が保守しているルールの一式を有効にするのを3番目に置いている。その前に、要件を確かめる段階と、どの脅威が自分の環境にとって大事かを決め、ATT&amp;CK で足りないところを探す段階がある。そして、調整と雑音の削減は、最後の段階ではなく、ずっと続くものだと書いている<a href="#ref-23">[23]</a>。</p>
+<p>直し方も分かれている。ルールそのものが広すぎて、どの環境でもふつうの動きに反応するなら、問い合わせやしきい値を変える（調整）。ルールは正しいが、自分の環境に特有の安全な動きに反応するなら、例外を足す。Elastic の手引きは、社内で作ったアプリケーションが、怪しいプログラムの動きを見るルールに反応してしまう例を挙げ、そのアプリケーションの名前を例外に足すやり方を示している<a href="#ref-23">[23]</a>。</p>
+<p>ATT&amp;CK の検知の例が、しきい値や時間の幅を「変える項目」として書いていたのも、同じ考え方だと思う<a href="#ref-16">[16]</a>。ルールは、置かれる環境のふだんの姿を知らないまま作られている。ふだんの姿を教えるのは、運用する人だ。</p>
+
+<h3>どの種類のルールを使うかで、見えるものが変わる</h3>
+<p>Elastic のルールの種類の説明を読むと、検知の考え方の幅が分かる。決まった値や条件に合うものを探すルール、数がしきい値を超えたら出すルール（総当たりのような量の手口に向くとされる）、出来事の順番や「あるはずの出来事がない」ことを見るルール（EQL）、脅威の情報と照らし合わせるルール、初めて現れた値に反応するルール、機械学習でふだんの動きを学び、外れたものを出すルールがある<a href="#ref-24">[24]</a>。</p>
+<p>先ほどの Elastic の SSH のルールは、順番を見る EQL で書かれていた<a href="#ref-18">[18]</a>。失敗の回数だけを見るなら、しきい値のルールで足りる。失敗のあとに成功が来た、という順番を見るには、順番を表せるルールが要る。どの種類を選ぶかは、何を問いたいかで決まる。</p>
+
+<h2>SOC アナリストは、SIEM のアラートから仕事を始める</h2>
+<h3>トリアージで、本物か、急ぐか、誰に渡すかを決める</h3>
+<p>SOC のアナリストの仕事は、SIEM の画面に並んだアラートを見るところから始まることが多い。最初にするのがトリアージ（ふるい分け）で、Splunk Enterprise Security の説明でも、調査と対応の前に置かれている<a href="#ref-12">[12]</a>。このアラートは本当に怪しい動きを示しているのか、どれくらい急ぐのか、自分で調べるのか、次の担当に渡すのかを決める。</p>
+<p>本物らしいと判断したら、調査に進む。アラートの前後の時間に、同じユーザー・同じ端末・同じ IP アドレスで何が起きていたかを、SIEM の検索でさかのぼる。ログインに成功したあと、そのアカウントは何をしたか。ほかの端末にも、同じ送り元から失敗が出ていないか。ここで、最初に集めて正規化しておいたログが生きてくる。</p>
+<p>NIST が2025年4月に出した SP 800-61 の第3版は、インシデント対応を、組織のセキュリティの仕事全体の中に組み込んで考える形に改めた。土台にしているのは CSF 2.0 の六つの機能（統治・識別・防御・検知・対応・復旧）で、どの機能もインシデント対応に関わるとしている<a href="#ref-25">[25]</a>。SIEM のアラートは、その中の検知から対応への入口にあたる。</p>
+
+<h3>「誤検知」の多くは、正しく鳴ったが害のない動きだった</h3>
+<p>アラートの中には、調べてみると問題のないものが多い。オックスフォード大学のアラーマディらは、SOC で働く実務者への調査と聞き取りをもとに、2022年の USENIX Security で「99% False Positives」という題の研究を発表した<a href="#ref-26">[26]</a>。</p>
+<p>この研究が示したのは、実務者が「誤検知」と呼んでいるものの多くが、厳密には誤りではない、ということだった。ルールの通りに正しく鳴ったが、その組織の環境では正当な動きだったもので、著者たちはこれを「benign trigger（害のない引き金）」と呼んでいる<a href="#ref-26">[26]</a>。僕なりの例を挙げると、管理者が障害の対応で夜中にサーバーへ入った記録は、ルールから見れば怪しく、組織から見れば仕事の一部だ。</p>
+<p>この違いは、直し方に関わる。ルールが間違っているなら、ルールを直す。ルールは正しいが環境の文脈を知らないなら、文脈を足す。例外を足す、資産や利用者の情報と組み合わせる、といったやり方だ。著者たちは、アラートが持つとよい性質として、信頼できる・説明できる・分析に役立つ・文脈を持つ・ほかへ移せる、の五つを提案している<a href="#ref-26">[26]</a>。</p>
+
+<h3>アラート疲れは、量と質の両方の問題だった</h3>
+<p>アラートが多すぎると、一つひとつを丁寧に見られなくなる。アラート疲れ（alert fatigue）と呼ばれる状態だ。同じ研究は、すぐに反応でき、解釈できて意味のあるアラートを出す道具が、アラートによる燃え尽きを減らすことにつながる、と結んでいる<a href="#ref-26">[26]</a>。</p>
+<p>アラート疲れや誤検知の割合については、さまざまな数字が出回っている。ただ、僕が見た範囲では、調べ方がはっきりしない調査が多かったので、この記事では割合を使わない。言えるのは、アラートの数を減らすことと、一つひとつのアラートに文脈を持たせることは、別々の手当てだということだ。数を減らしても、残ったアラートが読み解けなければ、アナリストの手間は大きくは減らない。</p>
+
+<h2>AI は、アナリストの席を空けたのか</h2>
+<p>SIEM や、その周りの道具には、機械学習や生成 AI の機能が足されてきている。Elastic のルールの種類には、機械学習でふだんの動きからの外れを見つけるものがあり<a href="#ref-24">[24]</a>、JPCERT/CC の LogonTracer も、2.0 の版で OpenAI の GPT のモデルを使った分析の機能を入れた<a href="#ref-14">[14]</a>。</p>
+<p>では、AI があれば SOC のアナリストは要らなくなるのか。公的な手引きは、そうは書いていない。2025年の実務者向けの手引きは、SIEM と SOAR が役に立つには、技能を持つ人による監視と、定期的な試験と、改善の繰り返しが要るとしている<a href="#ref-3">[3]</a>。経営層向けの手引きも、費用の中に、専門の技能を持つ人を雇い、とどめ、育てる費用を入れている<a href="#ref-7">[7]</a>。</p>
+<p>Gartner は2024年12月に、「Predict 2025: There Will Never Be an Autonomous SOC（自律した SOC は、これからもできない）」という題の予測を出している<a href="#ref-27">[27]</a>。僕が読めたのは要旨の冒頭だけで、理由の詳しいところは確かめられていない。予測は予測で、長い期間のデータではない。</p>
+<p>いまの資料から僕が読めるのは、AI が人の席をなくすというより、人がする仕事の中身が変わっていく、という見通しまでだ。何を自動に任せ、どこで人が判断するかを決めること自体が、仕事の一部になっていく。この先どうなるかは、まだ確かめられていない。</p>
+
+<h2>SOAR・EDR・XDR・ログ管理と、どこが違うのか</h2>
+<p>セキュリティの道具は略語が多い。違いを、何を見て、何をするかで並べてみた。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>似た名前の道具の違い（僕の整理）</caption><thead><tr><th scope="col">名前</th><th scope="col">主に見るもの</th><th scope="col">主にすること</th></tr></thead><tbody>
+<tr><th scope="row">ログ管理</th><td>あらゆるログ</td><td>集めて、保存し、検索できるようにする</td></tr>
+<tr><th scope="row">SIEM</th><td>多くの機器の、セキュリティにかかわるログ</td><td>形をそろえ、つなげて分析し、アラートを出し、保存する</td></tr>
+<tr><th scope="row">SOAR</th><td>SIEM のアラートや、ログ</td><td>プレイブックに沿って、対応を自動にする（端末の切り離しなど）</td></tr>
+<tr><th scope="row">EDR</th><td>パソコンやサーバーの中の動き</td><td>端末で怪しい動きを見つけ、その端末で対応する</td></tr>
+<tr><th scope="row">XDR</th><td>端末に加えて、ネットワーク・メール・クラウドなど</td><td>いくつもの領域の検知と対応を一つにまとめる（範囲は製品ごとに違う）</td></tr>
+</tbody></table></div>
+<p>ログ管理と SIEM の境目は、セキュリティのための分析をするかどうかにある。NIST の SP 800-92 が扱うのは、ログの管理全体の基盤づくりで<a href="#ref-9">[9]</a>、SIEM はその上で、セキュリティのための分析とアラートを受け持つ。</p>
+<p>SOAR は、SIEM の隣に置かれることが多い。実務者向けの手引きによると、SOAR の中には、自分でログを集めて分析するものもあれば、すでにある SIEM とつないで、その機能を使うものもある<a href="#ref-3">[3]</a>。</p>
+<p>EDR は、端末の中を深く見る道具だ。共同の手引きは、SIEM に入れるログの優先の最初に、EDR のログを置いていた<a href="#ref-13">[13]</a>。ここで EDR と SIEM は取って代わる関係ではなく、EDR が SIEM にログを渡す関係として描かれている。</p>
+<p>XDR は、端末の外まで検知と対応を広げる考え方だ。僕が読んだ範囲では、どこまでを XDR と呼ぶかは製品ごとに違い、一つの定義にまとまっていなかった。製品の側でも、境目は重なっている。Wazuh は自分を XDR と SIEM の機能を一つにした基盤だと説明し<a href="#ref-6">[6]</a>、Microsoft Sentinel は、クラウドで動く SIEM で、SOAR の機能も持つと説明している<a href="#ref-28">[28]</a>。「SIEM は XDR に置き換わった」と言えるだけの調査は、僕が探した範囲の公的な資料には見つからなかった。</p>
+
+<h2>主な製品は、提供のしかたと土台で分かれる</h2>
+<p>SIEM の製品は多い。ここでは、勉強の中でよく名前を見るものを、公式の説明に書かれた種類だけ並べる。比べて勧めることはしない。どれが合うかは、組織の環境と、すでに使っている道具で変わる。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主な SIEM の製品と、公式の説明での種類</caption><thead><tr><th scope="col">製品</th><th scope="col">公式の説明での種類</th></tr></thead><tbody>
+<tr><th scope="row">Splunk Enterprise Security</th><td>Splunk の基盤の上で動く SIEM。検索と相関の機能を使い、事案の管理、アラートのトリアージ・調査・対応をつなぐ<a href="#ref-12">[12]</a></td></tr>
+<tr><th scope="row">Microsoft Sentinel</th><td>Microsoft のクラウドで動く SIEM。SOAR の機能も持つ<a href="#ref-28">[28]</a></td></tr>
+<tr><th scope="row">Elastic Security</th><td>Kibana に組み込まれた機能で、Elasticsearch と Kibana があれば使える。脅威の検知、クラウドのセキュリティ、端末の保護を一つにまとめる<a href="#ref-11">[11]</a></td></tr>
+<tr><th scope="row">IBM QRadar</th><td>ネットワークのイベントや通信の流れ（フロー）のデータをリアルタイムに取り込み、まとめ、保存し、監視・アラート・「オフェンス」（QRadar での事案の呼び名）に使う<a href="#ref-29">[29]</a></td></tr>
+<tr><th scope="row">Wazuh</th><td>無料のオープンソース。XDR と SIEM の機能を一つにした基盤。エージェントと、インデクサー・マネージャー・ダッシュボードの三つの中心の部品でできている<a href="#ref-6">[6]</a></td></tr>
+</tbody></table></div>
+<p>提供のしかたで見ると、クラウドのサービスとして使うものと、自分のサーバーやプライベートクラウドに入れて動かすものがある。Gartner も、SIEM は SaaS として、または利用者の側のオンプレミスやプライベートクラウドで提供される、と書いている<a href="#ref-2">[2]</a>。</p>
+
+<h2>入れたあとに難しいのは、お金とデータと人だった</h2>
+<h3>費用は、取り込む量で増えやすい</h3>
+<p>経営層向けの手引きは、SIEM と SOAR の費用として、製品の料金のほかに、人の費用を挙げている。専門の技能を持つ人を雇ってとどめる費用、いまいる人の技能を上げる費用と続けての訓練、外に任せるならその委託料だ。料金はデータの取り込みの量で決まる仕組みが多く、取り込みを管理しないと払いすぎる危険がある、とも書いている<a href="#ref-7">[7]</a>。</p>
+<p>一方で手引きは、適切に入れて動かす費用より、サイバーのインシデントが起きたときの費用のほうが、はるかに大きくなりうるとも書いている<a href="#ref-7">[7]</a>。費用がかかるから何もしない、という読み方は、手引きの書き方とは違う。</p>
+
+<h3>データは、集めるより、正しく入り続けるほうが難しい</h3>
+<p>ログの取り込みは、一度つないだら終わりではない。機器の更新でログの形が変わる、エージェントが止まる、送り先の設定が消える。そうなっても、SIEM の画面には「何も起きていない」ように見える。アラートがないことと、何も起きていないことは違う。共同の手引きが、取り込みが正しく続いているかを定期的に確かめるよう勧めていた<a href="#ref-13">[13]</a>のは、このためだと僕は読んでいる。</p>
+
+<h3>ルールを合わせる人は、組織の外から買ってきにくい</h3>
+<p>ルールを調整するには、その組織のふだんの姿を知っている必要がある。誰が夜中にサーバーへ入るのか、どのアプリケーションが変わった動きをするのか。製品の標準のルールは出発点で、組織に合わせる作業は、組織のことを知る誰かがすることになる。手引きが「入れたら終わり」ではないと書き、技能を持つ人の費用を挙げているのは、この部分の重さを示しているのだと思う<a href="#ref-7">[7]</a>。</p>
+
+<h2>MITRE ATT&amp;CK は、ルールの抜けを探す地図として使われている</h2>
+<p>MITRE ATT&amp;CK は、実際に観測された攻撃者の戦術と技術をまとめた知識のベースだ<a href="#ref-8">[8]</a>。2026年10月に出た版（v20）の企業向けのマトリクスには、偵察から影響までの15の戦術と、227のテクニック、479のサブテクニックがある。数は、僕が公開のデータから、取り消し・廃止されたものを除いて数えた<a href="#ref-8">[8]</a>。</p>
+<p>SIEM との関係は、主に二つある。一つは、ルールに ATT&amp;CK の番号を付けることだ。先ほどの Wazuh のルール 40112 には T1078 と T1110 が付いていた<a href="#ref-17">[17]</a>。Elastic の SSH のルールにも、総当たり、パスワードの推測、パスワードスプレー、正規のアカウントといった ATT&amp;CK の項目が書かれている<a href="#ref-18">[18]</a>。アラートが出たとき、それが攻撃のどの段階にあたるかが、番号から分かる。</p>
+<p>もう一つは、抜けを探すことだ。自分の SIEM のルールを ATT&amp;CK の表に重ねると、どの技術に検知があって、どこが空いているかが見える。Elastic の手引きも、足りないところを ATT&amp;CK で探す段階を、検知の仕組みを育てる流れの中に置いている<a href="#ref-23">[23]</a>。Wazuh のダッシュボードにも、ATT&amp;CK の画面がある<a href="#ref-6">[6]</a>。</p>
+<p>ただ、表が埋まっていることと、検知できることは同じではない。ルールがあっても、必要なログが入っていなければ鳴らない。しきい値が環境に合っていなければ、鳴りすぎて読まれない。ATT&amp;CK の検知の例が、使うログの種類と、調整する項目まで書いているのは、そこまでそろって初めて検知になるからだと思う<a href="#ref-16">[16]</a>。</p>
+
+<h2>自分のラボで SIEM に触れる方法</h2>
+<h3>試すのは、自分の環境の中だけにする</h3>
+<p>SIEM を学ぶなら、実際にログを流して、アラートが出るところを見るのがいちばん分かりやすい。ただ、試すのは自分が持っている環境の中だけにしている。他人のシステムやサービスに、許可なくログインを試したり、攻撃をまねた通信を送ったりすることは、日本では不正アクセス禁止法などに触れるおそれがある<a href="#ref-30">[30]</a>。ここで挙げる方法も、自分のパソコンの中の仮想マシンか、自分で契約したクラウドの中で使う前提で書いている。</p>
+
+<h3>Wazuh は、ラボの組み方と検知の例を手引きに載せている</h3>
+<p>Wazuh は無料のオープンソースで、手引きに「概念実証（proof of concept）」のガイドがある。そこでは、ラボに仮想マシンを使い、最初の設定のすぐあとにスナップショット（その時点の状態の保存）を取って、試すたびにきれいな状態に戻すことを勧めている。小さなラボなら、中心の部品を1台にまとめた構成で足りるとしている<a href="#ref-5">[5]</a>。</p>
+<p>ガイドの中には、総当たりのログインの検知を確かめる例もある。自分で用意した端末どうしで認証の失敗を起こし、Wazuh が複数の認証の失敗をつなげてアラートにするところを見る、という流れだ<a href="#ref-5">[5]</a>。表で見たような相関のルールが、自分の画面でどう鳴るかを確かめられる。</p>
+
+<h3>Elastic は、無料の機能の範囲でも検知ルールが入る</h3>
+<p>Elastic Security は Kibana に組み込まれていて、Elasticsearch と Kibana があれば使える<a href="#ref-11">[11]</a>。検知ルールの公開のリポジトリの説明によると、Elastic Stack の標準の配布物に含まれる無料の機能の範囲でも、検知の画面を開けば最新のルールが入る<a href="#ref-31">[31]</a>。どの機能が無料かは版とサブスクリプションで変わるので、使う前に公式の表で確かめることになる。</p>
+<p>ルールの中身がリポジトリで公開されているのも、勉強には助かる。先ほどの SSH のルールのように、どんな条件で鳴るのかを、一行ずつ読める<a href="#ref-18">[18]</a>。</p>
+
+<h3>Splunk には、無料の版と学習用のデータがある</h3>
+<p>Splunk には「Splunk Free」という無料の版がある。公式の説明では、1日に取り込めるのは500MBまでで、期限はない。ただし1台だけで動かす使い方に限られ、作ったアラートは動かない<a href="#ref-32">[32]</a>。</p>
+<p>学習用のデータもある。Splunk が公開している「Boss of the SOC（BOTS）」の第3版は、セキュリティの練習用のデータセットで、CTF の形で問題を解く使い方もできる。データは取り込み済みの形で配られていて、取り込みの量による制限を気にしなくてよいと説明されている。AWS の CloudTrail や VPC のフローログなど、クラウドのログも含まれている<a href="#ref-33">[33]</a>。</p>
+<p>攻撃の通信を自分で起こさずに、すでに記録されたログで調べる練習ができる。ログを読む練習としては、これがいちばん手軽だと思う。Splunk は、自分のクラウドの中に検知を試すための環境を組み立て、攻撃をまねて、そのログを Splunk に流す「Attack Range」も公開している<a href="#ref-34">[34]</a>。こちらはクラウドの費用がかかり、使えるのは自分で契約した環境の中だけだ。</p>
+
+<h3>Windows のログオンを、図で見る</h3>
+<p>JPCERT/CC の LogonTracer は、Windows の Active Directory のイベントログから、ログオンに関わるイベントを読み、ホスト名（または IP アドレス）とアカウント名を結んでグラフにする道具だ。どのアカウントで、どの端末からログインが試されたかが、図で分かる<a href="#ref-14">[14]</a>。SIEM そのものではないが、4624 や 4625 といったイベントが、つなげるとどう見えるかを学ぶのに向いている。</p>
+
+<h2>公的な資料は、この順で読むと全体がつながる</h2>
+<p>最後に、この記事で使った公的な資料を、僕が読んでつながりやすかった順に並べておく。どれも英語だ。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>SIEM を学ぶための公的な資料</caption><thead><tr><th scope="col">資料</th><th scope="col">出た時期</th><th scope="col">書いてあること</th></tr></thead><tbody>
+<tr><th scope="row">NIST SP 800-92</th><td>2006年9月</td><td>ログの管理の基本。ログを作る・送る・保存する・分析する・捨てるの流れと、1か所に集める基盤のつくり方。手順書ではなく、高い視点からの手引き<a href="#ref-9">[9]</a></td></tr>
+<tr><th scope="row">NIST SP 800-92 第1版（改訂の下書き）</th><td>2023年10月</td><td>題は「Cybersecurity Log Management Planning Guide」。組織としてログの管理を計画するための手引き。意見の募集は2023年11月29日に締め切られ、NIST は意見を反映している途中としている<a href="#ref-35">[35]</a></td></tr>
+<tr><th scope="row">Best practices for event logging and threat detection</th><td>2024年8月</td><td>ログの方針、1か所での相関、安全な保存とログの完全性、脅威に合わせた検知の戦略、の四つの柱<a href="#ref-15">[15]</a></td></tr>
+<tr><th scope="row">Implementing SIEM and SOAR platforms（3部作）</th><td>2025年5月</td><td>経営層向け・実務者向け・優先して取り込むログの三つ。定義、費用、人、ログの優先の順<a href="#ref-3">[3]</a><a href="#ref-7">[7]</a><a href="#ref-13">[13]</a></td></tr>
+<tr><th scope="row">NIST SP 800-61 第3版</th><td>2025年4月</td><td>インシデント対応を、CSF 2.0 の六つの機能の中に置き直した<a href="#ref-25">[25]</a></td></tr>
+<tr><th scope="row">MITRE ATT&amp;CK</th><td>版ごとに更新</td><td>テクニックごとの検知の戦略と分析の例。使うログと、調整する項目まで書かれている<a href="#ref-8">[8]</a><a href="#ref-16">[16]</a></td></tr>
+</tbody></table></div>
+<p>SIEM について調べるほど、道具の話は、ログと人の話になっていった。SIEM が見せてくれるのは、集めたログの中から、ルールが拾い上げたものだけだ。何を集め、何を怪しいと決め、鳴ったものをどう読むかは、使う側に残っている。</p>
+
+<p class="rn-question">いま、あなたが守りたい環境で攻撃が始まっていたとしたら、それに気づくための記録は、どこに、どれだけ残っているだろうか。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">NIST CSRC 用語集「Security Information and Event Management (SIEM) Tool」（出どころは NIST SP 800-128）。<a href="https://csrc.nist.gov/glossary/term/security_information_and_event_management_tool">NIST CSRC</a></li>
+<li id="ref-2">Gartner 用語集「Security Information and Event Management (SIEM)」。<a href="https://www.gartner.com/en/information-technology/glossary/security-information-event-management">Gartner</a>。提供のしかたの説明は、Gartner Peer Insights の市場の定義。<a href="https://www.gartner.com/reviews/market/security-information-event-management">Gartner</a></li>
+<li id="ref-3">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Practitioner guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-practitioner-guidance">cyber.gov.au</a>。3部作の案内。<a href="https://www.cisa.gov/resources-tools/resources/guidance-siem-and-soar-implementation">CISA</a></li>
+<li id="ref-4">「Security information and event management」（SIM と SEM、用語の出どころの解説）。<a href="https://en.wikipedia.org/wiki/Security_information_and_event_management">Wikipedia（解説）</a></li>
+<li id="ref-5">Wazuh ドキュメント「Proof of concept guide」と「Detecting a brute-force attack」（GitHub の原稿）。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/proof-of-concept-guide/index.rst">GitHub（ラボの組み方）</a>。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/proof-of-concept-guide/detect-brute-force-attack.rst">GitHub（総当たりの検知）</a></li>
+<li id="ref-6">Wazuh ドキュメント「Getting started with Wazuh」と「Components」（GitHub の原稿）。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/getting-started/index.rst">GitHub</a>。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/getting-started/components/index.rst">GitHub（部品）</a></li>
+<li id="ref-7">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Executive guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-executive-guidance">cyber.gov.au</a></li>
+<li id="ref-8">MITRE ATT&amp;CK（Enterprise、v20、2026年10月）。<a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a>。数えたデータ（STIX の公開データ）。<a href="https://github.com/mitre/cti">mitre/cti（GitHub）</a>。版の一覧。<a href="https://github.com/mitre-attack/attack-stix-data">attack-stix-data（GitHub）</a></li>
+<li id="ref-9">Kent・Souppaya（2006）NIST SP 800-92 Guide to Computer Security Log Management。<a href="https://csrc.nist.gov/pubs/sp/800/92/final">NIST CSRC</a></li>
+<li id="ref-10">Wazuh ドキュメント「Log data analysis」（GitHub の原稿）。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/getting-started/use-cases/log-analysis.rst">GitHub</a></li>
+<li id="ref-11">Elastic ドキュメント「Elastic Security requirements」と「Security solution」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/get-started/elastic-security-requirements.md">GitHub</a>。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security.md">GitHub（概要）</a></li>
+<li id="ref-12">Splunk ドキュメント「About Splunk Enterprise Security」。<a href="https://help.splunk.com/en/splunk-enterprise-security-8/user-guide/8.1/introduction">Splunk</a></li>
+<li id="ref-13">ASD's ACSC・CISA ほか（2025）Priority logs for SIEM ingestion: Practitioner guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/priority-logs-for-siem-ingestion-practitioner-guidance">cyber.gov.au</a></li>
+<li id="ref-14">JPCERT/CC「LogonTracer」（README。扱うイベント ID と、2.0 の版の機能）。<a href="https://github.com/JPCERTCC/LogonTracer">GitHub</a></li>
+<li id="ref-15">ASD's ACSC・CISA・FBI・NSA ほか（2024）Best practices for event logging and threat detection。<a href="https://www.cisa.gov/resources-tools/resources/best-practices-event-logging-and-threat-detection">CISA</a></li>
+<li id="ref-16">MITRE ATT&amp;CK「Brute Force」（T1110）と、検知の戦略 DET0463。<a href="https://attack.mitre.org/techniques/T1110/">MITRE ATT&amp;CK</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0463">MITRE ATT&amp;CK（DET0463）</a></li>
+<li id="ref-17">Wazuh 4.14.0 のルールのファイル（0280-attack_rules.xml のルール 40111・40112、0095-sshd_rules.xml のルール 5763）。<a href="https://github.com/wazuh/wazuh/blob/v4.14.0/ruleset/rules/0280-attack_rules.xml">GitHub</a>。<a href="https://github.com/wazuh/wazuh/blob/v4.14.0/ruleset/rules/0095-sshd_rules.xml">GitHub（SSH）</a></li>
+<li id="ref-18">Elastic の検知ルール「Potential Successful SSH Brute Force Attack」。<a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/credential_access_potential_successful_linux_ssh_bruteforce.toml">GitHub</a></li>
+<li id="ref-19">MITRE ATT&amp;CK「Password Spraying」（T1110.003）と、検知の戦略 DET0487。<a href="https://attack.mitre.org/techniques/T1110/003/">MITRE ATT&amp;CK</a></li>
+<li id="ref-20">MITRE ATT&amp;CK「Local Account」（T1136.001）と、検知の戦略 DET0447。<a href="https://attack.mitre.org/techniques/T1136/001/">MITRE ATT&amp;CK</a></li>
+<li id="ref-21">MITRE ATT&amp;CK「Clear Windows Event Logs」と、検知の戦略 DET0532。<a href="https://attack.mitre.org/techniques/T1685/005">MITRE ATT&amp;CK</a></li>
+<li id="ref-22">SigmaHQ「Sigma - Generic Signature Format for SIEM Systems」（README）。<a href="https://github.com/SigmaHQ/sigma">GitHub</a></li>
+<li id="ref-23">Elastic ドキュメント「Detections and alerts」と「Tune detection rules」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert.md">GitHub</a>。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert/tune-detection-rules.md">GitHub（調整）</a></li>
+<li id="ref-24">Elastic ドキュメント「Choose the right rule type」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert/choose-the-right-rule-type.md">GitHub</a></li>
+<li id="ref-25">NIST（2025）SP 800-61 Rev. 3 Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile。<a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final">NIST CSRC</a></li>
+<li id="ref-26">Alahmadi・Axon・Martinovic（2022）99% False Positives: A Qualitative Study of SOC Analysts' Perspectives on Security Alarms。31st USENIX Security Symposium。<a href="https://www.usenix.org/conference/usenixsecurity22/presentation/alahmadi">USENIX</a></li>
+<li id="ref-27">Gartner（2024）Predict 2025: There Will Never Be an Autonomous SOC（要旨）。<a href="https://www.gartner.com/en/documents/6027635">Gartner</a></li>
+<li id="ref-28">Microsoft Learn「What is Microsoft Sentinel?」。<a href="https://learn.microsoft.com/azure/sentinel/overview">Microsoft Learn</a></li>
+<li id="ref-29">IBM ドキュメント「QRadar architecture overview」（QRadar 7.4）。<a href="https://www.ibm.com/docs/SS42VS_7.4/com.ibm.qradar.doc/c_qradar_deployment_guide_arch.html">IBM</a></li>
+<li id="ref-30">不正アクセス行為の禁止等に関する法律（平成11年法律第128号）。<a href="https://laws.e-gov.go.jp/law/411AC0000000128">e-Gov 法令検索</a></li>
+<li id="ref-31">Elastic「Detection Rules」（README の Licensing）。<a href="https://github.com/elastic/detection-rules">GitHub</a></li>
+<li id="ref-32">Splunk ドキュメント「About Splunk Free」（Splunk Enterprise 10.0）。<a href="https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.0/configure-splunk-licenses/about-splunk-free">Splunk</a></li>
+<li id="ref-33">Splunk「Boss of the SOC (BOTS) Dataset Version 3」（README）。<a href="https://github.com/splunk/botsv3">GitHub</a></li>
+<li id="ref-34">Splunk「Attack Range」（README）。<a href="https://github.com/splunk/attack_range">GitHub</a></li>
+<li id="ref-35">Scarfone・Souppaya（2023）NIST SP 800-92 Rev. 1（初期公開草案）Cybersecurity Log Management Planning Guide。<a href="https://csrc.nist.gov/pubs/sp/800/92/r1/ipd">NIST CSRC</a></li>
+</ol>
+</section>
