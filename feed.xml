@@ -6,5 +6,33 @@
   <atom:link href="https://moutonarchive.com/feed.xml" rel="self" type="application/rss+xml"/>
   <description>ムートンのセキュリティの個人研究ノート。演習・CTF の記録、公開された脆弱性と事件の読み解き、身の回りを守る手順を、学んだ順に置いていく。攻撃の技術は、自分の環境と許可された演習の中だけで試す。</description>
   <language>ja</language>
+  <item>
+    <title>侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。</title>
+    <link>https://moutonarchive.com/ids.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ids.html</guid>
+    <pubDate>Wed, 04 Nov 2026 12:03:00 +0000</pubDate>
+    <description>侵入に自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった。IDS（侵入検知システム）とは何か、IPS との違い、日本と海外の数字から見た大事さをまとめる。4本のうちの1本目。</description>
+  </item>
+  <item>
+    <title>無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。</title>
+    <link>https://moutonarchive.com/ids-free-tools.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ids-free-tools.html</guid>
+    <pubDate>Wed, 04 Nov 2026 12:02:00 +0000</pubDate>
+    <description>Snort 2 は2026年10月21日にサポートが終わった。無料で使える IDS の Suricata・Snort 3・Zeek・Security Onion・Wazuh・OSSEC の違いと、ルールの読み方をまとめる。4本のうちの2本目。</description>
+  </item>
+  <item>
+    <title>商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。</title>
+    <link>https://moutonarchive.com/ids-commercial-cloud.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ids-commercial-cloud.html</guid>
+    <pubDate>Wed, 04 Nov 2026 12:01:00 +0000</pubDate>
+    <description>商用の IDS は、次世代ファイアウォールの IPS・専用の IPS・NDR に分かれ、暗号化された通信の扱いが大きく違った。クラウドの3つの違いと、第三者の評価の読み方もまとめる。4本のうちの3本目。</description>
+  </item>
+  <item>
+    <title>IDSを選ぶ前に、誰が警告を読むかを決める。</title>
+    <link>https://moutonarchive.com/ids-choose-operate.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ids-choose-operate.html</guid>
+    <pubDate>Wed, 04 Nov 2026 12:00:00 +0000</pubDate>
+    <description>IDS を選ぶ前に答えておく7つの問い（どこを見るか・止めるか・暗号化・量・ルール・集め先・読む人）と、置いたあとに見る取りこぼし・誤検知・警告を読む人、合法な学び方をまとめる。4本のうちの4本目。</description>
+  </item>
 </channel>
 </rss>

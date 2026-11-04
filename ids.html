@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。 — ムートン</title>
+<meta name="description" content="侵入に自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった。IDS（侵入検知システム）とは何か、IPS との違い、日本と海外の数字から見た大事さをまとめる。4本のうちの1本目。">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。 — ムートン">
+<meta property="og:description" content="侵入に自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった。IDS（侵入検知システム）とは何か、IPS との違い、日本と海外の数字から見た大事さをまとめる。4本のうちの1本目。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/ids.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/ids.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。","description":"侵入に自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった。IDS（侵入検知システム）とは何か、IPS との違い、日本と海外の数字から見た大事さをまとめる。4本のうちの1本目。","inLanguage":"ja","datePublished":"2026-11-04","dateModified":"2026-11-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/ids.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。","item":"https://moutonarchive.com/ids.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-checking" role="note">公開前の下書きです。数字と参考文献を、原典で確かめている途中です。</p>
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">侵入に<wbr>自分で<wbr>気づけた<wbr>組織は<wbr>52%だった。<wbr>IDSは、<wbr>見つけて<wbr>知らせる<wbr>道具だった。</h1>
+  <p class="rn-subtitle">IDS 1/4：IDS とは何か、IPS との違い、なぜ大事か</p>
+  <p class="rn-meta"><span>約7分</span><span>更新日 <time datetime="2026-11-04">2026年11月4日</time></span></p>
+  <div class="rn-body">
+<p>侵入されたことに、自分で最初に気づけた組織は52%だった。Mandiant が2025年に対応した事案のまとめ（M-Trends 2026）の数字だ。残りは、外から知らされて初めて気づいている。侵入から見つかるまでの日数の中央値は14日で、前の年の11日より延びた<a href="#ref-1">[1]</a>。</p>
+<p>中から気づくための道具の一つが、IDS（侵入検知システム。通信やログを見て、攻撃らしいものを知らせる仕組み）だ。僕は専門家ではなく、セキュリティを勉強している一人として、IDS を調べ直した。この1本目では、IDS とは何か、なぜ大事かを書く。</p>
+<p>先に言うと、IDS は置けば守ってくれる箱ではなかった。見つけて知らせる道具で、知らせを誰かが読んで、初めて働く。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2 id="s-1">よく<wbr>言われる<wbr>ことの<wbr>判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。事実は公式の資料を検索で確かめたもので、原典を開いて確かめ直している途中なので、「中」より上にしていない。</p>
+<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody><tr><th scope="row">IDS を入れれば、攻撃を止められる</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">中</td><td data-label="根拠">IDS は見つけて知らせる仕組みで、止めるのは通り道に入る IPS の役目。Google Cloud IDS は、検知と警告だけで止めないと説明している <a href="#ref-2">[2]</a><a href="#ref-3">[3]</a></td></tr><tr><th scope="row">ネットワーク型の IDS があれば、端末の中は見なくてよい</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">低</td><td data-label="根拠">暗号化で見えなくなる部分は、端末からの記録で埋めると Security Onion の文書は書いている。CIS もホスト型とネットワーク型を別の項目にしている <a href="#ref-4">[4]</a><a href="#ref-5">[5]</a></td></tr><tr><th scope="row">侵入されても、たいていはすぐに気づける</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">中</td><td data-label="根拠">M-Trends 2026 では、自分で最初に気づけた組織は52%で、気づくまでの中央値は14日だった <a href="#ref-1">[1]</a></td></tr></tbody></table></div><details class="rn-toc"><summary>目次（4）</summary><ol><li><a href="#s-2">IDS は見つけて知らせる仕組みで、止めるのは IPS の役目だった</a></li><li><a href="#s-3">侵入に自分で気づけた組織は52%で、気づくまでの中央値は14日だった</a></li><li><a href="#s-4">IDS は、見つけたものを誰かが読んで初めて働く</a></li><li><a href="#refs-h">参考文献</a></li></ol></details>
+<h2 id="s-2">IDS は<wbr>見つけて<wbr>知らせる<wbr>仕組みで、<wbr>止めるのは<wbr> IPS の<wbr>役目だった</h2>
+<p>IDS の基本の文書は、米国の NIST（国立標準技術研究所）の SP 800-94 だ。いま有効なのは2007年2月の版だ。IDS と IPS（侵入防止システム。通信の通り道に入って、攻撃らしいものを止める仕組み）をまとめて、IDPS と呼んでいる<a href="#ref-2">[2]</a>。2012年に改訂の案が出たが、最終版にならず、2022年7月に取り下げられた<a href="#ref-6">[6]</a>。IPA が日本語訳を出している<a href="#ref-7">[7]</a>。</p>
+<p>この文書は、IDPS を見る場所で4つに分けている<a href="#ref-2">[2]</a>。</p>
+<ul>
+<li>ネットワーク型：ネットワークの通信を見る</li>
+<li>無線：無線の通信を見る</li>
+<li>ネットワークの振る舞いの分析：通信の量や流れの変化を見る</li>
+<li>ホスト型：1台の機械の中を見る</li>
+</ul>
+<p>検知の方式は3つに分けている<a href="#ref-2">[2]</a>。</p>
+<ul>
+<li>シグネチャ型：知られた攻撃の型と照らす</li>
+<li>アノマリー型：ふだんからのずれを見る</li>
+<li>ステートフルプロトコル解析：通信の決まりに合っているかを見る</li>
+</ul>
+<p>IPA の制御システム向けの手引書は、方式を5つに分けている。シグネチャ型・ルールベース・ステートフルプロトコル解析・振る舞い検知型・サンドボックス型（怪しいファイルを隔離した環境で動かして確かめる）だ<a href="#ref-8">[8]</a>。分け方は文書によって違う。それぞれの方式が何を得意とし、何を見逃しやすいかは、SP 800-94 の本文で確かめてから書き足す。</p>
+<h3>違いは、<wbr>製品の<wbr>名前ではなく<wbr>置き方で<wbr>決まる</h3>
+<p>通信のコピーを受け取って見るなら、知らせることしかできない。通信の通り道に入るなら、止められる。Google Cloud IDS は、通信のコピーを作って調べる仕組みだ。検知と警告だけを行い、止めるには別の製品を使うと説明している<a href="#ref-3">[3]</a>。</p>
+<p>近い道具との違いを、言い切れる範囲で並べると次のようになる。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>IDS と近い道具（この記事での使い分け）</caption><thead><tr><th scope="col">道具</th><th scope="col">見るもの</th><th scope="col">止めるか</th></tr></thead><tbody>
+<tr><th scope="row">ファイアウォール</th><td>決めた規則（宛先・ポートなど）</td><td>規則で通す・通さないを決める</td></tr>
+<tr><th scope="row">IDS（ネットワーク型）</th><td>通信の中身や手順の怪しさ</td><td>止めない。知らせる</td></tr>
+<tr><th scope="row">IPS</th><td>IDS と同じ</td><td>通り道にいて止める</td></tr>
+<tr><th scope="row">IDS（ホスト型）</th><td>1台の機械のログ・ファイル・設定</td><td>製品によって、その機械で対処する</td></tr>
+<tr><th scope="row">NDR</th><td>内側の通信の振る舞い（多くは通信のコピー）</td><td>ほかの仕組みと連携して対処する</td></tr>
+<tr><th scope="row">SIEM</th><td>IDS を含む色々なログ</td><td>止めない。集めて突き合わせる</td></tr>
+</tbody></table></div>
+<p>NDR（ネットワークの検知と対応）や SIEM（ログを集めて分析する仕組み）の定義は、メーカーによって少しずつ違う。この表は、この記事を読むための目安だ。</p>
+<h2 id="s-3">侵入に<wbr>自分で<wbr>気づけた<wbr>組織は<wbr>52%で、<wbr>気づくまでの<wbr>中央値は<wbr>14日だった</h2>
+<p>冒頭の数字をもう少し見る。M-Trends 2026 では、自分で最初に気づけた割合は52%で、前の年の43%から増えた。それでも、半分近くは外からの知らせで気づいている。気づくまでの日数の中央値は14日だ。中央値は、並べたときに真ん中に来る値なので、半分はそれより長い<a href="#ref-1">[1]</a>。</p>
+<p>IBM の Cost of a Data Breach の2026年版では、侵害を特定して封じ込めるまでの平均は247日だったと報じられている<a href="#ref-9">[9]</a>。14日と247日は、矛盾ではない。M-Trends は、Mandiant が対応した事案の中央値だ。IBM は、調査した組織のデータ侵害の平均だ。数え方も対象も違うので、「調べ方によって、数週間から8か月」と幅で受け取るのが正確だと思う。</p>
+<p>M-Trends 2026 は、最初の侵入の経路も並べている。1位は脆弱性（ソフトの弱点）の悪用で32%、6年続けて1位だった。2位は電話の声を使って人をだます手口で11%、3位は前に受けた侵害を足がかりにしたもので10%だった<a href="#ref-1">[1]</a>。入口が弱点の悪用なら、通信の中にその跡が残りうる。IDS が見るのは、そこだ。</p>
+<h3>日本では、<wbr>入口の<wbr>多くが<wbr>外と<wbr>つながる<wbr>境目だった</h3>
+<p>IPA の「情報セキュリティ10大脅威 2026」の組織編の1位は、ランサム攻撃による被害だった。1位は11年続いていて、4位は「システムの脆弱性を悪用した攻撃」だった。10大脅威は、前の年の事故や攻撃から候補を選び、約250人の選考会の投票で決めている<a href="#ref-10">[10]</a>。警察庁によると、2025年上半期のランサムウェアの被害の報告は116件で、そのうち77件が中小企業だった。感染経路が分かったもののうち、VPN（外から社内のネットワークに安全につなぐ仕組み）の機器が62.2%だった。リモートデスクトップと合わせると8割を超える<a href="#ref-11">[11]</a>。</p>
+<p>境目を通る通信を見ることにも、入られたあと中で広がる動きを見ることにも、IDS の出番がある。ただし、これは感染経路の統計で、IDS があれば防げたと言える数字ではない。</p>
+<h3>基準は、<wbr>見張る<wbr>ことと<wbr>判断する<wbr>ことを<wbr>別の<wbr>項目に<wbr>していた</h3>
+<p>CIS Controls v8.1 の Control 13 は、ネットワークの監視と防御の項目だ。侵入検知はホスト型（13.2）とネットワーク型（13.3）、侵入防止は 13.7 と 13.8 と、別々に置いている。13.3 は、最低限の対策の次の段階（実装グループ2）に入っている<a href="#ref-5">[5]</a>。ネットワーク型とホスト型は、見る場所が違う。暗号化で見えなくなる部分は、端末からの記録で埋めると Security Onion の文書は書いている<a href="#ref-4">[4]</a>。</p>
+<p>NIST の Cybersecurity Framework 2.0 では、検知（DE）が2つに分かれている。継続的な監視（DE.CM）と、見つけたものの分析（DE.AE）だ<a href="#ref-12">[12]</a>。見張ることと、見つけたものを分析して判断することが、別の項目として並んでいる。</p>
+<h2 id="s-4">IDS は、<wbr>見つけた<wbr>ものを<wbr>誰かが<wbr>読んで<wbr>初めて<wbr>働く</h2>
+<p>まとめると、IDS は見つけて知らせる仕組みで、止めるのは IPS だ。その違いは置き方で決まる。侵入に自分で気づけた組織は52%で、外から知らされて気づく組織もまだ多い。基準も、見張ることと、見つけたものを判断することを分けている。</p>
+<p>どの道具があるかは、2本目（無料の道具）と3本目（商用とクラウド）に書いた。選ぶときと置いたあとに見るところは、4本目に書いた。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分の環境で、侵入に最初に気づくのは、中の誰かだろうか。それとも、外からの知らせだろうか。</p>
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ids-free-tools.html">無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。</a><p class="rn-list-summary">Snort 2 は2026年10月に終わった。無料の IDS は、知らせる道具と記録する道具で役目が違った。</p></li><li class="rn-item"><a class="rn-list-title" href="ids-commercial-cloud.html">商用とクラウドのIDSは、暗号化された通信の扱いで分かれていた。</a><p class="rn-list-summary">復号して見るか、特徴で見るか、見えないか。商用とクラウドの IDS は、暗号化の扱いで分かれていた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（12）</h2></summary>
+<ol>
+<li id="ref-1">Mandiant（Google Cloud）（2026）M-Trends 2026。2025年に対応した事案のまとめ。<a href="https://cloud.google.com/blog/topics/threat-intelligence/m-trends-2026?hl=en">Google Cloud</a></li>
+<li id="ref-2">NIST（2007）SP 800-94 Guide to Intrusion Detection and Prevention Systems (IDPS)。<a href="https://csrc.nist.gov/pubs/sp/800/94/final">NIST</a></li>
+<li id="ref-3">Google Cloud、Cloud IDS の概要。<a href="https://docs.cloud.google.com/intrusion-detection-system/docs/overview">Google Cloud</a></li>
+<li id="ref-4">Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。<a href="https://docs.securityonion.net/en/3/main/use-cases/">Security Onion</a></li>
+<li id="ref-5">CIS Controls v8.1 Guide（2024）。Control 13 Network Monitoring and Defense。<a href="https://researchsoc.iu.edu/resources/crosswalks/cis_controls__v8.1_guide__2024_0801.pdf">PDF</a></li>
+<li id="ref-6">NIST（2012年案・2022年取り下げ）SP 800-94 Rev.1 の案。<a href="https://csrc.nist.gov/pubs/sp/800/94/r1/ipd">NIST</a></li>
+<li id="ref-7">IPA、SP 800-94 の日本語訳「侵入検知および侵入防止システム（IDPS）に関するガイド」。<a href="https://www.ipa.go.jp/security/reports/oversea/nist/ug65p90000019cp4-att/begoj9000000bfom.pdf">IPA（PDF）</a></li>
+<li id="ref-8">IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。<a href="https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html">IPA</a></li>
+<li id="ref-9">IBM Cost of a Data Breach 2026 の報道（Help Net Security、2026-07-30）。<a href="https://www.helpnetsecurity.com/2026/07/30/ibm-cost-of-a-data-breach-2026/">Help Net Security</a></li>
+<li id="ref-10">IPA「情報セキュリティ10大脅威 2026」。<a href="https://www.ipa.go.jp/security/10threats/10threats2026.html">IPA</a></li>
+<li id="ref-11">警察庁「令和7年上半期におけるサイバー空間をめぐる脅威の情勢等について」。<a href="https://www.npa.go.jp/publications/statistics/cybersecurity/data/R7kami/R07_kami_cyber_jyosei.pdf">警察庁（PDF）</a></li>
+<li id="ref-12">NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。<a href="https://doi.org/10.6028/NIST.CSWP.29">DOI</a></li>
+</ol>
+</details></section>
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

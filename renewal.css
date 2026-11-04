@@ -97,6 +97,9 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 /* 決定版の記事（2026-10-22、本文1万〜2万字）：節の中の小見出しと、本文の表 */
 .rn-body h3 { margin: 2em 0 .6em; font-size: clamp(18px, 2.6vw, 20px); line-height: 1.6; font-weight: 700; word-break: keep-all; overflow-wrap: anywhere; text-wrap: balance; }
 .rn-body h2 + h3 { margin-top: 1.2em; }
+/* 2026-11-04 セキュリティの記事：設定やルールの例（pre）は、390px でも切れずに折り返す。文字は本文より少し小さい等幅 */
+.rn-article pre { margin: 1.4em 0 2em; padding: 14px 16px; background: color-mix(in srgb, var(--ink) 6%, var(--paper)); border-radius: 6px; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 14px; line-height: 1.7; }
+.rn-article pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 /* 表は枠（.rn-scroll）の中でだけ横に動く。ページは横にはみ出さない。列が細くなりすぎないよう、1列に最低の幅を持たせる（390px の画面で4列までは枠に収まる） */
 .rn-scroll { max-width: 100%; overflow-x: auto; margin: 1.4em 0 2em; container-type: inline-size; }
 /* 枠の外に列が続くときだけ、その側の端に薄い影が出る（動かない。続きがあると分かるための印） */

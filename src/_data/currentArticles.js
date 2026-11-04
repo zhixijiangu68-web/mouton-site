@@ -8,4 +8,8 @@
 // 今までの記事（食・身体・お金・生き方）は、すべてアーカイブに移した（URL はそのまま）。
 // セキュリティの記事を書いたら、ここにファイル名を足す（docs/security-renewal-20261104.md）。
 export default [
+  'ids',
+  'ids-free-tools',
+  'ids-commercial-cloud',
+  'ids-choose-operate',
 ];

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>IDSを選ぶ前に、誰が警告を読むかを決める。 — ムートン</title>
+<meta name="description" content="IDS を選ぶ前に答えておく7つの問い（どこを見るか・止めるか・暗号化・量・ルール・集め先・読む人）と、置いたあとに見る取りこぼし・誤検知・警告を読む人、合法な学び方をまとめる。4本のうちの4本目。">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="IDSを選ぶ前に、誰が警告を読むかを決める。 — ムートン">
+<meta property="og:description" content="IDS を選ぶ前に答えておく7つの問い（どこを見るか・止めるか・暗号化・量・ルール・集め先・読む人）と、置いたあとに見る取りこぼし・誤検知・警告を読む人、合法な学び方をまとめる。4本のうちの4本目。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/ids-choose-operate.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/ids-choose-operate.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"IDSを選ぶ前に、誰が警告を読むかを決める。","description":"IDS を選ぶ前に答えておく7つの問い（どこを見るか・止めるか・暗号化・量・ルール・集め先・読む人）と、置いたあとに見る取りこぼし・誤検知・警告を読む人、合法な学び方をまとめる。4本のうちの4本目。","inLanguage":"ja","datePublished":"2026-11-04","dateModified":"2026-11-04","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/ids-choose-operate.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"IDSを選ぶ前に、誰が警告を読むかを決める。","item":"https://moutonarchive.com/ids-choose-operate.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-checking" role="note">公開前の下書きです。数字と参考文献を、原典で確かめている途中です。</p>
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">IDSを<wbr>選ぶ前に、<wbr>誰が<wbr>警告を<wbr>読むかを<wbr>決める。</h1>
+  <p class="rn-subtitle">IDS 4/4：選ぶとき・運用するときに見るところと、学び方</p>
+  <p class="rn-meta"><span>約7分</span><span>更新日 <time datetime="2026-11-04">2026年11月4日</time></span></p>
+  <div class="rn-body">
+<p>IDS の製品を比べ始めると、カタログの数字と機能の一覧に目が行く。調べ終えてみると、先に決めておくことのほうが多かった。どこを見るのか、止めたいのか、警告を誰が読むのか。</p>
+<p>この4本目では、選ぶときと、置いたあとに見るところを書く。最後に、自分の手元で学ぶ入口を置いた。</p>
+<p class="rn-note">IDS について、4本に分けて書いている。1 <a href="ids.html">IDS とは何か、なぜ大事か</a>／2 <a href="ids-free-tools.html">無料の道具</a>／3 <a href="ids-commercial-cloud.html">商用とクラウドの製品</a>／4 <a href="ids-choose-operate.html">選ぶとき・運用するとき</a>。</p>
+<h2 id="s-1">よく<wbr>言われる<wbr>ことの<wbr>判定</h2>
+<p class="rn-note">確かさは、資料の確かさの目安。ここに置いた2つは、メーカーの数字や、別の分野の手引書がもとなので、「低」にしている。</p>
+<div class="rn-table-wrap"><table class="rn-verdicts"><thead><tr><th scope="col">よく言われること</th><th scope="col">判定</th><th scope="col">確かさ</th><th scope="col">主な根拠</th></tr></thead><tbody><tr><th scope="row">カタログの最大の処理能力は、機能を全部使っても出る</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">低</td><td data-label="根拠">Corelight の発表では、ある機器は通信の分析だけなら最大10Gbpsで、Zeek・Suricata・パケットの保存を全部使うと最大5Gbpsだった（メーカーの数字） <a href="#ref-1">[1]</a></td></tr><tr><th scope="row">IDS は、置いたらすぐに止める設定で本番に入れてよい</th><td class="rn-verdict is-refute" data-label="判定"><span aria-hidden="true">×</span> 否定</td><td data-label="確かさ">低</td><td data-label="根拠">IPA の制御システム向けの手引書は、導入を「導入検討 → 構築 → 試験運用 → 本格運用」に分けている。制御システム向けの文書で、ほかの環境にそのまま当てはまるかは確かめていない <a href="#ref-2">[2]</a></td></tr></tbody></table></div><details class="rn-toc"><summary>目次（5）</summary><ol><li><a href="#s-2">選ぶときに見るのは、置き場所・止めるか・暗号化・処理能力・ルール・連携・人手だった</a></li><li><a href="#s-3">運用で見るのは、取りこぼし・誤検知の調整・警告を読む人だった</a></li><li><a href="#s-4">学ぶなら、自分の PC の仮想環境と公開された PCAP から始められる</a></li><li><a href="#s-5">IDS は、どこを見るかと、誰が読むかを決めて初めて働く</a></li><li><a href="#refs-h">参考文献</a></li></ol></details>
+<h2 id="s-2">選ぶ<wbr>ときに<wbr>見るのは、<wbr>置き場所・<wbr>止めるか・暗号化・処理能力・ルール・連携・人手だった</h2>
+<p>調べたことから、選ぶときの問いを7つに絞った。製品のカタログを開く前に、紙に書いて答えておくと迷いにくい。</p>
+<ol>
+<li><strong>どこを見たいか</strong>：境目を通る通信か、内側どうしの通信か、機械の中か</li>
+<li><strong>止めたいのか、知らせてほしいのか</strong>：止めるなら通り道に入る置き方になる。誤って止めたときの影響も背負う</li>
+<li><strong>暗号化された通信をどうするか</strong>：復号するか、特徴だけで見るか、端末の記録で埋めるか<a href="#ref-3">[3]</a></li>
+<li><strong>どれだけの量を流すか</strong>：カタログの処理能力は、機能を全部有効にすると下がることがある</li>
+<li><strong>ルールや脅威の情報は、どこから、どれくらいの遅れで届くか</strong>：無料のルールには遅れがあるものもある<a href="#ref-4">[4]</a></li>
+<li><strong>警告をどこに集めるか</strong>：EVE JSON のような形で、SIEM（ログを集めて分析する仕組み）に流せるか</li>
+<li><strong>誰が、いつ、警告を読むか</strong>：これに答えられないなら、製品を選ぶ前に決めることがある</li>
+</ol>
+<h3>誰が<wbr>読むかは、<wbr>名前と<wbr>時間まで<wbr>決める</h3>
+<p>7つ目の問いは、いちばん後回しにされやすいと僕は思う。「担当の部署」ではなく、誰が、どの時間に、1日に何件まで読めるかまで決めておく。読める件数より多く知らせる設定なら、知らせは読まれずに積もる。読んだあと、誰に知らせ、何を止めるかも、置く前に決めておきたい。</p>
+<h3>通信の<wbr>取り出し方は、<wbr>タップか、<wbr>ミラーポートか</h3>
+<p>1つ目の問いには、通信をどこから取り出すかも入る。Security Onion の文書は、2つの取り出し口を挙げている。スイッチのミラーポート（通信のコピーを出す口）と、専用のタップ（回線から通信のコピーを取り出す機器）だ。できればタップを勧めている<a href="#ref-5">[5]</a>。</p>
+<p>NAT（社内のアドレスを外向けの一つのアドレスに置き換える仕組み）がある環境では、内側で取るとしている。本当の社内のアドレスが見えるようにするためだ<a href="#ref-5">[5]</a>。</p>
+<h3>処理能力は、<wbr>使う<wbr>機能を<wbr>全部<wbr>入れた<wbr>数字で<wbr>見る</h3>
+<p>4つ目の問いの例として、Corelight の発表を見る。AP 620 という機器は、通信の分析だけなら最大10Gbpsだ。Zeek・Suricata・パケットの保存を全部使うと、最大5Gbpsになる<a href="#ref-1">[1]</a>。カタログの一番大きな数字ではなく、自分が使う機能を全部入れたときの数字を見る。</p>
+<h3>費用は、<wbr>代金と<wbr>人の<wbr>時間の<wbr>両方で<wbr>見る</h3>
+<p>無料の道具は、ソフトの代金はかからない。その代わり、機器を用意し、更新を当て、ルールを調整し、警告を読む人の時間がかかる。商用の製品は、機器やサブスクリプションの代金がかかる。その代わり、ルールや脅威の情報の更新は、メーカーが用意する。どちらが安いかは、環境と、使える人手で変わる。</p>
+<h3>試してから<wbr>決める</h3>
+<p>管理者として許可を得た範囲で、自分の環境の通信を保存しておく。それを候補の道具に読ませると、どれだけ知らせてくるかが分かる。そのうちどれだけが、本当に気にすべきものかも分かる。Security Onion の Import という構成は、保存した通信を読み込むためのもので、この試し方に使える<a href="#ref-6">[6]</a>。</p>
+<h2 id="s-3">運用で<wbr>見るのは、<wbr>取り<wbr>こぼし・誤検知の<wbr>調整・警告を<wbr>読む<wbr>人だった</h2>
+<p>置いたあとにも、見るところが3つある。</p>
+<p><strong>一つ目は取りこぼしだ。</strong>Security Onion は、Zeek が報告する取りこぼしの割合を画面に出す。値が高いほど、見えていない通信が多い。Zeek に取りこぼしがあるのにパケットの欠落がないときは、手前のタップやミラーポートで落ちている可能性が高いとしている<a href="#ref-7">[7]</a>。</p>
+<p><strong>二つ目は、いきなり止めない段取りだ。</strong>IPA の制御システム向けの手引書は、導入を4段階に分けている。「導入検討 → 構築 → 試験運用 → 本格運用」だ<a href="#ref-2">[2]</a>。制御システム向けの文書だが、試験運用で誤検知（攻撃ではないものを攻撃として知らせること）を見てから本番に移る考え方は、ほかの環境でも使えると僕は思う。</p>
+<p><strong>三つ目は、警告を読む人だ。</strong>NIST の CSF 2.0 は、見張ること（DE.CM）と、見つけたものを分析して判断すること（DE.AE）を、別の項目として並べている<a href="#ref-8">[8]</a>。警告が多すぎて読まれなければ、IDS はないのに近くなると僕は思う。ルールの調整は、置いたあとにずっと続く仕事だ。</p>
+<h2 id="s-4">学ぶなら、<wbr>自分の<wbr> PC の<wbr>仮想環境と<wbr>公開された<wbr> PCAP から<wbr>始められる</h2>
+<p>手を動かして学ぶ入口もある。<strong>試すのは、自分の機械と、許可された演習の環境の中だけにしてほしい。</strong>人のネットワークを許可なく監視したり、調べたりすることはしない。</p>
+<p>僕が調べた中でいちばん軽そうだったのは、自分の PC の仮想環境に Security Onion を入れる始め方だ。Import は、保存した通信（PCAP）を読み込むだけの構成だ。2コア・メモリ4GB・ディスク100GB・NIC（ネットワークにつなぐ部品）1枚が最低限とされている<a href="#ref-6">[6]</a>。Suricata や Zeek が通信を実際に見るところまで試す Eval という構成は、4コア・メモリ8GB・ディスク200GB・NIC 2枚とされている<a href="#ref-6">[6]</a>。</p>
+<p>読み込む通信は、公開された練習用の PCAP が使える。Brad Duncan が運営する malware-traffic-analysis.net には、分析の練習問題と PCAP がある。ただし本人が書いているとおり、PCAP の中に本物のマルウェアが入っていることがある。取り出して動かすと感染しうる。本人は、Linux や macOS などで見ることを勧めている<a href="#ref-9">[9]</a>。僕は、ネットにつながない仮想環境で、ファイルを取り出さずに読むことにしている。</p>
+<p>決まった道筋で学ぶなら、TryHackMe の Snort の部屋がある。IDS/IPS の概要からルールの書き方までを扱う<a href="#ref-10">[10]</a>。Hack The Box Academy の Working with IDS/IPS は、Suricata・Snort・Zeek を扱う<a href="#ref-11">[11]</a>。</p>
+<p>学ぶうちに、製品や公開されているサービスの弱点に気づくことがあるかもしれない。そのときは公開せず、作った会社か、IPA の届け出の窓口に知らせる。</p>
+<h2 id="s-5">IDS は、<wbr>どこを<wbr>見るかと、<wbr>誰が<wbr>読むかを<wbr>決めて<wbr>初めて<wbr>働く</h2>
+<p>まとめると、選ぶ前に7つの問いに答えておく。どこを見るか、止めるか、暗号化をどうするか、量、ルール、集め先、そして読む人だ。置いたあとは、取りこぼしを見て、試験運用で誤検知を減らし、警告を読む人と時間を回し続ける。</p>
+<p>4本を通して、IDS は置けば守ってくれる箱ではなかった。選ぶのは、自分の環境を知っている人だ。</p>
+<p>この記事の事実は、公式の資料を検索で確かめたもので、原典のページを一つずつ開いて確かめ直している途中だ。下書きと資料の照らし合わせには AI を使い、公開の前にムートンが全文を読む決まりにしている。特定の製品を勧めるものではない。</p>
+<p class="rn-question">自分の環境で、IDS の警告を最初に読むのは誰で、それはいつだろうか。</p>
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ids.html">侵入に自分で気づけた組織は52%だった。IDSは、見つけて知らせる道具だった。</a><p class="rn-list-summary">侵入に自分で気づけたのは52%。IDS は止める箱ではなく、見つけて知らせる道具だった。</p></li><li class="rn-item"><a class="rn-list-title" href="ids-free-tools.html">無料のIDSは、Suricata・Snort 3・Zeekが中心で、Snort 2はもう終わっていた。</a><p class="rn-list-summary">Snort 2 は2026年10月に終わった。無料の IDS は、知らせる道具と記録する道具で役目が違った。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（11）</h2></summary>
+<ol>
+<li id="ref-1">Corelight、センサーの仕様（メーカーの発表）。<a href="https://corelight.com/platform/sensor-specifications">Corelight</a></li>
+<li id="ref-2">IPA（2023）産業用制御システム向け侵入検知製品等の導入手引書。<a href="https://www.ipa.go.jp/security/controlsystem/icsidshandbook.html">IPA</a></li>
+<li id="ref-3">Security Onion の文書、使い方（暗号化で見えない部分は端末の記録で埋める）。<a href="https://docs.securityonion.net/en/3/main/use-cases/">Security Onion</a></li>
+<li id="ref-4">Snort、ルールセットの違い（Community・Registered・Subscriber）。<a href="https://www.snort.org/faq/what-are-the-differences-in-the-rule-sets">snort.org</a></li>
+<li id="ref-5">Security Onion の文書、構成（SPAN・TAP、NAT の内側で取る）。<a href="https://docs.securityonion.net/en/2.4/architecture.html">Security Onion</a></li>
+<li id="ref-6">Security Onion の文書、必要な機械（Import・Eval）。<a href="https://docs.securityonion.net/en/3/main/hardware/">Security Onion</a></li>
+<li id="ref-7">Security Onion の文書、Grid（Zeek の取りこぼし）。<a href="https://docs.securityonion.net/en/2.4/grid.html">Security Onion</a></li>
+<li id="ref-8">NIST（2024）Cybersecurity Framework 2.0（CSWP 29）。<a href="https://doi.org/10.6028/NIST.CSWP.29">DOI</a></li>
+<li id="ref-9">SANS Internet Storm Center、Brad Duncan の日誌（練習用の PCAP の扱いの注意）。<a href="https://isc.sans.edu/diary/27228">SANS ISC</a></li>
+<li id="ref-10">TryHackMe、Snort の部屋。<a href="https://tryhackme.com/room/snort">TryHackMe</a></li>
+<li id="ref-11">Hack The Box Academy、Working with IDS/IPS。<a href="https://academy.hackthebox.com/course/preview/working-with-idsips">HTB Academy</a></li>
+</ol>
+</details></section>
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
