@@ -3,7 +3,7 @@
 // - トップの h1 は「セキュリティを、手を動かして学ぶ。」（2026-11-04、オーナー「セキュリティの個人研究サイト、勉強用にしたい」。見出しはオーナーが決めるまでの仮）
 // - 今の記事がまだないときは、トップに「最初の記事を準備している」の一文が出る
 // - トップにオープニングの演出（intro-veil）がない（見出しが最初に見える。2026-10-18 コピーライティング第一）
-// - 今の記事（src/_data/currentArticles.js）は新しい型：判定表があり、書き込みワーク・穴埋め・○×クイズ・アーカイブの注記が出ない
+// - 今の記事（src/_data/currentArticles.js）は新しい型：書き込みワーク・穴埋め・○×クイズ・アーカイブの注記が出ない
 // - 公開前の下書き（checking: true）は noindex で、上に「公開前の下書き」の注記が出る
 // - それ以外の日本語の記事（アーカイブ）と、アーカイブに移したページには、上に「アーカイブ」の注記が出る
 // - 記事一覧は今の記事だけ、アーカイブの一覧はアーカイブの記事をすべて載せる
@@ -70,7 +70,7 @@ for (const s of currentArticles) {
   for (const [needle, why] of [['mw-blank', '穴埋めの空欄'], ['＿＿＿', '穴埋めの空欄'], ['class="mini-work"', '1分ワーク'], ['class="quiz-more', '○×クイズ'], ['class="archive-note"', 'アーカイブの注記'], ['data-qloop', '○×クイズ']]) {
     if (html.includes(needle)) report(`${s}.html`, `今の記事に${why}が出ている（${needle}）`);
   }
-  if (!html.includes('class="rn-verdicts"')) report(`${s}.html`, '今の記事に判定表がない（front matter の claims と {% verdictTable claims %}）');
+  // 判定表は、2026-11-06（オーナー「表は必要なときに用いる」）から必須ではない（docs/security-renewal-20261104.md「書くときの決まり」8）
   const src = read(`src/articles/${s}.html`);
   if (/^checking:\s*true/m.test(src)) {
     if (!html.includes('<meta name="robots" content="noindex">')) report(`${s}.html`, '公開前の下書きなのに noindex がない');
