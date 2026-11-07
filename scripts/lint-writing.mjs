@@ -98,11 +98,17 @@ for (const slug of slugs) {
   for (const n of new Set(cites)) if (!refs.includes(n)) out.push(`  [出典] 本文の [${n}] に対応する <p id="ref-${n}"> がない`);
   for (const n of refs) if (!cites.includes(n)) out.push(`  [出典] 参考文献 ${n} が本文から引かれていない`);
   // 終わり方：参考文献の節（なければ最後の共有ボタン）の前の段落に、問いがあるか
-  const refsAt = body.indexOf('<section class="refs">');
+  // 参考文献の節：前の型は class="refs"、2026-10-21 からの型は class="rn-refs"
+  const refsAt = [body.indexOf('<section class="refs">'), body.indexOf('<section class="rn-refs"')].filter(i => i !== -1).sort((a, b) => a - b)[0] ?? -1;
   const shareAt = body.lastIndexOf('<div class="article-share">');
   const before = refsAt !== -1 ? body.slice(0, refsAt) : shareAt !== -1 ? body.slice(0, shareAt) : body;
   const tail = paragraphs(before).slice(-3).join(' ');
-  if (!/[？?]|だろう。|だろうか。|ませんか。|でしょうか。/.test(tail)) out.push('  [終わり方] 本文の最後の3段落に問いが見当たらない（最後に問いを一つ置く）');
+  // セキュリティの記事（pillar: ctf / vuln / defense）は、2026-11-06 から最後の問いを置かない（docs/security-renewal-20261104.md「書くときの決まり」8）。
+  // 逆に、問いで終わっていたら知らせる
+  const isSecurity = /^pillar: (ctf|vuln|defense)\s*$/m.test(front);
+  if (isSecurity) {
+    if (/[？?]|だろう。|だろうか。|ませんか。|でしょうか。/.test(tail)) out.push('  [終わり方] セキュリティの記事なのに、本文の最後の3段落に問いがある（問いかけをしない：書くときの決まり 8）');
+  } else if (!/[？?]|だろう。|だろうか。|ませんか。|でしょうか。/.test(tail)) out.push('  [終わり方] 本文の最後の3段落に問いが見当たらない（最後に問いを一つ置く）');
   // 読者への手順：本文（参考文献より前）に <ol> があれば知らせる
   if (/<ol[\s>]/.test(before)) out.push('  [終わり方] 本文に番号付きの手順（<ol>）がある。読者への手順になっていないか読む');
   if (out.length) { console.log(`${file}`); console.log(out.join('\n')); warnings += out.length; }
