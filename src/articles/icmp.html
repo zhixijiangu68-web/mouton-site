@@ -1,0 +1,103 @@
+---
+layout: renewal-article.njk
+title: "ICMP を全部止めると、大きな通信だけが止まる。エラーと診断の知らせの読み方 — ムートン"
+headline: "ICMP を全部止めると、大きな通信だけが止まる。エラーと診断の知らせの読み方"
+subtitle: "ping と tracepath が使う知らせ、経路の途中の MTU を知る仕組み、止めてよい ICMP と止めてはいけない ICMP を、RFC と説明書で確かめた"
+description: "ICMP は、IP の通信がうまくいかなかったことを送り元に知らせる。ping と tracepath の仕組み、経路の MTU を知る仕組み、全部止めると大きな通信だけが止まる理由と、止めてよい種類を RFC で確かめた。"
+excerpt: "ICMP は IP の失敗と診断の知らせ。Time Exceeded で途中のルーターが、Packet Too Big で経路の MTU が分かる。全部止めると Path MTU Discovery が壊れ、ping は通るのに大きな通信だけが止まる。"
+date: 2026-11-07T16:00:00Z
+pillar: defense
+pick: 6            # おすすめの順。ルーティングの記事の「Time Exceeded」「tracepath」から広げた。仮の順。ムートンが決めたら直す
+related: ["routing", "tcp-udp"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。ルーティングの記事に出てきた「Time Exceeded」「tracepath」から広げた（docs「読む順と、記事の広げ方」の3）
+---
+<p>ICMP は、IP のパケットが届かなかったことや途中で捨てられたことを、送り元に知らせる仕組みだ。ping と tracepath はこの知らせで届くかどうかと道筋を調べ、OS は同じ知らせで経路の途中の MTU（一度に運べる大きさ）を知る。だから ICMP を全部止めると、小さな通信は通るのに大きな通信だけが止まることがある。<a href="routing.html">ルーティングの記事</a>に出てきた「時間切れ（Time Exceeded）」と tracepath の続きとして、RFC と説明書で確かめた。例のアドレスは文書用の範囲とプライベートアドレスだけを使う<a href="#ref-1">[1]</a>。</p>
+
+<h2>ICMP は、IP の失敗を送り元へ知らせる</h2>
+<p>ICMP（Internet Control Message Protocol）は、IP の通信で起きた問題を、問題が起きた場所から送り元へ返すための決まりだ。RFC 792 は、ICMP を IP の一部で、どの IP の実装も持たなければならないものとしている<a href="#ref-2">[2]</a>。IPv6 には同じ役目の ICMPv6 があり、RFC 4443 が決めている<a href="#ref-3">[3]</a>。</p>
+<p>ICMP は IP を確かなものにする仕組みではない。RFC 792 は、パケットが届くことも、知らせが返ることも約束されない、と書いている<a href="#ref-2">[2]</a>。知らせが返らないことは、問題がないことを意味しない。</p>
+<p>知らせには、それを引き起こしたパケットの頭の部分が入る。IPv4 では元の IP ヘッダーとそのあとの8バイトで、TCP や UDP ならここにポート番号が入るので、受け取った OS はどの通信への知らせかを見分けられる<a href="#ref-2">[2]</a>。知らせが知らせを呼び続けないよう、ICMP のエラーの知らせや、ブロードキャストあてのパケットへの返事としては、エラーの知らせを送らない決まりもある<a href="#ref-4">[4]</a>。</p>
+
+<h2>よく出る知らせは、四つ</h2>
+<p>ICMP の知らせは、種類（Type）と、その中の細かい理由（Code）の二つの数で表す。ICMPv6 では、Type が 0〜127 ならエラーの知らせ、128〜255 なら情報の知らせだ<a href="#ref-2">[2]</a><a href="#ref-3">[3]</a>。よく使うのは次の四つになる。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主な ICMP の知らせと、IPv4・IPv6 での番号</caption><thead><tr><th scope="col">知らせ</th><th scope="col">IPv4（ICMP）</th><th scope="col">IPv6（ICMPv6）</th><th scope="col">意味</th></tr></thead><tbody>
+<tr><th scope="row">Echo Request／Echo Reply</th><td>Type 8／Type 0</td><td>Type 128／Type 129</td><td>届くかの確かめ（ping）</td></tr>
+<tr><th scope="row">Destination Unreachable</th><td>Type 3（Code 0〜5）</td><td>Type 1（Code 0〜6）</td><td>宛先に届けられない</td></tr>
+<tr><th scope="row">Time Exceeded</th><td>Type 11</td><td>Type 3</td><td>通れるルーターの数の上限を使い切った、など</td></tr>
+<tr><th scope="row">Packet Too Big</th><td>Type 3 の Code 4</td><td>Type 2</td><td>次のリンクの MTU より大きい</td></tr>
+</tbody></table></div>
+<p>IPv4 には Packet Too Big という独立した種類がなく、Destination Unreachable の Code 4 が同じ役目をする<a href="#ref-2">[2]</a>。</p>
+
+<h2>ping は、Echo の往復で届くかと時間を測る</h2>
+<p>ping は Echo Request を送り、相手が返す Echo Reply までの往復の時間を測る<a href="#ref-5">[5]</a>。Echo に応える機能は、RFC 1122 がすべてのホストに、RFC 4443 がすべての IPv6 のノードに求めている<a href="#ref-4">[4]</a><a href="#ref-3">[3]</a>。返事には受け取ったデータをそのまま入れ、送り手は識別子と通し番号で、どの問い合わせへの返事かを突き合わせる<a href="#ref-2">[2]</a>。</p>
+<p>iputils の ping は標準で56バイトのデータを送り、ICMP のヘッダー8バイトと合わせて64バイトになる。返事が一つもなければ終了コード 1 で終わる<a href="#ref-5">[5]</a>。</p>
+<p>ただし、返事がないことは、相手がいないことと同じではない。Linux には Echo Request をすべて無視する設定（<code>icmp_echo_ignore_all</code>）があり<a href="#ref-6">[6]</a>、RFC 4890 は、IPv4 ではスキャンの危険を減らすためにファイアウォールで Echo Request を落とすことがよく行われてきた、と書いている<a href="#ref-7">[7]</a>。</p>
+
+<h2>届かない理由は、Destination Unreachable のコードに出る</h2>
+<p>宛先に届けられなかったとき、ルーターや宛先のホストは Destination Unreachable を返し、Code で理由を伝える。RFC 792 の Code は、0 がネットワークに届かない、1 がホストに届かない、2 がプロトコルが使えない、3 がポートが使えない、4 が分ける必要があるのに分けるなという印（DF）が立っている、5 がソースルートの失敗で、0・1・4・5 はルーターから、2・3 は宛先のホストから返る<a href="#ref-2">[2]</a>。</p>
+<p>「ポートが使えない」は、宛先までは届いたという意味でもある。RFC 4443 は、UDP のように受け手がいないことを伝える手段をほかに持たない決まりでは、受け手のいないポートあてのパケットにこの知らせを返すべきだとしている<a href="#ref-3">[3]</a>。tracepath は UDP でプローブを送り、説明書の表では、<code>!N</code>・<code>!H</code>・<code>!P</code> がネットワーク・ホスト・プロトコルに届かないこと、<code>!A</code> が管理上の禁止にあたり、宛先に着いたことを示す <code>reached</code> が「接続を断られた（ECONNREFUSED）」にあたる<a href="#ref-8">[8]</a>。</p>
+
+<h2>Time Exceeded で、途中のルーターが分かる</h2>
+<p>Time Exceeded は、パケットが通れるルーターの数の上限（IPv4 の TTL、IPv6 の Hop Limit）を使い切ったときに返る知らせで、tracepath や traceroute はこれで途中のルーターをたどる。RFC 4443 では、Hop Limit を 0 にしたルーターはパケットを捨て、Code 0 の Time Exceeded を返さなければならない<a href="#ref-3">[3]</a>。Code 1 は別の意味で、断片に分けられたパケットを時間内に組み立て直せなかったことを表す<a href="#ref-2">[2]</a>。</p>
+<p>tracepath は1行ごとに、プローブの上限の値、返事をしたルーター、往復の時間を並べ、経路の MTU が変わったところで <code>pmtu</code> の値を出す。最後の行には、見つけた経路の MTU とホップの数をまとめる<a href="#ref-8">[8]</a>。</p>
+<p>途中の行が抜けても、そこで経路が切れているとは限らない。RFC 4443 は、機器が送るエラーの知らせの速さに上限を設けることを求めている<a href="#ref-3">[3]</a>。Linux の IPv4 では標準で Destination Unreachable・Time Exceeded などが制限の対象で、同じ相手への知らせは1000ミリ秒の間隔を空ける<a href="#ref-6">[6]</a>。抜けた行が表すのは、知らせが返らなかったことだけだ。</p>
+
+<h2>経路の MTU は、Packet Too Big で知る</h2>
+<p>経路の MTU（Path MTU）は、経路の途中にあるリンクの MTU のうち、いちばん小さいものだ。RFC 1191 の Path MTU Discovery（PMTUD）では、送り手は DF を立てて送り、途中のルーターは次のリンクに対して大きすぎるパケットを捨てて Destination Unreachable の Code 4 を返す。RFC 1191 は、このとき使われていなかった欄に次のリンクの MTU を入れることを決め、送り手はその値で見込みを下げる<a href="#ref-9">[9]</a>。</p>
+<p>IPv6 では、途中のルーターはパケットを分けず、分けるのは送り元だけだ<a href="#ref-10">[10]</a>。大きすぎるパケットには Packet Too Big が返り、次のリンクの MTU が入る<a href="#ref-3">[3]</a>。IPv6 のリンクは1280バイト以上の MTU を持つ決まりなので<a href="#ref-10">[10]</a>、RFC 8201 は、1280 より小さい値を知らせる Packet Too Big は捨てるとしている<a href="#ref-11">[11]</a>。</p>
+<p>偽の知らせへの備えもある。RFC 1191 と RFC 8201 は、Packet Too Big を理由に見込みを上げてはならないとし、古いパケットや、妨害のために差し込まれた偽物かもしれないことを理由に挙げる。見込みを上げられるかを試すのは知らせから5分以上あとで、10分を勧めている<a href="#ref-9">[9]</a><a href="#ref-11">[11]</a>。</p>
+
+<h2>ICMP を全部止めると、大きな通信だけが止まる</h2>
+<p>PMTUD は大きすぎたという知らせに頼っているので、その知らせが届かないと、送り手は大きなパケットを送り続け、通信が止まる。RFC 2923 はこれを「ブラックホール」と呼び、原因の一つに、ICMP をすべて止めるよう誤って設定されたファイアウォールを挙げている<a href="#ref-12">[12]</a>。</p>
+<p>RFC 2923 によると、接続の最初のやりとりは小さいので通り、ping も通る。大きなデータのパケットだけが届かず、接続は最後にタイムアウトで切れる<a href="#ref-12">[12]</a>。RFC 8201 も、IPv6 で ICMPv6 が止められると、TCP の接続は張れるのにデータを送る段階で止まる、と書いている<a href="#ref-11">[11]</a>。見分けるには、ふつうの ping、MTU いっぱいの ping、同じ大きさで DF を立てた ping を比べ、最後のものだけ失敗するかを見る<a href="#ref-12">[12]</a>。iputils の ping では、<code>-s</code> でデータの大きさを、<code>-M do</code> で DF を立てる送り方を選べる<a href="#ref-5">[5]</a>。</p>
+<p>手当ては、まず止めている設定を直すことだ<a href="#ref-12">[12]</a>。送り手の側には、知らせに頼らない仕組みもある。RFC 4821 の方法は、TCP などが少しずつ大きなパケットを試し、届いたかどうかで経路の MTU を見つけるもので、ICMP を使わずに PMTUD を置き換えることもできる<a href="#ref-13">[13]</a>。RFC 8899 は同じ考え方を UDP のような決まりに広げた<a href="#ref-14">[14]</a>。Linux の TCP では <code>tcp_mtu_probing</code> で、ブラックホールを見つけたときだけ試す（1）か、いつも試す（2）かを選べる<a href="#ref-6">[6]</a>。</p>
+
+<h2>止めてよい ICMP と、止めてはいけない ICMP</h2>
+<p>ICMP を止めるかどうかは、種類ごとに決める。RFC 4890 は、ICMPv6 は IPv6 が動くのに欠かせないので、IPv4 の ICMP の止め方はそのまま当てはまらないとし、ファイアウォールを通り抜ける ICMPv6 の扱いを種類ごとにまとめている<a href="#ref-7">[7]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>RFC 4890 の勧め（ファイアウォールを通り抜ける ICMPv6）</caption><thead><tr><th scope="col">扱い</th><th scope="col">主な知らせ</th></tr></thead><tbody>
+<tr><th scope="row">止めてはいけない</th><td>Destination Unreachable（すべての Code）、Packet Too Big、Time Exceeded（Code 0）、Parameter Problem（Code 1・2）、Echo Request・Echo Reply</td></tr>
+<tr><th scope="row">ふつうは止めない</th><td>Time Exceeded（Code 1）、Parameter Problem（Code 0）</td></tr>
+<tr><th scope="row">理由がなければ止める</th><td>Node Information Query・Response（Type 139・140）、Router Renumbering（Type 138）、実験用の Type 100・101・200・201</td></tr>
+</tbody></table></div>
+<p>Echo が「止めてはいけない」に入るのは、IPv6 のアドレスの空間がとても広く、推測しやすい割り当て方をしていなければ、スキャンで相手を探すのが IPv4 よりずっと難しいからだ、と RFC 4890 は説明している<a href="#ref-7">[7]</a>。Neighbor Solicitation など同じリンクの中で使う知らせは、ルーターを越えないので通り抜けの規則では特別に扱わなくてよいが、ファイアウォール自身あてのものを止めると、その機器が IPv6 で通信できなくなる<a href="#ref-7">[7]</a>。IPv4 では、少なくとも Destination Unreachable の Code 4 を止めると PMTUD が壊れ、ブラックホールになる<a href="#ref-12">[12]</a>。</p>
+
+<h2>偵察とトンネルは、ふだんとの違いで見つける</h2>
+<p>ICMP は、攻撃の下調べと隠れたやりとりにも使われる。攻撃の手口をまとめた MITRE ATT&amp;CK は、ネットワークの中のほかの機器を探す手口（T1018）の例に ping を挙げている<a href="#ref-15">[15]</a>。また、アプリケーションの層ではない決まりでの通信（T1095）の例に ICMP を挙げ、TCP や UDP ほど見張られていないことが多く、通信を隠すのに使われうる、と書いている<a href="#ref-16">[16]</a>。RFC 4443 では、Echo に入れられるデータの量に制限がない<a href="#ref-3">[3]</a>。RFC 4890 は、エラーの知らせの中身を使った隠れたやりとりには、中身が正当な通信に対応しているかを深く調べることで備えられる、としている<a href="#ref-7">[7]</a>。</p>
+<p>ログでの手がかりは、ふだんの形からのずれだ。一つの機器から多くのアドレスへの Echo Request が短い時間に並ぶこと、外の一つのアドレスとの Echo が長く続くこと、データの大きさがふだんの ping と違うこと、などが候補になる。どれもそれだけで攻撃とは決まらず、監視の道具も同じ形の通信を出すので、ふだんの量と相手を知っておくことが前提だ。tcpdump では <code>icmp[icmptype] != icmp-echo and icmp[icmptype] != icmp-echoreply</code> で ping 以外の ICMP だけを選べる<a href="#ref-17">[17]</a>。</p>
+<p>偽のエラーの知らせで TCP の接続を切ったり遅くしたりする攻撃もある。RFC 5927 は対策として、知らせの中の TCP の通し番号が、送ったがまだ確認されていない範囲にあるかを確かめる方法を挙げ、Linux には長く入っているとしている<a href="#ref-18">[18]</a>。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>ICMP の観察は、自分の機器と自分のネットワークの中だけで行う。他人の機器やネットワークへ、許可なく大量の ping や調べるためのパケットを送らない。</p>
+<p>家のルーターが 192.168.1.1 なら、<code>ping -c 4 192.168.1.1</code> で4回だけ送って往復を見る<a href="#ref-5">[5]</a>。IPv4 で MTU が1500のリンクなら、IP のヘッダー20バイトと ICMP のヘッダー8バイトを引いた1472バイトが、分けずに送れるデータの上限になる。<code>ping -M do -s 1472 -c 3 192.168.1.1</code> は1500バイトのパケットになり、<code>-s 1473</code> にすると、DF を立てているので手元の OS が大きすぎるとして送らない<a href="#ref-5">[5]</a>。IPv6 は固定のヘッダーが40バイトなので<a href="#ref-10">[10]</a>、上限は1452バイトになる。経路の MTU は、tracepath の <code>pmtu</code> の表示で見られる<a href="#ref-8">[8]</a>。</p>
+<p>ブラックホールは、ラボで作ると分かりやすい。Linux のネットワーク名前空間は、経路表・ファイアウォールの規則・ネットワーク機器をそれぞれに持つ、ネットワークの仕組みの写しで<a href="#ref-19">[19]</a>、1台のパソコンの中に送り手・ルーター・受け手を作れる。文書用のアドレス（192.0.2.0/24 など）を振り、ルーターと受け手のあいだだけ MTU を小さくして、ラボのルーターで Destination Unreachable の Code 4 だけを落とす。ping と大きな転送を比べれば RFC 2923 の形を手元で試せ、送り手の <code>tcp_mtu_probing</code> を 1 にしたときの違いも比べられる<a href="#ref-6">[6]</a>。tcpdump で <code>icmp</code> を見ていれば、知らせが行き来する様子と、落とされて届かない様子が分かる<a href="#ref-17">[17]</a>。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Postel（1981）RFC 792 Internet Control Message Protocol（Destination Unreachable・Time Exceeded・Echo）。<a href="https://www.rfc-editor.org/rfc/rfc792">RFC Editor</a></li>
+<li id="ref-3">Conta・Deering・Gupta 編（2006）RFC 4443 Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification。<a href="https://www.rfc-editor.org/rfc/rfc4443">RFC Editor</a></li>
+<li id="ref-4">Braden 編（1989）RFC 1122 Requirements for Internet Hosts -- Communication Layers（3.2.2 節 ICMP）。<a href="https://www.rfc-editor.org/rfc/rfc1122">RFC Editor</a></li>
+<li id="ref-5">iputils「ping」の説明書（GitHub の原稿）。<a href="https://github.com/iputils/iputils/blob/master/doc/ping.xml">GitHub</a></li>
+<li id="ref-6">Linux カーネルの文書「IP Sysctl」（<code>icmp_echo_ignore_all</code>・<code>icmp_ratelimit</code>・<code>icmp_ratemask</code>・<code>tcp_mtu_probing</code>）。<a href="https://github.com/torvalds/linux/blob/master/Documentation/networking/ip-sysctl.rst">GitHub</a></li>
+<li id="ref-7">Davies・Mohacsi（2007）RFC 4890 Recommendations for Filtering ICMPv6 Messages in Firewalls。<a href="https://www.rfc-editor.org/rfc/rfc4890">RFC Editor</a></li>
+<li id="ref-8">iputils「tracepath」の説明書（GitHub の原稿）。<a href="https://github.com/iputils/iputils/blob/master/doc/tracepath.xml">GitHub</a></li>
+<li id="ref-9">Mogul・Deering（1990）RFC 1191 Path MTU Discovery。<a href="https://www.rfc-editor.org/rfc/rfc1191">RFC Editor</a></li>
+<li id="ref-10">Deering・Hinden（2017）RFC 8200 Internet Protocol, Version 6 (IPv6) Specification（断片化と最小の MTU）。<a href="https://www.rfc-editor.org/rfc/rfc8200">RFC Editor</a></li>
+<li id="ref-11">McCann・Deering・Mogul・Hinden 編（2017）RFC 8201 Path MTU Discovery for IP version 6。<a href="https://www.rfc-editor.org/rfc/rfc8201">RFC Editor</a></li>
+<li id="ref-12">Lahey（2000）RFC 2923 TCP Problems with Path MTU Discovery（2.1 節 Black Hole Detection）。<a href="https://www.rfc-editor.org/rfc/rfc2923">RFC Editor</a></li>
+<li id="ref-13">Mathis・Heffner（2007）RFC 4821 Packetization Layer Path MTU Discovery。<a href="https://www.rfc-editor.org/rfc/rfc4821">RFC Editor</a></li>
+<li id="ref-14">Fairhurst ほか（2020）RFC 8899 Packetization Layer Path MTU Discovery for Datagram Transports。<a href="https://www.rfc-editor.org/rfc/rfc8899">RFC Editor</a></li>
+<li id="ref-15">MITRE ATT&amp;CK「Remote System Discovery（T1018）」。<a href="https://attack.mitre.org/techniques/T1018/">MITRE ATT&amp;CK</a></li>
+<li id="ref-16">MITRE ATT&amp;CK「Non-Application Layer Protocol（T1095）」。<a href="https://attack.mitre.org/techniques/T1095/">MITRE ATT&amp;CK</a></li>
+<li id="ref-17">tcpdump／libpcap「pcap-filter」の説明書（GitHub の原稿）。<a href="https://github.com/the-tcpdump-group/libpcap/blob/master/pcap-filter.manmisc.in">GitHub</a></li>
+<li id="ref-18">Gont（2010）RFC 5927 ICMP Attacks against TCP。<a href="https://www.rfc-editor.org/rfc/rfc5927">RFC Editor</a></li>
+<li id="ref-19">iproute2「ip-netns」の説明書（GitHub の原稿）。<a href="https://github.com/iproute2/iproute2/blob/main/man/man8/ip-netns.8.in">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}
