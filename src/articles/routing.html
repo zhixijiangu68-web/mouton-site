@@ -1,0 +1,97 @@
+---
+layout: renewal-article.njk
+title: "ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる — ムートン"
+headline: "ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる"
+subtitle: "ルーターが経路を選ぶ決まり、AS と BGP、経路の乗っ取りと漏えいの事例、RPKI による確かめ方を、RFC と公式の記録で確かめた"
+description: "ルーターは、宛先にいちばん長く一致する経路を選ぶ。BGP はもともと、届いた経路の申告を確かめない。この二つが重なると経路の乗っ取りが起きる。ルーティングの決まり、事例、RPKI による確かめ方を RFC で確かめた。"
+excerpt: "ルーターは宛先ごとに次の行き先だけを決め、重なる経路ではいちばん細かいものを選ぶ。BGP は届いた申告を確かめずに使う設計だったため、乗っ取りと漏えいが起きてきた。RPKI は、申告した AS が正しいかを確かめる。"
+date: 2026-11-06T12:00:00Z
+pillar: defense
+pick: 1            # おすすめの順（1が先頭）。オーナー「最初にルーティングについての記事を作る」で、SIEM の3本より前に置いた。仮の順。ムートンが決めたら直す
+related: ["ip-address", "siem"]
+changes:
+  - date: 2026-11-06
+    note: 下書き。オーナー「最初にルーティングについての記事を作る」
+---
+<p>ルーターは、届いたパケットの宛先を経路表と照らし、いちばん長く一致する経路を選んで、次のルーターへ渡す。インターネットの組織と組織のあいだで経路を教え合う BGP は、もともと、届いた経路の申告が正しいかを確かめない。この二つが重なると、他人のアドレスあての通信を自分のほうへ流させる「経路の乗っ取り」が起きる。この記事は、ルーティングの決まりと、乗っ取りと漏えいの事例と、RPKI による確かめ方を、RFC と公式の記録で確かめたものだ。例のアドレスと AS 番号は、文書のために取ってあるもの（192.0.2.0/24・198.51.100.0/24・203.0.113.0/24、AS64496〜64511）を使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
+
+<h2>ルーターは、次の行き先だけを決める</h2>
+<p>ルーターは、パケットを最後の宛先まで運ぶ道筋をまとめて決めるのではなく、宛先ごとに「次にどのルーターへ渡すか」だけを決める。手がかりは経路表（ルーティングテーブル）で、宛先のアドレスの範囲（プレフィックス。203.0.113.0/24 のように、先頭から何ビットが同じかで範囲を表す。読み方は<a href="ip-address.html">IP アドレスの記事</a>に書いた）と、次に渡す相手（ネクストホップ）の組が並んでいる。どれにも当てはまらない宛先のために、0.0.0.0/0 という「ほかの全部」を表す経路（デフォルトルート）を置く。CIDR の決まりを書いた RFC 4632 は、この 0.0.0.0/0 をデフォルトルートとして使い、どの実装も受け付けなければならないとしている<a href="#ref-3">[3]</a>。</p>
+<p>パケットには、通れるルーターの数の上限も書かれている。IPv6 の決まり（RFC 8200）では、この欄（Hop Limit）は転送するたびに1ずつ減らされ、0 になったパケットは捨てられる<a href="#ref-4">[4]</a>。IPv4 では同じ役目の欄を TTL と呼ぶ。経路がぐるぐる回る誤りがあっても、パケットがいつまでも回り続けないための仕組みだ。</p>
+<p>上限を0にしたルーターは、パケットを捨てたうえで、送り元へ「時間切れ（Time Exceeded）」の知らせを返す。ICMPv6 の決まり（RFC 4443）は、これをルーターがしなければならないこととし、経路の回り続けか、上限の初めの値が小さすぎることを示す、としている<a href="#ref-5">[5]</a>。上限を 1、2、3 と増やしながらパケットを送れば、上限が尽きたところのルーターから順に知らせが返ってくるので、途中のルーターが分かる。Linux の tracepath や traceroute は、宛先までの道筋をこうしてたどって表示する道具だ<a href="#ref-6">[6]</a>。</p>
+
+<h2>重なる経路では、いちばん長く一致するものが勝つ</h2>
+<p>宛先に当てはまる経路がいくつもあるとき、ルーターはプレフィックスがいちばん長いもの、つまりいちばん細かい範囲の経路を選ぶ。RFC 4632 は「インターネットでの転送は、最長一致（longest-match）で行われる」と書いている<a href="#ref-3">[3]</a>。</p>
+<p>たとえば、経路表に三つの経路があるとする。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>宛先 198.51.100.200 に当てはまる経路</caption><thead><tr><th scope="col">経路</th><th scope="col">表す範囲</th><th scope="col">選ばれるか</th></tr></thead><tbody>
+<tr><th scope="row">0.0.0.0/0</th><td>すべてのアドレス（デフォルトルート）</td><td>当てはまるが、いちばん粗い</td></tr>
+<tr><th scope="row">198.51.100.0/24</th><td>198.51.100.0〜198.51.100.255 の256個</td><td>当てはまるが、もっと細かい経路がある</td></tr>
+<tr><th scope="row">198.51.100.128/25</th><td>198.51.100.128〜198.51.100.255 の128個</td><td>選ばれる（いちばん長く一致する）</td></tr>
+</tbody></table></div>
+<p>宛先の 198.51.100.200 は三つの範囲のどれにも入るが、/25 の経路がいちばん細かいので、パケットは /25 の経路のネクストホップへ渡される。宛先が 198.51.100.20 なら、/25 の範囲から外れるので、/24 の経路が選ばれる。</p>
+<p>Linux では、<code>ip route</code> で経路表を、<code>ip route get</code> に宛先を渡すと、その宛先にどの経路が使われるかを表示できる。iproute2 の説明書は、<code>get</code> は実際にその宛先へパケットを送るのと同じ選び方をする、としている<a href="#ref-7">[7]</a>。</p>
+
+<h2>経路表は、手で書くか、ルーター同士が教え合う</h2>
+<p>経路表の中身は、管理する人が手で書く（静的経路）か、ルーター同士がルーティングプロトコルで教え合って作る（動的経路）。小さなネットワークなら手で書けるが、つながる先が増えると、教え合う仕組みが要る。</p>
+<p>教え合う仕組みは、一つの組織の中と、組織と組織のあいだで分かれる。単位になるのが AS（自律システム）だ。BGP の決まり（RFC 4271）は、AS を古典的な定義として「一つの技術的な管理のもとにあるルーターの集まり」とし、中では内部のルーティングプロトコル（OSPF など）で、ほかの AS へは AS のあいだのルーティングプロトコルで経路を決める、と書いている<a href="#ref-8">[8]</a>。インターネットの AS のあいだで使われているのが BGP で、同じ RFC は、BGP の主な役目を「ネットワークへの到達の情報を、ほかの BGP のシステムとやりとりすること」とし、その情報には経路が通ってきた AS の並び（AS パス）が含まれる、としている<a href="#ref-8">[8]</a>。</p>
+<p>BGP で同じ宛先への経路が複数届いたとき、どれを使うかは距離だけでは決まらない。オープンソースのルーティングソフト FRRouting（FRR）の説明では、選び方は上から順に、管理者が付けた重み、ローカルプリファレンス（その AS の方針で付ける優先度）、自分で作った経路かどうか、と続き、AS パスの短さはそのあとに来る<a href="#ref-9">[9]</a>。どの相手から来た経路を好むかという、組織と組織の取り決めが先に効く。</p>
+
+<h2>BGP は、届いた申告を確かめずに使う</h2>
+<p>BGP は、隣の AS から届いた「この範囲は、この AS の先にある」という申告を、そのまま経路表に入れて、さらに隣へ伝える。申告した AS が、本当にそのアドレスを使ってよいのかを確かめる仕組みは、BGP そのものには入っていない。</p>
+<p>RFC 4632 は、セキュリティの節で、最長一致がこの弱さを強めると書いている。ある宛先について、ふだん広告されている範囲より細かいプレフィックスを広告すれば、通信を乗っ取れる。いちばん長く一致する経路が選ばれるので、細かい偽の経路のほうへ通信が流れるからだ。RFC 4632 が挙げる手当ては、事業者のあいだの信頼関係と、事業者の境目での強い経路のフィルターで、受け取るプレフィックスの長さに上限を設けるフィルターや、隣から受け取る経路の数に上限を設ける設定にも触れている<a href="#ref-3">[3]</a>。</p>
+<p>悪意がなくても、同じことは起きる。設定の誤りで、届けるはずのない経路を広告してしまうことがある。経路が、取り決めで決まった範囲を越えて伝わることを、RFC 7908 は「経路の漏えい（route leak）」と定義している<a href="#ref-10">[10]</a>。</p>
+
+<h2>乗っ取りと漏えいは、実際に起きてきた</h2>
+<p>経路の乗っ取りと漏えいは、大きなサービスが届かなくなる形で、何度も起きている。</p>
+<p>2008年2月24日、パキスタン・テレコム（AS17557）が、YouTube のアドレスの一部 208.65.153.0/24 を広告した。YouTube が広告していたのは、それを含むより粗い 208.65.152.0/22 で、細かい /24 のほうが選ばれた。上流の PCCW Global（AS3491）がこの経路をそのまま伝え、世界の多くの場所で YouTube への通信がパキスタン・テレコムへ流れた。RIPE NCC の事例の記録によると、偽の経路は約2時間後に取り下げられた<a href="#ref-11">[11]</a>。</p>
+<p>2017年8月25日の正午すぎには、日本で大規模なインターネットの接続障害が起きた。総務省の電気通信事故検証会議の報告によると、発端は、Google が設定の誤りで、本来配るはずではなかった経路の情報を配ったことだった。報告は対策として、誤って送られた経路を受け取らないことと、要らない経路を送らないこと、事業者のあいだで障害の情報を共有すること、利用者に知らせることを挙げている<a href="#ref-12">[12]</a>。</p>
+<p>2024年6月27日には、Cloudflare の公開 DNS サービス 1.1.1.1 が、一部の場所から届かなくなった。Cloudflare の報告によると、Eletronet（AS267613）が 1.1.1.1/32 を広告した乗っ取りと、別の AS による 1.1.1.0/24 の経路の漏えいが重なった。Cloudflare が広告していたのは /24 で、/32 はそれより細かい。報告は、ROA で経路に署名し、ROV を正しく実施しているネットワークでは、乗っ取りの影響が大きく抑えられた、としている<a href="#ref-13">[13]</a>。</p>
+
+<h2>RPKI は、申告した AS が正しいかを確かめる</h2>
+<p>RPKI（Resource Public Key Infrastructure）は、IP アドレスと AS 番号の割り当てを電子署名で証明する仕組みだ。RFC 6480 は、その最初の使い道として、アドレスを正しく持っている者が、そのアドレスへの経路を広告してよい AS を、確かめられる形で認めることを挙げている<a href="#ref-14">[14]</a>。この「認めた」という署名付きのデータが ROA（Route Origin Authorization）で、プレフィックス、広告してよい最大の長さ、AS 番号を持つ<a href="#ref-15">[15]</a>。</p>
+<p>ルーターの側で、届いた経路を ROA と照らすのが ROV（Route Origin Validation）だ。RFC 6811 は結果を三つに分ける。経路の範囲を含む ROA がなければ NotFound、範囲・最大の長さ・AS 番号まで合う ROA があれば Valid、範囲を含む ROA はあるのにどれとも合わなければ Invalid だ<a href="#ref-16">[16]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>ROA「203.0.113.0/24、最大の長さ 24、AS64500」があるときの判定</caption><thead><tr><th scope="col">届いた経路</th><th scope="col">判定</th><th scope="col">理由</th></tr></thead><tbody>
+<tr><th scope="row">203.0.113.0/24、AS64500 が広告</th><td>Valid</td><td>範囲・長さ・AS 番号が ROA と合う</td></tr>
+<tr><th scope="row">203.0.113.0/25、AS64511 が広告</th><td>Invalid</td><td>範囲は ROA に含まれるが、長さが最大を超え、AS 番号も違う</td></tr>
+<tr><th scope="row">198.51.100.0/24、AS64511 が広告</th><td>NotFound</td><td>この範囲を含む ROA がない</td></tr>
+</tbody></table></div>
+<p>表の2行目が、細かい経路による乗っ取りの形にあたる。ROV で Invalid の経路を捨てるルーターは、この経路を使わない。ただし、確かめる設定を入れただけでは捨てない製品もある。FRR の説明では、RPKI を有効にしても、標準では経路の選び方は変わらず、Invalid の経路も候補に残る。捨てるには、そう設定する<a href="#ref-17">[17]</a>。</p>
+<p>ROV が確かめるのは、経路を最初に広告した AS（起点）だけだ。途中の AS の並びが正しいかは確かめない。AS パスの一つひとつに署名を付ける BGPsec（RFC 8205）<a href="#ref-18">[18]</a>や、隣の AS との関係（お客さん・上流・対等）を BGP の中で取り決めて、漏えいを防ぎ見つける仕組み（RFC 9234）<a href="#ref-19">[19]</a>が、別に決められている。ROA を作るのはアドレスを持つ側、ROV をするのは経路を受け取る側で、両方がそろって初めて効く。</p>
+
+<h2>自分のラボで試す</h2>
+<p>ルーティングは、自分のパソコンの中の仮想マシンやコンテナで、ルーターを何台か動かして学べる。試すのは自分の環境の中だけにする。ラボの BGP を、インターネットにつながる本物の BGP の相手とつながないこと、他人のアドレスを広告しないことが前提だ。</p>
+<p>手元の経路表は、Linux の <code>ip route</code> と <code>ip route get</code> で見られる<a href="#ref-7">[7]</a>。FRR は、BGP・OSPF・IS-IS などを実装したフリーソフトで、Linux や BSD で動く<a href="#ref-20">[20]</a>。containerlab は、コンテナのルーターを並べ、そのあいだの配線を作って、ラボの構成を組み立てる道具だ<a href="#ref-21">[21]</a>。FRR のルーターを2〜3台つなぎ、文書用の AS 番号で BGP を張れば、経路が伝わる様子と、最長一致で選ばれる経路を確かめられる。</p>
+<p>RPKI も、ラボの中で試せる。Routinator は、RPKI のデータを取ってきて検証し、その結果をルーターに渡す（RTR）機能を持つオープンソースのソフトだ<a href="#ref-22">[22]</a>。FRR は RTR で検証の結果を受け取り、経路ごとに Valid・Invalid・NotFound を判定できる<a href="#ref-17">[17]</a>。ラボで細かい偽の経路を流し、ROV を入れる前と入れたあとで、どの経路が選ばれるかを比べると、この記事の二つの決まりが目で見える。</p>
+<p>ルーティングは、SIEM で見るログの通り道でもある。ログを集めて読む仕組みは<a href="siem.html">SIEM の記事</a>に書いた。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Huston（2008）RFC 5398 Autonomous System (AS) Number Reservation for Documentation Use。<a href="https://www.rfc-editor.org/rfc/rfc5398">RFC Editor</a></li>
+<li id="ref-3">Fuller・Li（2006）RFC 4632 Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan（5.1 節の転送の決まり、12 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc4632">RFC Editor</a></li>
+<li id="ref-4">Deering・Hinden（2017）RFC 8200 Internet Protocol, Version 6 (IPv6) Specification（Hop Limit）。<a href="https://www.rfc-editor.org/rfc/rfc8200">RFC Editor</a></li>
+<li id="ref-5">Conta・Deering・Gupta 編（2006）RFC 4443 Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification（Time Exceeded）。<a href="https://www.rfc-editor.org/rfc/rfc4443">RFC Editor</a></li>
+<li id="ref-6">iputils「tracepath」の説明書（GitHub の原稿）。<a href="https://github.com/iputils/iputils/blob/master/doc/tracepath.xml">GitHub</a></li>
+<li id="ref-7">iproute2「ip-route」の説明書（<code>ip route get</code>）。<a href="https://github.com/iproute2/iproute2/blob/main/man/man8/ip-route.8.in">GitHub</a></li>
+<li id="ref-8">Rekhter・Li・Hares 編（2006）RFC 4271 A Border Gateway Protocol 4 (BGP-4)。<a href="https://www.rfc-editor.org/rfc/rfc4271">RFC Editor</a></li>
+<li id="ref-9">FRRouting ドキュメント「BGP」の「Route Selection」（GitHub の原稿）。<a href="https://github.com/FRRouting/frr/blob/master/doc/user/bgp.rst">GitHub</a></li>
+<li id="ref-10">Sriram ほか（2016）RFC 7908 Problem Definition and Classification of BGP Route Leaks。<a href="https://www.rfc-editor.org/rfc/rfc7908">RFC Editor</a></li>
+<li id="ref-11">RIPE NCC「YouTube Hijacking: A RIPE NCC RIS case study」（2008）。<a href="https://www.ripe.net/publications/news/youtube-hijacking-a-ripe-ncc-ris-case-study/">RIPE NCC</a></li>
+<li id="ref-12">総務省 電気通信事故検証会議（2017）「平成29年8月に発生した大規模なインターネット接続障害に関する検証報告」。<a href="https://www.soumu.go.jp/main_content/000523153.pdf">総務省（PDF）</a></li>
+<li id="ref-13">Cloudflare「Cloudflare 1.1.1.1 incident on June 27, 2024」（2024年7月4日）。<a href="https://blog.cloudflare.com/cloudflare-1111-incident-on-june-27-2024/">Cloudflare</a></li>
+<li id="ref-14">Lepinski・Kent（2012）RFC 6480 An Infrastructure to Support Secure Internet Routing。<a href="https://www.rfc-editor.org/rfc/rfc6480">RFC Editor</a></li>
+<li id="ref-15">Lepinski・Kent・Kong（2012）RFC 6482 A Profile for Route Origin Authorizations (ROAs)。<a href="https://www.rfc-editor.org/rfc/rfc6482">RFC Editor</a></li>
+<li id="ref-16">Mohapatra ほか（2013）RFC 6811 BGP Prefix Origin Validation。<a href="https://www.rfc-editor.org/rfc/rfc6811">RFC Editor</a></li>
+<li id="ref-17">FRRouting ドキュメント「Prefix Origin Validation Using RPKI」（GitHub の原稿）。<a href="https://github.com/FRRouting/frr/blob/master/doc/user/rpki.rst">GitHub</a></li>
+<li id="ref-18">Lepinski・Sriram 編（2017）RFC 8205 BGPsec Protocol Specification。<a href="https://www.rfc-editor.org/rfc/rfc8205">RFC Editor</a></li>
+<li id="ref-19">Azimov ほか（2022）RFC 9234 Route Leak Prevention and Detection Using Roles in UPDATE and OPEN Messages。<a href="https://www.rfc-editor.org/rfc/rfc9234">RFC Editor</a></li>
+<li id="ref-20">FRRouting「README」。<a href="https://github.com/FRRouting/frr">GitHub</a></li>
+<li id="ref-21">containerlab「README」。<a href="https://github.com/srl-labs/containerlab">GitHub</a></li>
+<li id="ref-22">NLnet Labs「Routinator」（README）。<a href="https://github.com/NLnetLabs/routinator">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}
