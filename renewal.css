@@ -122,6 +122,7 @@ body.rn { margin: 0; background: var(--paper); color: var(--ink); font-family: v
 .rn-verdicts tbody th { font-weight: 700; }
 .rn-verdicts td:nth-child(3) { white-space: nowrap; }
 .rn-verdict { white-space: nowrap; font-weight: 900; }
+.rn-nowrap { white-space: nowrap; }
 .is-support { color: var(--ai); }
 .is-refute { color: var(--shu); }
 .is-weak, .is-none { color: var(--mark); }

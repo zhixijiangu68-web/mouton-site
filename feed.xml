@@ -7,6 +7,13 @@
   <description>ムートンのセキュリティの個人研究ノート。演習・CTF の記録、公開された脆弱性と事件の読み解き、身の回りを守る手順を、学んだ順に置いていく。攻撃の技術は、自分の環境と許可された演習の中だけで試す。</description>
   <language>ja</language>
   <item>
+    <title>/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</title>
+    <link>https://moutonarchive.com/ip-address.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ip-address.html</guid>
+    <pubDate>Sat, 07 Nov 2026 12:00:00 +0000</pubDate>
+    <description>IP アドレスは32ビット（IPv6 は128ビット）の数で、/24 のようなプレフィックスは先頭の何ビットが同じかで範囲を表す。二進数での読み方、特別な範囲、許可リストやログでの読み違いを RFC で確かめた。</description>
+  </item>
+  <item>
     <title>ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる</title>
     <link>https://moutonarchive.com/routing.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/routing.html</guid>

@@ -11,6 +11,7 @@
 // 2026-11-06 オーナー「最初にルーティングについての記事を作る」：ルーティングを SIEM の3本より前に置く。
 export default [
   'routing',
+  'ip-address',
   'siem',
   'siem-detection',
   'siem-ecosystem',
