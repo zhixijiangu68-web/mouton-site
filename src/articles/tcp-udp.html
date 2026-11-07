@@ -1,0 +1,105 @@
+---
+layout: renewal-article.njk
+title: "開いているポートの数だけ、外からの入口がある。TCP と UDP とポートの読み方 — ムートン"
+headline: "開いているポートの数だけ、外からの入口がある。TCP と UDP とポートの読み方"
+subtitle: "ポート番号の区分、TCP の3ウェイハンドシェイクと終わり方、UDP の軽さ、ポートスキャンと SYN フラッドの見え方を、RFC と Linux の文書で確かめた"
+description: "IP アドレスは機器を、ポート番号はその中のプログラムを指す。TCP は3回のやり取りで接続を作り、UDP は接続を作らずに送る。ポート番号の区分、ポートスキャンと SYN フラッドのログでの見え方、SYN cookies を RFC で確かめた。"
+excerpt: "IP アドレスが機器を、ポート番号がその中のプログラムを指す。TCP は SYN・SYN-ACK・ACK で接続を作って順番と再送を受け持ち、UDP は接続を作らずに送る。開いているポートは入口になるので、不要なものは閉じ、スキャンと SYN フラッドの見え方を知っておく。"
+date: 2026-11-07T15:00:00Z
+pillar: defense
+pick: 5            # おすすめの順。IP アドレスとルーティングの記事から広げた。仮の順。ムートンが決めたら直す
+related: ["ip-address", "routing"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。IP アドレスの記事とルーティングの記事から、「アドレスの先にあるもの」として広げた（docs「読む順と、記事の広げ方」の3）
+---
+<p>IP アドレスはパケットを機器まで届け、ポート番号はその機器の中のどのプログラムに渡すかを決める。TCP は3回のやり取りで接続を作ってから、順番をそろえ、届かなかった分を送り直す。UDP は接続を作らずに送る。この記事は、<a href="ip-address.html">IP アドレスの記事</a>と<a href="routing.html">ルーティングの記事</a>で見たアドレスと経路の先にある、TCP・UDP・ポートの仕組みと、守る側から見た注意を、RFC と Linux の文書で確かめたものだ。試すのは自分の機器と、許可された演習の環境だけにする。</p>
+
+<h2>ポートは、機器の中のプログラムを指す番号</h2>
+<p>ポート番号は16ビットの数で、0から65535まである。TCP の決まりを書いた RFC 9293 は、TCP はポート番号で、アプリケーションのサービスを見分け、同じ二つの機器のあいだの別々の通信を分けると書いている<a href="#ref-1">[1]</a>。UDP も、ヘッダーの最初に送り元と宛先のポートを持つ<a href="#ref-2">[2]</a>。</p>
+<p>一つの通信は、送り元と宛先の IP アドレス、送り元と宛先のポート番号、プロトコル（TCP か UDP か）の五つの組で決まる<a href="#ref-3">[3]</a>。たとえば 192.0.2.10 の機器のブラウザが 198.51.100.20 のウェブサーバーにつなぐとき、宛先は 198.51.100.20 の 443番、送り元は 192.0.2.10 の、機器が自動で選んだ番号になる。自動で選ばれる送り元のポートは、エフェメラルポートと呼ばれる<a href="#ref-4">[4]</a>。</p>
+
+<h2>ポート番号は、三つの範囲に分かれている</h2>
+<p>ポート番号の割り当ては IANA が管理し、RFC 6335 がその手順と範囲を決めている<a href="#ref-3">[3]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>ポート番号の三つの範囲（RFC 6335）</caption><thead><tr><th scope="col">範囲</th><th scope="col">名前</th><th scope="col">割り当て</th></tr></thead><tbody>
+<tr><th scope="row">0〜1023</th><td>System Ports（Well Known Ports）</td><td>IANA が割り当てる。IETF の審査か IESG の承認が要り、いちばん条件が厳しい</td></tr>
+<tr><th scope="row">1024〜49151</th><td>User Ports（Registered Ports）</td><td>IANA が割り当てる。申し込む側は使い道を書く</td></tr>
+<tr><th scope="row">49152〜65535</th><td>Dynamic Ports（Private・Ephemeral Ports）</td><td>割り当てない。機器の中で自由に使う</td></tr>
+</tbody></table></div>
+<p>Linux では、1024未満のポートで待ち受けられるのは特権を持つプログラム（CAP_NET_BIND_SERVICE の権限）だけだ<a href="#ref-5">[5]</a>。この境目は設定 <code>ip_unprivileged_port_start</code> で変えられ、初期値は1024だ<a href="#ref-6">[6]</a>。送り元のポートを選ぶ範囲 <code>ip_local_port_range</code> の初期値は32768〜60999で<a href="#ref-6">[6]</a>、IANA の Dynamic Ports とは一致しない。RFC 6056 は、外の攻撃者に番号を当てられにくくするため、送り元のポートはできるだけ広い範囲から、予測しにくい方法で選ぶよう勧めている<a href="#ref-4">[4]</a>。</p>
+<p>番号は約束ごとで、中身の証明ではない。RFC 6335 は、割り当てられたポートに通信が流れていても、それがよい通信だとも、そのサービスの通信だとも限らないと書き、ファイアウォールの設定は番号ではなく通信の中身の知識で決めるよう求めている<a href="#ref-3">[3]</a>。</p>
+
+<h2>TCP は、3回のやり取りで接続を始める</h2>
+<p>TCP は、データを送る前に、両側がそれぞれの最初の番号（初期シーケンス番号）を知らせ合い、受け取ったことを確かめる。これを3ウェイハンドシェイクと呼ぶ<a href="#ref-1">[1]</a>。RFC 9293 の例では、次のように進む。</p>
+<ul>
+<li>A が B へ SYN を送る。A の最初の番号は 100</li>
+<li>B が A へ SYN と ACK を一緒に送る。B の最初の番号は 300 で、確認応答の番号 101 は「100 までを受け取った、次は 101」を表す</li>
+<li>A が B へ ACK を送る。確認応答の番号は 301。ここで両側が ESTABLISHED（接続済み）になる</li>
+</ul>
+<p>B の「SYN の確認」と「自分の SYN」が1回にまとまるので、やり取りは3回で済む。RFC 9293 は、こうした確かめ合いが要るのは、ネットワークに残っていた古い SYN が届いたとき、受け取った側にはそれが古いものかを見分ける手段がないからだと説明している<a href="#ref-1">[1]</a>。</p>
+<p>最初の番号の選び方は、守りにも関わる。RFC 9293 は、時間とともに増える値に、接続のアドレスとポートと秘密の鍵から計算した値を足して選ぶよう勧め、その計算は外から求められてはならないとしている。ほかの接続で使われた番号から、この接続の番号を推測されないためだ<a href="#ref-1">[1]</a>。</p>
+
+<h2>TCP は、番号と確認応答で順番をそろえ、送り直す</h2>
+<p>TCP は送るデータの1バイトごとに番号を付け、受け取った側は「ここまで受け取った」を確認応答で返す。RFC 9293 は、TCP の信頼性は、番号で抜けを、チェックサムで誤りを見つけ、送り直して直すことでできていると書く<a href="#ref-1">[1]</a>。</p>
+<p>確認応答は累積で、番号 X の確認応答は「X の手前までをすべて受け取った」という意味になる。送った側は、確認応答が来ないまま一定の時間（再送タイムアウト）が過ぎると、そのデータを送り直す。この時間は回線の状態に合わせて決める<a href="#ref-1">[1]</a>。受け取る側は、ヘッダーの Window の欄で、あと何バイト受け取れるかを知らせ、送る側はその量を超えないように送る。</p>
+<p>TCP が届けるのは、区切りのないバイトの流れだ。アプリケーションが1回で書き込んだデータと、ネットワークを流れる一つひとつの塊（セグメント）の区切りは一致しない<a href="#ref-1">[1]</a>。</p>
+
+<h2>接続は、両方向をそれぞれ閉じて終わる</h2>
+<p>TCP の接続は、両方向をそれぞれ FIN で閉じて終わる。RFC 9293 は、閉じるとは「もう送るデータはない」という意味で、閉じた側も、相手が閉じるまでは受け取り続けられるとしている<a href="#ref-1">[1]</a>。ふつうは、A の FIN、B の ACK、B の FIN、A の ACK の順に進む。</p>
+<p>接続は、その時々の状態を持つ。RFC 9293 が決めている状態は、LISTEN（待ち受け）、SYN-SENT、SYN-RECEIVED、ESTABLISHED、FIN-WAIT-1、FIN-WAIT-2、CLOSE-WAIT、CLOSING、LAST-ACK、TIME-WAIT と、接続がないことを表す CLOSED だ<a href="#ref-1">[1]</a>。先に閉じた側は、最後の ACK を送ったあと TIME-WAIT に入り、パケットが生き残れる最大の時間（MSL）の2倍のあいだ待つ。RFC 9293 は MSL を2分としているので、待つのは4分になる<a href="#ref-1">[1]</a>。遅れて届いた古い接続のパケットを、新しい接続のものと取り違えないための待ち時間だ。</p>
+<p>FIN のほかに、RST で接続をすぐに打ち切る終わり方もある。待ち受けていないポートに SYN が届いたときも、TCP は RST を返す<a href="#ref-1">[1]</a>。</p>
+
+<h2>UDP は、接続を作らずに送る</h2>
+<p>UDP は、接続を作らずに、一つひとつのデータ（データグラム）をそのまま送る。1980年の RFC 768 は、UDP は最小限の仕組みでメッセージを送るもので、届くことも重複しないことも約束しないと書き、順番どおりの確かな配達が要るなら TCP を使うよう書いている<a href="#ref-2">[2]</a>。</p>
+<p>ヘッダーは、送り元のポート、宛先のポート、長さ、チェックサムの四つで、全部で8バイトしかない。送り元のポートは省略でき、使わないときは0を入れる<a href="#ref-2">[2]</a>。TCP のヘッダーは、決まった部分だけで20バイトある<a href="#ref-1">[1]</a>。</p>
+<p>UDP の使い方の指針である RFC 8085 は、UDP は失われたパケットを送り直さず、重複を防がず、順番もそろえないので、必要ならアプリケーションの側で用意する、としている<a href="#ref-7">[7]</a>。接続を作って閉じる手間がないぶん、軽い。TIME-WAIT のような仕組みもない<a href="#ref-7">[7]</a>。</p>
+<p>同じ RFC は、短い問い合わせに大きな答えを返すアプリケーションは、増幅攻撃に使われるおそれがあると書く。送り元の IP アドレスは簡単に偽れるので、相手を確かめる手がかりにならない<a href="#ref-7">[7]</a>。</p>
+<p>待ち受けていない UDP のポートにデータグラムが届いたとき、RFC 1122 は、ICMP の Port Unreachable を返すべきだとしている<a href="#ref-8">[8]</a>。ICMP の決まり（RFC 792）では、宛先に届かないことを知らせる Destination Unreachable の code 3 にあたる<a href="#ref-9">[9]</a>。</p>
+
+<h2>開いているポートは、外からの入口になる</h2>
+<p>ポートが「開いている」とは、その番号でプログラムが待ち受けていて、外から届いた通信を受け取るということだ。待ち受けるプログラムに弱点があれば、そのポートが入口になる。だから、使っていないサービスは止めて、待ち受けを減らす。</p>
+<p>米国 NIST のセキュリティ管理策の一覧（SP 800-53 Rev. 5）は、これを「最小限の機能」（CM-7）として挙げ、使わないソフトを取り除き、使わないポートとプロトコルを止めて、許可のない接続を防ぐよう組織に求めている<a href="#ref-10">[10]</a>。</p>
+<p>止められないサービスは、待ち受ける範囲を狭める。Linux では、待ち受けのアドレスを 0.0.0.0（INADDR_ANY）にすると機器のすべてのアドレスで受け付け、127.0.0.1 にすると機器の中からの接続だけになる<a href="#ref-5">[5]</a>。同じ機器の中だけで使うデータベースや管理画面なら、127.0.0.1 で待ち受ければ、外からは届かない。</p>
+
+<h2>ポートスキャンは、ログでは失敗した接続の束に見える</h2>
+<p>ポートスキャンは、どのポートで何が待ち受けているかを外から調べることだ。MITRE ATT&amp;CK は、攻撃者がほかの機器で動いているサービスの一覧を得る手口として「Network Service Discovery」（T1046）を挙げ、よく使われる方法にポートのスキャンを含めている<a href="#ref-11">[11]</a>。他人の機器を許可なく調べてはいけない。この記事では、守る側のログでの見え方だけを書く。</p>
+<p>TCP では、途中で捨てられなければ、閉じたポートへの SYN には RST が返る。UDP では、閉じたポートへのデータグラムに ICMP の Port Unreachable を返すべきだとされている<a href="#ref-1">[1]</a><a href="#ref-8">[8]</a>。そのため、守る側のログには、一つの送り元から、同じ相手のたくさんのポートへの、短いあいだの、つながらなかった接続が並ぶ。</p>
+<p>ネットワークを監視するソフト Zeek の 5.0 に付いていた検知の決まり（scan.zeek）は、この形を数えていた。一つの送り元が、5分のうちに、一つの相手の15個の異なるポートへの接続に失敗すると「Port_Scan」、一つのポートについて25台を超える相手への接続に失敗すると「Address_Scan」として知らせる。値は変えられ、待つ時間を長くすると、ゆっくりしたスキャンも拾えるが、誤った知らせも増える、と注記されている<a href="#ref-12">[12]</a>。</p>
+
+<h2>SYN フラッドは、作りかけの接続で待ち行列を埋める</h2>
+<p>SYN フラッドは、返事をしない送り元から SYN を大量に送り、受け手の作りかけの接続（SYN-RECEIVED）の置き場を埋めて、正しい接続を受け付けられなくする攻撃だ。RFC 4987 によると、SYN を受け取った機器は ACK を待つあいだ接続の情報を覚えておき、その数には上限（backlog）がある。攻撃はそこを狙う<a href="#ref-13">[13]</a>。</p>
+<p>同じ RFC によると、この攻撃は1996年に手順とともに公表され、その年の9月までには実際の攻撃が見られた。ある事業者のメールサーバーが止まり、CERT が注意を出した<a href="#ref-13">[13]</a>。送り元は偽られていることが多く、偽られた送り元が実在して返事をすると、受け手の作りかけの接続はすぐに消えるので、攻撃する側は返事をしないアドレスを選ぶ<a href="#ref-13">[13]</a>。</p>
+<p>RFC 4987 が挙げる守り方のうち、送り元の偽装を入口で捨てる方法（RFC 2827）は、IP アドレスの記事で触れたものだ<a href="#ref-14">[14]</a>。ただし、乗っ取った多くの機器から送られると効かない<a href="#ref-13">[13]</a>。機器の側の方法としては、作りかけの接続の情報を小さくして持つ SYN キャッシュと、何も覚えずに済ませる SYN cookies を、これまでに見つかった現実的な方法として挙げている<a href="#ref-13">[13]</a>。</p>
+<p>SYN cookies は、覚えておくはずの情報を、SYN-ACK で送る最初の番号の中に詰める。相手の ACK に返ってきた番号を秘密の値で確かめ、合っていれば、そこで初めて接続を作る<a href="#ref-13">[13]</a>。引き換えに、一部の TCP のオプションが使えなくなる。RFC 4987 は、最も大きな代償はウィンドウスケールのオプションが使えなくなり、速さが落ちることだとしている<a href="#ref-13">[13]</a>。</p>
+<p>Linux では、設定 <code>tcp_syncookies</code> の初期値が1で、作りかけの接続の待ち行列があふれたときだけ SYN cookies を使う<a href="#ref-6">[6]</a>。そのとき、カーネルは「Possible SYN flooding on port …. Sending cookies.」という知らせをログに残す<a href="#ref-15">[15]</a>。Linux の文書は、正しい接続が多すぎてこの知らせが出ているなら、cookies に頼らず、待ち行列の大きさ（<code>tcp_max_syn_backlog</code>）などを見直すよう書いている<a href="#ref-6">[6]</a>。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>手元の機器の待ち受けは、Linux の <code>ss -tulpn</code> で見られる。iproute2 の説明書によると、<code>-t</code> は TCP、<code>-u</code> は UDP、<code>-l</code> は待ち受けているものだけ、<code>-p</code> は使っているプログラム、<code>-n</code> はポートを名前に直さず数字で出す、という意味だ<a href="#ref-16">[16]</a>。</p>
+<p>出力の列は、種類（Netid）、状態（State）、Recv-Q、Send-Q、自分のアドレスとポート（Local Address:Port）、相手のアドレスとポート（Peer Address:Port）、プログラム（Process）だ。TCP の待ち受けの状態は LISTEN と表示され、接続のない UDP は UNCONN と表示される<a href="#ref-16">[16]</a>。自分のアドレスが 0.0.0.0 なら、その機器のすべてのアドレスで待ち受けている<a href="#ref-5">[5]</a>。見覚えのないプログラムやポートがあれば、何のためのものかを調べ、要らなければ止める。</p>
+<p>接続の状態でしぼり込むこともできる。<code>ss -t state syn-recv</code> で作りかけの接続を、<code>ss -t state time-wait</code> で TIME-WAIT の接続を出せ、<code>ss -s</code> で数のまとめが見られる<a href="#ref-16">[16]</a>。SYN cookies の設定は <code>sysctl net.ipv4.tcp_syncookies</code>、送り元のポートの範囲は <code>sysctl net.ipv4.ip_local_port_range</code> で確かめられる<a href="#ref-6">[6]</a>。自分の機器から TCP でつないでいるあいだに <code>ss -tn</code> を見ると、送り元のポートに <code>ip_local_port_range</code> の範囲の番号を使った ESTAB の行が出る。自分が先に閉じた接続は、閉じたあとしばらく TIME-WAIT として残る。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Eddy（編、2022）RFC 9293 Transmission Control Protocol (TCP)（2.2 節の要点、3.1 節のヘッダー、3.3.2 節の状態、3.4〜3.5 節の番号と接続の始まり、3.6 節の終わり方、3.10.7.1 節の CLOSED での処理）。<a href="https://www.rfc-editor.org/rfc/rfc9293">RFC Editor</a></li>
+<li id="ref-2">Postel（1980）RFC 768 User Datagram Protocol。<a href="https://www.rfc-editor.org/rfc/rfc768">RFC Editor</a></li>
+<li id="ref-3">Cotton・Eggert・Touch・Westerlund・Cheshire（2011）RFC 6335 Internet Assigned Numbers Authority (IANA) Procedures for the Management of the Service Name and Transport Protocol Port Number Registry（3 節の背景、6 節の範囲、8.1.2 節の割り当ての手順、9 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc6335">RFC Editor</a></li>
+<li id="ref-4">Larsen・Gont（2011）RFC 6056 Recommendations for Transport-Protocol Port Randomization（BCP 156）。<a href="https://www.rfc-editor.org/rfc/rfc6056">RFC Editor</a></li>
+<li id="ref-5">Linux man-pages「ip(7)」（特権のポート、INADDR_ANY）。<a href="https://man7.org/linux/man-pages/man7/ip.7.html">man7.org</a></li>
+<li id="ref-6">Linux カーネルの文書「IP Sysctl」（ip_local_port_range、ip_unprivileged_port_start、tcp_syncookies、tcp_max_syn_backlog）。<a href="https://docs.kernel.org/networking/ip-sysctl.html">The Linux Kernel documentation</a></li>
+<li id="ref-7">Eggert・Fairhurst・Shepherd（2017）RFC 8085 UDP Usage Guidelines（BCP 145。3.3 節の信頼性、5 節の TIME-WAIT、6 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc8085">RFC Editor</a></li>
+<li id="ref-8">Braden（編、1989）RFC 1122 Requirements for Internet Hosts -- Communication Layers（3.2.2.1 節、4.1.3.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc1122">RFC Editor</a></li>
+<li id="ref-9">Postel（1981）RFC 792 Internet Control Message Protocol。<a href="https://www.rfc-editor.org/rfc/rfc792">RFC Editor</a></li>
+<li id="ref-10">NIST（2020）SP 800-53 Rev. 5 Security and Privacy Controls for Information Systems and Organizations、CM-7 Least Functionality（OSCAL の版で確かめた）。<a href="https://github.com/usnistgov/oscal-content/tree/main/nist.gov/SP800-53/rev5">GitHub</a></li>
+<li id="ref-11">MITRE ATT&amp;CK「Network Service Discovery（T1046）」。<a href="https://attack.mitre.org/techniques/T1046/">MITRE ATT&amp;CK</a></li>
+<li id="ref-12">Zeek 5.0.0「scripts/policy/misc/scan.zeek」。<a href="https://github.com/zeek/zeek/blob/v5.0.0/scripts/policy/misc/scan.zeek">GitHub</a></li>
+<li id="ref-13">Eddy（2007）RFC 4987 TCP SYN Flooding Attacks and Common Mitigations（2 節の攻撃、3 節の守り方、4 節の分析、付録 A の SYN cookies）。<a href="https://www.rfc-editor.org/rfc/rfc4987">RFC Editor</a></li>
+<li id="ref-14">Ferguson・Senie（2000）RFC 2827 Network Ingress Filtering: Defeating Denial of Service Attacks which employ IP Source Address Spoofing（BCP 38）。<a href="https://www.rfc-editor.org/rfc/rfc2827">RFC Editor</a></li>
+<li id="ref-15">Linux カーネルのソース「net/ipv4/tcp_input.c」（tcp_syn_flood_action）。<a href="https://github.com/torvalds/linux/blob/master/net/ipv4/tcp_input.c">GitHub</a></li>
+<li id="ref-16">iproute2「ss」の説明書とソース（man/man8/ss.8、misc/ss.c）。<a href="https://github.com/iproute2/iproute2/blob/main/man/man8/ss.8">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}
