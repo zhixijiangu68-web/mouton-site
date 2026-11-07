@@ -416,7 +416,8 @@ test('MOUTON browser smoke', async t => {
           await page.goto(origin + '/' + await first.getAttribute('href'), { waitUntil: 'domcontentloaded' });
           assert.equal(await page.locator('.archive-note').count(), 0, 'current article has no archive note');
           assert.equal(await page.locator('.quiz-more, [data-qloop], .mini-work, .rn-quiz').count(), 0, 'current article has no quiz or work (tests live on test.html)');
-          assert.equal(await page.locator('.rn-verdicts').count(), 1, 'current article has a verdict table');
+          // 判定表は 2026-11-06 から必須ではない（表は必要なときだけ）。出すなら1つまで
+          assert.ok(await page.locator('.rn-verdicts').count() <= 1, 'current article has at most one verdict table');
         }
         await page.goto(origin + '/archive.html', { waitUntil: 'domcontentloaded' });
         assert.ok((await page.locator('#archive .journal-item').count()) > 50, 'archive lists the archived articles');

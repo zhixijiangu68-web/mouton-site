@@ -1,0 +1,96 @@
+---
+layout: renewal-article.njk
+title: "/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方 — ムートン"
+headline: "/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方"
+subtitle: "IPv4 と IPv6 のアドレスの形、プレフィックスとネットマスク、特別な範囲、ログや許可リストでの読み違いを、RFC で確かめた"
+description: "IP アドレスは32ビット（IPv6 は128ビット）の数で、/24 のようなプレフィックスは先頭の何ビットが同じかで範囲を表す。二進数での読み方、特別な範囲、許可リストやログでの読み違いを RFC で確かめた。"
+excerpt: "/24 は先頭24ビットが同じ256個の範囲。1ビット短くなるごとに範囲は倍になる。プライベートアドレスなどの特別な範囲と、許可リストやログでの読み違いを、ルーティングの記事の続きとしてまとめた。"
+date: 2026-11-07T12:00:00Z
+pillar: defense
+pick: 2            # おすすめの順。ルーティングの記事から広げた1本目。仮の順。ムートンが決めたら直す
+related: ["routing"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。ルーティングの記事に出てきた「プレフィックス」「/24」から広げた（docs「読む順と、記事の広げ方」の1）
+---
+<p>IPv4 のアドレスは32ビットの数で、203.0.113.0/24 のようなプレフィックスは「先頭の24ビットが同じアドレスの範囲」を表す。プレフィックスが1ビット短くなるごとに範囲は倍になり、/24 と /16 では256倍違う。この記事は、<a href="routing.html">ルーティングの記事</a>に出てきたプレフィックスの読み方と、特別な範囲と、許可リストやログでの読み違いを、RFC で確かめたものだ。例のアドレスは、文書のために取ってある範囲とプライベートアドレスだけを使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
+
+<h2>IPv4 のアドレスは、32ビットの数</h2>
+<p>IPv4 のアドレスは32ビットの数で、ふだんは8ビットずつ四つに区切り、それぞれを10進数で書く。198.51.100.200 は、二進数では 11000110.00110011.01100100.11001000 になる。四つの数は、どれも0から255までだ。</p>
+<p>32ビットで表せるアドレスは、2の32乗で約43億個ある。CIDR の決まりを書いた RFC 4632 は、CIDR が作られた背景の一つとして、この32ビットのアドレス空間をいずれ使い切ることを挙げている<a href="#ref-3">[3]</a>。</p>
+
+<h2>/24 は、先頭24ビットが同じアドレスの範囲</h2>
+<p>プレフィックスは、アドレスの形の数のあとに「/」と0〜32の数を書き、先頭から何ビットが意味を持つかを表す。RFC 4632 はこの書き方を定め、172.16.0.0/16 は、上位16ビットが1で下位16ビットが0のマスク（255.255.0.0）でネットワークの部分を取り出す、と説明している<a href="#ref-3">[3]</a>。このマスクをネットマスクと呼ぶ。</p>
+<p>先頭の決まったビットのあとに残るビットが、範囲の中の一つひとつのアドレスを表す。残りが n ビットなら、範囲には2の n 乗個のアドレスがある。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>プレフィックスの長さと、範囲の大きさ</caption><thead><tr><th scope="col">プレフィックス</th><th scope="col">ネットマスク</th><th scope="col">アドレスの数</th></tr></thead><tbody>
+<tr><th scope="row">/8</th><td>255.0.0.0</td><td>16,777,216</td></tr>
+<tr><th scope="row">/16</th><td>255.255.0.0</td><td>65,536</td></tr>
+<tr><th scope="row">/24</th><td>255.255.255.0</td><td>256</td></tr>
+<tr><th scope="row">/25</th><td>255.255.255.128</td><td>128</td></tr>
+<tr><th scope="row">/32</th><td>255.255.255.255</td><td>1</td></tr>
+</tbody></table></div>
+<p>範囲の最初のアドレス（残りのビットがすべて 0）と最後のアドレス（すべて 1）は、昔から、ネットワークそのものを表す番号と、範囲の全員に届けるブロードキャストの番号に使われてきた。そのため、ふつうのネットワークでは、範囲のアドレスの数より2個少ない数の機器にしか番号を付けられない。/24 なら、機器に付けられるのは254個だ。2台を直接つなぐ回線は、端が二つしかなく、ブロードキャストもいらない。RFC 3021 は、そうした回線に限って /31 を使い、二つのアドレスをどちらも機器の番号として扱うことを認めている<a href="#ref-4">[4]</a>。</p>
+<p>/32 は一つのアドレスだけを表し、/0 はすべてのアドレスを表す。ルーティングの記事に出てきた 0.0.0.0/0 のデフォルトルートは、この /0 だ<a href="#ref-3">[3]</a>。</p>
+
+<h2>二進数で見ると、範囲の境目が分かる</h2>
+<p>アドレスがある範囲に入るかどうかは、プレフィックスの長さの分だけ、二進数の先頭のビットを比べれば分かる。ルーティングの記事の例で確かめる。</p>
+<p>198.51.100.128/25 は、先頭25ビットが同じ範囲だ。最初の三つの数（24ビット）が 198.51.100 で、4つ目の数の最初の1ビットが 1 のものが入る。4つ目の数が 128（10000000）から 255（11111111）までのアドレスで、128個ある。</p>
+<p>宛先 198.51.100.200 の4つ目の数 200 は、二進数で 11001000 で、最初のビットが 1 だから、この範囲に入る。198.51.100.20 の 20 は 00010100 で、最初のビットが 0 だから入らない。ルーティングの記事で、200 には /25 の経路が、20 には /24 の経路が選ばれたのは、このためだ。</p>
+<p>境目が4つ目の数の途中にない場合も、同じように考える。10.1.2.0/23 は、先頭23ビットが同じ範囲だ。3つ目の数の 2 は 00000010、3 は 00000011 で、最後の1ビットだけが違うので、10.1.2.0 から 10.1.3.255 までの512個が入る。10.1.3.7 は入り、10.1.4.1 は、3つ目の数の 4（00000100）が先頭の7ビットで違うので入らない。</p>
+<p>範囲の書き方には決まりがある。プレフィックスの前の部分は、範囲の最初のアドレス（残りのビットがすべて 0）で書く。198.51.100.200/25 と書くと、残りのビットに 1 が混じるので、範囲の書き方としては正しくない。最後の節で触れる Python の ipaddress も、標準ではこの形を誤りとして扱う。</p>
+
+<h2>クラスの区切りから、自由な長さへ</h2>
+<p>昔の IPv4 は、アドレスの先頭のビットで「クラス A・B・C」に分け、範囲の大きさを /8・/16・/24 の三つに限っていた。RFC 4632 の CIDR は、このクラスをやめて、2のべき乗の大きさなら、1個から2の32乗個までどの大きさの範囲でも表せるようにした<a href="#ref-3">[3]</a>。</p>
+<p>自由な長さが使えると、隣り合う範囲を一つにまとめて広告できる（集約）。たとえば 10.1.0.0/24 と 10.1.1.0/24 は、先頭23ビットが同じなので、10.1.0.0/23 の一つの経路にまとめられる。RFC 4632 は、ある事業者に割り当てた 10.24.0.0 から 10.31.255.255 までの2の19乗個のアドレスを、10.24.0.0/13 の一つの経路で表す例を挙げている<a href="#ref-3">[3]</a>。経路をまとめれば、インターネット全体の経路表が増えるのを抑えられる。CIDR が作られた目的の一つがこれだ。</p>
+<p>アドレスの配り方も、この形に沿っている。RFC 4632 によると、IANA は未割り当てのアドレスを /8 の単位で地域インターネットレジストリ（RIR）に配り、RIR はそれを小さく分けて事業者に割り当てる<a href="#ref-3">[3]</a>。</p>
+
+<h2>特別な範囲がある</h2>
+<p>IPv4 のアドレスの中には、特別な目的のために取ってある範囲がある。RFC 6890 は、こうした範囲を一つの登録簿にまとめ、それぞれについて、ルーターが転送してよいか（Forwardable）、組織の外まで届けてよいか（Global）を決めている<a href="#ref-5">[5]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主な特別な範囲（RFC 6890 の登録簿から）</caption><thead><tr><th scope="col">範囲</th><th scope="col">名前</th><th scope="col">使い道</th></tr></thead><tbody>
+<tr><th scope="row"><span class="rn-nowrap">10.0.0.0/8</span><br><span class="rn-nowrap">172.16.0.0/12</span><br><span class="rn-nowrap">192.168.0.0/16</span></th><td>プライベート（Private-Use）</td><td>組織の中で自由に使う。組織の外へは届けない（Global が False）</td></tr>
+<tr><th scope="row"><span class="rn-nowrap">100.64.0.0/10</span></th><td>共有アドレス（Shared Address Space）</td><td>事業者の大規模な NAT（CGN）と利用者の機器のあいだで使う</td></tr>
+<tr><th scope="row"><span class="rn-nowrap">127.0.0.0/8</span></th><td>ループバック</td><td>自分自身を指す。ルーターは転送しない</td></tr>
+<tr><th scope="row"><span class="rn-nowrap">169.254.0.0/16</span></th><td>リンクローカル</td><td>アドレスを配る仕組みがないとき、同じつながりの中だけで使う</td></tr>
+<tr><th scope="row"><span class="rn-nowrap">192.0.2.0/24</span><br><span class="rn-nowrap">198.51.100.0/24</span><br><span class="rn-nowrap">203.0.113.0/24</span></th><td>文書用</td><td>説明や例に使う。実際には割り当てない</td></tr>
+</tbody></table></div>
+<p>共有アドレスは、RFC 6598 で、事業者の CGN 装置と利用者の機器をつなぐ部分に番号を付けるために取られた<a href="#ref-6">[6]</a>。リンクローカルは、RFC 3927 が、DHCP のようなアドレスを配る仕組みが使えないときに、機器が 169.254/16 の中から自分でアドレスを決める方法として定めている<a href="#ref-7">[7]</a>。</p>
+
+<h2>範囲の読み違いは、守りの穴になる</h2>
+<p>特別な範囲とプレフィックスの長さを読み違えると、ログの見立てと、通す相手の決め方を間違える。</p>
+<p>ログでは、アドレスがどの範囲に入るかで意味が変わる。社内の機器のログの送り元が 10.0.0.0/8 なら組織の中からの通信で、169.254.0.0/16 なら、その機器が DHCP からアドレスをもらえていない、という手がかりになる<a href="#ref-7">[7]</a>。インターネットとの境目で、外から入ってきた通信の送り元がプライベートアドレスなら、組織の外では使われないはずなので、送り元が偽られているか、設定に誤りがある。</p>
+<p>送り元の偽装について、RFC 2827 は、事業者が自分の配下のネットワークから出ていく通信のうち、正しく広告している範囲の外の送り元を名乗るものを、入口で捨てるよう求めている<a href="#ref-8">[8]</a>。送り元を偽った通信によるサービス妨害の攻撃を防ぐための方法で、送り元のアドレスを、範囲とプレフィックスで確かめることが土台になる。たとえば配下の利用者に 203.0.113.0/24 を割り当てた事業者なら、その利用者の側から入ってくる通信のうち、送り元が 203.0.113.0/24 の外にあるものを捨てる。同じ RFC は、この方法は正しい範囲のアドレスから送られてくる大量の通信は防げない、とも書いている<a href="#ref-8">[8]</a>。送り元の偽装を減らす方法で、攻撃そのものをなくす方法ではない。</p>
+<p>通す相手を決める許可リストでは、1ビットの違いが範囲を倍にする。10.1.2.0/24 の256個だけを通すつもりで 10.1.0.0/16 と書けば、65,536個を通すことになる。ファイアウォールやクラウドの設定でアドレスの範囲を書くときは、二進数の境目と、範囲の大きさを確かめる必要がある。</p>
+
+<h2>IPv6 は128ビットで、書き方に決まりがある</h2>
+<p>IPv6 のアドレスは128ビットの数だ<a href="#ref-9">[9]</a>。16ビットずつ八つに区切り、それぞれを16進数で書く。プレフィックスの読み方は IPv4 と同じで、RFC 4291 は、多くのアドレスで後ろの64ビットを機器ごとの部分（インターフェース ID）にすると決めている<a href="#ref-9">[9]</a>。そのため、機器を並べる一つのネットワークは /64 の範囲が基本になる。説明のための範囲としては、2001:db8::/32 が取ってある<a href="#ref-10">[10]</a>。</p>
+<p>IPv6 にも、IPv4 の特別な範囲にあたるものがある。fe80::/10 は、同じつながりの中だけで使うリンクローカルのアドレスで<a href="#ref-9">[9]</a>、IPv6 を使う機器は、ふつうこのアドレスを自分で持つ。fc00::/7 は、組織の中で使うためのユニークローカルのアドレスで、RFC 4193 は、インターネット全体では経路に載らないものとしている<a href="#ref-11">[11]</a>。IPv4 のプライベートアドレスに近い役目だ。</p>
+<p>IPv6 は長いので、同じアドレスにいくつもの書き方がある。RFC 5952 は書き方をそろえるため、各区切りの先頭の 0 を省く、0 が続く区切りは「::」でできるだけ長くまとめる、0 の区切りが一つだけのときは「::」を使わない、英字は小文字にする、と決めている<a href="#ref-12">[12]</a>。</p>
+<p>同じ RFC は、乱用の報告を扱う担当者が、2001:db8::1:0:1 と 2001:db8:1::0:1 の違いを見分けられなければならず、「::」の位置を間違えると重大なことになる、と書いている<a href="#ref-12">[12]</a>。ログを検索するときも、書き方をそろえてから比べないと、同じアドレスを別のものとして数えてしまう。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>手元のアドレスは、Linux の <code>ip addr</code> で見られる。iproute2 の説明書のとおり、アドレスは 192.0.2.10/24 のように、うしろにプレフィックスの長さを付けて設定する<a href="#ref-13">[13]</a>。この /24 は、その機器が同じつながりの中にあると見なす範囲で、Linux はこの範囲への経路を自動で経路表に足す（足させない設定 <code>noprefixroute</code> もある）<a href="#ref-13">[13]</a>。<code>ip route</code> の経路表に出るその行が、ルーティングの記事で見た経路の一つになる。</p>
+<p>範囲の計算は、Python の標準の ipaddress で確かめられる。<code>ipaddress.ip_network("198.51.100.128/25")</code> で範囲を作り、<code>in</code> でアドレスが入るかを調べられる。範囲の書き方で残りのビットに 1 が混じっていると、標準では誤りになる。隣り合う範囲をまとめる <code>collapse_addresses</code> もある<a href="#ref-14">[14]</a>。たとえば <code>ip_network("198.51.100.128/25")</code> のネットマスクは 255.255.255.128、アドレスの数は128で、198.51.100.200 を <code>in</code> で調べると True、198.51.100.20 は False になる。10.1.0.0/24 と 10.1.1.0/24 を <code>collapse_addresses</code> に渡すと 10.1.0.0/23 が返る。IPv6 では、<code>ip_address("2001:0db8:0000:0000:0000:0000:0000:0001")</code> を短い形にすると 2001:db8::1 になり、RFC 5952 の書き方にそろう。手で二進数に直した結果と、こうした道具の結果を突き合わせると、境目の読み方が身につく。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Rekhter ほか（1996）RFC 1918 Address Allocation for Private Internets（RFC 6890 の登録簿が引く出どころ）。<a href="https://www.rfc-editor.org/rfc/rfc1918">RFC Editor</a></li>
+<li id="ref-3">Fuller・Li（2006）RFC 4632 Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan（2 節の背景、3.1 節のプレフィックスの書き方、5.1 節、6 節の例）。<a href="https://www.rfc-editor.org/rfc/rfc4632">RFC Editor</a></li>
+<li id="ref-4">Retana ほか（2000）RFC 3021 Using 31-Bit Prefixes on IPv4 Point-to-Point Links。<a href="https://www.rfc-editor.org/rfc/rfc3021">RFC Editor</a></li>
+<li id="ref-5">Cotton・Vegoda・Bonica・Haberman（2013）RFC 6890 Special-Purpose IP Address Registries。<a href="https://www.rfc-editor.org/rfc/rfc6890">RFC Editor</a></li>
+<li id="ref-6">Weil ほか（2012）RFC 6598 IANA-Reserved IPv4 Prefix for Shared Address Space。<a href="https://www.rfc-editor.org/rfc/rfc6598">RFC Editor</a></li>
+<li id="ref-7">Cheshire・Aboba・Guttman（2005）RFC 3927 Dynamic Configuration of IPv4 Link-Local Addresses。<a href="https://www.rfc-editor.org/rfc/rfc3927">RFC Editor</a></li>
+<li id="ref-8">Ferguson・Senie（2000）RFC 2827 Network Ingress Filtering: Defeating Denial of Service Attacks which employ IP Source Address Spoofing（BCP 38）。<a href="https://www.rfc-editor.org/rfc/rfc2827">RFC Editor</a></li>
+<li id="ref-9">Hinden・Deering（2006）RFC 4291 IP Version 6 Addressing Architecture。<a href="https://www.rfc-editor.org/rfc/rfc4291">RFC Editor</a></li>
+<li id="ref-10">Huston・Lord・Smith（2004）RFC 3849 IPv6 Address Prefix Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc3849">RFC Editor</a></li>
+<li id="ref-11">Hinden・Haberman（2005）RFC 4193 Unique Local IPv6 Unicast Addresses。<a href="https://www.rfc-editor.org/rfc/rfc4193">RFC Editor</a></li>
+<li id="ref-12">Kawamura・Kawashima（2010）RFC 5952 A Recommendation for IPv6 Address Text Representation。<a href="https://www.rfc-editor.org/rfc/rfc5952">RFC Editor</a></li>
+<li id="ref-13">iproute2「ip-address」「ip-route」の説明書。<a href="https://github.com/iproute2/iproute2/tree/main/man/man8">GitHub</a></li>
+<li id="ref-14">Python ドキュメント「ipaddress — IPv4/IPv6 manipulation library」（GitHub の原稿）。<a href="https://github.com/python/cpython/blob/main/Doc/library/ipaddress.rst">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

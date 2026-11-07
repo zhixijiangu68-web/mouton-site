@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>SIEM と XDR は、置き換わる関係ではない。まわりの道具と、ラボでの学び方 — ムートン</title>
+<meta name="description" content="SIEM が XDR に置き換わったと示す公的な調査は見つからなかった。SOAR・EDR・XDR・ログ管理との違い、主な製品、入れたあとのお金・データ・人、ATT&amp;CK の使い方、自分のラボでの触れ方を公式の資料で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/siem-ecosystem.html">
+<meta property="og:title" content="SIEM と XDR は、置き換わる関係ではない。まわりの道具と、ラボでの学び方 — ムートン">
+<meta property="og:description" content="SIEM が XDR に置き換わったと示す公的な調査は見つからなかった。SOAR・EDR・XDR・ログ管理との違い、主な製品、入れたあとのお金・データ・人、ATT&amp;CK の使い方、自分のラボでの触れ方を公式の資料で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/siem-ecosystem.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/siem-ecosystem.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"SIEM と XDR は、置き換わる関係ではない。まわりの道具と、ラボでの学び方","description":"SIEM が XDR に置き換わったと示す公的な調査は見つからなかった。SOAR・EDR・XDR・ログ管理との違い、主な製品、入れたあとのお金・データ・人、ATT&CK の使い方、自分のラボでの触れ方を公式の資料で確かめた。","inLanguage":"ja","datePublished":"2026-11-04","dateModified":"2026-11-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/siem-ecosystem.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"SIEM と XDR は、置き換わる関係ではない。まわりの道具と、ラボでの学び方","item":"https://moutonarchive.com/siem-ecosystem.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">SIEM と<wbr> XDR は、<wbr>置き換わる<wbr>関係ではない。<wbr>まわりの<wbr>道具と、<wbr>ラボでの<wbr>学び方</h1>
+  <p class="rn-subtitle">SOAR・EDR・XDR・ログ管理との違い、主な製品、入れたあとの難しさ、ATT&amp;CK の使い方、自分のラボでの触れ方を、公式の資料で確かめた</p>
+  <p class="rn-meta"><span>約11分</span><span>更新日 <time datetime="2026-11-06">2026年11月6日</time></span></p>
+  <div class="rn-body">
+<p>SIEM が XDR に置き換わったことを示す公的な調査は、探した範囲では見つからず、似た名前の道具は、公的な手引きと製品の説明では、ログを渡し合い、機能が重なる関係として書かれていた。この記事は、似た名前の道具との違い、主な製品、入れたあとの難しさ、MITRE ATT&amp;CK の使い方、自分のラボで SIEM に触れる方法を、公式の資料で確かめたものだ。SIEM の仕組みは<a href="siem.html">1本目</a>、検知のルールと SOC の仕事は<a href="siem-detection.html">2本目</a>に書いた。</p>
+
+<details class="rn-toc"><summary>目次（7）</summary><ol><li><a href="#s-1">SOAR・EDR・XDR・ログ管理との違い</a></li><li><a href="#s-2">主な製品は、提供のしかたと土台で分かれる</a></li><li><a href="#s-3">入れたあとに難しいのは、お金とデータと人</a></li><li><a href="#s-4">MITRE ATT&amp;CK は、ルールの抜けを探す地図になる</a></li><li><a href="#s-5">自分のラボで SIEM に触れる</a></li><li><a href="#s-6">公的な資料は、この順で読むとつながる</a></li><li><a href="#refs-h">参考文献</a></li></ol></details><h2 id="s-1">SOAR・EDR・XDR・ログ管理との<wbr>違い</h2>
+<p>似た名前の道具は、何を見て、何をするかで分けると違いが分かる。下の表は僕の整理だ。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>似た名前の道具の違い（僕の整理）</caption><thead><tr><th scope="col">名前</th><th scope="col">主に見るもの</th><th scope="col">主にすること</th></tr></thead><tbody>
+<tr><th scope="row">ログ管理</th><td>あらゆるログ</td><td>集めて、保存し、検索できるようにする</td></tr>
+<tr><th scope="row">SIEM</th><td>多くの機器の、セキュリティにかかわるログ</td><td>形をそろえ、つなげて分析し、アラートを出し、保存する</td></tr>
+<tr><th scope="row">SOAR</th><td>SIEM のアラートや、ログ</td><td>プレイブックに沿って、対応を自動にする（端末の切り離しなど）</td></tr>
+<tr><th scope="row">EDR</th><td>パソコンやサーバーの中の動き</td><td>端末で怪しい動きを見つけ、その端末で対応する</td></tr>
+<tr><th scope="row">XDR</th><td>端末に加えて、ネットワーク・メール・クラウドなど</td><td>いくつもの領域の検知と対応を一つにまとめる（範囲は製品ごとに違う）</td></tr>
+</tbody></table></div>
+<p>ログ管理と SIEM の境目は、セキュリティのための分析をするかどうかにある。NIST の SP 800-92 が扱うのはログの管理全体の基盤づくりで<a href="#ref-1">[1]</a>、SIEM はその上で、セキュリティのための分析とアラートを受け持つ。</p>
+<p>SOAR は、SIEM の隣に置かれることが多い。実務者向けの手引きによると、SOAR の中には、自分でログを集めて分析するものもあれば、すでにある SIEM とつないで、その機能を使うものもある<a href="#ref-2">[2]</a>。</p>
+<p>EDR は、端末の中を深く見る道具で、SIEM にログを渡す側にある。共同の手引きは、SIEM に入れるログの優先の最初に、EDR のログを置いている<a href="#ref-3">[3]</a>。</p>
+<p>XDR は、端末の外まで検知と対応を広げる考え方で、どこまでを XDR と呼ぶかは製品ごとに違い、一つの定義にまとまっていない。製品の側でも境目は重なっている。Wazuh は自分を XDR と SIEM の機能を一つにした基盤だと説明し<a href="#ref-4">[4]</a>、Microsoft Sentinel は、クラウドで動く SIEM で、SOAR の機能も持つと説明している<a href="#ref-5">[5]</a>。</p>
+
+<h2 id="s-2">主な<wbr>製品は、<wbr>提供の<wbr>しかたと<wbr>土台で<wbr>分かれる</h2>
+<p>SIEM の製品は、クラウドのサービスとして使うものと、自分のサーバーやプライベートクラウドで動かすものに分かれ、土台にする基盤もそれぞれ違う。下の表は、勉強の中でよく名前を見る製品を、公式の説明に書かれた種類だけ並べたもので、どれを勧めるものでもない。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主な SIEM の製品と、公式の説明での種類</caption><thead><tr><th scope="col">製品</th><th scope="col">公式の説明での種類</th></tr></thead><tbody>
+<tr><th scope="row">Splunk Enterprise Security</th><td>Splunk の基盤の上で動く SIEM。検索と相関の機能を使い、事案の管理、アラートのトリアージ・調査・対応をつなぐ<a href="#ref-6">[6]</a></td></tr>
+<tr><th scope="row">Microsoft Sentinel</th><td>Microsoft のクラウドで動く SIEM。SOAR の機能も持つ<a href="#ref-5">[5]</a></td></tr>
+<tr><th scope="row">Elastic Security</th><td>Kibana に組み込まれた機能で、Elasticsearch と Kibana があれば使える。脅威の検知、クラウドのセキュリティ、端末の保護を一つにまとめる<a href="#ref-7">[7]</a></td></tr>
+<tr><th scope="row">IBM QRadar</th><td>ネットワークのイベントや通信の流れ（フロー）のデータをリアルタイムに取り込み、まとめ、保存し、監視・アラート・「オフェンス」（QRadar での事案の呼び名）に使う<a href="#ref-8">[8]</a></td></tr>
+<tr><th scope="row">Wazuh</th><td>無料のオープンソース。XDR と SIEM の機能を一つにした基盤。エージェントと、インデクサー・マネージャー・ダッシュボードの三つの中心の部品でできている<a href="#ref-4">[4]</a></td></tr>
+</tbody></table></div>
+<p>Gartner も、SIEM は SaaS として、または利用者の側のオンプレミスやプライベートクラウドで提供される、と書いている<a href="#ref-9">[9]</a>。どれが合うかは、組織の環境と、すでに使っている道具で変わる。</p>
+
+<h2 id="s-3">入れた<wbr>あとに<wbr>難しいのは、<wbr>お金と<wbr>データと<wbr>人</h2>
+<p>SIEM は入れたあとに、取り込む量で増える費用、止まっても気づきにくいデータの取り込み、ルールを合わせる人、の三つで手間がかかる。</p>
+<p>経営層向けの手引きは、SIEM と SOAR の費用として、製品の料金のほかに人の費用を挙げている。専門の技能を持つ人を雇ってとどめる費用、いまいる人の技能を上げる費用と続けての訓練、外に任せるならその委託料だ。料金はデータの取り込みの量で決まる仕組みが多く、取り込みを管理しないと払いすぎる危険がある、とも書いている<a href="#ref-10">[10]</a>。一方で手引きは、適切に入れて動かす費用より、サイバーのインシデントが起きたときの費用のほうが、はるかに大きくなりうるとも書いている<a href="#ref-10">[10]</a>。</p>
+<p>ログの取り込みは、一度つないだら終わりではない。機器の更新でログの形が変わる、エージェントが止まる、送り先の設定が消える。そうなっても、SIEM の画面には何も起きていないように見える。アラートがないことと、何も起きていないことは違う。共同の手引きが、取り込みが正しく続いているかを定期的に確かめるよう勧めているのは、このためだ<a href="#ref-3">[3]</a>。</p>
+<p>ルールを調整するには、その組織のふだんの姿を知っている必要がある。誰が夜中にサーバーへ入るのか、どのアプリケーションが変わった動きをするのかは、製品の標準のルールには書かれていない。組織に合わせる作業は、組織のことを知る誰かがすることになり、手引きが「入れたら終わり」ではないと書いて技能を持つ人の費用を挙げているのも、この部分にあたる<a href="#ref-10">[10]</a>。</p>
+
+<h2 id="s-4">MITRE ATT&amp;CK は、<wbr>ルールの<wbr>抜けを<wbr>探す地図に<wbr>なる</h2>
+<p>MITRE ATT&amp;CK は、SIEM のルールに番号を付けることと、検知の抜けを探すことの二つに使われている。ATT&amp;CK は、実際に観測された攻撃者の戦術と技術をまとめた知識のベースだ<a href="#ref-11">[11]</a>。2026年10月に出た版（v20）の企業向けのマトリクスには、偵察から影響までの15の戦術と、227のテクニック、479のサブテクニックがある。数は、公開のデータから、取り消し・廃止されたものを除いて僕が数えた<a href="#ref-11">[11]</a>。</p>
+<p>一つめの番号付けでは、<a href="siem-detection.html">2本目</a>で見た Wazuh のルール 40112（失敗が続いたあとの成功）に、T1078 と T1110 が付いている<a href="#ref-12">[12]</a>。Elastic の SSH のルールにも、総当たり、パスワードの推測、パスワードスプレー、正規のアカウントといった ATT&amp;CK の項目が書かれている<a href="#ref-13">[13]</a>。アラートが出たとき、それが攻撃のどの段階にあたるかが、番号から分かる。</p>
+<p>二つめの抜け探しでは、自分の SIEM のルールを ATT&amp;CK の表に重ね、どの技術に検知があって、どこが空いているかを見る。Elastic の手引きも、足りないところを ATT&amp;CK で探す段階を、検知の仕組みを育てる流れの中に置いている<a href="#ref-14">[14]</a>。Wazuh のダッシュボードにも、ATT&amp;CK の画面がある<a href="#ref-4">[4]</a>。</p>
+<p>表が埋まっていることと、検知できることは同じではない。ルールがあっても、必要なログが入っていなければ鳴らない。しきい値が環境に合っていなければ、鳴りすぎて読まれない。ATT&amp;CK の検知の例が、使うログの種類と、調整する項目まで書いているのは、そこまでそろって初めて検知になるからだ<a href="#ref-15">[15]</a>。</p>
+
+<h2 id="s-5">自分の<wbr>ラボで<wbr> SIEM に<wbr>触れる</h2>
+<p>SIEM は、無料の版と公開のデータを使えば、自分のパソコンの中の仮想マシンや、自分で契約したクラウドの中で学べる。試すのは自分が持っている環境の中だけにする。他人のシステムやサービスに、許可なくログインを試したり、攻撃をまねた通信を送ったりすることは、日本では不正アクセス禁止法などに触れるおそれがある<a href="#ref-16">[16]</a>。</p>
+<p>Wazuh の手引きには「概念実証（proof of concept）」のガイドがある。ラボに仮想マシンを使い、最初の設定のすぐあとにスナップショット（その時点の状態の保存）を取って、試すたびにきれいな状態に戻すことを勧め、小さなラボなら中心の部品を1台にまとめた構成で足りるとしている。ガイドの中には、総当たりのログインの検知を確かめる例もある。自分で用意した端末どうしで認証の失敗を起こし、Wazuh が複数の認証の失敗をつなげてアラートにするところを見る流れだ。ラボは、失敗を起こす側の Ubuntu 22.04、SSH を受ける RHEL 9.0、RDP（リモートデスクトップ）を受ける Windows 11 の3台で組み、アラートはダッシュボードの「Threat Hunting」の画面で、ルールの番号（Linux なら 5551 や 5712、Windows なら 60122 や 60204）で絞り込んで見る<a href="#ref-17">[17]</a>。2本目で見た相関のルールが、自分の画面でどう鳴るかを確かめられる。</p>
+<p>Elastic Security は、Elasticsearch と Kibana があれば使える<a href="#ref-7">[7]</a>。検知ルールの公開のリポジトリの説明によると、Elastic Stack の標準の配布物に含まれる無料の機能の範囲でも、検知の画面を開けば最新のルールが入る<a href="#ref-18">[18]</a>。どの機能が無料かは版とサブスクリプションで変わるので、使う前に公式の表で確かめる。ルールの中身はリポジトリで公開されていて、どんな条件で鳴るのかを一行ずつ読める<a href="#ref-13">[13]</a>。</p>
+<p>Splunk には「Splunk Free」という無料の版がある。公式の説明では、1日に取り込めるのは500MBまでで、期限はない。ただし1台だけで動かす使い方に限られ、作ったアラートは動かない<a href="#ref-19">[19]</a>。Splunk が公開している「Boss of the SOC（BOTS）」の第3版は、セキュリティの練習用のデータセットで、CTF の形で問題を解く使い方もできる。データは取り込み済みの形で配られていて、取り込みの量による制限を気にしなくてよいと説明されている。AWS の CloudTrail や VPC のフローログなど、クラウドのログも含まれている<a href="#ref-20">[20]</a>。攻撃の通信を自分で起こさずに、すでに記録されたログで調べる練習ができる。Splunk は、自分のクラウドの中に検知を試すための環境を組み立て、攻撃をまねて、そのログを Splunk に流す「Attack Range」も公開している<a href="#ref-21">[21]</a>。こちらはクラウドの費用がかかり、使えるのは自分で契約した環境の中だけだ。</p>
+<p>JPCERT/CC の LogonTracer は、Windows の Active Directory のイベントログから、ログオンに関わるイベントを読み、ホスト名（または IP アドレス）とアカウント名を結んでグラフにする道具だ。どのアカウントで、どの端末からログインが試されたかが、図で分かる<a href="#ref-22">[22]</a>。SIEM そのものではないが、4624 や 4625 といったイベントが、つなげるとどう見えるかを学ぶのに向いている。</p>
+
+<h2 id="s-6">公的な<wbr>資料は、<wbr>この<wbr>順で<wbr>読むと<wbr>つながる</h2>
+<p>3本で使った公的な資料は、ログの管理の基本から、SIEM の入れ方、検知の例へと、次の順で読むとつながる。どれも英語だ。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>SIEM を学ぶための公的な資料</caption><thead><tr><th scope="col">資料</th><th scope="col">出た時期</th><th scope="col">書いてあること</th></tr></thead><tbody>
+<tr><th scope="row">NIST SP 800-92</th><td>2006年9月</td><td>ログの管理の基本。ログを作る・送る・保存する・分析する・捨てるの流れと、1か所に集める基盤のつくり方<a href="#ref-1">[1]</a></td></tr>
+<tr><th scope="row">NIST SP 800-92 第1版（改訂の下書き）</th><td>2023年10月</td><td>題は「Cybersecurity Log Management Planning Guide」。組織としてログの管理を計画するための手引き。意見の募集は2023年11月29日に締め切られ、NIST は意見を反映している途中としている<a href="#ref-23">[23]</a></td></tr>
+<tr><th scope="row">Best practices for event logging and threat detection</th><td>2024年8月</td><td>ログの方針、1か所での相関、安全な保存とログの完全性、脅威に合わせた検知の戦略、の四つの柱<a href="#ref-24">[24]</a></td></tr>
+<tr><th scope="row">Implementing SIEM and SOAR platforms（3部作）</th><td>2025年5月</td><td>経営層向け・実務者向け・優先して取り込むログの三つ。定義、費用、人、ログの優先の順<a href="#ref-2">[2]</a><a href="#ref-10">[10]</a><a href="#ref-3">[3]</a></td></tr>
+<tr><th scope="row">NIST SP 800-61 第3版</th><td>2025年4月</td><td>インシデント対応を、CSF 2.0 の六つの機能の中に置き直した<a href="#ref-25">[25]</a></td></tr>
+<tr><th scope="row">MITRE ATT&amp;CK</th><td>版ごとに更新</td><td>テクニックごとの検知の戦略と分析の例。使うログと、調整する項目まで書かれている<a href="#ref-11">[11]</a><a href="#ref-15">[15]</a></td></tr>
+</tbody></table></div>
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li><li class="rn-item"><a class="rn-list-title" href="siem-detection.html">SIEM の検知ルールは、入れた日から調整が始まる</a><p class="rn-list-summary">同じ「失敗のあとの成功」でも、時間の幅は15秒から数分、失敗の数は8回から25回まで開いていた。ルールは、置かれる環境に合わせて調整する前提で作られている。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（25）</h2></summary>
+<ol>
+<li id="ref-1">Kent・Souppaya（2006）NIST SP 800-92 Guide to Computer Security Log Management。<a href="https://csrc.nist.gov/pubs/sp/800/92/final">NIST CSRC</a></li>
+<li id="ref-2">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Practitioner guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-practitioner-guidance">cyber.gov.au</a>。3部作の案内。<a href="https://www.cisa.gov/resources-tools/resources/guidance-siem-and-soar-implementation">CISA</a></li>
+<li id="ref-3">ASD's ACSC・CISA ほか（2025）Priority logs for SIEM ingestion: Practitioner guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/priority-logs-for-siem-ingestion-practitioner-guidance">cyber.gov.au</a></li>
+<li id="ref-4">Wazuh ドキュメント「Getting started with Wazuh」と「Components」（GitHub の原稿）。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/getting-started/index.rst">GitHub</a>。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/getting-started/components/index.rst">GitHub（部品）</a></li>
+<li id="ref-5">Microsoft Learn「What is Microsoft Sentinel?」。<a href="https://learn.microsoft.com/azure/sentinel/overview">Microsoft Learn</a></li>
+<li id="ref-6">Splunk ドキュメント「About Splunk Enterprise Security」。<a href="https://help.splunk.com/en/splunk-enterprise-security-8/user-guide/8.1/introduction">Splunk</a></li>
+<li id="ref-7">Elastic ドキュメント「Elastic Security requirements」と「Security solution」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/get-started/elastic-security-requirements.md">GitHub</a>。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security.md">GitHub（概要）</a></li>
+<li id="ref-8">IBM ドキュメント「QRadar architecture overview」（QRadar 7.4）。<a href="https://www.ibm.com/docs/SS42VS_7.4/com.ibm.qradar.doc/c_qradar_deployment_guide_arch.html">IBM</a></li>
+<li id="ref-9">Gartner Peer Insights「Security Information and Event Management」の市場の定義（提供のしかた）。<a href="https://www.gartner.com/reviews/market/security-information-event-management">Gartner</a></li>
+<li id="ref-10">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Executive guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-executive-guidance">cyber.gov.au</a></li>
+<li id="ref-11">MITRE ATT&amp;CK（Enterprise、v20、2026年10月）。<a href="https://attack.mitre.org/">MITRE ATT&amp;CK</a>。数えたデータ（STIX の公開データ）。<a href="https://github.com/mitre/cti">mitre/cti（GitHub）</a>。版の一覧。<a href="https://github.com/mitre-attack/attack-stix-data">attack-stix-data（GitHub）</a></li>
+<li id="ref-12">Wazuh 4.14.0 のルールのファイル（0280-attack_rules.xml のルール 40112）。<a href="https://github.com/wazuh/wazuh/blob/v4.14.0/ruleset/rules/0280-attack_rules.xml">GitHub</a></li>
+<li id="ref-13">Elastic の検知ルール「Potential Successful SSH Brute Force Attack」。<a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/credential_access_potential_successful_linux_ssh_bruteforce.toml">GitHub</a></li>
+<li id="ref-14">Elastic ドキュメント「Detections and alerts」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert.md">GitHub</a></li>
+<li id="ref-15">MITRE ATT&amp;CK「Brute Force」（T1110）と、検知の戦略 DET0463。<a href="https://attack.mitre.org/techniques/T1110/">MITRE ATT&amp;CK</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0463">MITRE ATT&amp;CK（DET0463）</a></li>
+<li id="ref-16">不正アクセス行為の禁止等に関する法律（平成11年法律第128号）。<a href="https://laws.e-gov.go.jp/law/411AC0000000128">e-Gov 法令検索</a></li>
+<li id="ref-17">Wazuh ドキュメント「Proof of concept guide」と「Detecting a brute-force attack」（GitHub の原稿）。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/proof-of-concept-guide/index.rst">GitHub（ラボの組み方）</a>。<a href="https://github.com/wazuh/wazuh-documentation/blob/main/source/proof-of-concept-guide/detect-brute-force-attack.rst">GitHub（総当たりの検知）</a></li>
+<li id="ref-18">Elastic「Detection Rules」（README の Licensing）。<a href="https://github.com/elastic/detection-rules">GitHub</a></li>
+<li id="ref-19">Splunk ドキュメント「About Splunk Free」（Splunk Enterprise 10.0）。<a href="https://help.splunk.com/en/splunk-enterprise/administer/admin-manual/10.0/configure-splunk-licenses/about-splunk-free">Splunk</a></li>
+<li id="ref-20">Splunk「Boss of the SOC (BOTS) Dataset Version 3」（README）。<a href="https://github.com/splunk/botsv3">GitHub</a></li>
+<li id="ref-21">Splunk「Attack Range」（README）。<a href="https://github.com/splunk/attack_range">GitHub</a></li>
+<li id="ref-22">JPCERT/CC「LogonTracer」（README）。<a href="https://github.com/JPCERTCC/LogonTracer">GitHub</a></li>
+<li id="ref-23">Scarfone・Souppaya（2023）NIST SP 800-92 Rev. 1（初期公開草案）Cybersecurity Log Management Planning Guide。<a href="https://csrc.nist.gov/pubs/sp/800/92/r1/ipd">NIST CSRC</a></li>
+<li id="ref-24">ASD's ACSC・CISA・FBI・NSA ほか（2024）Best practices for event logging and threat detection。<a href="https://www.cisa.gov/resources-tools/resources/best-practices-event-logging-and-threat-detection">CISA</a></li>
+<li id="ref-25">NIST（2025）SP 800-61 Rev. 3 Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile。<a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final">NIST CSRC</a></li>
+</ol>
+</details></section>
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

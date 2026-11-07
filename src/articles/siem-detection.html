@@ -1,0 +1,91 @@
+---
+layout: renewal-article.njk
+title: "SIEM の検知ルールは、入れた日から調整が始まる — ムートン"
+headline: "SIEM の検知ルールは、入れた日から調整が始まる"
+subtitle: "「ログイン失敗が続いたあとの成功」を見る三つのルール、調整と例外、SOC アナリストのトリアージと誤検知、AI との関係を、一次資料で確かめた"
+description: "SIEM の検知ルールは、有効にしただけでは環境に合わない。「ログイン失敗が続いたあとの成功」を三つのルールで比べ、調整と例外の足し方、SOC アナリストのトリアージ、誤検知と呼ばれるものの中身を一次資料で確かめた。"
+excerpt: "同じ「失敗のあとの成功」でも、時間の幅は15秒から数分、失敗の数は8回から25回まで開いていた。ルールは、置かれる環境に合わせて調整する前提で作られている。"
+date: 2026-11-04T12:00:00Z
+updated: 2026-11-06
+pillar: defense
+pick: 4            # おすすめの順。SIEM の3本の2本目。仮の順。ムートンが決めたら直す
+related: ["siem-ecosystem", "siem"]
+changes:
+  - date: 2026-11-04
+    note: siem の記事から、検知ルールと SOC の仕事の節を分けた（オーナー「記事が長い。分割を求める」）
+  - date: 2026-11-06
+    note: 書き方の決まり 8（オーナー「コピーライティングはタイトルのみに適応して、本文は簡潔にして、無駄な問いかけや、回り道を避ける。シンプルな構造にする。表は必要なときに用いる。」）で書き直した。判定表と最後の問いを外し、Wazuh のルールの重さの段階と、Elastic のルールに付いた調べ方の手引きを足した
+---
+<p>製品に入っている検知ルールは、置かれる環境のふだんの姿を知らないまま作られていて、入れたあとに人が合わせていく前提で書かれている。この記事は、「ログイン失敗が続いたあとの成功」を例に、ルールが何をつなげて見るか、どう調整するか、鳴ったアラートを SOC アナリストがどう読むかを、MITRE ATT&amp;CK、Wazuh と Elastic の公開のルール、SOC の実務者への調査で確かめたものだ。SIEM の仕組みは<a href="siem.html">前の記事</a>に書いた。ルールが何を見ているかまでを扱い、攻撃の手順は書かない。</p>
+
+<h2>ルールは、失敗のあとの成功をつなげて見る</h2>
+<p>総当たりの検知ルールは、ログイン失敗の回数だけでなく、失敗のあとに成功が来た順番を見る。総当たり（ブルートフォース）は ATT&amp;CK の「Brute Force」（T1110）にあたり、パスワードが分からないときに、繰り返し推測してアカウントに入ろうとする手口とされる<a href="#ref-1">[1]</a>。</p>
+<p>ATT&amp;CK は、技術ごとに「検知の戦略」と「分析」の例を載せている。総当たりの検知の戦略（DET0463）には、Windows での分析の例として、大量のログオンの失敗のあとに、怪しい利用者・端末・時間帯からの成功が続くことを見るものがある。使うログは Windows のセキュリティのログで、イベント ID の 4625 と 4776 を挙げている。Linux では、同じ IP アドレスや利用者で認証の失敗が続いたあとの成功を、auditd の記録で見る例がある<a href="#ref-1">[1]</a>。失敗が続くだけなら、パスワードを忘れた人の記録かもしれない。失敗のあとに成功があると、推測が当たった可能性が出てくる。</p>
+<p>Wazuh のルールは、この考え方を重さの段階で表している。SSH の認証の失敗1件はルール 5760 に当たり、重さは 5 だ<a href="#ref-2">[2]</a>。Wazuh の分類では、重さ 5 はパスワードの打ち間違いのような「利用者の起こした誤り」で、それだけではセキュリティ上の意味はないとされる<a href="#ref-3">[3]</a>。同じ送り元からの認証の失敗が160秒に12回重なるとルール 40111（重さ 10）になる<a href="#ref-2">[2]</a>。分類は重さ 10 を、攻撃のこともあれば、利用者が認証情報を忘れただけのこともある段階としている<a href="#ref-3">[3]</a>。そのあと240秒のうちに同じ送り元で認証の成功が来ると、ルール 40112（重さ 12）が鳴る<a href="#ref-2">[2]</a>。1件では意味のない出来事が、つながるごとに重くなっていく。</p>
+
+<h2>三つのルールで、時間の幅と回数が違う</h2>
+<p>同じ「失敗のあとの成功」でも、ルールによって時間の幅は15秒から数分まで、失敗の数は8回から25回まで開いている。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>「失敗のあとの成功」を見るルールの比較</caption><thead><tr><th scope="col">出どころ</th><th scope="col">何をつなげるか</th><th scope="col">時間の幅</th><th scope="col">失敗の数</th></tr></thead><tbody>
+<tr><th scope="row">MITRE ATT&amp;CK（DET0463 の Windows の例）</th><td>ログオンの失敗のあとの成功</td><td>環境に合わせて変える（例として5〜10分）</td><td>環境に合わせて変える（例として10〜15回）</td></tr>
+<tr><th scope="row">Wazuh のルール 40112</th><td>同じ送り元の IP アドレスで、「認証の失敗が続いた」のアラートのあとの成功</td><td>240秒</td><td>前のアラートの条件による（ルール 40111 は160秒に12回、SSH のルール 5763 は120秒に8回）</td></tr>
+<tr><th scope="row">Elastic「Potential Successful SSH Brute Force Attack」</th><td>同じ端末・送り元の IP アドレス・ユーザー名で、SSH の失敗のあとの成功</td><td>15秒</td><td>25回</td></tr>
+</tbody></table></div>
+<p>表のもとは、ATT&amp;CK の公開のデータ<a href="#ref-1">[1]</a>、Wazuh の 4.14.0 の版のルールのファイル<a href="#ref-2">[2]</a>、Elastic の公開の検知ルール<a href="#ref-4">[4]</a>だ。Wazuh のルール 40112 には、ATT&amp;CK の T1078（正規のアカウントの悪用）と T1110 の番号が付いている<a href="#ref-2">[2]</a>。</p>
+<p>どれが正しいという違いではない。ATT&amp;CK は、時間の幅、見張る利用者の範囲、アラートを出すまでの失敗の数を、環境に合わせて変える項目としてはっきり書いている<a href="#ref-1">[1]</a>。ルールは、置かれる場所に合わせて形を変える前提で作られている。</p>
+
+<h2>パスワードスプレーは、アカウントをまたいで数える</h2>
+<p>アカウントごとに失敗を数えるルールは、パスワードスプレーを見落としやすい。ATT&amp;CK の「Password Spraying」（T1110.003）は、よく使われるパスワードを一つか少しだけ用意し、それを多くの違うアカウントに試す手口で、一つのアカウントに何度も失敗してロックがかかるのを避けるためだとされる<a href="#ref-5">[5]</a>。</p>
+<p>この場合、一つのアカウントあたりの失敗は1回か2回しかなく、アカウントごとのしきい値には届かない。ATT&amp;CK の検知の例は、決めた時間の幅（例として10分）の中で、多くの違うアカウントにわたって認証の失敗が出ていることを見る。調整する項目も、いくつのアカウントにわたったらアラートを出すかや、利用者全体のうち失敗したアカウントの割合になっている<a href="#ref-5">[5]</a>。手口の形が変われば、数える単位も、一つのアカウントから送り元や時間の幅へ変える。</p>
+
+<h2>ログイン以外にも、つなげて見る例がある</h2>
+<p>ATT&amp;CK の検知の例には、ログイン以外の出来事を前後の動きとつなげて見るものもある。一つは、端末の中にローカルのアカウントが作られたこと（T1136.001）だ。Windows では、アカウントが作られたイベント（4720）が、PowerShell や net.exe のようなプログラムの起動の直後に起きていないかを見る。プログラムの起動とアカウントの作成のあいだの時間の幅（例として5秒〜2分）や、どの権限で動いたかを、調整する項目にしている<a href="#ref-6">[6]</a>。</p>
+<p>もう一つは、イベントログが消されたこと（Clear Windows Event Logs）だ。Windows のセキュリティのログに残るイベント 1102 と、ログを消すプログラムの起動や、ログのファイルの削除の記録を、ひと続きの動きとして見る<a href="#ref-7">[7]</a>。痕跡を消す動きそのものが、痕跡になる。消される前に SIEM へ送ってあれば、記録は SIEM の側に残る。</p>
+
+<h2>調整と例外は、入れたあともずっと続く</h2>
+<p>製品に最初から入っている検知ルールは出発点で、調整と雑音の削減はずっと続く作業とされている。Elastic の手引きは、検知の仕組みを育てる流れを七つの段階で示し、Elastic が保守しているルールの一式を有効にするのを3番目に置いている。その前に、要件を確かめる段階と、どの脅威が自分の環境にとって大事かを決め、ATT&amp;CK で足りないところを探す段階がある。調整と雑音の削減は、最後に一度するものではなく、続けるものだと書いている<a href="#ref-8">[8]</a>。</p>
+<p>直し方は二つに分かれる。ルールそのものが広すぎて、どの環境でもふつうの動きに反応するなら、問い合わせやしきい値を変える（調整）。ルールは正しいが、自分の環境に特有の安全な動きに反応するなら、例外を足す。Elastic の手引きは、社内で作ったアプリケーションが、怪しいプログラムの動きを見るルールに反応してしまう例を挙げ、そのアプリケーションの名前を例外に足すやり方を示している<a href="#ref-8">[8]</a>。ATT&amp;CK の検知の例が、しきい値や時間の幅を「変える項目」として書いているのも同じ考え方で<a href="#ref-1">[1]</a>、ふだんの姿をルールに教えるのは運用する人だ。</p>
+
+<h2>ルールの種類は、何を見たいかで選ぶ</h2>
+<p>回数を見るならしきい値のルール、順番を見るなら順番を表せるルールが要る。Elastic のルールの種類には、決まった値や条件に合うものを探すルール、数がしきい値を超えたら出すルール（総当たりのような量の手口に向くとされる）、出来事の順番や「あるはずの出来事がない」ことを見るルール（EQL）、脅威の情報と照らし合わせるルール、初めて現れた値に反応するルール、機械学習でふだんの動きを学び、外れたものを出すルールがある<a href="#ref-9">[9]</a>。</p>
+<p>表の Elastic の SSH のルールは、順番を見る EQL で書かれている<a href="#ref-4">[4]</a>。失敗が25回続き、そのあとに成功が来る、という並びを一つの条件として書けるからだ。</p>
+<p>ルールの書き方は製品ごとに違うので、製品に頼らない形で書く「Sigma」という取り組みもある。Sigma は、ログの中の出来事を書き表すための、汎用でオープンなシグネチャの形式で、公開のリポジトリには3,000を超える検知ルールがある。ルールは、それぞれの SIEM の問い合わせの言葉に変換して使う<a href="#ref-10">[10]</a>。一つのルールを読めば、どの製品でも同じ考え方が使える。</p>
+
+<h2>SOC アナリストは、トリアージから始める</h2>
+<p>SOC のアナリストの仕事は、SIEM の画面に並んだアラートのトリアージ（ふるい分け）から始まることが多い。Splunk Enterprise Security の説明でも、トリアージは調査と対応の前に置かれている<a href="#ref-11">[11]</a>。このアラートが本当に怪しい動きを示しているか、どれくらい急ぐか、自分で調べるか次の担当に渡すかを、ここで決める。</p>
+<p>本物らしいと判断したら、調査に進む。アラートの前後の時間に、同じユーザー・同じ端末・同じ IP アドレスで何が起きていたかを、SIEM の検索でさかのぼる。Elastic の SSH のルールには、調べ方の手引きが付いている。失敗したログインのユーザー名と送り元の IP アドレスを調べる、同じユーザーや端末に出た過去48時間のほかのアラートを調べる、送り元と宛先の端末が組織の中でどんな役目かを確かめる、という順だ<a href="#ref-4">[4]</a>。ここで、集めて形をそろえておいたログが生きてくる。</p>
+<p>NIST が2025年4月に出した SP 800-61 の第3版は、インシデント対応を、組織のセキュリティの仕事全体の中に組み込んで考える形に改めた。土台にしているのは CSF 2.0 の六つの機能（統治・識別・防御・検知・対応・復旧）で、どの機能もインシデント対応に関わるとしている<a href="#ref-12">[12]</a>。SIEM のアラートは、その中の検知から対応への入口にあたる。</p>
+
+<h2>誤検知の多くは、正しく鳴った害のない動き</h2>
+<p>実務者が「誤検知」と呼ぶアラートの多くは、ルールの誤りではなく、ルールどおりに鳴ったがその環境では正当な動きだったものだ。オックスフォード大学のアラーマディらは、SOC で働く実務者への調査と聞き取りをもとに、2022年の USENIX Security で「99% False Positives」という題の研究を発表し、こうしたアラートを「benign trigger（害のない引き金）」と呼んだ<a href="#ref-13">[13]</a>。管理者が障害の対応で夜中にサーバーへ入った記録は、ルールから見れば怪しく、組織から見れば仕事の一部だ。</p>
+<p>ルールの側も、そうした動きを前もって書いている。Elastic の SSH のルールは、誤検知になりうるものとして、認証の設定の誤りや古い認証情報、サービス用のアカウントのパスワードの期限切れ、基盤や可用性の障害を挙げ、ルールのタグには「Noise: High」（雑音が多い）と付けている<a href="#ref-4">[4]</a>。</p>
+<p>この区別は、直し方に関わる。ルールが間違っているなら、ルールを直す。ルールは正しいが環境の文脈を知らないなら、例外を足す、資産や利用者の情報と組み合わせる、といったやり方で文脈を足す。著者たちは、アラートが持つとよい性質として、信頼できる・説明できる・分析に役立つ・文脈を持つ・ほかへ移せる、の五つを挙げている<a href="#ref-13">[13]</a>。</p>
+<p>アラートが多すぎると、一つひとつを丁寧に見られなくなる。アラート疲れ（alert fatigue）と呼ばれる状態だ。同じ研究は、すぐに反応でき、解釈できて意味のあるアラートを出す道具が、アラートによる燃え尽きを減らすことにつながる、と結んでいる<a href="#ref-13">[13]</a>。誤検知の割合の数字はいくつも出回っているが、調べ方がはっきりしないものが多いので、ここでは使わない。アラートの数を減らすことと、一つひとつのアラートに文脈を持たせることは、別々の手当てだ。</p>
+
+<h2>AI があっても、判断は人に残る</h2>
+<p>SIEM には機械学習や生成 AI の機能が足されてきているが、公的な手引きは、技能を持つ人による監視と改善を前提にしている。Elastic のルールの種類には、機械学習でふだんの動きからの外れを見つけるものがあり<a href="#ref-9">[9]</a>、JPCERT/CC の調査の道具 LogonTracer も、2.0 の版で OpenAI の GPT のモデルを使った分析の機能を入れた<a href="#ref-14">[14]</a>。</p>
+<p>2025年の実務者向けの手引きは、SIEM と SOAR が役に立つには、技能を持つ人による監視と、定期的な試験と、改善の繰り返しが要るとしている<a href="#ref-15">[15]</a>。経営層向けの手引きも、費用の中に、専門の技能を持つ人を雇い、とどめ、育てる費用を入れている<a href="#ref-16">[16]</a>。</p>
+<p>Gartner は2024年12月に、「Predict 2025: There Will Never Be an Autonomous SOC（自律した SOC は、これからもできない）」という題の予測を出している<a href="#ref-17">[17]</a>。読めたのは要旨の冒頭だけで、理由の詳しいところは確かめていない。手引きも予測も見通しで、長い期間のデータではない。</p>
+<p>いまの資料から言えるのは、AI が人の席をなくすというより、人がする仕事の中身が変わっていく、というところまでだ。何を自動に任せ、どこで人が判断するかを決めること自体が、仕事の一部になる。ルールが鳴ったあとに、それが仕事なのか攻撃なのかを決める材料を持っているのは、その組織を知っている人だ。</p>
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">MITRE ATT&amp;CK「Brute Force」（T1110）と、検知の戦略 DET0463。<a href="https://attack.mitre.org/techniques/T1110/">MITRE ATT&amp;CK</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0463">MITRE ATT&amp;CK（DET0463）</a></li>
+<li id="ref-2">Wazuh 4.14.0 のルールのファイル（0280-attack_rules.xml のルール 40111・40112、0095-sshd_rules.xml のルール 5760・5763）。<a href="https://github.com/wazuh/wazuh/blob/v4.14.0/ruleset/rules/0280-attack_rules.xml">GitHub</a>。<a href="https://github.com/wazuh/wazuh/blob/v4.14.0/ruleset/rules/0095-sshd_rules.xml">GitHub（SSH）</a></li>
+<li id="ref-3">Wazuh ドキュメント「Rules classification」（4.14.0 の版の GitHub の原稿。ルールの重さの段階）。<a href="https://github.com/wazuh/wazuh-documentation/blob/v4.14.0/source/user-manual/ruleset/rules/rules-classification.rst">GitHub</a></li>
+<li id="ref-4">Elastic の検知ルール「Potential Successful SSH Brute Force Attack」（問い合わせ、調べ方の手引き、誤検知の例、タグ）。<a href="https://github.com/elastic/detection-rules/blob/main/rules/linux/credential_access_potential_successful_linux_ssh_bruteforce.toml">GitHub</a></li>
+<li id="ref-5">MITRE ATT&amp;CK「Password Spraying」（T1110.003）と、検知の戦略 DET0487。<a href="https://attack.mitre.org/techniques/T1110/003/">MITRE ATT&amp;CK</a></li>
+<li id="ref-6">MITRE ATT&amp;CK「Local Account」（T1136.001）と、検知の戦略 DET0447。<a href="https://attack.mitre.org/techniques/T1136/001/">MITRE ATT&amp;CK</a></li>
+<li id="ref-7">MITRE ATT&amp;CK「Clear Windows Event Logs」と、検知の戦略 DET0532。<a href="https://attack.mitre.org/techniques/T1685/005">MITRE ATT&amp;CK</a></li>
+<li id="ref-8">Elastic ドキュメント「Detections and alerts」と「Tune detection rules」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert.md">GitHub</a>。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert/tune-detection-rules.md">GitHub（調整）</a></li>
+<li id="ref-9">Elastic ドキュメント「Choose the right rule type」（GitHub の原稿）。<a href="https://github.com/elastic/docs-content/blob/main/solutions/security/detect-and-alert/choose-the-right-rule-type.md">GitHub</a></li>
+<li id="ref-10">SigmaHQ「Sigma - Generic Signature Format for SIEM Systems」（README）。<a href="https://github.com/SigmaHQ/sigma">GitHub</a></li>
+<li id="ref-11">Splunk ドキュメント「About Splunk Enterprise Security」。<a href="https://help.splunk.com/en/splunk-enterprise-security-8/user-guide/8.1/introduction">Splunk</a></li>
+<li id="ref-12">NIST（2025）SP 800-61 Rev. 3 Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile。<a href="https://csrc.nist.gov/pubs/sp/800/61/r3/final">NIST CSRC</a></li>
+<li id="ref-13">Alahmadi・Axon・Martinovic（2022）99% False Positives: A Qualitative Study of SOC Analysts' Perspectives on Security Alarms。31st USENIX Security Symposium。<a href="https://www.usenix.org/conference/usenixsecurity22/presentation/alahmadi">USENIX</a></li>
+<li id="ref-14">JPCERT/CC「LogonTracer」（README。2.0 の版の機能）。<a href="https://github.com/JPCERTCC/LogonTracer">GitHub</a></li>
+<li id="ref-15">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Practitioner guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-practitioner-guidance">cyber.gov.au</a>。3部作の案内。<a href="https://www.cisa.gov/resources-tools/resources/guidance-siem-and-soar-implementation">CISA</a></li>
+<li id="ref-16">ASD's ACSC・CISA ほか（2025）Implementing SIEM and SOAR platforms: Executive guidance。<a href="https://www.cyber.gov.au/business-government/detecting-responding-to-threats/event-logging/implementing-siem-soar-platforms/implementing-siem-and-soar-platforms-executive-guidance">cyber.gov.au</a></li>
+<li id="ref-17">Gartner（2024）Predict 2025: There Will Never Be an Autonomous SOC（要旨）。<a href="https://www.gartner.com/en/documents/6027635">Gartner</a></li>
+</ol>
+</section>

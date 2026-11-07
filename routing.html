@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる — ムートン</title>
+<meta name="description" content="ルーターは、宛先にいちばん長く一致する経路を選ぶ。BGP はもともと、届いた経路の申告を確かめない。この二つが重なると経路の乗っ取りが起きる。ルーティングの決まり、事例、RPKI による確かめ方を RFC で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/routing.html">
+<meta property="og:title" content="ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる — ムートン">
+<meta property="og:description" content="ルーターは、宛先にいちばん長く一致する経路を選ぶ。BGP はもともと、届いた経路の申告を確かめない。この二つが重なると経路の乗っ取りが起きる。ルーティングの決まり、事例、RPKI による確かめ方を RFC で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/routing.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/routing.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる","description":"ルーターは、宛先にいちばん長く一致する経路を選ぶ。BGP はもともと、届いた経路の申告を確かめない。この二つが重なると経路の乗っ取りが起きる。ルーティングの決まり、事例、RPKI による確かめ方を RFC で確かめた。","inLanguage":"ja","datePublished":"2026-11-06","dateModified":"2026-11-06","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/routing.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる","item":"https://moutonarchive.com/routing.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">ルーティングは、<wbr>いちばん<wbr>細かい<wbr>経路を<wbr>信じる。<wbr>その<wbr>決まりが、<wbr>経路の<wbr>乗っ取りに<wbr>使われる</h1>
+  <p class="rn-subtitle">ルーターが経路を選ぶ決まり、AS と BGP、経路の乗っ取りと漏えいの事例、RPKI による確かめ方を、RFC と公式の記録で確かめた</p>
+  <p class="rn-meta"><span>約11分</span><span>更新日 <time datetime="2026-11-06">2026年11月6日</time></span></p>
+  <div class="rn-body">
+<p>ルーターは、届いたパケットの宛先を経路表と照らし、いちばん長く一致する経路を選んで、次のルーターへ渡す。インターネットの組織と組織のあいだで経路を教え合う BGP は、もともと、届いた経路の申告が正しいかを確かめない。この二つが重なると、他人のアドレスあての通信を自分のほうへ流させる「経路の乗っ取り」が起きる。この記事は、ルーティングの決まりと、乗っ取りと漏えいの事例と、RPKI による確かめ方を、RFC と公式の記録で確かめたものだ。例のアドレスと AS 番号は、文書のために取ってあるもの（192.0.2.0/24・198.51.100.0/24・203.0.113.0/24、AS64496〜64511）を使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
+
+<details class="rn-toc"><summary>目次（9）</summary><ol><li><a href="#s-1">ルーターは、次の行き先だけを決める</a></li><li><a href="#s-2">重なる経路では、いちばん長く一致するものが勝つ</a></li><li><a href="#s-3">経路表は、手で書くか、ルーター同士が教え合う</a></li><li><a href="#s-4">BGP は、届いた申告を確かめずに使う</a></li><li><a href="#s-5">乗っ取りと漏えいは、実際に起きてきた</a></li><li><a href="#s-6">RPKI は、申告した AS が正しいかを確かめる</a></li><li><a href="#s-7">自分のラボで試す</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">ルーターは、<wbr>次の<wbr>行き先だけを<wbr>決める</h2>
+<p>ルーターは、パケットを最後の宛先まで運ぶ道筋をまとめて決めるのではなく、宛先ごとに「次にどのルーターへ渡すか」だけを決める。手がかりは経路表（ルーティングテーブル）で、宛先のアドレスの範囲（プレフィックス。203.0.113.0/24 のように、先頭から何ビットが同じかで範囲を表す。読み方は<a href="ip-address.html">IP アドレスの記事</a>に書いた）と、次に渡す相手（ネクストホップ）の組が並んでいる。どれにも当てはまらない宛先のために、0.0.0.0/0 という「ほかの全部」を表す経路（デフォルトルート）を置く。CIDR の決まりを書いた RFC 4632 は、この 0.0.0.0/0 をデフォルトルートとして使い、どの実装も受け付けなければならないとしている<a href="#ref-3">[3]</a>。</p>
+<p>パケットには、通れるルーターの数の上限も書かれている。IPv6 の決まり（RFC 8200）では、この欄（Hop Limit）は転送するたびに1ずつ減らされ、0 になったパケットは捨てられる<a href="#ref-4">[4]</a>。IPv4 では同じ役目の欄を TTL と呼ぶ。経路がぐるぐる回る誤りがあっても、パケットがいつまでも回り続けないための仕組みだ。</p>
+<p>上限を0にしたルーターは、パケットを捨てたうえで、送り元へ「時間切れ（Time Exceeded）」の知らせを返す。ICMPv6 の決まり（RFC 4443）は、これをルーターがしなければならないこととし、経路の回り続けか、上限の初めの値が小さすぎることを示す、としている<a href="#ref-5">[5]</a>。上限を 1、2、3 と増やしながらパケットを送れば、上限が尽きたところのルーターから順に知らせが返ってくるので、途中のルーターが分かる。Linux の tracepath や traceroute は、宛先までの道筋をこうしてたどって表示する道具だ<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-2">重なる<wbr>経路では、<wbr>いちばん長く<wbr>一致する<wbr>ものが<wbr>勝つ</h2>
+<p>宛先に当てはまる経路がいくつもあるとき、ルーターはプレフィックスがいちばん長いもの、つまりいちばん細かい範囲の経路を選ぶ。RFC 4632 は「インターネットでの転送は、最長一致（longest-match）で行われる」と書いている<a href="#ref-3">[3]</a>。</p>
+<p>たとえば、経路表に三つの経路があるとする。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>宛先 198.51.100.200 に当てはまる経路</caption><thead><tr><th scope="col">経路</th><th scope="col">表す範囲</th><th scope="col">選ばれるか</th></tr></thead><tbody>
+<tr><th scope="row">0.0.0.0/0</th><td>すべてのアドレス（デフォルトルート）</td><td>当てはまるが、いちばん粗い</td></tr>
+<tr><th scope="row">198.51.100.0/24</th><td>198.51.100.0〜198.51.100.255 の256個</td><td>当てはまるが、もっと細かい経路がある</td></tr>
+<tr><th scope="row">198.51.100.128/25</th><td>198.51.100.128〜198.51.100.255 の128個</td><td>選ばれる（いちばん長く一致する）</td></tr>
+</tbody></table></div>
+<p>宛先の 198.51.100.200 は三つの範囲のどれにも入るが、/25 の経路がいちばん細かいので、パケットは /25 の経路のネクストホップへ渡される。宛先が 198.51.100.20 なら、/25 の範囲から外れるので、/24 の経路が選ばれる。</p>
+<p>Linux では、<code>ip route</code> で経路表を、<code>ip route get</code> に宛先を渡すと、その宛先にどの経路が使われるかを表示できる。iproute2 の説明書は、<code>get</code> は実際にその宛先へパケットを送るのと同じ選び方をする、としている<a href="#ref-7">[7]</a>。</p>
+
+<h2 id="s-3">経路表は、<wbr>手で<wbr>書くか、<wbr>ルーター同士が<wbr>教え合う</h2>
+<p>経路表の中身は、管理する人が手で書く（静的経路）か、ルーター同士がルーティングプロトコルで教え合って作る（動的経路）。小さなネットワークなら手で書けるが、つながる先が増えると、教え合う仕組みが要る。</p>
+<p>教え合う仕組みは、一つの組織の中と、組織と組織のあいだで分かれる。単位になるのが AS（自律システム）だ。BGP の決まり（RFC 4271）は、AS を古典的な定義として「一つの技術的な管理のもとにあるルーターの集まり」とし、中では内部のルーティングプロトコル（OSPF など）で、ほかの AS へは AS のあいだのルーティングプロトコルで経路を決める、と書いている<a href="#ref-8">[8]</a>。インターネットの AS のあいだで使われているのが BGP で、同じ RFC は、BGP の主な役目を「ネットワークへの到達の情報を、ほかの BGP のシステムとやりとりすること」とし、その情報には経路が通ってきた AS の並び（AS パス）が含まれる、としている<a href="#ref-8">[8]</a>。</p>
+<p>BGP で同じ宛先への経路が複数届いたとき、どれを使うかは距離だけでは決まらない。オープンソースのルーティングソフト FRRouting（FRR）の説明では、選び方は上から順に、管理者が付けた重み、ローカルプリファレンス（その AS の方針で付ける優先度）、自分で作った経路かどうか、と続き、AS パスの短さはそのあとに来る<a href="#ref-9">[9]</a>。どの相手から来た経路を好むかという、組織と組織の取り決めが先に効く。</p>
+
+<h2 id="s-4">BGP は、<wbr>届いた<wbr>申告を<wbr>確かめずに<wbr>使う</h2>
+<p>BGP は、隣の AS から届いた「この範囲は、この AS の先にある」という申告を、そのまま経路表に入れて、さらに隣へ伝える。申告した AS が、本当にそのアドレスを使ってよいのかを確かめる仕組みは、BGP そのものには入っていない。</p>
+<p>RFC 4632 は、セキュリティの節で、最長一致がこの弱さを強めると書いている。ある宛先について、ふだん広告されている範囲より細かいプレフィックスを広告すれば、通信を乗っ取れる。いちばん長く一致する経路が選ばれるので、細かい偽の経路のほうへ通信が流れるからだ。RFC 4632 が挙げる手当ては、事業者のあいだの信頼関係と、事業者の境目での強い経路のフィルターで、受け取るプレフィックスの長さに上限を設けるフィルターや、隣から受け取る経路の数に上限を設ける設定にも触れている<a href="#ref-3">[3]</a>。</p>
+<p>悪意がなくても、同じことは起きる。設定の誤りで、届けるはずのない経路を広告してしまうことがある。経路が、取り決めで決まった範囲を越えて伝わることを、RFC 7908 は「経路の漏えい（route leak）」と定義している<a href="#ref-10">[10]</a>。</p>
+
+<h2 id="s-5">乗っ取りと<wbr>漏えいは、<wbr>実際に<wbr>起きてきた</h2>
+<p>経路の乗っ取りと漏えいは、大きなサービスが届かなくなる形で、何度も起きている。</p>
+<p>2008年2月24日、パキスタン・テレコム（AS17557）が、YouTube のアドレスの一部 208.65.153.0/24 を広告した。YouTube が広告していたのは、それを含むより粗い 208.65.152.0/22 で、細かい /24 のほうが選ばれた。上流の PCCW Global（AS3491）がこの経路をそのまま伝え、世界の多くの場所で YouTube への通信がパキスタン・テレコムへ流れた。RIPE NCC の事例の記録によると、偽の経路は約2時間後に取り下げられた<a href="#ref-11">[11]</a>。</p>
+<p>2017年8月25日の正午すぎには、日本で大規模なインターネットの接続障害が起きた。総務省の電気通信事故検証会議の報告によると、発端は、Google が設定の誤りで、本来配るはずではなかった経路の情報を配ったことだった。報告は対策として、誤って送られた経路を受け取らないことと、要らない経路を送らないこと、事業者のあいだで障害の情報を共有すること、利用者に知らせることを挙げている<a href="#ref-12">[12]</a>。</p>
+<p>2024年6月27日には、Cloudflare の公開 DNS サービス 1.1.1.1 が、一部の場所から届かなくなった。Cloudflare の報告によると、Eletronet（AS267613）が 1.1.1.1/32 を広告した乗っ取りと、別の AS による 1.1.1.0/24 の経路の漏えいが重なった。Cloudflare が広告していたのは /24 で、/32 はそれより細かい。報告は、ROA で経路に署名し、ROV を正しく実施しているネットワークでは、乗っ取りの影響が大きく抑えられた、としている<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-6">RPKI は、<wbr>申告した<wbr> AS が<wbr>正しいかを<wbr>確かめる</h2>
+<p>RPKI（Resource Public Key Infrastructure）は、IP アドレスと AS 番号の割り当てを電子署名で証明する仕組みだ。RFC 6480 は、その最初の使い道として、アドレスを正しく持っている者が、そのアドレスへの経路を広告してよい AS を、確かめられる形で認めることを挙げている<a href="#ref-14">[14]</a>。この「認めた」という署名付きのデータが ROA（Route Origin Authorization）で、プレフィックス、広告してよい最大の長さ、AS 番号を持つ<a href="#ref-15">[15]</a>。</p>
+<p>ルーターの側で、届いた経路を ROA と照らすのが ROV（Route Origin Validation）だ。RFC 6811 は結果を三つに分ける。経路の範囲を含む ROA がなければ NotFound、範囲・最大の長さ・AS 番号まで合う ROA があれば Valid、範囲を含む ROA はあるのにどれとも合わなければ Invalid だ<a href="#ref-16">[16]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>ROA「203.0.113.0/24、最大の長さ 24、AS64500」があるときの判定</caption><thead><tr><th scope="col">届いた経路</th><th scope="col">判定</th><th scope="col">理由</th></tr></thead><tbody>
+<tr><th scope="row">203.0.113.0/24、AS64500 が広告</th><td>Valid</td><td>範囲・長さ・AS 番号が ROA と合う</td></tr>
+<tr><th scope="row">203.0.113.0/25、AS64511 が広告</th><td>Invalid</td><td>範囲は ROA に含まれるが、長さが最大を超え、AS 番号も違う</td></tr>
+<tr><th scope="row">198.51.100.0/24、AS64511 が広告</th><td>NotFound</td><td>この範囲を含む ROA がない</td></tr>
+</tbody></table></div>
+<p>表の2行目が、細かい経路による乗っ取りの形にあたる。ROV で Invalid の経路を捨てるルーターは、この経路を使わない。ただし、確かめる設定を入れただけでは捨てない製品もある。FRR の説明では、RPKI を有効にしても、標準では経路の選び方は変わらず、Invalid の経路も候補に残る。捨てるには、そう設定する<a href="#ref-17">[17]</a>。</p>
+<p>ROV が確かめるのは、経路を最初に広告した AS（起点）だけだ。途中の AS の並びが正しいかは確かめない。AS パスの一つひとつに署名を付ける BGPsec（RFC 8205）<a href="#ref-18">[18]</a>や、隣の AS との関係（お客さん・上流・対等）を BGP の中で取り決めて、漏えいを防ぎ見つける仕組み（RFC 9234）<a href="#ref-19">[19]</a>が、別に決められている。ROA を作るのはアドレスを持つ側、ROV をするのは経路を受け取る側で、両方がそろって初めて効く。</p>
+
+<h2 id="s-7">自分の<wbr>ラボで<wbr>試す</h2>
+<p>ルーティングは、自分のパソコンの中の仮想マシンやコンテナで、ルーターを何台か動かして学べる。試すのは自分の環境の中だけにする。ラボの BGP を、インターネットにつながる本物の BGP の相手とつながないこと、他人のアドレスを広告しないことが前提だ。</p>
+<p>手元の経路表は、Linux の <code>ip route</code> と <code>ip route get</code> で見られる<a href="#ref-7">[7]</a>。FRR は、BGP・OSPF・IS-IS などを実装したフリーソフトで、Linux や BSD で動く<a href="#ref-20">[20]</a>。containerlab は、コンテナのルーターを並べ、そのあいだの配線を作って、ラボの構成を組み立てる道具だ<a href="#ref-21">[21]</a>。FRR のルーターを2〜3台つなぎ、文書用の AS 番号で BGP を張れば、経路が伝わる様子と、最長一致で選ばれる経路を確かめられる。</p>
+<p>RPKI も、ラボの中で試せる。Routinator は、RPKI のデータを取ってきて検証し、その結果をルーターに渡す（RTR）機能を持つオープンソースのソフトだ<a href="#ref-22">[22]</a>。FRR は RTR で検証の結果を受け取り、経路ごとに Valid・Invalid・NotFound を判定できる<a href="#ref-17">[17]</a>。ラボで細かい偽の経路を流し、ROV を入れる前と入れたあとで、どの経路が選ばれるかを比べると、この記事の二つの決まりが目で見える。</p>
+<p>ルーティングは、SIEM で見るログの通り道でもある。ログを集めて読む仕組みは<a href="siem.html">SIEM の記事</a>に書いた。</p>
+
+
+
+<p class="read-mark" data-total="5" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.06</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ip-address.html">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</a><p class="rn-list-summary">/24 は先頭24ビットが同じ256個の範囲。1ビット短くなるごとに範囲は倍になる。プライベートアドレスなどの特別な範囲と、許可リストやログでの読み違いを、ルーティングの記事の続きとしてまとめた。</p></li><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（22）</h2></summary>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Huston（2008）RFC 5398 Autonomous System (AS) Number Reservation for Documentation Use。<a href="https://www.rfc-editor.org/rfc/rfc5398">RFC Editor</a></li>
+<li id="ref-3">Fuller・Li（2006）RFC 4632 Classless Inter-domain Routing (CIDR): The Internet Address Assignment and Aggregation Plan（5.1 節の転送の決まり、12 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc4632">RFC Editor</a></li>
+<li id="ref-4">Deering・Hinden（2017）RFC 8200 Internet Protocol, Version 6 (IPv6) Specification（Hop Limit）。<a href="https://www.rfc-editor.org/rfc/rfc8200">RFC Editor</a></li>
+<li id="ref-5">Conta・Deering・Gupta 編（2006）RFC 4443 Internet Control Message Protocol (ICMPv6) for the Internet Protocol Version 6 (IPv6) Specification（Time Exceeded）。<a href="https://www.rfc-editor.org/rfc/rfc4443">RFC Editor</a></li>
+<li id="ref-6">iputils「tracepath」の説明書（GitHub の原稿）。<a href="https://github.com/iputils/iputils/blob/master/doc/tracepath.xml">GitHub</a></li>
+<li id="ref-7">iproute2「ip-route」の説明書（<code>ip route get</code>）。<a href="https://github.com/iproute2/iproute2/blob/main/man/man8/ip-route.8.in">GitHub</a></li>
+<li id="ref-8">Rekhter・Li・Hares 編（2006）RFC 4271 A Border Gateway Protocol 4 (BGP-4)。<a href="https://www.rfc-editor.org/rfc/rfc4271">RFC Editor</a></li>
+<li id="ref-9">FRRouting ドキュメント「BGP」の「Route Selection」（GitHub の原稿）。<a href="https://github.com/FRRouting/frr/blob/master/doc/user/bgp.rst">GitHub</a></li>
+<li id="ref-10">Sriram ほか（2016）RFC 7908 Problem Definition and Classification of BGP Route Leaks。<a href="https://www.rfc-editor.org/rfc/rfc7908">RFC Editor</a></li>
+<li id="ref-11">RIPE NCC「YouTube Hijacking: A RIPE NCC RIS case study」（2008）。<a href="https://www.ripe.net/publications/news/youtube-hijacking-a-ripe-ncc-ris-case-study/">RIPE NCC</a></li>
+<li id="ref-12">総務省 電気通信事故検証会議（2017）「平成29年8月に発生した大規模なインターネット接続障害に関する検証報告」。<a href="https://www.soumu.go.jp/main_content/000523153.pdf">総務省（PDF）</a></li>
+<li id="ref-13">Cloudflare「Cloudflare 1.1.1.1 incident on June 27, 2024」（2024年7月4日）。<a href="https://blog.cloudflare.com/cloudflare-1111-incident-on-june-27-2024/">Cloudflare</a></li>
+<li id="ref-14">Lepinski・Kent（2012）RFC 6480 An Infrastructure to Support Secure Internet Routing。<a href="https://www.rfc-editor.org/rfc/rfc6480">RFC Editor</a></li>
+<li id="ref-15">Lepinski・Kent・Kong（2012）RFC 6482 A Profile for Route Origin Authorizations (ROAs)。<a href="https://www.rfc-editor.org/rfc/rfc6482">RFC Editor</a></li>
+<li id="ref-16">Mohapatra ほか（2013）RFC 6811 BGP Prefix Origin Validation。<a href="https://www.rfc-editor.org/rfc/rfc6811">RFC Editor</a></li>
+<li id="ref-17">FRRouting ドキュメント「Prefix Origin Validation Using RPKI」（GitHub の原稿）。<a href="https://github.com/FRRouting/frr/blob/master/doc/user/rpki.rst">GitHub</a></li>
+<li id="ref-18">Lepinski・Sriram 編（2017）RFC 8205 BGPsec Protocol Specification。<a href="https://www.rfc-editor.org/rfc/rfc8205">RFC Editor</a></li>
+<li id="ref-19">Azimov ほか（2022）RFC 9234 Route Leak Prevention and Detection Using Roles in UPDATE and OPEN Messages。<a href="https://www.rfc-editor.org/rfc/rfc9234">RFC Editor</a></li>
+<li id="ref-20">FRRouting「README」。<a href="https://github.com/FRRouting/frr">GitHub</a></li>
+<li id="ref-21">containerlab「README」。<a href="https://github.com/srl-labs/containerlab">GitHub</a></li>
+<li id="ref-22">NLnet Labs「Routinator」（README）。<a href="https://github.com/NLnetLabs/routinator">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="ip-address.html" data-slug="ip-address"><span class="reading-card-title">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
