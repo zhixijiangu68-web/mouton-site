@@ -1,0 +1,97 @@
+---
+layout: renewal-article.njk
+title: "経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み — ムートン"
+headline: "経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み"
+subtitle: "名前の木、ルート・TLD・権威サーバー、フルサービスリゾルバーとキャッシュ、TTL、主なレコード、逆引きを、RFC とソフトの説明書で確かめた"
+description: "DNS は example.com のような名前を IP アドレスに変える。名前は木の形で委任され、リゾルバーがルートから順にたどり、答えを TTL の間だけ覚える。仕組み、主なレコード、逆引き、1.1.1.1 の事例を RFC で確かめた。"
+excerpt: "名前は右から読む木で、親のゾーンが子のゾーンの担当サーバーを示してつながる。リゾルバーはルート・TLD・権威サーバーの順にたどり、答えを TTL の間だけ覚える。頼む先のリゾルバーに届かなければ、経路が生きていても名前は引けない。"
+date: 2026-11-07T19:00:00Z
+pillar: defense
+pick: 9            # おすすめの順。ルーティングの記事の 1.1.1.1 の事例から広げた。仮の順。ムートンが決めたら直す
+related: ["routing", "dns-security"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。ルーティングの記事に出てきた「公開 DNS 1.1.1.1」の事例から広げた（docs「読む順と、記事の広げ方」の5）
+---
+<p>DNS は、example.com のような名前を、通信に使う IP アドレスに変える仕組みだ<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。名前は右から読む木の形で管理され、利用者の代わりにフルサービスリゾルバーがルート・TLD・権威サーバーの順に問い合わせ、答えを TTL の秒数だけ覚えておく。<a href="routing.html">ルーティングの記事</a>で見た 2024年6月の 1.1.1.1 の事例は、経路の問題が、このリゾルバーに届く道をふさいだものだった。例には example.com と、文書用のアドレスとプライベートアドレスを使う。</p>
+
+<h2>名前は、右から読む木になっている</h2>
+<p>DNS の名前は一本の木で、右端が根（ルート）、左へ行くほど枝の先になる。RFC 1034 は名前空間を木の形と定め、木の一つひとつの点（ノード）にラベルが付き、ノードの名前は、そこから根までのラベルを並べたものだとしている<a href="#ref-1">[1]</a>。www.example.com なら、根の下に com、その下に example、その下に www がある。</p>
+<p>ラベルは0〜63オクテットで、長さ0のラベルは根のためだけに使う。名前全体は、通信で送る形で255オクテットまでだ<a href="#ref-2">[2]</a><a href="#ref-3">[3]</a>。完全な名前は根の空のラベルで終わるので、正式には「www.example.com.」と最後に点を付けて書く。ふだんの表示では、この点を省く<a href="#ref-3">[3]</a>。大文字と小文字は区別せずに比べる<a href="#ref-1">[1]</a>。</p>
+<p>ある名前が別の名前の下にあるかは、ラベル単位で末尾を比べて決める。RFC 9499 の例では、ooo.example.com は oo.example.com の下にはない<a href="#ref-3">[3]</a>。文字列の末尾が一致するかだけで判断すると、この区別を誤る。ログを検索するときや、許可する名前の一覧を作るときも同じだ。</p>
+
+<h2>木はゾーンに区切られ、委任でつながる</h2>
+<p>名前の木は、管理する組織ごとの「ゾーン」に区切られ、親のゾーンが子のゾーンの担当サーバーを示すことでつながっている。RFC 1034 は、木の隣り合うノードの間に切れ目を入れ、切れ目で囲まれた一続きの部分を一つのゾーンとし、組織は自分のゾーンの中を自由に変え、さらに下を別のゾーンとして任せられる、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>この「任せる」ことを委任と呼ぶ。委任は、親のゾーンに、子の名前の NS レコード（そのゾーンを担当するサーバーの名前）を置くことで起きる<a href="#ref-3">[3]</a>。根のゾーン（ルートゾーン）の一段下が、com や jp のような TLD のゾーンで、example.com のゾーンは com のゾーンから委任される<a href="#ref-3">[3]</a>。ルートゾーンを答えるサーバーは、互いに独立したルートサーバーの運用者が出している<a href="#ref-3">[3]</a>。</p>
+<p>ゾーンの中身を自分の情報として持ち、ほかに聞かずに答えられるサーバーを権威サーバーと呼ぶ。権威サーバーは、自分のゾーンの答えに AA（Authoritative Answer）の印を付け、子のゾーンについて聞かれると、子の担当サーバーを示す紹介（referral）を返す<a href="#ref-3">[3]</a>。担当サーバーの名前が子のゾーンの中にあると（ns.example.com が example.com を担当するなど）、そのアドレスを引くのに、そのサーバー自身に聞かなければならなくなる。これを避けるため、親のゾーンは紹介にそのサーバーのアドレスを添える。このアドレスをグルーと呼ぶ<a href="#ref-1">[1]</a><a href="#ref-3">[3]</a>。</p>
+
+<h2>引く仕事は、スタブリゾルバーとフルサービスリゾルバーで分かれる</h2>
+<p>手元の機器は名前を自分では引ききらず、近くのフルサービスリゾルバーに頼む。RFC 1123 は、リゾルバーの作り方に二つの型を挙げている<a href="#ref-4">[4]</a>。フルサービスリゾルバーは、担当のサーバーを探し、サーバーの故障や通信の失敗に対処しながら、名前を最後まで引く。答えを覚えておくキャッシュを持ち、キャッシュの情報は時間が来たら消さなければならない。スタブリゾルバーは、近くの再帰的なサーバーに引く仕事を任せ、そのサーバーのキャッシュをほかの機器と分け合う<a href="#ref-4">[4]</a>。</p>
+<p>パソコンやスマホの中にあるのは、ふつうスタブリゾルバーで、頼む先は、家のルーターや通信事業者のリゾルバー、または 1.1.1.1 のような公開リゾルバーになる。RFC 9499 は、誰からの問い合わせでも受け付けるフルサービスリゾルバーをオープンリゾルバーと呼び、意図して開いているものは公開リゾルバー（public resolver）とも呼ばれる、と書いている<a href="#ref-3">[3]</a>。</p>
+<p>頼むときの約束は、問い合わせの RD（recursion desired）の印と、答えの RA（recursion available）の印で表す。RD は「最後まで引いてほしい」、RA は「このサーバーは再帰を引き受ける」という意味だ。再帰で答えるサーバーは、答えかエラーを返し、紹介は返さない。どのクライアントの再帰を引き受けるかは、サーバーが制限してよい<a href="#ref-1">[1]</a>。</p>
+<p>Linux の systemd-resolved は、説明書の上では、キャッシュを持つスタブリゾルバーだ。127.0.0.53 で問い合わせを受け、設定された DNS サーバー（ネットワークの設定で配られたものや、設定ファイルの <code>DNS=</code> に書いたもの）へ送る<a href="#ref-5">[5]</a>。</p>
+
+<h2>キャッシュが空なら、ルートから一段ずつ下りる</h2>
+<p>フルサービスリゾルバーは、キャッシュに答えがなければ、根に近いサーバーから聞き、紹介をたどって担当の権威サーバーまで下りる。RFC 1034 の手順は、キャッシュを見る、聞くべきいちばんよいサーバーを探す、答えが来るまで問い合わせる、答えを読む、の四つだ<a href="#ref-1">[1]</a>。</p>
+<p>www.example.com の A レコード（IPv4 アドレス）を、キャッシュが空の状態で引く流れは次のようになる。リゾルバーはまず、根のサーバーのアドレスを知っている必要がある。多くのソフトは、根のサーバーの名前とアドレスの一覧（ルートヒント）を持っていて、そこから根のサーバーの今の一覧を得る。これをプライミングと呼ぶ<a href="#ref-3">[3]</a>。根のサーバーに www.example.com を聞くと、根は答えを持たず、com の担当サーバーを紹介する。com のサーバーは、example.com の担当サーバーを紹介する。example.com の権威サーバーが AA の印を付けて A レコードを返し、リゾルバーはそれをキャッシュに入れて、スタブリゾルバーに返す<a href="#ref-1">[1]</a><a href="#ref-3">[3]</a>。</p>
+<p>途中で受け取った紹介もキャッシュに入る<a href="#ref-1">[1]</a>。RFC 1034 の手順は、聞く先を探すとき、名前そのもの、その親、さらにその親、と根の方向へ、手元にある NS レコードを探す<a href="#ref-1">[1]</a>。そのため、次に別の .com の名前を引くときは、根を飛ばして com のサーバーから聞き始められる。</p>
+<p>答えが CNAME（別名）だったときは、リゾルバーは CNAME をキャッシュに入れ、CNAME が指す名前に取り替えて、最初から引き直す<a href="#ref-1">[1]</a>。</p>
+<p>問い合わせは UDP と TCP の53番ポートで運ばれ、ふつうの問い合わせは UDP を先に使う<a href="#ref-2">[2]</a><a href="#ref-4">[4]</a>。答えが切り詰められていたら、TCP で聞き直す<a href="#ref-4">[4]</a>。RFC 1034 は、答えを読むときは疑ってかかり、答えの ID が、送った問い合わせの ID と合うかを確かめるよう書いている<a href="#ref-1">[1]</a>。</p>
+
+<h2>TTL は、答えを覚えておいてよい秒数</h2>
+<p>レコードには TTL が付いていて、リゾルバーはその秒数のあいだ、答えをキャッシュから返せる。RFC 1034 は、TTL を秒単位の数で、主にキャッシュに使い、捨てるまでにどれだけ覚えておいてよいかを表すとしている<a href="#ref-1">[1]</a>。RFC 1035 は符号付きの32ビットの数と書いたが、RFC 2181 が、0 から 2,147,483,647（2の31乗引く1）までの符号なしの数と決め直した<a href="#ref-2">[2]</a><a href="#ref-6">[6]</a>。同じ名前・同じ種類のレコードの組（RRset）は、TTL をそろえなければならない<a href="#ref-6">[6]</a>。</p>
+<p>TTL が3600なら、リゾルバーは1時間のあいだ、権威サーバーに聞き直さずに答えられる。権威サーバーでアドレスを変えても、古い答えを覚えているリゾルバーの利用者には、TTL が切れるまで古いアドレスが返る。TTL を短くすれば切り替わりは早くなり、そのぶん権威サーバーへの問い合わせは増える。</p>
+<p>「無い」という答えも覚えておける。名前が存在しない NXDOMAIN と、名前はあるが求めた種類のレコードがない NODATA を、否定の答えと呼ぶ<a href="#ref-3">[3]</a>。RFC 2308 は、権威サーバーが否定の答えにゾーンの SOA レコードを付けることを求め、否定の答えを覚えておける時間を、SOA の MINIMUM 欄と SOA 自身の TTL の小さいほうで決める<a href="#ref-7">[7]</a>。新しく作った名前が、作る前に一度引かれていると、この時間が過ぎるまで「無い」と返り続けることがある。</p>
+
+<h2>主なレコードは、種類ごとに入るものが違う</h2>
+<p>DNS は、名前にアドレスだけでなく、いくつもの種類のデータ（リソースレコード）を結びつける。種類は番号で区別され、主なものは RFC 1035 と、AAAA を定めた RFC 3596 にある<a href="#ref-2">[2]</a><a href="#ref-8">[8]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主なリソースレコード（RFC 1035・RFC 3596 から）</caption><thead><tr><th scope="col">種類</th><th scope="col">番号</th><th scope="col">入るもの</th></tr></thead><tbody>
+<tr><th scope="row">A</th><td>1</td><td>IPv4 のアドレス（32ビット）</td></tr>
+<tr><th scope="row">AAAA</th><td>28</td><td>IPv6 のアドレス（128ビット）</td></tr>
+<tr><th scope="row">CNAME</th><td>5</td><td>別名が指す、正式な名前</td></tr>
+<tr><th scope="row">MX</th><td>15</td><td>その名前あてのメールを受け取るサーバーの名前と、優先度の数</td></tr>
+<tr><th scope="row">NS</th><td>2</td><td>そのゾーンを担当する権威サーバーの名前</td></tr>
+<tr><th scope="row">TXT</th><td>16</td><td>文字列</td></tr>
+<tr><th scope="row">PTR</th><td>12</td><td>別の名前を指す印。逆引きに使う</td></tr>
+</tbody></table></div>
+<p>CNAME には決まりがある。CNAME を置いた名前には、ほかのデータを置かない。別名と正式な名前のデータが食い違わないようにするためで、こう決めておけば、キャッシュした CNAME を、ほかの種類について権威サーバーに確かめずに使える<a href="#ref-1">[1]</a>。また、NS の値と MX の値には、別名（CNAME を持つ名前）を書いてはいけない<a href="#ref-6">[6]</a>。</p>
+<p>MX は、優先度の数が小さいほど先に使われる<a href="#ref-2">[2]</a>。TXT の中身の意味は、置かれた場所で決まる<a href="#ref-2">[2]</a>。たとえば、メールの送り元を確かめる SPF は、その名前からメールを送ってよいサーバーの一覧を、TXT レコードで公開する<a href="#ref-9">[9]</a>。</p>
+
+<h2>逆引きは、アドレスを逆に並べた名前を引く</h2>
+<p>アドレスから名前を引く逆引きは、アドレスを名前に作り直して、その名前の PTR レコードを引く。IPv4 では、アドレスの四つの数を逆の順に並べ、in-addr.arpa を付ける。RFC 1035 の例では、10.2.0.52 のデータは 52.0.2.10.in-addr.arpa にある<a href="#ref-2">[2]</a>。192.0.2.10 なら 10.2.0.192.in-addr.arpa だ。</p>
+<p>逆に並べるのは、ネットワークの範囲ごとにゾーンを委任できるようにするためだ<a href="#ref-2">[2]</a>。アドレスの上の桁が名前の右（根に近い側）に来るので、アドレスの範囲を持つ組織に、その範囲の逆引きのゾーンを任せられる。</p>
+<p>IPv6 では、アドレスを16進数の1桁（4ビット）ずつ、下の桁から順に並べ、ip6.arpa を付ける<a href="#ref-8">[8]</a>。2001:db8::1 なら、1.0.0.0 で始まる32桁の並びになり、最後は 8.b.d.0.1.0.0.2.ip6.arpa で終わる。</p>
+<p>正引きのゾーン（example.com）と、逆引きのゾーン（in-addr.arpa の下）は、別々に委任される。ログに出た逆引きの名前は、そのアドレスの範囲を任された側が付けた名前で、その名前を正引きして同じアドレスが返るとは限らない。</p>
+
+<h2>リゾルバーに届かないと、名前が引けない</h2>
+<p>宛先への経路が生きていても、頼む先のリゾルバーに届かなければ、機器は名前を引けず、名前から始まる通信は始まらない。ルーティングの記事で見た2024年6月27日の事例では、1.1.1.1/32 の乗っ取りと 1.1.1.0/24 の経路の漏えいが重なり、一部の場所から 1.1.1.1 に届かなくなった<a href="#ref-10">[10]</a>。Cloudflare は、世界の少数の利用者が、1.1.1.1 に届かない、または遅いと気づいたかもしれない、としている<a href="#ref-10">[10]</a>。リゾルバーを 1.1.1.1 だけにしていた機器は、宛先のサーバーへの経路に問題がなくても、名前からアドレスを引く最初の段で止まる。</p>
+<p>RFC 1123 は、スタブリゾルバーが、複数の再帰サーバーに問い合わせを向けられることを求めている<a href="#ref-4">[4]</a>。Linux の resolv.conf には nameserver を3つまで書け、問い合わせが時間切れになると、次のサーバーに移る<a href="#ref-11">[11]</a>。ただし、並べたリゾルバーがどれも同じ障害の影響を受ければ、並べても助けにならない。</p>
+<p>守る側にとって、DNS の問い合わせのログは、どの機器がどの名前を引いたかを残す記録で、<a href="siem.html">SIEM の記事</a>でも取り込むログの一つに挙げた。リゾルバーや答えを偽られる話と、名前を乗っ取られる話は、次の DNS の守りの記事で扱う。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>DNS の動きは、自分の機器の resolvectl と dig で観察できる。試すのは自分の機器と、自分が管理するネットワークの中だけにする。他人のサーバーに大量の問い合わせを送ったり、他人のゾーンの中身を丸ごと取ろうとしたりはしない。</p>
+<p><code>resolvectl status</code> は、いま使っている DNS の設定を、全体とリンクごとに見せる。<code>resolvectl query example.com</code> で名前を引くと、systemd-resolved を通した答えが出る。別の端末で <code>resolvectl monitor</code> を動かしておくと、手元の機器が出した問い合わせと答えが流れていく。これは機器の中の問い合わせで、キャッシュから答えたものも含む。<code>resolvectl show-cache</code> でキャッシュの中身を見られ、<code>resolvectl flush-caches</code> でキャッシュを消せる<a href="#ref-5">[5]</a>。</p>
+<p>dig は BIND に付いてくる道具で、サーバーを指定しなければ /etc/resolv.conf に書かれたサーバーに問い合わせる<a href="#ref-12">[12]</a>。<code>dig example.com</code> の答えの flags に rd と ra があれば、再帰を頼み、サーバーが引き受けたことが分かる<a href="#ref-1">[1]</a>。少し時間をおいてもう一度引き、答えの TTL を見比べると、キャッシュから答えたときの値の変わり方が分かる。</p>
+<p><code>dig +trace example.com</code> は、根のサーバーから紹介を自分でたどって問い合わせ、各段の答えを見せる<a href="#ref-12">[12]</a>。<code>dig +norecurse</code> は RD の印を外して問い合わせ、<code>dig -x</code> にアドレスを渡すと、in-addr.arpa の名前を作って PTR を引く<a href="#ref-12">[12]</a>。<code>dig -x 192.168.1.1</code> のように家のルーターのプライベートアドレスで試すと、手元のリゾルバーが逆引きに何を返すかが分かる。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Mockapetris（1987）RFC 1034 Domain Names - Concepts and Facilities（2.4 節、3.1 節の木と名前、3.6 節の TTL、3.6.2 節の CNAME、4.2 節のゾーン、4.3.1 節の RD と RA、5.3.3 節の手順）。<a href="https://www.rfc-editor.org/rfc/rfc1034">RFC Editor</a></li>
+<li id="ref-2">Mockapetris（1987）RFC 1035 Domain Names - Implementation and Specification（2.3.4 節の大きさの上限、3.2.2 節の種類の番号、3.3 節の MX と TXT、3.5 節の IN-ADDR.ARPA、4.2 節の UDP と TCP の53番）。<a href="https://www.rfc-editor.org/rfc/rfc1035">RFC Editor</a></li>
+<li id="ref-3">Hoffman・Fujiwara（2024）RFC 9499 DNS Terminology（BCP 219）。<a href="https://www.rfc-editor.org/rfc/rfc9499">RFC Editor</a></li>
+<li id="ref-4">Braden 編（1989）RFC 1123 Requirements for Internet Hosts - Application and Support（6.1.3.1 節のフルサービスリゾルバーとスタブリゾルバー、6.1.3.2 節）。<a href="https://www.rfc-editor.org/rfc/rfc1123">RFC Editor</a></li>
+<li id="ref-5">systemd「systemd-resolved.service」「resolved.conf」「resolvectl」の説明書。<a href="https://github.com/systemd/systemd/tree/main/man">GitHub</a></li>
+<li id="ref-6">Elz・Bush（1997）RFC 2181 Clarifications to the DNS Specification（5.2 節、8 節の TTL、10.3 節の MX と NS）。<a href="https://www.rfc-editor.org/rfc/rfc2181">RFC Editor</a></li>
+<li id="ref-7">Andrews（1998）RFC 2308 Negative Caching of DNS Queries (DNS NCACHE)（3 節）。<a href="https://www.rfc-editor.org/rfc/rfc2308">RFC Editor</a></li>
+<li id="ref-8">Thomson ほか（2003）RFC 3596 DNS Extensions to Support IP Version 6（AAAA と IP6.ARPA）。<a href="https://www.rfc-editor.org/rfc/rfc3596">RFC Editor</a></li>
+<li id="ref-9">Kitterman（2014）RFC 7208 Sender Policy Framework (SPF) for Authorizing Use of Domains in Email, Version 1（3 節）。<a href="https://www.rfc-editor.org/rfc/rfc7208">RFC Editor</a></li>
+<li id="ref-10">Cloudflare「Cloudflare 1.1.1.1 incident on June 27, 2024」（2024年7月4日）。<a href="https://blog.cloudflare.com/cloudflare-1111-incident-on-june-27-2024/">Cloudflare</a></li>
+<li id="ref-11">Linux man-pages「resolv.conf(5)」（nameserver と MAXNS）。<a href="https://github.com/mkerrisk/man-pages/blob/master/man5/resolv.conf.5">GitHub</a></li>
+<li id="ref-12">ISC「dig - DNS lookup utility」（BIND 9 の説明書。<code>+trace</code>・<code>+norecurse</code>・<code>-x</code>）。<a href="https://github.com/isc-projects/bind9/blob/main/bin/dig/dig.rst">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}
