@@ -1,0 +1,99 @@
+---
+layout: renewal-article.njk
+title: "DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い — ムートン"
+headline: "DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い"
+subtitle: "偽の応答が受け取られる仕組みと2008年の対策、DNSSEC と DoT・DoH が守るもの、登録情報の書き換えとぶら下がった CNAME、DNS のログでの見つけ方を、RFC と公的機関の文書で確かめた"
+description: "DNS は、条件の合う応答のうち最初に届いたものを受け取る。偽の応答を防ぐ ID と送り元ポートの乱数、署名で正しさを確かめる DNSSEC、通信路を暗号化する DoT・DoH の役目の違いと、ログでの見つけ方を RFC で確かめた。"
+excerpt: "DNS は、届いた応答の正しさを確かめずに、条件の合う最初の応答を受け取る。2008年のキャッシュポイズニングの対策、署名で確かめる DNSSEC、通信路を暗号化する DoT・DoH はそれぞれ守るものが違う。持ち主の側の乗っ取りとログでの見つけ方もまとめた。"
+date: 2026-11-07T20:00:00Z
+pillar: defense
+pick: 10           # おすすめの順。DNS の記事から広げた1本。仮の順。ムートンが決めたら直す
+related: ["dns", "siem"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。DNS の記事に出てきた「DNS の乗っ取り」から広げた（docs「読む順と、記事の広げ方」の5）
+---
+<p>DNS はもともと、届いた応答の正しさを確かめない。問い合わせと条件の合う応答のうち、最初に届いたものを受け取るので、偽の応答が先に届けば偽の答えが使われる。この記事は、<a href="dns.html">DNS の記事</a>に出てきた「DNS の乗っ取り」を、偽の応答を防ぐ仕組み、署名で確かめる DNSSEC、通信路を暗号化する DoT・DoH、持ち主の側の乗っ取り、ログでの見つけ方に分けて、RFC と公的機関の文書で確かめたものだ。例の名前は example.com と example.net、アドレスは文書用の範囲だけを使う。</p>
+
+<h2>DNS は、条件の合う最初の応答を受け取る</h2>
+<p>DNS の問い合わせと応答は、ふつう署名も暗号化もない UDP のパケット一つで運ばれる。RFC 3833 は、そのため通り道にいる者は、問い合わせた側に何でも信じ込ませられる、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>リゾルバー（名前を代わりに調べてくれるサーバー）が応答を受け取る条件は、RFC 5452 によると四つある。応答の質問の部分が待っている問い合わせと同じこと、16ビットの ID が一致すること、問い合わせを送った相手のアドレスから来ること、問い合わせを出したアドレスとポートに届くことだ。四つを満たす応答のうち、最初に届いたものが受け取られる<a href="#ref-2">[2]</a>。</p>
+<p>受け取った答えはキャッシュに入り、決められた時間（TTL）のあいだ、リゾルバーを使う全員に配られる<a href="#ref-2">[2]</a>。偽の答えが一度入ると、その影響は一台の端末ではなく、リゾルバーの利用者全体に広がる。</p>
+
+<h2>キャッシュポイズニングは、偽の応答を先に届ける</h2>
+<p>キャッシュポイズニングは、本物の応答より先に、四つの条件を満たす偽の応答をリゾルバーに届けて、キャッシュに入れさせる攻撃だ。外から当てずっぽうで送る者にとって、いちばんの壁は ID とポートを当てることになる。</p>
+<p>ID は16ビットなので、組み合わせは65,536通りしかない。RFC 3833 は、送り元のポートも合わせれば2の32乗通りになるが、送り元のポートがファイアウォールなどの事情で決まった値になっていることも珍しくなく、探す範囲が2の16乗より小さくなることも多い、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>もう一つの壁は TTL だった。答えがキャッシュにあるあいだは問い合わせが出ないので、試せる機会は TTL が切れるたびに一回しかない。RFC 5452 の計算では、TTL が3,600秒の名前に毎秒7,000個の偽の応答を送っても、最初の24時間で成功する見込みは10％だ<a href="#ref-2">[2]</a>。</p>
+<p>2008年に公表された手法は、この TTL の壁を外した。CVE-2008-1447 の記述によると、この弱点は、問い合わせ ID と送り元ポートの乱数が足りないことに関係し、同じドメインの中の委任の情報を使って、リゾルバーのキャッシュを書き換えるものだった。研究者のダン・カミンスキーの名を取って「カミンスキーのバグ」とも呼ばれる<a href="#ref-3">[3]</a>。CERT/CC は2008年7月8日に、これを VU#800113「Multiple DNS implementations vulnerable to cache poisoning」として公表した<a href="#ref-4">[4]</a>。</p>
+<p>毎回違う名前を問い合わせさせれば、キャッシュに答えがないので、そのたびに新しい問い合わせが出る。RFC 5452 は、問い合わせを変えながら繰り返す方法では待つべき TTL が実質0になり、送り元ポートが一つなら、同じ毎秒7,000個の偽の応答で7秒以内に成功の見込みが50％に達する、と計算している<a href="#ref-2">[2]</a>。</p>
+
+<h2>2008年の対策は、問い合わせを読みにくくすること</h2>
+<p>当時の対策の中心は、送り元ポートを問い合わせごとに乱数で選ぶことだった。CERT/CC の記録によると、いくつもの作り手が、ポートを乱数にする修正を出した<a href="#ref-4">[4]</a>。</p>
+<p>RFC 5452 は2009年に、この対策を決まりにした。リゾルバーは、応答の送り元と宛先のアドレス、宛先のポート、ID、問い合わせの名前・クラス・型がすべて問い合わせと一致するかを確かめ、一つでも違えば捨てる。送り元のポートはできるだけ広い範囲から予測できない形で選び、ID も0〜65535の全部を予測できない形で使う<a href="#ref-2">[2]</a>。</p>
+<p>ポートが当てられなくなると、探す範囲は約64,000倍に広がる。RFC 5452 の計算では、6万4千のポートを使えば、同じ毎秒7,000個の偽の応答で成功の見込みが50％に達するまで、約116時間かかる<a href="#ref-2">[2]</a>。</p>
+<p>この対策は、偽の応答が当たる見込みを下げるもので、当たらないとまでは言えない。RFC 5452 は、NAT の機器が送り元ポートを並べ直したり数を絞ったりすると、乱数の効果が大きく下がると書いている。通り道でパケットを見たり書き換えたりできる者にも効かず、それを防ぐには RFC 4033 からの DNSSEC を見るよう案内している<a href="#ref-2">[2]</a>。</p>
+
+<h2>DNSSEC は、署名で答えの正しさを確かめる</h2>
+<p>DNSSEC は、DNS の答えに電子署名を付け、その答えが正しい持ち主から来て、途中で変えられていないことを確かめる仕組みだ。RFC 4033 は、DNSSEC が与えるものを、データの出どころの確認と、改ざんがないことの確認だとしている<a href="#ref-5">[5]</a>。</p>
+<p>DNSSEC は新しいレコードを四つ足した。答えへの署名（RRSIG）、ゾーンの公開鍵（DNSKEY）、子のゾーンの鍵を指す DS、存在しないことを示す NSEC だ<a href="#ref-5">[5]</a>。example.com の DS は、example.com のゾーンではなく、親の com のゾーンに置かれる<a href="#ref-6">[6]</a>。親のゾーンの署名つきの DS が子のゾーンの鍵を指し、それをルートから順にたどると、信頼の連鎖ができる<a href="#ref-5">[5]</a>。</p>
+<p>確かめる側のリゾルバーは、出発点の鍵（トラストアンカー）を最初から持ち、そこから連鎖をたどって署名を確かめる<a href="#ref-5">[5]</a>。結果は四つに分かれる。全部の署名が確かめられれば secure、途中で子のゾーンに DS がないことが署名つきで示されれば insecure、署名があるはずなのに確かめられなければ bogus、出発点の鍵がなければ indeterminate だ。bogus のとき、確かめない端末には「Server Failure」が返る<a href="#ref-5">[5]</a>。</p>
+<p>署名には有効期間がある。RRSIG には始まりと終わりの時刻が入っていて、その外では使えない<a href="#ref-6">[6]</a>。リゾルバーが確かめた結果は、応答の AD ビットで端末に伝えられる<a href="#ref-7">[7]</a>。</p>
+
+<h2>DNSSEC は、中身を隠さない</h2>
+<p>DNSSEC は答えの正しさを確かめるだけで、問い合わせの中身は隠さない。RFC 4033 は、DNS のデータは誰にでも同じ答えを返す公開のものだという前提から、DNSSEC はあえて機密性を与えない設計にした、と書いている<a href="#ref-5">[5]</a>。</p>
+<p>同じ RFC は、ほかにも守らないものを挙げている。サービス妨害の攻撃は防げず、署名を確かめる計算を狙った新しい種類の妨害が加わる。NSEC をたどれば、ゾーンの中の名前を一覧にできる。署名のないゾーンの答えは確かめられない。設定の誤りで、正しいゾーンにまで届かなくなることもある<a href="#ref-5">[5]</a>。</p>
+<p>端末とリゾルバーのあいだも、DNSSEC だけでは守れない。自分で署名を確かめない端末は、AD ビットを信じるしかなく、RFC 4033 は、そのためにはリゾルバーと、そこまでの通信路の両方を信頼できる必要がある、としている<a href="#ref-5">[5]</a>。RFC 3833 は、リゾルバーの時計を狂わせられる者は、期限切れの署名でリゾルバーを騙せる、とも書いている<a href="#ref-1">[1]</a>。</p>
+
+<h2>DoT と DoH は、通信路を暗号化する</h2>
+<p>DoT（DNS over TLS）と DoH（DNS over HTTPS）は、端末とリゾルバーのあいだの通信を暗号化し、盗み見と途中での書き換えを防ぐ。答えそのものが正しいかは確かめないので、DNSSEC とは役目が違う。</p>
+<p>RFC 7858 の DoT は、TCP の853番ポートで TLS を結び、その上で DNS をやりとりする。目的は盗み見から問い合わせを守ることで、DNS のほかの問題は扱わない。RFC 7858 は、DNSSEC と DoT は別々の問題を解く、両立する仕組みで、片方を使っても、もう片方の必要は減らない、と書いている<a href="#ref-8">[8]</a>。サーバーを確かめない使い方（機会があれば暗号化する形）では、通り道にいる者に暗号化を外される危険が残る<a href="#ref-8">[8]</a>。</p>
+<p>RFC 8484 の DoH は、DNS のメッセージを HTTPS の要求と応答に入れて運ぶ。HTTPS は DoH のサーバーと端末のあいだを守るが、DNSSEC が与える答えの正しさは与えない、と RFC 8484 は書いている。DNSSEC の情報がなければ、DoH のサーバーは正しくない答えを返せる<a href="#ref-9">[9]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>偽の答えへの三つの守り</caption><thead><tr><th scope="col">守り</th><th scope="col">守るもの</th><th scope="col">守らないもの</th></tr></thead><tbody>
+<tr><th scope="row">ID と送り元ポートの乱数</th><td>外から当てずっぽうで送る偽の応答</td><td>通り道で見たり書き換えたりできる者</td></tr>
+<tr><th scope="row">DNSSEC</th><td>答えが正しい持ち主から来て、変えられていないこと</td><td>問い合わせの中身、サービス妨害、署名のないゾーン</td></tr>
+<tr><th scope="row">DoT・DoH</th><td>端末とリゾルバーのあいだの盗み見と書き換え</td><td>リゾルバーが返す答えそのものの正しさ</td></tr>
+</tbody></table></div>
+<p>組織の中では、暗号化が守りの道具の目を隠すこともある。NSA は2021年1月の手引きで、DoH は設定を誤ると組織のセキュリティの仕組みから大事な情報を隠してしまうとして、DNS の通信はすべて組織が決めたリゾルバーに送り、ほかの暗号化されたリゾルバーは止めるよう勧めている<a href="#ref-10">[10]</a>。</p>
+
+<h2>名前の持ち主の側からも、乗っ取られる</h2>
+<p>DNS の乗っ取りは、通信の途中だけでなく、名前を登録・管理する側でも起きる。管理のアカウントを使って正規の手続きで書き換えられると、通信路の守りでは区別できない。</p>
+<p>CISA は2019年1月22日に、緊急指令 ED 19-01「Mitigate DNS Infrastructure Tampering」を出した。DNS の基盤を書き換える一連の事件で、連邦政府の機関の複数のドメインが影響を受けたためだ。指令は、公開している DNS のレコードの点検、DNS を管理するアカウントのパスワードの変更、多要素認証、証明書の透明性（CT）のログの監視を求めた。CT のログを見るのは、書き換えられた名前で、攻撃者がその組織のドメインの正しい証明書を取れてしまうことがあるからだ<a href="#ref-11">[11]</a>。</p>
+<p>DNSSEC も、この形の乗っ取りには弱い。RFC 3833 は、DNSSEC の信頼はほぼ完全に階層の形をしていて、ルートから目当ての名前までのどこかのゾーンが乗っ取られれば、その名前の守りが損なわれる、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>ぶら下がった CNAME は、管理の手落ちから起きる乗っ取りだ。Microsoft の手引きは、使わなくなったクラウドの資源を消したあとも、それを指す CNAME が残っていると、ほかの人が同じ名前の資源を作って、その名前への通信を受け取れる、と説明している<a href="#ref-12">[12]</a>。たとえば app.example.com が、もう消した app-old.example.net を指したままなら、app-old.example.net を新しく取った者が app.example.com の中身を決められる。</p>
+<p>同じ手引きは、乗っ取られた名前で正しい証明書が取られることや、MX レコードならメールを受け取られることを挙げている。防ぎ方は、資源を消すときに DNS のレコードを消す手順を入れること、名前と資源と持ち主の一覧を作って定期的に照らすこと、使わないレコードを消すことだ<a href="#ref-12">[12]</a>。</p>
+
+<h2>DNS のログで見つける</h2>
+<p>DNS の守りは、ログで書き換えや悪用の跡を見つけることと組み合わせて働く。<a href="siem.html">SIEM の記事</a>の表で DNS のログの例に挙げた「example.com の下に、意味の読めない長い名前の問い合わせが続いている」は、その一つだ。</p>
+<p>MITRE ATT&amp;CK は、攻撃者が DNS の通信の中にデータや命令を埋め込んで、ふつうの通信にまぎれて外とやりとりする手口を、DNS トンネリングとしてまとめている。命令は TXT や A のレコードに入れられることがあり、やりとりの間隔が長いと見つけにくい<a href="#ref-13">[13]</a>。名前の部分にデータを入れれば、同じドメインの下に、長くて毎回違う名前が並ぶ。ログでは、一つのドメインの下の名前の数と長さ、TXT の問い合わせの多さ、問い合わせた端末を見ることになる。</p>
+<p>キャッシュポイズニングの試みにも跡が残る。RFC 5452 は、条件に合わない応答が大量に届くことを手がかりに、リゾルバーが問い合わせを TCP でやり直してよい、としている<a href="#ref-2">[2]</a>。持ち主の側の書き換えには、公開している NS などのレコードが登録したとおりかを定期的に照らすことと、CT のログに身に覚えのない証明書がないかを見ることが当たる<a href="#ref-11">[11]</a>。端末が外の DoH のサーバーへ直接問い合わせると、組織の DNS のログには残らないことも、ログを読むときの前提になる<a href="#ref-10">[10]</a>。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>署名は、BIND の dig で自分の端末から見られる。<code>dig +dnssec</code> を付けると、問い合わせに DO ビットが立ち、DNSSEC のレコードを返すよう頼める<a href="#ref-14">[14]</a>。署名されたドメインなら、答えに RRSIG のレコードが付く<a href="#ref-5">[5]</a>。出力の先頭の、応答のヘッダーを表す行に AD ビット（ad）が立っていれば、使っているリゾルバーが答えを確かめた印だ<a href="#ref-7">[7]</a><a href="#ref-14">[14]</a>。<code>+cd</code> を付けると、確かめないよう頼める<a href="#ref-14">[14]</a>。</p>
+<p>リゾルバーを信じずに確かめるなら、同じ BIND の delv が使える。delv は組み込みのルートの鍵から信頼の連鎖をたどり、返す答えは確かめ終えたものか署名のないもので、失敗すれば理由を出す<a href="#ref-15">[15]</a>。dig には <code>+tls</code>（853番ポートの DoT）と <code>+https</code>（443番ポートの DoH）もあり、暗号化した問い合わせも試せる<a href="#ref-14">[14]</a>。</p>
+<p>systemd-resolved を使う Linux では、resolved.conf の <code>DNSSEC=</code> と <code>DNSOverTLS=</code> で、端末の側の確認と暗号化を決められる。説明書によると、allow-downgrade と opportunistic は、相手が対応していなければ確認や暗号化を自動でやめる形で、偽の応答で守りを外される危険がある<a href="#ref-16">[16]</a>。試すのは自分の端末と、自分で立てたリゾルバーの中だけにし、他人のサーバーに大量の問い合わせを送らない。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Atkins・Austein（2004）RFC 3833 Threat Analysis of the Domain Name System (DNS)（2.1 節、2.2 節、3 節）。<a href="https://www.rfc-editor.org/rfc/rfc3833">RFC Editor</a></li>
+<li id="ref-2">Hubert・van Mook（2009）RFC 5452 Measures for Making DNS More Resilient against Forged Answers（3 節、7〜10 節）。<a href="https://www.rfc-editor.org/rfc/rfc5452">RFC Editor</a></li>
+<li id="ref-3">CVE-2008-1447（CVE の記録。公開 2008年7月8日）。<a href="https://www.cve.org/CVERecord?id=CVE-2008-1447">CVE</a></li>
+<li id="ref-4">CERT/CC（2008）Vulnerability Note VU#800113 Multiple DNS implementations vulnerable to cache poisoning。<a href="https://www.kb.cert.org/vuls/id/800113">CERT/CC</a></li>
+<li id="ref-5">Arends ほか（2005）RFC 4033 DNS Security Introduction and Requirements（3 節、4 節、5 節、12 節）。<a href="https://www.rfc-editor.org/rfc/rfc4033">RFC Editor</a></li>
+<li id="ref-6">Arends ほか（2005）RFC 4034 Resource Records for the DNS Security Extensions（3.1.5 節、5 節）。<a href="https://www.rfc-editor.org/rfc/rfc4034">RFC Editor</a></li>
+<li id="ref-7">Arends ほか（2005）RFC 4035 Protocol Modifications for the DNS Security Extensions（3.2.3 節）。<a href="https://www.rfc-editor.org/rfc/rfc4035">RFC Editor</a></li>
+<li id="ref-8">Hu ほか（2016）RFC 7858 Specification for DNS over Transport Layer Security (TLS)（3.1 節、4.1 節、8 節）。<a href="https://www.rfc-editor.org/rfc/rfc7858">RFC Editor</a></li>
+<li id="ref-9">Hoffman・McManus（2018）RFC 8484 DNS Queries over HTTPS (DoH)（1 節、9 節）。<a href="https://www.rfc-editor.org/rfc/rfc8484">RFC Editor</a></li>
+<li id="ref-10">NSA（2021）Adopting Encrypted DNS in Enterprise Environments（発表）。<a href="https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/2471956/">NSA</a></li>
+<li id="ref-11">CISA（2019）Emergency Directive 19-01 Mitigate DNS Infrastructure Tampering。<a href="https://www.cisa.gov/emergency-directive-19-01">CISA</a></li>
+<li id="ref-12">Microsoft Learn「Prevent dangling DNS entries and avoid subdomain takeover」（GitHub の原稿）。<a href="https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/security/fundamentals/subdomain-takeover.md">GitHub</a></li>
+<li id="ref-13">MITRE ATT&amp;CK「Application Layer Protocol: DNS」（T1071.004）。<a href="https://attack.mitre.org/techniques/T1071/004/">MITRE ATT&amp;CK</a></li>
+<li id="ref-14">ISC BIND 9「dig」の説明書（GitHub の原稿）。<a href="https://github.com/isc-projects/bind9/blob/main/bin/dig/dig.rst">GitHub</a></li>
+<li id="ref-15">ISC BIND 9「delv」の説明書（GitHub の原稿）。<a href="https://github.com/isc-projects/bind9/blob/main/bin/delv/delv.rst">GitHub</a></li>
+<li id="ref-16">systemd「resolved.conf」の説明書（GitHub の原稿）。<a href="https://github.com/systemd/systemd/blob/main/man/resolved.conf.xml">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

@@ -1,0 +1,101 @@
+---
+layout: renewal-article.njk
+title: "経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと — ムートン"
+headline: "経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと"
+subtitle: "暗号化・完全性・相手の確認、TLS 1.3 のハンドシェイク、証明書と認証局、名前の確認、Certificate Transparency、守る側の設定を、RFC と公式の文書で確かめた"
+description: "TLS は、通信を暗号にし、書き換えに気づき、相手を証明書で確かめる。経路を乗っ取られても、この三つがあれば中身は読まれず、偽のサーバーと取り違えない。TLS 1.3 の流れ、証明書、CT、守り方を RFC で確かめた。"
+excerpt: "TLS は暗号化・完全性・相手の確認の三つを受け持つ。TLS 1.3 は鍵を決めてから証明書で相手を確かめ、証明書は名前と期限と取り消しまで見る。不正な発行は CT の公開の記録で見つけ、CAA で発行できる認証局をしぼる。"
+date: 2026-11-07T21:00:00Z
+pillar: defense
+pick: 11           # おすすめの順。ルーティングの記事の「経路の乗っ取り」から広げた。仮の順。ムートンが決めたら直す
+related: ["routing", "http"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。ルーティングの記事に出てきた「経路の乗っ取り」から広げた（docs「読む順と、記事の広げ方」の6）
+---
+<p>TLS は、通信の中身を暗号にし（暗号化）、途中での書き換えに気づき（完全性）、つないだ相手が名乗ったとおりの相手かを証明書で確かめる（相手の確認）。<a href="routing.html">ルーティングの記事</a>に書いた経路の乗っ取りで通信が別の場所へ流れても、この三つが働いていれば、流れた先で中身は読まれず、偽のサーバーを本物と取り違えない。この記事は、TLS 1.3 の流れ、証明書と認証局、名前の確認、Certificate Transparency、守る側の設定を、RFC と公式の文書で確かめたものだ。例の名前は、文書のために取ってある example.com と example.net だけを使う<a href="#ref-1">[1]</a>。</p>
+
+<h2>TLS は、暗号化・完全性・相手の確認を受け持つ</h2>
+<p>TLS 1.3 の決まり（RFC 8446）は、TLS の目的を、通信する二者のあいだに安全な通り道を作ることとし、その性質を三つ挙げている<a href="#ref-2">[2]</a>。相手の確認（サーバーは毎回、クライアントは必要なときだけ確かめる）、暗号化（送ったデータは両端にしか見えない）、完全性（気づかれずに書き換えることはできない）だ。</p>
+<p>RFC 8446 は、これらがネットワークを完全に握った攻撃者に対しても成り立つべきだとしている<a href="#ref-2">[2]</a>。経路を乗っ取った側にパケットが届いても、中身は暗号のままで、書き換えれば受け取った側が気づく。本物のサーバーになりすますには、本物の秘密鍵が要る。</p>
+<p>隠さないものもある。RFC 8446 は、TLS は送るデータの長さを隠さないと書いている<a href="#ref-2">[2]</a>。IP アドレスも、ルーターが読んで次の行き先を決めるので暗号にできない。TLS が守るのは、どこと通信しているかではなく、何をやりとりしているかと、相手が本物かだ。</p>
+
+<h2>TLS 1.3 は、鍵を決めてから相手を確かめる</h2>
+<p>TLS 1.3 の最初のやりとり（ハンドシェイク）は、鍵の交換、サーバーの設定、相手の確認の三つの段に分かれる。RFC 8446 は、鍵の交換の段よりあとのものは、すべて暗号にして送る、としている<a href="#ref-2">[2]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>TLS 1.3 のハンドシェイクの主なメッセージ（証明書でサーバーを確かめるとき）</caption><thead><tr><th scope="col">メッセージ</th><th scope="col">送る側</th><th scope="col">役目</th><th scope="col">暗号にするか</th></tr></thead><tbody>
+<tr><th scope="row">ClientHello</th><td>クライアント</td><td>使える版と暗号の候補、鍵の片割れ（key_share）、つなぎたい名前（server_name）を送る</td><td>しない</td></tr>
+<tr><th scope="row">ServerHello</th><td>サーバー</td><td>選んだ暗号と、サーバーの鍵の片割れを返す。ここで共通の鍵が決まる</td><td>しない</td></tr>
+<tr><th scope="row">EncryptedExtensions</th><td>サーバー</td><td>暗号の選択に関わらない、そのほかの取り決めを返す</td><td>する</td></tr>
+<tr><th scope="row">Certificate</th><td>サーバー</td><td>サーバーの証明書（と途中の認証局の証明書）を送る</td><td>する</td></tr>
+<tr><th scope="row">CertificateVerify</th><td>サーバー</td><td>ここまでのやりとり全体に、証明書の公開鍵と対になる秘密鍵で署名する</td><td>する</td></tr>
+<tr><th scope="row">Finished</th><td>両方</td><td>やりとり全体の MAC（改ざんを見つけるための値）で、同じ鍵を持っていることを確かめ合う</td><td>する</td></tr>
+</tbody></table></div>
+<p>鍵の交換は、ディフィー・ヘルマン鍵交換（楕円曲線を使うものを含む）で行う。両者が一回きりの鍵の片割れを送り合い、それぞれ手元で同じ秘密を計算するので、秘密そのものは通信路を流れない<a href="#ref-2">[2]</a>。</p>
+<p>相手の確認は、CertificateVerify が要になる。証明書は公開されているので、偽のサーバーでも本物の証明書を送ることはできる。しかし、そのやりとりに合った署名は、対になる秘密鍵がなければ作れない<a href="#ref-2">[2]</a>。途中でメッセージを差し替えれば、Finished の MAC が合わなくなる。</p>
+<p>RFC 8446 は、TLS 1.2 との違いとして、固定の RSA による鍵の交換を外し、公開鍵による鍵の交換はすべて前方秘匿性を持つようになったと書いている。あとでサーバーの秘密鍵が漏れても、通信の鍵を消してあれば、過去の通信は解けないという性質だ<a href="#ref-2">[2]</a>。</p>
+<p>ClientHello は鍵が決まる前に送るので暗号にならず、中の server_name（SNI）の名前も見える。サーバーはこの名前で、出す証明書を選ぶ<a href="#ref-2">[2]</a>。</p>
+
+<h2>証明書は、名前と公開鍵の組に認証局が署名したもの</h2>
+<p>証明書は、「この名前の持ち主の公開鍵はこれだ」という組に、認証局（CA）が署名したものだ。インターネットでの証明書の決まり（RFC 5280）は、証明書の検証の主な目的を、証明書に書かれた名前と公開鍵の結び付きを確かめることだとしている<a href="#ref-3">[3]</a>。</p>
+<p>使う側は限られた数の CA の公開鍵しか最初から持っていないので、サーバーの証明書から、途中の CA（中間 CA）の証明書をたどって、手持ちの CA までつなげる。RFC 5280 は、この並びを証明書のパス（チェーン）と呼ぶ<a href="#ref-3">[3]</a>。起点の CA（トラストアンカー）は、通信とは別の信頼できる手段で渡されたものとされ、ブラウザーや OS が持つ CA の一覧がこれにあたる<a href="#ref-3">[3]</a>。</p>
+<p>RFC 5280 の検証の手順では、チェーンの一枚ごとに、少なくとも次を確かめる<a href="#ref-3">[3]</a>。一枚前の CA の公開鍵で署名が検証できること。今の時刻が有効期限の中にあること。今の時刻に取り消されていないこと。発行者の名前が、一枚前の証明書の持ち主の名前と合うこと。どれか一つでも欠ければ、チェーンは通らない。</p>
+<p>RFC 8446 は、細かい検証は RFC 5280 に任せたうえで、MD5 を使う署名の証明書ではハンドシェイクを止めなければならないとし、SHA-1 も止めることを勧めている<a href="#ref-2">[2]</a>。</p>
+
+<h2>名前の確認で、別のサイトの証明書を見分ける</h2>
+<p>チェーンが検証できても、それだけでは足りない。攻撃者は、自分で正しく取った example.net の証明書を、www.example.com として出せるからだ。そこで、証明書の名前が、つなごうとした名前と合うかを確かめる。</p>
+<p>この決まりは RFC 9525（2023年、RFC 6125 を置き換えた）にある。クライアントは、利用者が入力した URL などから、サーバーの出した名前とは別に「つなぎたい名前」を作り、証明書の Subject Alternative Name（SAN）の欄の DNS の名前と比べる。Common Name の欄で名前を表すことは、RFC 9525 ではもう正しくない<a href="#ref-4">[4]</a>。RFC 5280 は、CA が SAN のすべての部分を確かめなければならないとしている<a href="#ref-3">[3]</a>。</p>
+<p>名前は、ドットで区切ったラベルごとに、大文字と小文字を区別せずに比べる。<code>*</code> を使ったワイルドカードの証明書には決まりがある。<code>*</code> は一つだけで、いちばん左のラベル全体でなければならず、合うのは一つのラベルだけだ<a href="#ref-4">[4]</a>。<code>*.example.com</code> の証明書は www.example.com には合うが、example.com にも a.www.example.com にも合わない。</p>
+<p>名前が合わなければ、RFC 9525 は、自動で動くプログラムは接続を止めて記録を残すべきで、この確認を標準で切ってはならないとしている。人が使うソフトも、食い違いを知らせて接続を止めるべきだとしている<a href="#ref-4">[4]</a>。</p>
+
+<h2>証明書には期限があり、途中で取り消すこともある</h2>
+<p>証明書には有効期限があり、期限が切れた証明書はチェーンの検証を通らない。RFC 5280 では、期限は notBefore（いつから）と notAfter（いつまで）の二つの日時で表し、両端の日時も期限に含む<a href="#ref-3">[3]</a>。</p>
+<p>公開の Web で使う証明書の期限の上限は、CA とブラウザーの作る CA/Browser Forum の基本要件（Baseline Requirements）が決めている。いまの版では、2026年3月15日より前に発行したものは398日まで、2026年3月15日からは200日まで、2027年3月15日からは100日まで、2029年3月15日からは47日までだ<a href="#ref-5">[5]</a>。期限が短くなるほど、更新を手でするのは難しくなる。ACME（RFC 8555）は、ドメインを持っていることの確認と証明書の発行を、CA と申請する側とのあいだで自動でするための決まりだ<a href="#ref-6">[6]</a>。</p>
+<p>期限の前でも、秘密鍵が漏れたときなどは、証明書を取り消す（失効させる）<a href="#ref-3">[3]</a>。取り消した証明書は、CA が定期的に出す署名付きの一覧（CRL）に通し番号で載る。RFC 5280 は、一覧が1日ごとなら取り消しが届くのも最大でそのぶん遅れる、という限りも書いている<a href="#ref-3">[3]</a>。問い合わせに応じて状態を返す OCSP もあるが、基本要件は2023年の改定で OCSP を任意にし、CRL を必須にした<a href="#ref-5">[5]</a>。</p>
+
+<h2>Certificate Transparency は、発行された証明書を公開の記録に残す</h2>
+<p>Certificate Transparency（CT）は、発行された証明書を公開の追記だけの記録（ログ）に残し、不正な発行をあとから見つけられるようにする仕組みだ。信頼される CA はたくさんあり、技術的にはどの CA でもどの名前の証明書でも発行できてしまう。CT はその発行を止めるのではなく、見える場所に出す。</p>
+<p>CT の最初の決まりは RFC 6962（2013年）で、版2が RFC 9162（2021年）だ。どちらも実験的な（Experimental）RFC として出ている<a href="#ref-7">[7]</a><a href="#ref-8">[8]</a>。RFC 9162 によると、ログは証明書のチェーンを受け付けると、署名付きのタイムスタンプ（SCT）を返す。TLS のクライアントは、受け入れる証明書に SCT が付いていることを求めることができる。ログが追記だけであることは、マークル木というハッシュの木で確かめられる<a href="#ref-8">[8]</a>。</p>
+<p>RFC 9162 は、ログそのものは不正な発行を見つけないと書いている。見つけるのはドメインの持ち主などで、ログを見張り（モニター）、思いがけない証明書が出ていれば、CA に取り消しを頼むなどする<a href="#ref-8">[8]</a>。</p>
+<p>ブラウザーの側も CT を求めている。Chrome の CT の方針は、CT を求める版の Chrome では、公開の Web で信頼される TLS の証明書は、方針を満たす SCT が付いていなければ検証を通らない、としている<a href="#ref-9">[9]</a>。2015年には、Google が、自社が頼んでいない google.com の証明書（発行前の形のもの）が Symantec の CA から出ていたことを、CT のログで見つけたと報告している<a href="#ref-10">[10]</a>。</p>
+
+<h2>守る側は、古い版を止め、警告を無視せず、発行を見張る</h2>
+<p>守る側がすることは、古い版を使わない、証明書の警告で止まる、自分のドメインの発行を見張る、発行できる CA をしぼる、の四つだ。</p>
+<p>TLS 1.0 と 1.1 は、RFC 8996（2021年）で廃止された。RFC 8996 は、どちらも使ってはならず、どの版からもこの二つへ交渉で下げてはならない、としている。理由の一つは、ハンドシェイクの完全性が SHA-1 に頼っていることで、2の77乗回ほどの計算ができる攻撃者は、ハンドシェイクを古い版へ下げさせられる、と書いている<a href="#ref-11">[11]</a>。TLS の使い方の勧め（RFC 9325、BCP 195）は、TLS 1.2 は対応しなければならず、TLS 1.3 には対応すべきで、対応するなら 1.3 を優先して選ばなければならない、としている<a href="#ref-12">[12]</a>。</p>
+<p>証明書の警告は、名前・期限・チェーンのどれかが通らなかったという知らせで、先へ進めると相手の確認がなくなる<a href="#ref-4">[4]</a>。OpenSSL の説明書も、どんな証明書でも受け入れるのは試験の道具だからで、ふつうのプログラムがそうすると中間者攻撃に弱くなると書いている<a href="#ref-13">[13]</a>。</p>
+<p>自分のドメインは、CT のログを見張れば、身に覚えのない発行に気づける<a href="#ref-8">[8]</a>。</p>
+<p>発行できる CA は、DNS の CAA レコード（RFC 8659）でしぼれる。CAA は、そのドメインの証明書を発行してよい CA を、ドメインの持ち主が DNS に書いておくものだ<a href="#ref-14">[14]</a>。たとえば <code>example.com. CAA 0 issue "ca1.example.net"</code> と書けば、ca1.example.net 以外の CA には発行しないよう求めることになる。<code>issue ";"</code> はどの CA にも発行させない書き方で、ワイルドカードの証明書は <code>issuewild</code> で別に決められる<a href="#ref-14">[14]</a>。基本要件は、CA に発行の手続きの中で CAA を調べることを求めている<a href="#ref-5">[5]</a>。ただし CAA は CA が発行する前に確かめるもので、RFC 8659 は、接続する側が証明書の検証に CAA を使ってはならない、としている<a href="#ref-14">[14]</a>。発行の前は CAA で、発行のあとは CT で見る、という組み合わせになる。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>TLS の観察は、自分のパソコンの中だけでできる。他人のサーバーに試験の接続をしたり設定を探ったりはせず、自分で立てたサーバーと、許可された演習の環境だけで試す。</p>
+<p>まず <code>openssl req</code> などで、自分だけの CA と、SAN に www.example.com を入れたサーバーの証明書を作る。それを試験用のサーバー <code>openssl s_server</code> に渡し、<code>-accept 127.0.0.1:8443</code> で自分のパソコンの中だけで動かす<a href="#ref-15">[15]</a>。</p>
+<p>つなぐ側は <code>openssl s_client</code> だ。<code>-connect 127.0.0.1:8443</code> でつなぎ、<code>-servername www.example.com</code> で ClientHello の SNI を決める<a href="#ref-13">[13]</a>。<code>-CAfile</code> に自分の CA の証明書を、<code>-verify_hostname www.example.com</code> で確かめる名前を渡す<a href="#ref-16">[16]</a>。<code>-verify_return_error</code> を付けると、検証の誤りでハンドシェイクを止める。付けないと、s_client は誤りを表示したうえで接続を続ける<a href="#ref-13">[13]</a>。</p>
+<p>手元の OpenSSL 3.0 では、正しい名前と CA で、版 TLSv1.3、検証 OK と表示された。確かめる名前を www.example.net に変えると「hostname mismatch」で、<code>-CAfile</code> を外すと「unable to get local issuer certificate」で止まった。名前の確認とチェーンの検証が、別々に働いている。</p>
+<p>s_client の出力を <code>openssl x509 -noout -subject -issuer -dates -ext subjectAltName</code> に渡すと、持ち主・発行者・期限・SAN を表示できる。<code>-checkend</code> に秒数を渡すと、そのうちに期限が切れるかを終了コードで返すので、期限切れの見張りに使える<a href="#ref-17">[17]</a>。なお <code>-showcerts</code> が表示するのは、サーバーが送った証明書の並びで、検証したチェーンではない<a href="#ref-13">[13]</a>。</p>
+<p>古い版を断るかは、自分のサーバーに <code>-tls1_1</code> を付けてつなげば確かめられる<a href="#ref-13">[13]</a>。手元の OpenSSL が古い版を使わない設定なら、「no protocols available」と送る前に止まる。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Eastlake・Panitz（1999）RFC 2606 Reserved Top Level DNS Names（example.com・example.net）。<a href="https://www.rfc-editor.org/rfc/rfc2606">RFC Editor</a></li>
+<li id="ref-2">Rescorla（2018）RFC 8446 The Transport Layer Security (TLS) Protocol Version 1.3。<a href="https://www.rfc-editor.org/rfc/rfc8446">RFC Editor</a></li>
+<li id="ref-3">Cooper ほか（2008）RFC 5280 Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile（3.2・3.3・4.1.2.5・4.2.1.6・6.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc5280">RFC Editor</a></li>
+<li id="ref-4">Saint-Andre・Salz（2023）RFC 9525 Service Identity in TLS。<a href="https://www.rfc-editor.org/rfc/rfc9525">RFC Editor</a></li>
+<li id="ref-5">CA/Browser Forum「Baseline Requirements for the Issuance and Management of Publicly-Trusted TLS Server Certificates」Version 2.3.1（4.2.2.1 節の CAA、6.3.2 節の有効期限、改定履歴の SC063）。<a href="https://github.com/cabforum/servercert/blob/main/docs/BR.md">GitHub</a></li>
+<li id="ref-6">Barnes ほか（2019）RFC 8555 Automatic Certificate Management Environment (ACME)。<a href="https://www.rfc-editor.org/rfc/rfc8555">RFC Editor</a></li>
+<li id="ref-7">Laurie・Langley・Kasper（2013）RFC 6962 Certificate Transparency。<a href="https://www.rfc-editor.org/rfc/rfc6962">RFC Editor</a></li>
+<li id="ref-8">Laurie・Messeri・Stradling（2021）RFC 9162 Certificate Transparency Version 2.0（1 節、8.2 節の Monitor、11.2 節）。<a href="https://www.rfc-editor.org/rfc/rfc9162">RFC Editor</a></li>
+<li id="ref-9">Google Chrome「Chrome Certificate Transparency Policy」。<a href="https://github.com/GoogleChrome/CertificateTransparency/blob/main/ct_policy.md">GitHub</a></li>
+<li id="ref-10">Google Security Blog「Improved Digital Certificate Security」（2015年9月18日）。<a href="https://security.googleblog.com/2015/09/improved-digital-certificate-security.html">Google</a></li>
+<li id="ref-11">Moriarty・Farrell（2021）RFC 8996 Deprecating TLS 1.0 and TLS 1.1。<a href="https://www.rfc-editor.org/rfc/rfc8996">RFC Editor</a></li>
+<li id="ref-12">Sheffer・Saint-Andre・Fossati（2022）RFC 9325 Recommendations for Secure Use of Transport Layer Security (TLS) and Datagram Transport Layer Security (DTLS)（3.1.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc9325">RFC Editor</a></li>
+<li id="ref-13">OpenSSL「openssl-s_client」の説明書（GitHub の原稿）。<a href="https://github.com/openssl/openssl/blob/master/doc/man1/openssl-s_client.pod.in">GitHub</a></li>
+<li id="ref-14">Hallam-Baker・Stradling・Hoffman-Andrews（2019）RFC 8659 DNS Certification Authority Authorization (CAA) Resource Record。<a href="https://www.rfc-editor.org/rfc/rfc8659">RFC Editor</a></li>
+<li id="ref-15">OpenSSL「openssl-s_server」の説明書（GitHub の原稿）。<a href="https://github.com/openssl/openssl/blob/master/doc/man1/openssl-s_server.pod.in">GitHub</a></li>
+<li id="ref-16">OpenSSL「openssl-verification-options」の説明書（<code>-verify_hostname</code>、GitHub の原稿）。<a href="https://github.com/openssl/openssl/blob/master/doc/man1/openssl-verification-options.pod">GitHub</a></li>
+<li id="ref-17">OpenSSL「openssl-x509」の説明書（GitHub の原稿）。<a href="https://github.com/openssl/openssl/blob/master/doc/man1/openssl-x509.pod.in">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

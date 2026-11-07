@@ -7,6 +7,76 @@
   <description>ムートンのセキュリティの個人研究ノート。演習・CTF の記録、公開された脆弱性と事件の読み解き、身の回りを守る手順を、学んだ順に置いていく。攻撃の技術は、自分の環境と許可された演習の中だけで試す。</description>
   <language>ja</language>
   <item>
+    <title>HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う</title>
+    <link>https://moutonarchive.com/http.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/http.html</guid>
+    <pubDate>Sat, 07 Nov 2026 22:00:00 +0000</pubDate>
+    <description>HTTP は要求と応答を一つずつやりとりし、前の要求を覚えていない。ログインの状態は Cookie でつなぐ。メソッド・ステータスコード・ヘッダー、Cookie の属性、HTTPS と HSTS、アクセスログの読み方を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</title>
+    <link>https://moutonarchive.com/tls.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/tls.html</guid>
+    <pubDate>Sat, 07 Nov 2026 21:00:00 +0000</pubDate>
+    <description>TLS は、通信を暗号にし、書き換えに気づき、相手を証明書で確かめる。経路を乗っ取られても、この三つがあれば中身は読まれず、偽のサーバーと取り違えない。TLS 1.3 の流れ、証明書、CT、守り方を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い</title>
+    <link>https://moutonarchive.com/dns-security.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/dns-security.html</guid>
+    <pubDate>Sat, 07 Nov 2026 20:00:00 +0000</pubDate>
+    <description>DNS は、条件の合う応答のうち最初に届いたものを受け取る。偽の応答を防ぐ ID と送り元ポートの乱数、署名で正しさを確かめる DNSSEC、通信路を暗号化する DoT・DoH の役目の違いと、ログでの見つけ方を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み</title>
+    <link>https://moutonarchive.com/dns.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/dns.html</guid>
+    <pubDate>Sat, 07 Nov 2026 19:00:00 +0000</pubDate>
+    <description>DNS は example.com のような名前を IP アドレスに変える。名前は木の形で委任され、リゾルバーがルートから順にたどり、答えを TTL の間だけ覚える。仕組み、主なレコード、逆引き、1.1.1.1 の事例を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>ファイアウォールは、通すものだけを書いて残りを止める。穴は、ルールの順番と範囲の書き違いから開く</title>
+    <link>https://moutonarchive.com/firewall.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/firewall.html</guid>
+    <pubDate>Sat, 07 Nov 2026 18:00:00 +0000</pubDate>
+    <description>ファイアウォールは、送り元と宛先のアドレス、ポート、プロトコルで通信を通すか止めるかを決める。状態を覚える方式、ルールの順番、既定で拒否、出ていく通信を見る理由、ログの残し方を、RFC と公式の文書で確かめた。</description>
+  </item>
+  <item>
+    <title>外から入れないのは、NAT が守っているからではない。変換の表と CGN とログの読み方</title>
+    <link>https://moutonarchive.com/nat.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/nat.html</guid>
+    <pubDate>Sat, 07 Nov 2026 17:00:00 +0000</pubDate>
+    <description>NAT は、境目の機器がアドレスとポート番号を書き換え、その対応を表に覚えて返事を戻す仕組み。外から入れないのは表に行がないことの副作用だ。タイムアウト、CGN と 100.64.0.0/10、ログに要るポート番号を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>ICMP を全部止めると、大きな通信だけが止まる。エラーと診断の知らせの読み方</title>
+    <link>https://moutonarchive.com/icmp.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/icmp.html</guid>
+    <pubDate>Sat, 07 Nov 2026 16:00:00 +0000</pubDate>
+    <description>ICMP は、IP の通信がうまくいかなかったことを送り元に知らせる。ping と tracepath の仕組み、経路の MTU を知る仕組み、全部止めると大きな通信だけが止まる理由と、止めてよい種類を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>開いているポートの数だけ、外からの入口がある。TCP と UDP とポートの読み方</title>
+    <link>https://moutonarchive.com/tcp-udp.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/tcp-udp.html</guid>
+    <pubDate>Sat, 07 Nov 2026 15:00:00 +0000</pubDate>
+    <description>IP アドレスは機器を、ポート番号はその中のプログラムを指す。TCP は3回のやり取りで接続を作り、UDP は接続を作らずに送る。ポート番号の区分、ポートスキャンと SYN フラッドのログでの見え方、SYN cookies を RFC で確かめた。</description>
+  </item>
+  <item>
+    <title>つないだ機器は、答えたサーバーを確かめずに設定を受け取る。DHCP の仕組みと、偽の DHCP サーバーの防ぎ方</title>
+    <link>https://moutonarchive.com/dhcp.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/dhcp.html</guid>
+    <pubDate>Sat, 07 Nov 2026 14:00:00 +0000</pubDate>
+    <description>DHCP は、つないだ機器にアドレス・ネットマスク・ゲートウェイ・DNS サーバーを期限つきで貸す。返事の送り主を確かめないので、偽のサーバーが入り込める。仕組み、IPv6 での違い、スイッチでの防ぎ方、リースの記録の読み方を確かめた。</description>
+  </item>
+  <item>
+    <title>ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み</title>
+    <link>https://moutonarchive.com/arp.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/arp.html</guid>
+    <pubDate>Sat, 07 Nov 2026 13:00:00 +0000</pubDate>
+    <description>同じネットワークの中では、パケットは MAC アドレスあてに届く。その MAC アドレスを引く ARP は、答えが本物かを確かめない。届け方の決まり、IPv6 の近隣探索、偽の ARP の見つけ方と防ぎ方を RFC で確かめた。</description>
+  </item>
+  <item>
     <title>/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</title>
     <link>https://moutonarchive.com/ip-address.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/ip-address.html</guid>

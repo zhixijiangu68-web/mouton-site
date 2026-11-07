@@ -1,0 +1,108 @@
+---
+layout: renewal-article.njk
+title: "つないだ機器は、答えたサーバーを確かめずに設定を受け取る。DHCP の仕組みと、偽の DHCP サーバーの防ぎ方 — ムートン"
+headline: "つないだ機器は、答えたサーバーを確かめずに設定を受け取る。DHCP の仕組みと、偽の DHCP サーバーの防ぎ方"
+subtitle: "DISCOVER・OFFER・REQUEST・ACK とリース、169.254 のアドレス、IPv6 の SLAAC と DHCPv6、偽のサーバーとスイッチでの防ぎ方、リースの記録の読み方を、RFC とソフトの公式文書で確かめた"
+description: "DHCP は、つないだ機器にアドレス・ネットマスク・ゲートウェイ・DNS サーバーを期限つきで貸す。返事の送り主を確かめないので、偽のサーバーが入り込める。仕組み、IPv6 での違い、スイッチでの防ぎ方、リースの記録の読み方を確かめた。"
+excerpt: "DHCP は四つのメッセージでアドレスと設定を貸し、期限の半分で延長を頼む。もらえなければ 169.254 の中から自分で決める。返事の送り主は確かめないので、偽のサーバーはスイッチで止め、リースの記録でアドレスと機器を結びつける。"
+date: 2026-11-07T14:00:00Z
+pillar: defense
+pick: 4            # おすすめの順。IP アドレスの記事の 169.254 の節から広げた。仮の順。ムートンが決めたら直す
+related: ["ip-address", "arp"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。IP アドレスの記事の「169.254 は DHCP からアドレスをもらえていない手がかり」から広げた
+---
+<p>DHCP は、ネットワークにつないだ機器に、IP アドレス・ネットマスク・デフォルトゲートウェイ・DNS サーバーを期限つきで貸す仕組みで、基本の DHCP には、返事を送ったサーバーが本物かを確かめる仕組みがない。だから偽のサーバーはスイッチで止め、リースの記録でアドレスと機器を結びつける。この記事は、<a href="ip-address.html">IP アドレスの記事</a>に出てきた「169.254 のアドレスは、DHCP からアドレスをもらえていない手がかり」から広げて、仕組みと守り方を RFC とソフトの公式文書で確かめたものだ。例のアドレスと MAC アドレスは、文書のために取ってある値を使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
+
+<h2>DHCP は、つなぐのに要る設定を期限つきで貸す</h2>
+<p>DHCP のサーバーは、機器（クライアント）に IP アドレスを決まった期間だけ貸す。この期間をリースと呼び、RFC 2131 は秒で表すと決め、0xffffffff を「無期限」に取ってある<a href="#ref-3">[3]</a>。アドレスのほかの設定は「オプション」として同じ返事に入れて渡す。番号と形は RFC 2132 が決めている<a href="#ref-4">[4]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>機器がつながるのに使う主なオプション（RFC 2132 から）</caption><thead><tr><th scope="col">番号</th><th scope="col">名前</th><th scope="col">中身</th></tr></thead><tbody>
+<tr><th scope="row">1</th><td>サブネットマスク</td><td>ネットマスク（例 255.255.255.0）</td></tr>
+<tr><th scope="row">3</th><td>ルーター</td><td>同じつながりにあるルーターのアドレス。優先する順に並べる。機器はこれをデフォルトゲートウェイに使う</td></tr>
+<tr><th scope="row">6</th><td>DNS サーバー</td><td>名前を引くサーバーのアドレス。優先する順に並べる</td></tr>
+<tr><th scope="row">51</th><td>リース時間</td><td>貸す期間（秒）</td></tr>
+<tr><th scope="row">53</th><td>メッセージの種類</td><td>1 が DISCOVER、2 が OFFER、3 が REQUEST、5 が ACK など</td></tr>
+<tr><th scope="row">54</th><td>サーバー識別子</td><td>返事を送ったサーバーのアドレス</td></tr>
+</tbody></table></div>
+<p>DHCP は UDP を使い、クライアントからサーバーへはポート67、サーバーからクライアントへはポート68に送る<a href="#ref-3">[3]</a>。アドレスをもらう前の機器は自分のアドレスを持たないので、送り元を 0 にしたブロードキャストで、同じつながりの全員に向けて送る<a href="#ref-3">[3]</a>。</p>
+
+<h2>四つのメッセージで、アドレスが決まる</h2>
+<p>新しくアドレスをもらうときは、DISCOVER・OFFER・REQUEST・ACK の四つのメッセージを順にやりとりする。RFC 2131 の流れは次のとおりだ<a href="#ref-3">[3]</a>。</p>
+<p>まず機器が、DISCOVER をブロードキャストして、サーバーを探す。サーバーはそれぞれ、空いているアドレスと設定を OFFER で返す。サーバーは新しいアドレスを貸す前に、そのアドレスが使われていないかを ICMP の Echo Request などで確かめるべき（SHOULD）とされている。</p>
+<p>機器は届いた OFFER から一つを選び、選んだサーバーのサーバー識別子を入れた REQUEST を、またブロードキャストする。全員に届くので、選ばれなかったサーバーも、自分の申し出が断られたと分かる。選ばれたサーバーは貸し出しを記録し、ACK で設定を確定させる。</p>
+<p>ACK を受け取った機器は、そのアドレスを ARP で確かめるべき（SHOULD）とされ、すでに使われていれば DECLINE をサーバーに送ってやり直す。やり直す前には10秒以上待つべきとされる。サーバーは、REQUEST に応えられないとき NAK を返す。機器がアドレスを手放すときは RELEASE を送る<a href="#ref-3">[3]</a>。</p>
+<p>ブロードキャストはルーターを越えないので、サーバーが別のネットワークにあるときは、ルーターなどの中継（リレーエージェント）がメッセージをサーバーへ渡す。中継は自分のアドレスを giaddr という欄に入れ、サーバーはその値で、どのネットワークのアドレスを貸すかを決める<a href="#ref-3">[3]</a>。</p>
+
+<h2>リースは、期限の半分で延長を頼む</h2>
+<p>機器はリースが切れる前に延長を頼み、その時刻は T1 と T2 の二つで決まる。RFC 2131 では、T1 はリースの長さの0.5倍、T2 は0.875倍が標準で、サーバーはオプション58と59で別の値を渡せる<a href="#ref-3">[3]</a><a href="#ref-4">[4]</a>。</p>
+<p>T1 になると、機器は貸してくれたサーバーにだけ、ユニキャストで REQUEST を送る（RENEWING）。T2 までに ACK が来なければ、ブロードキャストで、どのサーバーにでも延長を頼む（REBINDING）。それでもリースが切れたら、機器はそのアドレスでの通信をやめ、最初からやり直す。返事がないときの送り直しは、残り時間の半分ずつ待ち、間隔は60秒より短くしない<a href="#ref-3">[3]</a>。</p>
+<p>たとえばリースが1日（86,400秒）なら、T1 は12時間後、T2 は21時間後になる。RFC 2131 は、多くの機器が同時に延長を頼まないよう、T1 と T2 に少しのばらつきを持たせるべきとしている<a href="#ref-3">[3]</a>。</p>
+
+<h2>もらえないときは、169.254 の中から自分で決める</h2>
+<p>DHCP のサーバーから返事がないとき、機器は 169.254.0.0/16 の中から自分でアドレスを決めることがある。この方法は RFC 3927 が決めていて、169.254.1.0 から 169.254.254.255 までの中から乱数で一つを選ぶ。最初と最後の256個は、将来のために取ってある<a href="#ref-5">[5]</a>。</p>
+<p>選んだアドレスは、すぐには使わない。送り元を 0 にした ARP の問い合わせ（ARP Probe）を3回送り、誰かが同じアドレスを使っていれば選び直す。重ならなければ、ARP で2回知らせてから使い始める<a href="#ref-5">[5]</a>。</p>
+<p>このアドレスは同じつながりの中だけで使うもので、送り元か宛先が 169.254/16 のパケットは、ルーターへ渡してはならず、受け取った機器も転送してはならない<a href="#ref-5">[5]</a>。インターネットにはつながらない。RFC 3927 は、このアドレスを付けたあとも DHCP のクライアントの動きを変えず、アドレスを求め続けるよう求めている<a href="#ref-5">[5]</a>。</p>
+<p>169.254 のアドレスを付けるかどうかは、OS の設定で変わる。たとえば systemd-networkd では、IPv4 のこのアドレスは <code>LinkLocalAddressing=</code> で ipv4 か yes を選んだときだけ、DHCP がしばらく失敗したあとに付く。標準の値は ipv6 で、IPv4 では付かない<a href="#ref-6">[6]</a>。</p>
+
+<h2>IPv6 では、ルーター広告からアドレスを作れる</h2>
+<p>IPv6 の機器は、DHCP のサーバーがなくても、ルーターの広告からアドレスを自分で作れる。この仕組みを SLAAC（ステートレス自動設定）と呼び、RFC 4862 が決めている。ルーターは、つながりで使うプレフィックスを広告し、機器はそのプレフィックスに自分のインターフェース ID を足してアドレスを作る。使う前には、同じアドレスがないかを確かめる（重複アドレス検出）<a href="#ref-7">[7]</a>。</p>
+<p>デフォルトゲートウェイも、ルーター広告から知る。広告にはルーターの寿命（Router Lifetime）の欄があり、0 でなければ、機器はそのルーターをデフォルトルーターの候補に入れる。広告の M フラグは「アドレスを DHCPv6 で配っている」、O フラグは「DNS などのほかの設定を DHCPv6 で配っている」ことを表す<a href="#ref-8">[8]</a>。</p>
+<p>DHCPv6 は RFC 8415 が決めている。機器はポート546で待ち、サーバーと中継はポート547で待つ。機器は Solicit を ff02::1:2 という中継とサーバーのためのマルチキャストのアドレスに送り、Advertise・Request・Reply と続く四つのやりとりでアドレスを受け取る。Rapid Commit というオプションを付ければ、Solicit と Reply の二つで済ませることもできる<a href="#ref-9">[9]</a>。機器は MAC アドレスではなく DUID という識別子で見分けられ、事業者が家のルーターにプレフィックスごと貸すこと（プレフィックスの委任）にも使われる<a href="#ref-9">[9]</a>。</p>
+<p>DNS サーバーのアドレスは、DHCPv6 のほか、ルーター広告のオプション（RDNSS）でも渡せる<a href="#ref-10">[10]</a>。また、SLAAC で作るアドレスには、時間とともに変わる一時アドレスもあり、RFC 8981 は、同じアドレスを使い続けることで通信が結びつけられるのを減らすためと説明している<a href="#ref-11">[11]</a>。</p>
+
+<h2>偽の DHCP サーバーは、ゲートウェイと DNS を差し替える</h2>
+<p>同じつながりにいる機器なら、DHCP の返事を送ることができる。RFC 2131 は、許可されていない DHCP サーバーは簡単に立てられ、間違ったアドレス、偽のルーターを含む間違った経路の情報、偽の DNS サーバーなどを配れる、と書いている<a href="#ref-3">[3]</a>。</p>
+<p>機器が偽のサーバーの OFFER を選ぶと、デフォルトゲートウェイが偽のサーバーの指定したアドレスになり、外へ出る通信がまずそこを通る。DNS サーバーが差し替えられれば、名前を引いた答えを偽のサーバーが決められる。RFC 8415 も、偽のサーバーの目的として、DNS や NTP のような相手を偽物に差し替える中間者攻撃と、間違った設定で通信を止めるサービス妨害を挙げている<a href="#ref-9">[9]</a>。</p>
+<p>悪意がなくても同じことが起きる。RFC 8415 は、間違えて設定された DHCP サーバーが意図しない設定を配ることも脅威として挙げている<a href="#ref-9">[9]</a>。DHCP サーバーの機能を持つ家庭用のルーターを社内のネットワークにつなげば、それも返事を送りうる。</p>
+<p>クライアントの側からの攻撃もある。RFC 2131 は、悪意のあるクライアントがアドレスをすべて借りてしまい、正しい機器が借りられなくなるおそれを書いている<a href="#ref-3">[3]</a>。IPv6 では、許可されていないルーターや設定を誤ったルーターが出すルーター広告（rogue RA）が同じ問題を起こし、RFC 6105 はそれをスイッチで止める枠組みを書いている<a href="#ref-12">[12]</a>。</p>
+
+<h2>スイッチは、決めたポートからだけサーバーの返事を通す</h2>
+<p>偽のサーバーへのいちばんの対策は、機器がつながるスイッチで、サーバーの返事を受け取ってよいポートを決めておくことだ。IPv4 では DHCP snooping と呼ばれる機能として広く使われてきた、と RFC 7610 は書いている<a href="#ref-13">[13]</a>。</p>
+<p>RFC 7610 は、同じ考えを DHCPv6 に当てた DHCPv6-Shield を決めている。スイッチには、サーバーからクライアントへのメッセージを受け取ってよいポートを先に設定し、それ以外のポートから来たサーバーのメッセージを捨てる。IPv6 のヘッダーの連なりを最後まで読み、途中で切れた断片は捨てて記録を残すことも求めている。読む長さに上限があると、すり抜けられるからだ<a href="#ref-13">[13]</a>。ルーター広告には、ルーターのポート以外からの広告を止める RA-Guard がある<a href="#ref-12">[12]</a>。</p>
+<p>DHCP のやりとりを見たスイッチは、どのポートの機器にどのアドレスが貸されたかの表を作れる。RFC 7513（SAVI-DHCP）は、この表を使って、貸されたものと違う送り元のアドレスを名乗るパケットを捨てる方法を決めている。サーバーのメッセージを送ってよいかを表す DHCP-Trust の属性は、標準で FALSE、つまり「サーバーではない」とされている<a href="#ref-14">[14]</a>。</p>
+<p>アドレスを借り尽くす攻撃には、一つのクライアントが借りられる数をサーバーで制限する方法がある、と RFC 8415 は書いている<a href="#ref-9">[9]</a>。設定の名前や書き方はスイッチやサーバーの製品ごとに違うので、使っている機器の説明書で確かめる。</p>
+
+<h2>リースの記録で、アドレスと機器を結びつける</h2>
+<p>ファイアウォールなどのログに残った社内のアドレスがどの機器かは、その時刻に有効だったリースの記録で分かる。同じアドレスは時間がたてば別の機器に貸されるので、アドレスだけでなく時刻で照らす必要がある。</p>
+<p>記録の場所はソフトごとに違う。ISC の Kea は、リースを CSV のファイル（memfile）に追記していき、読み込むときは最後の行を有効なものとして扱う。古い行は、標準で3,600秒ごとに動くクリーンアップ（LFC）で消える<a href="#ref-15">[15]</a>。リースのファイルは履歴として残るものではないので、あとで調べたい期間の分は、ログとして別に集めておく必要がある。dnsmasq は、リースを作ったとき・消したときに指定したプログラムを動かし、「add」「del」などの種類、MAC アドレス、IP アドレス、ホスト名を渡す<a href="#ref-16">[16]</a>。たとえば「add、00:00:5e:00:53:01、192.0.2.57」という記録があれば、その時刻の 192.0.2.57 はこの MAC アドレスの機器だ。</p>
+<p>中継が DHCP のメッセージに足すオプション82（Relay Agent Information）の Circuit ID には、スイッチのポートの番号などが入る。RFC 3046 は、サーバーがこの値をリースのログに残すよう勧めている<a href="#ref-17">[17]</a>。MAC アドレスに加えて、どのポートにつながっていたかも分かる。</p>
+<p>結びつけには限りもある。機器によっては、つなぐたびやつなぐネットワークごとに MAC アドレスを乱数にする。RFC 7844 は、そうした機器のために、DHCP のメッセージから見分けに使える値を減らす方法を書いている<a href="#ref-18">[18]</a>。IPv6 の SLAAC のアドレスは機器が自分で作るので、DHCP のサーバーには記録が残らない<a href="#ref-7">[7]</a>。</p>
+<p>見張りの手がかりもリースの記録にある。知らないサーバー識別子からの返事や、DECLINE の急な増え方は、偽のサーバーやアドレスの重なりの手がかりになる。RFC 2131 は、DECLINE を受けたサーバーに、そのアドレスを使えないものとし、管理者に知らせるよう求めている<a href="#ref-3">[3]</a>。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>DHCP のやりとりは、自分の機器と自分のネットワークの中で観察できる。試すのは自分の環境だけにする。共用のネットワークで練習用の DHCP サーバーを動かすと、それ自体が偽のサーバーになるので、仮想マシンの内部ネットワークのような閉じた場所で試す。</p>
+<p>systemd-networkd を使う機器では、<code>networkctl dhcp-lease &lt;インターフェース&gt;</code> で、受け取った ACK の中身が見られる。オプションの番号ごとに、ネットマスク・ルーター・DNS サーバー・リース時間・サーバー識別子・T1・T2 が並ぶ。この命令は systemd の 261 版で足された<a href="#ref-19">[19]</a>。</p>
+<p>つなぎ直すときのやりとりは、<code>tcpdump -n -v -i &lt;インターフェース&gt; 'udp port 67 or udp port 68'</code> で見られる<a href="#ref-20">[20]</a>。DISCOVER・OFFER・REQUEST・ACK が順に流れ、ACK のオプションに表の値が入っているのが分かる。</p>
+<p>IPv6 では、<code>ip -6 addr show dynamic</code> で SLAAC で作ったアドレスだけを並べられる。valid_lft と preferred_lft は、RFC 4862 の有効期間と推奨期間だ<a href="#ref-21">[21]</a>。IPv4 で 169.254 のアドレスが出ていれば、DHCP の返事を受け取れていない。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Eastlake・Abley（2013）RFC 7042 IANA Considerations and IETF Protocol and Documentation Usage for IEEE 802 Parameters（2.1.2 節、文書用の MAC アドレス）。<a href="https://www.rfc-editor.org/rfc/rfc7042">RFC Editor</a></li>
+<li id="ref-3">Droms（1997）RFC 2131 Dynamic Host Configuration Protocol（3.1 節の流れ、3.3 節の時間、4.1 節のポートと送り元、4.3.3 節の DECLINE、4.4.5 節の T1・T2、7 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc2131">RFC Editor</a></li>
+<li id="ref-4">Alexander・Droms（1997）RFC 2132 DHCP Options and BOOTP Vendor Extensions。<a href="https://www.rfc-editor.org/rfc/rfc2132">RFC Editor</a></li>
+<li id="ref-5">Cheshire・Aboba・Guttman（2005）RFC 3927 Dynamic Configuration of IPv4 Link-Local Addresses。<a href="https://www.rfc-editor.org/rfc/rfc3927">RFC Editor</a></li>
+<li id="ref-6">systemd「systemd.network」の説明書（LinkLocalAddressing=）。<a href="https://github.com/systemd/systemd/blob/main/man/systemd.network.xml">GitHub</a></li>
+<li id="ref-7">Thomson・Narten・Jinmei（2007）RFC 4862 IPv6 Stateless Address Autoconfiguration。<a href="https://www.rfc-editor.org/rfc/rfc4862">RFC Editor</a></li>
+<li id="ref-8">Narten・Nordmark・Simpson・Soliman（2007）RFC 4861 Neighbor Discovery for IP version 6 (IPv6)（4.2 節、ルーター広告）。<a href="https://www.rfc-editor.org/rfc/rfc4861">RFC Editor</a></li>
+<li id="ref-9">Mrugalski ほか（2018）RFC 8415 Dynamic Host Configuration Protocol for IPv6 (DHCPv6)（22 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc8415">RFC Editor</a></li>
+<li id="ref-10">Jeong・Park・Beloeil・Madanapalli（2017）RFC 8106 IPv6 Router Advertisement Options for DNS Configuration。<a href="https://www.rfc-editor.org/rfc/rfc8106">RFC Editor</a></li>
+<li id="ref-11">Gont・Krishnan・Narten・Draves（2021）RFC 8981 Temporary Address Extensions for Stateless Address Autoconfiguration in IPv6。<a href="https://www.rfc-editor.org/rfc/rfc8981">RFC Editor</a></li>
+<li id="ref-12">Levy-Abegnoli・Van de Velde・Popoviciu・Mohacsi（2011）RFC 6105 IPv6 Router Advertisement Guard。<a href="https://www.rfc-editor.org/rfc/rfc6105">RFC Editor</a></li>
+<li id="ref-13">Gont・Liu・Van de Velde（2015）RFC 7610 DHCPv6-Shield: Protecting against Rogue DHCPv6 Servers（BCP 199）。<a href="https://www.rfc-editor.org/rfc/rfc7610">RFC Editor</a></li>
+<li id="ref-14">Bi・Wu・Yao・Baker（2015）RFC 7513 Source Address Validation Improvement (SAVI) Solution for DHCP（4.2.2 節）。<a href="https://www.rfc-editor.org/rfc/rfc7513">RFC Editor</a></li>
+<li id="ref-15">ISC「Kea Administrator Reference Manual」DHCPv4 の章（Memfile - Basic Storage for Leases、Why Is Lease File Cleanup Necessary?）。<a href="https://github.com/isc-projects/kea/blob/master/doc/sphinx/arm/dhcp4-srv.rst">GitHub</a></li>
+<li id="ref-16">dnsmasq の説明書（--dhcp-script、--log-dhcp）。<a href="https://thekelleys.org.uk/dnsmasq/docs/dnsmasq-man.html">dnsmasq</a></li>
+<li id="ref-17">Patrick（2001）RFC 3046 DHCP Relay Agent Information Option（3.1 節、Agent Circuit ID）。<a href="https://www.rfc-editor.org/rfc/rfc3046">RFC Editor</a></li>
+<li id="ref-18">Huitema・Mrugalski・Krishnan（2016）RFC 7844 Anonymity Profiles for DHCP Clients。<a href="https://www.rfc-editor.org/rfc/rfc7844">RFC Editor</a></li>
+<li id="ref-19">systemd「networkctl」の説明書（dhcp-lease）。<a href="https://github.com/systemd/systemd/blob/main/man/networkctl.xml">GitHub</a></li>
+<li id="ref-20">tcpdump の説明書。<a href="https://github.com/the-tcpdump-group/tcpdump/blob/master/tcpdump.1.in">GitHub</a></li>
+<li id="ref-21">iproute2「ip-address」の説明書（dynamic、valid_lft、preferred_lft）。<a href="https://github.com/iproute2/iproute2/tree/main/man/man8">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

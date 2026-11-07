@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い — ムートン</title>
+<meta name="description" content="DNS は、条件の合う応答のうち最初に届いたものを受け取る。偽の応答を防ぐ ID と送り元ポートの乱数、署名で正しさを確かめる DNSSEC、通信路を暗号化する DoT・DoH の役目の違いと、ログでの見つけ方を RFC で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/dns-security.html">
+<meta property="og:title" content="DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い — ムートン">
+<meta property="og:description" content="DNS は、条件の合う応答のうち最初に届いたものを受け取る。偽の応答を防ぐ ID と送り元ポートの乱数、署名で正しさを確かめる DNSSEC、通信路を暗号化する DoT・DoH の役目の違いと、ログでの見つけ方を RFC で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/dns-security.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/dns-security.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い","description":"DNS は、条件の合う応答のうち最初に届いたものを受け取る。偽の応答を防ぐ ID と送り元ポートの乱数、署名で正しさを確かめる DNSSEC、通信路を暗号化する DoT・DoH の役目の違いと、ログでの見つけ方を RFC で確かめた。","inLanguage":"ja","datePublished":"2026-11-07","dateModified":"2026-11-07","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/dns-security.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"DNS の答えは、先に届いた偽物が勝つ。キャッシュポイズニングと、DNSSEC・DoH の役目の違い","item":"https://moutonarchive.com/dns-security.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">DNS の<wbr>答えは、<wbr>先に<wbr>届いた<wbr>偽物が<wbr>勝つ。<wbr>キャッシュポイズニングと、<wbr>DNSSEC・DoH の<wbr>役目の<wbr>違い</h1>
+  <p class="rn-subtitle">偽の応答が受け取られる仕組みと2008年の対策、DNSSEC と DoT・DoH が守るもの、登録情報の書き換えとぶら下がった CNAME、DNS のログでの見つけ方を、RFC と公的機関の文書で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-07">2026年11月7日</time></span></p>
+  <div class="rn-body">
+<p>DNS はもともと、届いた応答の正しさを確かめない。問い合わせと条件の合う応答のうち、最初に届いたものを受け取るので、偽の応答が先に届けば偽の答えが使われる。この記事は、<a href="dns.html">DNS の記事</a>に出てきた「DNS の乗っ取り」を、偽の応答を防ぐ仕組み、署名で確かめる DNSSEC、通信路を暗号化する DoT・DoH、持ち主の側の乗っ取り、ログでの見つけ方に分けて、RFC と公的機関の文書で確かめたものだ。例の名前は example.com と example.net、アドレスは文書用の範囲だけを使う。</p>
+
+<details class="rn-toc"><summary>目次（11）</summary><ol><li><a href="#s-1">DNS は、条件の合う最初の応答を受け取る</a></li><li><a href="#s-2">キャッシュポイズニングは、偽の応答を先に届ける</a></li><li><a href="#s-3">2008年の対策は、問い合わせを読みにくくすること</a></li><li><a href="#s-4">DNSSEC は、署名で答えの正しさを確かめる</a></li><li><a href="#s-5">DNSSEC は、中身を隠さない</a></li><li><a href="#s-6">DoT と DoH は、通信路を暗号化する</a></li><li><a href="#s-7">名前の持ち主の側からも、乗っ取られる</a></li><li><a href="#s-8">DNS のログで見つける</a></li><li><a href="#s-9">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">DNS は、<wbr>条件の<wbr>合う<wbr>最初の<wbr>応答を<wbr>受け取る</h2>
+<p>DNS の問い合わせと応答は、ふつう署名も暗号化もない UDP のパケット一つで運ばれる。RFC 3833 は、そのため通り道にいる者は、問い合わせた側に何でも信じ込ませられる、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>リゾルバー（名前を代わりに調べてくれるサーバー）が応答を受け取る条件は、RFC 5452 によると四つある。応答の質問の部分が待っている問い合わせと同じこと、16ビットの ID が一致すること、問い合わせを送った相手のアドレスから来ること、問い合わせを出したアドレスとポートに届くことだ。四つを満たす応答のうち、最初に届いたものが受け取られる<a href="#ref-2">[2]</a>。</p>
+<p>受け取った答えはキャッシュに入り、決められた時間（TTL）のあいだ、リゾルバーを使う全員に配られる<a href="#ref-2">[2]</a>。偽の答えが一度入ると、その影響は一台の端末ではなく、リゾルバーの利用者全体に広がる。</p>
+
+<h2 id="s-2">キャッシュポイズニングは、<wbr>偽の<wbr>応答を<wbr>先に<wbr>届ける</h2>
+<p>キャッシュポイズニングは、本物の応答より先に、四つの条件を満たす偽の応答をリゾルバーに届けて、キャッシュに入れさせる攻撃だ。外から当てずっぽうで送る者にとって、いちばんの壁は ID とポートを当てることになる。</p>
+<p>ID は16ビットなので、組み合わせは65,536通りしかない。RFC 3833 は、送り元のポートも合わせれば2の32乗通りになるが、送り元のポートがファイアウォールなどの事情で決まった値になっていることも珍しくなく、探す範囲が2の16乗より小さくなることも多い、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>もう一つの壁は TTL だった。答えがキャッシュにあるあいだは問い合わせが出ないので、試せる機会は TTL が切れるたびに一回しかない。RFC 5452 の計算では、TTL が3,600秒の名前に毎秒7,000個の偽の応答を送っても、最初の24時間で成功する見込みは10％だ<a href="#ref-2">[2]</a>。</p>
+<p>2008年に公表された手法は、この TTL の壁を外した。CVE-2008-1447 の記述によると、この弱点は、問い合わせ ID と送り元ポートの乱数が足りないことに関係し、同じドメインの中の委任の情報を使って、リゾルバーのキャッシュを書き換えるものだった。研究者のダン・カミンスキーの名を取って「カミンスキーのバグ」とも呼ばれる<a href="#ref-3">[3]</a>。CERT/CC は2008年7月8日に、これを VU#800113「Multiple DNS implementations vulnerable to cache poisoning」として公表した<a href="#ref-4">[4]</a>。</p>
+<p>毎回違う名前を問い合わせさせれば、キャッシュに答えがないので、そのたびに新しい問い合わせが出る。RFC 5452 は、問い合わせを変えながら繰り返す方法では待つべき TTL が実質0になり、送り元ポートが一つなら、同じ毎秒7,000個の偽の応答で7秒以内に成功の見込みが50％に達する、と計算している<a href="#ref-2">[2]</a>。</p>
+
+<h2 id="s-3">2008年の<wbr>対策は、<wbr>問い合わせを<wbr>読みにくくする<wbr>こと</h2>
+<p>当時の対策の中心は、送り元ポートを問い合わせごとに乱数で選ぶことだった。CERT/CC の記録によると、いくつもの作り手が、ポートを乱数にする修正を出した<a href="#ref-4">[4]</a>。</p>
+<p>RFC 5452 は2009年に、この対策を決まりにした。リゾルバーは、応答の送り元と宛先のアドレス、宛先のポート、ID、問い合わせの名前・クラス・型がすべて問い合わせと一致するかを確かめ、一つでも違えば捨てる。送り元のポートはできるだけ広い範囲から予測できない形で選び、ID も0〜65535の全部を予測できない形で使う<a href="#ref-2">[2]</a>。</p>
+<p>ポートが当てられなくなると、探す範囲は約64,000倍に広がる。RFC 5452 の計算では、6万4千のポートを使えば、同じ毎秒7,000個の偽の応答で成功の見込みが50％に達するまで、約116時間かかる<a href="#ref-2">[2]</a>。</p>
+<p>この対策は、偽の応答が当たる見込みを下げるもので、当たらないとまでは言えない。RFC 5452 は、NAT の機器が送り元ポートを並べ直したり数を絞ったりすると、乱数の効果が大きく下がると書いている。通り道でパケットを見たり書き換えたりできる者にも効かず、それを防ぐには RFC 4033 からの DNSSEC を見るよう案内している<a href="#ref-2">[2]</a>。</p>
+
+<h2 id="s-4">DNSSEC は、<wbr>署名で<wbr>答えの<wbr>正しさを<wbr>確かめる</h2>
+<p>DNSSEC は、DNS の答えに電子署名を付け、その答えが正しい持ち主から来て、途中で変えられていないことを確かめる仕組みだ。RFC 4033 は、DNSSEC が与えるものを、データの出どころの確認と、改ざんがないことの確認だとしている<a href="#ref-5">[5]</a>。</p>
+<p>DNSSEC は新しいレコードを四つ足した。答えへの署名（RRSIG）、ゾーンの公開鍵（DNSKEY）、子のゾーンの鍵を指す DS、存在しないことを示す NSEC だ<a href="#ref-5">[5]</a>。example.com の DS は、example.com のゾーンではなく、親の com のゾーンに置かれる<a href="#ref-6">[6]</a>。親のゾーンの署名つきの DS が子のゾーンの鍵を指し、それをルートから順にたどると、信頼の連鎖ができる<a href="#ref-5">[5]</a>。</p>
+<p>確かめる側のリゾルバーは、出発点の鍵（トラストアンカー）を最初から持ち、そこから連鎖をたどって署名を確かめる<a href="#ref-5">[5]</a>。結果は四つに分かれる。全部の署名が確かめられれば secure、途中で子のゾーンに DS がないことが署名つきで示されれば insecure、署名があるはずなのに確かめられなければ bogus、出発点の鍵がなければ indeterminate だ。bogus のとき、確かめない端末には「Server Failure」が返る<a href="#ref-5">[5]</a>。</p>
+<p>署名には有効期間がある。RRSIG には始まりと終わりの時刻が入っていて、その外では使えない<a href="#ref-6">[6]</a>。リゾルバーが確かめた結果は、応答の AD ビットで端末に伝えられる<a href="#ref-7">[7]</a>。</p>
+
+<h2 id="s-5">DNSSEC は、<wbr>中身を<wbr>隠さない</h2>
+<p>DNSSEC は答えの正しさを確かめるだけで、問い合わせの中身は隠さない。RFC 4033 は、DNS のデータは誰にでも同じ答えを返す公開のものだという前提から、DNSSEC はあえて機密性を与えない設計にした、と書いている<a href="#ref-5">[5]</a>。</p>
+<p>同じ RFC は、ほかにも守らないものを挙げている。サービス妨害の攻撃は防げず、署名を確かめる計算を狙った新しい種類の妨害が加わる。NSEC をたどれば、ゾーンの中の名前を一覧にできる。署名のないゾーンの答えは確かめられない。設定の誤りで、正しいゾーンにまで届かなくなることもある<a href="#ref-5">[5]</a>。</p>
+<p>端末とリゾルバーのあいだも、DNSSEC だけでは守れない。自分で署名を確かめない端末は、AD ビットを信じるしかなく、RFC 4033 は、そのためにはリゾルバーと、そこまでの通信路の両方を信頼できる必要がある、としている<a href="#ref-5">[5]</a>。RFC 3833 は、リゾルバーの時計を狂わせられる者は、期限切れの署名でリゾルバーを騙せる、とも書いている<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-6">DoT と<wbr> DoH は、<wbr>通信路を<wbr>暗号化する</h2>
+<p>DoT（DNS over TLS）と DoH（DNS over HTTPS）は、端末とリゾルバーのあいだの通信を暗号化し、盗み見と途中での書き換えを防ぐ。答えそのものが正しいかは確かめないので、DNSSEC とは役目が違う。</p>
+<p>RFC 7858 の DoT は、TCP の853番ポートで TLS を結び、その上で DNS をやりとりする。目的は盗み見から問い合わせを守ることで、DNS のほかの問題は扱わない。RFC 7858 は、DNSSEC と DoT は別々の問題を解く、両立する仕組みで、片方を使っても、もう片方の必要は減らない、と書いている<a href="#ref-8">[8]</a>。サーバーを確かめない使い方（機会があれば暗号化する形）では、通り道にいる者に暗号化を外される危険が残る<a href="#ref-8">[8]</a>。</p>
+<p>RFC 8484 の DoH は、DNS のメッセージを HTTPS の要求と応答に入れて運ぶ。HTTPS は DoH のサーバーと端末のあいだを守るが、DNSSEC が与える答えの正しさは与えない、と RFC 8484 は書いている。DNSSEC の情報がなければ、DoH のサーバーは正しくない答えを返せる<a href="#ref-9">[9]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>偽の答えへの三つの守り</caption><thead><tr><th scope="col">守り</th><th scope="col">守るもの</th><th scope="col">守らないもの</th></tr></thead><tbody>
+<tr><th scope="row">ID と送り元ポートの乱数</th><td>外から当てずっぽうで送る偽の応答</td><td>通り道で見たり書き換えたりできる者</td></tr>
+<tr><th scope="row">DNSSEC</th><td>答えが正しい持ち主から来て、変えられていないこと</td><td>問い合わせの中身、サービス妨害、署名のないゾーン</td></tr>
+<tr><th scope="row">DoT・DoH</th><td>端末とリゾルバーのあいだの盗み見と書き換え</td><td>リゾルバーが返す答えそのものの正しさ</td></tr>
+</tbody></table></div>
+<p>組織の中では、暗号化が守りの道具の目を隠すこともある。NSA は2021年1月の手引きで、DoH は設定を誤ると組織のセキュリティの仕組みから大事な情報を隠してしまうとして、DNS の通信はすべて組織が決めたリゾルバーに送り、ほかの暗号化されたリゾルバーは止めるよう勧めている<a href="#ref-10">[10]</a>。</p>
+
+<h2 id="s-7">名前の<wbr>持ち主の<wbr>側からも、<wbr>乗っ取られる</h2>
+<p>DNS の乗っ取りは、通信の途中だけでなく、名前を登録・管理する側でも起きる。管理のアカウントを使って正規の手続きで書き換えられると、通信路の守りでは区別できない。</p>
+<p>CISA は2019年1月22日に、緊急指令 ED 19-01「Mitigate DNS Infrastructure Tampering」を出した。DNS の基盤を書き換える一連の事件で、連邦政府の機関の複数のドメインが影響を受けたためだ。指令は、公開している DNS のレコードの点検、DNS を管理するアカウントのパスワードの変更、多要素認証、証明書の透明性（CT）のログの監視を求めた。CT のログを見るのは、書き換えられた名前で、攻撃者がその組織のドメインの正しい証明書を取れてしまうことがあるからだ<a href="#ref-11">[11]</a>。</p>
+<p>DNSSEC も、この形の乗っ取りには弱い。RFC 3833 は、DNSSEC の信頼はほぼ完全に階層の形をしていて、ルートから目当ての名前までのどこかのゾーンが乗っ取られれば、その名前の守りが損なわれる、と書いている<a href="#ref-1">[1]</a>。</p>
+<p>ぶら下がった CNAME は、管理の手落ちから起きる乗っ取りだ。Microsoft の手引きは、使わなくなったクラウドの資源を消したあとも、それを指す CNAME が残っていると、ほかの人が同じ名前の資源を作って、その名前への通信を受け取れる、と説明している<a href="#ref-12">[12]</a>。たとえば app.example.com が、もう消した app-old.example.net を指したままなら、app-old.example.net を新しく取った者が app.example.com の中身を決められる。</p>
+<p>同じ手引きは、乗っ取られた名前で正しい証明書が取られることや、MX レコードならメールを受け取られることを挙げている。防ぎ方は、資源を消すときに DNS のレコードを消す手順を入れること、名前と資源と持ち主の一覧を作って定期的に照らすこと、使わないレコードを消すことだ<a href="#ref-12">[12]</a>。</p>
+
+<h2 id="s-8">DNS の<wbr>ログで<wbr>見つける</h2>
+<p>DNS の守りは、ログで書き換えや悪用の跡を見つけることと組み合わせて働く。<a href="siem.html">SIEM の記事</a>の表で DNS のログの例に挙げた「example.com の下に、意味の読めない長い名前の問い合わせが続いている」は、その一つだ。</p>
+<p>MITRE ATT&amp;CK は、攻撃者が DNS の通信の中にデータや命令を埋め込んで、ふつうの通信にまぎれて外とやりとりする手口を、DNS トンネリングとしてまとめている。命令は TXT や A のレコードに入れられることがあり、やりとりの間隔が長いと見つけにくい<a href="#ref-13">[13]</a>。名前の部分にデータを入れれば、同じドメインの下に、長くて毎回違う名前が並ぶ。ログでは、一つのドメインの下の名前の数と長さ、TXT の問い合わせの多さ、問い合わせた端末を見ることになる。</p>
+<p>キャッシュポイズニングの試みにも跡が残る。RFC 5452 は、条件に合わない応答が大量に届くことを手がかりに、リゾルバーが問い合わせを TCP でやり直してよい、としている<a href="#ref-2">[2]</a>。持ち主の側の書き換えには、公開している NS などのレコードが登録したとおりかを定期的に照らすことと、CT のログに身に覚えのない証明書がないかを見ることが当たる<a href="#ref-11">[11]</a>。端末が外の DoH のサーバーへ直接問い合わせると、組織の DNS のログには残らないことも、ログを読むときの前提になる<a href="#ref-10">[10]</a>。</p>
+
+<h2 id="s-9">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>署名は、BIND の dig で自分の端末から見られる。<code>dig +dnssec</code> を付けると、問い合わせに DO ビットが立ち、DNSSEC のレコードを返すよう頼める<a href="#ref-14">[14]</a>。署名されたドメインなら、答えに RRSIG のレコードが付く<a href="#ref-5">[5]</a>。出力の先頭の、応答のヘッダーを表す行に AD ビット（ad）が立っていれば、使っているリゾルバーが答えを確かめた印だ<a href="#ref-7">[7]</a><a href="#ref-14">[14]</a>。<code>+cd</code> を付けると、確かめないよう頼める<a href="#ref-14">[14]</a>。</p>
+<p>リゾルバーを信じずに確かめるなら、同じ BIND の delv が使える。delv は組み込みのルートの鍵から信頼の連鎖をたどり、返す答えは確かめ終えたものか署名のないもので、失敗すれば理由を出す<a href="#ref-15">[15]</a>。dig には <code>+tls</code>（853番ポートの DoT）と <code>+https</code>（443番ポートの DoH）もあり、暗号化した問い合わせも試せる<a href="#ref-14">[14]</a>。</p>
+<p>systemd-resolved を使う Linux では、resolved.conf の <code>DNSSEC=</code> と <code>DNSOverTLS=</code> で、端末の側の確認と暗号化を決められる。説明書によると、allow-downgrade と opportunistic は、相手が対応していなければ確認や暗号化を自動でやめる形で、偽の応答で守りを外される危険がある<a href="#ref-16">[16]</a>。試すのは自分の端末と、自分で立てたリゾルバーの中だけにし、他人のサーバーに大量の問い合わせを送らない。</p>
+
+
+
+<p class="read-mark" data-total="15" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.07</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="dns.html">経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み</a><p class="rn-list-summary">名前は右から読む木で、親のゾーンが子のゾーンの担当サーバーを示してつながる。リゾルバーはルート・TLD・権威サーバーの順にたどり、答えを TTL の間だけ覚える。頼む先のリゾルバーに届かなければ、経路が生きていても名前は引けない。</p></li><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（16）</h2></summary>
+<ol>
+<li id="ref-1">Atkins・Austein（2004）RFC 3833 Threat Analysis of the Domain Name System (DNS)（2.1 節、2.2 節、3 節）。<a href="https://www.rfc-editor.org/rfc/rfc3833">RFC Editor</a></li>
+<li id="ref-2">Hubert・van Mook（2009）RFC 5452 Measures for Making DNS More Resilient against Forged Answers（3 節、7〜10 節）。<a href="https://www.rfc-editor.org/rfc/rfc5452">RFC Editor</a></li>
+<li id="ref-3">CVE-2008-1447（CVE の記録。公開 2008年7月8日）。<a href="https://www.cve.org/CVERecord?id=CVE-2008-1447">CVE</a></li>
+<li id="ref-4">CERT/CC（2008）Vulnerability Note VU#800113 Multiple DNS implementations vulnerable to cache poisoning。<a href="https://www.kb.cert.org/vuls/id/800113">CERT/CC</a></li>
+<li id="ref-5">Arends ほか（2005）RFC 4033 DNS Security Introduction and Requirements（3 節、4 節、5 節、12 節）。<a href="https://www.rfc-editor.org/rfc/rfc4033">RFC Editor</a></li>
+<li id="ref-6">Arends ほか（2005）RFC 4034 Resource Records for the DNS Security Extensions（3.1.5 節、5 節）。<a href="https://www.rfc-editor.org/rfc/rfc4034">RFC Editor</a></li>
+<li id="ref-7">Arends ほか（2005）RFC 4035 Protocol Modifications for the DNS Security Extensions（3.2.3 節）。<a href="https://www.rfc-editor.org/rfc/rfc4035">RFC Editor</a></li>
+<li id="ref-8">Hu ほか（2016）RFC 7858 Specification for DNS over Transport Layer Security (TLS)（3.1 節、4.1 節、8 節）。<a href="https://www.rfc-editor.org/rfc/rfc7858">RFC Editor</a></li>
+<li id="ref-9">Hoffman・McManus（2018）RFC 8484 DNS Queries over HTTPS (DoH)（1 節、9 節）。<a href="https://www.rfc-editor.org/rfc/rfc8484">RFC Editor</a></li>
+<li id="ref-10">NSA（2021）Adopting Encrypted DNS in Enterprise Environments（発表）。<a href="https://www.nsa.gov/Press-Room/News-Highlights/Article/Article/2471956/">NSA</a></li>
+<li id="ref-11">CISA（2019）Emergency Directive 19-01 Mitigate DNS Infrastructure Tampering。<a href="https://www.cisa.gov/emergency-directive-19-01">CISA</a></li>
+<li id="ref-12">Microsoft Learn「Prevent dangling DNS entries and avoid subdomain takeover」（GitHub の原稿）。<a href="https://github.com/MicrosoftDocs/azure-docs/blob/main/articles/security/fundamentals/subdomain-takeover.md">GitHub</a></li>
+<li id="ref-13">MITRE ATT&amp;CK「Application Layer Protocol: DNS」（T1071.004）。<a href="https://attack.mitre.org/techniques/T1071/004/">MITRE ATT&amp;CK</a></li>
+<li id="ref-14">ISC BIND 9「dig」の説明書（GitHub の原稿）。<a href="https://github.com/isc-projects/bind9/blob/main/bin/dig/dig.rst">GitHub</a></li>
+<li id="ref-15">ISC BIND 9「delv」の説明書（GitHub の原稿）。<a href="https://github.com/isc-projects/bind9/blob/main/bin/delv/delv.rst">GitHub</a></li>
+<li id="ref-16">systemd「resolved.conf」の説明書（GitHub の原稿）。<a href="https://github.com/systemd/systemd/blob/main/man/resolved.conf.xml">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="dns.html" data-slug="dns"><span class="reading-card-title">経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

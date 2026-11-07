@@ -1,0 +1,92 @@
+---
+layout: renewal-article.njk
+title: "ファイアウォールは、通すものだけを書いて残りを止める。穴は、ルールの順番と範囲の書き違いから開く — ムートン"
+headline: "ファイアウォールは、通すものだけを書いて残りを止める。穴は、ルールの順番と範囲の書き違いから開く"
+subtitle: "アドレス・ポート・プロトコルで決める仕組み、状態を覚える方式、ルールの順番、既定で拒否、出ていく通信、ログを、RFC と公式の文書で確かめた"
+description: "ファイアウォールは、送り元と宛先のアドレス、ポート、プロトコルで通信を通すか止めるかを決める。状態を覚える方式、ルールの順番、既定で拒否、出ていく通信を見る理由、ログの残し方を、RFC と公式の文書で確かめた。"
+excerpt: "ファイアウォールは、アドレスとポートとプロトコルで通すか止めるかを決める。行きの通信を覚えて戻りだけを通す方式、上から読んで最初に合ったルールで決まる作り、既定で拒否、出ていく通信とログを、IP アドレスと TCP・UDP の記事の続きとしてまとめた。"
+date: 2026-11-07T18:00:00Z
+pillar: defense
+pick: 8            # おすすめの順。IP アドレスの記事の許可リストの節と、TCP・UDP の記事から広げた。仮の順。ムートンが決めたら直す
+related: ["ip-address", "tcp-udp", "siem"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。IP アドレスの記事の「許可リスト」と、TCP・UDP の記事の「ポート」から広げた（docs「読む順と、記事の広げ方」の4）
+---
+<p>ファイアウォールは、パケットの送り元と宛先のアドレス、ポート、プロトコルを見て、通すか止めるかを決める仕組みだ。ルールは、通すものだけを書いて残りを止める「既定で拒否」が基本で、入ってくる通信と出ていく通信の両方に当てる。この記事は、<a href="ip-address.html">IP アドレスの記事</a>の許可リストの話と、<a href="tcp-udp.html">TCP・UDP の記事</a>のポートの話から広げた。例のアドレスは文書用の範囲とプライベートアドレスだけを使い、試すのは自分の機器の中だけにする。</p>
+
+<h2>ファイアウォールは、アドレスとポートとプロトコルで決める</h2>
+<p>ファイアウォールが手がかりにするのは、主にパケットの頭（ヘッダー）に書かれた送り元と宛先のアドレス、ポートの番号、プロトコルだ。インターネットのセキュリティの用語集 RFC 4949 は、ファイアウォールを、二つのネットワークのつなぎ目に置き、内側のネットワークに出入りする通信を制限して、外側からの脅威から守る関門だと定義している<a href="#ref-1">[1]</a>。同じ用語集は、決まりに従ってパケットを通すかどうかを決めるルーターを「フィルタリングルーター」と呼び、その決まりは主に送り元と宛先の IP アドレスと TCP のポート番号で書かれると説明している<a href="#ref-1">[1]</a>。</p>
+<p>RFC 2979 は、パケットを調べるファイアウォールがすることを、そのまま通す、捨てる、自分で何らかの扱いをする、の三つに分けている<a href="#ref-2">[2]</a>。判断の例には、内側のアドレスを送り元に名乗って外から来るパケットを止める、外から内への TELNET の接続を止める、メールやファイルを送ることを認めていない内側の機器から外への SMTP・FTP の接続を止める、などが挙がっている<a href="#ref-2">[2]</a>。</p>
+<p>ルールは、条件と結果の組で書く。「送り元が 192.168.1.0/24、プロトコルが TCP、宛先のポートが 22 なら通す」のような形だ。プロトコルは IP のヘッダーの番号で区別され、ICMP は 1、TCP は 6、UDP は 17、IPv6 の ICMP は 58 だ<a href="#ref-3">[3]</a>。ポートは TCP と UDP にある番号で、ICMP にはポートがなく、種類（type）と符号（code）で区別する<a href="#ref-4">[4]</a>。</p>
+<p>この方式は、通信の中身までは見ない。中身で決めるには、アプリケーションの層で中継するプロキシを使う<a href="#ref-1">[1]</a>。</p>
+
+<h2>状態を覚える方式は、行きの通信の戻りだけを通す</h2>
+<p>状態を覚えるファイアウォール（ステートフル）は、内側から始めた通信を表に記録し、その戻りのパケットを通す。NIST の用語集は、ステートフルインスペクションを、接続の状態も追いかけ、期待される状態から外れたパケットを止めるパケットフィルタとして定義している（出どころは NIST のファイアウォールの手引き SP 800-41 Rev. 1）<a href="#ref-5">[5]</a>。状態を覚えないパケットフィルタで戻りを通すには、戻りに使われうるポートの範囲を、入ってくる側のルールで広く開けておくことになる。AWS の説明書は、仮想ネットワークの「ネットワーク ACL」が状態を覚えない方式で、入ってきた通信への応答にも出ていく側のルールが当てはまると書いている<a href="#ref-6">[6]</a>。</p>
+<p>Linux のファイアウォールの仕組み（netfilter）では、この記録を接続の追跡（conntrack）が受け持ち、パケットごとに状態を付ける。iptables の説明書によると、NEW は新しい接続を始めたか、まだ両方向のパケットを見ていない接続に属するパケット、ESTABLISHED は両方向のパケットを見た接続に属するパケット、RELATED は新しい接続だが既存の接続に関係するもの（FTP のデータの転送や ICMP のエラーなど）、INVALID はどの接続にも属さないパケットだ<a href="#ref-7">[7]</a>。nftables では <code>ct state established,related accept</code> の1行で、行きの通信の戻りと、それに関係する ICMP のエラーを通せる<a href="#ref-8">[8]</a>。</p>
+<p>TCP は、SYN を送るところから三つのやりとりで接続を始める<a href="#ref-9">[9]</a>。UDP には接続の始まりと終わりがないが、Linux の接続の追跡は UDP にも記録を作り、決まった時間がたつと消す。Linux カーネルの説明書では、確立した TCP の記録の既定の保持時間は432,000秒（5日）、UDP は30秒（やりとりが続いていると見なしたものは120秒）だ<a href="#ref-10">[10]</a>。記録の数には上限（nf_conntrack_max）があり、いまの数は nf_conntrack_count で読める<a href="#ref-10">[10]</a>。</p>
+
+<h2>ルールは上から読まれ、最初に合ったもので決まる製品が多い</h2>
+<p>確かめた範囲では、ルールを上から順に読み、最初に条件が合ったルールで決める作りが多いが、すべての製品がそうではない。</p>
+<p>Linux の nftables では、チェーン（ルールの並び）の中のルールが順に評価される。説明書は、accept（通す）と drop（捨てる）を、評価をその場で終える結果だとしている<a href="#ref-8">[8]</a>。drop はすぐに効き、そのあとのチェーンは評価されない。accept はそのチェーンでの評価を終えるだけで、同じ場所にあるあとのチェーンや、パケットの通り道のあとの段階で捨てられることはある<a href="#ref-8">[8]</a>。ログを残す log や数を数える counter は評価を終えない文で、そのあとのルールに進む<a href="#ref-8">[8]</a>。</p>
+<p>AWS のネットワーク ACL は、ルールに付けた番号の小さい順に評価し、合ったルールがあれば、番号の大きいルールに逆のことが書かれていても、そのルールを当てる。一方、AWS のセキュリティグループは許可のルールしか持たず、すべてのルールを見てから通すかを決める<a href="#ref-6">[6]</a>。ルールを読む前に、その製品の評価の決まりを確かめる。</p>
+<p>最初に合ったもので決まる製品では、広い条件を上に置くと、その下の細かいルールに届かない。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>順番の書き違いの例（上から評価し、最初に合ったもので決まる場合）</caption><thead><tr><th scope="col">順番</th><th scope="col">条件</th><th scope="col">結果</th></tr></thead><tbody>
+<tr><th scope="row">1</th><td>送り元 10.0.0.0/8、TCP の 22 番</td><td>通す</td></tr>
+<tr><th scope="row">2</th><td>送り元 10.1.2.50、TCP の 22 番</td><td>止める</td></tr>
+<tr><th scope="row">3</th><td>それ以外</td><td>止める</td></tr>
+</tbody></table></div>
+<p>2番で 10.1.2.50 からの接続を止めるつもりでも、10.1.2.50 は 10.0.0.0/8 に入るので、1番で通ってしまう。止めるルールを1番より上に置けば、意図どおりになる。nftables では、<code>add</code> はルールをチェーンの最後に足し、<code>insert</code> は先頭に足す<a href="#ref-8">[8]</a>。最後に「全部止める」ルールを書いたチェーンへ <code>add</code> で許可を足すと、許可はその下に付き、合うパケットはその前に止められる。</p>
+
+<h2>既定で拒否し、必要なものだけを許す</h2>
+<p>ルールの基本は、通すものだけを書き、それ以外を全部止める「既定で拒否（default deny）」だ。NIST の SP 800-41 Rev. 1 は、ファイアウォールの方針で明示的に許していない入る通信と出る通信は、組織に必要ないものとして、一般に止めるべきだとしている<a href="#ref-5">[5]</a>。MITRE ATT&amp;CK も、ネットワークを分ける対策の一つとして、ネットワーク機器のアクセス制御リストで「既定で拒否」の方針を当てることを挙げている<a href="#ref-11">[11]</a>。</p>
+<p>既定が拒否になっているとは限らない。AWS のネットワーク ACL には、どの番号のルールにも合わないパケットを捨てる消せないルールが最後に付いているが、最初から用意される既定のネットワーク ACL は、すべての通信を通す設定になっている<a href="#ref-6">[6]</a>。nftables のチェーンの既定の方針（policy）は accept で、drop にするには自分で書く<a href="#ref-8">[8]</a>。ルールを全部消す <code>nft flush ruleset</code> のあとは、カーネルは正しい形のパケットをすべて受け入れる<a href="#ref-8">[8]</a>。</p>
+<p>「必要なもの」には、通信を支える ICMP のエラーが入る。RFC 2979 は、ファイアウォールを入れたことで、なければ動いていた正当な通信を壊してはならないとしている。例として、ICMP をまとめて止めると、経路の途中で一度に送れる大きさ（MTU）を調べる仕組みが働かなくなる問題を挙げ、DF ビットを立てた外向きのパケットを通すなら、その応答として返る「断片化が必要」のエラーを止めてはならない、とする。一方で、ping に使う Echo を止めるのは正当だとしている<a href="#ref-2">[2]</a>。</p>
+<p>IPv6 では、RFC 4890 が、通信を始めて続けるのに欠かせないものとして、Destination Unreachable、Packet Too Big、Time Exceeded（符号 0）、Parameter Problem（符号 1 と 2）を、止めてはならない ICMPv6 のエラーに挙げている<a href="#ref-4">[4]</a>。IPv6 ではルーターがパケットを分けないので、Packet Too Big が届かないと、インターネットの一部に事実上届かなくなる、と同じ RFC は書いている<a href="#ref-4">[4]</a>。</p>
+
+<h2>出ていく通信も止める</h2>
+<p>ルールは、外から入ってくる通信だけでなく、内から出ていく通信（egress）にも当てる。入る側だけを絞ると、内側の機器が乗っ取られたあと、その機器から外への通信はどこへでも通る。</p>
+<p>MITRE ATT&amp;CK は、通信を絞る対策（M1037）の中で、許していない外向きの通信を止めて、データの持ち出しと、攻撃者の指令サーバー（C2）との通信を防ぐことを挙げている<a href="#ref-12">[12]</a>。RFC 2979 の例にも、メールやファイルを送ることを認めていない内側の機器から外への SMTP・FTP の接続を止めることが入っている<a href="#ref-2">[2]</a>。</p>
+<p>出ていく通信の送り元も確かめる。RFC 2827 は、送り元を偽ったパケットによるサービス妨害を減らすため、事業者が入口で偽の送り元を捨てることを求め、企業のネットワークの管理者も、自分のネットワークが偽った通信の出どころにならないようにフィルタを入れるべきだとしている<a href="#ref-13">[13]</a>。組織に 203.0.113.0/24 が割り当てられているなら、外へ出ていくパケットのうち、送り元がその範囲の外にあるものは捨ててよい。</p>
+<p>組織の中の通信も対象になる。MITRE ATT&amp;CK のネットワークを分ける対策は、外と内のあいだ（南北）の通信だけでなく、内側どうし（東西）の通信もファイアウォールで絞ることを挙げている<a href="#ref-11">[11]</a>。</p>
+
+<h2>許可の範囲は、必要な大きさで書く</h2>
+<p>許可のルールのアドレスの範囲は、必要な機器が入る最小の大きさで書く。<a href="ip-address.html">IP アドレスの記事</a>で見たとおり、プレフィックスが1ビット短くなるごとに範囲は倍になり、10.1.2.0/24 の256個を通すつもりで 10.1.0.0/16 と書けば、65,536個を通す。送り元を 0.0.0.0/0 と書けば、すべてのアドレスを許すことになる。</p>
+<p>MITRE ATT&amp;CK は、入ってくる通信を絞る例として、公開しているサーバーへの SSH（22番）と RDP（3389番）を、特定の IP アドレスの範囲からだけに限ることを挙げている<a href="#ref-12">[12]</a>。ポートも、広く開けるほど、その範囲で待ち受けるほかのサービスに届く。</p>
+<p>IPv4 と IPv6 は別々に書く。nftables の inet の表は IPv4 と IPv6 の両方を扱うが、<code>ip saddr</code> は IPv4 のヘッダーの送り元で、IPv6 の送り元は <code>ip6 saddr</code> で書く<a href="#ref-8">[8]</a>。チェーンの方針が accept のまま、IPv4 のアドレスで止めるルールだけを書けば、IPv6 の通信はそのルールに当たらずに通る。AWS の既定のネットワーク ACL も、IPv6 の範囲を足すと、IPv6 用のルールが別に加わる<a href="#ref-6">[6]</a>。</p>
+
+<h2>止めた記録をログに残し、SIEM に送る</h2>
+<p>ルールが意図どおりに働いているかと、だれがどこへつなごうとしたかは、ログを見ないと分からない。nftables では、ルールに <code>log</code> を書くと、合ったパケットの情報がカーネルのログに出て、dmesg か syslog で読める<a href="#ref-8">[8]</a>。<code>log</code> は評価を終えない文なので、<code>log prefix "nft-input-drop: "</code> のように見分けるための前置きを付けて、止める直前に置ける。量が多いときは <code>limit</code> と組み合わせて、記録する件数を絞れる<a href="#ref-8">[8]</a>。</p>
+<p>ログの1行には、受けたインターフェース（IN=）、出すインターフェース（OUT=）、送り元（SRC=）、宛先（DST=）、プロトコル（PROTO=）、TCP と UDP なら送り元と宛先のポート（SPT=、DPT=）が並ぶ。Linux カーネルの書き出しの処理（nf_log_syslog）がこの形で書く<a href="#ref-14">[14]</a>。どのアドレスからどのポートへ来たかが、ルールの条件と同じ項目で残る。</p>
+<p>ログは1台の中に置いたままにせず、1か所に集めて、ほかの機器のログとつなげて読む。その仕組みが SIEM で、集め方は<a href="siem.html">SIEM の記事</a>に書いた。出ていく通信が止められた記録は、内側の機器が、決めていない相手とつながろうとした跡になる。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>試すのは、自分のパソコンか、自分で作った仮想マシンの中だけにする。遠くのサーバーで方針を drop に変えると、SSH の許可を書き忘れたときに自分も入れなくなるので、画面から操作できる仮想マシンが安全だ。</p>
+<p>いまのルールは、管理者の権限で <code>nft list ruleset</code> を実行すると、人が読める形で出る。<code>-a</code> を付けると、ルールごとの番号（handle）も出る<a href="#ref-8">[8]</a>。まず各チェーンの <code>policy</code> が accept か drop かを見て、上から順に条件と結果を読む。</p>
+<p>新しいルールは、ファイルに書いて <code>nft -c -f ファイル名</code> を実行すると、適用せずに書き方の誤りだけを調べられる<a href="#ref-8">[8]</a>。僕は手元の nftables 1.0.9 で、次の6行を並べたファイルをこの方法で確かめた。inet の表に input のチェーンを方針 drop で作り、上から <code>ct state established,related accept</code>、<code>ct state invalid drop</code>、<code>iif "lo" accept</code>（自分自身への通信）、<code>meta l4proto { icmp, ipv6-icmp } accept</code>、<code>ip saddr 192.168.1.0/24 tcp dport 22 counter accept</code>、<code>limit rate 5/minute log prefix "nft-input-drop: "</code> を置いたものだ。最後の行まで来たパケットは、件数を絞ってログに残され、どれも方針で捨てられる。</p>
+<p>ログは <code>journalctl -k</code> でカーネルのメッセージだけを出して読める<a href="#ref-15">[15]</a>。前置きの文字で絞り込めば、止めた通信だけが並ぶ。counter を付けたルールは、<code>nft list ruleset</code> の出力に、合ったパケットの数とバイト数が出る<a href="#ref-8">[8]</a>。数が増えないルールは、順番か条件が意図と違っている手がかりになる。接続の追跡の記録の数は、<code>sysctl net.netfilter.nf_conntrack_count</code> で読める<a href="#ref-10">[10]</a>。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Shirey（2007）RFC 4949 Internet Security Glossary, Version 2（firewall、filtering router、proxy の項）。<a href="https://www.rfc-editor.org/rfc/rfc4949">RFC Editor</a></li>
+<li id="ref-2">Freed（2000）RFC 2979 Behavior of and Requirements for Internet Firewalls。<a href="https://www.rfc-editor.org/rfc/rfc2979">RFC Editor</a></li>
+<li id="ref-3">IANA「Assigned Internet Protocol Numbers」（手元の Linux の /etc/protocols で番号を確かめた）。<a href="https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml">IANA</a></li>
+<li id="ref-4">Davies・Mohacsi（2007）RFC 4890 Recommendations for Filtering ICMPv6 Messages in Firewalls（4.3.1 節、付録 A.2）。<a href="https://www.rfc-editor.org/rfc/rfc4890">RFC Editor</a></li>
+<li id="ref-5">Scarfone・Hoffman（2009）NIST SP 800-41 Rev. 1 Guidelines on Firewalls and Firewall Policy。<a href="https://csrc.nist.gov/pubs/sp/800/41/r1/final">NIST CSRC</a>。NIST CSRC 用語集「stateful inspection」（出どころは SP 800-41 Rev. 1）。<a href="https://csrc.nist.gov/glossary/term/stateful_inspection">NIST CSRC</a></li>
+<li id="ref-6">AWS「Amazon VPC User Guide」の Network ACLs と、セキュリティグループとネットワーク ACL の比べ（GitHub に公開されていた原稿）。<a href="https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/vpc-network-acls.md">GitHub（Network ACLs）</a>。<a href="https://github.com/awsdocs/amazon-vpc-user-guide/blob/master/doc_source/VPC_Security.md">GitHub（比べ）</a></li>
+<li id="ref-7">iptables「iptables-extensions」の conntrack の説明（iptables 1.8.11 の原稿）。<a href="https://git.netfilter.org/iptables/tree/extensions/libxt_conntrack.man">netfilter.org</a></li>
+<li id="ref-8">nftables「nft(8)」の説明書（チェーンと方針、ルールの add と insert、verdict、log・limit・counter、conntrack と IPv4・IPv6 のヘッダーの式、--check）。<a href="https://git.netfilter.org/nftables/tree/doc">netfilter.org</a></li>
+<li id="ref-9">Eddy 編（2022）RFC 9293 Transmission Control Protocol (TCP)（3.5 節）。<a href="https://www.rfc-editor.org/rfc/rfc9293">RFC Editor</a></li>
+<li id="ref-10">Linux カーネルの説明書「Netfilter Conntrack Sysfs variables」。<a href="https://github.com/torvalds/linux/blob/master/Documentation/networking/nf_conntrack-sysctl.rst">GitHub</a></li>
+<li id="ref-11">MITRE ATT&amp;CK「Network Segmentation（M1030）」。<a href="https://attack.mitre.org/mitigations/M1030/">MITRE ATT&amp;CK</a></li>
+<li id="ref-12">MITRE ATT&amp;CK「Filter Network Traffic（M1037）」。<a href="https://attack.mitre.org/mitigations/M1037/">MITRE ATT&amp;CK</a></li>
+<li id="ref-13">Ferguson・Senie（2000）RFC 2827 Network Ingress Filtering: Defeating Denial of Service Attacks which employ IP Source Address Spoofing（BCP 38）。<a href="https://www.rfc-editor.org/rfc/rfc2827">RFC Editor</a></li>
+<li id="ref-14">Linux カーネルのソース「net/netfilter/nf_log_syslog.c」。<a href="https://github.com/torvalds/linux/blob/master/net/netfilter/nf_log_syslog.c">GitHub</a></li>
+<li id="ref-15">systemd「journalctl」の説明書（-k、--dmesg）。<a href="https://github.com/systemd/systemd/blob/main/man/journalctl.xml">GitHub</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

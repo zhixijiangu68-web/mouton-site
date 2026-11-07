@@ -61,9 +61,9 @@
 <p>ルーターは、届いたパケットの宛先を経路表と照らし、いちばん長く一致する経路を選んで、次のルーターへ渡す。インターネットの組織と組織のあいだで経路を教え合う BGP は、もともと、届いた経路の申告が正しいかを確かめない。この二つが重なると、他人のアドレスあての通信を自分のほうへ流させる「経路の乗っ取り」が起きる。この記事は、ルーティングの決まりと、乗っ取りと漏えいの事例と、RPKI による確かめ方を、RFC と公式の記録で確かめたものだ。例のアドレスと AS 番号は、文書のために取ってあるもの（192.0.2.0/24・198.51.100.0/24・203.0.113.0/24、AS64496〜64511）を使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
 
 <details class="rn-toc"><summary>目次（9）</summary><ol><li><a href="#s-1">ルーターは、次の行き先だけを決める</a></li><li><a href="#s-2">重なる経路では、いちばん長く一致するものが勝つ</a></li><li><a href="#s-3">経路表は、手で書くか、ルーター同士が教え合う</a></li><li><a href="#s-4">BGP は、届いた申告を確かめずに使う</a></li><li><a href="#s-5">乗っ取りと漏えいは、実際に起きてきた</a></li><li><a href="#s-6">RPKI は、申告した AS が正しいかを確かめる</a></li><li><a href="#s-7">自分のラボで試す</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">ルーターは、<wbr>次の<wbr>行き先だけを<wbr>決める</h2>
-<p>ルーターは、パケットを最後の宛先まで運ぶ道筋をまとめて決めるのではなく、宛先ごとに「次にどのルーターへ渡すか」だけを決める。手がかりは経路表（ルーティングテーブル）で、宛先のアドレスの範囲（プレフィックス。203.0.113.0/24 のように、先頭から何ビットが同じかで範囲を表す。読み方は<a href="ip-address.html">IP アドレスの記事</a>に書いた）と、次に渡す相手（ネクストホップ）の組が並んでいる。どれにも当てはまらない宛先のために、0.0.0.0/0 という「ほかの全部」を表す経路（デフォルトルート）を置く。CIDR の決まりを書いた RFC 4632 は、この 0.0.0.0/0 をデフォルトルートとして使い、どの実装も受け付けなければならないとしている<a href="#ref-3">[3]</a>。</p>
+<p>ルーターは、パケットを最後の宛先まで運ぶ道筋をまとめて決めるのではなく、宛先ごとに「次にどのルーターへ渡すか」だけを決める。手がかりは経路表（ルーティングテーブル）で、宛先のアドレスの範囲（プレフィックス。203.0.113.0/24 のように、先頭から何ビットが同じかで範囲を表す。読み方は<a href="ip-address.html">IP アドレスの記事</a>に書いた）と、次に渡す相手（ネクストホップ）の組が並んでいる。ネクストホップへ実際に届けるときは、その相手の MAC アドレスを調べて送る（<a href="arp.html">ARP の記事</a>）。どれにも当てはまらない宛先のために、0.0.0.0/0 という「ほかの全部」を表す経路（デフォルトルート）を置く。CIDR の決まりを書いた RFC 4632 は、この 0.0.0.0/0 をデフォルトルートとして使い、どの実装も受け付けなければならないとしている<a href="#ref-3">[3]</a>。</p>
 <p>パケットには、通れるルーターの数の上限も書かれている。IPv6 の決まり（RFC 8200）では、この欄（Hop Limit）は転送するたびに1ずつ減らされ、0 になったパケットは捨てられる<a href="#ref-4">[4]</a>。IPv4 では同じ役目の欄を TTL と呼ぶ。経路がぐるぐる回る誤りがあっても、パケットがいつまでも回り続けないための仕組みだ。</p>
-<p>上限を0にしたルーターは、パケットを捨てたうえで、送り元へ「時間切れ（Time Exceeded）」の知らせを返す。ICMPv6 の決まり（RFC 4443）は、これをルーターがしなければならないこととし、経路の回り続けか、上限の初めの値が小さすぎることを示す、としている<a href="#ref-5">[5]</a>。上限を 1、2、3 と増やしながらパケットを送れば、上限が尽きたところのルーターから順に知らせが返ってくるので、途中のルーターが分かる。Linux の tracepath や traceroute は、宛先までの道筋をこうしてたどって表示する道具だ<a href="#ref-6">[6]</a>。</p>
+<p>上限を0にしたルーターは、パケットを捨てたうえで、送り元へ「時間切れ（Time Exceeded）」の知らせを返す。ICMPv6 の決まり（RFC 4443）は、これをルーターがしなければならないこととし、経路の回り続けか、上限の初めの値が小さすぎることを示す、としている<a href="#ref-5">[5]</a>。止めてよい知らせと止めてはいけない知らせは、<a href="icmp.html">ICMP の記事</a>に書いた。上限を 1、2、3 と増やしながらパケットを送れば、上限が尽きたところのルーターから順に知らせが返ってくるので、途中のルーターが分かる。Linux の tracepath や traceroute は、宛先までの道筋をこうしてたどって表示する道具だ<a href="#ref-6">[6]</a>。</p>
 
 <h2 id="s-2">重なる<wbr>経路では、<wbr>いちばん長く<wbr>一致する<wbr>ものが<wbr>勝つ</h2>
 <p>宛先に当てはまる経路がいくつもあるとき、ルーターはプレフィックスがいちばん長いもの、つまりいちばん細かい範囲の経路を選ぶ。RFC 4632 は「インターネットでの転送は、最長一致（longest-match）で行われる」と書いている<a href="#ref-3">[3]</a>。</p>
@@ -90,7 +90,7 @@
 <p>経路の乗っ取りと漏えいは、大きなサービスが届かなくなる形で、何度も起きている。</p>
 <p>2008年2月24日、パキスタン・テレコム（AS17557）が、YouTube のアドレスの一部 208.65.153.0/24 を広告した。YouTube が広告していたのは、それを含むより粗い 208.65.152.0/22 で、細かい /24 のほうが選ばれた。上流の PCCW Global（AS3491）がこの経路をそのまま伝え、世界の多くの場所で YouTube への通信がパキスタン・テレコムへ流れた。RIPE NCC の事例の記録によると、偽の経路は約2時間後に取り下げられた<a href="#ref-11">[11]</a>。</p>
 <p>2017年8月25日の正午すぎには、日本で大規模なインターネットの接続障害が起きた。総務省の電気通信事故検証会議の報告によると、発端は、Google が設定の誤りで、本来配るはずではなかった経路の情報を配ったことだった。報告は対策として、誤って送られた経路を受け取らないことと、要らない経路を送らないこと、事業者のあいだで障害の情報を共有すること、利用者に知らせることを挙げている<a href="#ref-12">[12]</a>。</p>
-<p>2024年6月27日には、Cloudflare の公開 DNS サービス 1.1.1.1 が、一部の場所から届かなくなった。Cloudflare の報告によると、Eletronet（AS267613）が 1.1.1.1/32 を広告した乗っ取りと、別の AS による 1.1.1.0/24 の経路の漏えいが重なった。Cloudflare が広告していたのは /24 で、/32 はそれより細かい。報告は、ROA で経路に署名し、ROV を正しく実施しているネットワークでは、乗っ取りの影響が大きく抑えられた、としている<a href="#ref-13">[13]</a>。</p>
+<p>2024年6月27日には、Cloudflare の公開 DNS サービス 1.1.1.1 が、一部の場所から届かなくなった。Cloudflare の報告によると、Eletronet（AS267613）が 1.1.1.1/32 を広告した乗っ取りと、別の AS による 1.1.1.0/24 の経路の漏えいが重なった。Cloudflare が広告していたのは /24 で、/32 はそれより細かい。報告は、ROA で経路に署名し、ROV を正しく実施しているネットワークでは、乗っ取りの影響が大きく抑えられた、としている<a href="#ref-13">[13]</a>。1.1.1.1 は名前をアドレスに変える DNS のリゾルバーで、そこに届かない機器は、宛先への経路が生きていても名前を引けなくなる（<a href="dns.html">DNS の記事</a>）。経路を乗っ取られても中身を読まれないための仕組みは、<a href="tls.html">TLS の記事</a>に書いた。</p>
 
 <h2 id="s-6">RPKI は、<wbr>申告した<wbr> AS が<wbr>正しいかを<wbr>確かめる</h2>
 <p>RPKI（Resource Public Key Infrastructure）は、IP アドレスと AS 番号の割り当てを電子署名で証明する仕組みだ。RFC 6480 は、その最初の使い道として、アドレスを正しく持っている者が、そのアドレスへの経路を広告してよい AS を、確かめられる形で認めることを挙げている<a href="#ref-14">[14]</a>。この「認めた」という署名付きのデータが ROA（Route Origin Authorization）で、プレフィックス、広告してよい最大の長さ、AS 番号を持つ<a href="#ref-15">[15]</a>。</p>
@@ -111,7 +111,7 @@
 
 
 
-<p class="read-mark" data-total="5" aria-live="polite"></p>
+<p class="read-mark" data-total="15" aria-live="polite"></p>
 
 
 <aside class="author-box" aria-labelledby="author-box-name">
@@ -126,7 +126,7 @@
 </aside>
 
 
-<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ip-address.html">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</a><p class="rn-list-summary">/24 は先頭24ビットが同じ256個の範囲。1ビット短くなるごとに範囲は倍になる。プライベートアドレスなどの特別な範囲と、許可リストやログでの読み違いを、ルーティングの記事の続きとしてまとめた。</p></li><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="ip-address.html">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</a><p class="rn-list-summary">/24 は先頭24ビットが同じ256個の範囲。1ビット短くなるごとに範囲は倍になる。プライベートアドレスなどの特別な範囲と、許可リストやログでの読み違いを、ルーティングの記事の続きとしてまとめた。</p></li><li class="rn-item"><a class="rn-list-title" href="arp.html">ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み</a><p class="rn-list-summary">宛先が自分の範囲の中なら相手の、外ならゲートウェイの MAC アドレスへ送る。その MAC アドレスを引く ARP は答えを確かめないので、同じネットワークの者が偽の答えで通信を横取りできる。見つけ方と防ぎ方までまとめた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
 <details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（22）</h2></summary>
 <ol>
 <li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
@@ -155,7 +155,7 @@
 </details></section>
 
 
-<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="ip-address.html" data-slug="ip-address"><span class="reading-card-title">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="ip-address.html" data-slug="ip-address"><span class="reading-card-title">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</span></a><a class="reading-card" href="arp.html" data-slug="arp"><span class="reading-card-title">ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み</span></a><a class="reading-card" href="icmp.html" data-slug="icmp"><span class="reading-card-title">ICMP を全部止めると、大きな通信だけが止まる。エラーと診断の知らせの読み方</span></a><a class="reading-card" href="dns.html" data-slug="dns"><span class="reading-card-title">経路が生きていても、名前が引けなければ通信は始まらない。DNS が example.com をアドレスに変える仕組み</span></a><a class="reading-card" href="tls.html" data-slug="tls"><span class="reading-card-title">経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</span></a></div>
 <div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
 <p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
 

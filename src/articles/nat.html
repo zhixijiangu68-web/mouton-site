@@ -1,0 +1,93 @@
+---
+layout: renewal-article.njk
+title: "外から入れないのは、NAT が守っているからではない。変換の表と CGN とログの読み方 — ムートン"
+headline: "外から入れないのは、NAT が守っているからではない。変換の表と CGN とログの読み方"
+subtitle: "アドレスだけを変える NAT とポート番号も変える NAPT、変換の表とタイムアウト、事業者の CGN と 100.64.0.0/10、ログに残すポート番号と時刻を、RFC と Linux の文書で確かめた"
+description: "NAT は、境目の機器がアドレスとポート番号を書き換え、その対応を表に覚えて返事を戻す仕組み。外から入れないのは表に行がないことの副作用だ。タイムアウト、CGN と 100.64.0.0/10、ログに要るポート番号を RFC で確かめた。"
+excerpt: "家庭のルーターは、プライベートアドレスの機器の通信を、一つの外のアドレスとポート番号に書き換えて外へ出す。変換の表、タイムアウト、事業者の CGN、NAT がファイアウォールではない理由、ログで利用者をたどるのに要る情報を、IP アドレスの記事の続きとしてまとめた。"
+date: 2026-11-07T17:00:00Z
+pillar: defense
+pick: 7            # おすすめの順。IP アドレスの記事の「プライベートアドレス」「100.64.0.0/10」から広げた。仮の順。ムートンが決めたら直す
+related: ["ip-address", "tcp-udp"]
+changes:
+  - date: 2026-11-07
+    note: 下書き。IP アドレスの記事に出てきた「プライベートアドレス」「100.64.0.0/10（CGN）」から広げた（docs「読む順と、記事の広げ方」の4）
+---
+<p>NAT は、プライベートアドレスの機器が外とやりとりするとき、境目の機器が送り元のアドレス（多くはポート番号も）を書き換え、その対応を表に覚えて、返事を元の機器へ戻す仕組みだ。外から始まる通信が中へ入らないのは、この表に行がないことの副作用で、ファイアウォールの代わりにはならない。この記事は、<a href="ip-address.html">IP アドレスの記事</a>に出てきたプライベートアドレスと 100.64.0.0/10 から広げて、変換の仕組みと、守りとログの読み方を RFC と Linux の文書で確かめたものだ。</p>
+
+<h2>NAT は、境目でアドレスを書き換える</h2>
+<p>NAT は、あるアドレスの世界から別の世界へパケットを渡すときに、IP ヘッダーのアドレスを書き換える。RFC 2663 はこれを、アドレスの世界（realm）のあいだで、端の機器に意識させずにパケットを届ける仕組みとして定義している<a href="#ref-1">[1]</a>。</p>
+<p>プライベートアドレス（10.0.0.0/8・172.16.0.0/12・192.168.0.0/16）は、組織の中で自由に使える代わりに、組織の外へは届けない<a href="#ref-2">[2]</a>。そのまま外へ出すと、返事が戻ってこない。そこで、内と外の境目に置いた機器が、外へ出ていくパケットの送り元を外で通用するアドレスに書き換え、戻ってくるパケットの宛先を元のプライベートアドレスに書き戻す。RFC 3022 は、この、内側から始まる通信を外へ出すための NAT を「Traditional NAT」と呼んでいる<a href="#ref-3">[3]</a>。</p>
+<p>書き換えるのはアドレスだけではない。IP ヘッダーのチェックサムに加え、TCP と UDP のチェックサムも直す必要がある。TCP と UDP のチェックサムは、送り元と宛先のアドレスを含む擬似ヘッダーも計算に入れているからだ<a href="#ref-3">[3]</a>。</p>
+<p>同じ RFC は、一つの通信の行きと帰りが、同じ NAT の機器を通らなければならない、とも書いている<a href="#ref-3">[3]</a>。どのプライベートアドレスをどの外のアドレスに書き換えたかは、その機器しか覚えていないからだ。</p>
+
+<h2>家庭のルーターは、ポート番号も書き換える</h2>
+<p>RFC 3022 の Traditional NAT には二つの形がある。アドレスだけを書き換える Basic NAT と、アドレスと <a href="tcp-udp.html">TCP・UDP のポート番号</a>の組を書き換える NAPT だ<a href="#ref-3">[3]</a>。</p>
+<p>Basic NAT は、内側のアドレスを、外のアドレスの集まりの一つに対応させる。内側の機器の数が外のアドレスの数より多いと、外のアドレスを使い切ったところで、残りの機器は外へ出られなくなる<a href="#ref-3">[3]</a>。</p>
+<p>NAPT は、（内側のアドレス, 内側のポート番号）の組を、（外のアドレス, 割り当てたポート番号）の組に対応させる<a href="#ref-3">[3]</a>。ポート番号で通信を見分けるので、外のアドレスが一つでも、内側の多くの機器が同時に外とやりとりできる。RFC 3022 は、事業者から一つのアドレスしかもらえない小さな事務所や家庭に向く形としてこれを挙げている<a href="#ref-3">[3]</a>。家庭のルーターが「NAT」と呼んでいるものの多くは、この NAPT だ。</p>
+<p>たとえば、内側の 192.168.1.10 と 192.168.1.11 が、どちらも送り元のポート番号 50000 で、同じサーバー 198.51.100.20 の 443 番へつなぐとする。ルーターは送り元を、外のアドレス 203.0.113.5 と、たとえば 61000 と 61001 のように別々のポート番号に書き換える。返事の宛先が 203.0.113.5 の 61001 番なら、ルーターは表を引いて 192.168.1.11 の 50000 番へ戻す。</p>
+<p>ポート番号を持たない通信もある。RFC 3022 によると、NAPT は ICMP の問い合わせ（ping など）では、ポート番号の代わりにヘッダーの識別子（query ID）を書き換える。TCP・UDP・ICMP の問い合わせ以外の通信は、NAPT を通せない<a href="#ref-3">[3]</a>。</p>
+
+<h2>変換の表は、通信が途絶えると消える</h2>
+<p>NAT は通信ごとに変換の行（セッション）を作り、使われなくなった行を時間で消す。RFC 2663 は、TCP と UDP のセッションを（送り元のアドレス, 送り元のポート, 宛先のアドレス, 宛先のポート）の組で見分け、最初のパケットの向きでセッションの向きを決める、としている<a href="#ref-1">[1]</a>。</p>
+<p>TCP は、SYN で始まり、FIN のやりとりや RST で終わるので、始まりと終わりが分かる。それでも、相手が再起動したときのように、NAT が終わりに気づかないこともある。UDP には始まりも終わりも決まった形がない。そのため NAT は、一定の時間パケットが流れなかった行を、終わったものとして消す<a href="#ref-1">[1]</a>。</p>
+<p>短すぎる時間で消すと、まだ使っている通信が切れる。そのため RFC は、NAT が守る最短の時間を決めている。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>変換の行を消すまでの時間（RFC の要件と Linux の既定値）</caption><thead><tr><th scope="col">通信</th><th scope="col">RFC の要件</th><th scope="col">Linux の conntrack の既定値</th></tr></thead><tbody>
+<tr><th scope="row">UDP</th><td>2分より短くしない。既定は5分以上を推奨（RFC 4787）</td><td>返事のないもの30秒、両方向に流れ続けるもの120秒</td></tr>
+<tr><th scope="row">TCP（つながっている）</th><td>2時間4分より短くしない（RFC 5382）</td><td>5日（432,000秒）</td></tr>
+<tr><th scope="row">TCP（始まりかけ・終わりかけ）</th><td>4分より短くしない（RFC 5382）</td><td>状態ごとに10〜120秒</td></tr>
+</tbody></table></div>
+<p>RFC 4787 は UDP について、2分（よく知られたポートへの通信は、それより短くてもよい）と5分を挙げ、理由を、行を保つためのパケットを頻繁に送らずに済むように、としている<a href="#ref-4">[4]</a>。RFC 5382 の2時間4分は、TCP の keep-alive の既定の間隔が2時間なので、それより少し長く待てば、keep-alive を送っている通信を生きていると見分けられる、という理由だ<a href="#ref-5">[5]</a>。Linux の値は、カーネルの文書と、僕の手元の Linux（6.18）の既定値で確かめた<a href="#ref-6">[6]</a>。</p>
+<p>行が消えたあとに届いたパケットは、元の機器へ戻せない。長い時間何も送らないアプリが、ときどき短いパケットを送って行を保つのは、このためだ。</p>
+
+<h2>事業者の NAT（CGN）と 100.64.0.0/10</h2>
+<p>IPv4 のアドレスが足りなくなり、事業者は自分のネットワークの中に NAT を置いて、一つの外のアドレスを多くの利用者で分けるようになった。RFC 6888 はこれを CGN（Carrier-Grade NAT）と呼び、「carrier-grade」は品質ではなく、事業者のネットワークにあって多くの利用者の通信を変換する、という置き場所を表す言葉だ、と書いている<a href="#ref-7">[7]</a>。利用者は CGN をほとんど、あるいはまったく設定できない。</p>
+<p>CGN の内側にも、家庭のルーターの外側にも、アドレスが要る。RFC 6598 は、このあいだに番号を付けるために 100.64.0.0/10 を取った<a href="#ref-8">[8]</a>。プライベートアドレスを使うと、利用者が家の中で使っている範囲と重なるおそれがあり、ルーターの内と外に同じ範囲が来ると、うまく動かないおそれがある。利用者が自分でルーターを用意する場合、事業者はその重なりを避けられない<a href="#ref-8">[8]</a>。</p>
+<p>RFC 6598 は、この範囲を送り元や宛先にしたパケットを事業者の境目を越えて転送しないこと、入口でそうしたパケットを捨てることを求めている<a href="#ref-8">[8]</a>。家庭のルーターの外側のアドレスが 100.64.0.0/10 に入っていれば、その回線は事業者の CGN の内側にあり、家のルーターと CGN で二回変換されていると考えられる。</p>
+<p>同じ RFC は、CGN の影響として、同じ外のアドレスの利用者どうしでつながらないゲーム、外からつなぎに来てもらえない P2P や通話、CGN の場所を指してしまう位置の推定、外のアドレスごとに同時ログインの数を絞るサイトを挙げている<a href="#ref-8">[8]</a>。RFC 6888 は、一人の利用者がポート番号を使い切って他の利用者を妨げないよう、利用者ごとに使える外のポート番号の数を制限できることを CGN に求めている<a href="#ref-7">[7]</a>。</p>
+
+<h2>NAT はファイアウォールではない</h2>
+<p>NAT がしているのは書き換えで、何を通すかを決める仕組みではない。RFC 4787 は、NAT の対応の作り方の違いはセキュリティに関係せず、セキュリティは NAT がどのパケットを入れるか（フィルタリングのふるまい）だけで決まる、と書いている<a href="#ref-4">[4]</a>。</p>
+<p>RFC 4864 は、IPv4 の NAT はセキュリティのために作られたものではなく、セキュリティの仕組みでもない、と書いている<a href="#ref-9">[9]</a>。NAT が守っているように見えるのは、外から始まる通信に合う行が表に前もってないからで、同じ程度の守りは基本的なファイアウォールでも得られる、という説明だ。逆に、内側から始まる通信は、行を作ってそのまま通る。RFC 4864 は、トロイの木馬のように内側から外へつなぐ攻撃は NAT の境目を越える、と書いている<a href="#ref-9">[9]</a>。</p>
+<p>外からの入口は、設定で開く。RFC 3022 は、外のアドレスのポート番号を内側の特定の機器に固定で対応させれば、外から始まる通信も受けられる、としている<a href="#ref-3">[3]</a>。家庭のルーターの「ポート転送」がこれだ。RFC 4864 は、外のアドレスへのすべての通信を一台の機器に向けた場合、その機器の危険は NAT がないときと同じになる、と書いている<a href="#ref-9">[9]</a>。</p>
+<p>この入口は、内側の機器が自分で開けることもある。UPnP の IGD（Internet Gateway Device）では、内側の機器が AddPortMapping という操作で、ルーターに対応の行を足すよう頼める<a href="#ref-10">[10]</a>。事業者の NAT 向けには PCP（Port Control Protocol）があり、RFC 6887 は、PCP の要求で、内側の機器がふだんの通信で作れる以上の対応を作らせないことを、安全に使うための条件の一つにしている<a href="#ref-11">[11]</a>。</p>
+<p>守りの点検は、ルーターに開いている入口があるかを見ることから始まる。ポート転送と UPnP で作られた対応の一覧に、使っていない入口があれば閉じられる。UPnP を切っておけば、UPnP で入口が足されることはなくなる。IPv6 は NAT を要らなくするように設計されていて<a href="#ref-9">[9]</a>、外から入らない仕組みを NAT の副作用に頼れない。RFC 4864 は、家庭のルーターに、外からの通信は内側から出た通信への返事だけを通す、状態を持つファイアウォールを既定で入れることを勧めている<a href="#ref-9">[9]</a>。</p>
+
+<h2>ログで利用者をたどるには、ポート番号と時刻がいる</h2>
+<p>NAT の外側では、多くの機器や利用者が同じアドレスに見える。だから、サーバーのログに送り元のアドレスしか残っていなければ、そのアドレスの裏にいる一人を特定できない。RFC 6302 は、IANA の IPv4 アドレスの在庫が2011年2月に尽き、事業者がアドレスを分け合うしかなくなったことを背景に、インターネットに面したサーバーに、送り元のアドレスに加えて次のものをログに残すよう勧めている<a href="#ref-12">[12]</a>。</p>
+<ul>
+<li>送り元のポート番号</li>
+<li>時刻（UTC で、秒まで正確で、NTP のようなたどれる時刻源に合わせたもの）</li>
+<li>一つのサービスがいくつものプロトコルやポートを使う場合は、TCP か UDP かと、宛先のポート番号</li>
+</ul>
+<p>時刻が秒まで要るのは、CGN がポート番号を使い回すまでの時間が装置によって違うからだ。すぐ使い回すものもあれば、数分待つものもある<a href="#ref-12">[12]</a>。RFC 6888 は、外のポート番号を解放してから新しい対応に使うまで、少なくとも120秒あけることを勧めている<a href="#ref-7">[7]</a>。時刻は、時間帯の情報が報告の途中で落ちることがあるので、UTC で残すほうがよいとされている<a href="#ref-12">[12]</a>。</p>
+<p>RFC 6888 は、CGN の側で対応を作るたびに残す情報の例として、プロトコル、利用者を見分ける情報（内側の送り元のアドレスなど）、外の送り元のアドレスとポート番号、時刻を挙げている<a href="#ref-7">[7]</a>。サーバーのログの「外のアドレス・ポート番号・時刻」を CGN のログと突き合わせて、はじめて利用者にたどり着ける。RFC 6888 は、宛先のアドレスとポート番号は、プライバシーのため、管理上の理由がなければ CGN で記録しないよう勧めている。サーバーが RFC 6302 に沿ってログを取っていれば、CGN の側に宛先は要らないからだ<a href="#ref-7">[7]</a>。</p>
+<p>組織の中でも同じことが起きる。RFC 3022 は、内側の機器が外へ攻撃や大量のスパムを送っても、NAT の装置の裏に隠れて送り元を突き止めにくくなる、と書いている<a href="#ref-3">[3]</a>。外から「このアドレスから攻撃が来た」と知らせを受けたら、自分の NAT の装置の変換のログで、そのポート番号と時刻に対応していた内側の機器を探すことになる。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>試すのは、自分の機器と自分のネットワークの中だけにする。家庭のルーターでは、管理画面で外側（WAN）のアドレスと、ポート転送と UPnP の対応の一覧を見られることが多い。外側のアドレスが 100.64.0.0/10 に入っているかは、IP アドレスの記事で書いた二進数の読み方か、Python の ipaddress で確かめられる。</p>
+<p>Linux の NAT は、netfilter の接続追跡（conntrack）の表を使う。表は <code>/proc/net/nf_conntrack</code> で見られ、conntrack-tools の <code>conntrack -L</code> でも一覧できる。<code>conntrack -L --src-nat</code> は送り元を書き換えた通信だけを出し、<code>conntrack -E -o timestamp</code> は行ができた・消えたという出来事を時刻つきで出す<a href="#ref-13">[13]</a>。</p>
+<p>表の1行には、行きの組と、返事として待っている組が並ぶ。僕が手元の Linux で、送り元を書き換える規則を一つ入れて UDP を送ると、行きの組は内側のアドレスとポート番号のまま、返事の組の宛先が書き換えたあとのアドレスとポート番号になり、まだ返事のない行には <code>[UNREPLIED]</code> の印と、残りの秒数（30秒から減っていく値）が付いていた。返事が続いた TCP の行には <code>[ASSURED]</code> が付く。消すまでの時間は <code>/proc/sys/net/netfilter/</code> の <code>nf_conntrack_udp_timeout</code> などで読める<a href="#ref-6">[6]</a>。この二つの組の違いが、NAT の変換の表そのものだ。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Srisuresh・Holdrege（1999）RFC 2663 IP Network Address Translator (NAT) Terminology and Considerations（2.3・2.5・2.6 節）。<a href="https://www.rfc-editor.org/rfc/rfc2663">RFC Editor</a></li>
+<li id="ref-2">Rekhter ほか（1996）RFC 1918 Address Allocation for Private Internets。<a href="https://www.rfc-editor.org/rfc/rfc1918">RFC Editor</a></li>
+<li id="ref-3">Srisuresh・Egevang（2001）RFC 3022 Traditional IP Network Address Translator (Traditional NAT)（2.1・2.2・4.1・6.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc3022">RFC Editor</a></li>
+<li id="ref-4">Audet・Jennings（2007）RFC 4787 Network Address Translation (NAT) Behavioral Requirements for Unicast UDP（BCP 127。4.1・4.3・5 節）。<a href="https://www.rfc-editor.org/rfc/rfc4787">RFC Editor</a></li>
+<li id="ref-5">Guha ほか（2008）RFC 5382 NAT Behavioral Requirements for TCP（BCP 142。REQ-5）。<a href="https://www.rfc-editor.org/rfc/rfc5382">RFC Editor</a></li>
+<li id="ref-6">Linux カーネルの文書「Netfilter Conntrack Sysfs variables」（nf_conntrack-sysctl）。<a href="https://github.com/torvalds/linux/blob/master/Documentation/networking/nf_conntrack-sysctl.rst">GitHub</a></li>
+<li id="ref-7">Perreault ほか（2013）RFC 6888 Common Requirements for Carrier-Grade NATs (CGNs)（2 節、REQ-4・REQ-8・REQ-12、4 節）。<a href="https://www.rfc-editor.org/rfc/rfc6888">RFC Editor</a></li>
+<li id="ref-8">Weil ほか（2012）RFC 6598 IANA-Reserved IPv4 Prefix for Shared Address Space（3・4・5.2 節）。<a href="https://www.rfc-editor.org/rfc/rfc6598">RFC Editor</a></li>
+<li id="ref-9">Van de Velde ほか（2007）RFC 4864 Local Network Protection for IPv6（2.2・4.2 節）。<a href="https://www.rfc-editor.org/rfc/rfc4864">RFC Editor</a></li>
+<li id="ref-10">Boucadair・Penno・Wing（2013）RFC 6970 Universal Plug and Play (UPnP) Internet Gateway Device - Port Control Protocol Interworking Function (IGD-PCP IWF)。<a href="https://www.rfc-editor.org/rfc/rfc6970">RFC Editor</a></li>
+<li id="ref-11">Wing ほか（2013）RFC 6887 Port Control Protocol (PCP)（18.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc6887">RFC Editor</a></li>
+<li id="ref-12">Durand ほか（2011）RFC 6302 Logging Recommendations for Internet-Facing Servers（BCP 162）。<a href="https://www.rfc-editor.org/rfc/rfc6302">RFC Editor</a></li>
+<li id="ref-13">conntrack-tools「conntrack(8)」の説明書。<a href="https://conntrack-tools.netfilter.org/">netfilter.org</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み — ムートン</title>
+<meta name="description" content="同じネットワークの中では、パケットは MAC アドレスあてに届く。その MAC アドレスを引く ARP は、答えが本物かを確かめない。届け方の決まり、IPv6 の近隣探索、偽の ARP の見つけ方と防ぎ方を RFC で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/arp.html">
+<meta property="og:title" content="ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み — ムートン">
+<meta property="og:description" content="同じネットワークの中では、パケットは MAC アドレスあてに届く。その MAC アドレスを引く ARP は、答えが本物かを確かめない。届け方の決まり、IPv6 の近隣探索、偽の ARP の見つけ方と防ぎ方を RFC で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/arp.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/arp.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み","description":"同じネットワークの中では、パケットは MAC アドレスあてに届く。その MAC アドレスを引く ARP は、答えが本物かを確かめない。届け方の決まり、IPv6 の近隣探索、偽の ARP の見つけ方と防ぎ方を RFC で確かめた。","inLanguage":"ja","datePublished":"2026-11-07","dateModified":"2026-11-07","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/arp.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"ARP は、答えた相手を確かめない。同じネットワークの中で、通信が横取りされる仕組み","item":"https://moutonarchive.com/arp.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">ARP は、<wbr>答えた<wbr>相手を<wbr>確かめない。<wbr>同じ<wbr>ネットワークの<wbr>中で、<wbr>通信が<wbr>横取りされる<wbr>仕組み</h1>
+  <p class="rn-subtitle">MAC アドレス、ARP、デフォルトゲートウェイ、ARP の表、IPv6 の近隣探索と、ARP スプーフィングの見つけ方・防ぎ方を、RFC と公式の説明書で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-07">2026年11月7日</time></span></p>
+  <div class="rn-body">
+<p>同じネットワークの中では、パケットは IP アドレスではなく MAC アドレスを宛先にして届けられる。送る側は、宛先が自分と同じ範囲の中ならその相手の、外ならデフォルトゲートウェイの MAC アドレスへ送り、IPv4 ではその MAC アドレスを ARP で調べる。ARP は返ってきた答えが本物かを確かめないので、同じネットワークにいる者が偽の答えを返すと、通信を横取りできる。<a href="routing.html">ルーティングの記事</a>のネクストホップと、<a href="ip-address.html">IP アドレスの記事</a>の「同じ範囲（/24）」から広げ、RFC と公式の説明書で確かめた。例のアドレスは文書用のものだけを使う<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a><a href="#ref-3">[3]</a>。</p>
+
+<details class="rn-toc"><summary>目次（11）</summary><ol><li><a href="#s-1">同じつながりの中は、MAC アドレスで届ける</a></li><li><a href="#s-2">宛先が範囲の外なら、ゲートウェイの MAC アドレスへ送る</a></li><li><a href="#s-3">ARP は、全員に聞いて、本人が答える</a></li><li><a href="#s-4">ARP の表は、答えをしばらく覚えておく</a></li><li><a href="#s-5">IPv6 では、近隣探索が同じ役目をする</a></li><li><a href="#s-6">ARP は、答えが本物かを確かめない</a></li><li><a href="#s-7">見つけるには、IP アドレスと MAC アドレスの組の変化を見る</a></li><li><a href="#s-8">防ぐには、スイッチで確かめるか、表を固定する</a></li><li><a href="#s-9">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">同じ<wbr>つながりの<wbr>中は、<wbr>MAC アドレスで<wbr>届ける</h2>
+<p>イーサネットのような同じつながり（リンク）の中では、機器は MAC アドレスで相手を見分ける。MAC アドレスは48ビットの数で、8ビットずつ六つに区切って16進数で書く。先頭の3バイトは OUI と呼ばれる組織ごとの番号で、残りをその組織が機器ごとに付ける<a href="#ref-2">[2]</a>。すべてのビットが 1 の ff:ff:ff:ff:ff:ff は、つながりの全員あてのブロードキャストだ<a href="#ref-4">[4]</a>。</p>
+<p>イーサネットで送るひとまとまり（フレーム）の頭には、宛先の MAC アドレス、送り元の MAC アドレス、中身の種類の番号が並ぶ<a href="#ref-4">[4]</a>。種類の番号は、IPv4 が 0x0800、ARP が 0x0806、IPv6 が 0x86DD だ<a href="#ref-2">[2]</a>。</p>
+<p>IP のヘッダーの宛先は最後の相手のまま変わらないが、フレームの宛先は、そのつながりの中で次に渡す相手を指す。RFC 826 は、ルーティングが次の相手（ネクストホップ）の IP アドレスを決め、それを MAC アドレスに直してから送る、という順で説明している<a href="#ref-4">[4]</a>。</p>
+
+<h2 id="s-2">宛先が<wbr>範囲の<wbr>外なら、<wbr>ゲートウェイの<wbr> MAC アドレスへ<wbr>送る</h2>
+<p>機器は、宛先が自分と同じ範囲にあるかを確かめ、中なら相手へ直接、外ならゲートウェイ（ルーター）へ送る。RFC 1122 は、自分のアドレスと宛先のアドレスをネットマスクで取り出して比べ、同じなら宛先へ直接送り、違えばゲートウェイを通す、と決めている<a href="#ref-5">[5]</a>。</p>
+<p>たとえば、自分が 192.0.2.10/24 で、デフォルトゲートウェイが 192.0.2.1 の機器を考える。宛先が 192.0.2.20 なら、先頭24ビットが同じなので、192.0.2.20 の MAC アドレスを調べて直接送る。宛先が 198.51.100.200 なら範囲の外なので、IP のヘッダーの宛先は 198.51.100.200 のまま、フレームの宛先にはゲートウェイ 192.0.2.1 の MAC アドレスを書く。このとき機器が ARP で調べるのは、198.51.100.200 ではなく 192.0.2.1 だ。</p>
+<p>デフォルトゲートウェイは、経路表のデフォルトルート（0.0.0.0/0）のネクストホップのことだ。Linux の <code>ip route get 198.51.100.200</code> では、使われる経路に <code>via 192.0.2.1</code> と、ネクストホップのルーターのアドレスが出る<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-3">ARP は、<wbr>全員に<wbr>聞いて、<wbr>本人が<wbr>答える</h2>
+<p>ARP（Address Resolution Protocol）は、IPv4 アドレスから MAC アドレスを調べる決まりで、1982年の RFC 826 で定められた。調べたい機器は、つながりの全員あてに要求をブロードキャストで送り、その IP アドレスを持つ機器だけが、自分の MAC アドレスを入れた応答を、聞いてきた相手に直接返す<a href="#ref-4">[4]</a>。</p>
+<p>ARP のパケットには、要求（1）か応答（2）かの番号と、送り手と相手それぞれの MAC アドレスと IP アドレスが入る。要求では、相手の MAC アドレスの欄に決まった値を入れない<a href="#ref-4">[4]</a>。</p>
+<p>RFC 826 の例では、X から要求を受けた Y は、要求に入っていた X の IP アドレスと MAC アドレスの組を先に自分の表に入れてから、応答を返す。X が Y に話しかけるなら、Y も X に話しかけるだろう、という考えからだ<a href="#ref-4">[4]</a>。</p>
+
+<h2 id="s-4">ARP の<wbr>表は、<wbr>答えを<wbr>しばらく<wbr>覚えて<wbr>おく</h2>
+<p>機器は ARP で調べた結果を表（ARP キャッシュ）に覚えておき、送るたびには聞き直さない。古い行の消し方を RFC 826 は決めておらず<a href="#ref-4">[4]</a>、RFC 1122 が、古い行を消す仕組みを持つことと、同じ IP アドレスへの要求を宛先ごとに1秒に1回程度までに抑えることを求めている<a href="#ref-5">[5]</a>。</p>
+<p>Linux では、ARP の表は近隣の表（neighbour table）の一つで、iproute2 の説明書は IPv4 の近隣の表を ARP の表とも呼ぶ、と書いている。<code>ip neigh</code> で見ると、行ごとに状態が付く。REACHABLE は確かめてから時間がたっていない、STALE は使えるが確かめ直しが要る、PERMANENT は管理者が登録して、管理者が消すまで残る、という意味だ<a href="#ref-6">[6]</a>。</p>
+<p>Linux の arp(7) の説明書によると、相手が見つかった行は、base_reachable_time（標準で30秒）の半分から1.5倍までのでたらめな長さのあいだ有効とみなされ、TCP の確認応答のような上の層からの手応えがあると延びる<a href="#ref-7">[7]</a>。</p>
+
+<h2 id="s-5">IPv6 では、<wbr>近隣探索が<wbr>同じ<wbr>役目を<wbr>する</h2>
+<p>IPv6 には ARP がなく、近隣探索（Neighbor Discovery、NDP）が、MAC アドレスの調べとルーターの見つけ方をまとめて受け持つ。RFC 4861 は、近隣探索を、IPv4 の ARP、ICMP のルーター発見、ICMP のリダイレクトを合わせたものにあたる、と書いている<a href="#ref-8">[8]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>IPv4 と IPv6 の、同じリンクの中の届け方（RFC 4861 の対応づけから）</caption><thead><tr><th scope="col">役目</th><th scope="col">IPv4</th><th scope="col">IPv6</th></tr></thead><tbody>
+<tr><th scope="row">MAC アドレスを調べる</th><td>ARP の要求と応答</td><td>近隣要請（NS、ICMPv6 の 135）と近隣広告（NA、136）</td></tr>
+<tr><th scope="row">要求の送り先</th><td>全員（ff:ff:ff:ff:ff:ff）</td><td>要請ノードマルチキャストアドレス</td></tr>
+<tr><th scope="row">ルーターを見つける</th><td>ICMP のルーター発見</td><td>ルーター要請（RS、133）とルーター広告（RA、134）</td></tr>
+<tr><th scope="row">覚えておく表</th><td>ARP の表</td><td>近隣キャッシュ（5つの状態）</td></tr>
+<tr><th scope="row">相手に届くかの確かめ</th><td>広く合意された方法はない</td><td>到達不能の検出（NUD）</td></tr>
+</tbody></table></div>
+<p>近隣要請は、全員あてではなく、相手のアドレスの下位24ビットから作る要請ノードマルチキャストアドレスへ送る。RFC 4291 によると、このアドレスは ff02::1:ff00:0/104 に下位24ビットを付けたもので、2001:db8::5e:10 なら ff02::1:ff5e:10 になる<a href="#ref-9">[9]</a>。相手は、自分の MAC アドレスを近隣広告で直接返す<a href="#ref-8">[8]</a>。</p>
+<p>送り先を決める手順も IPv4 と同じ形だ。RFC 4861 では、宛先が同じリンクの中かをプレフィックスの最長一致で判断し、中なら宛先そのものを、外ならルーター広告で知ったデフォルトルーターの一覧から選んだルーターを、次の相手にする。近隣キャッシュの行の REACHABLE の標準の長さは30,000ミリ秒だ<a href="#ref-8">[8]</a>。</p>
+<p>近隣探索のメッセージは Hop Limit を255にして送り、受け取る側は255であることを確かめる。ルーターは転送のたびに Hop Limit を減らすので、255のまま届いたものは同じリンクから来たと分かる<a href="#ref-8">[8]</a>。同じリンクの中にいる者の偽りは、これでは防げない。</p>
+
+<h2 id="s-6">ARP は、<wbr>答えが<wbr>本物かを<wbr>確かめない</h2>
+<p>ARP には、答えた機器が本当にその IP アドレスの持ち主かを確かめる仕組みがない。RFC 826 の受け取りの手順では、表にすでにある IP アドレスについて ARP のパケットが届くと、自分あてかどうかを見る前に、その行の MAC アドレスを新しい値で書き換える<a href="#ref-4">[4]</a>。機器が別のハードウェアに替わったときに、早く直るようにするための作りだ<a href="#ref-4">[4]</a>。</p>
+<p>この作りのため、同じリンクにいる機器は、偽の ARP でほかの機器の表を書き換えられる。これを ARP スプーフィング（ARP キャッシュの汚染）と呼ぶ。RFC 5227 は、悪意のある機器がすべての要求に自分の MAC アドレスで答え、ネットワークのすべてのアドレスを自分のものだと名乗るのはたやすい、と書いている<a href="#ref-10">[10]</a>。たとえば 192.0.2.10 の表で、ゲートウェイ 192.0.2.1 の行が 00-00-5E-00-53-01 から偽の 00-00-5E-00-53-02 に書き換わると、192.0.2.10 から外へ出る通信は、すべて偽の機器に届く。偽の機器がそれを本物のゲートウェイへ流し直せば、気づかれにくいまま中身を見たり変えたりでき（中間者攻撃）、流さなければ通信が止まる。</p>
+<p>Linux も、表にすでにある IP アドレスなら、頼まれていない ARP（gratuitous ARP）でも行を書き換える。Linux の説明書は、arp_accept の設定に関係なく、すでにある行は更新される、と書いている<a href="#ref-11">[11]</a>。頼まれていない ARP には正しい使い道もある。RFC 5227 は、アドレスを使い始める機器が自分のアドレスを全員に知らせ、ほかの機器に古い行を直させる「ARP の告知」を決めている<a href="#ref-10">[10]</a>。正しい告知と偽の告知は、パケットの形では見分けられない。</p>
+<p>この攻撃ができるのは、同じリンクにいる者だけだ。ARP の要求はリンクの中の全員にしか届かず<a href="#ref-4">[4]</a>、ルーターの向こうからは表を書き換えられない。IPv6 の近隣探索にも同じ弱さがあり、RFC 3756 は、偽の近隣要請・近隣広告で通信を別の MAC アドレスへ流させることと、偽のルーター広告で自分をデフォルトルーターに選ばせることを、脅威に挙げている<a href="#ref-12">[12]</a>。</p>
+
+<h2 id="s-7">見つけるには、<wbr>IP アドレスと<wbr> MAC アドレスの<wbr>組の<wbr>変化を<wbr>見る</h2>
+<p>ARP スプーフィングの手がかりは、同じ IP アドレスに結び付く MAC アドレスが変わることだ。arpwatch は、リンクを流れる ARP を聞いて IP アドレスと MAC アドレスの組を記録し、変化を syslog とメールで知らせる道具だ。主な知らせは次のとおり<a href="#ref-13">[13]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>arpwatch の主な知らせ</caption><thead><tr><th scope="col">知らせ</th><th scope="col">意味</th></tr></thead><tbody>
+<tr><th scope="row">new station</th><td>初めて見る MAC アドレス</td></tr>
+<tr><th scope="row">changed ethernet address</th><td>ある IP アドレスが、新しい MAC アドレスに替わった</td></tr>
+<tr><th scope="row">flip flop</th><td>直前の MAC アドレスから、その一つ前の MAC アドレスに戻った</td></tr>
+<tr><th scope="row">ethernet mismatch</th><td>フレームの送り元の MAC アドレスと、ARP の中の送り手の MAC アドレスが合わない</td></tr>
+<tr><th scope="row">bogon</th><td>送り元の IP アドレスが、そのリンクの範囲の外</td></tr>
+</tbody></table></div>
+<p>組の変化は、そのまま攻撃の証拠にはならない。ネットワークカードの交換<a href="#ref-8">[8]</a>や、IP アドレスを別の機器に付け替えたとき<a href="#ref-4">[4]</a>にも組は変わる。見る価値が高いのは、ゲートウェイのように動かないはずの IP アドレスの組の変化と、flip flop のように二つの MAC アドレスを行き来する動きだ。一つの IP アドレスに二つの機器が答えていると、表はその二つのあいだを行き来する。</p>
+<p>機器の側でも見つけられる。RFC 5227 は、ゲートウェイや DNS サーバーのようにアドレスを手放せない機器が、自分のアドレスを名乗るほかの機器の ARP を受け取ったら、その送り元の MAC アドレスなどを記録し、管理者に知らせるべきだとしている<a href="#ref-10">[10]</a>。Linux では <code>ip monitor neigh</code> で、近隣の表が変わるたびに表示させられる<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-8">防ぐには、<wbr>スイッチで<wbr>確かめるか、<wbr>表を<wbr>固定する</h2>
+<p>主な防ぎ方は、つながりの側で偽の ARP を通さないことと、大事な行を固定することだ。</p>
+<p>一つ目は、スイッチの Dynamic ARP Inspection（DAI）だ。Cisco の設定の案内によると、DAI は信頼しないポートで受け取った ARP をすべて受け止め、IP アドレスと MAC アドレスの組が、DHCP スヌーピングで作った表（DHCP で実際に配られたアドレスの記録）と合うかを確かめ、合わないものを捨てて記録する。手でアドレスを決めた機器は、ARP 用のアクセスリストに正しい組を書く。ほかのスイッチやルーターにつながるポートは信頼するポートにして、確かめを省く。受け取る ARP の数に上限を設けることもできる<a href="#ref-14">[14]</a>。</p>
+<p>二つ目は、表の行を静的に登録することだ。Linux では <code>ip neigh</code> で状態を permanent にした行を登録でき、この行は管理者が消すまで残る<a href="#ref-6">[6]</a>。Linux カーネルは、管理者の操作でない更新、つまり受け取ったパケットによる更新では、permanent と noarp の行を書き換えない<a href="#ref-15">[15]</a>。ゲートウェイの行を固定すれば、その機器の表は偽の ARP では変わらない。ただし守れるのは固定した機器の表だけで、ゲートウェイの側の表は別に守る必要がある。機器を入れ替えるたびに手で直す必要もある。</p>
+<p>IPv6 では、スイッチで偽のルーター広告を止める RA Guard がある。RFC 6105 が示すいちばん単純な形では、ルーターにつながるポートだけがルーター広告を通し、ほかのポートは止める<a href="#ref-16">[16]</a>。近隣探索のメッセージに電子署名を付ける SEND（RFC 3971）も決められている<a href="#ref-17">[17]</a>。</p>
+<p>リンクに入れる機器を限ることも効く。RFC 3756 は、リンクに入れるのが信頼できる機器だけなら偽の近隣要請や近隣広告は心配にならないとし、その例に 802.1X で接続を制御する有線の LAN を挙げる<a href="#ref-12">[12]</a>。最後の守りは暗号だ。TLS 1.3 の RFC 8446 は、TLS を、盗み聞き・書き換え・なりすましを防ぐよう作られたものとしている<a href="#ref-18">[18]</a>。通り道を横取りされても、証明書を正しく確かめる TLS の通信なら、中身は読まれない。</p>
+
+<h2 id="s-9">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>ARP と近隣探索の動きは、自分の機器の中で、Linux の標準の道具で観察できる。偽の ARP を送って試すのは、自分が管理する仮想マシンだけのラボの中に限る。会社や店のような共有のネットワークでは、ほかの人の通信を止めたり横取りしたりすることになるので、許可なく試さない。</p>
+<p><code>ip neigh</code> で ARP の表と近隣キャッシュを見られる<a href="#ref-6">[6]</a>。<code>ip route get</code> に外の宛先を渡すと <code>via</code> のあとにゲートウェイが出て、そのゲートウェイの行が <code>ip neigh</code> に MAC アドレス付きで並ぶ。しばらく通信しないと、行は REACHABLE から STALE に変わる<a href="#ref-7">[7]</a>。</p>
+<p>パケットは tcpdump で見られる。フィルターに <code>arp</code> と書くと ARP だけを取り出せ、<code>-e</code> を付けると各行にフレームの送り元と宛先の MAC アドレスが出る<a href="#ref-19">[19]</a>。自分の機器の表から一つの行を消してから同じ相手に通信すると、要求が ff:ff:ff:ff:ff:ff あてに出て、応答が自分の MAC アドレスあてに返ってくる様子が見える。そのとき表の行が変わる様子は <code>ip monitor neigh</code> で見られる<a href="#ref-6">[6]</a>。</p>
+
+
+
+<p class="read-mark" data-total="15" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.07</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="routing.html">ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる</a><p class="rn-list-summary">ルーターは宛先ごとに次の行き先だけを決め、重なる経路ではいちばん細かいものを選ぶ。BGP は届いた申告を確かめずに使う設計だったため、乗っ取りと漏えいが起きてきた。RPKI は、申告した AS が正しいかを確かめる。</p></li><li class="rn-item"><a class="rn-list-title" href="ip-address.html">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</a><p class="rn-list-summary">/24 は先頭24ビットが同じ256個の範囲。1ビット短くなるごとに範囲は倍になる。プライベートアドレスなどの特別な範囲と、許可リストやログでの読み違いを、ルーティングの記事の続きとしてまとめた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（19）</h2></summary>
+<ol>
+<li id="ref-1">Arkko・Cotton・Vegoda（2010）RFC 5737 IPv4 Address Blocks Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc5737">RFC Editor</a></li>
+<li id="ref-2">Eastlake・Abley（2013）RFC 7042 IANA Considerations and IETF Protocol and Documentation Usage for IEEE 802 Parameters（2.1 節の MAC アドレスの形と文書用の値、付録の EtherType）。<a href="https://www.rfc-editor.org/rfc/rfc7042">RFC Editor</a></li>
+<li id="ref-3">Huston・Lord・Smith（2004）RFC 3849 IPv6 Address Prefix Reserved for Documentation。<a href="https://www.rfc-editor.org/rfc/rfc3849">RFC Editor</a></li>
+<li id="ref-4">Plummer（1982）RFC 826 An Ethernet Address Resolution Protocol（Packet Generation・Packet Reception・Related issue）。<a href="https://www.rfc-editor.org/rfc/rfc826">RFC Editor</a></li>
+<li id="ref-5">Braden 編（1989）RFC 1122 Requirements for Internet Hosts -- Communication Layers（2.3.2 節の ARP、3.3.1.1 節の Local/Remote Decision）。<a href="https://www.rfc-editor.org/rfc/rfc1122">RFC Editor</a></li>
+<li id="ref-6">iproute2「ip」「ip-route」「ip-neighbour」「ip-monitor」の説明書。<a href="https://github.com/iproute2/iproute2/tree/main/man/man8">GitHub</a></li>
+<li id="ref-7">Linux man-pages「arp(7)」（GitHub の原稿）。<a href="https://github.com/mkerrisk/man-pages/blob/master/man7/arp.7">GitHub</a></li>
+<li id="ref-8">Narten・Nordmark・Simpson・Soliman（2007）RFC 4861 Neighbor Discovery for IP version 6 (IPv6)（3 節、5.2 節、7.3 節、11 節）。<a href="https://www.rfc-editor.org/rfc/rfc4861">RFC Editor</a></li>
+<li id="ref-9">Hinden・Deering（2006）RFC 4291 IP Version 6 Addressing Architecture（2.7.1 節の Solicited-Node Address）。<a href="https://www.rfc-editor.org/rfc/rfc4291">RFC Editor</a></li>
+<li id="ref-10">Cheshire（2008）RFC 5227 IPv4 Address Conflict Detection（2.3 節の ARP Announcement、2.4 節、5 節のセキュリティ）。<a href="https://www.rfc-editor.org/rfc/rfc5227">RFC Editor</a></li>
+<li id="ref-11">Linux カーネルの説明書「IP Sysctl」（arp_accept、GitHub の原稿）。<a href="https://github.com/torvalds/linux/blob/master/Documentation/networking/ip-sysctl.rst">GitHub</a></li>
+<li id="ref-12">Nikander 編・Kempf・Nordmark（2004）RFC 3756 IPv6 Neighbor Discovery (ND) Trust Models and Threats（3 節、4.1.1 節、4.2.1 節）。<a href="https://www.rfc-editor.org/rfc/rfc3756">RFC Editor</a></li>
+<li id="ref-13">LBNL Network Research Group「arpwatch」の説明書（arpwatch.8 の REPORT MESSAGES と SYSLOG MESSAGES）。<a href="https://ee.lbl.gov/">LBNL</a></li>
+<li id="ref-14">Cisco「Security Configuration Guide, Cisco IOS XE Amsterdam 17.2.x (Catalyst 9200 Switches)」の「Configuring Dynamic ARP Inspection」。<a href="https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst9200/software/release/17-2/configuration_guide/sec/b_172_sec_9200_cg/configuring_dynamic_arp_inspection.html">Cisco</a></li>
+<li id="ref-15">Linux カーネルのソース「net/core/neighbour.c」（__neigh_update）。<a href="https://github.com/torvalds/linux/blob/master/net/core/neighbour.c">GitHub</a></li>
+<li id="ref-16">Levy-Abegnoli ほか（2011）RFC 6105 IPv6 Router Advertisement Guard。<a href="https://www.rfc-editor.org/rfc/rfc6105">RFC Editor</a></li>
+<li id="ref-17">Arkko 編ほか（2005）RFC 3971 SEcure Neighbor Discovery (SEND)。<a href="https://www.rfc-editor.org/rfc/rfc3971">RFC Editor</a></li>
+<li id="ref-18">Rescorla（2018）RFC 8446 The Transport Layer Security (TLS) Protocol Version 1.3。<a href="https://www.rfc-editor.org/rfc/rfc8446">RFC Editor</a></li>
+<li id="ref-19">The Tcpdump Group「tcpdump」「pcap-filter」の説明書（-e、arp）。<a href="https://github.com/the-tcpdump-group/tcpdump/blob/master/tcpdump.1.in">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="routing.html" data-slug="routing"><span class="reading-card-title">ルーティングは、いちばん細かい経路を信じる。その決まりが、経路の乗っ取りに使われる</span></a><a class="reading-card" href="ip-address.html" data-slug="ip-address"><span class="reading-card-title">/24 と /16 の違いは、許す相手の数で256倍になる。IP アドレスとプレフィックスの読み方</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
