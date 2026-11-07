@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う — ムートン</title>
+<meta name="description" content="HTTP は要求と応答を一つずつやりとりし、前の要求を覚えていない。ログインの状態は Cookie でつなぐ。メソッド・ステータスコード・ヘッダー、Cookie の属性、HTTPS と HSTS、アクセスログの読み方を RFC で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/http.html">
+<meta property="og:title" content="HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う — ムートン">
+<meta property="og:description" content="HTTP は要求と応答を一つずつやりとりし、前の要求を覚えていない。ログインの状態は Cookie でつなぐ。メソッド・ステータスコード・ヘッダー、Cookie の属性、HTTPS と HSTS、アクセスログの読み方を RFC で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/http.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/http.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う","description":"HTTP は要求と応答を一つずつやりとりし、前の要求を覚えていない。ログインの状態は Cookie でつなぐ。メソッド・ステータスコード・ヘッダー、Cookie の属性、HTTPS と HSTS、アクセスログの読み方を RFC で確かめた。","inLanguage":"ja","datePublished":"2026-11-07","dateModified":"2026-11-07","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/http.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う","item":"https://moutonarchive.com/http.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">HTTP は、<wbr>前の<wbr>要求を<wbr>覚えていない。<wbr>だから、<wbr>Cookie を<wbr>見せた<wbr>相手を<wbr>本人と<wbr>して<wbr>扱う</h1>
+  <p class="rn-subtitle">要求と応答の形、メソッド、ステータスコード、ヘッダー、Cookie とその属性、HTTPS と HSTS、アクセスログの読み方を、RFC とソフトの公式文書で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-07">2026年11月7日</time></span></p>
+  <div class="rn-body">
+<p>HTTP は、クライアントが要求を一つ送り、サーバーが応答を返す決まりで、一つひとつの要求は前の要求と切り離して扱われる。ログインの状態のような前後のつながりは Cookie が運ぶので、Cookie の属性と、通り道で中身を守る HTTPS が、Web の守りの土台になる。HTTP は <a href="tcp-udp.html">TCP・UDP の記事</a>のポート 80 と 443 の上で動き、HTTPS は <a href="tls.html">TLS の記事</a>の TLS の上で HTTP を送る。例のアドレスとドメインは、文書用のもの（203.0.113.0/24、example.com）だけを使う。</p>
+
+<details class="rn-toc"><summary>目次（13）</summary><ol><li><a href="#s-1">HTTP は、要求を一つ送り、応答を一つ受け取る</a></li><li><a href="#s-2">要求の1行目は、メソッドとパスとバージョン</a></li><li><a href="#s-3">メソッドは、要求の目的を表す</a></li><li><a href="#s-4">ステータスコードは、最初の1桁で結果の種類が分かる</a></li><li><a href="#s-5">ヘッダーは、要求と応答に添える情報</a></li><li><a href="#s-6">Cookie は、状態を持たない HTTP に前後のつながりを足す</a></li><li><a href="#s-7">Cookie の属性で、送る先と読める相手をしぼる</a></li><li><a href="#s-8">HTTPS は、TLS の上で HTTP を送り、HSTS で平文に戻らないようにする</a></li><li><a href="#s-9">アクセスログには、一つの要求が一行で残る</a></li><li><a href="#s-10">SIEM では、数の変化と見慣れない要求を見る</a></li><li><a href="#s-11">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">HTTP は、<wbr>要求を<wbr>一つ<wbr>送り、<wbr>応答を<wbr>一つ<wbr>受け取る</h2>
+<p>RFC 9110 は、HTTP を「状態を持たない、要求と応答のプロトコル」と定めている。それぞれの要求はそれだけで意味が分かるように作られ、サーバーは、前に何が来たかを HTTP の仕組みとしては覚えていない<a href="#ref-1">[1]</a>。</p>
+<p>HTTP/1.1・HTTP/2・HTTP/3 は、どれも RFC 9110 の同じ意味の決まりに従い、違うのは送り方だ<a href="#ref-1">[1]</a>。HTTP/1.1 は文字の行で要求を書いて TCP で送る<a href="#ref-2">[2]</a>。HTTP/2 は同じ中身を二進数の枠（フレーム）に詰め、一つの接続で複数のやりとりを並行して運ぶ<a href="#ref-3">[3]</a>。HTTP/3 は UDP の上の QUIC を使う<a href="#ref-4">[4]</a>。ポートを書かなければ、http は TCP の 80 番、https は 443 番につなぐ<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-2">要求の<wbr>1行目は、<wbr>メソッドと<wbr>パスと<wbr>バージョン</h2>
+<p>HTTP/1.1 の要求は、メソッド・要求の対象・バージョンを空白で区切った1行から始まり、ヘッダーが1行ずつ続く<a href="#ref-2">[2]</a>。<code>http://www.example.com/articles/http.html?ref=top</code> を開くと、<code>GET /articles/http.html?ref=top HTTP/1.1</code> と <code>Host: www.example.com</code> が送られる。要求の対象は URL のパスと「?」のあとのクエリだけで<a href="#ref-2">[2]</a>、「#」から後ろ（フラグメント）はブラウザーの中で使い、サーバーには送らない<a href="#ref-1">[1]</a>。</p>
+<p>ホストの名前は Host ヘッダーで送る。RFC 9112 は、HTTP/1.1 の要求に Host を入れるよう求め、Host がないか2つ以上ある要求には 400 を返すよう決めている<a href="#ref-2">[2]</a>。Host のおかげで、一つのサーバーが複数のドメインを受け持てる。そのぶん、キャッシュを汚したり、要求を別のサーバーへ向けさせたりする攻撃の的にもなる<a href="#ref-1">[1]</a>。</p>
+<p>URL は秘密を守る場所ではない。サーバーやプロキシやブラウザーの多くが URL をログに残し、表示するので、RFC 9110 は、知られては困る情報を URL に入れないよう勧めている<a href="#ref-1">[1]</a>。クエリに載せたものは、アクセスログにそのまま残る。</p>
+
+<h2 id="s-3">メソッドは、<wbr>要求の<wbr>目的を<wbr>表す</h2>
+<p>メソッドは、要求で何をしたいかを表す。RFC 9110 は8つのメソッドを定め、汎用のサーバーには GET と HEAD への対応を求めている。実装していないメソッドには 501、その対象に許していないメソッドには 405 を返すのがよいとされる<a href="#ref-1">[1]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>RFC 9110 の主なメソッド</caption><thead><tr><th scope="col">メソッド</th><th scope="col">目的</th><th scope="col">安全</th><th scope="col">べき等</th></tr></thead><tbody>
+<tr><th scope="row">GET</th><td>対象の中身を受け取る</td><td>○</td><td>○</td></tr>
+<tr><th scope="row">HEAD</th><td>GET と同じだが、本文を受け取らない</td><td>○</td><td>○</td></tr>
+<tr><th scope="row">POST</th><td>送った中身（フォームの入力など）を、対象に処理させる</td><td>―</td><td>―</td></tr>
+<tr><th scope="row">PUT</th><td>対象を、送った中身で作る・置き換える</td><td>―</td><td>○</td></tr>
+<tr><th scope="row">DELETE</th><td>対象を消す</td><td>―</td><td>○</td></tr>
+</tbody></table></div>
+<p>ほかに CONNECT・OPTIONS・TRACE がある。「安全」は、サーバーの状態を変えることを求めない読むだけのメソッドで、GET・HEAD・OPTIONS・TRACE が当たる。「べき等」は、何度送っても1回と同じ結果を求めるメソッドで、安全なものと PUT・DELETE が当たる<a href="#ref-1">[1]</a>。巡回のプログラムや先読みは、安全なメソッドなら害がないとみなしてリンクを GET する。そのため RFC 9110 は、<code>page?do=delete</code> のような消す操作を、GET では動かさないよう求めている<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-4">ステータスコードは、<wbr>最初の<wbr>1桁で<wbr>結果の<wbr>種類が<wbr>分かる</h2>
+<p>応答の1行目には、3桁のステータスコードが入る。範囲は100〜599で、最初の1桁が結果の種類を表す。クライアントは知らないコードでも種類は理解し、たとえば 471 は 400 として扱う<a href="#ref-1">[1]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>ステータスコードの5つの種類（RFC 9110）</caption><thead><tr><th scope="col">種類</th><th scope="col">意味</th><th scope="col">例</th></tr></thead><tbody>
+<tr><th scope="row">1xx</th><td>受け取った。処理を続けている</td><td>100 Continue</td></tr>
+<tr><th scope="row">2xx</th><td>成功した</td><td>200 OK</td></tr>
+<tr><th scope="row">3xx</th><td>完了には、別の動きが要る（転送など）</td><td>301・302・304</td></tr>
+<tr><th scope="row">4xx</th><td>クライアントの側の誤り</td><td>400・401・403・404</td></tr>
+<tr><th scope="row">5xx</th><td>サーバーの側の誤り</td><td>500・501・503</td></tr>
+</tbody></table></div>
+<p>301 と 302 は転送で、行き先は Location ヘッダーに入る。401 は認証の情報がないこと、403 は要求を理解したうえで断ることを表す。RFC 9110 は、対象があること自体を隠したいサーバーが、403 の代わりに 404 を返してよいとしている<a href="#ref-1">[1]</a>。ログの 404 は、その URL に何もないとは限らない。</p>
+
+<h2 id="s-5">ヘッダーは、<wbr>要求と<wbr>応答に<wbr>添える<wbr>情報</h2>
+<p>ヘッダーは「名前: 値」の行で、名前の大文字と小文字は区別しない<a href="#ref-2">[2]</a>。守りの面でよく見るのは、Host のほかに User-Agent と Referer だ。</p>
+<p>User-Agent は、要求を送ったソフトの名前と版を、クライアント自身が名乗るヘッダーだ。RFC 9110 は、細かすぎる値は利用者の見分け（フィンガープリント）に使われると注意し、別のソフトを名乗る場合にも触れている<a href="#ref-1">[1]</a>。curl は既定で <code>curl/</code> と版の番号を送り、<code>-A</code> で好きな文字列に変えられる<a href="#ref-5">[5]</a>。Referer は、どのページから来たかを表すが、すべての要求に付くわけではない<a href="#ref-1">[1]</a>。</p>
+<p>RFC 9110 は、メソッド・URL・ヘッダー・本文のどれも、攻撃する側が好きに作れると書いている<a href="#ref-1">[1]</a>。要求の値は、どれもそのまま信じない前提で扱う。</p>
+
+<h2 id="s-6">Cookie は、<wbr>状態を<wbr>持たない<wbr> HTTP に<wbr>前後の<wbr>つながりを<wbr>足す</h2>
+<p>Cookie は、サーバーが応答の Set-Cookie で名前と値を渡し、ブラウザーが次からの要求の Cookie ヘッダーで返す仕組みだ。RFC 6265 の例では、サーバーが <code>Set-Cookie: SID=31d4d96e407aad42</code> を返し、ブラウザーは次から <code>Cookie: SID=31d4d96e407aad42</code> を送る<a href="#ref-6">[6]</a>。</p>
+<p>多くのサーバーは、意味のない番号（セッション ID）を Cookie に入れ、それを鍵にしてサーバーの側の情報を引く<a href="#ref-6">[6]</a>。サーバーから見ると、正しいセッション ID を送ってきた要求が、ログインした本人の要求になる。RFC 6265 は、ここから来る弱点を挙げている<a href="#ref-6">[6]</a>。</p>
+<ul>
+<li>ブラウザーは、他のサイトに仕向けられた要求にも Cookie を付ける。これがクロスサイト・リクエスト・フォージェリ（CSRF）の土台になる</li>
+<li>攻撃者が自分の持つセッション ID を相手のブラウザーに押し込み、相手がログインしたあとで同じ ID を使う「セッション固定」がある</li>
+<li>Cookie の中身を暗号化して署名しても、別のブラウザーへ移されたり、あとで使い回されたりするのは防げない</li>
+</ul>
+<p>Cookie には、残す期限（Expires・Max-Age）と、送る先のホスト（Domain）とパス（Path）も付けられる。ブラウザーが送り返すのは名前と値だけで、サーバーは、どの属性で作られたかを Cookie ヘッダーからは知れない<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-7">Cookie の<wbr>属性で、<wbr>送る<wbr>先と<wbr>読める<wbr>相手を<wbr>しぼる</h2>
+<p>Secure・HttpOnly・SameSite の三つの属性で、セッション ID の Cookie が漏れる道をしぼれる。</p>
+<p>Secure を付けた Cookie は、TLS のような守られた通り道の要求にしか付かない。RFC 6265 は、HTTPS のウェブメールが Secure を付けていないと、通り道の攻撃者が平文の要求を起こさせて Cookie を盗める、という例を挙げている。ただし Secure は、平文の通り道から Cookie を上書きされることまでは防がない<a href="#ref-6">[6]</a>。HttpOnly を付けた Cookie は、ページのスクリプトのような HTTP 以外の方法からは読めない<a href="#ref-6">[6]</a>。</p>
+<p>SameSite は RFC 6265 にはなく、改訂の草案（draft-ietf-httpbis-rfc6265bis）が定めている。Strict は、同じサイトからの要求にだけ Cookie を付ける。Lax は、他のサイトからのリンクでページを開くときにも、GET のような安全なメソッドなら付ける。None はどの要求にも付け、Secure のない None の Cookie は受け付けられない<a href="#ref-7">[7]</a>。草案は、SameSite だけに頼らず、CSRF トークンのようなサーバー側の対策と組み合わせるよう勧めている<a href="#ref-7">[7]</a>。</p>
+
+<h2 id="s-8">HTTPS は、<wbr>TLS の<wbr>上で<wbr> HTTP を<wbr>送り、<wbr>HSTS で<wbr>平文に<wbr>戻らないように<wbr>する</h2>
+<p>https の URL は、TLS でつなぎ、相手が本物のサーバーであることを確かめ、中身を読まれず書き換えられない状態で HTTP を送ることを意味する<a href="#ref-1">[1]</a>。TLS の仕組みは <a href="tls.html">TLS の記事</a>に書いた。TLS がなければ、Cookie は平文で流れる<a href="#ref-6">[6]</a>。</p>
+<p>HSTS は、サイトが「HTTPS でしかつながない」ことをブラウザーに覚えさせる仕組みで、RFC 6797 が定めている。サーバーは HTTPS の応答に <code>Strict-Transport-Security: max-age=31536000</code> を付ける。max-age は覚えておく秒数で、31536000秒はおよそ1年だ。覚えたブラウザーは、そのホストの http の URL を、つなぐ前に https に書き換え、証明書に誤りがあれば、利用者に「続ける」を選ばせずに接続をやめる<a href="#ref-8">[8]</a>。</p>
+<p>弱点は最初の1回だ。まだ覚えていないブラウザーが http で最初につなぐと、その1回は守られない。RFC 6797 は、ブラウザーに最初から HSTS のサイトの一覧（プリロードの一覧）を入れておく方法で補えると書いている<a href="#ref-8">[8]</a>。</p>
+
+<h2 id="s-9">アクセスログには、<wbr>一つの<wbr>要求が<wbr>一行で<wbr>残る</h2>
+<p>Apache httpd の Combined Log Format と nginx の既定の combined では、一つの要求が、送り元・時刻・要求の1行目・ステータスコード・大きさ・Referer・User-Agent の1行で残る<a href="#ref-9">[9]</a><a href="#ref-10">[10]</a>。文書用のアドレスで書くと、次のようになる。</p>
+<p><code>203.0.113.25 - - [07/Nov/2026:21:58:03 +0900] "GET /articles/http.html HTTP/1.1" 200 5120 "https://www.example.com/" "curl/8.5.0"</code></p>
+<p>Apache の説明書によると、最初の欄の送り元は、間にプロキシがあればプロキシのアドレスになる。「-」は情報がないことを表し、引用符の中が要求の1行目、そのあとがステータスコードと応答の大きさだ<a href="#ref-9">[9]</a>。HTTPS は通り道で中身を隠すが、サーバーのログには、ほどいたあとの要求が残る。</p>
+<p>ログそのものも守る対象だ。RFC 9110 は、アクセスログを個人の情報として安全にしまい、要らなくなった IP アドレスやクエリを消すよう勧めている。ログに残った要求の値が、あとで監視の道具の中で命令として解釈されないよう気をつけることも求めている<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-10">SIEM では、<wbr>数の<wbr>変化と<wbr>見慣れない<wbr>要求を<wbr>見る</h2>
+<p>アクセスログを <a href="siem.html">SIEM</a> に集めると、1行ずつでは見えない数の変化と、ふだんと違う要求が見える。</p>
+<ul>
+<li>4xx の急増。同じ送り元から短い時間に 404 が続くなら、ないページを探している動きかもしれない。ログインのパスで 401 や 403 が増えるなら、パスワードを繰り返し試している動きかもしれない</li>
+<li>5xx の急増。故障のこともあれば、想定していない要求で処理に失敗していることもある</li>
+<li>見慣れないパスの連続。自分のサイトにない管理画面のパスや、RFC 9110 が注意を促す「..」を含むパス<a href="#ref-1">[1]</a></li>
+<li>使っていないメソッドや、極端に長い URL。長すぎる URL には 414 を返す決まりがある<a href="#ref-2">[2]</a></li>
+</ul>
+<p>ログの値には、偽れるものがある。User-Agent は相手が名乗った名前で<a href="#ref-5">[5]</a>、送り元はプロキシや中継を通せば中継のアドレスになる<a href="#ref-9">[9]</a>。User-Agent だけで安全と決めず、送り元の数・時刻の並び・ステータスコードの変化を合わせて見る。</p>
+
+<h2 id="s-11">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>HTTP のやりとりは、自分のパソコンの中でサーバーと curl を動かせば見られる。試すのは自分の機械か、許された演習の環境だけにする。</p>
+<p><code>python3 -m http.server --bind 127.0.0.1 8000</code> で、小さなサーバーが動く。既定ではすべてのインターフェースで待ち受けるので、<code>--bind 127.0.0.1</code> で自分の機械の中だけにする。Python の説明書は、本番に使うことは勧めていない<a href="#ref-11">[11]</a>。</p>
+<p>別の端末で <code>curl -v http://127.0.0.1:8000/</code> を送ると、「&gt;」の行に送ったヘッダー、「&lt;」の行に受け取ったヘッダー、「*」の行に curl の説明が出る<a href="#ref-5">[5]</a>。僕の手元（curl 8.5.0）では、<code>GET / HTTP/1.1</code>・<code>Host: 127.0.0.1:8000</code>・<code>User-Agent: curl/8.5.0</code> が送られ、<code>HTTP/1.0 200 OK</code> が返った。サーバーの端末には <code>127.0.0.1 - - [07/Nov/2026 10:28:01] "GET / HTTP/1.1" 200 -</code> の行が出た。ないパスでは 404 が、<code>-X POST</code> では、POST を実装していないこのサーバーから 501 が返った。</p>
+<p>自己署名の証明書で HTTPS のサーバーを動かし、<code>--cacert</code> でその証明書を信頼させて curl -v を送ると、「*」の行に TLS 1.3 の取り決めと ALPN の様子が出て、そのあとに HTTP の要求と応答が出る。-v の出力には認証の情報のような秘密が含まれうるので、人に見せるときは消す<a href="#ref-5">[5]</a>。</p>
+
+
+
+<p class="read-mark" data-total="15" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.07</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="tls.html">経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</a><p class="rn-list-summary">TLS は暗号化・完全性・相手の確認の三つを受け持つ。TLS 1.3 は鍵を決めてから証明書で相手を確かめ、証明書は名前と期限と取り消しまで見る。不正な発行は CT の公開の記録で見つけ、CAA で発行できる認証局をしぼる。</p></li><li class="rn-item"><a class="rn-list-title" href="tcp-udp.html">開いているポートの数だけ、外からの入口がある。TCP と UDP とポートの読み方</a><p class="rn-list-summary">IP アドレスが機器を、ポート番号がその中のプログラムを指す。TCP は SYN・SYN-ACK・ACK で接続を作って順番と再送を受け持ち、UDP は接続を作らずに送る。開いているポートは入口になるので、不要なものは閉じ、スキャンと SYN フラッドの見え方を知っておく。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（11）</h2></summary>
+<ol>
+<li id="ref-1">Fielding・Nottingham・Reschke（2022）RFC 9110 HTTP Semantics（1 節、4.2 節の http と https、7.2 節の Host、9 節のメソッド、10.1 節の Referer と User-Agent、15 節のステータスコード、17 節のセキュリティの考慮）。<a href="https://www.rfc-editor.org/rfc/rfc9110">RFC Editor</a></li>
+<li id="ref-2">Fielding・Nottingham・Reschke（2022）RFC 9112 HTTP/1.1（2〜5 節の要求の行・ステータスの行・ヘッダーの行、3.2 節の Host）。<a href="https://www.rfc-editor.org/rfc/rfc9112">RFC Editor</a></li>
+<li id="ref-3">Thomson・Benfield（2022）RFC 9113 HTTP/2（1 節）。<a href="https://www.rfc-editor.org/rfc/rfc9113">RFC Editor</a></li>
+<li id="ref-4">Bishop（2022）RFC 9114 HTTP/3。<a href="https://www.rfc-editor.org/rfc/rfc9114">RFC Editor</a></li>
+<li id="ref-5">curl の説明書「--verbose」「--user-agent」（GitHub の原稿）。<a href="https://github.com/curl/curl/tree/master/docs/cmdline-opts">GitHub</a></li>
+<li id="ref-6">Barth（2011）RFC 6265 HTTP State Management Mechanism（3 節、4.1.2 節の属性、8 節のセキュリティの考慮）。<a href="https://www.rfc-editor.org/rfc/rfc6265">RFC Editor</a></li>
+<li id="ref-7">IETF HTTP WG「Cookies: HTTP State Management Mechanism」draft-ietf-httpbis-rfc6265bis（改訂の草案。SameSite の属性と、SameSite の Cookie のセキュリティの考慮）。<a href="https://datatracker.ietf.org/doc/draft-ietf-httpbis-rfc6265bis/">IETF Datatracker</a></li>
+<li id="ref-8">Hodges・Jackson・Barth（2012）RFC 6797 HTTP Strict Transport Security (HSTS)（6.1 節、8 節、12 節、14.6 節）。<a href="https://www.rfc-editor.org/rfc/rfc6797">RFC Editor</a></li>
+<li id="ref-9">Apache HTTP Server ドキュメント「Log Files」（Common Log Format と Combined Log Format）。<a href="https://httpd.apache.org/docs/current/logs.html">Apache</a></li>
+<li id="ref-10">nginx ドキュメント「Module ngx_http_log_module」（log_format の combined）。<a href="https://nginx.org/en/docs/http/ngx_http_log_module.html">nginx</a></li>
+<li id="ref-11">Python ドキュメント「http.server — HTTP servers」（GitHub の原稿）。<a href="https://github.com/python/cpython/blob/main/Doc/library/http.server.rst">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="tls.html" data-slug="tls"><span class="reading-card-title">経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</span></a><a class="reading-card" href="tcp-udp.html" data-slug="tcp-udp"><span class="reading-card-title">開いているポートの数だけ、外からの入口がある。TCP と UDP とポートの読み方</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

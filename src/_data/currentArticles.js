@@ -9,9 +9,20 @@
 // セキュリティの記事を書いたら、ここにファイル名を足す（docs/security-renewal-20261104.md）。
 // 2026-11-04 オーナー「記事が長い。分割を求める」：SIEM の記事を3本に分けた。読む順に並べる。
 // 2026-11-06 オーナー「最初にルーティングについての記事を作る」：ルーティングを SIEM の3本より前に置く。
+// 2026-11-07 オーナー「記事を10個」：ルーティングと IP アドレスから広げた土台の10本を、SIEM の3本の前に置く。
 export default [
   'routing',
   'ip-address',
+  'arp',
+  'dhcp',
+  'tcp-udp',
+  'icmp',
+  'nat',
+  'firewall',
+  'dns',
+  'dns-security',
+  'tls',
+  'http',
   'siem',
   'siem-detection',
   'siem-ecosystem',
