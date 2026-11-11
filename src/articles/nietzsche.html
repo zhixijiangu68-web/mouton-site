@@ -22,7 +22,7 @@ styles: |
   article{max-width:790px;margin:auto}p{font-family:"Noto Serif JP",serif;font-size:15px;line-height:2.25;margin:0 0 27px}h2{font-family:"Noto Serif JP",serif;font-weight:400;font-size:clamp(23px,3vw,32px);line-height:1.7;margin:68px 0 28px}strong{font-weight:600}.question{font-size:clamp(20px,2.8vw,30px);line-height:1.9;margin:48px 0}.words{line-height:2.5}.exercise{margin:60px 0;padding:clamp(26px,5vw,48px);border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.25)}.exercise h2{margin-top:0}.prompt{padding:20px 0;border-bottom:1px solid var(--line);font-family:"Noto Serif JP",serif;line-height:1.9}.identity{font-family:"Noto Serif JP",serif;font-size:clamp(25px,4vw,42px);line-height:1.7;text-align:center;margin:52px 0;padding:38px 10px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.ending{margin-top:70px;padding-top:42px;border-top:1px solid var(--line)}.ending p:last-child{font-size:clamp(21px,3vw,30px);line-height:1.9}.footer{width:min(1040px,92vw);margin:0 auto 35px;font-size:8px;letter-spacing:.2em;opacity:.7}
   @media(max-width:700px){main{width:94vw;margin-top:8px;padding:30px 22px}h1{margin-bottom:38px}p{font-size:14px;line-height:2.15}h2{margin-top:52px}.exercise{margin:45px 0;padding:24px 20px}}
 ---
-<main data-nav="light" data-nav-solid="light"><article>
+<main data-nav="light" data-nav-solid="light" data-play="recurrence"><article>
         <div class="meta">2026.09.30　/　PHILOSOPHY</div>
         <h1>その「すべき」は、<br>誰の声なのか。</h1><p class="reading-time">約{{ readMinutes }}分で読めます（目安）</p><div class="article-share"><button class="copy-link" type="button">リンクをコピー</button><span class="copy-status" role="status" aria-live="polite"></span><div class="copy-fallback" hidden><label>リンクを長押ししてコピー<input class="copy-url" type="text" readonly aria-label="この記事のリンク"></label></div></div>
         <p class="lead">日曜の夜、ベッドでスマホを眺めている。</p>
@@ -37,7 +37,7 @@ styles: |
         <p>ニーチェ自身も、はじめは期待にきちんと応える側の人だった。1844年にドイツの牧師の家に生まれ、24歳でスイスのバーゼル大学の教授になる。けれど体を壊して34歳で大学を辞めてからは、本を書いてもほとんど売れず、評価の外で書きつづけた。</p>
         <h2 id="section-2">鱗の一枚一枚に光る言葉</h2>
         <p>大学を辞めて4年後の1883年、ニーチェは『ツァラトゥストラはこう語った』の第1部を出す。その本編の最初に置かれた「三つの変化」という話に、一頭の竜が出てくる <a href="#ref-2">[2]</a>。</p>
-        <p class="question">その大きな竜の名は「汝なすべし」という。金色にきらめく鱗の一枚一枚に、「汝なすべし！」が光っている。 ——『ツァラトゥストラはこう語った』第1部「三つの変化」（要約・僕の訳）</p>
+        <p class="question" data-play="dragon">その大きな竜の名は「汝なすべし」という。金色にきらめく鱗の一枚一枚に、「汝なすべし！」が光っている。 ——『ツァラトゥストラはこう語った』第1部「三つの変化」（要約・僕の訳）</p>
         <p>竜は、千年来の価値がこの鱗に光っている、価値はもう全部つくられた、と語る。ニーチェはこの竜を、人の精神がもう主とも神とも呼びたくなくなった相手として描いている（要約）。神を信じられなくなっても、「すべし」の声だけは残った、ということだと僕は受けとっている。</p>
         <p>僕がこの場面で手を止めたのは、鱗に書いてあるのが竜自身の言葉ではないところだ。どの「すべし」も、ずっと前に誰かが書いたものだ。それが長い時間をかけて積み重なり、いまは金色に光って、まるで世界の決まりのような顔をしている。</p>
         <p>日曜の夜に聞こえた「ちゃんとすべきだ」も、たぶん同じだと思う。親がよく言っていたこと、前の上司の口ぐせ、タイムラインで何度も見た「30歳までに」。<strong>自分の声に聞こえていたものの多くは、誰かの物差しが、鱗になって張りついたものなのかもしれない。</strong></p>
@@ -54,4 +54,5 @@ styles: |
 {% set ctaSlug = "paid-nietzsche" %}{% include "partials/paid-cta.njk" %}
 {% include "partials/article-end.njk" %}
 {% include "partials/reading-next.njk" %}
+<link rel="stylesheet" href="philosophy-play.css"><script src="philosophy-play.js" defer></script>
 </article></main>
