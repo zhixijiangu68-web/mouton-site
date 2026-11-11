@@ -1,0 +1,41 @@
+/* 哲学ページの遊び（2026-11-11、オーナー「サイトのUIで遊びたい。収益よりも個人の自由を優先したい」）
+   philosophy-play.js が付けたクラスにだけ効く。言葉は隠さない・遅らせない（文字はいつも読める）。
+   動きを減らす設定（prefers-reduced-motion）では、JS が何も足さないので静かなまま。 */
+
+.play-sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.play-hint{display:block;margin:-14px 0 34px;font-family:"Noto Sans JP",sans-serif;font-size:12px;letter-spacing:.08em;line-height:1.8;color:var(--muted,#666a64)}
+
+/* ニーチェ：竜「汝なすべし」の鱗 */
+.play-dragon{position:relative;isolation:isolate;padding:28px 22px;border-radius:12px;touch-action:pan-y}
+.play-dragon canvas{position:absolute;inset:0;width:100%;height:100%;z-index:-1;border-radius:inherit;pointer-events:none}
+
+/* ニーチェ：永劫回帰（いちばん下でさらに下へ → 冒頭へ戻る） */
+.play-loop{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));z-index:9000;white-space:nowrap;display:flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:999px;background:rgba(250,248,243,.94);box-shadow:0 8px 30px rgba(25,31,28,.16);font-family:"Noto Serif JP",serif;font-size:13px;color:#252724;transform:translate(-50%,140%);opacity:0;transition:transform .35s ease,opacity .35s ease;pointer-events:none}
+.play-loop.is-shown{transform:translate(-50%,0);opacity:1}
+.play-loop svg{width:34px;height:34px;flex:none;transform:rotate(-90deg)}
+.play-loop .ring-bg{fill:none;stroke:rgba(37,39,36,.14);stroke-width:3}
+.play-loop .ring{fill:none;stroke:#b8923a;stroke-width:3;stroke-linecap:round}
+.play-veil{position:fixed;inset:0;z-index:9001;display:grid;place-items:center;padding:24px;background:#f4f1e9;color:#252724;text-align:center;font-family:"Noto Serif JP",serif;font-size:clamp(18px,3.4vw,26px);line-height:2;opacity:0;pointer-events:none;transition:opacity .7s ease}
+.play-veil.is-on{opacity:1;pointer-events:auto}
+.play-veil small{display:block;margin-top:10px;font-size:12px;letter-spacing:.06em;opacity:.6}
+
+/* キルケゴール：自由のめまい */
+.play-vertigo{position:relative;isolation:isolate;overflow:hidden;perspective:700px;border-radius:12px}
+.play-vertigo .play-abyss{position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at var(--ax,50%) var(--ay,50%),rgba(37,39,36,.10),rgba(37,39,36,0) 62%)}
+.play-vertigo .play-abyss i{position:absolute;left:var(--ax,50%);top:var(--ay,50%);width:120%;aspect-ratio:1;border:1.5px solid rgba(37,39,36,.3);border-radius:50%;transform:translate(-50%,-50%) scale(1.6);opacity:0;animation:play-fall 7s linear infinite}
+.play-vertigo .play-abyss i:nth-child(2){animation-delay:-1.4s}
+.play-vertigo .play-abyss i:nth-child(3){animation-delay:-2.8s}
+.play-vertigo .play-abyss i:nth-child(4){animation-delay:-4.2s}
+.play-vertigo .play-abyss i:nth-child(5){animation-delay:-5.6s}
+.play-vertigo .play-tilt{display:block;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.7,.2,1);animation:play-sway 6s ease-in-out infinite}
+.play-vertigo.is-near .play-abyss i{animation-duration:3.5s}
+@keyframes play-fall{0%{transform:translate(-50%,-50%) scale(1.6);opacity:0}15%{opacity:.9}100%{transform:translate(-50%,-50%) scale(0);opacity:.15}}
+@keyframes play-sway{0%,100%{translate:0 0;rotate:0deg}30%{translate:-2px 1px;rotate:-.6deg}65%{translate:2px -1px;rotate:.5deg}}
+
+/* スピノザ：コナトゥス（押しても、元に戻ろうとする文字） */
+.play-conatus{cursor:default;user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.play-conatus .play-ch{display:inline-block;will-change:transform}
+
+@media (prefers-reduced-motion: reduce){
+  .play-vertigo .play-abyss i,.play-vertigo .play-tilt{animation:none}
+}
