@@ -1,0 +1,113 @@
+---
+layout: renewal-article.njk
+title: "Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない — ムートン"
+headline: "Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない"
+subtitle: "ログの種類、監査ポリシー、4624・4625 とログオンの種類、4672・4688・4720・1102・7045、Sysmon、SOC での見方と SIEM への送り方を、Microsoft の文書と公開の検知ルールで確かめた"
+description: "Windows のセキュリティのログに何が残るかは、監査ポリシーで決まる。4624・4625 とログオンの種類、4688 のコマンドライン、Sysmon、ログの消去の見つけ方、SIEM への送り方を Microsoft の文書で確かめた。"
+excerpt: "Windows のイベントログは、ログの名前とイベント ID で読む。何が残るかは監査ポリシーと Sysmon の設定で決まり、4688 のコマンドラインは既定では残らない。ログオンの種類の読み方、SOC で目を向ける出来事、SIEM への送り方もまとめた。"
+date: 2026-11-13T12:00:00Z
+pillar: defense
+pick: 13           # おすすめの順。SIEM の記事の「Windows のログオンのイベント（4624・4625）」から広げた1本。仮の順。ムートンが決めたら直す
+related: ["siem", "http"]
+changes:
+  - date: 2026-11-13
+    note: 下書き。SIEM の記事の 4624・4625 と、検知ルールの記事の 4720・1102 から広げた（毎朝の SOC レッスンの話題）
+---
+<p>Windows は、ログオンやプロセスの起動のような出来事を、番号（イベント ID）つきでイベントログに書く。何が残るかは監査ポリシーと Sysmon の設定で決まり、記録の対象にしていない出来事は残らない。<a href="siem.html">SIEM の記事</a>で触れた 4624・4625 と、<a href="siem-detection.html">検知ルールの記事</a>の 4720・1102 を、ここで一つずつ読む。</p>
+
+<h2>イベントログは、ログの名前とイベント ID で探す</h2>
+<p>Windows の基本のログは三つある。Application はアプリケーションが書く出来事、Security はログオンの成功と失敗やファイルの操作のような監査の出来事、System はドライバーの読み込みの失敗のような OS の部品の出来事を残す。ファイルは、既定では %SystemRoot%\system32\winevt\logs\ の下に置かれる<a href="#ref-1">[1]</a>。</p>
+<p>Windows Vista でイベントログの仕組みが作り直され、出し手（プロバイダー）が自分のログ（チャネル）を定義できるようになった。チャネルには Admin・Operational・Analytic・Debug の四つの種類がある<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。Sysmon は Microsoft-Windows-Sysmon/Operational のチャネルに書く<a href="#ref-3">[3]</a>。</p>
+<p>一つのイベントには、出し手、イベント ID、時刻、端末名、チャネルと、イベントごとの項目（EventData）が入る。Splunk が公開している 4624 の見本では、出し手が Microsoft-Windows-Security-Auditing、チャネルが Security で、ユーザー名やログオンの種類は EventData の中にある<a href="#ref-4">[4]</a>。番号はログと出し手ごとに決まるので、ログの名前と組にして読む。</p>
+
+<h2>何を残すかは、監査ポリシーで決まる</h2>
+<p>Security のログに何が残るかは、監査ポリシーで決まる。Microsoft の「Events to Monitor」は、監査に関わるグループポリシーの多くが既定で「未構成」で、残る出来事は Windows の版や種類で変わると書き、Advanced Audit Policy Configuration で監査を設定するよう勧めている<a href="#ref-5">[5]</a>。</p>
+<p>Windows Vista と Windows Server 2008 から、監査の大きな分類の下に細かい分類（サブカテゴリー）ができ、それぞれで成功・失敗・両方を選べるようになった。Logon の分類の出来事は、ログオンされた側の端末に残る。共有フォルダーへのネットワーク越しのログオンなら、共有を持つ端末の側だ。ドメインのアカウントの資格情報の確かめ（Credential Validation）は、ドメインコントローラーに残る<a href="#ref-6">[6]</a>。</p>
+<p>いま効いている設定は <code>auditpol /get /category:*</code> で見られる。グループポリシーの画面は有効な監査の状態を正しく表さないことがあり、auditpol は正しく表すと Microsoft は書いている<a href="#ref-6">[6]</a><a href="#ref-7">[7]</a>。細かい分類の設定は、古い基本の監査ポリシーで上書きされることがあり、上書きされると 4719 が残る<a href="#ref-8">[8]</a>。</p>
+
+<h2>4624 は成功、4625 は失敗。ログオフは 4634 と 4647</h2>
+<p>ログオンの記録の中心は、4624（アカウントがログオンした）と 4625（ログオンに失敗した）だ。ログオフは 4634（ログオフした）と 4647（利用者がログオフを始めた）、資格情報を明示して使ったログオンの試みは 4648、アカウントのロックアウトは 4740 で残る<a href="#ref-5">[5]</a>。</p>
+<p>4624 で読む主な項目は、ログオンしたアカウント（TargetUserName）、ログオンの種類（LogonType）、相手のアドレス（IpAddress）と端末名（WorkstationName）、認証の方式（AuthenticationPackageName）、ログオン ID（TargetLogonId）だ<a href="#ref-4">[4]</a>。Microsoft の 4624 の説明では、ログオン ID は、同じ ID を持つ近くの出来事（たとえば 4672）と結びつけるための値とされている<a href="#ref-9">[9]</a>。</p>
+<p>4625 には、失敗の理由が Status と SubStatus のコードで入る<a href="#ref-4">[4]</a>。公開の検知ルール集 Sigma には、無効にされたアカウント（0xC0000072）や、許されていない端末から（0xC0000070）のような、ふだんは出にくい理由の失敗を拾うルールがある<a href="#ref-10">[10]</a>。</p>
+
+<h2>ログオンの種類で、どう入ったかが分かる</h2>
+<p>4624 と 4625 の LogonType は、ログオンのしかたを表す番号で、Windows の SECURITY_LOGON_TYPE の値に合う<a href="#ref-11">[11]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主なログオンの種類（SECURITY_LOGON_TYPE）</caption><thead><tr><th scope="col">番号</th><th scope="col">名前</th><th scope="col">意味</th></tr></thead><tbody>
+<tr><th scope="row">2</th><td>Interactive</td><td>対話型のログオン</td></tr>
+<tr><th scope="row">3</th><td>Network</td><td>ネットワーク越しのログオン</td></tr>
+<tr><th scope="row">4</th><td>Batch</td><td>バッチの処理のためのログオン</td></tr>
+<tr><th scope="row">5</th><td>Service</td><td>サービスのアカウントのログオン</td></tr>
+<tr><th scope="row">7</th><td>Unlock</td><td>画面のロックの解除</td></tr>
+<tr><th scope="row">8</th><td>NetworkCleartext</td><td>平文の資格情報によるネットワーク越しのログオン</td></tr>
+<tr><th scope="row">9</th><td>NewCredentials</td><td>今のトークンを複製し、外への接続にだけ別の資格情報を使う</td></tr>
+<tr><th scope="row">10</th><td>RemoteInteractive</td><td>リモートからの対話型（ターミナルサーバーのセッション）</td></tr>
+<tr><th scope="row">11</th><td>CachedInteractive</td><td>ネットワークに出ず、キャッシュした資格情報で確かめる</td></tr>
+</tbody></table></div>
+<p>3 は、共有フォルダーを開くようなネットワーク越しのログオンで、共有を持つ側に残る<a href="#ref-6">[6]</a>。10 はリモートデスクトップで、Microsoft はリモートデスクトップによるログオンを「リモートの対話型」と呼んでいる<a href="#ref-12">[12]</a>。MITRE の分析の例 CAR-2016-04-005 も、「4624 で LogonType が 10」をリモートデスクトップのログオンとして拾い、許された端末からかを比べる<a href="#ref-13">[13]</a>。</p>
+
+<h2>4672 は管理者級の権限、4720〜4756 はアカウントとグループの変更</h2>
+<p>4672 は、新しいログオンに特別な権限が割り当てられたことを表す<a href="#ref-5">[5]</a>。特別なログオンは、管理者と同じ強さの権限を持つログオンのことだ<a href="#ref-6">[6]</a>。Splunk の説明では、4672 は管理者の権限を持つ利用者のログオンで残り、権限の一覧が PrivilegeList に入る<a href="#ref-4">[4]</a>。4624 とログオン ID で結べば、権限の強いログオンだけを取り出せる<a href="#ref-9">[9]</a>。</p>
+<p>アカウントの作成は 4720、削除は 4726、セキュリティのグループへのメンバーの追加は、グローバルのグループが 4728、ローカルのグループが 4732、ユニバーサルのグループが 4756 だ<a href="#ref-5">[5]</a>。JPCERT/CC の調査の道具 LogonTracer も、これらの番号を扱う<a href="#ref-14">[14]</a>。Sigma には、ローカルの Administrators のグループ（SID が S-1-5-32-544）へのメンバーの追加を 4732 で拾うルールがあり、正規の管理の作業を誤検知の候補に挙げている<a href="#ref-10">[10]</a>。</p>
+<p>「Events to Monitor」は、重さ「高」は1件でも調べ、「中」と「低」は思いがけないときや数がふだんを大きく超えたときに調べるとし、4624・4625・4672・4688・4720・4732 を「低」、監査ポリシーの変更（4719）を「高」としている<a href="#ref-5">[5]</a>。</p>
+
+<h2>4688 は、設定しなければコマンドラインを残さない</h2>
+<p>4688 は、新しいプロセスが作られたことを表す。残すには Detailed Tracking の分類の Audit Process Creation を有効にする必要があり、既定は未構成だ<a href="#ref-8">[8]</a>。</p>
+<p>コマンドラインまで残すには、さらに Include command line in process creation events を有効にする。既定では有効になっていない。有効にすると、すべてのプロセスのコマンドラインが平文で Security のログに入る<a href="#ref-8">[8]</a>。Splunk の 4688 の見本では、起動したプログラム（NewProcessName）、親のプログラム（ParentProcessName）、コマンドライン（CommandLine）が並ぶ<a href="#ref-4">[4]</a>。</p>
+<p>Microsoft は、有効にすると Security のログを読める人なら誰もがコマンドラインを読め、そこにはパスワードや利用者のデータが入りうると注意している<a href="#ref-8">[8]</a>。残すかどうかは、ログを読める人をしぼることと一緒に決める。</p>
+
+<h2>Sysmon は、プロセスと通信を細かく残す</h2>
+<p>Sysmon（System Monitor）は Sysinternals の道具で、サービスとドライバーとして動き、出来事を Windows のイベントログに書く。2026年9月10日に公開された版は 15.22 だ<a href="#ref-3">[3]</a>。</p>
+<p>プロセスの起動（イベント ID 1）には、本人と親のプロセスのコマンドライン、実行ファイルのハッシュ、ProcessGuid が入る。ProcessGuid は、Windows がプロセス ID を使い回しても出来事をつなげるための値だ。ほかに、ネットワークの接続（3）、ファイルの作成（11）、レジストリの値の書き込み（13）、DNS の問い合わせ（22）、ファイルの削除（23）などがある。3 は既定では残らない<a href="#ref-3">[3]</a>。</p>
+<p>何を残すかは XML の設定ファイルで、出来事の種類ごとに含める・除くを決める。時刻は UTC で入る。Sysmon は出来事を分析せず、攻撃者から自分を隠そうともしないので、分析は SIEM の側でする<a href="#ref-3">[3]</a>。</p>
+
+<h2>新しいサービスとログの消去は、それだけで目を向ける</h2>
+<p>サービスの追加は、System のログに 7045（出し手は Service Control Manager）として残り、サービスの名前（ServiceName）、実行ファイルのパス（ImagePath）、起動の種類（StartType）、動かすアカウント（AccountName）が入る<a href="#ref-4">[4]</a>。Security のログの 4697 も、サービスのインストールを表す<a href="#ref-5">[5]</a>。MITRE ATT&amp;CK の検知の例（DET0552）は、C:\Users\ や C:\Temp\ のようなふだん使わない場所の実行ファイルを目印にしている<a href="#ref-15">[15]</a>。Sigma にも、7045 の ImagePath に一時フォルダーのパスなどが入るものを拾うルールがある<a href="#ref-10">[10]</a>。</p>
+<p>Security のログを消すと 1102（監査のログが消された）が残り、「Events to Monitor」での重さは「中〜高」だ<a href="#ref-5">[5]</a>。ほかのログを消したときは、System のログに 104 が残る<a href="#ref-10">[10]</a>。MITRE の CAR-2016-04-002 は、ふだんの運用でログが消されることは考えにくいとし、ログを1か所に集めておけば痕跡を消すのがずっと難しくなると書いている<a href="#ref-13">[13]</a>。</p>
+
+<h2>SOC では、数と時刻と前後の出来事で見る</h2>
+<p>1件では判断しにくい出来事も、数・時刻・前後の出来事を合わせると意味が出る。MITRE ATT&amp;CK の検知の例は次のとおりだ<a href="#ref-15">[15]</a>。</p>
+<ul>
+<li>失敗の連続：同じか似たアカウントへの 4625 が、一つか複数の送り元から続く（パスワードの推測）。一つか少数のパスワードで、多くのアカウントに失敗が広がる（パスワードスプレー。4625・4771・4648）</li>
+<li>ふだんと違うログオン：見慣れないログオンの種類や、時刻・場所の食い違い。ローカルのアカウントが業務時間の外に使われる（4624・4648・4672）</li>
+<li>リモートデスクトップのあとの動き：リモートデスクトップのログオンの直後（例として5分）に、cmd.exe や powershell.exe のようなプロセスが動く</li>
+</ul>
+<p>深夜の管理者のログオンは、時刻だけでは決められない。夜の保守の作業もあるので、ATT&amp;CK は業務時間の幅や、リモートデスクトップを使う人の範囲を、環境に合わせて調整する項目にしている<a href="#ref-15">[15]</a>。Splunk の公開ルールには、ドメインコントローラーの 4776 で、存在しないユーザー名での失敗（Status が 0xc0000064）が一つの端末からふだんより大きく増えたことを拾うものもある<a href="#ref-16">[16]</a>。失敗のあとの成功を見るルールの形は、<a href="siem-detection.html">検知ルールの記事</a>に書いた。</p>
+
+<h2>SIEM へは、消される前に送る</h2>
+<p>端末の中のログは、その端末で消せる。だから、出来事が起きたら端末の外へ送っておく。</p>
+<p>Windows には、ほかの端末のイベントを受け取って集める仕組み（Windows Event Collector）がある。送る側をグループポリシーで設定する「送る側から始める購読」と、送る側を全部指定する「集める側から始める購読」があり、転送されたイベントは中身を失わずに集める側のログに入る<a href="#ref-17">[17]</a>。Sysmon の文書は、Windows Event Collection か SIEM のエージェントで集めて分析するよう書いている<a href="#ref-3">[3]</a>。</p>
+<p>Splunk では、Security と System のログは Splunk Add-on for Microsoft Windows、Sysmon のログは Splunk Add-on for Sysmon を使い、XML の形（sourcetype が XmlWinEventLog）で取り込む<a href="#ref-4">[4]</a>。どのログから SIEM に入れるかの順は、<a href="siem.html">SIEM の記事</a>に書いた。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>イベントログは、自分の Windows の端末か、自分で作った演習の仮想マシンで見られる。他人の端末や、許可のない環境では試さない。</p>
+<p>監査の設定は <code>auditpol /get /category:*</code> で一覧になる<a href="#ref-6">[6]</a>。ログの一覧は <code>wevtutil el</code>、Security のログの新しい5件は <code>wevtutil qe Security /c:5 /rd:true /f:text</code> で読める<a href="#ref-18">[18]</a>。PowerShell なら <code>Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625}</code> で、失敗したログオンだけを取り出せる。管理者として動かさないと、ログを読めないというエラーが出ることがある<a href="#ref-19">[19]</a>。サインインの画面で違うパスワードを入れてから、4625 が残ったか、LogonType がいくつかを見る。</p>
+<p>Sysmon は、演習用の仮想マシンに <code>sysmon -accepteula -i</code> で入れられる。既定の設定ではネットワークの接続（3）は残らないので、残すには設定ファイルを使う<a href="#ref-3">[3]</a>。入れたら、Sysmon/Operational のログのイベント ID 1 に、親のプロセスとコマンドラインが入っているかを見る。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">Microsoft「Eventlog Key」（Application・Security・System のログと、ログのファイルの既定の置き場所。GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/eventlog/eventlog-key">Microsoft Learn</a></li>
+<li id="ref-2">Microsoft「Defining Channels」（チャネルの四つの種類。GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/wes/defining-channels">Microsoft Learn</a></li>
+<li id="ref-3">Russinovich・Garnier「Sysmon v15.22」（2026年9月10日。イベント ID の一覧、保存先、設定ファイル。GitHub の原稿）。<a href="https://learn.microsoft.com/sysinternals/downloads/sysmon">Microsoft Learn</a></li>
+<li id="ref-4">Splunk「security_content」のデータソースの定義（Windows Event Log Security 4624・4625・4672・4688、System 7045、Sysmon EventID 1。項目の一覧と見本のイベント）。<a href="https://github.com/splunk/security_content/tree/develop/data_sources">GitHub</a></li>
+<li id="ref-5">Microsoft「Appendix L: Events to Monitor」（イベント ID の一覧と重さ）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor">Microsoft Learn</a></li>
+<li id="ref-6">Microsoft「Monitoring Active Directory for Signs of Compromise」（監査の分類と細かい分類、auditpol）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/monitoring-active-directory-for-signs-of-compromise">Microsoft Learn</a></li>
+<li id="ref-7">Microsoft「auditpol get」。<a href="https://learn.microsoft.com/windows-server/administration/windows-commands/auditpol-get">Microsoft Learn</a></li>
+<li id="ref-8">Microsoft「Command line process auditing」（4688 とコマンドラインの記録、既定の設定、4719）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/manage/component-updates/command-line-process-auditing">Microsoft Learn</a></li>
+<li id="ref-9">Microsoft「4624(S): An account was successfully logged on」（ログオン ID の説明）。<a href="https://learn.microsoft.com/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4624">Microsoft Learn</a></li>
+<li id="ref-10">SigmaHQ のルール「Account Tampering - Suspicious Failed Logon Reasons」「User Added to Local Administrator Group」「Suspicious Service Installation」「Security Eventlog Cleared」「Eventlog Cleared」。<a href="https://github.com/SigmaHQ/sigma/tree/master/rules/windows/builtin">GitHub</a></li>
+<li id="ref-11">Microsoft「SECURITY_LOGON_TYPE enumeration (ntsecapi.h)」。<a href="https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-security_logon_type">Microsoft Learn</a></li>
+<li id="ref-12">Microsoft「Windows logon scenarios」（対話型・リモートの対話型・ネットワークのログオン）。<a href="https://learn.microsoft.com/windows-server/security/windows-authentication/windows-logon-scenarios">Microsoft Learn</a></li>
+<li id="ref-13">MITRE Cyber Analytics Repository「CAR-2016-04-005: Remote Desktop Logon」「CAR-2016-04-002: User Activity from Clearing Event Logs」。<a href="https://car.mitre.org/analytics/CAR-2016-04-005/">MITRE CAR（リモートデスクトップ）</a>。<a href="https://car.mitre.org/analytics/CAR-2016-04-002/">MITRE CAR（ログの消去）</a></li>
+<li id="ref-14">JPCERT/CC「LogonTracer」（README。扱うイベント ID）。<a href="https://github.com/JPCERTCC/LogonTracer">GitHub</a></li>
+<li id="ref-15">MITRE ATT&amp;CK の検知の戦略 DET0551（パスワードの推測）・DET0487（パスワードスプレー）・DET0560 と DET0407（正規のアカウントの悪用）・DET0327（リモートデスクトップ）・DET0552（Windows のサービス）。<a href="https://attack.mitre.org/detectionstrategies/DET0551">DET0551</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0487">DET0487</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0560">DET0560</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0407">DET0407</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0327">DET0327</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0552">DET0552</a></li>
+<li id="ref-16">Splunk「security_content」の検知ルール「Windows Unusual Count Of Invalid Users Failed To Auth Using NTLM」。<a href="https://github.com/splunk/security_content/blob/develop/detections/endpoint/windows_unusual_count_of_invalid_users_failed_to_auth_using_ntlm.yml">GitHub</a></li>
+<li id="ref-17">Microsoft「Windows Event Collector」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/wec/windows-event-collector">Microsoft Learn</a></li>
+<li id="ref-18">Microsoft「wevtutil」。<a href="https://learn.microsoft.com/windows-server/administration/windows-commands/wevtutil">Microsoft Learn</a></li>
+<li id="ref-19">Microsoft「Get-WinEvent」（PowerShell 5.1。FilterHashtable）。<a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.diagnostics/get-winevent?view=powershell-5.1">Microsoft Learn</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}
