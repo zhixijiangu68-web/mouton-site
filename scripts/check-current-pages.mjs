@@ -1,6 +1,6 @@
 // オーナーが決めたことを、生成されたページで確かめる。
 // 2026-10-21 作り直し（docs/site-renewal-20261021.md）で、トップと記事の型を新しくした：
-// - トップの h1 は「セキュリティを、手を動かして学ぶ。」（2026-11-04、オーナー「セキュリティの個人研究サイト、勉強用にしたい」。見出しはオーナーが決めるまでの仮）
+// - トップの h1 は「調べて、試して、書き残す。」（2026-11-13、オーナー「セキュリティに限らず、幅広いテーマを扱いたい」。その前は「セキュリティを、手を動かして学ぶ。」（2026-11-04、オーナー「セキュリティの個人研究サイト、勉強用にしたい」。見出しはオーナーが決めるまでの仮）
 // - 今の記事がまだないときは、トップに「最初の記事を準備している」の一文が出る
 // - トップにオープニングの演出（intro-veil）がない（見出しが最初に見える。2026-10-18 コピーライティング第一）
 // - 今の記事（src/_data/currentArticles.js）は新しい型：書き込みワーク・穴埋め・○×クイズ・アーカイブの注記が出ない
@@ -10,7 +10,9 @@
 // - 残すページの小見出し（eyebrow など）は日本語
 // - 新しいページの CSS（renewal.css）に、文章を行数や「…」で切る指定がない
 // - 理解度テスト（test.html、2026-10-22）：問題のデータの形、記事の節へのリンク、記事とテストが切り離されていること
-// - 新しい型の今の記事は、本文が5,000〜6,000字（2026-11-04、オーナー「記事が長い。分割を求める」。それまでは2026-10-22 の1万〜2万字）
+// - 新しい型の今の記事の本文の長さは、棚（pillar）で変える（2026-11-13、オーナー「テーマごとに変える」）：
+//   セキュリティ（ctf・vuln・defense）5,000〜6,000字／食・身体・お金・生き方・哲学（food・body・money・life・philosophy）10,000〜20,000字／
+//   暮らし・趣味（fashion・interior・scent・music・gourmet・outing）2,000〜3,000字
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import currentArticles from '../src/_data/currentArticles.js';
 
@@ -34,8 +36,12 @@ const text = html => stripTags(html);
 // 新しい型の今の記事は、本文が 5,000〜6,000 字。数えないもの：front matter、参考文献（class="rn-refs" の要素から後ろ）、
 // テンプレートのタグ（{% %} と {{ }}）、HTML のタグ、空白と改行。数え方は記事を書くときの道具（count.mjs）と同じ。
 // タグは stripTags と同じく1文字ずつ読んで外す（正規表現の置き換えで外さない）
-const BODY_MIN = 5000;
-const BODY_MAX = 6000;
+const BODY_RANGES = {
+  security: { min: 5000, max: 6000, why: 'セキュリティの記事は5,000〜6,000字（オーナー、2026-11-04「記事が長い。分割を求める」。長いテーマは分けて書く）' },
+  evidence: { min: 10000, max: 20000, why: '食・身体・お金・生き方・哲学の記事は1万〜2万字（オーナー、2026-10-22「サイトは決定版だから重厚にして欲しい」。2026-11-13「テーマごとに変える」）' },
+  hobby: { min: 2000, max: 3000, why: '暮らし・趣味の記事は2,000〜3,000字（オーナー、2026-11-13「テーマごとに変える」）' },
+};
+const PILLAR_GROUP = { ctf: 'security', vuln: 'security', defense: 'security', food: 'evidence', body: 'evidence', money: 'evidence', life: 'evidence', philosophy: 'evidence', fashion: 'hobby', interior: 'hobby', scent: 'hobby', music: 'hobby', gourmet: 'hobby', outing: 'hobby' };
 const bodyLength = src => {
   let body = src.split('\n---\n').slice(1).join('\n---\n');
   const refs = body.indexOf('class="rn-refs"');
@@ -79,7 +85,10 @@ for (const s of currentArticles) {
   if (/^health:\s*true/m.test(src) && !html.includes('class="rn-health"')) report(`${s}.html`, '健康の記事に注意書きがない');
   if (/^layout:\s*renewal-article\.njk\s*$/m.test(src)) {
     const n = bodyLength(src);
-    if (n < BODY_MIN || n > BODY_MAX) report(`src/articles/${s}.html`, `本文が ${n.toLocaleString('en-US')} 字。サイトの記事は5,000〜6,000字（オーナー、2026-11-04「記事が長い。分割を求める」。長いテーマは分けて書く）`);
+    const pillar = (src.match(/^pillar:\s*([a-z]+)/m) || [])[1];
+    const range = BODY_RANGES[PILLAR_GROUP[pillar]];
+    if (!range) report(`src/articles/${s}.html`, `pillar「${pillar || ''}」が決まった棚（${Object.keys(PILLAR_GROUP).join('・')}）のどれでもない`);
+    else if (n < range.min || n > range.max) report(`src/articles/${s}.html`, `本文が ${n.toLocaleString('en-US')} 字。${range.why}`);
   }
 }
 for (const s of archived) {
@@ -98,8 +107,8 @@ for (const p of ['topic-philosophy.html', 'topic-body.html', 'topic-work.html', 
 }
 const index = read('index.html');
 const h1 = index.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/);
-if (!h1 || !text(h1[1]).includes('セキュリティを、手を動かして学ぶ。')) {
-  report('index.html', 'h1 が「セキュリティを、手を動かして学ぶ。」になっていない');
+if (!h1 || !text(h1[1]).includes('調べて、試して、書き残す。')) {
+  report('index.html', 'h1 が「調べて、試して、書き残す。」になっていない');
 }
 if (!currentArticles.length && !/<p class="rn-none">[^<]*最初の記事を準備している/.test(index)) report('index.html', '今の記事がないのに「最初の記事を準備している」の一文がない');
 if (index.includes('intro-veil') || index.includes("classList.add('intro'")) report('index.html', 'オープニングの演出（intro-veil）が戻っている。見出しが最初に見えること');

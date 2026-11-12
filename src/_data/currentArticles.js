@@ -33,4 +33,22 @@ export default [
   'siem',
   'siem-detection',
   'siem-ecosystem',
+  // 2026-11-13 オーナー「セキュリティに限らず、幅広いテーマを扱いたい」（docs/broad-themes-20261113.md）：
+  // 2026-11-04 にアーカイブへ移した食・身体・生き方の16本（判定表つき）を、いまの記事に戻す。
+  'meat-and-libido',
+  'libido-and-food',
+  'libido-what-moves-it',
+  'prolactin',
+  'habit-design',
+  'color-impression',
+  'sleep-evidence',
+  'before-sleep-hour',
+  'patience',
+  'sincerity-word-deed',
+  'vascular-endothelium',
+  'sex-in-daily-life',
+  'good-habits',
+  'sauna-evidence',
+  'd2-receptor-evidence',
+  'subconscious-evidence',
 ];

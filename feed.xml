@@ -4,7 +4,7 @@
   <title>ムートン</title>
   <link>https://moutonarchive.com/</link>
   <atom:link href="https://moutonarchive.com/feed.xml" rel="self" type="application/rss+xml"/>
-  <description>ムートンのセキュリティの個人研究ノート。演習・CTF の記録、公開された脆弱性と事件の読み解き、身の回りを守る手順を、学んだ順に置いていく。攻撃の技術は、自分の環境と許可された演習の中だけで試す。</description>
+  <description>ムートンの個人のノート。セキュリティ、食と身体と生き方、暮らしと趣味。学んだことと確かめたことを、出典つきで置いていく。</description>
   <language>ja</language>
   <item>
     <title>遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない</title>

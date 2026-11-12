@@ -69,7 +69,8 @@ test('MOUTON browser smoke', async t => {
     // 2026-10-21〜22 サイトの作り直し（docs/site-renewal-20261021.md）：トップは見出し・短い文・検索・3つの並び順・記事の一覧だけ。
     // 2026-11-04 セキュリティの個人研究サイトに変えた（docs/security-renewal-20261104.md）。今の記事がまだない間は、一覧の代わりに「最初の記事を準備している」の一文が出る。
     // 今の記事があるときの確かめ（並び順・検索・記事の型・理解度テスト）は、記事が1本入ると、そのまま動く。
-    const headline = ['セキュリティを、手を動かして学ぶ。'];
+    // 2026-11-13 オーナー「セキュリティに限らず、幅広いテーマを扱いたい」：見出しを広い言葉に変えた。
+    const headline = ['調べて、試して、書き残す。'];
     const noneYet = async page => {
       assert.equal(await page.locator('.rn-none').isVisible(), true, 'no current article yet: the "preparing" line is shown');
       assert.equal(await page.locator('.rn-none a[href="archive.html"]').count(), 1, 'the line leads to the archive');
@@ -202,7 +203,7 @@ test('MOUTON browser smoke', async t => {
       ]) {
         await checkPage(browser, label, options, async page => {
           await page.goto(origin + '/start.html', { waitUntil: 'domcontentloaded' });
-          // 2026-11-04：セキュリティの個人研究サイトの「ムートンについて」。置くもの・攻撃の技術を試すときの決まり・アーカイブへの道
+          // 2026-11-04：セキュリティの個人研究サイトの「ムートンについて」。置くもの・攻撃の技術を試すときの決まり・アーカイブへの道（2026-11-13 に棚を3つに広げても、攻撃の技術の決まりは残す）
           const main = page.locator('main article.rn-article');
           assert.equal(await main.locator('h1').innerText(), 'ムートンについて');
           assert.equal(await main.getByRole('heading', { name: '攻撃の技術を試すときの決まり' }).count(), 1, 'the rules for trying attack techniques are on the page');
@@ -406,9 +407,10 @@ test('MOUTON browser smoke', async t => {
         await page.goto(origin + '/coffee.html', { waitUntil: 'domcontentloaded' });
         assert.equal(await page.locator('article .archive-note').count(), 1, 'archived article shows the archive note');
         assert.equal(await page.locator('.archive-note a[href="index.html"]').count(), 1, 'the note leads to the current articles');
-        // 2026-11-04：判定表の型の記事（2026年10月）もアーカイブに移った。上に注記が出る
+        // 2026-11-04：判定表の型の記事（2026年10月）もアーカイブに移った。
+        // 2026-11-13（オーナー「セキュリティに限らず、幅広いテーマを扱いたい」）：その16本は今の記事に戻した。注記は出ず、判定表は残る
         await page.goto(origin + '/habit-design.html', { waitUntil: 'domcontentloaded' });
-        assert.equal(await page.locator('article .archive-note').count(), 1, 'an archived verdict-table article shows the archive note');
+        assert.equal(await page.locator('article .archive-note').count(), 0, 'a restored verdict-table article has no archive note');
         assert.equal(await page.locator('.rn-verdicts').count(), 1, 'it keeps its verdict table');
         await page.goto(origin + '/journal.html', { waitUntil: 'domcontentloaded' });
         const first = page.locator('.rn-current .rn-item a.rn-list-title').first();

@@ -6,7 +6,7 @@ layout: renewal.njk
     判定表の下に、その id へ飛ぶ目次を折りたたんで置く（withToc。2026-10-28、オーナー）。
     問いのあと・参考文献の前に「次に読む」を2本（nextReads）。参考文献は「参考文献（N）」に折りたたむ（foldRefs。本文の [N] を押すと renewal-article.js が開く）。2026-10-28、オーナー。
     更新履歴（changes）は front matter に残すが、表示は更新日だけ（2026-10-21、オーナー「余計なものはいらない」）。 #}
-{%- set pillarLabels = { ctf: '演習・CTF', vuln: '脆弱性・事件', defense: '守る', food: '食', body: '身体', money: 'お金', life: '生き方' } %}
+{%- set pillarLabels = { ctf: '演習・CTF', vuln: '脆弱性・事件', defense: '守る', food: '食', body: '身体', money: 'お金', life: '生き方', philosophy: '哲学', fashion: '装い', interior: '部屋', scent: '香り', music: '音楽', gourmet: '食べ歩き', outing: 'おでかけ' } %}
 <article class="rn-wrap rn-article">
   {%- if archived %}
   <aside class="archive-note" aria-label="アーカイブ"><p class="archive-note-title">アーカイブ</p>
