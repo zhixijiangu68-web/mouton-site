@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる — ムートン</title>
+<meta name="description" content="多要素認証は、知識・所持・生体のうち二つ以上で本人を確かめる。手で打ち込む確認コードは偽のサイトに中継されうる。NIST のパスワードの決まり、TOTP、MFA 疲れ、WebAuthn がフィッシングに強い理由、ログで見ることを確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/mfa.html">
+<meta property="og:title" content="確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる — ムートン">
+<meta property="og:description" content="多要素認証は、知識・所持・生体のうち二つ以上で本人を確かめる。手で打ち込む確認コードは偽のサイトに中継されうる。NIST のパスワードの決まり、TOTP、MFA 疲れ、WebAuthn がフィッシングに強い理由、ログで見ることを確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/mfa.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/mfa.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる","description":"多要素認証は、知識・所持・生体のうち二つ以上で本人を確かめる。手で打ち込む確認コードは偽のサイトに中継されうる。NIST のパスワードの決まり、TOTP、MFA 疲れ、WebAuthn がフィッシングに強い理由、ログで見ることを確かめた。","inLanguage":"ja","datePublished":"2026-11-13","dateModified":"2026-11-13","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/mfa.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる","item":"https://moutonarchive.com/mfa.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">確認コードは、<wbr>偽の<wbr>サイトにも<wbr>打ち込める。<wbr>多要素認証の<wbr>強さは、<wbr>鍵が<wbr>どの<wbr>サイトに<wbr>結びつくかで<wbr>決まる</h1>
+  <p class="rn-subtitle">知識・所持・生体の三つの要素、NIST のパスワードの決まり、ソルトと遅いハッシュ、HOTP と TOTP、SMS とプッシュ通知の弱さ、WebAuthn とパスキー、ログで見ることを、NIST・RFC・W3C の文書で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-13">2026年11月13日</time></span></p>
+  <div class="rn-body">
+<p>認証は、ログインしようとしている相手が、登録した本人と同じ秘密や機器を持っているかを確かめることで、多要素認証（MFA）は、種類の違う二つ以上の要素で確かめる。MFA の中にも強さの差があり、手で打ち込む確認コードは偽のサイトに中継されうるが、WebAuthn の鍵はサイトの名前に結びつくので中継では使えない。オリジンと証明書は <a href="tls.html">TLS の記事</a>に、ログインのあとの Cookie は <a href="http.html">HTTP の記事</a>に書いた。</p>
+
+<details class="rn-toc"><summary>目次（12）</summary><ol><li><a href="#s-1">認証は、知っているもの・持っているもの・本人であることの三つで確かめる</a></li><li><a href="#s-2">パスワードは、長さと漏えいの照合で選ばせ、定期変更を求めない</a></li><li><a href="#s-3">パスワードは、ソルトを付けた遅いハッシュで保存する</a></li><li><a href="#s-4">ワンタイムパスワードは、共有した鍵と、回数か時刻から作る</a></li><li><a href="#s-5">SMS のコードは、電話網を通るので「制約つき」とされている</a></li><li><a href="#s-6">プッシュ通知の承認は、繰り返し送られると押されてしまう</a></li><li><a href="#s-7">フィッシングに強い認証は、鍵をサイトの名前に結びつける</a></li><li><a href="#s-8">MFA を通ったあとは、Cookie と、MFA を通らない入口が狙われる</a></li><li><a href="#s-9">ログでは、失敗の連続、拒否の連続、合わない場所を見る</a></li><li><a href="#s-10">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">認証は、<wbr>知っている<wbr>もの<wbr>・持っている<wbr>もの・本人である<wbr>ことの<wbr>三つで<wbr>確かめる</h2>
+<p>NIST の SP 800-63B（2025年の第4版）は、認証の要素を「知っているもの」「持っているもの」「本人であること」の三つとしている<a href="#ref-1">[1]</a>。パスワードと PIN は知っているもの、ワンタイムパスワードを出すアプリや機器、セキュリティキーは持っているもの、指紋や顔は本人であることに当たる。</p>
+<p>多要素認証は、違う種類の要素を二つ以上確かめる。パスワードを二つ聞いても、要素は一つのままだ。SP 800-63B-4 は、二つの要素を求める水準（AAL2）のサービスに、フィッシングに強い方法を選べるようにしておくことを求めている<a href="#ref-1">[1]</a>。</p>
+<p>生体は単独では使わない。SP 800-63B-4 は、生体を、持っているもの（機器）と組み合わせる多要素の一部としてだけ認める。照合が確率で決まることと、顔の写真や物に残った指紋のように、生体が秘密ではないことが理由だ。指紋や顔は、機器の中の鍵を使えるようにする「起動の要素」として使う<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-2">パスワードは、<wbr>長さと<wbr>漏えいの<wbr>照合で<wbr>選ばせ、<wbr>定期変更を<wbr>求めない</h2>
+<p>SP 800-63B-4 のパスワードの決まりは、複雑さより長さと照合を重く見る<a href="#ref-1">[1]</a>。</p>
+<ul>
+<li>パスワードだけで認証するなら15文字以上、多要素の一部なら8文字以上を求める。64文字以上まで受け付けるのがよいとしている</li>
+<li>大文字・数字・記号を混ぜるような組み立ての決まりを課さない</li>
+<li>定期的な変更を求めない。漏れた形跡があるときは変えさせる</li>
+<li>新しいパスワードを、過去に漏えいしたもの・辞書の言葉・サービス名やユーザー名から作った言葉の一覧（ブロックリスト）と照らし、載っていれば理由を示して選び直させる</li>
+<li>秘密の質問とヒントを使わせない。パスワードマネージャーと貼り付けを許す</li>
+<li>失敗の回数を制限する</li>
+</ul>
+<p>付録は、組み立ての決まりを課すと、「password」が「Password1!」になるような予測しやすい変え方が起きると説明している<a href="#ref-1">[1]</a>。攻撃する側は、前の漏えいで当たったパスワードから試すので、一覧との照合のほうが効く。</p>
+
+<h2 id="s-3">パスワードは、<wbr>ソルトを<wbr>付けた<wbr>遅い<wbr>ハッシュで<wbr>保存する</h2>
+<p>サーバーはパスワードそのものを保存せず、ハッシュにして保存する。ハッシュは一方向の計算で、値から元のパスワードには戻せない。暗号化は鍵があれば元に戻せるので、パスワードの保存には向かない<a href="#ref-2">[2]</a>。</p>
+<p>ソルトは利用者ごとに変える乱数で、パスワードと一緒にハッシュにかける。同じパスワードでも値が変わるので、前もって計算した表が使えず、攻撃する側は一件ずつ計算することになる<a href="#ref-2">[2]</a>。SP 800-63B-4 は、32ビット以上のソルトを、ハッシュの値と一緒に保存するよう求めている<a href="#ref-1">[1]</a>。</p>
+<p>SHA-256 のような速いハッシュは、盗まれたハッシュに対して、推測を速く大量に試させてしまう。OWASP は、Argon2id（メモリ 19MiB・2回・並列1 以上）を第一に、使えなければ scrypt、古いシステムでは bcrypt、FIPS 140 への適合が要るなら PBKDF2-HMAC-SHA256 を60万回以上、と勧めている<a href="#ref-2">[2]</a>。SP 800-63B-4 も、計算の重さを性能の許す限り高くすることと、サーバーだけが持つ鍵でもう一段かけること（OWASP の言う「ペッパー」）を勧めている<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。</p>
+
+<h2 id="s-4">ワンタイムパスワードは、<wbr>共有した<wbr>鍵と、<wbr>回数か<wbr>時刻から<wbr>作る</h2>
+<p>HOTP（RFC 4226）は、サーバーと機器が同じ秘密の鍵とカウンター（回数）を持ち、HMAC-SHA-1 の結果を切り詰めて6桁以上の数字にする。カウンターがずれたときのために、サーバーは先の数個の値まで照らす。照らす幅を広げるほど当てられやすくなるので、失敗の回数の制限を合わせて置く<a href="#ref-3">[3]</a>。</p>
+<p>TOTP（RFC 6238）は、カウンターの代わりに時刻を使う。既定では、1970年1月1日からの秒数を30で割った整数を、HOTP のカウンターとして使う。同じ30秒の中では同じ値になるので、一度通ったコードを二度目は受け付けない。通信の遅れには一つ前の区切りまで認めることを勧め、幅を広げるほど攻撃の余地も広がるとしている。HMAC-SHA-256 と HMAC-SHA-512 も使える<a href="#ref-4">[4]</a>。</p>
+<p>OTP は使い回せない点で、パスワードより強い。ただ SP 800-63B-4 は、手で打ち込む方法をフィッシングに強いとは見なさない。打ち込んだ値がその接続に結びついていないので、偽のサイトが受け取って、そのまま本物に渡せるからだ<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-5">SMS の<wbr>コードは、<wbr>電話網を<wbr>通るので<wbr>「制約つき」と<wbr>されている</h2>
+<p>SP 800-63B-4 は、SMS や音声通話でコードを送る方法を「制約つき」の認証方式としている。使う組織は、リスクを評価して受け入れ、制約のない別の方法も用意する<a href="#ref-1">[1]</a>。電話番号の登録や変更は、新しい認証器を結びつけるのと同じ扱いで、コードを送る前に、端末の入れ替え・SIM の変更・番号の移転のような兆しを見るよう勧めている<a href="#ref-1">[1]</a>。</p>
+<p>MITRE ATT&amp;CK は、SMS で送るコードが途中で盗まれうることと、SMS を送る事業者が狙われた例を挙げている<a href="#ref-5">[5]</a>。CISA の Microsoft Entra ID の設定の基準（SCuBA）は、SMS・音声通話・メールの OTP を最も弱い方法とし、無効にするよう求めている<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-6">プッシュ通知の<wbr>承認は、<wbr>繰り返し送られると<wbr>押されてしまう</h2>
+<p>通知の「承認」を押すだけの方法では、パスワードを手に入れた攻撃者がログインを繰り返し、通知を何度も送りつけられる。利用者が根負けして承認するのを待つ手口を、MITRE ATT&amp;CK は「Multi-Factor Authentication Request Generation」（T1621）としてまとめ、「MFA 疲れ」と呼んでいる<a href="#ref-7">[7]</a>。</p>
+<p>対策は、承認に数字の入力を足すことだ。ログインの画面に出た数字をアプリに打ち込ませると、その画面を見ていない人は承認できない（番号の照合）。CISA は2022年10月の資料で、番号の照合を、フィッシングに強い MFA をすぐに入れられない組織の当座の対策として勧めている<a href="#ref-8">[8]</a>。Microsoft Authenticator では、すべてのプッシュ通知で番号の照合が有効になっている<a href="#ref-9">[9]</a>。</p>
+<p>SP 800-63B-4 は、二つの画面の値を見比べて承認するだけの方式を、もう受け入れない。見比べずに承認されやすく、MFA 疲れの攻撃で実際に起きたためで、値を一方の画面からもう一方へ打ち込ませる形を求めている。送る通知の数に上限を置くことも勧めている<a href="#ref-1">[1]</a>。ATT&amp;CK も同じ上限を対策に挙げている<a href="#ref-7">[7]</a>。</p>
+
+<h2 id="s-7">フィッシングに<wbr>強い<wbr>認証は、<wbr>鍵を<wbr>サイトの<wbr>名前に<wbr>結びつける</h2>
+<p>SP 800-63B-4 は、フィッシングへの強さを「利用者の注意に頼らずに、偽の相手へ秘密や有効な出力を渡さない」性質と定め、暗号の鍵で認証する方式でなければ満たせないとしている。その例に、FIDO2 の認証器が使う WebAuthn を挙げている<a href="#ref-1">[1]</a>。</p>
+<p>WebAuthn（W3C）では、登録のときに認証器がサイトごとに新しい鍵の組を作る。秘密鍵は認証器が持ち、誰にも見せない前提で、サイトは公開鍵だけを保存する<a href="#ref-10">[10]</a>。鍵には、サイトの識別子（RP ID。example.com のようなドメイン）が結びつく。ブラウザーは、開いているページのオリジンが https で、そのドメインが RP ID と同じか、その下にあるときにだけ、その鍵を使わせる<a href="#ref-10">[10]</a>。</p>
+<p>ログインでは、サイトが毎回、乱数（チャレンジ）を送る。ブラウザーは、チャレンジとページのオリジンを書いたデータ（clientDataJSON）を作り、認証器は、RP ID のハッシュを含むデータと一緒に秘密鍵で署名する。サイトは公開鍵で署名を確かめ、チャレンジとオリジンが予想どおりかを確かめる<a href="#ref-10">[10]</a>。</p>
+<p>偽のサイト（example.net）が本物（example.com）のふりをしても、ブラウザーは example.com の鍵を example.net では使わせない。中継しても、署名したデータの中のオリジンが本物と違うので、本物のサイトは受け付けない。打ち込むコードと違い、利用者が偽物に気づかなくても防げる。CISA も FIDO/WebAuthn を、広く使えるフィッシングに強い認証として挙げている<a href="#ref-11">[11]</a>。</p>
+<p>パスキーは、WebAuthn の仕様で、ユーザー名を先に入れなくても使える「見つけられる認証情報」の呼び名だ<a href="#ref-10">[10]</a>。端末のあいだで同期するパスキーもある。SP 800-63B-4 は、同期できる鍵を取り出せる鍵として扱い、最も高い水準（AAL3）では使わせない<a href="#ref-1">[1]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>認証の方法と、偽のサイトへの中継（SP 800-63B-4 と WebAuthn から）</caption><thead><tr><th scope="col">方法</th><th scope="col">要素</th><th scope="col">偽のサイトに中継されうるか</th></tr></thead><tbody>
+<tr><th scope="row">パスワード</th><td>知っているもの</td><td>されうる。あとで使い回せる</td></tr>
+<tr><th scope="row">SMS のコード</th><td>持っているもの（制約つき）</td><td>されうる。電話網の側でも盗まれうる</td></tr>
+<tr><th scope="row">TOTP・HOTP</th><td>持っているもの</td><td>されうる。使い回しはできない</td></tr>
+<tr><th scope="row">番号の照合つきプッシュ</th><td>持っているもの</td><td>されうる。手で打ち込む方法なので</td></tr>
+<tr><th scope="row">WebAuthn・パスキー</th><td>持っているもの（PIN や生体で起動）</td><td>されない。署名にオリジンが入る</td></tr>
+</tbody></table></div>
+
+<h2 id="s-8">MFA を<wbr>通った<wbr>あとは、<wbr>Cookie と、<wbr>MFA を<wbr>通らない<wbr>入口が<wbr>狙われる</h2>
+<p>ログインが終わると、サーバーはセッションの Cookie を渡し、それを見せる要求を本人として扱う（<a href="http.html">HTTP の記事</a>）。SP 800-63B-4 は、Cookie を認証器ではなくセッションの間だけの秘密とし、Secure を必須に、HttpOnly と SameSite（Lax か Strict）を勧めている<a href="#ref-1">[1]</a>。</p>
+<p>MITRE ATT&amp;CK は、盗んだセッションの Cookie を使うと、認証を経ずにログインした状態になり、一部の MFA を素通りできると書いている。偽のサイトで通信を中継し、ログインのあとの Cookie を集める道具があることも挙げている<a href="#ref-12">[12]</a>。WebAuthn ではオリジンが合わず、中継したログインが通らないので、この手口への備えになる。端末の中から盗まれる場合に向けて、SP 800-63B-4 は、Cookie を持っていることを暗号で示す新しい仕組み（DBSC）に触れている<a href="#ref-1">[1]</a>。</p>
+<p>MFA をかけていない入口があれば、そこから入られる。2026年11月6日、CISA は SonicWall の SonicOS の SSL VPN の脆弱性 CVE-2026-19868 を、悪用が確かめられた脆弱性の一覧（KEV）に加えた。別の認証方式の正しい認証情報を持つ利用者が、SAML の認証と、SAML で求めている MFA を回避できるおそれがあるという内容で、影響を受けるのは Gen7 の 7.3.3-7015 以前と Gen8 の 8.2.2-8015 以前だ<a href="#ref-13">[13]</a><a href="#ref-14">[14]</a>。対処は、メーカーの告知（SNWLID-2026-0014）に沿って修正を当てることだ<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-9">ログでは、<wbr>失敗の<wbr>連続、<wbr>拒否の<wbr>連続、<wbr>合わない<wbr>場所を<wbr>見る</h2>
+<p>認証のログ（ID の基盤、VPN、サーバーのログオンの記録）では、次の並びを見る<a href="#ref-1">[1]</a><a href="#ref-7">[7]</a>。</p>
+<ul>
+<li>一つのアカウントへの失敗の連続。SP 800-63B-4 は、一つの認証器への連続の失敗を100回以下で止めるよう求め、IP アドレス・場所・要求の時刻の並びで、普段と違う動きを見分ける方法も挙げている<a href="#ref-1">[1]</a></li>
+<li>多くのアカウントへの、同じ少数のパスワードでの失敗。パスワードスプレーと呼ばれ、ロックアウトや検知を避けるため、わざとゆっくり試すこともある<a href="#ref-15">[15]</a>。アカウントごとの回数だけを見ていると見逃す</li>
+<li>パスワードは通ったのに、MFA の拒否や時間切れが続く。パスワードが漏れていて、MFA 疲れを狙われている兆しだ。ATT&amp;CK は、普段と違う送り元からの MFA の要求の多さと、拒否や時間切れになった要求を見るよう挙げている<a href="#ref-7">[7]</a>。CISA も、拒否された通知を調べるよう勧めている<a href="#ref-8">[8]</a></li>
+<li>合わない場所。ログインの送り元が見慣れない国や IP アドレスで、MFA の端末の場所と合わない<a href="#ref-7">[7]</a></li>
+<li>MFA の方法の新しい登録や、MFA の対象からの除外。入り込んだ攻撃者が、自分の方法を登録したり、MFA を外したりする手口がある<a href="#ref-16">[16]</a></li>
+</ul>
+<p>架空の例では、user01 に 203.0.113.45 から、数分のうちにパスワードの成功と MFA の拒否が10回続き、そのあと承認された並びがこれに当たる。本人への確認、パスワードの変更、セッションの取り消しへ進む。</p>
+
+<h2 id="s-10">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>試すのは、自分の機械と許可された演習の環境だけにする。他人のサービスにログインを試したり、通知を送らせたりはしない。</p>
+<p>TOTP は、Python の標準ライブラリ（hmac・hashlib）だけで計算できる。RFC 6238 の付録 B の試験値では、鍵を文字列「12345678901234567890」、時刻を59秒としたとき、SHA-1 の8桁で 94287082 になる<a href="#ref-4">[4]</a>。59 を30で割った 1 を8バイトにして HMAC-SHA-1 にかけ、RFC 4226 の切り詰め（最後の1バイトの下4ビットを位置にして4バイトを取り出し、先頭のビットを落とす）をして、1億で割った余りを取ると、この値と一致する<a href="#ref-3">[3]</a><a href="#ref-4">[4]</a>。</p>
+<p>保存の違いは <code>hashlib.pbkdf2_hmac</code> で見られる。同じパスワードに、<code>os.urandom(16)</code> で作った別々のソルトを渡すと、違う値になる。回数を60万にすると、SHA-256 を1回かけるより桁違いに時間がかかる。Python の説明書も、パスワードのハッシュは調整でき、遅く、ソルトを含むものでなければならないとしている<a href="#ref-17">[17]</a>。</p>
+<p>WebAuthn は https のほか、<code>http://localhost</code> でも使える<a href="#ref-10">[10]</a>。自分のパソコンで動かしたページで <code>navigator.credentials.get()</code> を呼び、返ってきた clientDataJSON を文字に戻すと、type（webauthn.get）・challenge・origin が入っている<a href="#ref-10">[10]</a>。</p>
+
+
+
+<p class="read-mark" data-total="21" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.13</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="tls.html">経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</a><p class="rn-list-summary">TLS は暗号化・完全性・相手の確認の三つを受け持つ。TLS 1.3 は鍵を決めてから証明書で相手を確かめ、証明書は名前と期限と取り消しまで見る。不正な発行は CT の公開の記録で見つけ、CAA で発行できる認証局をしぼる。</p></li><li class="rn-item"><a class="rn-list-title" href="windows-event-log.html">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</a><p class="rn-list-summary">Windows のイベントログは、ログの名前とイベント ID で読む。何が残るかは監査ポリシーと Sysmon の設定で決まり、4688 のコマンドラインは既定では残らない。ログオンの種類の読み方、SOC で目を向ける出来事、SIEM への送り方もまとめた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（17）</h2></summary>
+<ol>
+<li id="ref-1">NIST（2025）SP 800-63B-4 Digital Identity Guidelines: Authentication and Authenticator Management（1 節、3.1.1 節のパスワード、3.1.3 節の帯域外の認証と電話網、3.1.4 節の OTP、3.2.2 節の回数の制限、3.2.3 節の生体、3.2.5 節のフィッシングへの強さ、3.2.9 節の制約つきの認証器、5.1 節のセッションと Cookie、付録 A・B、用語集。GitHub の usnistgov/800-63-4 の原稿で読んだ）。<a href="https://doi.org/10.6028/NIST.SP.800-63b-4">NIST</a></li>
+<li id="ref-2">OWASP Cheat Sheet Series「Password Storage Cheat Sheet」（GitHub の原稿）。<a href="https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html">OWASP</a></li>
+<li id="ref-3">M'Raihi ほか（2005）RFC 4226 HOTP: An HMAC-Based One-Time Password Algorithm（4 節の要件、5 節の計算、7.3 節の回数の制限、7.4 節の同期）。<a href="https://www.rfc-editor.org/rfc/rfc4226">RFC Editor</a></li>
+<li id="ref-4">M'Raihi ほか（2011）RFC 6238 TOTP: Time-Based One-Time Password Algorithm（1.2 節、4 節の計算、5.2 節の確かめ方と時間の区切り、付録 B の試験値）。<a href="https://www.rfc-editor.org/rfc/rfc6238">RFC Editor</a></li>
+<li id="ref-5">MITRE ATT&amp;CK「Multi-Factor Authentication Interception（T1111）」（GitHub の mitre/cti のデータ）。<a href="https://attack.mitre.org/techniques/T1111/">MITRE ATT&amp;CK</a></li>
+<li id="ref-6">CISA「SCuBA Microsoft Entra ID Configuration Baseline」（MS.AAD.3.1v1、MS.AAD.3.5v2）。<a href="https://github.com/cisagov/ScubaGear/blob/main/PowerShell/ScubaGear/baselines/aad.md">GitHub</a></li>
+<li id="ref-7">MITRE ATT&amp;CK「Multi-Factor Authentication Request Generation（T1621）」と、その検知の方針・対策（GitHub の mitre/cti のデータ）。<a href="https://attack.mitre.org/techniques/T1621/">MITRE ATT&amp;CK</a></li>
+<li id="ref-8">CISA（2022）Implementing Number Matching in MFA Applications（ファクトシート）。<a href="https://www.cisa.gov/sites/default/files/publications/fact-sheet-implement-number-matching-in-mfa-applications-508c.pdf">CISA</a></li>
+<li id="ref-9">Microsoft Learn「How number matching works in MFA push notifications for Authenticator」（GitHub の MicrosoftDocs/entra-docs の原稿）。<a href="https://learn.microsoft.com/en-us/entra/identity/authentication/how-to-mfa-number-match">Microsoft Learn</a></li>
+<li id="ref-10">W3C「Web Authentication: An API for accessing Public Key Credentials Level 3」（用語の RP ID・Credential Private Key・Passkey、CollectedClientData、登録と認証の確かめ方、Relying Party の安全の考慮。GitHub の w3c/webauthn の原稿で読んだ）。<a href="https://www.w3.org/TR/webauthn-3/">W3C</a></li>
+<li id="ref-11">CISA（2022）Implementing Phishing-Resistant MFA（ファクトシート）。<a href="https://www.cisa.gov/sites/default/files/publications/fact-sheet-implementing-phishing-resistant-mfa-508c.pdf">CISA</a></li>
+<li id="ref-12">MITRE ATT&amp;CK「Steal Web Session Cookie（T1539）」（GitHub の mitre/cti のデータ）。<a href="https://attack.mitre.org/techniques/T1539/">MITRE ATT&amp;CK</a></li>
+<li id="ref-13">CISA「Known Exploited Vulnerabilities Catalog」の CVE-2026-19868（2026年11月6日に追加。GitHub の cisagov/kev-data で読んだ）。<a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA</a></li>
+<li id="ref-14">CVE Program「CVE-2026-19868」（SonicWall が登録した記録。影響を受ける版）。<a href="https://www.cve.org/CVERecord?id=CVE-2026-19868">CVE</a></li>
+<li id="ref-15">MITRE ATT&amp;CK「Brute Force: Password Spraying（T1110.003）」（GitHub の mitre/cti のデータ）。<a href="https://attack.mitre.org/techniques/T1110/003/">MITRE ATT&amp;CK</a></li>
+<li id="ref-16">MITRE ATT&amp;CK「Modify Authentication Process: Multi-Factor Authentication（T1556.006）」（GitHub の mitre/cti のデータ）。<a href="https://attack.mitre.org/techniques/T1556/006/">MITRE ATT&amp;CK</a></li>
+<li id="ref-17">Python ドキュメント「hashlib — Secure hashes and message digests」の Key derivation（GitHub の原稿）。<a href="https://docs.python.org/3/library/hashlib.html">Python</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="tls.html" data-slug="tls"><span class="reading-card-title">経路を乗っ取っても、本物の鍵がなければ本物にはなれない。TLS が守る三つのこと</span></a><a class="reading-card" href="windows-event-log.html" data-slug="windows-event-log"><span class="reading-card-title">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

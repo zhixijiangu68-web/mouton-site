@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>Linux のログは、手元にあるかぎり消せる。だから外へも送っておく — ムートン</title>
+<meta name="description" content="Linux のログは rsyslog と journald に残り、管理者なら消せる。syslog の形、sshd と sudo の行、wtmp、auditd、回転と転送、SOC での見方を公式文書で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/linux-log.html">
+<meta property="og:title" content="Linux のログは、手元にあるかぎり消せる。だから外へも送っておく — ムートン">
+<meta property="og:description" content="Linux のログは rsyslog と journald に残り、管理者なら消せる。syslog の形、sshd と sudo の行、wtmp、auditd、回転と転送、SOC での見方を公式文書で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/linux-log.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/linux-log.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Linux のログは、手元にあるかぎり消せる。だから外へも送っておく","description":"Linux のログは rsyslog と journald に残り、管理者なら消せる。syslog の形、sshd と sudo の行、wtmp、auditd、回転と転送、SOC での見方を公式文書で確かめた。","inLanguage":"ja","datePublished":"2026-11-13","dateModified":"2026-11-13","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/linux-log.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"Linux のログは、手元にあるかぎり消せる。だから外へも送っておく","item":"https://moutonarchive.com/linux-log.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">Linux の<wbr>ログは、<wbr>手元に<wbr>あるかぎり消せる。<wbr>だから<wbr>外へも<wbr>送って<wbr>おく</h1>
+  <p class="rn-subtitle">syslog の facility と severity、rsyslog と journald、auth.log と secure、sshd と sudo の行、last と lastb、auditd、logrotate、別の機械への転送を、RFC とソフトの公式文書で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-13">2026年11月13日</time></span></p>
+  <div class="rn-body">
+<p>Linux のログは、多くのプログラムが syslog の形で出し、rsyslog がテキストのファイルに、systemd-journald が journal という独自の形のファイルに書く。ログインや権限の記録は、sshd と sudo の行、wtmp と btmp、auditd の記録に分かれて残り、その機械の管理者の権限があれば消せるので、別の機械にも送っておく。<a href="siem-detection.html">SIEM の検知ルールの記事</a>の SSH の総当たりは、この記事の sshd の行を数えている。Windows の側は <a href="windows-event-log.html">Windows のイベントログの記事</a>に書いた。例のアドレスは文書用のもの（203.0.113.0/24・198.51.100.0/24）、ユーザー名は架空のものだけを使う。</p>
+
+<details class="rn-toc"><summary>目次（14）</summary><ol><li><a href="#s-1">syslog のメッセージは、facility と severity を持つ</a></li><li><a href="#s-2">rsyslog はテキストに、journald は journal に書く</a></li><li><a href="#s-3">journalctl は、項目で絞って読む</a></li><li><a href="#s-4">認証の記録の置き場所は、ディストリビューションで違う</a></li><li><a href="#s-5">sshd は、認証の結果を1行に書く</a></li><li><a href="#s-6">sudo は、誰が誰として何を実行したかを書く</a></li><li><a href="#s-7">last と lastb は、wtmp と btmp を読む</a></li><li><a href="#s-8">auditd は、カーネルが見た出来事を記録する</a></li><li><a href="#s-9">ログは、回転で消え、手で消されることもある</a></li><li><a href="#s-10">別の機械へ送れば、手元で消されても写しが残る</a></li><li><a href="#s-11">SOC では、失敗の連続・見慣れない sudo・途切れを見る</a></li><li><a href="#s-12">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">syslog の<wbr>メッセージは、<wbr>facility と<wbr> severity を<wbr>持つ</h2>
+<p>syslog のメッセージには、どこから来たかを表す facility と、重さを表す severity が付く。RFC 5424 は facility を 0〜23 の番号で表し、0 がカーネル、4 と 10 がセキュリティと認証、16〜23 が自由に使える local0〜local7 だ<a href="#ref-1">[1]</a>。設定ファイルでは、4 を auth、10 を authpriv の名前で書く<a href="#ref-2">[2]</a><a href="#ref-3">[3]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>syslog の severity（RFC 5424）</caption><thead><tr><th scope="col">番号</th><th scope="col">名前</th><th scope="col">意味</th></tr></thead><tbody>
+<tr><th scope="row">0</th><td>emerg</td><td>システムが使えない</td></tr>
+<tr><th scope="row">1</th><td>alert</td><td>すぐに対応が要る</td></tr>
+<tr><th scope="row">2</th><td>crit</td><td>危機的な状態</td></tr>
+<tr><th scope="row">3</th><td>err</td><td>エラー</td></tr>
+<tr><th scope="row">4</th><td>warning</td><td>警告</td></tr>
+<tr><th scope="row">5</th><td>notice</td><td>正常だが、目を留めるべき出来事</td></tr>
+<tr><th scope="row">6</th><td>info</td><td>情報</td></tr>
+<tr><th scope="row">7</th><td>debug</td><td>デバッグ用の細かい情報</td></tr>
+</tbody></table></div>
+<p>二つは、メッセージの先頭の山かっこの中に一つの数でまとめられる。facility の番号に 8 を掛けて severity を足した数で、RFC 5424 の例 <code>&lt;34&gt;1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 ...</code> の 34 は、facility 4（認証）と severity 2 を表す<a href="#ref-1">[1]</a>。</p>
+<p>古い形を書き留めた RFC 3164 は、標準ではなく情報としての文書で、例は <code>&lt;34&gt;Oct 11 22:14:15 mymachine su: ...</code> のように年とタイムゾーンを持たない<a href="#ref-4">[4]</a>。RFC 5424 はこれを置き換え、年とタイムゾーンを含む時刻を使う<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-2">rsyslog は<wbr>テキストに、<wbr>journald は<wbr> journal に<wbr>書く</h2>
+<p>systemd を使う Linux では、systemd-journald がログを集める。集める先は、カーネルのメッセージ、syslog の関数で出されたメッセージ、journal の独自の方法で出された構造のあるメッセージ、サービスの標準出力と標準エラー、カーネルの監査の記録だ<a href="#ref-5">[5]</a>。</p>
+<p>journal は <code>/var/log/journal</code> に置けば残り、<code>/run/log/journal</code> に置けば再起動で消える。どちらを使うかは journald.conf の <code>Storage=</code> で決め、<code>auto</code> なら <code>/var/log/journal</code> があるときだけ残す<a href="#ref-6">[6]</a>。</p>
+<p>journal の項目のうち、名前が「_」で始まるもの（<code>_PID</code>・<code>_UID</code>・<code>_COMM</code> など）は journald が自分で付け、送った側のプログラムが書き換えられない<a href="#ref-7">[7]</a>。<code>SYSLOG_IDENTIFIER</code> のような名乗りは送る側が決める。util-linux の logger は、<code>-t</code> で好きな名前を付けて syslog に書ける<a href="#ref-8">[8]</a>。テキストのファイルで「sshd」と書かれた行が本当に sshd から出たかは、journal の <code>_COMM</code> や <code>_UID</code> で確かめられる。</p>
+<p>rsyslog は、syslog のメッセージを facility と severity で振り分けてファイルに書く。rsyslog が入っていない機械では、ログは journal にしかない。</p>
+
+<h2 id="s-3">journalctl は、<wbr>項目で<wbr>絞って<wbr>読む</h2>
+<p>journal は二進数のファイルなので、journalctl で読む。よく使う絞り方は次のとおり<a href="#ref-9">[9]</a>。</p>
+<ul>
+<li><code>-u</code>：systemd のユニット（サービス）を指定する</li>
+<li><code>-t</code>：syslog の名乗り（SYSLOG_IDENTIFIER）を指定する</li>
+<li><code>-p</code>：severity をしぼる。<code>-p warning</code> なら warning とそれより重いもの</li>
+<li><code>-S</code>・<code>-U</code>：時刻の範囲。<code>-S today</code> のようにも書ける</li>
+<li><code>-b</code>：起動ごとに分ける。<code>--list-boots</code> で起動の一覧が出る</li>
+<li><code>-g</code>：本文（MESSAGE）を正規表現で探す</li>
+<li><code>-o verbose</code>・<code>-o json</code>：すべての項目を出す</li>
+</ul>
+<p>システムの journal を読めるのは、root と、systemd-journal・adm・wheel のグループの利用者だ<a href="#ref-9">[9]</a>。</p>
+
+<h2 id="s-4">認証の<wbr>記録の<wbr>置き場所は、<wbr>ディストリビューションで<wbr>違う</h2>
+<p>認証の記録は、Debian の系統（Ubuntu を含む）では <code>/var/log/auth.log</code>、Red Hat の系統では <code>/var/log/secure</code> に書かれることが多い。ATT&amp;CK も、認証のログの場所としてこの二つを並べている<a href="#ref-10">[10]</a>。</p>
+<p>どちらも rsyslog の設定の結果だ。rsyslog の Red Hat 向けの設定の見本は、authpriv の全部を <code>/var/log/secure</code> に書き、一般の <code>/var/log/messages</code> からは authpriv を外している<a href="#ref-2">[2]</a>。fail2ban の設定でも、認証のログの既定は <code>/var/log/auth.log</code>、Fedora 向けは <code>/var/log/secure</code> になっている<a href="#ref-11">[11]</a>。</p>
+<p>Debian 12 からは、rsyslog が標準では入らなくなり、ログは journalctl で読むよう案内されている<a href="#ref-12">[12]</a>。fail2ban の Debian 向けの設定も、sshd のログを journal から読む<a href="#ref-11">[11]</a>。<code>/var/log/auth.log</code> がないときは、まず rsyslog が入っているかを確かめる。</p>
+
+<h2 id="s-5">sshd は、<wbr>認証の<wbr>結果を<wbr>1行に<wbr>書く</h2>
+<p>OpenSSH の sshd は、既定で facility AUTH、ログの細かさ INFO で書く。説明書は、DEBUG の細かさは利用者のプライバシーを損なうので勧めないとしている<a href="#ref-3">[3]</a>。</p>
+<p>認証の結果は、ソースの auth.c で一つの形に決まっている。成功は Accepted、失敗は Failed で始まり、方式・ユーザー名・送り元のアドレス・ポートが続く。存在しないユーザーには「invalid user」が付き、その前に「Invalid user」の行も出る<a href="#ref-13">[13]</a>。</p>
+<p><code>Invalid user admin01 from 203.0.113.50 port 50122</code><br>
+<code>Failed password for invalid user admin01 from 203.0.113.50 port 50122 ssh2</code><br>
+<code>Failed password for user01 from 203.0.113.50 port 50130 ssh2</code><br>
+<code>Accepted publickey for user01 from 198.51.100.7 port 51022 ssh2: ED25519 SHA256:...</code></p>
+<p>公開鍵での成功には、鍵の種類と指紋（フィンガープリント）が続く<a href="#ref-13">[13]</a>。行の頭の時刻・ホスト名・プログラムの名前は、ログを書くソフトと版で変わる。</p>
+<p>INFO で残らない失敗もある。auth.c は、パスワードの失敗と存在しないユーザーは INFO で書くが、ある利用者の公開鍵の失敗は、失敗の回数が MaxAuthTries（既定 6）の半分に届くまで VERBOSE で書く<a href="#ref-3">[3]</a><a href="#ref-13">[13]</a>。上限を超えると「maximum authentication attempts exceeded」の行が出て、接続が切られる<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-6">sudo は、<wbr>誰が<wbr>誰と<wbr>して<wbr>何を<wbr>実行したかを<wbr>書く</h2>
+<p>sudo の行には、実行した人、端末、作業していたディレクトリー、なり代わった相手、コマンドが入る<a href="#ref-14">[14]</a>。</p>
+<p><code>user01 : TTY=pts/0 ; PWD=/home/user01 ; USER=root ; COMMAND=/usr/bin/systemctl restart nginx</code></p>
+<p>断られたときは、ユーザー名のあとに理由が入る。sudoers に名前がない「user NOT in sudoers」、その機械で許されていない「user NOT authorized on host」、そのコマンドが許されていない「command not allowed」、パスワードを3回まちがえた「3 incorrect password attempts」などだ<a href="#ref-14">[14]</a>。</p>
+<p>facility と severity はビルドの設定で決まり、authpriv がある環境では authpriv、成功は notice、拒否は alert が既定になる<a href="#ref-14">[14]</a>。ログに入る制御文字は、タブなら「#011」のように「#」と8進数で書かれる<a href="#ref-14">[14]</a>。</p>
+
+<h2 id="s-7">last と<wbr> lastb は、<wbr>wtmp と<wbr> btmp を<wbr>読む</h2>
+<p>ログインとログアウトの記録は、テキストのログとは別の二進数のファイルに残る。last は <code>/var/log/wtmp</code> を読み、ログインした利用者と、再起動（疑似の利用者 reboot）の一覧を出す。lastb は、失敗したログインを記録する <code>/var/log/btmp</code> を読む<a href="#ref-15">[15]</a>。</p>
+<p>この二つのファイルは、あるときだけ書かれる<a href="#ref-15">[15]</a>。wtmp の形は、多くの環境で時刻が 32 ビットのため 2038 年の問題を抱え、SQLite を使う wtmpdb という置き換えが作られている<a href="#ref-16">[16]</a>。</p>
+
+<h2 id="s-8">auditd は、<wbr>カーネルが<wbr>見た出来事を<wbr>記録する</h2>
+<p>auditd は、Linux のカーネルの監査の仕組みの、利用者の側の部品で、記録を <code>/var/log/audit/audit.log</code> に書く<a href="#ref-17">[17]</a>。何を記録するかは、起動のときに <code>/etc/audit/audit.rules</code>（または <code>/etc/audit/rules.d/</code>）から読まれるルールで決まる<a href="#ref-17">[17]</a>。</p>
+<p>ルールには、ファイルへの読み書きや属性の変更を見るものと、システムコールを見るものがある。どちらにも「キー」という自由な名前を付けられ、説明書は、調べるときに目的のものだけを選べるようキーを付けるよう勧めている。システムコールのルールは数が増えるほど重くなる<a href="#ref-17">[17]</a>。</p>
+<p>読むときは ausearch と aureport を使う。ausearch は、キー（<code>-k</code>）、記録の種類（<code>-m</code>）、時刻（<code>-ts</code>）で探し、<code>-i</code> で uid のような番号を名前に直す。一つのシステムコールで出た複数の記録は同じイベントの番号を持ち、まとめて出る。aureport は、認証の試み（<code>-au</code>）やログイン（<code>-l</code>）の集計を出す<a href="#ref-17">[17]</a>。</p>
+
+<h2 id="s-9">ログは、<wbr>回転で<wbr>消え、<wbr>手で<wbr>消される<wbr>こともある</h2>
+<p>テキストのログは logrotate が区切って古いものを消す。logrotate は日に一度、cron か logrotate.timer で動き、<code>rotate</code> の数だけ古い版を残して、それより古いものを消す（既定は 0）。<code>copytruncate</code> は、写してから元を空にするので、そのあいだの行が抜けることがある<a href="#ref-18">[18]</a>。</p>
+<p>journal は、ファイルシステムの 10%（上限 4G）を既定の上限とし、超えると閉じた古いファイルから消す。期間で消す <code>MaxRetentionSec=</code> もある<a href="#ref-6">[6]</a>。auditd は、ファイルが <code>max_log_file</code> の大きさに届いたときの動きを <code>max_log_file_action</code> で決め、<code>rotate</code> なら <code>num_logs</code> の数だけ残して古いものを消す<a href="#ref-17">[17]</a>。</p>
+<p>消すのは仕組みだけではない。ATT&amp;CK は、侵入の跡を隠すために <code>/var/log</code> の下のログを消す動きを「Clear Linux or Mac System Logs」（T1070.002）としてまとめている<a href="#ref-10">[10]</a>。journal には、鍵を作っておくと改ざんに気づけるようにする封印（<code>Seal=</code>）と、<code>journalctl --verify</code> での確認がある<a href="#ref-6">[6]</a><a href="#ref-9">[9]</a>。ただし、ファイルごと消されれば、その機械の中には何も残らない。</p>
+
+<h2 id="s-10">別の<wbr>機械へ<wbr>送れば、<wbr>手元で<wbr>消されても<wbr>写しが<wbr>残る</h2>
+<p>ログを送った先の機械には、送り元で消されたあとも写しが残る。syslog の送り方は三つある。</p>
+<ul>
+<li>UDP の 514 番。確認応答がなく、途中で落ちても気づけない。送り元を確かめる仕組みもない<a href="#ref-19">[19]</a></li>
+<li>TCP。落ちれば送り直せる。rsyslog の例では 514 番を使う<a href="#ref-20">[20]</a></li>
+<li>TLS。TCP の 6514 番で、中身を読まれず、相手を確かめられる<a href="#ref-20">[20]</a></li>
+</ul>
+<p>UDP と TCP の違いは <a href="tcp-udp.html">TCP・UDP の記事</a>に書いた。rsyslog の転送の説明書は、TLS の上の TCP を勧め、送り先が止まっても詰まらないよう待ち行列を付けるよう書いている<a href="#ref-20">[20]</a>。送った先を <a href="siem.html">SIEM</a> にすれば、機械をまたいで同じ送り元や同じユーザーを数えられる。</p>
+
+<h2 id="s-11">SOC では、<wbr>失敗の<wbr>連続・<wbr>見慣れない<wbr> sudo・途切れを<wbr>見る</h2>
+<p>Linux のログで SOC が見るのは、主に三つの変化だ。</p>
+<p>一つ目は、同じ送り元からの sshd の失敗の連続と、そのあとの成功。「Invalid user」の行が続くなら、ユーザー名を推測している動きかもしれない。<a href="siem-detection.html">SIEM の検知ルールの記事</a>の Wazuh と Elastic のルールは、この順番を見ている。</p>
+<p>二つ目は、見慣れない sudo。ふだん sudo を使わない利用者の行、ふだんと違う時刻、COMMAND に見慣れないプログラムが入った行、「NOT in sudoers」の拒否の行だ。</p>
+<p>三つ目は、ログの途切れ。送られてくるはずの機械から届かなくなる、ファイルが急に小さくなる、時刻に穴が開く。故障のこともあれば、ログを消したり止めたりする動きのこともある。途切れは、届いたログの中には出てこないので、届かないことを数えるルールが要る。</p>
+
+<h2 id="s-12">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>ここに書いたことは、自分の仮想マシンで確かめられる。試すのは自分の機械か、許された演習の環境だけにする。</p>
+<ul>
+<li><code>journalctl -b -p warning</code>：今回の起動で warning より重い行</li>
+<li><code>journalctl -S today -g "Failed password|Invalid user"</code>：今日の sshd の失敗</li>
+<li><code>logger -p auth.notice -t test "logger test"</code> を送り、<code>journalctl -t test -o verbose</code> で <code>_COMM</code> と <code>SYSLOG_IDENTIFIER</code> を見比べる</li>
+<li><code>last -F</code> と <code>sudo lastb</code>：ログインと失敗の記録</li>
+<li><code>sudo aureport -au</code>：auditd が入っていれば、認証の試みの集計</li>
+<li><code>/etc/logrotate.conf</code> と <code>/etc/logrotate.d/</code>：何日分を残す設定か</li>
+</ul>
+
+
+
+<p class="read-mark" data-total="21" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.13</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="windows-event-log.html">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</a><p class="rn-list-summary">Windows のイベントログは、ログの名前とイベント ID で読む。何が残るかは監査ポリシーと Sysmon の設定で決まり、4688 のコマンドラインは既定では残らない。ログオンの種類の読み方、SOC で目を向ける出来事、SIEM への送り方もまとめた。</p></li><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（20）</h2></summary>
+<ol>
+<li id="ref-1">Gerhards（2009）RFC 5424 The Syslog Protocol（6.2.1 節の facility と severity、6.5 節の例、付録 A.1 の RFC 3164 との関係）。<a href="https://www.rfc-editor.org/rfc/rfc5424">RFC Editor</a></li>
+<li id="ref-2">rsyslog の Red Hat 向けの設定の見本（platform/redhat/rsyslog.conf）。<a href="https://github.com/rsyslog/rsyslog/blob/main/platform/redhat/rsyslog.conf">GitHub</a></li>
+<li id="ref-3">OpenSSH の説明書「sshd_config(5)」（LogLevel、SyslogFacility、MaxAuthTries）。<a href="https://github.com/openssh/openssh-portable/blob/master/sshd_config.5">GitHub</a></li>
+<li id="ref-4">Lonvick（2001）RFC 3164 The BSD syslog Protocol（Informational）。<a href="https://www.rfc-editor.org/rfc/rfc3164">RFC Editor</a></li>
+<li id="ref-5">systemd の説明書「systemd-journald.service(8)」（GitHub の原稿）。<a href="https://github.com/systemd/systemd/blob/main/man/systemd-journald.service.xml">GitHub</a></li>
+<li id="ref-6">systemd の説明書「journald.conf(5)」（Storage=、Seal=、SystemMaxUse=、ForwardToSyslog=）。<a href="https://github.com/systemd/systemd/blob/main/man/journald.conf.xml">GitHub</a></li>
+<li id="ref-7">systemd の説明書「systemd.journal-fields(7)」（信頼できる項目）。<a href="https://github.com/systemd/systemd/blob/main/man/systemd.journal-fields.xml">GitHub</a></li>
+<li id="ref-8">util-linux の説明書「logger(1)」。<a href="https://github.com/util-linux/util-linux/blob/master/misc-utils/logger.1.adoc">GitHub</a></li>
+<li id="ref-9">systemd の説明書「journalctl(1)」（-u・-t・-p・-S・-b・-g・-o、--list-boots、--verify、読める利用者）。<a href="https://github.com/systemd/systemd/blob/main/man/journalctl.xml">GitHub</a></li>
+<li id="ref-10">MITRE ATT&amp;CK「Indicator Removal: Clear Linux or Mac System Logs」（T1070.002）。<a href="https://attack.mitre.org/techniques/T1070/002/">MITRE ATT&amp;CK</a></li>
+<li id="ref-11">fail2ban の設定（paths-common.conf、paths-debian.conf、paths-fedora.conf）。<a href="https://github.com/fail2ban/fail2ban/tree/master/config">GitHub</a></li>
+<li id="ref-12">Debian「Release Notes for Debian 12 (bookworm)」5 章（システムのログの変更）。<a href="https://www.debian.org/releases/bookworm/amd64/release-notes/ch-information.en.html">Debian</a></li>
+<li id="ref-13">OpenSSH のソース auth.c（auth_log、auth_maxtries_exceeded、Invalid user の行）。<a href="https://github.com/openssh/openssh-portable/blob/master/auth.c">GitHub</a></li>
+<li id="ref-14">sudo の説明書「sudoers(5)」の EVENT LOGGING と syslog の項目、configure.ac の既定の facility と severity。<a href="https://github.com/sudo-project/sudo/blob/main/docs/sudoers.mdoc.in">GitHub</a>。<a href="https://github.com/sudo-project/sudo/blob/main/configure.ac">GitHub（configure.ac）</a></li>
+<li id="ref-15">util-linux の説明書「last(1)」（last と lastb、wtmp と btmp）。<a href="https://github.com/util-linux/util-linux/blob/master/login-utils/last.1.adoc">GitHub</a></li>
+<li id="ref-16">wtmpdb（README の Background）。<a href="https://github.com/thkukuk/wtmpdb">GitHub</a></li>
+<li id="ref-17">Linux Audit の説明書「auditd(8)」「auditd.conf(5)」「audit.rules(7)」「ausearch(8)」「aureport(8)」。<a href="https://github.com/linux-audit/audit-userspace/tree/master/docs">GitHub</a></li>
+<li id="ref-18">logrotate の説明書「logrotate(8)」（rotate、copytruncate、日に一度の実行）。<a href="https://github.com/logrotate/logrotate/blob/main/logrotate.8.in">GitHub</a></li>
+<li id="ref-19">Okmianski（2009）RFC 5426 Transmission of Syslog Messages over UDP（3.3 節のポート 514、4 節の信頼性、5.1 節の送り元の認証）。<a href="https://www.rfc-editor.org/rfc/rfc5426">RFC Editor</a></li>
+<li id="ref-20">rsyslog の説明書「omfwd: syslog Forwarding Output Module」（UDP・TCP・TLS、ポート 514 と 6514、待ち行列）。<a href="https://github.com/rsyslog/rsyslog/blob/main/doc/source/configuration/modules/omfwd.rst">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="windows-event-log.html" data-slug="windows-event-log"><span class="reading-card-title">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

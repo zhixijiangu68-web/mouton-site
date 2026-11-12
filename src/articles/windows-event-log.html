@@ -13,7 +13,7 @@ changes:
   - date: 2026-11-13
     note: 下書き。SIEM の記事の 4624・4625 と、検知ルールの記事の 4720・1102 から広げた（毎朝の SOC レッスンの話題）
 ---
-<p>Windows は、ログオンやプロセスの起動のような出来事を、番号（イベント ID）つきでイベントログに書く。何が残るかは監査ポリシーと Sysmon の設定で決まり、記録の対象にしていない出来事は残らない。<a href="siem.html">SIEM の記事</a>で触れた 4624・4625 と、<a href="siem-detection.html">検知ルールの記事</a>の 4720・1102 を、ここで一つずつ読む。</p>
+<p>Windows は、ログオンやプロセスの起動のような出来事を、番号（イベント ID）つきでイベントログに書く。何が残るかは監査ポリシーと Sysmon の設定で決まり、記録の対象にしていない出来事は残らない。<a href="siem.html">SIEM の記事</a>で触れた 4624・4625 と、<a href="siem-detection.html">検知ルールの記事</a>の 4720・1102 を、ここで一つずつ読む。Linux の側は<a href="linux-log.html">Linux のログの記事</a>、NTLM の 4776 は<a href="ntlm.html">NTLM の記事</a>、7045 を遠隔操作ツールの悪用の手がかりにする例は<a href="rmm.html">RMM の記事</a>に書いた。</p>
 
 <h2>イベントログは、ログの名前とイベント ID で探す</h2>
 <p>Windows の基本のログは三つある。Application はアプリケーションが書く出来事、Security はログオンの成功と失敗やファイルの操作のような監査の出来事、System はドライバーの読み込みの失敗のような OS の部品の出来事を残す。ファイルは、既定では %SystemRoot%\system32\winevt\logs\ の下に置かれる<a href="#ref-1">[1]</a>。</p>

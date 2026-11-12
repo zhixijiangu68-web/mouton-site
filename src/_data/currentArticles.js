@@ -10,6 +10,7 @@
 // 2026-11-04 オーナー「記事が長い。分割を求める」：SIEM の記事を3本に分けた。読む順に並べる。
 // 2026-11-06 オーナー「最初にルーティングについての記事を作る」：ルーティングを SIEM の3本より前に置く。
 // 2026-11-07 オーナー「記事を10個」：ルーティングと IP アドレスから広げた土台の10本を、SIEM の3本の前に置く。
+// 2026-11-13 オーナー「会話を覗いて、新しい記事を作成して欲しい」：SOC・支援士のレッスンと IT朝刊から広げた6本（ログ → 認証 → 脆弱性 → 攻撃）を、SIEM の前に置く。
 export default [
   'routing',
   'ip-address',
@@ -23,6 +24,12 @@ export default [
   'dns-security',
   'tls',
   'http',
+  'windows-event-log',
+  'linux-log',
+  'mfa',
+  'kev',
+  'ntlm',
+  'rmm',
   'siem',
   'siem-detection',
   'siem-ecosystem',
