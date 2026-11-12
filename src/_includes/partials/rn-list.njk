@@ -4,7 +4,7 @@
     - 人気順：src/_data/popular.json の views（過去4週間の閲覧数、ファイル名ごと）。空のあいだは新しい順と同じ
     - 検索：今の記事は題・要約・副題・見出し・柱から、アーカイブは題から。外のサービスは使わない（renewal.js）
     検索と並び替えは JS があるときだけ出す（html.js）。 #}
-{%- set pillarLabels = { ctf: '演習・CTF', vuln: '脆弱性・事件', defense: '守る', food: '食', body: '身体', money: 'お金', life: '生き方' } %}
+{%- set pillarLabels = { ctf: '演習・CTF', vuln: '脆弱性・事件', defense: '守る', food: '食', body: '身体', money: 'お金', life: '生き方', philosophy: '哲学', fashion: '装い', interior: '部屋', scent: '香り', music: '音楽', gourmet: '食べ歩き', outing: 'おでかけ' } %}
 <div class="rn-find" aria-label="記事を探す" role="search">
   <label class="rn-vh" for="rn-q">記事を探す</label>
   <input class="rn-q" id="rn-q" type="search" placeholder="記事を探す（例：CTF、脆弱性、パスワード）" autocomplete="off" enterkeyhint="search">
