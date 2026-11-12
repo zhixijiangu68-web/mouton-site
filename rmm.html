@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない — ムートン</title>
+<meta name="description" content="RMM（リモート監視・管理）ツールは、MSP や情報システムの担当が端末を遠隔で管理する正規のソフトで、攻撃者も同じものを使う。選ばれる理由、偽のサポートと MSP 経由で広がる形、許可リスト・多要素認証・ログでの見つけ方を確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/rmm.html">
+<meta property="og:title" content="遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない — ムートン">
+<meta property="og:description" content="RMM（リモート監視・管理）ツールは、MSP や情報システムの担当が端末を遠隔で管理する正規のソフトで、攻撃者も同じものを使う。選ばれる理由、偽のサポートと MSP 経由で広がる形、許可リスト・多要素認証・ログでの見つけ方を確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/rmm.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/rmm.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない","description":"RMM（リモート監視・管理）ツールは、MSP や情報システムの担当が端末を遠隔で管理する正規のソフトで、攻撃者も同じものを使う。選ばれる理由、偽のサポートと MSP 経由で広がる形、許可リスト・多要素認証・ログでの見つけ方を確かめた。","inLanguage":"ja","datePublished":"2026-11-13","dateModified":"2026-11-13","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/rmm.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない","item":"https://moutonarchive.com/rmm.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">脆弱性・事件</p>
+  <h1 class="rn-title">遠隔操作ツールは、<wbr>本物の<wbr>まま<wbr>攻撃に<wbr>使われる。<wbr>だから<wbr>ウイルス対策は、<wbr>ふつう<wbr>鳴らない</h1>
+  <p class="rn-subtitle">RMM と MSP の仕組み、攻撃者が正規のツールを選ぶ理由、偽のサポートの手口、管理画面の乗っ取りが顧客へ広がる形、許可リスト・多要素認証・ログでの見つけ方を、CISA の勧告と MITRE ATT&amp;CK で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-13">2026年11月13日</time></span></p>
+  <div class="rn-body">
+<p>RMM（リモート監視・管理）ツールは、運用を受け持つ事業者や社内の情報システムの担当が、離れた場所から多くの端末を見守り、操作するための正規のソフトだ。攻撃者は同じソフトを、だまして入れさせる道具や、入り込んだあとの出入り口として使う。業務と同じソフトなので見分けにくく、守る側は、使ってよい RMM を決めてほかを止めること、管理する側のアカウントを固めること、見慣れない導入と外への通信をログで見ることで備える。</p>
+
+<details class="rn-toc"><summary>目次（13）</summary><ol><li><a href="#s-1">RMM は、離れた場所から多くの端末を見て、操作する道具</a></li><li><a href="#s-2">MSP は、RMM で多くの顧客の端末につながっている</a></li><li><a href="#s-3">攻撃者が正規の RMM を選ぶのは、止められにくく、目立ちにくいから</a></li><li><a href="#s-4">偽のサポートを装い、本人に入れさせる手口がある</a></li><li><a href="#s-5">MSP の管理画面を乗っ取られると、顧客へまとめて広がる</a></li><li><a href="#s-6">使ってよい RMM を一つに決め、ほかを止める</a></li><li><a href="#s-7">MSP との契約で、権限と責任の分け方を決める</a></li><li><a href="#s-8">管理画面とアカウントは、多要素認証で守る</a></li><li><a href="#s-9">外への通信を見て、許していない RMM の通信先を止める</a></li><li><a href="#s-10">ログでは、見慣れない RMM の導入と、そのあとの動きを見る</a></li><li><a href="#s-11">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">RMM は、<wbr>離れた<wbr>場所から<wbr>多くの<wbr>端末を<wbr>見て、<wbr>操作する<wbr>道具</h2>
+<p>RMM は、端末に入れたソフトを通じて、離れた場所から画面やコマンドで端末を扱う道具だ。MITRE ATT&amp;CK は、遠隔操作の道具を使うと、利用者がその場にいるかのように端末を操作でき、利用者やソフトの権限をそのまま受け継ぐと説明している。使い道は、障害の調査、ソフトの導入、システムの管理だ<a href="#ref-1">[1]</a>。</p>
+<p>2023年6月に CISA などが出した手引き「Guide to Securing Remote Access Software」も、RMM を、MSP（運用を受け持つ事業者）のような管理者が離れた場所から仕事をするための道具としている<a href="#ref-2">[2]</a>。</p>
+<p>多くの RMM は、入れるときに Windows のサービスを作り、裏で動き続ける。ATT&amp;CK は、この導入の作りが、そのまま攻撃者にとっての居座り（永続化）にもなると書いている<a href="#ref-1">[1]</a>。</p>
+
+<h2 id="s-2">MSP は、<wbr>RMM で<wbr>多くの<wbr>顧客の<wbr>端末に<wbr>つながっている</h2>
+<p>MSP は、契約している多くの会社の端末を、RMM で管理していることが多い。CISA・NSA・MS-ISAC の勧告 AA23-025A は、MSP と社内のヘルプデスクが、利用者のサポート、ネットワークの管理、端末の監視のために、ふだんから正規の RMM を使っていると書いている<a href="#ref-3">[3]</a>。</p>
+<p>同じ勧告は、攻撃者がこうした RMM の正規の利用者を狙うことが多く、MSP のネットワークの信頼関係を悪用して、その MSP の多くの顧客に入り込めると注意している。MSP が侵害されると、顧客にはランサムウェアや情報を盗む攻撃の危険が及ぶ<a href="#ref-3">[3]</a>。</p>
+<p>ATT&amp;CK は、この形を「信頼された関係」（T1199）としてまとめている。組織は外部の業者に高い権限を渡すことが多く、その権限が組織のほかの部分と同じネットワークにあることもある。業者のアカウントが乗っ取られれば、そこから入られ、その入り口はふつうの入り口ほど注意して見られていないことがある<a href="#ref-4">[4]</a>。一社への侵入が、その会社の顧客へ広がるのが、MSP を通したサプライチェーンの攻撃の形だ。</p>
+
+<h2 id="s-3">攻撃者が<wbr>正規の<wbr> RMM を<wbr>選ぶのは、<wbr>止められにくく、<wbr>目立ちに<wbr>くいから</h2>
+<p>正規の RMM は、ウイルス対策に止められにくく、自前の不正なプログラムを用意しなくても遠隔操作ができる。AA23-025A は、守る側が知っておくこととして、次の点を挙げている<a href="#ref-3">[3]</a>。</p>
+<ul>
+<li>攻撃者は、どの正規の RMM でも悪用できる</li>
+<li>RMM は、インストールの要らない単体で動く版（ポータブル版）として取ってこられる。これを使うと、管理者の権限と、ソフトの導入を管理する仕組みの両方をすり抜けられる</li>
+<li>RMM を使っても、ウイルス対策や不正なプログラムの対策は、ふつう反応しない</li>
+<li>RMM は、居座りと、外から命令を送る通り道（C2）のための裏口として使われてきた</li>
+<li>RMM を使えば、攻撃者は自前の不正なプログラムを作らずに済む</li>
+</ul>
+<p>ATT&amp;CK も、VNC・TeamViewer・AnyDesk・ScreenConnect・LogMeIn といったデスクトップのサポート用ソフトは、正規のサポートに広く使われているため、アプリの制御で許されている場合があると書いている<a href="#ref-5">[5]</a>。</p>
+<p>CISA などの手引きは、攻撃者が遠隔操作のソフトを、最初の侵入、居座り、ほかの道具の持ち込み、ネットワークの中の横移動、データの持ち出しに使うと整理している<a href="#ref-2">[2]</a>。業務で同じ製品を使っている組織では、その製品の通信先はふだんから許されているので、通信だけを見て業務と攻撃を見分けるのは難しくなる。</p>
+
+<h2 id="s-4">偽の<wbr>サポートを<wbr>装い、<wbr>本人に<wbr>入れさせる<wbr>手口が<wbr>ある</h2>
+<p>攻撃者は、サポートの窓口を装って、相手自身に RMM を入れさせることがある。AA23-025A は、2022年に米国の連邦政府の職員が狙われた例を書いている。ヘルプデスクを装ったメールに電話番号やリンクがあり、電話した人やリンクを開いた人は、最初の不正なサイトから実行ファイルを受け取る。それが次のサイトから、攻撃者の RMM のサーバーにつながるよう設定された AnyDesk と ScreenConnect のポータブル版を取ってきた<a href="#ref-3">[3]</a>。</p>
+<p>この例では、攻撃者は RMM でつないだまま相手に銀行のサイトへログインさせ、残高の表示を書き換えて返金しすぎたように見せ、差額の「返金」を求めた。勧告は、得たアクセスがほかの攻撃者に売られ、職場の組織への攻撃につながりうると注意している<a href="#ref-3">[3]</a>。</p>
+<p>ATT&amp;CK は、電話を使うこの形を「音声によるフィッシング」（T1566.004）としてまとめ、メッセージで電話番号に電話させ、遠隔管理の道具を入れさせる例を挙げている<a href="#ref-6">[6]</a>。日本でも IPA が、ブラウザーに偽のセキュリティ警告と電話番号を出し、電話してきた人に遠隔操作のソフトを入れさせる「サポート詐欺」に注意を呼びかけている<a href="#ref-7">[7]</a><a href="#ref-8">[8]</a>。IPA の勧めは、警告に出た番号に電話しないこと、警告の画面を閉じること、遠隔操作されてしまったらネットワークを切り、入れられたソフトを消して相談することだ<a href="#ref-7">[7]</a><a href="#ref-8">[8]</a>。</p>
+
+<h2 id="s-5">MSP の<wbr>管理画面を<wbr>乗っ取られると、<wbr>顧客へ<wbr>まとめて<wbr>広がる</h2>
+<p>RMM の管理画面は、つながっている端末にソフトを配り、命令を動かせるので、ここを乗っ取られると被害が一度に広がる。ATT&amp;CK は、組織全体の端末を管理するソフトに入られると、つながっているすべての端末で命令を動かされうると書いている<a href="#ref-9">[9]</a>。2021年7月、Kaseya の RMM「VSA」の脆弱性を使ったランサムウェアの攻撃が、複数の MSP とその顧客に広がった<a href="#ref-10">[10]</a>。Kaseya によると、直接侵害された顧客は60社未満で、すべてオンプレミス版の VSA の利用者だった。その多くがほかの会社に IT のサービスを提供していたため、影響は合わせて1,500社未満の会社に及んだ<a href="#ref-11">[11]</a>。この脆弱性について、Kaseya は2021年7月11日にオンプレミス版の修正を出している<a href="#ref-11">[11]</a>。</p>
+<p>このとき CISA と FBI は、MSP に、すべてのアカウントでの多要素認証、RMM との通信を決まった IP アドレスの組だけに許すこと、RMM の管理画面を VPN か管理専用のネットワークの内側に置くことを勧め、顧客には、切り離したバックアップと、管理者のアカウントを必要最小限の権限にすることを勧めた<a href="#ref-10">[10]</a>。</p>
+<p>2026年11月にも、ConnectWise が、ScreenConnect の利用者を狙った攻撃を調べるなかで、外部の会社が作った拡張機能を止めたと報じられている<a href="#ref-12">[12]</a>。調査は、この記事を書いている時点で続いている。</p>
+
+<h2 id="s-6">使って<wbr>よい<wbr> RMM を<wbr>一つに<wbr>決め、<wbr>ほかを<wbr>止める</h2>
+<p>守りの最初は、組織の中でどの RMM が使われているかを洗い出し、使ってよいものを決めて、それ以外を動かさないことだ。AA23-025A は、ネットワークの中の遠隔操作の道具を調べて、使っているものと許したものを把握すること、アプリの制御で許した RMM だけを動かすこと（許可リスト）を勧めている。その制御は、許していない RMM のインストールだけでなく、ポータブル版の実行も止めるものにする<a href="#ref-3">[3]</a>。ATT&amp;CK の対策も、許していないソフトの導入と利用をアプリの制御で止めることと、要らない遠隔接続の機能を無効にすることを挙げている<a href="#ref-1">[1]</a>。</p>
+<p>Windows では、App Control for Business（以前の名前は WDAC）のような仕組みで、動かしてよいプログラムを決められる。Microsoft の教材は、いきなり止めずに、まず監査モードで動かして、止めるはずだったものを記録させる手順を示している。記録は「Microsoft-Windows-CodeIntegrity/Operational」のログのイベント ID 3076 に残り、それを見て、業務に要るのに許していないものを足してから強制に切り替える<a href="#ref-13">[13]</a>。</p>
+<p>許した RMM も、使える経路をしぼる。AA23-025A は、許した RMM を VPN や仮想デスクトップのような認めた遠隔接続の内側からだけ使わせること、よく使われる RMM のポートとプロトコルを、ネットワークの境界で入りも出も止めることを勧めている<a href="#ref-3">[3]</a>。</p>
+
+<h2 id="s-7">MSP との<wbr>契約で、<wbr>権限と<wbr>責任の<wbr>分け方を<wbr>決める</h2>
+<p>MSP に預けるなら、誰が何をできるか、何かあったときに誰が何をするかを、契約で先に決めておく。2022年5月に英国・豪州・カナダ・ニュージーランド・米国の機関が出した共同の勧告 AA22-131A は、MSP と顧客の契約で、セキュリティの役割と責任を誰が持つかをはっきりさせるよう勧め、顧客には、MSP のアカウントを組織の中の管理者のグループに入れないこと、ネットワーク全体で必要最小限の権限にすることを挙げている。侵入に気づくまで何か月もかかることがあるので、重要なログを少なくとも6か月は残すことも勧めている<a href="#ref-14">[14]</a>。</p>
+<p>ATT&amp;CK の T1199 の対策も、信頼した相手のアカウントと権限を、相手の乱用と乗っ取りの両方を考えて管理することと、ネットワークを分けることを挙げている<a href="#ref-4">[4]</a>。</p>
+
+<h2 id="s-8">管理画面と<wbr>アカウントは、<wbr>多要素認証で<wbr>守る</h2>
+<p>RMM の管理画面と、MSP が顧客の環境に入るためのアカウントは、パスワードだけで守らない。ATT&amp;CK は、外部の業者に委ねた管理者の権限（委任された管理者）を持つアカウントのすべてに、多要素認証を求めるよう勧めている<a href="#ref-4">[4]</a>。Kaseya の件の手引きも、すべてのアカウントでの多要素認証を、MSP への勧めの一つに置いている<a href="#ref-10">[10]</a>。多要素認証の仕組みと弱点は、<a href="mfa.html">多要素認証の記事</a>にまとめた。</p>
+
+<h2 id="s-9">外への<wbr>通信を<wbr>見て、<wbr>許していない<wbr> RMM の<wbr>通信先を<wbr>止める</h2>
+<p>遠隔操作のソフトは、端末の側から外のサーバーへつなぎに行く形で使われることがあるので、入ってくる通信だけでなく、出ていく通信を見る。AA23-025A の例でも、ポータブル版は攻撃者の RMM のサーバーへつなぐよう設定されていた<a href="#ref-3">[3]</a>。ATT&amp;CK の対策は、ファイアウォールやプロキシで、遠隔操作のソフトが使うサイトやサービスへの外向きの通信を制限することを挙げている<a href="#ref-1">[1]</a>。出ていく通信を許すものだけにする考え方は、<a href="firewall.html">ファイアウォールの記事</a>の「出ていく通信も止める」の節に書いた。</p>
+<p>許した RMM の通信先が決まっていれば、ほかの RMM の通信先へのアクセスは、それだけで調べる理由になる。プロキシやファイアウォールのログを <a href="siem.html">SIEM</a> に集めておけば、どの端末がいつからつないでいるかをさかのぼれる。</p>
+
+<h2 id="s-10">ログでは、<wbr>見慣れない<wbr> RMM の<wbr>導入と、<wbr>その<wbr>あとの<wbr>動きを<wbr>見る</h2>
+<p>ログで見るのは、許していない RMM が入ったこと、動いたこと、外へつなぎ続けていることの三つだ。RMM の多くはサービスとして入るので<a href="#ref-1">[1]</a>、Windows のシステムのログに残る、サービスが入ったことを表すイベントが手がかりになる。Microsoft の文書によると、ソースが Service Control Manager のイベント ID 7045 は「A service was installed in the system.」で、サービスの名前、実行ファイルの場所、種類、開始の方法、動かすアカウントが記録される<a href="#ref-15">[15]</a>。イベントログの仕組みは、<a href="windows-event-log.html">Windows のイベントログの記事</a>にまとめた。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>RMM の悪用を見つける手がかり</caption><thead><tr><th scope="col">見るもの</th><th scope="col">どこに残るか</th><th scope="col">見落としやすい点</th></tr></thead><tbody>
+<tr><th scope="row">サービスの導入</th><td>システムのログのイベント ID 7045<a href="#ref-15">[15]</a></td><td>ポータブル版はインストールしないので、ここに出ないことがある<a href="#ref-3">[3]</a></td></tr>
+<tr><th scope="row">RMM の実行</th><td>プロセスの起動の記録、EDR の記録</td><td>メモリーの中だけで動くものは、それを見られる道具が要る<a href="#ref-3">[3]</a></td></tr>
+<tr><th scope="row">止めた・止めるはずだった実行</th><td>CodeIntegrity のログのイベント ID 3076（監査モード）<a href="#ref-13">[13]</a></td><td>監査モードの記録は、許したものをすべて残すわけではない<a href="#ref-13">[13]</a></td></tr>
+<tr><th scope="row">外への通信</th><td>ファイアウォール・プロキシのログ</td><td>業務で同じ製品を使っていると、通信先だけでは見分けにくい</td></tr>
+</tbody></table></div>
+<p>公開されている検知のルールでは、Sigma の「Remote Access Tool Services Have Been Installed - System」が、Service Control Manager のイベント ID 7045 と 7036 のうち、サービスの名前に TeamViewer・AnyDesk・LogMeIn・Atera などの文字を含むものを拾う。重さは medium で<a href="#ref-16">[16]</a>、名前で拾うので、許した RMM を入れたときにも鳴る。鳴ったら、許可リストに載っている RMM か、導入した人と時刻に心当たりがあるかを確かめる。</p>
+<p>一つの記録で決めず、つなげて見る。ATT&amp;CK の検知の考え方は、遠隔操作のソフトが動き、サービスや自動起動で居座り、外へ長くつながり続け、そこからシェルなどのプロセスが生まれる流れを一続きで見る<a href="#ref-1">[1]</a>。AA23-025A も、RMM の実行のログを見て、ポータブル版として動いている不自然な使い方を探すよう勧めている<a href="#ref-3">[3]</a>。</p>
+
+<h2 id="s-11">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>試すのは、自分の機械か、学習用に用意した仮想マシンと、許された演習の環境だけにする。他人の端末に RMM を入れたり、他人の管理画面に触れたりしない。</p>
+<p>自分の Windows の仮想マシンで、ふつうのソフトを一つ入れたあと、イベントビューアーの「Windows ログ」→「システム」を開き、イベント ID 7045 で絞り込むと、サービスが入った記録と、名前・場所・開始の方法が見られる<a href="#ref-15">[15]</a>。PowerShell なら <code>Get-WinEvent -FilterHashtable @{ LogName='System'; Id=7045 }</code> で同じものを取り出せる<a href="#ref-17">[17]</a>。出てきたサービスがどのソフトのものかを一つずつ確かめておくと、ふだんの姿（ベースライン）が分かる。</p>
+<p>許可リストを試すなら、学習用の仮想マシンで、App Control の監査モードの方針を入れ、CodeIntegrity のログのイベント ID 3076 に何が残るかを見る<a href="#ref-13">[13]</a>。強制に切り替える前に、復旧の手段を用意しておく。</p>
+
+
+
+<p class="read-mark" data-total="21" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.13</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="firewall.html">ファイアウォールは、通すものだけを書いて残りを止める。穴は、ルールの順番と範囲の書き違いから開く</a><p class="rn-list-summary">ファイアウォールは、アドレスとポートとプロトコルで通すか止めるかを決める。行きの通信を覚えて戻りだけを通す方式、上から読んで最初に合ったルールで決まる作り、既定で拒否、出ていく通信とログを、IP アドレスと TCP・UDP の記事の続きとしてまとめた。</p></li><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（17）</h2></summary>
+<ol>
+<li id="ref-1">MITRE ATT&amp;CK「T1219 Remote Access Tools」（説明、対策の M1038・M1037・M1042、検知の考え方 DET0496。mitre/cti の enterprise-attack.json で確かめた）。<a href="https://attack.mitre.org/techniques/T1219/">MITRE ATT&amp;CK</a></li>
+<li id="ref-2">CISA・FBI・NSA・MS-ISAC・INCD（2023）Guide to Securing Remote Access Software（検索の抜粋で確かめた）。<a href="https://www.cisa.gov/resources-tools/resources/guide-securing-remote-access-software">CISA</a></li>
+<li id="ref-3">CISA・NSA・MS-ISAC（2023）AA23-025A Protecting Against Malicious Use of Remote Monitoring and Management Software（Technical Details、Mitigations）。<a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-025a">CISA</a></li>
+<li id="ref-4">MITRE ATT&amp;CK「T1199 Trusted Relationship」（説明、対策の M1032・M1018・M1030）。<a href="https://attack.mitre.org/techniques/T1199/">MITRE ATT&amp;CK</a></li>
+<li id="ref-5">MITRE ATT&amp;CK「T1219.002 Remote Desktop Software」。<a href="https://attack.mitre.org/techniques/T1219/002/">MITRE ATT&amp;CK</a></li>
+<li id="ref-6">MITRE ATT&amp;CK「T1566.004 Spearphishing Voice」（T1566 Phishing の一つ）。<a href="https://attack.mitre.org/techniques/T1566/004/">MITRE ATT&amp;CK</a></li>
+<li id="ref-7">IPA 安心相談窓口だより（2023）「遠隔操作ソフト（アプリ）を悪用される手口に気をつけて！」（検索の抜粋で確かめた）。<a href="https://www.ipa.go.jp/security/anshin/attention/2023/mgdayori20230411.html">IPA</a></li>
+<li id="ref-8">IPA 安心相談窓口だより（2024）「パソコンに偽のウイルス感染警告を表示させるサポート詐欺に注意」（検索の抜粋で確かめた）。<a href="https://www.ipa.go.jp/security/anshin/attention/2024/mgdayori20241119.html">IPA</a></li>
+<li id="ref-9">MITRE ATT&amp;CK「T1072 Software Deployment Tools」。<a href="https://attack.mitre.org/techniques/T1072/">MITRE ATT&amp;CK</a></li>
+<li id="ref-10">CISA・FBI（2021）CISA-FBI Guidance for MSPs and their Customers Affected by the Kaseya VSA Supply-Chain Ransomware Attack。<a href="https://www.cisa.gov/news-events/alerts/2021/07/04/cisa-fbi-guidance-msps-and-their-customers-affected-kaseya-vsa-supply-chain-ransomware-attack">CISA</a></li>
+<li id="ref-11">Kaseya（2021）Important Notice（VSA の事件の経過と、2021年7月11日の修正の公開）。<a href="https://helpdesk.kaseya.com/hc/en-gb/articles/4403440684689-Important-Notice-August-4th-2021">Kaseya</a></li>
+<li id="ref-12">Cybersecurity Dive（2026年11月）ConnectWise disables third-party extensions as it probes cyberattack targeting ScreenConnect users（見出しと検索の抜粋で確かめた）。<a href="https://www.cybersecuritydive.com/news/connectwise-disables-third-party-extensions-cyberattack-ScreenConnect/874490/">Cybersecurity Dive</a></li>
+<li id="ref-13">Microsoft Learn「Restrict unauthorized code execution with Code Integrity policies on Windows Server」の「Deploy audit policies」（GitHub の原稿）。<a href="https://github.com/MicrosoftDocs/learn/blob/main/learn-pr/advocates/app-control-windows-server/includes/5-deploy-audit-policies.md">GitHub</a></li>
+<li id="ref-14">英国・豪州・カナダ・ニュージーランド・米国の機関の共同（2022）AA22-131A Protecting Against Cyber Threats to Managed Service Providers and their Customers（検索の抜粋で確かめた）。<a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa22-131a">CISA</a></li>
+<li id="ref-15">Microsoft Learn「Troubleshoot unexpected reboots using system event logs」（イベント ID 7045 の表）。<a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/performance/troubleshoot-unexpected-reboots-system-event-logs">Microsoft Learn</a></li>
+<li id="ref-16">SigmaHQ「Remote Access Tool Services Have Been Installed - System」（win_system_service_install_remote_access_software.yml）。<a href="https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/system/service_control_manager/win_system_service_install_remote_access_software.yml">GitHub</a></li>
+<li id="ref-17">PowerShell ドキュメント「Get-WinEvent」（FilterHashtable の例。GitHub の原稿）。<a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.diagnostics/get-winevent">Microsoft Learn</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="firewall.html" data-slug="firewall"><span class="reading-card-title">ファイアウォールは、通すものだけを書いて残りを止める。穴は、ルールの順番と範囲の書き違いから開く</span></a><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

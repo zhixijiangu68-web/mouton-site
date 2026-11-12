@@ -1,0 +1,100 @@
+---
+layout: renewal-article.njk
+title: "CVSS の 10.0 は、悪用されるかどうかを表さない。直す順番は、KEV と「外から届くか」で決める — ムートン"
+headline: "CVSS の 10.0 は、悪用されるかどうかを表さない。直す順番は、KEV と「外から届くか」で決める"
+subtitle: "CVE の番号と記録、CVSS v3.1・v4.0、EPSS、CISA の KEV と BOD 22-01・26-04、JVN と IPA、月例パッチを、公式の文書とカタログのデータで確かめた"
+description: "脆弱性の情報は、どの弱点か（CVE）、どれほど重いか（CVSS）、悪用されそうか（EPSS）、実際に悪用されたか（KEV）に分けて読む。直す順番の決め方を、公式の文書と KEV のカタログのデータで確かめた。"
+excerpt: "CVSS のベースの値は、起きたときの深刻さで、悪用の起こりやすさではない。実際に悪用が確かめられた脆弱性は CISA の KEV に載る。CVE・CVSS・EPSS・KEV・JVN・月例パッチの読み方と、KEV と外から届く機器を先に直す順番を、カタログの項目と件数とあわせてまとめた。"
+date: 2026-11-13T15:00:00Z
+pillar: vuln
+pick: 16           # おすすめの順。ファイアウォールの記事（つなぎ目の機器）と、SIEM の記事から広げた1本。仮の順。ムートンが決めたら直す
+related: ["firewall", "siem"]
+changes:
+  - date: 2026-11-13
+    note: 下書き。IT朝刊の「CISA が KEV に○件追加」「月例パッチ」と、ファイアウォールの記事のつなぎ目の機器から広げた
+---
+<p>脆弱性の情報は、どの弱点か（CVE）、起きたときにどれほど重いか（CVSS）、悪用されそうか（EPSS）、実際に悪用されたか（KEV）の四つに分けて読むと整理できる。直す順番は、CVSS の点数の高さより先に、KEV に載ったかと、その機器がインターネットから届くかで決める。IT のニュースに出る「CISA が KEV に○件追加」「月例パッチ」の読み方として、<a href="firewall.html">ファイアウォールの記事</a>のつなぎ目の機器の話から広げた。</p>
+
+<h2>CVE は、一つの弱点に付く番号と、その記録</h2>
+<p>CVE は、公開された脆弱性に一つずつ付く番号で、番号ごとに「CVE レコード」という記録がある。番号の形は「CVE-年-数字」で、数字は4桁から19桁まで、年は見つかった年か公開した年を表す<a href="#ref-1">[1]</a>。KEV のカタログ（2026年11月10日版）の1,779件にも、数字が6桁と7桁の番号が33件ある<a href="#ref-2">[2]</a>。</p>
+<p>番号を割り当てるのは、CNA（CVE Numbering Authority）と呼ばれる組織だ。CNA の欄には、製品・版・問題の種類・説明・参照を入れる決まりになっている。記録の状態は、公開（PUBLISHED）か取り下げ（REJECTED）のどちらかになる<a href="#ref-1">[1]</a>。Palo Alto Networks のファイアウォールの OS「PAN-OS」の CVE-2024-3400 は、作った会社自身が CNA として2024年4月5日に番号を予約し、4月12日に公開した<a href="#ref-3">[3]</a>。</p>
+<p>公式の一覧「CVE List」は、GitHub の cvelistV5 に JSON のファイルとして置かれ、約7分ごとに更新される<a href="#ref-4">[4]</a>。記録には CNA の欄のほかに、ほかの組織が情報を足す ADP の欄がある。CISA の ADP は、SSVC の判断材料と KEV に載った日付を足し、CNA が書いていない CVSS や CWE（弱点の種類の番号）を補うことがある。CNA の欄の値は書き換えない<a href="#ref-4">[4]</a><a href="#ref-5">[5]</a>。</p>
+
+<h2>CVSS のベースの値は、深刻さで、悪用の起こりやすさではない</h2>
+<p>CVSS は、脆弱性の性質を項目ごとに評価し、0.0〜10.0 の点数と項目の並び（ベクトル）で表す決まりで、FIRST が管理している<a href="#ref-6">[6]</a>。CVE-2024-3400 の記録には、v3.1 のベクトル <code>CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H</code> と、ベースの値 10.0（CRITICAL）が入っている<a href="#ref-3">[3]</a>。ネットワークから届き（AV:N）、条件は難しくなく（AC:L）、権限も利用者の操作も要らず（PR:N・UI:N）、影響が脆弱な部品の外へ及び（S:C）、機密性・完全性・可用性への影響がどれも高い（C:H・I:H・A:H）、という読み方になる。</p>
+<p>ベースの値は、時間や使う環境で変わらない、脆弱性そのものの性質を表す。v3.1 の利用者の手引きは「CVSS が測るのは深刻さで、リスクではない」という節を置き、リスクを評価するなら、外から届くかや脅威の状況のような CVSS の外の要素も考えるよう書いている<a href="#ref-7">[7]</a>。</p>
+<p>2023年11月1日に公開された v4.0 は、項目をベース・脅威・環境・補足の四つのまとまりに分けた<a href="#ref-6">[6]</a>。脅威のまとまりの「Exploit Maturity（悪用の成熟度）」は、悪用の情報がないときの既定値を「攻撃されている（Attacked）」と同じに扱い、最悪の場合を前提に点数を出す<a href="#ref-6">[6]</a>。v4.0 は、どのまとまりで出した点数かを CVSS-B（ベースだけ）・CVSS-BT・CVSS-BE・CVSS-BTE の名前で示すよう求め、製品の会社や NVD が出すのはふつう CVSS-B だと書いている<a href="#ref-6">[6]</a>。脅威と環境の値は、使う側が自分の環境に合わせて足すものとされている。</p>
+<p>点数の呼び方は、0.1〜3.9 が Low、4.0〜6.9 が Medium、7.0〜8.9 が High、9.0〜10.0 が Critical だ<a href="#ref-6">[6]</a>。</p>
+
+<h2>EPSS と SSVC は、悪用の見込みと状況を足す</h2>
+<p>EPSS は、FIRST が出している、CVE ごとに「これから30日のうちに悪用の動きが観測される確率」を見積もる仕組みだ。値は 0〜1 の確率と、ほかの CVE と比べた順位（パーセンタイル）で表され、毎日更新される<a href="#ref-8">[8]</a>。EPSS は、最悪の場合を前提にした CVSS-B に、起こりやすさの見積もりを足す。見積もりなので、値が低いことは、悪用されないことの約束ではない。</p>
+<p>CISA が CVE レコードに足す SSVC の判断材料は、三つの値でできている。悪用の状況（Exploitation：none・poc・active）、偵察から悪用までを自動にできるか（Automatable：yes・no）、悪用されたときに攻撃者が得る支配の大きさ（Technical Impact：partial・total）だ<a href="#ref-5">[5]</a>。CVE-2024-3400 には active・yes・total が入っている<a href="#ref-3">[3]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>脆弱性の情報が表すもの</caption><thead><tr><th scope="col">情報</th><th scope="col">表すもの</th><th scope="col">出すところ</th></tr></thead><tbody>
+<tr><th scope="row">CVE</th><td>どの弱点か（番号と記録）</td><td>CNA</td></tr>
+<tr><th scope="row">CVSS（ベース）</th><td>起きたときの深刻さ。0.0〜10.0</td><td>CNA・NVD など</td></tr>
+<tr><th scope="row">EPSS</th><td>30日のうちに悪用が観測される確率の見積もり</td><td>FIRST</td></tr>
+<tr><th scope="row">SSVC の判断材料</th><td>悪用の状況・自動にできるか・支配の大きさ</td><td>CISA（ADP）</td></tr>
+<tr><th scope="row">KEV</th><td>実際に悪用が確かめられたか</td><td>CISA</td></tr>
+</tbody></table></div>
+
+<h2>KEV は、実際に悪用が確かめられた脆弱性の一覧</h2>
+<p>KEV（Known Exploited Vulnerabilities）は、CISA が出している、実際に悪用が確かめられた脆弱性のカタログだ。載せる条件は、CVE の番号があること、悪用されている確かな証拠があること、直し方か避け方がはっきりしていることの三つで、悪用には試みも含む。スキャンや研究、PoC（動くことを示すだけのコード）の公開だけでは載らない<a href="#ref-9">[9]</a>。</p>
+<p>KEV は、2021年11月3日に、米国の連邦の行政機関に向けた拘束力のある指令 BOD 22-01 とともに始まった。BOD 22-01 は、カタログに載った脆弱性を期限までに直すよう機関に求め、最初の期限を、2021年以降の番号は2週間、それより前の番号は6か月とした<a href="#ref-10">[10]</a>。カタログでも、2021年11月3日に載った287件の期限は、2021年以降の番号の多くが14日、それより前の番号のほぼすべてが181日だ。2023〜2025年に足された618件では、578件が21日だった<a href="#ref-2">[2]</a>。</p>
+<p>2026年6月からは、BOD 26-04「Prioritizing Security Updates Based on Risk」が KEV の根拠になっている<a href="#ref-11">[11]</a><a href="#ref-12">[12]</a>。CISA の資料は、BOD 26-04 を、KEV の上に立って、リスクの高い脆弱性を先に直し、低いものは後に回せるようにする指令と説明し、直す期限は、KEV に載った時と、機関が自分の機器で見つけた時の早いほうから数えるとしている<a href="#ref-12">[12]</a>。カタログでは、2026年6月11日から11月10日までに足された162件のうち、126件が3日、36件が14日の期限だった<a href="#ref-2">[2]</a>。指令が縛るのは米国の連邦の機関だけで、ほかの組織には、内容を読むことを勧めている<a href="#ref-12">[12]</a>。</p>
+
+<h2>KEV のカタログは、12の項目で書かれている</h2>
+<p>KEV は JSON と CSV で配られ、GitHub の cisagov/kev-data に、項目の意味を決めたスキーマと一緒に置かれている<a href="#ref-2">[2]</a>。全体には、版（catalogVersion）・出した日時（dateReleased）・件数（count）が付き、2026年11月10日の版（2026.11.10）は1,779件だった。一件ごとの項目は次の12個だ<a href="#ref-2">[2]</a>。</p>
+<ul>
+<li>cveID・vendorProject・product・vulnerabilityName・shortDescription：番号、作った会社、製品、名前、説明</li>
+<li>dateAdded：カタログに足された日。ニュースの「○件追加」は、この日付が同じ件数にあたる。2026年11月10日は6件、11月9日は4件だった</li>
+<li>requiredAction・dueDate：求める対応と、連邦の機関の期限。2026年6月11日からの162件にはどれも、機器ごとにインターネットへの出方を評価するよう書かれている</li>
+<li>knownRansomwareCampaignUse：ランサムウェアの攻撃に使われたと分かっていれば Known、確かめられていなければ Unknown。1,779件のうち361件が Known</li>
+<li>forensicTriage：BOD 26-04 のもとで、フォレンジックの確認（すでに入られていないかの調べ）を求めるなら Yes。103件が Yes</li>
+<li>notes・cwes：製品の会社の告知や NVD へのリンクと、弱点の種類（CWE）。CWE-20（入力の確かめの不足）が119件、CWE-78（OS コマンドの注入）が115件と多い</li>
+</ul>
+
+<h2>日本では、JVN と IPA の緊急対策情報を見る</h2>
+<p>日本の製品やサイトの脆弱性は、2004年7月に始まった「情報セキュリティ早期警戒パートナーシップ」の流れで扱われる。IPA が届け出を受け付け、JPCERT/CC が製品の会社との調整をし、修正ができると、脆弱性と対策の情報が JVN（Japan Vulnerability Notes）で公表される<a href="#ref-13">[13]</a>。弱点を見つけたときは、公開せずに、作った会社か IPA の窓口に知らせる。KEV の notes に JVN の頁が並ぶ項目もあり、2026年11月10日に足された CVE-2026-111793 には JVNVU93403064 が載っている<a href="#ref-2">[2]</a>。</p>
+<p>IPA は、早めの対策が要るものを「重要なセキュリティ情報」として出す。2026年10月の「Microsoft 製品の脆弱性対策について」は、10月14日（日本時間）に公表された更新のうち、Windows のシェルの CVE-2026-96951 を、Microsoft が悪用を確認したものとして挙げ、至急の更新を呼びかけている<a href="#ref-14">[14]</a>。同じ番号は、米国の10月13日に KEV に足され、期限は3日、forensicTriage は Yes だった<a href="#ref-2">[2]</a>。</p>
+
+<h2>月例パッチは、決まった日にまとめて出る</h2>
+<p>Microsoft のセキュリティ更新は、ふつう毎月第2火曜日（米国の日付）に出る。日本の日付では翌日の水曜日になる。Microsoft の手引きは、この日に合わせて本番の前に数日の確かめの期間を置く例を示し、緊急の修正を予定の外で入れる手順も決めておくよう勧めている<a href="#ref-15">[15]</a>。</p>
+<p>月例パッチの日には、悪用が確かめられたものが KEV に足されることが多い。2026年は、8月11日・9月8日・10月13日・11月10日の第2火曜日に、それぞれ Microsoft の脆弱性が KEV に入った<a href="#ref-2">[2]</a>。先に見るのは、月例パッチの件数より、その中で悪用が確かめられたものだ。</p>
+
+<h2>直す順番は、悪用の事実と、外から届くかで決める</h2>
+<p>先に直すのは、KEV に載ったもののうち、インターネットから直接届く機器だ。VPN の入口やファイアウォール、メールの中継の機器は、外と内の<a href="firewall.html">つなぎ目</a>に置かれ、インターネットのどこからでも接続を試せる。2026年に KEV に足された項目にも、SonicWall の SSL VPN、Ivanti Connect Secure、Cisco の Secure Firewall ASA と FTD、Palo Alto Networks の PAN-OS、Citrix NetScaler、Check Point の Security Gateway、Barracuda のメールのゲートウェイが並ぶ<a href="#ref-2">[2]</a>。</p>
+<p>CVE-2024-3400 は、PAN-OS の GlobalProtect（VPN の機能）にあり、認証なしでファイアウォールの上で root の権限のコマンドを動かせる弱点だった。CVE の公開と同じ2024年4月12日に KEV に載り、期限は7日、ランサムウェアへの利用は Known になっている<a href="#ref-2">[2]</a><a href="#ref-3">[3]</a>。修正はすでに出ている。</p>
+<p>管理画面も同じだ。CISA の BOD 23-02 は、連邦の機関に、インターネットから届く管理画面を、見つけてから14日のうちに外から外すか、別の仕組みで接続を制限するよう求めている<a href="#ref-12">[12]</a>。</p>
+<p>KEV にないものは、CVSS のベースの値に、自分の環境の事情を足して並べる。インターネットから届くか、その機器がどれほど大切か、EPSS の値、SSVC の Automatable と Technical Impact だ<a href="#ref-5">[5]</a><a href="#ref-6">[6]</a><a href="#ref-8">[8]</a>。どの順番でも、自分が何の製品のどの版を使っているかの一覧がなければ、KEV や告知と照らし合わせられない。</p>
+<p>直したあとは、直す前に入られていないかを確かめる。KEV の forensicTriage が Yes の項目は、BOD 26-04 がこの確認を求めているものだ<a href="#ref-2">[2]</a>。その機器のログを <a href="siem.html">SIEM</a> に集めていれば、告知に書かれた時期までさかのぼって、見慣れない接続や管理者の操作を探せる（道具は <a href="siem-ecosystem.html">SIEM のまわりの記事</a>）。</p>
+
+<h2>自分の環境で確かめる</h2>
+<p>KEV と CVE レコードは公開のデータなので、自分のパソコンで読める。試すのは自分の機械と、許された演習の環境だけにし、脆弱性を他人の機器で試すことはしない。</p>
+<p><code>curl -sO https://raw.githubusercontent.com/cisagov/kev-data/main/known_exploited_vulnerabilities.json</code> でカタログを取り、<code>jq -r '.catalogVersion, .count' known_exploited_vulnerabilities.json</code> を実行すると、版と件数が出る。2026年11月10日の版では <code>2026.11.10</code> と <code>1779</code> だった<a href="#ref-2">[2]</a>。</p>
+<p><code>jq -r '.vulnerabilities[] | select(.dateAdded &gt;= "2026-11-09") | [.dateAdded, .cveID, .product, .dueDate] | @tsv' known_exploited_vulnerabilities.json</code> で、11月9日からの追加が1件1行で並ぶ。select の条件を vendorProject（作った会社）に変えれば、自分の使う製品の項目だけが残る。</p>
+<p>CVE レコードは、cvelistV5 の <code>cves/2024/3xxx/CVE-2024-3400.json</code> のように、年と番号の上の桁で分けたフォルダーに置かれている。<code>jq '.containers.cna.metrics'</code> で CNA の CVSS が、<code>jq '.containers.adp[].metrics'</code> で CISA が足した SSVC と KEV の日付が出る<a href="#ref-3">[3]</a><a href="#ref-5">[5]</a>。</p>
+
+{% include "partials/article-end.njk" %}
+
+<section class="rn-refs" aria-labelledby="refs-h">
+<h2 id="refs-h">参考文献</h2>
+<ol>
+<li id="ref-1">CVE Program「CVE Record Format」のスキーマ（CVE_Record_Format.json。cveId の形、CNA の欄、PUBLISHED と REJECTED）。<a href="https://github.com/CVEProject/cve-schema/blob/main/schema/CVE_Record_Format.json">GitHub</a></li>
+<li id="ref-2">CISA「Known Exploited Vulnerabilities Catalog」（cisagov/kev-data の known_exploited_vulnerabilities.json・スキーマ・README。2026年11月10日の版 2026.11.10 で数えた）。<a href="https://github.com/cisagov/kev-data">GitHub</a></li>
+<li id="ref-3">CVE-2024-3400 の CVE レコード（cvelistV5 の JSON。CNA は Palo Alto Networks、CISA の ADP の SSVC と KEV の欄を含む）。<a href="https://www.cve.org/CVERecord?id=CVE-2024-3400">CVE</a></li>
+<li id="ref-4">CVE Program「CVE List V5」（cvelistV5 の README。CVE List、CNA・CVE Program・ADP の欄、CISA の ADP）。<a href="https://github.com/CVEProject/cvelistV5">GitHub</a></li>
+<li id="ref-5">CISA「CISA Vulnrichment」（README。SSVC の判断材料、KEV の欄、CWE と CVSS を足す条件）。<a href="https://github.com/cisagov/vulnrichment">GitHub</a></li>
+<li id="ref-6">FIRST（2023）Common Vulnerability Scoring System version 4.0: Specification Document（文書の版 1.2。四つのまとまり、名前の付け方、Exploit Maturity、評価の段階。GitHub の FIRSTdotorg/cvss-resources の原稿で読んだ）。<a href="https://www.first.org/cvss/v4-0/specification-document">FIRST</a></li>
+<li id="ref-7">FIRST「CVSS v3.1 User Guide」（2.1 節 CVSS Measures Severity, not Risk）。<a href="https://www.first.org/cvss/v3-1/user-guide">FIRST</a></li>
+<li id="ref-8">FIRST「Exploit Prediction Scoring System (EPSS)」と「The EPSS Model」。<a href="https://www.first.org/epss/">FIRST</a></li>
+<li id="ref-9">CISA「Reducing the Significant Risk of Known Exploited Vulnerabilities」（KEV に載せる条件）。<a href="https://www.cisa.gov/known-exploited-vulnerabilities">CISA</a></li>
+<li id="ref-10">CISA（2021）BOD 22-01: Reducing the Significant Risk of Known Exploited Vulnerabilities。<a href="https://www.cisa.gov/news-events/directives/bod-22-01-reducing-significant-risk-known-exploited-vulnerabilities">CISA</a></li>
+<li id="ref-11">CISA（2026）BOD 26-04: Prioritizing Security Updates Based on Risk。<a href="https://www.cisa.gov/news-events/directives/bod-26-04-prioritizing-security-updates-based-risk">CISA</a></li>
+<li id="ref-12">CISA「Cyber Hygiene」の報告と通知の原稿（cisagov/cyhy-reports の report.mustache の BOD 26-04 と BOD 23-02 の節、cisagov/cyhy-mailer の CyhyNotificationMessage.py）。<a href="https://github.com/cisagov/cyhy-reports">GitHub</a></li>
+<li id="ref-13">IPA「情報セキュリティ早期警戒パートナーシップガイドライン」の概要。<a href="https://www.ipa.go.jp/security/guide/vuln/ug65p90000019by0-att/partnership_guideline_overview_jp.pdf">IPA（PDF）</a></li>
+<li id="ref-14">IPA「Microsoft 製品の脆弱性対策について(2026年10月)」。<a href="https://www.ipa.go.jp/security/security-alert/2026/1014-ms.html">IPA</a></li>
+<li id="ref-15">Microsoft Learn「Scalable Windows virtual machine patch management」（GitHub の MicrosoftDocs/architecture-center の原稿）。<a href="https://learn.microsoft.com/azure/architecture/virtual-machines/patch-management">Microsoft Learn</a></li>
+</ol>
+</section>
+
+{% include "partials/reading-next.njk" %}

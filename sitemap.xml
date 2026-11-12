@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://moutonarchive.com/</loc></url>
+  <url><loc>https://moutonarchive.com/rmm.html</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://moutonarchive.com/ntlm.html</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://moutonarchive.com/kev.html</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://moutonarchive.com/mfa.html</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://moutonarchive.com/linux-log.html</loc><lastmod>2026-11-13</lastmod></url>
+  <url><loc>https://moutonarchive.com/windows-event-log.html</loc><lastmod>2026-11-13</lastmod></url>
   <url><loc>https://moutonarchive.com/http.html</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://moutonarchive.com/tls.html</loc><lastmod>2026-11-07</lastmod></url>
   <url><loc>https://moutonarchive.com/dns-security.html</loc><lastmod>2026-11-07</lastmod></url>

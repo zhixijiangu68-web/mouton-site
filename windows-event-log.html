@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない — ムートン</title>
+<meta name="description" content="Windows のセキュリティのログに何が残るかは、監査ポリシーで決まる。4624・4625 とログオンの種類、4688 のコマンドライン、Sysmon、ログの消去の見つけ方、SIEM への送り方を Microsoft の文書で確かめた。">
+<link rel="canonical" href="https://moutonarchive.com/windows-event-log.html">
+<meta property="og:title" content="Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない — ムートン">
+<meta property="og:description" content="Windows のセキュリティのログに何が残るかは、監査ポリシーで決まる。4624・4625 とログオンの種類、4688 のコマンドライン、Sysmon、ログの消去の見つけ方、SIEM への送り方を Microsoft の文書で確かめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/windows-event-log.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/windows-event-log.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない","description":"Windows のセキュリティのログに何が残るかは、監査ポリシーで決まる。4624・4625 とログオンの種類、4688 のコマンドライン、Sysmon、ログの消去の見つけ方、SIEM への送り方を Microsoft の文書で確かめた。","inLanguage":"ja","datePublished":"2026-11-13","dateModified":"2026-11-13","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/windows-event-log.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない","item":"https://moutonarchive.com/windows-event-log.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">守る</p>
+  <h1 class="rn-title">Windows の<wbr>セキュリティの<wbr>ログには、<wbr>監査ポリシーで<wbr>決めた<wbr>ことしか<wbr>残らない</h1>
+  <p class="rn-subtitle">ログの種類、監査ポリシー、4624・4625 とログオンの種類、4672・4688・4720・1102・7045、Sysmon、SOC での見方と SIEM への送り方を、Microsoft の文書と公開の検知ルールで確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-13">2026年11月13日</time></span></p>
+  <div class="rn-body">
+<p>Windows は、ログオンやプロセスの起動のような出来事を、番号（イベント ID）つきでイベントログに書く。何が残るかは監査ポリシーと Sysmon の設定で決まり、記録の対象にしていない出来事は残らない。<a href="siem.html">SIEM の記事</a>で触れた 4624・4625 と、<a href="siem-detection.html">検知ルールの記事</a>の 4720・1102 を、ここで一つずつ読む。Linux の側は<a href="linux-log.html">Linux のログの記事</a>、NTLM の 4776 は<a href="ntlm.html">NTLM の記事</a>、7045 を遠隔操作ツールの悪用の手がかりにする例は<a href="rmm.html">RMM の記事</a>に書いた。</p>
+
+<details class="rn-toc"><summary>目次（13）</summary><ol><li><a href="#s-1">イベントログは、ログの名前とイベント ID で探す</a></li><li><a href="#s-2">何を残すかは、監査ポリシーで決まる</a></li><li><a href="#s-3">4624 は成功、4625 は失敗。ログオフは 4634 と 4647</a></li><li><a href="#s-4">ログオンの種類で、どう入ったかが分かる</a></li><li><a href="#s-5">4672 は管理者級の権限、4720〜4756 はアカウントとグループの変更</a></li><li><a href="#s-6">4688 は、設定しなければコマンドラインを残さない</a></li><li><a href="#s-7">Sysmon は、プロセスと通信を細かく残す</a></li><li><a href="#s-8">新しいサービスとログの消去は、それだけで目を向ける</a></li><li><a href="#s-9">SOC では、数と時刻と前後の出来事で見る</a></li><li><a href="#s-10">SIEM へは、消される前に送る</a></li><li><a href="#s-11">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">イベントログは、<wbr>ログの<wbr>名前と<wbr>イベント ID で<wbr>探す</h2>
+<p>Windows の基本のログは三つある。Application はアプリケーションが書く出来事、Security はログオンの成功と失敗やファイルの操作のような監査の出来事、System はドライバーの読み込みの失敗のような OS の部品の出来事を残す。ファイルは、既定では %SystemRoot%\system32\winevt\logs\ の下に置かれる<a href="#ref-1">[1]</a>。</p>
+<p>Windows Vista でイベントログの仕組みが作り直され、出し手（プロバイダー）が自分のログ（チャネル）を定義できるようになった。チャネルには Admin・Operational・Analytic・Debug の四つの種類がある<a href="#ref-1">[1]</a><a href="#ref-2">[2]</a>。Sysmon は Microsoft-Windows-Sysmon/Operational のチャネルに書く<a href="#ref-3">[3]</a>。</p>
+<p>一つのイベントには、出し手、イベント ID、時刻、端末名、チャネルと、イベントごとの項目（EventData）が入る。Splunk が公開している 4624 の見本では、出し手が Microsoft-Windows-Security-Auditing、チャネルが Security で、ユーザー名やログオンの種類は EventData の中にある<a href="#ref-4">[4]</a>。番号はログと出し手ごとに決まるので、ログの名前と組にして読む。</p>
+
+<h2 id="s-2">何を<wbr>残すかは、<wbr>監査ポリシーで<wbr>決まる</h2>
+<p>Security のログに何が残るかは、監査ポリシーで決まる。Microsoft の「Events to Monitor」は、監査に関わるグループポリシーの多くが既定で「未構成」で、残る出来事は Windows の版や種類で変わると書き、Advanced Audit Policy Configuration で監査を設定するよう勧めている<a href="#ref-5">[5]</a>。</p>
+<p>Windows Vista と Windows Server 2008 から、監査の大きな分類の下に細かい分類（サブカテゴリー）ができ、それぞれで成功・失敗・両方を選べるようになった。Logon の分類の出来事は、ログオンされた側の端末に残る。共有フォルダーへのネットワーク越しのログオンなら、共有を持つ端末の側だ。ドメインのアカウントの資格情報の確かめ（Credential Validation）は、ドメインコントローラーに残る<a href="#ref-6">[6]</a>。</p>
+<p>いま効いている設定は <code>auditpol /get /category:*</code> で見られる。グループポリシーの画面は有効な監査の状態を正しく表さないことがあり、auditpol は正しく表すと Microsoft は書いている<a href="#ref-6">[6]</a><a href="#ref-7">[7]</a>。細かい分類の設定は、古い基本の監査ポリシーで上書きされることがあり、上書きされると 4719 が残る<a href="#ref-8">[8]</a>。</p>
+
+<h2 id="s-3">4624 は<wbr>成功、<wbr>4625 は<wbr>失敗。<wbr>ログオフは<wbr> 4634 と<wbr> 4647</h2>
+<p>ログオンの記録の中心は、4624（アカウントがログオンした）と 4625（ログオンに失敗した）だ。ログオフは 4634（ログオフした）と 4647（利用者がログオフを始めた）、資格情報を明示して使ったログオンの試みは 4648、アカウントのロックアウトは 4740 で残る<a href="#ref-5">[5]</a>。</p>
+<p>4624 で読む主な項目は、ログオンしたアカウント（TargetUserName）、ログオンの種類（LogonType）、相手のアドレス（IpAddress）と端末名（WorkstationName）、認証の方式（AuthenticationPackageName）、ログオン ID（TargetLogonId）だ<a href="#ref-4">[4]</a>。Microsoft の 4624 の説明では、ログオン ID は、同じ ID を持つ近くの出来事（たとえば 4672）と結びつけるための値とされている<a href="#ref-9">[9]</a>。</p>
+<p>4625 には、失敗の理由が Status と SubStatus のコードで入る<a href="#ref-4">[4]</a>。公開の検知ルール集 Sigma には、無効にされたアカウント（0xC0000072）や、許されていない端末から（0xC0000070）のような、ふだんは出にくい理由の失敗を拾うルールがある<a href="#ref-10">[10]</a>。</p>
+
+<h2 id="s-4">ログオンの<wbr>種類で、<wbr>どう<wbr>入ったかが<wbr>分かる</h2>
+<p>4624 と 4625 の LogonType は、ログオンのしかたを表す番号で、Windows の SECURITY_LOGON_TYPE の値に合う<a href="#ref-11">[11]</a>。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>主なログオンの種類（SECURITY_LOGON_TYPE）</caption><thead><tr><th scope="col">番号</th><th scope="col">名前</th><th scope="col">意味</th></tr></thead><tbody>
+<tr><th scope="row">2</th><td>Interactive</td><td>対話型のログオン</td></tr>
+<tr><th scope="row">3</th><td>Network</td><td>ネットワーク越しのログオン</td></tr>
+<tr><th scope="row">4</th><td>Batch</td><td>バッチの処理のためのログオン</td></tr>
+<tr><th scope="row">5</th><td>Service</td><td>サービスのアカウントのログオン</td></tr>
+<tr><th scope="row">7</th><td>Unlock</td><td>画面のロックの解除</td></tr>
+<tr><th scope="row">8</th><td>NetworkCleartext</td><td>平文の資格情報によるネットワーク越しのログオン</td></tr>
+<tr><th scope="row">9</th><td>NewCredentials</td><td>今のトークンを複製し、外への接続にだけ別の資格情報を使う</td></tr>
+<tr><th scope="row">10</th><td>RemoteInteractive</td><td>リモートからの対話型（ターミナルサーバーのセッション）</td></tr>
+<tr><th scope="row">11</th><td>CachedInteractive</td><td>ネットワークに出ず、キャッシュした資格情報で確かめる</td></tr>
+</tbody></table></div>
+<p>3 は、共有フォルダーを開くようなネットワーク越しのログオンで、共有を持つ側に残る<a href="#ref-6">[6]</a>。10 はリモートデスクトップで、Microsoft はリモートデスクトップによるログオンを「リモートの対話型」と呼んでいる<a href="#ref-12">[12]</a>。MITRE の分析の例 CAR-2016-04-005 も、「4624 で LogonType が 10」をリモートデスクトップのログオンとして拾い、許された端末からかを比べる<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-5">4672 は<wbr>管理者級の<wbr>権限、<wbr>4720〜4756 は<wbr>アカウントと<wbr>グループの<wbr>変更</h2>
+<p>4672 は、新しいログオンに特別な権限が割り当てられたことを表す<a href="#ref-5">[5]</a>。特別なログオンは、管理者と同じ強さの権限を持つログオンのことだ<a href="#ref-6">[6]</a>。Splunk の説明では、4672 は管理者の権限を持つ利用者のログオンで残り、権限の一覧が PrivilegeList に入る<a href="#ref-4">[4]</a>。4624 とログオン ID で結べば、権限の強いログオンだけを取り出せる<a href="#ref-9">[9]</a>。</p>
+<p>アカウントの作成は 4720、削除は 4726、セキュリティのグループへのメンバーの追加は、グローバルのグループが 4728、ローカルのグループが 4732、ユニバーサルのグループが 4756 だ<a href="#ref-5">[5]</a>。JPCERT/CC の調査の道具 LogonTracer も、これらの番号を扱う<a href="#ref-14">[14]</a>。Sigma には、ローカルの Administrators のグループ（SID が S-1-5-32-544）へのメンバーの追加を 4732 で拾うルールがあり、正規の管理の作業を誤検知の候補に挙げている<a href="#ref-10">[10]</a>。</p>
+<p>「Events to Monitor」は、重さ「高」は1件でも調べ、「中」と「低」は思いがけないときや数がふだんを大きく超えたときに調べるとし、4624・4625・4672・4688・4720・4732 を「低」、監査ポリシーの変更（4719）を「高」としている<a href="#ref-5">[5]</a>。</p>
+
+<h2 id="s-6">4688 は、<wbr>設定しなければ<wbr>コマンドラインを<wbr>残さない</h2>
+<p>4688 は、新しいプロセスが作られたことを表す。残すには Detailed Tracking の分類の Audit Process Creation を有効にする必要があり、既定は未構成だ<a href="#ref-8">[8]</a>。</p>
+<p>コマンドラインまで残すには、さらに Include command line in process creation events を有効にする。既定では有効になっていない。有効にすると、すべてのプロセスのコマンドラインが平文で Security のログに入る<a href="#ref-8">[8]</a>。Splunk の 4688 の見本では、起動したプログラム（NewProcessName）、親のプログラム（ParentProcessName）、コマンドライン（CommandLine）が並ぶ<a href="#ref-4">[4]</a>。</p>
+<p>Microsoft は、有効にすると Security のログを読める人なら誰もがコマンドラインを読め、そこにはパスワードや利用者のデータが入りうると注意している<a href="#ref-8">[8]</a>。残すかどうかは、ログを読める人をしぼることと一緒に決める。</p>
+
+<h2 id="s-7">Sysmon は、<wbr>プロセスと<wbr>通信を<wbr>細かく<wbr>残す</h2>
+<p>Sysmon（System Monitor）は Sysinternals の道具で、サービスとドライバーとして動き、出来事を Windows のイベントログに書く。2026年9月10日に公開された版は 15.22 だ<a href="#ref-3">[3]</a>。</p>
+<p>プロセスの起動（イベント ID 1）には、本人と親のプロセスのコマンドライン、実行ファイルのハッシュ、ProcessGuid が入る。ProcessGuid は、Windows がプロセス ID を使い回しても出来事をつなげるための値だ。ほかに、ネットワークの接続（3）、ファイルの作成（11）、レジストリの値の書き込み（13）、DNS の問い合わせ（22）、ファイルの削除（23）などがある。3 は既定では残らない<a href="#ref-3">[3]</a>。</p>
+<p>何を残すかは XML の設定ファイルで、出来事の種類ごとに含める・除くを決める。時刻は UTC で入る。Sysmon は出来事を分析せず、攻撃者から自分を隠そうともしないので、分析は SIEM の側でする<a href="#ref-3">[3]</a>。</p>
+
+<h2 id="s-8">新しい<wbr>サービスと<wbr>ログの<wbr>消去は、<wbr>それだけで<wbr>目を<wbr>向ける</h2>
+<p>サービスの追加は、System のログに 7045（出し手は Service Control Manager）として残り、サービスの名前（ServiceName）、実行ファイルのパス（ImagePath）、起動の種類（StartType）、動かすアカウント（AccountName）が入る<a href="#ref-4">[4]</a>。Security のログの 4697 も、サービスのインストールを表す<a href="#ref-5">[5]</a>。MITRE ATT&amp;CK の検知の例（DET0552）は、C:\Users\ や C:\Temp\ のようなふだん使わない場所の実行ファイルを目印にしている<a href="#ref-15">[15]</a>。Sigma にも、7045 の ImagePath に一時フォルダーのパスなどが入るものを拾うルールがある<a href="#ref-10">[10]</a>。</p>
+<p>Security のログを消すと 1102（監査のログが消された）が残り、「Events to Monitor」での重さは「中〜高」だ<a href="#ref-5">[5]</a>。ほかのログを消したときは、System のログに 104 が残る<a href="#ref-10">[10]</a>。MITRE の CAR-2016-04-002 は、ふだんの運用でログが消されることは考えにくいとし、ログを1か所に集めておけば痕跡を消すのがずっと難しくなると書いている<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-9">SOC では、<wbr>数と<wbr>時刻と<wbr>前後の<wbr>出来事で<wbr>見る</h2>
+<p>1件では判断しにくい出来事も、数・時刻・前後の出来事を合わせると意味が出る。MITRE ATT&amp;CK の検知の例は次のとおりだ<a href="#ref-15">[15]</a>。</p>
+<ul>
+<li>失敗の連続：同じか似たアカウントへの 4625 が、一つか複数の送り元から続く（パスワードの推測）。一つか少数のパスワードで、多くのアカウントに失敗が広がる（パスワードスプレー。4625・4771・4648）</li>
+<li>ふだんと違うログオン：見慣れないログオンの種類や、時刻・場所の食い違い。ローカルのアカウントが業務時間の外に使われる（4624・4648・4672）</li>
+<li>リモートデスクトップのあとの動き：リモートデスクトップのログオンの直後（例として5分）に、cmd.exe や powershell.exe のようなプロセスが動く</li>
+</ul>
+<p>深夜の管理者のログオンは、時刻だけでは決められない。夜の保守の作業もあるので、ATT&amp;CK は業務時間の幅や、リモートデスクトップを使う人の範囲を、環境に合わせて調整する項目にしている<a href="#ref-15">[15]</a>。Splunk の公開ルールには、ドメインコントローラーの 4776 で、存在しないユーザー名での失敗（Status が 0xc0000064）が一つの端末からふだんより大きく増えたことを拾うものもある<a href="#ref-16">[16]</a>。失敗のあとの成功を見るルールの形は、<a href="siem-detection.html">検知ルールの記事</a>に書いた。</p>
+
+<h2 id="s-10">SIEM へは、<wbr>消される前に<wbr>送る</h2>
+<p>端末の中のログは、その端末で消せる。だから、出来事が起きたら端末の外へ送っておく。</p>
+<p>Windows には、ほかの端末のイベントを受け取って集める仕組み（Windows Event Collector）がある。送る側をグループポリシーで設定する「送る側から始める購読」と、送る側を全部指定する「集める側から始める購読」があり、転送されたイベントは中身を失わずに集める側のログに入る<a href="#ref-17">[17]</a>。Sysmon の文書は、Windows Event Collection か SIEM のエージェントで集めて分析するよう書いている<a href="#ref-3">[3]</a>。</p>
+<p>Splunk では、Security と System のログは Splunk Add-on for Microsoft Windows、Sysmon のログは Splunk Add-on for Sysmon を使い、XML の形（sourcetype が XmlWinEventLog）で取り込む<a href="#ref-4">[4]</a>。どのログから SIEM に入れるかの順は、<a href="siem.html">SIEM の記事</a>に書いた。</p>
+
+<h2 id="s-11">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>イベントログは、自分の Windows の端末か、自分で作った演習の仮想マシンで見られる。他人の端末や、許可のない環境では試さない。</p>
+<p>監査の設定は <code>auditpol /get /category:*</code> で一覧になる<a href="#ref-6">[6]</a>。ログの一覧は <code>wevtutil el</code>、Security のログの新しい5件は <code>wevtutil qe Security /c:5 /rd:true /f:text</code> で読める<a href="#ref-18">[18]</a>。PowerShell なら <code>Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4625}</code> で、失敗したログオンだけを取り出せる。管理者として動かさないと、ログを読めないというエラーが出ることがある<a href="#ref-19">[19]</a>。サインインの画面で違うパスワードを入れてから、4625 が残ったか、LogonType がいくつかを見る。</p>
+<p>Sysmon は、演習用の仮想マシンに <code>sysmon -accepteula -i</code> で入れられる。既定の設定ではネットワークの接続（3）は残らないので、残すには設定ファイルを使う<a href="#ref-3">[3]</a>。入れたら、Sysmon/Operational のログのイベント ID 1 に、親のプロセスとコマンドラインが入っているかを見る。</p>
+
+
+
+<p class="read-mark" data-total="21" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.13</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="siem.html">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</a><p class="rn-list-summary">SIEM がするのは、集める・そろえる・つなげる・知らせる・残すまで。止めるのは SOAR などの別の仕組みと人。どのログを入れるかで、見えるものが決まる。</p></li><li class="rn-item"><a class="rn-list-title" href="http.html">HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う</a><p class="rn-list-summary">HTTP は一つの要求に一つの応答を返し、要求どうしを覚えていない。前の要求とのつながりは Cookie が運ぶので、Cookie の属性と HTTPS が守りの土台になる。アクセスログの一行から読めることと、SIEM で見る観点もまとめた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（19）</h2></summary>
+<ol>
+<li id="ref-1">Microsoft「Eventlog Key」（Application・Security・System のログと、ログのファイルの既定の置き場所。GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/eventlog/eventlog-key">Microsoft Learn</a></li>
+<li id="ref-2">Microsoft「Defining Channels」（チャネルの四つの種類。GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/wes/defining-channels">Microsoft Learn</a></li>
+<li id="ref-3">Russinovich・Garnier「Sysmon v15.22」（2026年9月10日。イベント ID の一覧、保存先、設定ファイル。GitHub の原稿）。<a href="https://learn.microsoft.com/sysinternals/downloads/sysmon">Microsoft Learn</a></li>
+<li id="ref-4">Splunk「security_content」のデータソースの定義（Windows Event Log Security 4624・4625・4672・4688、System 7045、Sysmon EventID 1。項目の一覧と見本のイベント）。<a href="https://github.com/splunk/security_content/tree/develop/data_sources">GitHub</a></li>
+<li id="ref-5">Microsoft「Appendix L: Events to Monitor」（イベント ID の一覧と重さ）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/appendix-l--events-to-monitor">Microsoft Learn</a></li>
+<li id="ref-6">Microsoft「Monitoring Active Directory for Signs of Compromise」（監査の分類と細かい分類、auditpol）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/monitoring-active-directory-for-signs-of-compromise">Microsoft Learn</a></li>
+<li id="ref-7">Microsoft「auditpol get」。<a href="https://learn.microsoft.com/windows-server/administration/windows-commands/auditpol-get">Microsoft Learn</a></li>
+<li id="ref-8">Microsoft「Command line process auditing」（4688 とコマンドラインの記録、既定の設定、4719）。<a href="https://learn.microsoft.com/windows-server/identity/ad-ds/manage/component-updates/command-line-process-auditing">Microsoft Learn</a></li>
+<li id="ref-9">Microsoft「4624(S): An account was successfully logged on」（ログオン ID の説明）。<a href="https://learn.microsoft.com/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4624">Microsoft Learn</a></li>
+<li id="ref-10">SigmaHQ のルール「Account Tampering - Suspicious Failed Logon Reasons」「User Added to Local Administrator Group」「Suspicious Service Installation」「Security Eventlog Cleared」「Eventlog Cleared」。<a href="https://github.com/SigmaHQ/sigma/tree/master/rules/windows/builtin">GitHub</a></li>
+<li id="ref-11">Microsoft「SECURITY_LOGON_TYPE enumeration (ntsecapi.h)」。<a href="https://learn.microsoft.com/windows/win32/api/ntsecapi/ne-ntsecapi-security_logon_type">Microsoft Learn</a></li>
+<li id="ref-12">Microsoft「Windows logon scenarios」（対話型・リモートの対話型・ネットワークのログオン）。<a href="https://learn.microsoft.com/windows-server/security/windows-authentication/windows-logon-scenarios">Microsoft Learn</a></li>
+<li id="ref-13">MITRE Cyber Analytics Repository「CAR-2016-04-005: Remote Desktop Logon」「CAR-2016-04-002: User Activity from Clearing Event Logs」。<a href="https://car.mitre.org/analytics/CAR-2016-04-005/">MITRE CAR（リモートデスクトップ）</a>。<a href="https://car.mitre.org/analytics/CAR-2016-04-002/">MITRE CAR（ログの消去）</a></li>
+<li id="ref-14">JPCERT/CC「LogonTracer」（README。扱うイベント ID）。<a href="https://github.com/JPCERTCC/LogonTracer">GitHub</a></li>
+<li id="ref-15">MITRE ATT&amp;CK の検知の戦略 DET0551（パスワードの推測）・DET0487（パスワードスプレー）・DET0560 と DET0407（正規のアカウントの悪用）・DET0327（リモートデスクトップ）・DET0552（Windows のサービス）。<a href="https://attack.mitre.org/detectionstrategies/DET0551">DET0551</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0487">DET0487</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0560">DET0560</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0407">DET0407</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0327">DET0327</a>。<a href="https://attack.mitre.org/detectionstrategies/DET0552">DET0552</a></li>
+<li id="ref-16">Splunk「security_content」の検知ルール「Windows Unusual Count Of Invalid Users Failed To Auth Using NTLM」。<a href="https://github.com/splunk/security_content/blob/develop/detections/endpoint/windows_unusual_count_of_invalid_users_failed_to_auth_using_ntlm.yml">GitHub</a></li>
+<li id="ref-17">Microsoft「Windows Event Collector」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows/win32/wec/windows-event-collector">Microsoft Learn</a></li>
+<li id="ref-18">Microsoft「wevtutil」。<a href="https://learn.microsoft.com/windows-server/administration/windows-commands/wevtutil">Microsoft Learn</a></li>
+<li id="ref-19">Microsoft「Get-WinEvent」（PowerShell 5.1。FilterHashtable）。<a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.diagnostics/get-winevent?view=powershell-5.1">Microsoft Learn</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="siem.html" data-slug="siem"><span class="reading-card-title">SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</span></a><a class="reading-card" href="http.html" data-slug="http"><span class="reading-card-title">HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

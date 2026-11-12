@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="ja" data-root="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>document.documentElement.classList.add('js')</script>
+<title>NTLM は、パスワードがなくてもハッシュで答えられる。Windows は、その答えを外の共有にも自動で送る — ムートン</title>
+<meta name="description" content="NTLM は、チャレンジに NT ハッシュから作った応答で答える。ハッシュがあれば応答は作れ、Windows は外の SMB や WebDAV にも認証を自動で送る。漏れる仕組みと、署名・EPA・445 番・ログでの守り方をまとめた。">
+<link rel="canonical" href="https://moutonarchive.com/ntlm.html">
+<meta property="og:title" content="NTLM は、パスワードがなくてもハッシュで答えられる。Windows は、その答えを外の共有にも自動で送る — ムートン">
+<meta property="og:description" content="NTLM は、チャレンジに NT ハッシュから作った応答で答える。ハッシュがあれば応答は作れ、Windows は外の SMB や WebDAV にも認証を自動で送る。漏れる仕組みと、署名・EPA・445 番・ログでの守り方をまとめた。">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="ムートン">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:url" content="https://moutonarchive.com/ntlm.html">
+<meta property="og:image" content="https://moutonarchive.com/images/og/ntlm.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ムートン" href="https://moutonarchive.com/feed.xml">
+<meta name="twitter:site" content="@moutonarchive">
+<meta name="theme-color" content="#FAF8F3">
+<script src="design-version.js"></script>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="shortcut icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&amp;display=swap"></noscript>
+<link rel="stylesheet" href="renewal.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"NTLM は、パスワードがなくてもハッシュで答えられる。Windows は、その答えを外の共有にも自動で送る","description":"NTLM は、チャレンジに NT ハッシュから作った応答で答える。ハッシュがあれば応答は作れ、Windows は外の SMB や WebDAV にも認証を自動で送る。漏れる仕組みと、署名・EPA・445 番・ログでの守り方をまとめた。","inLanguage":"ja","datePublished":"2026-11-13","dateModified":"2026-11-13","author":{"@type":"Person","name":"ムートン","sameAs":["https://x.com/moutonarchive"],"url":"https://moutonarchive.com/operator.html"},"mainEntityOfPage":"https://moutonarchive.com/ntlm.html"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"ムートン","item":"https://moutonarchive.com/"},{"@type":"ListItem","position":2,"name":"NTLM は、パスワードがなくてもハッシュで答えられる。Windows は、その答えを外の共有にも自動で送る","item":"https://moutonarchive.com/ntlm.html"}]}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CLF0SMB36X"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-CLF0SMB36X');</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2111458982949833" crossorigin="anonymous"></script>
+</head>
+<body class="rn">
+
+<a class="rn-skip" href="#main">本文へスキップ</a>
+<header class="rn-header">
+  <div class="rn-wrap rn-header-in">
+    <a class="rn-brand" href="index.html">MOUTON</a>
+    <nav class="rn-nav" aria-label="メニュー">
+      <a href="start.html">ムートンについて</a>
+      <a href="archive.html">アーカイブ</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+
+<article class="rn-wrap rn-article">
+  <p class="rn-pillar">脆弱性・事件</p>
+  <h1 class="rn-title">NTLM は、<wbr>パスワードが<wbr>なくても<wbr>ハッシュで<wbr>答えられる。<wbr>Windows は、<wbr>その<wbr>答えを<wbr>外の<wbr>共有にも<wbr>自動で<wbr>送る</h1>
+  <p class="rn-subtitle">Kerberos との違い、チャレンジと応答、NT ハッシュ、自動で送られる認証、リレー、SMB 署名と EPA、外向きの 445 番、NTLM を減らす方針、4624・4776 の読み方を、Microsoft の仕様と公式の文書、MITRE ATT&amp;CK で確かめた</p>
+  <p class="rn-meta"><span>約12分</span><span>更新日 <time datetime="2026-11-13">2026年11月13日</time></span></p>
+  <div class="rn-body">
+<p>NTLM は、サーバーが出したチャレンジ（その場かぎりの値）に、パスワードから作ったハッシュで計算した応答を返す、Windows の認証方式だ。応答はパスワードそのものではなくハッシュから作られるので、ハッシュを盗まれれば本人として認証でき、Windows が外の SMB や WebDAV に自動で送る認証からは、応答が漏れる。SMB は <a href="tcp-udp.html">TCP・UDP の記事</a>のポートでいう TCP の 445 番を使い、その外向きの通信は <a href="firewall.html">ファイアウォールの記事</a>の「出ていく通信も止める」の対象になる。試すのは自分の環境と、許された演習の中だけにする。</p>
+
+<details class="rn-toc"><summary>目次（11）</summary><ol><li><a href="#s-1">Windows の認証は、Kerberos が先で、NTLM は代わりに使われる</a></li><li><a href="#s-2">NTLM は、チャレンジに応答を返して、パスワードを知っていることを示す</a></li><li><a href="#s-3">応答の鍵は、パスワードの NT ハッシュから作られる</a></li><li><a href="#s-4">Windows は、外の SMB や WebDAV にも自動で認証を送る</a></li><li><a href="#s-5">リレーは、受け取った応答をそのまま別のサーバーへ渡す</a></li><li><a href="#s-6">署名と EPA で、リレーされた認証を使えなくする</a></li><li><a href="#s-7">外向きの 445 番を止め、NTLM を減らしていく</a></li><li><a href="#s-8">ログでは、4624 の認証パッケージと 4776 を見る</a></li><li><a href="#s-9">自分の環境で確かめる</a></li><li><a href="#refs-h">参考文献</a></li><li><a href="#reading-next-heading">次に読む</a></li></ol></details><h2 id="s-1">Windows の<wbr>認証は、<wbr>Kerberos が<wbr>先で、<wbr>NTLM は<wbr>代わりに<wbr>使われる</h2>
+<p>Active Directory のドメインでは Kerberos が優先され、NTLM は Kerberos が使えないときの代わりとして残っている。Microsoft の説明では、ワークグループの機器どうしの認証と、ドメインコントローラー以外の機器でのローカルのログオンには、今も NTLM が使われる<a href="#ref-1">[1]</a>。</p>
+<p>Kerberos では、利用者は先にドメインコントローラーの KDC からチケットを受け取り、サービスごとのチケットをサーバーに見せる。サーバーは、つなぐたびにドメインコントローラーへ問い合わせなくてよい。Kerberos は、クライアントとサーバーが互いに相手を確かめられる。NTLM は、クライアントがサーバーの正体を確かめる仕組みを持たず、サーバーが本物であることを前提に作られている<a href="#ref-2">[2]</a>。</p>
+<p>アプリが使う Negotiate という仕組みは、まず Kerberos を試し、必要なときだけ NTLM に戻る<a href="#ref-3">[3]</a>。共有を名前ではなく IP アドレスや DNS の別名（CNAME）で開くと、Kerberos ではなく NTLM になる<a href="#ref-4">[4]</a>。</p>
+
+<h2 id="s-2">NTLM は、<wbr>チャレンジに<wbr>応答を<wbr>返して、<wbr>パスワードを<wbr>知っている<wbr>ことを<wbr>示す</h2>
+<p>NTLM のやりとりは、3つのメッセージでできている。Microsoft の仕様 [MS-NLMP] によると、クライアントが NEGOTIATE を送り、サーバーが 8 バイトの乱数（チャレンジ）を入れた CHALLENGE を返し、クライアントが利用者の名前と応答を入れた AUTHENTICATE を返す<a href="#ref-5">[5]</a>。</p>
+<p>NTLM は自分のポートを持たない。SMB や HTTP のような別のプロトコルのメッセージの中に埋め込まれて運ばれる<a href="#ref-5">[5]</a>。SMB の 445 番でも、HTTP の 80 番・443 番でも、同じ NTLM が流れうる。</p>
+<p>応答を確かめるのはサーバーか、ドメインコントローラーだ。ローカルのアカウントなら、サーバーが自分のアカウントのデータベースで確かめる。ドメインのアカウントなら、サーバーは名前・チャレンジ・応答をドメインコントローラーに送って確かめてもらう<a href="#ref-1">[1]</a><a href="#ref-5">[5]</a>。</p>
+<p>NTLM には LM・NTLMv1・NTLMv2 の3つの版があり、流れは同じで、応答の計算のしかただけが違う。仕様は、NTLM が AES や SHA-256 のような新しい暗号に対応せず、MD4・MD5・RC4 を使っていることを挙げ、アプリには一般に NTLM を使わないよう勧めている<a href="#ref-5">[5]</a>。</p>
+
+<h2 id="s-3">応答の<wbr>鍵は、<wbr>パスワードの<wbr> NT ハッシュから<wbr>作られる</h2>
+<p>NTLM の応答に使う鍵は、パスワードを MD4 にかけた値（NT ハッシュ）から作られる。[MS-NLMP] は、NTLMv1 の鍵を MD4(パスワード) と定め、NTLMv2 の鍵を、この MD4 の値を鍵にして、利用者名とドメイン名を HMAC-MD5 にかけた値と定めている。応答は、この鍵で、サーバーのチャレンジとクライアント側の時刻や乱数を HMAC-MD5 にかけて作る<a href="#ref-5">[5]</a>。</p>
+<p>式の中でパスワードが出てくるのは、MD4 にかけるところだけだ。つまり、NT ハッシュを持っていれば、パスワードを知らなくても正しい応答が作れる。盗んだハッシュで本人として認証するのが「パス・ザ・ハッシュ」（MITRE ATT&amp;CK の T1550.002）だ<a href="#ref-6">[6]</a>。MD4(パスワード) には利用者ごとの違いが入らないので、同じパスワードを使うアカウントは同じ NT ハッシュになる。</p>
+<p>NT ハッシュは、ドメインコントローラーやローカルのアカウントのデータベースに保存され<a href="#ref-5">[5]</a>、ログオン中の端末のメモリーにも置かれうる。Microsoft の Protected Users グループの説明には、メンバーになると NTLM が NT ハッシュ（NTOWF）をキャッシュしなくなり、ドメインコントローラーでも NTLM で認証できなくなる、とある<a href="#ref-7">[7]</a>。</p>
+<p>ATT&amp;CK が挙げる対策は、ネットワーク越しのログオンでローカルのアカウントに UAC の制限をかけること、一つのドメインのアカウントを多くの端末のローカル管理者にしないこと、端末どうしで同じ認証情報を使い回さないことだ<a href="#ref-6">[6]</a>。</p>
+
+<h2 id="s-4">Windows は、<wbr>外の<wbr> SMB や<wbr> WebDAV にも<wbr>自動で<wbr>認証を<wbr>送る</h2>
+<p>Windows は、SMB の共有を開くとき、ログオン中の利用者の認証情報で自動で認証する。パスワードを打たずに社内の共有を開くための動きだが、行き先が攻撃者のサーバーでも認証は送られる。ATT&amp;CK はこれを「強制された認証」（T1187）とし、SMB が止められたときには、HTTP の上の WebDAV（80 番・443 番）が代わりに使われることにも触れている<a href="#ref-8">[8]</a>。</p>
+<p>きっかけは、外のサーバーを指す UNC パス（<code>\\サーバー名\共有名\…</code> の形）を含むファイルやメッセージだ。ATT&amp;CK の例では、開くと外のテンプレートを読み込む文書や、アイコンの場所を外の UNC パスにした .LNK・.SCF のファイルがあり、アイコンを表示しただけで認証が始まる<a href="#ref-8">[8]</a>。</p>
+<p>Outlook の CVE-2023-23397 もこの形だった。Microsoft の説明では、細工したメッセージの拡張プロパティ（PidLidReminderFileParameter）に外の SMB サーバーを指す UNC パスを入れると、メッセージが処理されたときに NTLMv2 の応答が送られた。修正版の Outlook は、信頼できるネットワークの外を指すパスを使わなくなった<a href="#ref-9">[9]</a>。CISA は 2023年3月14日、これを悪用が確かめられた脆弱性の一覧（KEV）に加え、NTLM のリレーで別のサービスに本人として認証させうる脆弱性と説明している<a href="#ref-10">[10]</a>。</p>
+<p>漏れるのは NT ハッシュそのものではなく、そのチャレンジに対する応答だ。応答は別のチャレンジには使い回せない。ただ、チャレンジを出したのは攻撃者なので、パスワードの候補から応答を計算して突き合わせる、手元での総当たりができる<a href="#ref-8">[8]</a>。長く推測しにくいパスワードは、この総当たりを遅らせる<a href="#ref-4">[4]</a>。</p>
+
+<h2 id="s-5">リレーは、<wbr>受け取った<wbr>応答を<wbr>そのまま<wbr>別の<wbr>サーバーへ<wbr>渡す</h2>
+<p>リレーは、クライアントとサーバーの間に入った攻撃者が、本物のサーバーのチャレンジをクライアントに渡し、返ってきた応答をそのまま本物のサーバーに渡して、本人としてログオンする攻撃だ。NTLM のクライアントはサーバーの正体を確かめないので<a href="#ref-2">[2]</a>、相手が中継しているだけだと気づけない。</p>
+<p>ATT&amp;CK の T1557.001 は、間に入る方法として名前の解決の乗っ取りを挙げている。LLMNR（UDP 5355）・NBT-NS（UDP 137）・mDNS（UDP 5353）で同じネットワークに名前を尋ねる端末に、攻撃者が「自分だ」と答えると、端末は攻撃者に認証を送る。受け取った NTLMv1・v2 の応答は、SMB だけでなく LDAP や HTTP のサービスへも中継されうる<a href="#ref-11">[11]</a>。対策には、使っていない LLMNR・NBT-NS・mDNS を止めることと、SMB 署名を有効にすることが挙がっている<a href="#ref-11">[11]</a>。</p>
+
+<h2 id="s-6">署名と<wbr> EPA で、<wbr>リレーされた<wbr>認証を<wbr>使えなくする</h2>
+<p>SMB 署名は、SMB のメッセージごとに、認証で決まったセッション鍵から作った署名を付ける。セッション鍵はパスワードから作られ、署名には送り手と受け手の情報も入るので、改ざんとリレーを防ぐ<a href="#ref-4">[4]</a>。[MS-NLMP] でも、セッション鍵は NT ハッシュから作った鍵で計算される<a href="#ref-5">[5]</a>。中継しているだけの攻撃者はこの鍵を持たないので、認証のあとに署名付きのメッセージを続けられない。</p>
+<p>以前は、署名が既定で必須なのはドメインコントローラーとの接続などに限られていた。Windows 11 24H2 と Windows Server 2025 からは、すべての送受信の SMB 接続で既定で必須になった<a href="#ref-12">[12]</a>。</p>
+<p>HTTP の上の認証には、EPA（認証の拡張保護）を使う。EPA は、TLS の通り道の情報（チャネルバインディングトークン）を認証の中に入れる。攻撃者が間に入ると TLS の通り道が二つに分かれるので、サーバーは値の食い違いで中継に気づき、認証を断れる<a href="#ref-13">[13]</a>。NTLMv2 では、この値と宛先のサーバーの名前を、応答の中の欄（MsvAvChannelBindings・MsvAvTargetName）で運ぶ<a href="#ref-5">[5]</a>。サーバー側の設定は「なし・一部・すべて」の3段階で、「すべて」なら値を送らないクライアントを断る<a href="#ref-13">[13]</a>。</p>
+
+<h2 id="s-7">外向きの<wbr> 445 番を<wbr>止め、<wbr>NTLM を<wbr>減らしていく</h2>
+<p>外のサーバーへの自動の認証は、通信そのものを止めれば起きない。Microsoft は、会社のファイアウォールで、インターネットへ出ていく TCP 445 番を止めるよう勧め、クラウドの一部のサービスを除けば外へ SMB を出す必要はまずないとしている。社外で使うノートパソコンにも、端末のファイアウォールで外向きの SMB を止める規則を当てる<a href="#ref-14">[14]</a>。ATT&amp;CK も、TCP 139・445 と UDP 137 の外向きの通信と、外への WebDAV を止め、必要なら許可リストで絞るよう挙げている<a href="#ref-8">[8]</a>。</p>
+<p>止めにくい端末では、SMB のクライアント側で NTLM を止める方法がある。Windows 11 24H2 と Windows Server 2025 の SMB クライアントは、外向きの接続で NTLM を使わない設定を持ち、例外のサーバーを名前やアドレスで指定できる<a href="#ref-15">[15]</a>。</p>
+<p>Microsoft は NTLM を段階的に減らしている。Windows Server 2025 で NTLMv1 は削除され、NTLMv2 も非推奨になった<a href="#ref-3">[3]</a>。2026年1月29日の Windows IT Pro Blog では、NTLM の使われ方を調べる監査の強化から始め、Kerberos に移れない場面を減らす機能を足し、次の大きな版でネットワークの NTLM 認証を既定で無効にする計画を示した。NTLM を Windows から消すわけではなく、必要なら新しいポリシーで有効に戻せる<a href="#ref-16">[16]</a>。</p>
+
+<h2 id="s-8">ログでは、<wbr>4624 の<wbr>認証パッケージと<wbr> 4776 を<wbr>見る</h2>
+<p>Windows のログの全体は <a href="windows-event-log.html">Windows のイベントログの記事</a>に書いた。</p>
+<div class="rn-scroll"><table class="rn-data"><caption>NTLM を見るときの主な記録</caption><thead><tr><th scope="col">記録</th><th scope="col">残る場所</th><th scope="col">見るところ</th></tr></thead><tbody>
+<tr><th scope="row">4624（ログオンの成功）</th><td>ログオンされた機器のセキュリティのログ</td><td>ログオンの種類（3 はネットワーク）、認証パッケージ（NTLM・Kerberos）、NTLM の版</td></tr>
+<tr><th scope="row">4776（資格情報の確認）</th><td>アカウントの持ち主の機器（ドメインのアカウントならドメインコントローラー）</td><td>どのアカウントを、どの端末から確かめたか、結果のコード</td></tr>
+<tr><th scope="row">NTLM の Operational のログ（8001・8002・8004 など）</th><td>NTLM の制限のポリシーで監査を有効にした機器</td><td>外へ出す NTLM の宛先、受けた NTLM、ドメインコントローラーでの NTLM</td></tr>
+</tbody></table></div>
+<p>NSA の手引きは、パス・ザ・ハッシュの横移動を見る条件として、4624 のうち、ログオンの種類が 3、認証パッケージが NTLM、ドメインのアカウントでなく、ANONYMOUS LOGON でもないものを挙げている<a href="#ref-17">[17]</a>。4624 には NTLM の版（NTLM V1・NTLM V2）も入るので、残っている NTLMv1 を探すのにも使える<a href="#ref-18">[18]</a>。</p>
+<p>4776 は、NTLM で資格情報を確かめたとき、その持ち主の機器に残る。ドメインのアカウントならドメインコントローラー、ローカルのアカウントならその機器だ<a href="#ref-19">[19]</a>。<a href="siem.html">SIEM の記事</a>の LogonTracer も、4776 を NTLM の認証として扱う。</p>
+<p>NTLM の Operational のログは、止める前の監査に使う。Sigma のルールでは、8001 は宛先の名前を持つ外向きの NTLM、8002 は受けた NTLM、8004 はドメインコントローラーで端末の名前を持つ NTLM の記録として使われている<a href="#ref-20">[20]</a>。Protected Users のメンバーが NTLM で認証しようとして失敗すると、ドメインコントローラーの ProtectedUserFailures-DomainController のログに 100 が残る<a href="#ref-7">[7]</a>。</p>
+<p>通信の記録も手がかりになる。ATT&amp;CK の検知の例は、端末から信頼していない宛先への TCP 139・445 の接続や、NTLM の認証を含む WebDAV の要求を見る<a href="#ref-8">[8]</a>。外向きの 445 番の遮断の記録は、端末が外の SMB に認証しにいこうとした跡でもある。</p>
+
+<h2 id="s-9">自分の<wbr>環境で<wbr>確かめる</h2>
+<p>確かめるのは、自分の仮想マシンだけのネットワークか、許された演習の環境の中だけにする。攻撃の道具は使わず、Windows の設定とログで見る。</p>
+<p>Windows の PowerShell で <code>Get-SmbClientConfiguration</code> と <code>Get-SmbServerConfiguration</code> を実行すると、RequireSecuritySignature の欄で SMB 署名を必須にしているかが分かる<a href="#ref-4">[4]</a>。Windows 11 24H2 以降なら、クライアント側に BlockNTLM の設定もある<a href="#ref-15">[15]</a>。</p>
+<p>ドメインの演習環境があれば、同じ共有を <code>\\PC-01\share</code> と <code>\\192.168.10.20\share</code> の両方で開き、共有を持つ側の 4624 を比べる。Microsoft の説明どおりなら、名前のときは Kerberos、IP アドレスのときは NTLM が認証パッケージの欄に出て、IP アドレスのときはドメインコントローラーに 4776 も残る<a href="#ref-4">[4]</a><a href="#ref-19">[19]</a>。</p>
+<p>端末のファイアウォールで外向きの TCP 445 番を止め、止めた記録をログに残す設定にしてから、文書用のアドレス <code>\\203.0.113.10\share</code> を開くと、外の SMB への接続が止められた記録が残る。この記録を <a href="siem.html">SIEM</a> に送れば、外向きの 445 番の遮断を数える検知の練習になる。</p>
+
+
+
+<p class="read-mark" data-total="21" aria-live="polite"></p>
+
+
+<aside class="author-box" aria-labelledby="author-box-name">
+  <div class="author-mark" aria-hidden="true">ム</div>
+  <div>
+    <p class="author-label">この記事を書いた人</p>
+    <p class="author-name" id="author-box-name">ムートン</p>
+    <p class="author-bio">セキュリティを勉強している一人です。専門家ではありません。学んだこと、演習で試したこと、公開された情報を読んで分かったことを、出典つきで記録しています。攻撃の技術は、自分の環境と許可された演習の中だけで試します。</p>
+    <p class="author-links"><a href="operator.html">運営者情報</a><a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X / @moutonarchive <span aria-hidden="true">↗</span></a></p>
+    <p class="author-dates">公開 2026.11.13</p>
+  </div>
+</aside>
+
+
+<nav class="rn-next" aria-label="次に読む"><p class="rn-next-title">次に読む</p><ul class="rn-list"><li class="rn-item"><a class="rn-list-title" href="mfa.html">確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる</a><p class="rn-list-summary">パスワードは長さと漏えいの照合で選ばせ、ソルトを付けた遅いハッシュで保存する。ワンタイムパスワードや SMS のコードは偽のサイトに中継されうるが、WebAuthn の鍵はサイトの名前に結びつく。MFA のあとはセッションの Cookie が本人の証明になる。</p></li><li class="rn-item"><a class="rn-list-title" href="windows-event-log.html">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</a><p class="rn-list-summary">Windows のイベントログは、ログの名前とイベント ID で読む。何が残るかは監査ポリシーと Sysmon の設定で決まり、4688 のコマンドラインは既定では残らない。ログオンの種類の読み方、SOC で目を向ける出来事、SIEM への送り方もまとめた。</p></li></ul></nav><section class="rn-refs" aria-labelledby="refs-h">
+<details class="rn-refs-box"><summary><h2 id="refs-h">参考文献<wbr>（20）</h2></summary>
+<ol>
+<li id="ref-1">Microsoft Learn「NTLM overview」（Windows Server。GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/security/kerberos/ntlm-overview">Microsoft Learn</a></li>
+<li id="ref-2">Microsoft Learn「Kerberos authentication overview」（Windows Server。相互認証と、NTLM の pass-through 認証との違い。GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/security/kerberos/kerberos-authentication-overview">Microsoft Learn</a></li>
+<li id="ref-3">Microsoft Learn「Features removed or no longer developed in Windows Server」（Windows Server 2025 の NTLM。GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/get-started/removed-deprecated-features-windows-server">Microsoft Learn</a></li>
+<li id="ref-4">Microsoft Learn「Overview of Server Message Block signing in Windows」と「Control SMB signing behavior」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/storage/file-server/smb-signing-overview">Microsoft Learn</a>／<a href="https://learn.microsoft.com/windows-server/storage/file-server/smb-signing">Microsoft Learn</a></li>
+<li id="ref-5">Microsoft「[MS-NLMP]: NT LAN Manager (NTLM) Authentication Protocol」（1.3 節の概要と流れ、2.2.1 節のメッセージ、2.2.2.1 節の AV_PAIR、3.3 節の NTLMv1・v2 の計算、5.1 節のセキュリティの考慮）。<a href="https://learn.microsoft.com/openspecs/windows_protocols/ms-nlmp/b38c36ed-2804-4868-a9ff-8dd3182128e4">Microsoft Learn</a></li>
+<li id="ref-6">MITRE ATT&amp;CK「Use Alternate Authentication Material: Pass the Hash（T1550.002）」（対策と、検知の戦略 DET0409）。<a href="https://attack.mitre.org/techniques/T1550/002/">MITRE ATT&amp;CK</a></li>
+<li id="ref-7">Microsoft Learn「Protected Users security group」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/security/credentials-protection-and-management/protected-users-security-group">Microsoft Learn</a></li>
+<li id="ref-8">MITRE ATT&amp;CK「Forced Authentication（T1187）」（対策 M1037・M1027 と、検知の戦略 DET0022）。<a href="https://attack.mitre.org/techniques/T1187/">MITRE ATT&amp;CK</a></li>
+<li id="ref-9">Microsoft Security Response Center（2023）「Microsoft Mitigates Outlook Elevation of Privilege Vulnerability」。<a href="https://msrc.microsoft.com/blog/2023/03/microsoft-mitigates-outlook-elevation-of-privilege-vulnerability/">MSRC</a></li>
+<li id="ref-10">CISA「Known Exploited Vulnerabilities Catalog」（CVE-2023-23397 の項。GitHub の cisagov/kev-data の写し）。<a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog">CISA</a></li>
+<li id="ref-11">MITRE ATT&amp;CK「Adversary-in-the-Middle: Name Resolution Poisoning and SMB Relay（T1557.001）」。<a href="https://attack.mitre.org/techniques/T1557/001/">MITRE ATT&amp;CK</a></li>
+<li id="ref-12">Microsoft Learn「SMB security hardening in Windows Server and Windows Client」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/storage/file-server/smb-security-hardening">Microsoft Learn</a></li>
+<li id="ref-13">Microsoft Learn「Extended Protection for Authentication Overview」（.NET Framework。GitHub の原稿）。<a href="https://learn.microsoft.com/dotnet/framework/wcf/feature-details/extended-protection-for-authentication-overview">Microsoft Learn</a></li>
+<li id="ref-14">Microsoft Learn「Secure SMB Traffic in Windows Server」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/storage/file-server/smb-secure-traffic">Microsoft Learn</a></li>
+<li id="ref-15">Microsoft Learn「Block NTLM connections on SMB」（GitHub の原稿）。<a href="https://learn.microsoft.com/windows-server/storage/file-server/smb-ntlm-blocking">Microsoft Learn</a></li>
+<li id="ref-16">Microsoft Windows IT Pro Blog（2026）「Advancing Windows security: Disabling NTLM by default」。<a href="https://techcommunity.microsoft.com/blog/windows-itpro-blog/advancing-windows-security-disabling-ntlm-by-default/4489526">Microsoft Tech Community</a></li>
+<li id="ref-17">NSA「Windows Event Monitoring Guidance」（Event Forwarding Guidance の Events。Pass the Hash Detection の節）。<a href="https://github.com/nsacyber/Event-Forwarding-Guidance/tree/master/Events">GitHub</a></li>
+<li id="ref-18">Microsoft Learn「Audit use of NTLMv1 on a Windows Server-based domain controller」。<a href="https://learn.microsoft.com/troubleshoot/windows-server/windows-security/audit-domain-controller-ntlmv1">Microsoft Learn</a></li>
+<li id="ref-19">Microsoft Learn「4776(S, F): The computer attempted to validate the credentials for an account」と「Appendix L: Events to monitor」。<a href="https://learn.microsoft.com/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4776">Microsoft Learn</a></li>
+<li id="ref-20">SigmaHQ「Sigma のルール（Windows の NTLM。Microsoft-Windows-NTLM/Operational の 8001・8002・8004 を使うもの）」。<a href="https://github.com/SigmaHQ/sigma/tree/master/rules/windows/builtin/ntlm">GitHub</a></li>
+</ol>
+</details></section>
+
+
+<nav class="reading-next" aria-labelledby="reading-next-heading"><h2 id="reading-next-heading">次に<wbr>読む</h2><div class="reading-next-grid"><a class="reading-card" href="mfa.html" data-slug="mfa"><span class="reading-card-title">確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる</span></a><a class="reading-card" href="windows-event-log.html" data-slug="windows-event-log"><span class="reading-card-title">Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</span></a></div>
+<div class="lucky" data-lucky><button class="lucky-btn" type="button">迷ったら、おまかせで1本 <span aria-hidden="true">?</span></button><div class="lucky-out" aria-live="polite"></div></div>
+<p class="reading-returns"><a class="reading-return" href=""></a></p></nav>
+
+
+  </div>
+  <p class="rn-back"><a href="journal.html">記事の一覧へ</a></p>
+</article>
+<script src="renewal-article.js" defer></script>
+
+</main>
+<footer class="rn-footer">
+  <div class="rn-wrap rn-footer-in">
+    <a class="rn-brand rn-brand--small" href="index.html">MOUTON</a>
+    <nav class="rn-footer-links" aria-label="サイト情報">
+      <a href="operator.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="https://x.com/moutonarchive" target="_blank" rel="noopener noreferrer">X</a>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>

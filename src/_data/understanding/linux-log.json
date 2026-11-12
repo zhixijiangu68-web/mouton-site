@@ -1,0 +1,113 @@
+{
+  "slug": "linux-log",
+  "questions": [
+    {
+      "q": "syslog のメッセージの先頭が <34> のとき、記事の内容と合う読み方はどれか。",
+      "choices": [
+        "facility 3（システムのデーモン）と severity 4（警告）",
+        "facility 34 で、severity は書かれていない",
+        "facility 4（セキュリティと認証）と severity 2（crit）",
+        "メッセージの長さが 34 バイトであること"
+      ],
+      "answer": 2,
+      "why": "山かっこの中の数は、facility の番号に 8 を掛けて severity を足したもの（RFC 5424）。34 = 4 × 8 + 2 なので、facility 4 と severity 2 になる。",
+      "section": "syslog のメッセージは、facility と severity を持つ"
+    },
+    {
+      "q": "テキストのログに「sshd」と書かれた行が、本当に sshd から出たかを journal で確かめるときに見る項目として、記事の内容と合うものはどれか。",
+      "choices": [
+        "journald が自分で付け、送った側が書き換えられない _COMM や _UID",
+        "送る側が自由に決められる SYSLOG_IDENTIFIER",
+        "メッセージの本文の MESSAGE",
+        "logger の -t で付けた名前"
+      ],
+      "answer": 0,
+      "why": "名前が「_」で始まる項目は journald が付ける信頼できる項目で、送った側のプログラムは書き換えられない。SYSLOG_IDENTIFIER は送る側の名乗りで、logger の -t で好きな名前にできる。",
+      "section": "rsyslog はテキストに、journald は journal に書く"
+    },
+    {
+      "q": "認証の記録の置き場所について、記事の内容と合うものはどれか。",
+      "choices": [
+        "どの Linux でも /var/log/auth.log に必ず書かれる",
+        "Red Hat の系統では /var/log/messages にだけ書かれる",
+        "認証の記録は journal には残らない",
+        "Red Hat の系統では /var/log/secure に書かれることが多く、Debian 12 では rsyslog が標準で入らないため、ログは journalctl で読む"
+      ],
+      "answer": 3,
+      "why": "置き場所は rsyslog の設定で決まる。Red Hat 向けの設定の見本は authpriv を /var/log/secure に書き、/var/log/messages からは外している。Debian 12 からは rsyslog が標準で入らず、journal を journalctl で読む。",
+      "section": "認証の記録の置き場所は、ディストリビューションで違う"
+    },
+    {
+      "q": "sshd の「Failed password for invalid user admin01 from 203.0.113.50 port 50122 ssh2」の行から読めることとして、記事の内容と合うものはどれか。",
+      "choices": [
+        "admin01 のパスワードの認証に成功した",
+        "その機械に存在しないユーザー名 admin01 で、203.0.113.50 からのパスワードの認証が失敗した",
+        "203.0.113.50 の機械のポート 22 が閉じていた",
+        "admin01 の公開鍵が登録されていない"
+      ],
+      "answer": 1,
+      "why": "OpenSSH の auth.c は、失敗を Failed、成功を Accepted で書き、方式・ユーザー名・送り元のアドレスとポートを続ける。存在しないユーザーには「invalid user」が付く。",
+      "section": "sshd は、認証の結果を1行に書く"
+    },
+    {
+      "q": "sudo のログに「user NOT in sudoers」と出たときの意味として、記事の内容と合うものはどれか。",
+      "choices": [
+        "コマンドは root として実行された",
+        "パスワードを3回まちがえた",
+        "その利用者は sudoers に載っておらず、実行を断られた",
+        "その機械には sudo が入っていない"
+      ],
+      "answer": 2,
+      "why": "断られたときは、ユーザー名のあとに理由が入る。「user NOT in sudoers」は sudoers に名前がないこと、「3 incorrect password attempts」はパスワードの失敗を表す（sudoers の説明書）。",
+      "section": "sudo は、誰が誰として何を実行したかを書く"
+    },
+    {
+      "q": "lastb が既定で読むファイルとして、記事の内容と合うものはどれか。",
+      "choices": [
+        "/var/log/btmp（失敗したログインの記録）",
+        "/var/log/wtmp（ログインとログアウトの記録）",
+        "/var/log/audit/audit.log",
+        "/var/log/journal"
+      ],
+      "answer": 0,
+      "why": "last は /var/log/wtmp を、lastb は失敗したログインを記録する /var/log/btmp を読む（util-linux の last の説明書）。どちらもファイルがあるときだけ書かれる。",
+      "section": "last と lastb は、wtmp と btmp を読む"
+    },
+    {
+      "q": "auditd のルールに「キー」を付けておく理由として、記事の内容と合うものはどれか。",
+      "choices": [
+        "記録を暗号化するため",
+        "システムコールのルールを軽くするため",
+        "記録を別の機械へ送るため",
+        "調べるときに ausearch の -k で、目的のルールに当たった記録だけを選べるようにするため"
+      ],
+      "answer": 3,
+      "why": "audit.rules の説明書は、ルールの意味が分かるようキーを付けることを勧めている。ausearch は -k でキーを指定して探せる。",
+      "section": "auditd は、カーネルが見た出来事を記録する"
+    },
+    {
+      "q": "logrotate の copytruncate について、記事の内容と合うものはどれか。",
+      "choices": [
+        "古い版を消さずにすべて残す",
+        "ログを写してから元のファイルを空にするので、そのあいだに書かれた行が抜けることがある",
+        "ログを別の機械へ送る",
+        "journal の大きさの上限を決める"
+      ],
+      "answer": 1,
+      "why": "copytruncate は、写しを作ってから元のファイルを0の大きさに切り詰める。logrotate の説明書は、写すことと切り詰めることのあいだに、わずかなログが失われうると書いている。",
+      "section": "ログは、回転で消え、手で消されることもある"
+    },
+    {
+      "q": "UDP の 514 番で syslog を送ることについて、記事の内容と合うものはどれか。",
+      "choices": [
+        "TLS で中身が守られる",
+        "届かなかったメッセージは自動で送り直される",
+        "確認応答がなく、途中で落ちても気づけず、送り元を確かめる仕組みもない",
+        "送り元で消されたログも、送り先から自動で消える"
+      ],
+      "answer": 2,
+      "why": "RFC 5426 は、UDP での syslog に、落ちたデータグラムを見つけて直す仕組みも、強い送り元の認証もないとしている。rsyslog の説明書は、TLS の上の TCP（6514 番）を勧めている。",
+      "section": "別の機械へ送れば、手元で消されても写しが残る"
+    }
+  ]
+}

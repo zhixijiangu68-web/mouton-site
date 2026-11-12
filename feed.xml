@@ -7,6 +7,48 @@
   <description>ムートンのセキュリティの個人研究ノート。演習・CTF の記録、公開された脆弱性と事件の読み解き、身の回りを守る手順を、学んだ順に置いていく。攻撃の技術は、自分の環境と許可された演習の中だけで試す。</description>
   <language>ja</language>
   <item>
+    <title>遠隔操作ツールは、本物のまま攻撃に使われる。だからウイルス対策は、ふつう鳴らない</title>
+    <link>https://moutonarchive.com/rmm.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/rmm.html</guid>
+    <pubDate>Fri, 13 Nov 2026 17:00:00 +0000</pubDate>
+    <description>RMM（リモート監視・管理）ツールは、MSP や情報システムの担当が端末を遠隔で管理する正規のソフトで、攻撃者も同じものを使う。選ばれる理由、偽のサポートと MSP 経由で広がる形、許可リスト・多要素認証・ログでの見つけ方を確かめた。</description>
+  </item>
+  <item>
+    <title>NTLM は、パスワードがなくてもハッシュで答えられる。Windows は、その答えを外の共有にも自動で送る</title>
+    <link>https://moutonarchive.com/ntlm.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/ntlm.html</guid>
+    <pubDate>Fri, 13 Nov 2026 16:00:00 +0000</pubDate>
+    <description>NTLM は、チャレンジに NT ハッシュから作った応答で答える。ハッシュがあれば応答は作れ、Windows は外の SMB や WebDAV にも認証を自動で送る。漏れる仕組みと、署名・EPA・445 番・ログでの守り方をまとめた。</description>
+  </item>
+  <item>
+    <title>CVSS の 10.0 は、悪用されるかどうかを表さない。直す順番は、KEV と「外から届くか」で決める</title>
+    <link>https://moutonarchive.com/kev.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/kev.html</guid>
+    <pubDate>Fri, 13 Nov 2026 15:00:00 +0000</pubDate>
+    <description>脆弱性の情報は、どの弱点か（CVE）、どれほど重いか（CVSS）、悪用されそうか（EPSS）、実際に悪用されたか（KEV）に分けて読む。直す順番の決め方を、公式の文書と KEV のカタログのデータで確かめた。</description>
+  </item>
+  <item>
+    <title>確認コードは、偽のサイトにも打ち込める。多要素認証の強さは、鍵がどのサイトに結びつくかで決まる</title>
+    <link>https://moutonarchive.com/mfa.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/mfa.html</guid>
+    <pubDate>Fri, 13 Nov 2026 14:00:00 +0000</pubDate>
+    <description>多要素認証は、知識・所持・生体のうち二つ以上で本人を確かめる。手で打ち込む確認コードは偽のサイトに中継されうる。NIST のパスワードの決まり、TOTP、MFA 疲れ、WebAuthn がフィッシングに強い理由、ログで見ることを確かめた。</description>
+  </item>
+  <item>
+    <title>Linux のログは、手元にあるかぎり消せる。だから外へも送っておく</title>
+    <link>https://moutonarchive.com/linux-log.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/linux-log.html</guid>
+    <pubDate>Fri, 13 Nov 2026 13:00:00 +0000</pubDate>
+    <description>Linux のログは rsyslog と journald に残り、管理者なら消せる。syslog の形、sshd と sudo の行、wtmp、auditd、回転と転送、SOC での見方を公式文書で確かめた。</description>
+  </item>
+  <item>
+    <title>Windows のセキュリティのログには、監査ポリシーで決めたことしか残らない</title>
+    <link>https://moutonarchive.com/windows-event-log.html</link>
+    <guid isPermaLink="true">https://moutonarchive.com/windows-event-log.html</guid>
+    <pubDate>Fri, 13 Nov 2026 12:00:00 +0000</pubDate>
+    <description>Windows のセキュリティのログに何が残るかは、監査ポリシーで決まる。4624・4625 とログオンの種類、4688 のコマンドライン、Sysmon、ログの消去の見つけ方、SIEM への送り方を Microsoft の文書で確かめた。</description>
+  </item>
+  <item>
     <title>HTTP は、前の要求を覚えていない。だから、Cookie を見せた相手を本人として扱う</title>
     <link>https://moutonarchive.com/http.html</link>
     <guid isPermaLink="true">https://moutonarchive.com/http.html</guid>
@@ -103,13 +145,6 @@
     <guid isPermaLink="true">https://moutonarchive.com/siem-ecosystem.html</guid>
     <pubDate>Wed, 04 Nov 2026 12:00:00 +0000</pubDate>
     <description>SIEM が XDR に置き換わったと示す公的な調査は見つからなかった。SOAR・EDR・XDR・ログ管理との違い、主な製品、入れたあとのお金・データ・人、ATT&amp;CK の使い方、自分のラボでの触れ方を公式の資料で確かめた。</description>
-  </item>
-  <item>
-    <title>SIEM は攻撃を止めない。ログをつなげて、人に知らせる仕組みだ</title>
-    <link>https://moutonarchive.com/siem.html</link>
-    <guid isPermaLink="true">https://moutonarchive.com/siem.html</guid>
-    <pubDate>Wed, 04 Nov 2026 12:00:00 +0000</pubDate>
-    <description>SIEM は、散らばったログを1か所に集めて形をそろえ、つなげて読み、怪しい動きを人に知らせる仕組みで、攻撃を止める道具ではない。公的な定義、中で起きる五つの処理、どのログから入れるかを一次資料で確かめた。</description>
   </item>
 </channel>
 </rss>
